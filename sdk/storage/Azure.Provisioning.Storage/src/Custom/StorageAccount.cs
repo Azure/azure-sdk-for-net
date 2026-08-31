@@ -112,6 +112,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generator names this property ProvisioningState; retain the shipped StorageAccountProvisioningState name.
     /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
     [CodeGenMember("ProvisioningState")]
     public BicepValue<StorageAccountProvisioningState> StorageAccountProvisioningState
@@ -123,9 +124,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
-    // Generated flattened properties are getter-only because their resource-model parent is read-only. Forward
-    // through the custom writable nested properties until resource and create-body graphs are recursively combined:
-    // https://github.com/Azure/azure-sdk-for-net/issues/61011.
+    // The generated flattened CustomDomain is getter-only; forward through the writable nested model to preserve the shipped setter.
     /// <summary> Gets or sets the custom domain assigned to this storage account. </summary>
     [CodeGenMember("CustomDomain")]
     public StorageCustomDomain CustomDomain
@@ -138,6 +137,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generated flattened SasPolicy is getter-only; forward through the writable nested model to preserve the shipped setter.
     /// <summary> Gets or sets the SAS policy assigned to the storage account. </summary>
     [CodeGenMember("SasPolicy")]
     public StorageAccountSasPolicy SasPolicy
@@ -150,6 +150,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generated flattened Encryption is getter-only; forward through the writable nested model to preserve the shipped setter.
     /// <summary> Gets or sets the encryption settings on the storage account. </summary>
     [CodeGenMember("Encryption")]
     public StorageAccountEncryption Encryption
@@ -162,6 +163,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generated flattened AccessTier is getter-only; forward through the writable nested model to preserve the shipped setter.
     /// <summary> Gets or sets the access tier. </summary>
     [CodeGenMember("AccessTier")]
     public BicepValue<StorageAccountAccessTier> AccessTier
@@ -178,6 +180,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generated flattened NetworkRuleSet is getter-only; forward through the writable nested model to preserve the shipped setter.
     /// <summary> Gets or sets the network rule set. </summary>
     [CodeGenMember("NetworkRuleSet")]
     public StorageAccountNetworkRuleSet NetworkRuleSet
@@ -190,6 +193,7 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generated flattened KeyExpirationPeriodInDays is getter-only; forward through the writable nested model to preserve the shipped setter.
     /// <summary> Gets or sets the key expiration period in days. </summary>
     [CodeGenMember("KeyExpirationPeriodInDays")]
     public BicepValue<int> KeyExpirationPeriodInDays

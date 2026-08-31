@@ -15,6 +15,7 @@ public partial class StorageAccountResourceAccessRule
     private BicepValue<Guid> _tenantId;
     private BicepValue<ResourceIdentifier> _resourceId;
 
+    // The generator omits writable TenantId because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the tenant ID. </summary>
     [CodeGenMember("TenantId")]
     public BicepValue<Guid> TenantId
@@ -23,6 +24,7 @@ public partial class StorageAccountResourceAccessRule
         set { Initialize(); _tenantId.Assign(value); }
     }
 
+    // The generator omits writable ResourceId because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the resource ID. </summary>
     [CodeGenMember("ResourceId")]
     public BicepValue<ResourceIdentifier> ResourceId
@@ -33,8 +35,7 @@ public partial class StorageAccountResourceAccessRule
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes these properties writable, but the resource model marks their parent as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
         _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
     }

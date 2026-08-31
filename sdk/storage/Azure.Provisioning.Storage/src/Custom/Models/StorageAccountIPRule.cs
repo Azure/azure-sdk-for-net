@@ -13,6 +13,7 @@ public partial class StorageAccountIPRule
     private BicepValue<string> _ipAddressOrRange;
     private BicepValue<StorageAccountNetworkRuleAction> _action;
 
+    // The generator omits writable IPAddressOrRange because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the IP address or range. </summary>
     [CodeGenMember("IPAddressOrRange")]
     public BicepValue<string> IPAddressOrRange
@@ -21,6 +22,7 @@ public partial class StorageAccountIPRule
         set { Initialize(); _ipAddressOrRange.Assign(value); }
     }
 
+    // The generator omits writable Action because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the network rule action. </summary>
     [CodeGenMember("Action")]
     public BicepValue<StorageAccountNetworkRuleAction> Action
@@ -31,8 +33,7 @@ public partial class StorageAccountIPRule
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes these properties writable, but the resource model marks their parent as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _ipAddressOrRange = DefineProperty<string>(nameof(IPAddressOrRange), new string[] { "value" });
         _action = DefineProperty<StorageAccountNetworkRuleAction>(nameof(Action), new string[] { "action" });
     }

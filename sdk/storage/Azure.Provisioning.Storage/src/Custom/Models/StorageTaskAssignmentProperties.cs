@@ -12,13 +12,12 @@ namespace Azure.Provisioning.Storage;
 
 public partial class StorageTaskAssignmentProperties
 {
-    // The generator emits ProvisioningState with the task-specific enum; expose it under the shipped qualified name
-    // and retain the obsolete shared-enum property on the same response path.
     private BicepValue<StorageTaskAssignmentProvisioningState> _storageTaskAssignmentProvisioningState;
 #pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
     private BicepValue<StorageProvisioningState> _legacyProvisioningState;
 #pragma warning restore CS0618
 
+    // The generator names this property ProvisioningState; retain the shipped StorageTaskAssignmentProvisioningState name.
     /// <summary>
     /// Represents the provisioning state of the storage task assignment.
     /// </summary>
@@ -28,6 +27,7 @@ public partial class StorageTaskAssignmentProperties
         get { Initialize(); return _storageTaskAssignmentProvisioningState; }
     }
 
+    // Retain the shipped ProvisioningState shared-enum view alongside the task-specific replacement.
     /// <summary>
     /// Represents the provisioning state of the storage task assignment.
     /// </summary>
@@ -42,7 +42,6 @@ public partial class StorageTaskAssignmentProperties
 
     partial void DefineAdditionalProperties()
     {
-        // Both output aliases share the response path because they preserve the shipped new and old views of the same wire property.
         _storageTaskAssignmentProvisioningState = DefineProperty<StorageTaskAssignmentProvisioningState>(nameof(StorageTaskAssignmentProvisioningState), ["provisioningState"], isOutput: true);
 #pragma warning disable CS0618 // Compatibility property registration intentionally uses the obsolete shipped enum.
         _legacyProvisioningState = DefineProperty<StorageProvisioningState>(nameof(ProvisioningState), ["provisioningState"], isOutput: true);

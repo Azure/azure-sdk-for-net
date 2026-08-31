@@ -11,6 +11,7 @@ namespace Azure.Provisioning.Storage;
 
 public partial class ExecutionTrigger : ProvisionableConstruct
 {
+    // TypeSpec uses the TaskExecutionTriggerType name and enum; retain the shipped TriggerType compatibility view.
     /// <summary>
     /// The trigger type of the storage task assignment execution.
     ///
@@ -30,8 +31,6 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     private BicepValue<ExecutionTriggerType>? _triggerType;
 #pragma warning restore CS0618
 
-    // The generator emits TaskExecutionTriggerType with a new enum type; retain the shipped TriggerType property
-    // and ExecutionTriggerType enum on the same "type" path.
     partial void DefineAdditionalProperties()
     {
 #pragma warning disable CS0618 // Compatibility property registration intentionally uses the obsolete shipped enum.

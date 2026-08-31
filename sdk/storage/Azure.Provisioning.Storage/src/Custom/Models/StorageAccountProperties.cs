@@ -18,16 +18,14 @@ internal partial class StorageAccountProperties
     private BicepValue<StorageAccountAccessTier> _accessTier;
     private StorageAccountNetworkRuleSet _networkRuleSet;
 #pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
-    // TypeSpec uses StorageAccountProvisioningState; retain the shipped shared-enum view on the same response path.
     private BicepValue<StorageProvisioningState> _legacyProvisioningState;
 #pragma warning restore CS0618
 
-    // TypeSpec generates a nested resource list named PrivateEndpointConnections, but the shipped new API names it PrivateEndpointConnectionResources.
     private BicepList<StoragePrivateEndpointConnection> _privateEndpointConnectionResources;
 
-    // The shipped old API keeps the PrivateEndpointConnections name with its data-model element type.
     private BicepList<StoragePrivateEndpointConnectionData> _privateEndpointConnections;
 
+    // TypeSpec names this resource list PrivateEndpointConnections; retain the shipped PrivateEndpointConnectionResources name.
     [CodeGenMember("PrivateEndpointConnections")]
     public BicepList<StoragePrivateEndpointConnection> PrivateEndpointConnectionResources
     {
@@ -38,6 +36,7 @@ internal partial class StorageAccountProperties
         }
     }
 
+    // TypeSpec generates a resource-list view; retain the shipped PrivateEndpointConnections data-model view.
     internal BicepList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections
     {
         get
@@ -47,6 +46,7 @@ internal partial class StorageAccountProperties
         }
     }
 
+    // The generator omits writable CustomDomain because the create body makes it settable while the resource graph is read-only.
     [CodeGenMember("CustomDomain")]
     public StorageCustomDomain CustomDomain
     {
@@ -54,6 +54,7 @@ internal partial class StorageAccountProperties
         set { Initialize(); AssignOrReplace(ref _customDomain, value); }
     }
 
+    // The generator omits writable SasPolicy because the create body makes it settable while the resource graph is read-only.
     [CodeGenMember("SasPolicy")]
     public StorageAccountSasPolicy SasPolicy
     {
@@ -61,12 +62,14 @@ internal partial class StorageAccountProperties
         set { Initialize(); AssignOrReplace(ref _sasPolicy, value); }
     }
 
+    // The generator omits KeyPolicy from the writable create graph; retain it so KeyExpirationPeriodInDays remains settable.
     [CodeGenMember("KeyPolicy")]
     internal KeyPolicy KeyPolicy
     {
         get { Initialize(); return _keyPolicy; }
     }
 
+    // The generator omits writable Encryption because the create body makes it settable while the resource graph is read-only.
     [CodeGenMember("Encryption")]
     public StorageAccountEncryption Encryption
     {
@@ -74,6 +77,7 @@ internal partial class StorageAccountProperties
         set { Initialize(); AssignOrReplace(ref _encryption, value); }
     }
 
+    // The generator omits writable AccessTier because the create body makes it settable while the resource graph is read-only.
     [CodeGenMember("AccessTier")]
     public BicepValue<StorageAccountAccessTier> AccessTier
     {
@@ -81,6 +85,7 @@ internal partial class StorageAccountProperties
         set { Initialize(); _accessTier.Assign(value); }
     }
 
+    // The generator omits writable NetworkRuleSet because the create body makes it settable while the resource graph is read-only.
     [CodeGenMember("NetworkRuleSet")]
     public StorageAccountNetworkRuleSet NetworkRuleSet
     {
@@ -88,6 +93,7 @@ internal partial class StorageAccountProperties
         set { Initialize(); AssignOrReplace(ref _networkRuleSet, value); }
     }
 
+    // The generator omits writable KeyExpirationPeriodInDays; forward through KeyPolicy to preserve the shipped setter.
     public BicepValue<int> KeyExpirationPeriodInDays
     {
         get { Initialize(); return KeyPolicy.KeyExpirationPeriodInDays; }
@@ -95,6 +101,7 @@ internal partial class StorageAccountProperties
     }
 
 #pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
+    // TypeSpec uses StorageAccountProvisioningState; retain the shipped LegacyProvisioningState shared-enum view.
     internal BicepValue<StorageProvisioningState> LegacyProvisioningState
 #pragma warning restore CS0618
     {
@@ -103,8 +110,7 @@ internal partial class StorageAccountProperties
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes these properties writable, but the resource model marks them as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _customDomain = DefineModelProperty<StorageCustomDomain>(nameof(CustomDomain), new string[] { "customDomain" });
         _sasPolicy = DefineModelProperty<StorageAccountSasPolicy>(nameof(SasPolicy), new string[] { "sasPolicy" });
         _keyPolicy = DefineModelProperty<KeyPolicy>(nameof(KeyPolicy), new string[] { "keyPolicy" });
@@ -112,7 +118,6 @@ internal partial class StorageAccountProperties
         _accessTier = DefineProperty<StorageAccountAccessTier>(nameof(AccessTier), new string[] { "accessTier" });
         _networkRuleSet = DefineModelProperty<StorageAccountNetworkRuleSet>(nameof(NetworkRuleSet), new string[] { "networkAcls" });
 
-        // Both output aliases share the response path because they preserve the shipped new and old views of the same wire property.
         _privateEndpointConnectionResources = DefineListProperty<StoragePrivateEndpointConnection>(nameof(PrivateEndpointConnectionResources), new string[] { "privateEndpointConnections" }, isOutput: true, isRequired: false);
         _privateEndpointConnections = DefineListProperty<StoragePrivateEndpointConnectionData>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true, isRequired: false);
 

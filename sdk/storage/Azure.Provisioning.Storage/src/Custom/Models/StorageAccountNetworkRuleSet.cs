@@ -16,6 +16,7 @@ public partial class StorageAccountNetworkRuleSet
     private BicepList<StorageAccountIPRule> _ipRules;
     private BicepValue<StorageNetworkDefaultAction> _defaultAction;
 
+    // The generator omits writable Bypass because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the network bypass setting. </summary>
     [CodeGenMember("Bypass")]
     public BicepValue<StorageNetworkBypass> Bypass
@@ -24,6 +25,7 @@ public partial class StorageAccountNetworkRuleSet
         set { Initialize(); _bypass.Assign(value); }
     }
 
+    // The generator omits writable ResourceAccessRules because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the resource access rules. </summary>
     [CodeGenMember("ResourceAccessRules")]
     public BicepList<StorageAccountResourceAccessRule> ResourceAccessRules
@@ -32,6 +34,7 @@ public partial class StorageAccountNetworkRuleSet
         set { Initialize(); _resourceAccessRules.Assign(value); }
     }
 
+    // The generator omits writable VirtualNetworkRules because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the virtual network rules. </summary>
     [CodeGenMember("VirtualNetworkRules")]
     public BicepList<StorageAccountVirtualNetworkRule> VirtualNetworkRules
@@ -40,6 +43,7 @@ public partial class StorageAccountNetworkRuleSet
         set { Initialize(); _virtualNetworkRules.Assign(value); }
     }
 
+    // The generator omits writable IPRules because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the IP rules. </summary>
     [CodeGenMember("IPRules")]
     public BicepList<StorageAccountIPRule> IPRules
@@ -48,6 +52,7 @@ public partial class StorageAccountNetworkRuleSet
         set { Initialize(); _ipRules.Assign(value); }
     }
 
+    // The generator omits writable DefaultAction because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the default network action. </summary>
     [CodeGenMember("DefaultAction")]
     public BicepValue<StorageNetworkDefaultAction> DefaultAction
@@ -58,8 +63,7 @@ public partial class StorageAccountNetworkRuleSet
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes these properties writable, but the resource model marks their parent as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _bypass = DefineProperty<StorageNetworkBypass>(nameof(Bypass), new string[] { "bypass" });
         _resourceAccessRules = DefineListProperty<StorageAccountResourceAccessRule>(nameof(ResourceAccessRules), new string[] { "resourceAccessRules" });
         _virtualNetworkRules = DefineListProperty<StorageAccountVirtualNetworkRule>(nameof(VirtualNetworkRules), new string[] { "virtualNetworkRules" });

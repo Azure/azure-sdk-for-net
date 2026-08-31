@@ -19,6 +19,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
     private BicepValue<StorageAccountKeyPermission>? _permissions;
     private BicepValue<DateTimeOffset>? _createdOn;
 
+    // Provisioning generation omits the listKeys result model; retain the shipped KeyName output property.
     /// <summary>
     /// Name of the key.
     /// </summary>
@@ -27,6 +28,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
         get { Initialize(); return _keyName!; }
     }
 
+    // Provisioning generation omits the listKeys result model; retain the shipped Value output property.
     /// <summary>
     /// Base 64-encoded value of the key.
     /// </summary>
@@ -35,6 +37,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
         get { Initialize(); return _value!; }
     }
 
+    // Provisioning generation omits the listKeys result model; retain the shipped Permissions output property.
     /// <summary>
     /// Permissions for the key -- read-only or full permissions.
     /// </summary>
@@ -43,6 +46,7 @@ public partial class StorageAccountKey : ProvisionableConstruct
         get { Initialize(); return _permissions!; }
     }
 
+    // Provisioning generation omits the listKeys result model; retain the shipped CreatedOn output property.
     /// <summary>
     /// Creation time of the key, in round trip date format.
     /// </summary>

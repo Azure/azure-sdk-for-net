@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Storage;
 [EditorBrowsable(EditorBrowsableState.Never)]
 public partial class StoragePrivateEndpointConnectionData : ProvisionableConstruct
 {
+    // TypeSpec omits this shipped data-model view; retain its PrivateEndpointId output for compatibility.
     /// <summary>
     /// Gets Id.
     /// </summary>
@@ -32,6 +33,7 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     }
     private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
+    // TypeSpec omits this shipped data-model view; retain its ConnectionState property for compatibility.
     /// <summary>
     /// A collection of information about the state of the connection between
     /// service consumer and provider.
@@ -43,6 +45,7 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     }
     private StoragePrivateLinkServiceConnectionState? _connectionState;
 
+    // TypeSpec omits this shipped data-model view; retain its ProvisioningState output for compatibility.
     /// <summary>
     /// The provisioning state of the private endpoint connection resource.
     /// </summary>
@@ -52,6 +55,7 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     }
     private BicepValue<StoragePrivateEndpointConnectionProvisioningState>? _provisioningState;
 
+    // TypeSpec omits this shipped data-model view; retain its Id output for compatibility.
     /// <summary>
     /// Gets the Id.
     /// </summary>
@@ -61,6 +65,7 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     }
     private BicepValue<ResourceIdentifier>? _id;
 
+    // TypeSpec omits this shipped data-model view; retain its Name output for compatibility.
     /// <summary>
     /// Gets the Name.
     /// </summary>
@@ -70,6 +75,7 @@ public partial class StoragePrivateEndpointConnectionData : ProvisionableConstru
     }
     private BicepValue<string>? _name;
 
+    // TypeSpec omits this shipped data-model view; retain its SystemData output for compatibility.
     /// <summary>
     /// Gets the SystemData.
     /// </summary>

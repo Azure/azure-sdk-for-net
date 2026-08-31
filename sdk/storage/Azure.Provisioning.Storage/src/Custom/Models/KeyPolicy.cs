@@ -12,6 +12,7 @@ internal partial class KeyPolicy
 {
     private BicepValue<int> _keyExpirationPeriodInDays;
 
+    // The generator omits writable KeyExpirationPeriodInDays because this model is reached through both the create body and a read-only resource graph.
     [CodeGenMember("KeyExpirationPeriodInDays")]
     public BicepValue<int> KeyExpirationPeriodInDays
     {
@@ -21,8 +22,7 @@ internal partial class KeyPolicy
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes this property writable, but the resource model marks its parent as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _keyExpirationPeriodInDays = DefineProperty<int>(nameof(KeyExpirationPeriodInDays), new string[] { "keyExpirationPeriodInDays" });
     }
 }

@@ -14,6 +14,7 @@ public partial class BlobRestoreContent
     private BicepValue<DateTimeOffset> _timeToRestore;
     private BicepList<BlobRestoreRange> _blobRanges;
 
+    // The generator omits writable TimeToRestore because BlobRestoreContent is also reachable through an output model graph.
     /// <summary> Gets or sets the restore time. </summary>
     [CodeGenMember("TimeToRestore")]
     public BicepValue<DateTimeOffset> TimeToRestore
@@ -22,6 +23,7 @@ public partial class BlobRestoreContent
         set { Initialize(); _timeToRestore.Assign(value); }
     }
 
+    // The generator omits writable BlobRanges because BlobRestoreContent is also reachable through an output model graph.
     /// <summary> Gets or sets the blob ranges to restore. </summary>
     [CodeGenMember("BlobRanges")]
     public BicepList<BlobRestoreRange> BlobRanges
@@ -32,9 +34,7 @@ public partial class BlobRestoreContent
 
     partial void DefineAdditionalProperties()
     {
-        // The generator omits writable TimeToRestore and BlobRanges because this request model is also reachable
-        // through an output model graph. Remove this workaround when input and output models are analyzed coherently:
-        // https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _timeToRestore = DefineProperty<DateTimeOffset>(nameof(TimeToRestore), new string[] { "timeToRestore" }, format: "O");
         _blobRanges = DefineListProperty<BlobRestoreRange>(nameof(BlobRanges), new string[] { "blobRanges" });
     }

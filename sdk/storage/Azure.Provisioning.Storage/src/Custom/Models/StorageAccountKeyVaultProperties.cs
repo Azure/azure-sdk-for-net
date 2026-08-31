@@ -15,6 +15,7 @@ public partial class StorageAccountKeyVaultProperties
     private BicepValue<string> _keyVersion;
     private BicepValue<Uri> _keyVaultUri;
 
+    // The generator omits writable KeyName because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the key name. </summary>
     [CodeGenMember("KeyName")]
     public BicepValue<string> KeyName
@@ -23,6 +24,7 @@ public partial class StorageAccountKeyVaultProperties
         set { Initialize(); _keyName.Assign(value); }
     }
 
+    // The generator omits writable KeyVersion because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the key version. </summary>
     [CodeGenMember("KeyVersion")]
     public BicepValue<string> KeyVersion
@@ -31,6 +33,7 @@ public partial class StorageAccountKeyVaultProperties
         set { Initialize(); _keyVersion.Assign(value); }
     }
 
+    // The generator omits writable KeyVaultUri because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the key vault URI. </summary>
     [CodeGenMember("KeyVaultUri")]
     public BicepValue<Uri> KeyVaultUri
@@ -41,8 +44,7 @@ public partial class StorageAccountKeyVaultProperties
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes these properties writable, but the resource model marks their parent as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _keyName = DefineProperty<string>(nameof(KeyName), new string[] { "keyname" });
         _keyVersion = DefineProperty<string>(nameof(KeyVersion), new string[] { "keyversion" });
         _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyvaulturi" });

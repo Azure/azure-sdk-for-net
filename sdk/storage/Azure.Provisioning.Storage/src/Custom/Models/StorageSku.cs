@@ -12,6 +12,7 @@ public partial class StorageSku
 {
     private BicepValue<StorageSkuName> _name;
 
+    // The generator omits writable Name because SKU is writable in the create body but read-only in the resource graph.
     /// <summary> Gets or sets the SKU name. </summary>
     [CodeGenMember("Name")]
     public BicepValue<StorageSkuName> Name
@@ -30,8 +31,7 @@ public partial class StorageSku
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes sku.name writable, but the resource model marks sku as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _name = DefineProperty<StorageSkuName>(nameof(Name), new string[] { "name" });
     }
 }

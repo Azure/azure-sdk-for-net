@@ -13,6 +13,7 @@ public partial class BlobRestoreRange
     private BicepValue<string> _startRange;
     private BicepValue<string> _endRange;
 
+    // The generator omits writable StartRange because BlobRestoreRange is also reachable through an output model graph.
     /// <summary> Gets or sets the start of the blob range. </summary>
     [CodeGenMember("StartRange")]
     public BicepValue<string> StartRange
@@ -21,6 +22,7 @@ public partial class BlobRestoreRange
         set { Initialize(); _startRange.Assign(value); }
     }
 
+    // The generator omits writable EndRange because BlobRestoreRange is also reachable through an output model graph.
     /// <summary> Gets or sets the end of the blob range. </summary>
     [CodeGenMember("EndRange")]
     public BicepValue<string> EndRange
@@ -31,9 +33,7 @@ public partial class BlobRestoreRange
 
     partial void DefineAdditionalProperties()
     {
-        // The generator omits writable StartRange and EndRange because this request model is also reachable through
-        // an output model graph. Remove this workaround when input and output models are analyzed coherently:
-        // https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _startRange = DefineProperty<string>(nameof(StartRange), new string[] { "startRange" });
         _endRange = DefineProperty<string>(nameof(EndRange), new string[] { "endRange" });
     }

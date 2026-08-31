@@ -16,6 +16,7 @@ public partial class StorageAccountEncryption
     private StorageAccountKeyVaultProperties _keyVaultProperties;
     private StorageAccountEncryptionIdentity _encryptionIdentity;
 
+    // The generator omits writable Services because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the encryption services. </summary>
     [CodeGenMember("Services")]
     public StorageAccountEncryptionServices Services
@@ -24,6 +25,7 @@ public partial class StorageAccountEncryption
         set { Initialize(); AssignOrReplace(ref _services, value); }
     }
 
+    // The generator omits writable KeySource because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the encryption key source. </summary>
     [CodeGenMember("KeySource")]
     public BicepValue<StorageAccountKeySource> KeySource
@@ -32,6 +34,7 @@ public partial class StorageAccountEncryption
         set { Initialize(); _keySource.Assign(value); }
     }
 
+    // The generator omits writable RequireInfrastructureEncryption because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets whether infrastructure encryption is required. </summary>
     [CodeGenMember("RequireInfrastructureEncryption")]
     public BicepValue<bool> RequireInfrastructureEncryption
@@ -40,6 +43,7 @@ public partial class StorageAccountEncryption
         set { Initialize(); _requireInfrastructureEncryption.Assign(value); }
     }
 
+    // The generator omits writable KeyVaultProperties because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the key vault properties. </summary>
     [CodeGenMember("KeyVaultProperties")]
     public StorageAccountKeyVaultProperties KeyVaultProperties
@@ -48,6 +52,7 @@ public partial class StorageAccountEncryption
         set { Initialize(); AssignOrReplace(ref _keyVaultProperties, value); }
     }
 
+    // The generator omits writable EncryptionIdentity because this model is reached through both the create body and a read-only resource graph.
     /// <summary> Gets or sets the encryption identity. </summary>
     [CodeGenMember("EncryptionIdentity")]
     public StorageAccountEncryptionIdentity EncryptionIdentity
@@ -58,8 +63,7 @@ public partial class StorageAccountEncryption
 
     partial void DefineAdditionalProperties()
     {
-        // The create body makes these properties writable, but the resource model marks their parent as read-only. Remove this
-        // workaround when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // Remove these registrations when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
         _services = DefineModelProperty<StorageAccountEncryptionServices>(nameof(Services), new string[] { "services" });
         _keySource = DefineProperty<StorageAccountKeySource>(nameof(KeySource), new string[] { "keySource" });
         _requireInfrastructureEncryption = DefineProperty<bool>(nameof(RequireInfrastructureEncryption), new string[] { "requireInfrastructureEncryption" });
