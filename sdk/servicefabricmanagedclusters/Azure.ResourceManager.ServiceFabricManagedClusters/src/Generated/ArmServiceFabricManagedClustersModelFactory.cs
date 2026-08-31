@@ -1380,16 +1380,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="keyIncarnationId"> Increasing the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
         /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. </param>
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. </param>
-        /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
+        /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <returns> A new <see cref="Models.ProxyAgentSettings"/> instance for mocking. </returns>
-        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? addProxyAgentExtension = default)
+        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
         {
             return new ProxyAgentSettings(
                 enabled,
                 keyIncarnationId,
                 wireServer,
                 imds,
-                addProxyAgentExtension,
+                shouldAddProxyAgentExtension,
                 default);
         }
 

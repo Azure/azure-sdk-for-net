@@ -1,5 +1,5 @@
 directory: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/ServiceFabricManagedClusters
-commit: 44920c2ab894014c26ce4a61b0eb5483ecf48280
+commit: 76961f57cd6edc4cd65666891168d9ec27798e31
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
