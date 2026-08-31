@@ -699,7 +699,7 @@ namespace Azure.Storage.Files.DataLake
 
             PathRestClient blobPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
-                pipeline: _clientConfiguration.Pipeline,
+                pipeline: _clientConfiguration.BlobPipeline,
                 endpoint: blobUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
