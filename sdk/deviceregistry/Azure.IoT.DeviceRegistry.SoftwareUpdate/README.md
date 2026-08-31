@@ -36,11 +36,7 @@ List operations return `Pageable<T>` or `AsyncPageable<T>`, allowing results to 
 
 The following example creates an authenticated client and asynchronously lists imported updates:
 
-```csharp
-using System;
-using Azure.Identity;
-using Azure.IoT.DeviceRegistry._SoftwareUpdate;
-
+```C# Snippet:DeviceRegistrySoftwareUpdate_ListUpdatesAsync
 string endpoint = Environment.GetEnvironmentVariable("DEVICE_REGISTRY_SOFTWARE_UPDATE_ENDPOINT")
     ?? throw new InvalidOperationException("Set DEVICE_REGISTRY_SOFTWARE_UPDATE_ENDPOINT before running this example.");
 

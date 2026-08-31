@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.IoT.DeviceRegistry.SoftwareUpdate client library for developing .NET applications with rich experience.</Description>
+    <Description>The Azure Software Update for Device Registry client library enables .NET applications to publish and manage software updates for IoT devices registered with Azure Device Registry.</Description>
     <AssemblyTitle>SDK Code Generation Azure.IoT.DeviceRegistry.SoftwareUpdate</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.IoT.DeviceRegistry._SoftwareUpdate</PackageTags>
