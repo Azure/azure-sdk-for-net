@@ -1,14 +1,15 @@
 # Release History
 
-## 1.19.0-beta.2 (Unreleased)
+## 1.19.0-beta.2 (2026-08-27)
 
 ### Features Added
 
+- Upgraded api-version to `2026-06-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `SecureLdapType` support to `LdapConfiguration` and `LdapConfigurationPatch`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed the `ArmNetAppModelFactory.LdapConfiguration` and `ArmNetAppModelFactory.LdapConfigurationPatch` factory methods to accept `SecureLdapType` instead of `bool` for the LDAP security setting.
 
 ## 1.19.0-beta.1 (2026-08-12)
 
