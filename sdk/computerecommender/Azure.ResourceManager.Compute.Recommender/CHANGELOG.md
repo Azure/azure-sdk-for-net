@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Upgraded API version to `2026-09-05-preview`.
+- Added `ComputeSkuMixPlacementGenerateResult.Id` so the recommendation identifier is returned once per response.
+- Added `ComputeSkuMixPlacementGenerateResult.CapacityLimits` and the `ComputeSkuMixPlacementCapacityLimit` model, which report the capacity ceiling that constrained a recommendation.
+- Added the `SkuMixPlacementCapacityLimitReason` enum with values `None`, `InsufficientCapacity`, `InsufficientQuota`, and `SkuNotAvailable`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed `ComputeSkuMixPlacementDeploymentChoice.Id`. Use `ComputeSkuMixPlacementGenerateResult.Id` instead; the identifier now applies to the whole response rather than to each individual placement choice.
+- Removed `ComputeSkuMixPlacementItem.CapacityMax`. Use `ComputeSkuMixPlacementGenerateResult.CapacityLimits` instead, which reports the same ceiling along with the `Reason` it was applied.
 
 ## 1.1.0-beta.1 (2026-08-07)
 
