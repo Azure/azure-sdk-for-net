@@ -268,8 +268,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClientOptions options = new() { Transport = transport };
             SecretClient client = new(VaultUri, new MockCredential(transport), options);
 
-            // Must surface as a service failure (401), not a NullReferenceException.
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetSecretAsync("test-secret"));
+            // Must surface as the service 401, not a NullReferenceException.
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.GetSecretAsync("test-secret"));
+            Assert.AreEqual(401, ex.Status);
         }
         private class MockTransportBuilder
         {
