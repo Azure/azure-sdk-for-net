@@ -31,7 +31,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<BinaryData> _urlSafeBinaryContent;
         private BicepValue<DateTimeOffset> _lastModified;
         private BicepList<DateTimeOffset> _auditTimestamps;
-        private BicepValue<DateTimeOffset> _expirationTimestamp;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<DateTimeOffset> _activationOn;
         private BicepValue<TimeSpan> _activationTime;
         private BicepValue<TimeSpan> _retryAfter;
@@ -269,18 +269,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the ExpirationTimestamp. </summary>
-        public BicepValue<DateTimeOffset> ExpirationTimestamp
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expirationTimestamp;
+                return _expiresOn;
             }
             set
             {
                 Initialize();
-                _expirationTimestamp.Assign(value);
+                _expiresOn.Assign(value);
             }
         }
 
@@ -411,7 +411,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _urlSafeBinaryContent = DefineProperty<BinaryData>(nameof(UrlSafeBinaryContent), new string[] { "urlSafeBinaryContent" }, format: "base64url");
             _lastModified = DefineProperty<DateTimeOffset>(nameof(LastModified), new string[] { "lastModified" }, format: "R");
             _auditTimestamps = DefineListProperty<DateTimeOffset>(nameof(AuditTimestamps), new string[] { "auditTimestamps" }, format: "O");
-            _expirationTimestamp = DefineProperty<DateTimeOffset>(nameof(ExpirationTimestamp), new string[] { "expirationTimestamp" }, format: "U");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationTimestamp" }, format: "U");
             _activationOn = DefineProperty<DateTimeOffset>(nameof(ActivationOn), new string[] { "activationDate" }, format: "D");
             _activationTime = DefineProperty<TimeSpan>(nameof(ActivationTime), new string[] { "activationTime" }, format: "T");
             _retryAfter = DefineProperty<TimeSpan>(nameof(RetryAfter), new string[] { "retryAfter" }, format: "seconds-int64");

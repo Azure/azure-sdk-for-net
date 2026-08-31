@@ -2422,7 +2422,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreProperties.linkedResources",
+                "crossLanguageDefinitionId": "TypeSpec.Array",
                 "serializationOptions": {
                   "json": {
                     "name": "linkedResources"
