@@ -68,7 +68,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             get
             {
-                return ExtendedInfo.PropertyBag;
+                return ExtendedInfo is null ? default : ExtendedInfo.PropertyBag;
             }
         }
 
