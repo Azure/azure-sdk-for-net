@@ -260,6 +260,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new CognitiveServicesManagedNetworkSettingsResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ArcDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArcDeploymentResource"/> object. </returns>
+        public virtual ArcDeploymentResource GetArcDeploymentResource(ResourceIdentifier id)
+        {
+            ArcDeploymentResource.ValidateResourceId(id);
+            return new ArcDeploymentResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CognitiveServicesAgentApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CognitiveServicesAgentApplicationResource"/> object. </returns>

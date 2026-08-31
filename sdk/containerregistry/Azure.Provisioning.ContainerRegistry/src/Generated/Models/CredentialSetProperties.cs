@@ -80,7 +80,7 @@ namespace Azure.Provisioning.ContainerRegistry
             base.DefineProvisionableProperties();
             _loginServer = DefineProperty<string>(nameof(LoginServer), new string[] { "loginServer" });
             _authCredentials = DefineListProperty<ContainerRegistryAuthCredential>(nameof(AuthCredentials), new string[] { "authCredentials" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
