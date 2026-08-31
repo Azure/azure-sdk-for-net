@@ -204,7 +204,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                return Activation.Status;
+                return Activation is null ? default : Activation.Status;
             }
         }
 
