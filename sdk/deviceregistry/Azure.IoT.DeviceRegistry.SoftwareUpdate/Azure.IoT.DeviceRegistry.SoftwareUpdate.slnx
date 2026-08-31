@@ -1,3 +1,7 @@
 <Solution>
+  <Project Path="../../core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj" />
+  <Project Path="../../tools/Azure.SdkAnalyzers/src/Azure.SdkAnalyzers.csproj" />
+  <Project Path="../../tools/Azure.SdkAnalyzers.CodeFixes/src/Azure.SdkAnalyzers.CodeFixes.csproj" />
   <Project Path="src/Azure.IoT.DeviceRegistry.SoftwareUpdate.csproj" />
+  <Project Path="tests/Azure.IoT.DeviceRegistry.SoftwareUpdate.Tests.csproj" />
 </Solution>
