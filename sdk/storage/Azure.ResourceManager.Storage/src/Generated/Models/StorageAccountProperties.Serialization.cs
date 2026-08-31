@@ -305,11 +305,6 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("dataCollaborationPolicyProperties"u8);
                 writer.WriteObjectValue(DataCollaborationPolicyProperties, options);
             }
-            if (Optional.IsDefined(AllowCrossTenantDelegationSas))
-            {
-                writer.WritePropertyName("allowCrossTenantDelegationSas"u8);
-                writer.WriteBooleanValue(AllowCrossTenantDelegationSas.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -397,7 +392,6 @@ namespace Azure.ResourceManager.Storage.Models
             GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
             StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default;
             StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default;
-            bool? allowCrossTenantDelegationSas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -811,15 +805,6 @@ namespace Azure.ResourceManager.Storage.Models
                     dataCollaborationPolicyProperties = StorageDataCollaborationPolicyProperties.DeserializeStorageDataCollaborationPolicyProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("allowCrossTenantDelegationSas"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowCrossTenantDelegationSas = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -871,7 +856,6 @@ namespace Azure.ResourceManager.Storage.Models
                 geoPriorityReplicationStatus,
                 allowSharedKeyAccessForServices,
                 dataCollaborationPolicyProperties,
-                allowCrossTenantDelegationSas,
                 additionalBinaryDataProperties);
         }
     }
