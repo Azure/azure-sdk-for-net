@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerAssociationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType = null, ResourceIdentifier subnetId = null, ServiceNetworkingProvisioningState? provisioningState = null)
+        public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, TrafficControllerAssociationType? associationType = null, ResourceIdentifier subnetId = null, ServiceNetworkingProvisioningState? provisioningState = null)
         {
             return new TrafficControllerAssociationData(
                 id,
