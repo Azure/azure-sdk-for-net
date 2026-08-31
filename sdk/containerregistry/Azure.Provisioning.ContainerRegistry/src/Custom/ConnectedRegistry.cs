@@ -10,6 +10,8 @@ namespace Azure.Provisioning.ContainerRegistry
 {
     public partial class ConnectedRegistry
     {
+        // ConnectedRegistry has both an ARM resource parent and a flattened model property named Parent.
+        // Defining the resource parent here lets the customization below target the model property unambiguously.
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Gets or sets the Parent. </summary>
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
+        // Preserve the existing public API name while avoiding a collision with the resource Parent property.
         /// <summary> Gets or sets the ConnectedRegistryParent. </summary>
         [CodeGenMember("Parent")]
         public ConnectedRegistryParent ConnectedRegistryParent
