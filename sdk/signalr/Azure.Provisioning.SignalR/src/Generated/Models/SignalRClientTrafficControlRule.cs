@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.SignalR
     /// </summary>
     public partial class SignalRClientTrafficControlRule : ProvisionableConstruct
     {
+        private BicepValue<ClientTrafficControlRuleDiscriminator> _type;
+
         /// <summary> Creates a new SignalRClientTrafficControlRule. </summary>
         public SignalRClientTrafficControlRule()
         {
+        }
+
+        /// <summary> Gets the Type. </summary>
+        internal BicepValue<ClientTrafficControlRuleDiscriminator> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Define all the provisionable properties for SignalRClientTrafficControlRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<ClientTrafficControlRuleDiscriminator>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
