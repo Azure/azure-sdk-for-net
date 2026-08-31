@@ -2077,9 +2077,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent GetGroupIdListForLdapUserContent(string username = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult GetGroupIdListForLdapUserResult(System.Collections.Generic.IEnumerable<string> groupIdsForLdapUser = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.LargeVolumeType LargeVolumeType(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.LdapConfiguration LdapConfiguration(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, Azure.ResourceManager.NetApp.Models.SecureLdapType? secureLdapType = default(Azure.ResourceManager.NetApp.Models.SecureLdapType?), string serverCACertificate = null, string certificateCNHost = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> dnsServers = null, int? ldapPort = default(int?), string userDN = null, string groupDN = null, string netGroupDN = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig bindPasswordAkvConfig = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.LdapConfiguration LdapConfiguration(string certificateCNHost, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string domain, string serverCACertificate) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.LdapConfiguration LdapConfiguration(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, bool? isLdapOverTlsEnabled = default(bool?), string serverCACertificate = null, string certificateCNHost = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> dnsServers = null, int? ldapPort = default(int?), string userDN = null, string groupDN = null, string netGroupDN = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig bindPasswordAkvConfig = null) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.LdapConfigurationPatch LdapConfigurationPatch(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, bool? isLdapOverTlsEnabled = default(bool?), string serverCACertificate = null, string certificateCNHost = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> dnsServers = null, int? ldapPort = default(int?), string userDN = null, string groupDN = null, string netGroupDN = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = null) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.LdapConfigurationPatch LdapConfigurationPatch(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, Azure.ResourceManager.NetApp.Models.SecureLdapType? secureLdapType = default(Azure.ResourceManager.NetApp.Models.SecureLdapType?), string serverCACertificate = null, string certificateCNHost = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> dnsServers = null, int? ldapPort = default(int?), string userDN = null, string groupDN = null, string netGroupDN = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.ListQuotaReportResult ListQuotaReportResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaReport> quotaReportRecords = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.ListReplicationsContent ListReplicationsContent(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter? excludeReplicationsFilter = default(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory NetAppAccountActiveDirectory(string activeDirectoryId = null, string username = null, string password = null, string domain = null, string dns = null, Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus? status = default(Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus?), string statusDetails = null, string smbServerName = null, string organizationalUnit = null, string site = null, System.Collections.Generic.IEnumerable<string> backupOperators = null, System.Collections.Generic.IEnumerable<string> administrators = null, System.Net.IPAddress kdcIP = null, string adName = null, string serverRootCACertificate = null, bool? isAesEncryptionEnabled = default(bool?), bool? isLdapSigningEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> securityOperators = null, bool? isLdapOverTlsEnabled = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?), bool? encryptDCConnections = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppLdapSearchScopeConfiguration ldapSearchScope = null, string preferredServersForLdapClient = null) { throw null; }
@@ -3457,6 +3457,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? LdapPort { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Net.IPAddress> LdapServers { get { throw null; } }
         public string NetGroupDN { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.SecureLdapType? SecureLdapType { get { throw null; } set { } }
         public string ServerCACertificate { get { throw null; } set { } }
         public string UserDN { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NetApp.Models.LdapConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3483,6 +3484,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? LdapPort { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Net.IPAddress> LdapServers { get { throw null; } }
         public string NetGroupDN { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.SecureLdapType? SecureLdapType { get { throw null; } set { } }
         public string ServerCACertificate { get { throw null; } set { } }
         public string UserDN { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NetApp.Models.LdapConfigurationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6199,6 +6201,23 @@ namespace Azure.ResourceManager.NetApp.Models
         public static implicit operator Azure.ResourceManager.NetApp.Models.ReplicationMirrorState (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.NetApp.Models.ReplicationMirrorState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.ReplicationMirrorState left, Azure.ResourceManager.NetApp.Models.ReplicationMirrorState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecureLdapType : System.IEquatable<Azure.ResourceManager.NetApp.Models.SecureLdapType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecureLdapType(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.SecureLdapType LdapOverTls { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.SecureLdapType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.SecureLdapType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.SecureLdapType left, Azure.ResourceManager.NetApp.Models.SecureLdapType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.SecureLdapType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.SecureLdapType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.SecureLdapType left, Azure.ResourceManager.NetApp.Models.SecureLdapType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
