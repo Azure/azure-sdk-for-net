@@ -32,15 +32,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="StorageAccountSasPolicy"/>. </summary>
         /// <param name="sasExpirationPeriod"> The SAS expiration period, DD.HH:MM:SS. </param>
         /// <param name="expirationAction"> The SAS Expiration Action defines the action to be performed when sasPolicy.sasExpirationPeriod is violated. The 'Log' action can be used for audit purposes and the 'Block' action can be used to block and deny the usage of SAS tokens that do not adhere to the sas policy expiration period. </param>
-        /// <param name="requireUserBoundUserDelegationSas"> Indicates whether user delegation SAS (shared access signature) tokens are required to be bound to a specific user. The default interpretation is false for this property. </param>
-        /// <param name="requireUserBoundUserDelegationSasAction"> The action to perform when a user delegation SAS (shared access signature) token is not bound to a user as required by requireUserBoundUserDelegationSas. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountSasPolicy(string sasExpirationPeriod, ExpirationAction expirationAction, bool? requireUserBoundUserDelegationSas, PolicyViolationAction? requireUserBoundUserDelegationSasAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountSasPolicy(string sasExpirationPeriod, ExpirationAction expirationAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SasExpirationPeriod = sasExpirationPeriod;
             ExpirationAction = expirationAction;
-            RequireUserBoundUserDelegationSas = requireUserBoundUserDelegationSas;
-            RequireUserBoundUserDelegationSasAction = requireUserBoundUserDelegationSasAction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,13 +47,5 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The SAS Expiration Action defines the action to be performed when sasPolicy.sasExpirationPeriod is violated. The 'Log' action can be used for audit purposes and the 'Block' action can be used to block and deny the usage of SAS tokens that do not adhere to the sas policy expiration period. </summary>
         [WirePath("expirationAction")]
         public ExpirationAction ExpirationAction { get; set; }
-
-        /// <summary> Indicates whether user delegation SAS (shared access signature) tokens are required to be bound to a specific user. The default interpretation is false for this property. </summary>
-        [WirePath("requireUserBoundUserDelegationSas")]
-        public bool? RequireUserBoundUserDelegationSas { get; set; }
-
-        /// <summary> The action to perform when a user delegation SAS (shared access signature) token is not bound to a user as required by requireUserBoundUserDelegationSas. </summary>
-        [WirePath("requireUserBoundUserDelegationSasAction")]
-        public PolicyViolationAction? RequireUserBoundUserDelegationSasAction { get; set; }
     }
 }

@@ -197,33 +197,6 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageDataShareResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContextCacheResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContextCacheResource"/> object. </returns>
-        public virtual ContextCacheResource GetContextCacheResource(ResourceIdentifier id)
-        {
-            ContextCacheResource.ValidateResourceId(id);
-            return new ContextCacheResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ContextCacheContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContextCacheContainerResource"/> object. </returns>
-        public virtual ContextCacheContainerResource GetContextCacheContainerResource(ResourceIdentifier id)
-        {
-            ContextCacheContainerResource.ValidateResourceId(id);
-            return new ContextCacheContainerResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AdvancedPlatformMetricsRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvancedPlatformMetricsRuleResource"/> object. </returns>
-        public virtual AdvancedPlatformMetricsRuleResource GetAdvancedPlatformMetricsRuleResource(ResourceIdentifier id)
-        {
-            AdvancedPlatformMetricsRuleResource.ValidateResourceId(id);
-            return new AdvancedPlatformMetricsRuleResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>

@@ -83,16 +83,6 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SasExpirationPeriod);
             writer.WritePropertyName("expirationAction"u8);
             writer.WriteStringValue(ExpirationAction.ToString());
-            if (Optional.IsDefined(RequireUserBoundUserDelegationSas))
-            {
-                writer.WritePropertyName("requireUserBoundUserDelegationSas"u8);
-                writer.WriteBooleanValue(RequireUserBoundUserDelegationSas.Value);
-            }
-            if (Optional.IsDefined(RequireUserBoundUserDelegationSasAction))
-            {
-                writer.WritePropertyName("requireUserBoundUserDelegationSasAction"u8);
-                writer.WriteStringValue(RequireUserBoundUserDelegationSasAction.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,8 +127,6 @@ namespace Azure.ResourceManager.Storage.Models
             }
             string sasExpirationPeriod = default;
             ExpirationAction expirationAction = default;
-            bool? requireUserBoundUserDelegationSas = default;
-            PolicyViolationAction? requireUserBoundUserDelegationSasAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,30 +140,12 @@ namespace Azure.ResourceManager.Storage.Models
                     expirationAction = new ExpirationAction(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("requireUserBoundUserDelegationSas"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requireUserBoundUserDelegationSas = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("requireUserBoundUserDelegationSasAction"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requireUserBoundUserDelegationSasAction = new PolicyViolationAction(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageAccountSasPolicy(sasExpirationPeriod, expirationAction, requireUserBoundUserDelegationSas, requireUserBoundUserDelegationSasAction, additionalBinaryDataProperties);
+            return new StorageAccountSasPolicy(sasExpirationPeriod, expirationAction, additionalBinaryDataProperties);
         }
     }
 }

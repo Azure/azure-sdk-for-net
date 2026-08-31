@@ -488,24 +488,6 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <summary> Allow or disallow cross AAD tenant user delegation SAS (shared access signature). The default interpretation is false for this property. </summary>
-        [WirePath("properties.allowCrossTenantDelegationSas")]
-        public bool? AllowCrossTenantDelegationSas
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowCrossTenantDelegationSas;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesUpdateParameters();
-                }
-                Properties.AllowCrossTenantDelegationSas = value;
-            }
-        }
-
         /// <summary> The key expiration period in days. </summary>
         [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
         public int? KeyExpirationPeriodInDays
