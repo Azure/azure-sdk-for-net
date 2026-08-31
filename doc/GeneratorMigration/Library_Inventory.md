@@ -17,16 +17,16 @@
 ## Summary
 
 - Total libraries: 452
-- Management Plane (MPG): 263
+- Management Plane (MPG): 264
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 224
+  - New Emitter (TypeSpec): 225
   - Old TypeSpec: 0
 - Data Plane (DPG): 124
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
-- Provisioning: 65
-  - Reflection-based generator: 19
+- Provisioning: 64
+  - Reflection-based generator: 18
   - TypeSpec-based generator: 44
   - No generator: 2
 - No generator: 41
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 224 / 224 (100%)
+**Migration Status**: 225 / 225 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -364,6 +364,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | websites | Azure.ResourceManager.AppService | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
+| workloadssapmonitor | Azure.ResourceManager.WorkloadsSapMonitor | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 
@@ -418,7 +419,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 39
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 44 / 65 migrated to TypeSpec-based generator
+**Migration Status**: 44 / 64 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -451,7 +452,6 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
 | iothub | Azure.Provisioning.IotHub | Azure.ResourceManager.IotHub ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
-| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.Extensions | Azure.ResourceManager.KubernetesConfiguration.Extensions ✅ | TypeSpec ✅ |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.ExtensionTypes | Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes ✅ | TypeSpec ✅ |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.FluxConfigurations | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations ✅ | TypeSpec ✅ |
