@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2768,5 +2769,57 @@ namespace Azure.ResourceManager.Compute
 
             return GetVirtualMachineRunCommands().Get(runCommandName, expand, cancellationToken);
         }
+
+        /// <summary> The operation to update a virtual machine. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}.Operation Id.VirtualMachines_Update.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="patch"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)
+        {
+            return UpdateAsync(waitUntil: waitUntil, patch: patch, matchConditions: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> The operation to update a virtual machine. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}.Operation Id.VirtualMachines_Update.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="patch"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)
+        {
+            return Update(waitUntil: waitUntil, patch: patch, matchConditions: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine uses. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate.Operation Id.VirtualMachines_Deallocate.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="hibernate"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeallocateAsync(WaitUntil waitUntil, bool? hibernate, CancellationToken cancellationToken)
+        {
+            return DeallocateAsync(waitUntil: waitUntil, hibernate: hibernate, forceDeallocate: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine uses. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate.Operation Id.VirtualMachines_Deallocate.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="hibernate"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation Deallocate(WaitUntil waitUntil, bool? hibernate, CancellationToken cancellationToken)
+        {
+            return Deallocate(waitUntil: waitUntil, hibernate: hibernate, forceDeallocate: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
