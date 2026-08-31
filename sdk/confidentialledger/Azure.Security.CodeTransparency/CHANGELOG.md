@@ -2,8 +2,6 @@
 
 ## 1.0.0 (2026-08-31)
 
-### Features Added
-
 ### Breaking Changes
 
 - Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
