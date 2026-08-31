@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificDetails"/>. </summary>
+        protected FabricSpecificDetails() : this(default)
+        {
+        }
+
         /// <summary> Gets the class type. Overridden in derived classes. </summary>
         internal string InstanceType { get; set; }
     }
