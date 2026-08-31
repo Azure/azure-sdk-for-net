@@ -143,90 +143,84 @@ public class BasicApplicationInsightsTests
     }
 
     [Test]
+    [Description("https://learn.microsoft.com/azure/templates/microsoft.insights/2020-03-01-preview/components/linkedstorageaccounts")]
     public async Task CreateLinkedStorageAccounts()
     {
         await using Trycep test = CreateLinkedStorageAccountsTest();
         test.Compare(
-            string.Join(
-                "\n",
-                new[]
-                {
-                    "@description('The location for the resource(s) to be deployed.')",
-                    "param location string = resourceGroup().location",
-                    "",
-                    "resource appInsights 'Microsoft.Insights/components@2020-02-02' = {",
-                    "  name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)",
-                    "  location: location",
-                    "  kind: 'web'",
-                    "  properties: {",
-                    "    Application_Type: 'web'",
-                    "  }",
-                    "}",
-                    "",
-                    "resource linkedStorage 'Microsoft.Insights/components/linkedStorageAccounts@2020-03-01-preview' = {",
-                    "  name: 'ServiceProfiler'",
-                    "  parent: appInsights",
-                    "  properties: {",
-                    "    linkedStorageAccount: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/storage'",
-                    "  }",
-                    "}"
-                }));
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
+              name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)
+              location: location
+              kind: 'web'
+              properties: {
+                Application_Type: 'web'
+              }
+            }
+
+            resource linkedStorage 'Microsoft.Insights/components/linkedStorageAccounts@2020-03-01-preview' = {
+              name: 'ServiceProfiler'
+              parent: appInsights
+              properties: {
+                linkedStorageAccount: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/storage'
+              }
+            }
+            """);
     }
 
     [Test]
+    [Description("https://learn.microsoft.com/azure/templates/microsoft.insights/2023-06-01/workbooks/revisions")]
     public async Task CreateWorkbookRevision()
     {
         await using Trycep test = CreateWorkbookRevisionTest();
         test.Compare(
-            string.Join(
-                "\n",
-                new[]
-                {
-                    "@description('The location for the resource(s) to be deployed.')",
-                    "param location string = resourceGroup().location",
-                    "",
-                    "resource workbook 'Microsoft.Insights/workbooks@2023-06-01' existing = {",
-                    "  name: '00000000-0000-0000-0000-000000000000'",
-                    "}",
-                    "",
-                    "resource revision 'Microsoft.Insights/workbooks/revisions@2023-06-01' = {",
-                    "  name: 'revision-1'",
-                    "  location: location",
-                    "  parent: workbook",
-                    "  properties: {",
-                    "    category: 'workbook'",
-                    "    displayName: 'Workbook revision'",
-                    "    serializedData: '{}'",
-                    "  }",
-                    "}"
-                }));
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource workbook 'Microsoft.Insights/workbooks@2023-06-01' existing = {
+              name: '00000000-0000-0000-0000-000000000000'
+            }
+
+            resource revision 'Microsoft.Insights/workbooks/revisions@2023-06-01' = {
+              name: 'revision-1'
+              location: location
+              parent: workbook
+              properties: {
+                category: 'workbook'
+                displayName: 'Workbook revision'
+                serializedData: '{}'
+              }
+            }
+            """);
     }
 
     [Test]
+    [Description("https://learn.microsoft.com/azure/templates/microsoft.insights/2020-11-20/workbooktemplates")]
     public async Task CreateWorkbookTemplate()
     {
         await using Trycep test = CreateWorkbookTemplateTest();
         test.Compare(
-            string.Join(
-                "\n",
-                new[]
-                {
-                    "@description('The location for the resource(s) to be deployed.')",
-                    "param location string = resourceGroup().location",
-                    "",
-                    "resource workbookTemplate 'Microsoft.Insights/workbooktemplates@2020-11-20' = {",
-                    "  name: take('workbooktemplate${uniqueString(resourceGroup().id)}', 24)",
-                    "  location: location",
-                    "  properties: {",
-                    "    galleries: []",
-                    "    localized: {",
-                    "      'en-US': [",
-                    "        { }",
-                    "      ]",
-                    "    }",
-                    "    templateData: { }",
-                    "  }",
-                    "}"
-                }));
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource workbookTemplate 'Microsoft.Insights/workbooktemplates@2020-11-20' = {
+              name: take('workbooktemplate${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                galleries: []
+                localized: {
+                  'en-US': [
+                    { }
+                  ]
+                }
+                templateData: { }
+              }
+            }
+            """);
     }
 }
