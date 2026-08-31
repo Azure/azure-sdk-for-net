@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI;
-using TypeSpec;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.Projects.Agents
     /// durable ordering extensions.
     /// </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceResponse : OmitPropertiesRealtimeResponse
+    public partial class VoiceResponse : VoiceResponseBase
     {
         /// <summary> Initializes a new instance of <see cref="VoiceResponse"/>. </summary>
         /// <param name="id"> The unique id of the response. </param>
@@ -62,7 +61,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResponse(OmitPropertiesRealtimeResponseObject? @object, OmitPropertiesStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<OmitPropertiesOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<RealtimeConversationItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdOn, DateTimeOffset? completedOn) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResponse(VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<RealtimeConversationItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdOn, DateTimeOffset? completedOn) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
             Output = output;
             Audio = audio;

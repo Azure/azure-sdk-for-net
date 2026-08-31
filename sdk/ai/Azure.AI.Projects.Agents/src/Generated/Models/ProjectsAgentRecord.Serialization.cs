@@ -107,6 +107,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("agent_endpoint"u8);
                 writer.WriteObjectValue(AgentEndpoint, options);
             }
+            if (Optional.IsDefined(DigitalWorkerType))
+            {
+                writer.WritePropertyName("digital_worker_type"u8);
+                writer.WriteStringValue(DigitalWorkerType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(InstanceIdentity))
             {
                 writer.WritePropertyName("instance_identity"u8);
@@ -176,6 +181,7 @@ namespace Azure.AI.Projects.Agents
             AgentStateSource? stateSource = default;
             AgentObjectVersions versions = default;
             AgentEndpointConfiguration agentEndpoint = default;
+            DigitalWorkerType? digitalWorkerType = default;
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
             AgentBlueprintReference blueprintReference = default;
@@ -224,6 +230,15 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("digital_worker_type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    digitalWorkerType = new DigitalWorkerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instance_identity"u8))
@@ -275,6 +290,7 @@ namespace Azure.AI.Projects.Agents
                 stateSource,
                 versions,
                 agentEndpoint,
+                digitalWorkerType,
                 instanceIdentity,
                 blueprint,
                 blueprintReference,

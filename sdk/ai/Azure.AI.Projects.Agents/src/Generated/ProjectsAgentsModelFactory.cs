@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
-using TypeSpec;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -2132,9 +2131,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponse VoiceResponse(OmitPropertiesRealtimeResponseObject? @object = default, OmitPropertiesStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<OmitPropertiesOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeConversationItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
+        public static VoiceResponse VoiceResponse(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeConversationItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
         {
-            outputModalities ??= new ChangeTrackingList<OmitPropertiesOutputModality>();
+            outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
             output ??= new ChangeTrackingList<RealtimeConversationItem>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2350,7 +2349,7 @@ namespace Azure.AI.Projects.Agents
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The template for omitting properties. </summary>
+        /// <summary> Properties shared by persisted voice responses. </summary>
         /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
@@ -2381,12 +2380,12 @@ namespace Azure.AI.Projects.Agents
         /// Maximum number of output tokens for a single assistant response,
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
-        /// <returns> A new <see cref="TypeSpec.OmitPropertiesRealtimeResponse"/> instance for mocking. </returns>
-        public static OmitPropertiesRealtimeResponse OmitPropertiesRealtimeResponse(string id = default, OmitPropertiesRealtimeResponseObject? @object = default, OmitPropertiesStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<OmitPropertiesOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
+        /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
+        public static VoiceResponseBase VoiceResponseBase(string id = default, VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
         {
-            outputModalities ??= new ChangeTrackingList<OmitPropertiesOutputModality>();
+            outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
 
-            return new OmitPropertiesRealtimeResponse(
+            return new VoiceResponseBase(
                 id,
                 @object,
                 status,
@@ -3379,9 +3378,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default, AgentBlueprintReference blueprintReference = default, bool? draft = default)
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3390,6 +3390,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 definition,
                 blueprintReference,
+                digitalWorkerType,
                 draft,
                 additionalBinaryDataProperties: null);
         }
@@ -3571,7 +3572,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition)
         {
-            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, draft: default);
+            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, digitalWorkerType: default, draft: default);
         }
     }
 }

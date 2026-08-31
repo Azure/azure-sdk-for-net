@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    public enum OmitPropertiesOutputModality
+    public enum VoiceResponseBaseOutputModality
     {
         /// <summary> Text. </summary>
         Text,

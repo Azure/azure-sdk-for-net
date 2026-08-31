@@ -5,26 +5,25 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 using OpenAI;
 
-namespace TypeSpec
+namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The template for omitting properties. </summary>
-    public partial class OmitPropertiesRealtimeResponse
+    /// <summary> Properties shared by persisted voice responses. </summary>
+    public partial class VoiceResponseBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _id;
         private protected string _conversationId;
 
-        /// <summary> Initializes a new instance of <see cref="OmitPropertiesRealtimeResponse"/>. </summary>
-        internal OmitPropertiesRealtimeResponse()
+        /// <summary> Initializes a new instance of <see cref="VoiceResponseBase"/>. </summary>
+        internal VoiceResponseBase()
         {
-            OutputModalities = new ChangeTrackingList<OmitPropertiesOutputModality>();
+            OutputModalities = new ChangeTrackingList<VoiceResponseBaseOutputModality>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OmitPropertiesRealtimeResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceResponseBase"/>. </summary>
         /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
@@ -56,7 +55,7 @@ namespace TypeSpec
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OmitPropertiesRealtimeResponse(string id, OmitPropertiesRealtimeResponseObject? @object, OmitPropertiesStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<OmitPropertiesOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceResponseBase(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -73,13 +72,13 @@ namespace TypeSpec
         public string Id { get; }
 
         /// <summary> The object type, must be `realtime.response`. </summary>
-        public OmitPropertiesRealtimeResponseObject? Object { get; }
+        public VoiceResponseBaseObject? Object { get; }
 
         /// <summary>
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
         ///   `incomplete`, `in_progress`).
         /// </summary>
-        public OmitPropertiesStatus? Status { get; }
+        public VoiceResponseBaseStatus? Status { get; }
 
         /// <summary> Additional details about the status. </summary>
         public RealtimeResponseStatusDetails StatusDetails { get; }
@@ -107,7 +106,7 @@ namespace TypeSpec
         ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
         ///   output to mode `text` will disable audio output from the model.
         /// </summary>
-        public IList<OmitPropertiesOutputModality> OutputModalities { get; }
+        public IList<VoiceResponseBaseOutputModality> OutputModalities { get; }
 
         /// <summary>
         /// Maximum number of output tokens for a single assistant response,

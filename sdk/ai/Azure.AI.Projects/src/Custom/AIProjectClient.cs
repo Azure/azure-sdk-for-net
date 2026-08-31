@@ -226,6 +226,12 @@ namespace Azure.AI.Projects
         {
             return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
         }
+
+        /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>
+        internal virtual AgentInsightMonitors GetAgentInsightMonitorsClient()
+        {
+            return Volatile.Read(ref _cachedAgentInsightMonitors) ?? Interlocked.CompareExchange(ref _cachedAgentInsightMonitors, new AgentInsightMonitors(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentInsightMonitors;
+        }
         /// <summary> Gets the client for managing connections. </summary>
         public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
@@ -269,6 +275,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for routines operations. </summary>
         [Experimental("AAIP001")]
         public virtual AIProjectRoutines Routines => GetAIProjectRoutinesClient();
+        /// <summary> Gets the client for Agent Insights Monitors </summary>
+        [Experimental("AAIP001")]
+        public virtual AgentInsightMonitors AgentInsightMonitors => GetAgentInsightMonitorsClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    public enum OmitPropertiesStatus
+    public enum VoiceResponseBaseStatus
     {
         /// <summary> Completed. </summary>
         Completed,

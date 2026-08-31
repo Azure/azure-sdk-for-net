@@ -6,57 +6,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 using OpenAI;
 
-namespace TypeSpec
+namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The template for omitting properties. </summary>
-    public partial class OmitPropertiesRealtimeResponse : IJsonModel<OmitPropertiesRealtimeResponse>
+    /// <summary> Properties shared by persisted voice responses. </summary>
+    public partial class VoiceResponseBase : IJsonModel<VoiceResponseBase>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OmitPropertiesRealtimeResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceResponseBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OmitPropertiesRealtimeResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOmitPropertiesRealtimeResponse(document.RootElement, options);
+                        return DeserializeVoiceResponseBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OmitPropertiesRealtimeResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceResponseBase)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OmitPropertiesRealtimeResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OmitPropertiesRealtimeResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceResponseBase)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OmitPropertiesRealtimeResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VoiceResponseBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OmitPropertiesRealtimeResponse IPersistableModel<OmitPropertiesRealtimeResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceResponseBase IPersistableModel<VoiceResponseBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OmitPropertiesRealtimeResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceResponseBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OmitPropertiesRealtimeResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceResponseBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -67,10 +66,10 @@ namespace TypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OmitPropertiesRealtimeResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OmitPropertiesRealtimeResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceResponseBase)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -106,7 +105,7 @@ namespace TypeSpec
             {
                 writer.WritePropertyName("output_modalities"u8);
                 writer.WriteStartArray();
-                foreach (OmitPropertiesOutputModality item in OutputModalities)
+                foreach (VoiceResponseBaseOutputModality item in OutputModalities)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
@@ -143,36 +142,36 @@ namespace TypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OmitPropertiesRealtimeResponse IJsonModel<OmitPropertiesRealtimeResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceResponseBase IJsonModel<VoiceResponseBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OmitPropertiesRealtimeResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceResponseBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OmitPropertiesRealtimeResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OmitPropertiesRealtimeResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceResponseBase)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOmitPropertiesRealtimeResponse(document.RootElement, options);
+            return DeserializeVoiceResponseBase(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OmitPropertiesRealtimeResponse DeserializeOmitPropertiesRealtimeResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static VoiceResponseBase DeserializeVoiceResponseBase(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            OmitPropertiesRealtimeResponseObject? @object = default;
-            OmitPropertiesStatus? status = default;
+            VoiceResponseBaseObject? @object = default;
+            VoiceResponseBaseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
             string conversationId = default;
-            IList<OmitPropertiesOutputModality> outputModalities = default;
+            IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +187,7 @@ namespace TypeSpec
                     {
                         continue;
                     }
-                    @object = new OmitPropertiesRealtimeResponseObject(prop.Value.GetString());
+                    @object = new VoiceResponseBaseObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -197,7 +196,7 @@ namespace TypeSpec
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOmitPropertiesStatus();
+                    status = prop.Value.GetString().ToVoiceResponseBaseStatus();
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -229,10 +228,10 @@ namespace TypeSpec
                     {
                         continue;
                     }
-                    List<OmitPropertiesOutputModality> array = new List<OmitPropertiesOutputModality>();
+                    List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToOmitPropertiesOutputModality());
+                        array.Add(item.GetString().ToVoiceResponseBaseOutputModality());
                     }
                     outputModalities = array;
                     continue;
@@ -251,14 +250,14 @@ namespace TypeSpec
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OmitPropertiesRealtimeResponse(
+            return new VoiceResponseBase(
                 id,
                 @object,
                 status,
                 statusDetails,
                 usage,
                 conversationId,
-                outputModalities ?? new ChangeTrackingList<OmitPropertiesOutputModality>(),
+                outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties);
         }

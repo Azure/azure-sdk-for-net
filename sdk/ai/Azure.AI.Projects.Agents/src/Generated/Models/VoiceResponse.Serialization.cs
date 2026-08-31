@@ -8,7 +8,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI;
-using TypeSpec;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -19,7 +18,7 @@ namespace Azure.AI.Projects.Agents
     /// (`GET .../responses/{response_id}/items`) for its output items. `created_at`/`completed_at` are Foundry
     /// durable ordering extensions.
     /// </summary>
-    public partial class VoiceResponse : OmitPropertiesRealtimeResponse, IJsonModel<VoiceResponse>
+    public partial class VoiceResponse : VoiceResponseBase, IJsonModel<VoiceResponse>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceResponse"/> for deserialization. </summary>
         internal VoiceResponse()
@@ -28,7 +27,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OmitPropertiesRealtimeResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceResponseBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -151,7 +150,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OmitPropertiesRealtimeResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceResponseBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -170,11 +169,11 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            OmitPropertiesRealtimeResponseObject? @object = default;
-            OmitPropertiesStatus? status = default;
+            VoiceResponseBaseObject? @object = default;
+            VoiceResponseBaseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
-            IList<OmitPropertiesOutputModality> outputModalities = default;
+            IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
@@ -193,7 +192,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    @object = new OmitPropertiesRealtimeResponseObject(prop.Value.GetString());
+                    @object = new VoiceResponseBaseObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -202,7 +201,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOmitPropertiesStatus();
+                    status = prop.Value.GetString().ToVoiceResponseBaseStatus();
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -229,10 +228,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<OmitPropertiesOutputModality> array = new List<OmitPropertiesOutputModality>();
+                    List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToOmitPropertiesOutputModality());
+                        array.Add(item.GetString().ToVoiceResponseBaseOutputModality());
                     }
                     outputModalities = array;
                     continue;
@@ -337,7 +336,7 @@ namespace Azure.AI.Projects.Agents
                 status,
                 statusDetails,
                 usage,
-                outputModalities ?? new ChangeTrackingList<OmitPropertiesOutputModality>(),
+                outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties,
                 id,
