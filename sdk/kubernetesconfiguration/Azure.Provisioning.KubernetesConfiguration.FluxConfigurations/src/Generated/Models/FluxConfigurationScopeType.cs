@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Scope at which the configuration will be installed. </summary>
-    internal enum FluxConfigurationScopeType
+    public enum FluxConfigurationScopeType
     {
         /// <summary> cluster. </summary>
         [DataMember(Name = "cluster")]

@@ -79,21 +79,6 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Gets or sets the Scope. </summary>
-        public ProvisionableResource Scope
-        {
-            get
-            {
-                Initialize();
-                return _scope.Value;
-            }
-            set
-            {
-                Initialize();
-                _scope.Value = value;
-            }
-        }
-
         /// <summary> Gets or sets the Namespace. </summary>
         public BicepValue<string> Namespace
         {

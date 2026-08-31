@@ -20,6 +20,7 @@ public class BasicKubernetesConfigurationFluxConfigurationsTests
                 FluxConfiguration flux =
                     new(nameof(flux), FluxConfiguration.ResourceVersions.V2025_04_01)
                     {
+                        InstallationScope = FluxConfigurationScopeType.Namespace,
                         Namespace = "flux-system",
                         GitRepository = new FluxGitRepository
                         {
@@ -47,6 +48,7 @@ public class BasicKubernetesConfigurationFluxConfigurationsTests
                   url: 'https://github.com/Azure/arc-k8s-demo'
                 }
                 namespace: 'flux-system'
+                scope: 'namespace'
               }
             }
             """);
