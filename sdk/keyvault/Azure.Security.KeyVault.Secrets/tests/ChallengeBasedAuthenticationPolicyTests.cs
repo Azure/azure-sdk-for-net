@@ -273,6 +273,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 async () => await client.GetSecretAsync("test-secret"));
             Assert.AreEqual(401, ex.Status);
         }
+
         private class MockTransportBuilder
         {
             private const string AuthorizationHeader = "Authorization";

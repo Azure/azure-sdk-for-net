@@ -132,20 +132,20 @@ namespace Azure.Security.KeyVault
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
-                // Reuse the cached scope for this authority when present; on a cache miss keep the
-                // scope parsed from this response instead of dereferencing a null challenge.
-                if (s_challengeCache.TryGetValue(authority, out _challenge))
+                // Reuse the cached scope for this authority when one is present; on a cache miss there
+                // is no scope to reuse, so fall through and surface the challenge below.
+                if (s_challengeCache.TryGetValue(authority, out ChallengeParameters cached))
                 {
+                    _challenge = cached;
                     scope = _challenge.Scopes[0];
                 }
             }
 
             if (scope is null)
             {
-                if (s_challengeCache.TryGetValue(authority, out _challenge))
-                {
-                    return false;
-                }
+                // No scope from this challenge or the cache - surface the service failure rather than
+                // building a token request context from a null challenge.
+                return false;
             }
             else
             {
@@ -176,11 +176,6 @@ namespace Azure.Security.KeyVault
 
                 _challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
                 s_challengeCache[authority] = _challenge;
-            }
-
-            if (_challenge is null)
-            {
-                return false;
             }
 
             var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims);
