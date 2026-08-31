@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -787,6 +789,271 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         #endregion
 
+        #region Layout-Aware Routing + Session Tests
+
+        /// <summary>
+        /// File size for the layout-aware routing tests. Large enough that the service
+        /// spreads it across multiple layout segments rather than one contiguous extent.
+        /// </summary>
+        private const long LayoutTestFileSize = 16 * Constants.MB;
+
+        /// <summary>
+        /// Chunk sizes small enough relative to <see cref="LayoutTestFileSize"/> that a
+        /// transfer fans out into several ranged requests that can each be routed
+        /// independently.
+        /// </summary>
+        private static StorageTransferOptions LayoutTestTransferOptions => new StorageTransferOptions
+        {
+            InitialTransferSize = 4 * Constants.MB,
+            MaximumTransferSize = 4 * Constants.MB,
+            MaximumConcurrency = 4
+        };
+
+        /// <summary>
+        /// Chunk size used by every layout test, for both the partitioned read ranges
+        /// and the OpenRead buffer fills.
+        /// </summary>
+        private const int LayoutTestChunkSize = 4 * Constants.MB;
+
+        /// <summary>
+        /// Number of data GET requests a full transfer of <see cref="LayoutTestFileSize"/>
+        /// must issue: the file is read in <see cref="LayoutTestChunkSize"/> chunks, and
+        /// for ReadTo the first of those chunks is the initial range request.
+        /// </summary>
+        private const int LayoutTestChunkCount = (int)(LayoutTestFileSize / LayoutTestChunkSize);
+
+        /// <summary>
+        /// Uploads a file in chunks via Append/Flush so it is genuinely spread across
+        /// multiple layout segments.
+        /// </summary>
+        private async Task<DataLakeFileClient> UploadLayoutTestFileAsync(
+            DataLakeFileSystemClient fileSystem,
+            byte[] data)
+        {
+            DataLakeFileClient file = InstrumentClient(fileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(data.Length);
+            return file;
+        }
+
+        /// <summary>
+        /// Extracts the host from a layout endpoint value. The service returns a full
+        /// URL (for example <c>https://blob.example.store.core.windows.net:443</c>), so
+        /// naively splitting on ':' would yield the scheme rather than the host.
+        /// </summary>
+        private static string GetHost(string layoutEndpoint) =>
+            Uri.TryCreate(layoutEndpoint, UriKind.Absolute, out Uri parsed)
+                ? parsed.Host
+                : layoutEndpoint.Split(':')[0];
+
+        /// <summary>
+        /// Layout-aware routing and session authentication both hook the read path: the
+        /// layout cache chooses the endpoint for each chunk and the session policy signs
+        /// it. This asserts the two compose rather than one disabling the other.
+        /// </summary>
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadToAsync_LayoutAwareRouting_Sessions()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+
+            var countingPolicy = new SessionAuthCountingPolicy();
+            Uri serviceUri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttps();
+            DataLakeClientOptions options = GetSessionOptions(
+                countingPolicy,
+                GetCountingSessionProvider(serviceUri, countingPolicy));
+
+            byte[] data = GetRandomBuffer(LayoutTestFileSize);
+            DataLakeFileClient file = await UploadLayoutTestFileAsync(test.FileSystem, data);
+
+            DataLakeFileClient oauthFileClient = InstrumentClient(
+                new DataLakeFileClient(
+                    file.Uri,
+                    TestEnvironment.Credential,
+                    options));
+
+            // Act
+            countingPolicy.Start();
+            using var destination = new MemoryStream();
+            await oauthFileClient.ReadToAsync(destination, new DataLakeFileReadToOptions
+            {
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Enabled,
+                TransferOptions = LayoutTestTransferOptions
+            });
+
+            // Assert — verify data was read correctly
+            TestHelper.AssertSequenceEqual(data, destination.ToArray());
+
+            // Assert — data locality was applied
+            Assert.AreEqual(1, countingPolicy.GetLayoutCount,
+                "Expected exactly one Get Blob Layout request to serve every ranged GET from the cache");
+            Assert.AreEqual(LayoutTestChunkCount - 1, countingPolicy.RoutedRequestCount,
+                "Expected every ranged GET after the initial range to be routed to a layout endpoint; " +
+                "the initial range is issued before the layout is known and so is never routed");
+            CollectionAssert.AllItemsAreNotNull(countingPolicy.RoutedHosts);
+
+            // Assert — session authentication was applied to every ranged GET, including
+            // the ones re-routed to a layout endpoint.
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Expected one create session request for the file system");
+            Assert.AreEqual(LayoutTestChunkCount, countingPolicy.GetSessionAuthCount,
+                $"Expected exactly {LayoutTestChunkCount} ranged GETs ({LayoutTestFileSize} file in {LayoutTestChunkSize} chunks), all using Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
+
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetSessionTokens;
+            CollectionAssert.IsNotEmpty(sessionTokens);
+            foreach (string sessionToken in sessionTokens)
+            {
+                Assert.AreEqual(sessionTokens[0], sessionToken,
+                    "All ranged GETs should share the file system's cached session token, even when routed to different endpoints");
+            }
+        }
+
+        /// <summary>
+        /// The OpenRead equivalent, driven through a caller-supplied shared provider so the
+        /// session is minted once and reused across every buffer fill.
+        /// </summary>
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task OpenReadAsync_LayoutAwareRouting_Sessions_SharedSessionProvider()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+
+            // The provider owns its own pipeline for CreateSession traffic, so the
+            // counting policy has to be attached to the provider's options as well.
+            var countingPolicy = new SessionAuthCountingPolicy();
+            Uri serviceUri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttps();
+            var sharedProvider = new Blobs.Models.ContainerSessionProvider(
+                GetBlobServiceUri(serviceUri),
+                TestEnvironment.Credential,
+                GetBlobOptionsForProvider(countingPolicy));
+
+            byte[] data = GetRandomBuffer(LayoutTestFileSize);
+            DataLakeFileClient file = await UploadLayoutTestFileAsync(test.FileSystem, data);
+
+            DataLakeFileClient oauthFileClient = InstrumentClient(
+                new DataLakeFileClient(
+                    file.Uri,
+                    TestEnvironment.Credential,
+                    GetSessionOptions(countingPolicy, sharedProvider)));
+
+            // Act
+            countingPolicy.Start();
+            Stream readStream = await oauthFileClient.OpenReadAsync(new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = LayoutTestChunkSize,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Enabled
+            });
+            using var destination = new MemoryStream();
+            await readStream.CopyToAsync(destination);
+
+            // Assert — verify data was read correctly
+            TestHelper.AssertSequenceEqual(data, destination.ToArray());
+
+            // Assert — data locality was applied
+            Assert.AreEqual(1, countingPolicy.GetLayoutCount,
+                "Expected exactly one Get Blob Layout request to bootstrap and seed the layout cache");
+            Assert.AreEqual(LayoutTestChunkCount, countingPolicy.RoutedRequestCount,
+                $"Expected all {LayoutTestChunkCount} buffer fills to be routed to a layout endpoint");
+            CollectionAssert.AllItemsAreNotNull(countingPolicy.RoutedHosts);
+
+            // Assert — session authentication was applied to every buffer fill
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "A shared provider should mint exactly one session for the file system");
+            Assert.AreEqual(LayoutTestChunkCount, countingPolicy.GetSessionAuthCount,
+                $"Expected exactly {LayoutTestChunkCount} buffer-fill GETs ({LayoutTestFileSize} file in {LayoutTestChunkSize} buffers), all using Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
+
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetSessionTokens;
+            CollectionAssert.IsNotEmpty(sessionTokens);
+            foreach (string sessionToken in sessionTokens)
+            {
+                Assert.AreEqual(sessionTokens[0], sessionToken,
+                    "All buffer fills should share the provider's cached session token");
+            }
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadContentAsync_LayoutEndpoint_Sessions()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+
+            var countingPolicy = new SessionAuthCountingPolicy();
+            Uri serviceUri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttps();
+            DataLakeClientOptions options = GetSessionOptions(
+                countingPolicy,
+                GetCountingSessionProvider(serviceUri, countingPolicy));
+
+            byte[] data = GetRandomBuffer(LayoutTestFileSize);
+            DataLakeFileClient file = await UploadLayoutTestFileAsync(test.FileSystem, data);
+
+            DataLakeFileClient oauthFileClient = InstrumentClient(
+                new DataLakeFileClient(
+                    file.Uri,
+                    TestEnvironment.Credential,
+                    options));
+
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act — ask for the single layout entry covering our offset, then hand that
+            // endpoint straight to ReadContent.
+            countingPolicy.Start();
+            DataLakeFileLayoutInfo layoutInfo = await oauthFileClient
+                .GetLayoutAsync(new DataLakeFileGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
+                .FirstAsync();
+            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+
+            Response<DataLakeFileReadResult> response = await oauthFileClient.ReadContentAsync(
+                new DataLakeFileReadOptions
+                {
+                    Range = new HttpRange(downloadOffset, downloadLength),
+                    LayoutEndpoint = layoutEndpoint
+                });
+
+            // Assert — verify the response body matches the requested range
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert — the caller-supplied endpoint was actually routed to
+            Assert.AreEqual(1, countingPolicy.GetLayoutCount,
+                "Expected exactly one Get Blob Layout request, issued explicitly by the caller");
+            Assert.AreEqual(1, countingPolicy.RoutedRequestCount,
+                "Expected the read to be routed to the caller-supplied layout endpoint");
+            CollectionAssert.Contains(countingPolicy.RoutedHosts, GetHost(layoutEndpoint),
+                "Expected the request to be routed to the exact endpoint supplied by the caller");
+
+            // Assert — session authentication still applied to the routed read
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Expected one create session request for the file system");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount,
+                "Expected the single-shot read to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
+        }
+
+        #endregion
+
         #region Helper Classes
 
         /// <summary>
@@ -816,7 +1083,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             options.SessionOptions = new SessionOptions
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = TestConfigHierarchicalNamespace.AccountName,
                 SessionProvider = sessionProvider,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
@@ -868,11 +1134,51 @@ namespace Azure.Storage.Files.DataLake.Tests
             private int _getSessionAuthCount;
             private int _createSessionCount;
             private int _bearerGetCount;
+            private int _getLayoutCount;
+            private int _routedRequestCount;
             private volatile bool _enabled;
+            private readonly List<string> _getSessionTokens = new List<string>();
+            private readonly List<string> _routedHosts = new List<string>();
+            private readonly object _listLock = new object();
 
             public int GetSessionAuthCount => _getSessionAuthCount;
             public int CreateSessionCount => _createSessionCount;
             public int BearerGetCount => _bearerGetCount;
+
+            /// <summary>Number of Get Blob Layout requests observed (GET with <c>comp=layout</c>).</summary>
+            public int GetLayoutCount => _getLayoutCount;
+
+            /// <summary>
+            /// Number of requests whose URI host was rewritten by <c>DataLocalityPolicy</c>
+            /// to a layout endpoint. The policy preserves the original authority on the Host
+            /// header, so a mismatch between the request URI host and the Host header is
+            /// proof locality-aware routing was actually applied on the wire.
+            /// </summary>
+            public int RoutedRequestCount => _routedRequestCount;
+
+            /// <summary>Layout endpoint hosts requests were routed to, in order.</summary>
+            public IReadOnlyList<string> RoutedHosts
+            {
+                get
+                {
+                    lock (_listLock)
+                    {
+                        return _routedHosts.ToArray();
+                    }
+                }
+            }
+
+            /// <summary>Session tokens observed on data GET requests, in order.</summary>
+            public IReadOnlyList<string> GetSessionTokens
+            {
+                get
+                {
+                    lock (_listLock)
+                    {
+                        return _getSessionTokens.ToArray();
+                    }
+                }
+            }
 
             public void Start() => _enabled = true;
 
@@ -886,11 +1192,57 @@ namespace Azure.Storage.Files.DataLake.Tests
                 bool hasAuth = message.Request.Headers.TryGetValue("Authorization", out string authHeader);
                 bool hasSessionAuth = hasAuth && authHeader.StartsWith("Session ", StringComparison.Ordinal);
                 bool hasBearerAuth = hasAuth && authHeader.StartsWith("Bearer ", StringComparison.Ordinal);
-                bool isGet = message.Request.Method == RequestMethod.Get;
+
+                string query = message.Request.Uri.ToUri().Query;
+
+                // Get Blob Layout is a GET with comp=layout. It must not be lumped in with
+                // the data GETs, or it would skew the session and bearer counts.
+                bool isLayoutRequest = message.Request.Method == RequestMethod.Get
+                    && query != null
+                    && query.Contains("comp=layout");
+                bool isGet = message.Request.Method == RequestMethod.Get && !isLayoutRequest;
+
+                if (isLayoutRequest)
+                {
+                    Interlocked.Increment(ref _getLayoutCount);
+                }
+
+                // DataLocalityPolicy rewrites the request URI host but pins the original
+                // authority on the Host header, so the two differing is the routing signal.
+                if (message.Request.Headers.TryGetValue("Host", out string hostHeader)
+                    && !string.IsNullOrEmpty(hostHeader))
+                {
+                    string requestHost = message.Request.Uri.Host;
+                    string hostHeaderHost = hostHeader.Split(':')[0];
+                    if (!string.Equals(requestHost, hostHeaderHost, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Interlocked.Increment(ref _routedRequestCount);
+                        lock (_listLock)
+                        {
+                            _routedHosts.Add(requestHost);
+                        }
+                    }
+                }
 
                 if (hasSessionAuth && isGet)
                 {
                     Interlocked.Increment(ref _getSessionAuthCount);
+
+                    // Authorization is "Session {sessionToken}:{perRequestSignature}".
+                    // The signature is HMAC'd per request, so capture only the session
+                    // token portion (between "Session " and the last ':') so that
+                    // "same session" comparisons across requests work.
+                    const string scheme = "Session ";
+                    string sessionToken = authHeader;
+                    int lastColon = authHeader.LastIndexOf(':');
+                    if (lastColon > scheme.Length)
+                    {
+                        sessionToken = authHeader.Substring(scheme.Length, lastColon - scheme.Length);
+                    }
+                    lock (_listLock)
+                    {
+                        _getSessionTokens.Add(sessionToken);
+                    }
                 }
 
                 if (hasBearerAuth && isGet)
@@ -898,7 +1250,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Interlocked.Increment(ref _bearerGetCount);
                 }
 
-                string query = message.Request.Uri.ToUri().Query;
                 if (message.Request.Method == RequestMethod.Post
                     && query != null
                     && query.Contains("restype=container")

@@ -710,29 +710,27 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void AccountNameNotDerivable_WritesWarningToEventSource()
+        public void AccountNameNotDerivable_SessionsEnabled_WritesWarningToEventSource()
         {
             var mockBearer = CreateMockBearerPolicy();
 
             using var listener = new TestEventListener();
             listener.EnableEvents(BlobsEventSource.Singleton, EventLevel.Warning);
 
-            // The listener observes the process-wide event source, so scope the assertions
-            // to an endpoint unique to this test case.
             var unparseableUri = new Uri($"https://warning-{_async}/test");
-            _ = new SessionAuthenticationPolicy(
+            Assert.Throws<InvalidOperationException>(() => new SessionAuthenticationPolicy(
                 unparseableUri,
                 mockBearer.Object,
                 CreateProvider().Provider,
-                new SessionOptions { SessionMode = SessionMode.Auto });
+                new SessionOptions { SessionMode = SessionMode.Enabled }));
 
-            EventWrittenEventArgs sessionDisabledEvent = listener.SingleEventById(
-                SessionAuthenticationDisabledEventId,
+            EventWrittenEventArgs sessionEvent = listener.SingleEventById(
+                SessionAuthenticationCannotBeEnabledEventId,
                 e => e.Payload.Contains(unparseableUri.GetLeftPart(UriPartial.Path)));
-            Assert.AreEqual(EventLevel.Warning, sessionDisabledEvent.Level);
+            Assert.AreEqual(EventLevel.Warning, sessionEvent.Level);
             Assert.AreEqual(
-                nameof(BlobsEventSource.SessionAuthenticationDisabledAccountNameUnavailable),
-                sessionDisabledEvent.EventName);
+                nameof(BlobsEventSource.SessionAuthenticationCannotBeEnabledAccountNameUnavailable),
+                sessionEvent.EventName);
         }
 
         [Test]
@@ -800,7 +798,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void AccountNameNotDerivable_DoesNotLeakQueryStringToEventSource()
+        public void AccountNameNotDerivable_SessionsEnabled_DoesNotLeakQueryStringToEventSource()
         {
             var mockBearer = CreateMockBearerPolicy();
 
@@ -808,17 +806,17 @@ namespace Azure.Storage.Blobs.Tests
             listener.EnableEvents(BlobsEventSource.Singleton, EventLevel.Warning);
 
             var unparseableUri = new Uri($"https://query-{_async}/test?sig=supersecretsignature");
-            _ = new SessionAuthenticationPolicy(
+            Assert.Throws<InvalidOperationException>(() => new SessionAuthenticationPolicy(
                 unparseableUri,
                 mockBearer.Object,
                 CreateProvider().Provider,
-                new SessionOptions { SessionMode = SessionMode.Auto });
+                new SessionOptions { SessionMode = SessionMode.Enabled }));
 
-            EventWrittenEventArgs sessionDisabledEvent = listener.SingleEventById(
-                SessionAuthenticationDisabledEventId,
+            EventWrittenEventArgs sessionEvent = listener.SingleEventById(
+                SessionAuthenticationCannotBeEnabledEventId,
                 e => e.Payload.Contains(unparseableUri.GetLeftPart(UriPartial.Path)));
             CollectionAssert.DoesNotContain(
-                sessionDisabledEvent.Payload,
+                sessionEvent.Payload,
                 unparseableUri.AbsoluteUri,
                 "The endpoint must be reported without its query string.");
         }

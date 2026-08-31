@@ -9,10 +9,10 @@ namespace Azure.Storage.Blobs
     {
         public static SessionMode ResolveAuto(this SessionMode sessionMode)
         {
-            // Auto maps to Enabled today, may change in the future.
+            // Auto maps to Disabled today, may change in the future.
             if (sessionMode == SessionMode.Auto)
             {
-                return SessionMode.Enabled;
+                return SessionMode.Disabled;
             }
             return sessionMode;
         }

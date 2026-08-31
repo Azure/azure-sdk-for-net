@@ -1268,6 +1268,19 @@ namespace Azure.Storage.Blobs.Test
         };
 
         /// <summary>
+        /// Chunk size used by every layout test, for both the partitioned download
+        /// ranges and the OpenRead buffer fills.
+        /// </summary>
+        private const int LayoutTestChunkSize = 4 * Constants.MB;
+
+        /// <summary>
+        /// Number of GET blob requests a full transfer of <see cref="LayoutTestBlobSize"/>
+        /// must issue: the blob is downloaded in <see cref="LayoutTestChunkSize"/> chunks,
+        /// and for DownloadTo the first of those chunks is the initial range request.
+        /// </summary>
+        private const int LayoutTestChunkCount = LayoutTestBlobSize / LayoutTestChunkSize;
+
+        /// <summary>
         /// Uploads a blob in chunks so that it is genuinely spread across multiple layout
         /// segments rather than landing as a single contiguous extent.
         /// </summary>
@@ -1285,23 +1298,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
-        /// Asserts that locality-aware routing was actually applied on the wire, not just
-        /// requested.  <c>FetchLayoutInternal</c> soft-fails on 400/5xx and silently falls
-        /// back to the client endpoint, so observing the layout call alone is not enough:
-        /// we also require that <c>DataLocalityPolicy</c> rewrote at least one request host.
+        /// Extracts the host from a layout endpoint value. The service returns a full
+        /// URL (for example <c>https://blob.example.store.core.windows.net:443</c>), so
+        /// naively splitting on ':' would yield the scheme rather than the host.
         /// </summary>
-        private static void AssertDataLocalityApplied(SessionAuthCountingPolicy countingPolicy)
-        {
-            Assert.Greater(countingPolicy.GetLayoutCount, 0,
-                "Expected at least one Get Blob Layout request when LayoutAwareRouting is Enabled");
-            Assert.Greater(countingPolicy.RoutedRequestCount, 0,
-                "Expected at least one request to be routed to a layout endpoint. The layout was fetched " +
-                "but no request host was rewritten, which means the account returned no usable layout segments.");
-
-            IReadOnlyList<string> routedHosts = countingPolicy.RoutedHosts;
-            CollectionAssert.IsNotEmpty(routedHosts, "Expected routed hosts to be recorded");
-            CollectionAssert.AllItemsAreNotNull(routedHosts);
-        }
+        private static string GetHost(string layoutEndpoint) =>
+            Uri.TryCreate(layoutEndpoint, UriKind.Absolute, out Uri parsed)
+                ? parsed.Host
+                : layoutEndpoint.Split(':')[0];
 
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
@@ -1338,14 +1342,19 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, destination.ToArray());
 
             // Assert — data locality was applied
-            AssertDataLocalityApplied(countingPolicy);
+            Assert.AreEqual(1, countingPolicy.GetLayoutCount,
+                "Expected exactly one Get Blob Layout request to serve every ranged GET from the cache");
+            Assert.AreEqual(LayoutTestChunkCount - 1, countingPolicy.RoutedRequestCount,
+                "Expected every ranged GET after the initial range to be routed to a layout endpoint; " +
+                "the initial range is issued before the layout is known and so is never routed");
+            CollectionAssert.AllItemsAreNotNull(countingPolicy.RoutedHosts);
 
             // Assert — session authentication was applied to every ranged GET, including
             // the ones that were re-routed to a layout endpoint.
             Assert.AreEqual(1, countingPolicy.CreateSessionCount,
                 "Expected one create session request for the container");
-            Assert.Greater(countingPolicy.GetSessionAuthCount, 1,
-                "Expected the download to fan out into multiple ranged GETs, all using Session authorization");
+            Assert.AreEqual(LayoutTestChunkCount, countingPolicy.GetSessionAuthCount,
+                $"Expected exactly {LayoutTestChunkCount} ranged GETs ({LayoutTestBlobSize} blob in {LayoutTestChunkSize} chunks), all using Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
                 "Expected no GET blob requests to fall back to Bearer authorization");
 
@@ -1392,7 +1401,7 @@ namespace Azure.Storage.Blobs.Test
             countingPolicy.Start();
             Stream readStream = await blob.OpenReadAsync(new BlobOpenReadOptions(allowModifications: false)
             {
-                BufferSize = 4 * Constants.MB,
+                BufferSize = LayoutTestChunkSize,
                 LayoutAwareRouting = LayoutAwareRouting.Enabled
             });
             using var destination = new MemoryStream();
@@ -1402,19 +1411,17 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, destination.ToArray());
 
             // Assert — data locality was applied
-            AssertDataLocalityApplied(countingPolicy);
-
-            // Assert — OpenRead's bootstrap contract: a single Get Blob Layout supplies both
-            // the layout and the ETag/length/metadata, and seeds the cache, so neither a
-            // second layout fetch nor a GetProperties is needed for the life of the stream.
             Assert.AreEqual(1, countingPolicy.GetLayoutCount,
                 "Expected exactly one Get Blob Layout request to bootstrap and seed the layout cache");
+            Assert.AreEqual(LayoutTestChunkCount, countingPolicy.RoutedRequestCount,
+                $"Expected all {LayoutTestChunkCount} buffer fills to be routed to a layout endpoint");
+            CollectionAssert.AllItemsAreNotNull(countingPolicy.RoutedHosts);
 
             // Assert — session authentication was applied to every buffer fill
             Assert.AreEqual(1, countingPolicy.CreateSessionCount,
                 "A shared provider should mint exactly one session for the container");
-            Assert.Greater(countingPolicy.GetSessionAuthCount, 1,
-                "Expected multiple buffer-fill GETs, all using Session authorization");
+            Assert.AreEqual(LayoutTestChunkCount, countingPolicy.GetSessionAuthCount,
+                $"Expected exactly {LayoutTestChunkCount} buffer-fill GETs ({LayoutTestBlobSize} blob in {LayoutTestChunkSize} buffers), all using Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
                 "Expected no GET blob requests to fall back to Bearer authorization");
 
@@ -1425,6 +1432,67 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(sessionTokens[0], sessionToken,
                     "All buffer fills should share the provider's cached session token");
             }
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadContentAsync_LayoutEndpoint_Sessions()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            byte[] data = GetRandomBuffer(LayoutTestBlobSize);
+            BlobClient blob = await UploadLayoutTestBlobAsync(test.Container, data);
+
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act — ask for the single layout entry covering our offset, then hand that
+            // endpoint straight to DownloadContent.
+            countingPolicy.Start();
+            BlobLayoutInfo layoutInfo = await blob
+                .GetLayoutAsync(new BlobGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
+                .FirstAsync();
+            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobDownloadOptions
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint
+            });
+
+            // Assert — verify the response body matches the requested range
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert — the caller-supplied endpoint was actually routed to
+            Assert.AreEqual(1, countingPolicy.GetLayoutCount,
+                "Expected exactly one Get Blob Layout request, issued explicitly by the caller");
+            Assert.AreEqual(1, countingPolicy.RoutedRequestCount,
+                "Expected the download to be routed to the caller-supplied layout endpoint");
+            CollectionAssert.Contains(countingPolicy.RoutedHosts, GetHost(layoutEndpoint),
+                "Expected the request to be routed to the exact endpoint supplied by the caller");
+
+            // Assert — session authentication still applied to the routed download
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Expected one create session request for the container");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount,
+                "Expected the single-shot download to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
+                "Expected no GET blob requests to fall back to Bearer authorization");
         }
     }
 }

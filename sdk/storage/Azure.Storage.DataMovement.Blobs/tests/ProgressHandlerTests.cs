@@ -248,7 +248,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
-        [Ignore("Temporarily ignore this test until we revert enabling Sessions by default")]
         public async Task ProgressHandler_Chunks(TransferDirection transferType)
         {
             // Arrange
