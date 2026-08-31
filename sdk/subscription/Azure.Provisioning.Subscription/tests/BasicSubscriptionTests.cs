@@ -49,8 +49,8 @@ public class BasicSubscriptionTests
             resource subscriptionAlias 'Microsoft.Subscription/aliases@2025-11-01-preview' = {
               name: 'contoso-subscription'
               properties: {
-                displayName: 'Contoso Subscription'
                 billingScope: '/providers/Microsoft.Billing/billingAccounts/00000000'
+                displayName: 'Contoso Subscription'
                 workload: 'Production'
               }
             }
