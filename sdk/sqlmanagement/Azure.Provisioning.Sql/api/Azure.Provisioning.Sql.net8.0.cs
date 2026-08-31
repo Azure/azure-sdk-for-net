@@ -111,6 +111,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.BackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -157,6 +159,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.DatabaseAdvancedThreatProtection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -213,6 +217,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.DataMaskingPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -318,6 +326,11 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ElasticPool FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -360,6 +373,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.EncryptionProtector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -405,6 +420,11 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ExtendedDatabaseBlobAuditingPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -431,6 +451,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ExtendedServerBlobAuditingPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -459,6 +481,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.FailoverGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -507,6 +531,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.GeoBackupPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -564,6 +592,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.InstanceFailoverGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -597,6 +627,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.InstancePool FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -617,6 +649,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.IPv6FirewallRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -760,6 +796,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.LedgerDigestUpload FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -786,6 +824,9 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.LogicalDatabaseTransparentDataEncryption FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -834,6 +875,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.LongTermRetentionPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -898,6 +941,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedBackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -937,6 +982,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -953,6 +1000,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedDatabaseAdvancedThreatProtection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1083,6 +1132,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedDatabaseSecurityAlertPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1159,6 +1210,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedDatabaseVulnerabilityAssessment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1254,6 +1307,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstance FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1272,6 +1327,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceAdministrator FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1292,6 +1349,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceAdvancedThreatProtection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1307,6 +1366,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceAzureADOnlyAuthentication FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1334,6 +1395,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceDtc FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1372,6 +1435,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceEncryptionProtector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1403,6 +1468,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceKey FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1448,6 +1515,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceLongTermRetentionPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1528,6 +1597,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstancePrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1623,6 +1694,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceServerConfigurationOption FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1645,6 +1718,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceServerTrustCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1664,6 +1739,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceStartStopSchedule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1687,6 +1764,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceVulnerabilityAssessment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1703,6 +1782,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedLedgerDigestUpload FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1749,6 +1830,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedServerDnsAlias FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1771,6 +1854,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1791,6 +1876,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedTransparentDataEncryption FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -1815,6 +1902,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.OutboundFirewallRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2109,6 +2200,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ServerAdvancedThreatProtection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2197,6 +2290,9 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlAgentConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2018_06_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2369,6 +2465,11 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2433,6 +2534,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlDatabaseBlobAuditingPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2514,6 +2617,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlDatabaseSecurityAlertPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2698,6 +2805,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlDatabaseVulnerabilityAssessment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2769,6 +2878,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlDistributedAvailabilityGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2784,6 +2895,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -2937,6 +3052,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3056,6 +3175,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3114,6 +3237,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerAzureADAdministrator FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3129,6 +3256,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerAzureADOnlyAuthentication FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3154,6 +3285,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerBlobAuditingPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3178,6 +3311,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerConnectionPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3210,6 +3347,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerDatabaseReplicationLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3237,6 +3378,11 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerDatabaseRestorePoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3257,6 +3403,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerDevOpsAuditingSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3272,6 +3420,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerDnsAlias FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3294,6 +3444,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerJob FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3314,6 +3466,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerJobAgent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3330,6 +3484,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerJobCredential FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3357,6 +3513,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerJobExecution FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3446,6 +3604,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerJobStep FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3461,6 +3621,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerJobTargetGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3518,6 +3680,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerKey FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3558,6 +3722,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3578,6 +3744,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3593,6 +3763,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaseline FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3608,6 +3782,10 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3676,6 +3854,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerTrustGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3693,6 +3873,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerVirtualNetworkRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3720,6 +3902,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerVulnerabilityAssessment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3889,6 +4073,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SyncAgent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3933,6 +4119,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SyncGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -3989,6 +4177,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SyncMember FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -4163,6 +4353,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.WorkloadClassifier FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
@@ -4183,6 +4375,8 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.WorkloadGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
             public static readonly string V2025_01_01;
         }
     }
