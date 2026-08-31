@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlaySource. </summary>
-    internal partial class PlaySourceInternal
+    public partial class PlaySourceInternal
     {
         /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
         /// <param name="kind"> Defines the type of the play source. </param>

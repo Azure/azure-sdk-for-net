@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The SsmlSource. </summary>
-    internal partial class SsmlSourceInternal
+    public partial class SsmlSourceInternal
     {
         /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/>. </summary>
         /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
