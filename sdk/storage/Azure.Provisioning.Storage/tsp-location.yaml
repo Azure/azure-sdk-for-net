@@ -1,4 +1,4 @@
 directory: specification/storage/Storage.Management
-commit: 02a927486f37840a0dd2211008db1672edd90fe3
-repo: ArcturusZhang/azure-rest-api-specs
+commit: 75fe2685df052017fb6e61502704d1610335e849
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

@@ -21,49 +21,8 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Model factory for models. </summary>
     // Suppress: generated method uses string groupId; prior GA used ResourceIdentifier groupId.
     [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>))]
-    [CodeGenSuppress("StoragePrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateLinkServiceConnectionState), typeof(StoragePrivateEndpointConnectionProvisioningState?), typeof(ResourceIdentifier))]
     public static partial class ArmStorageModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Storage.StoragePrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StoragePrivateLinkServiceConnectionState connectionState, StoragePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
-        {
-            return new StoragePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Storage.StoragePrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata. </param>
-        /// <param name="connectionState"> The private endpoint connection state. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for the private endpoint. </param>
-        /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
-            => StoragePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                connectionState,
-                provisioningState,
-                privateEndpointId is null ? default : new ResourceIdentifier(privateEndpointId));
-
         /// <summary> Initializes a new instance of StorageTaskAssignmentPatchProperties (backward-compat overload). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus)

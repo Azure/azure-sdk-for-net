@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
         [WirePath("privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
+        public string PrivateEndpointId
         {
             get
             {

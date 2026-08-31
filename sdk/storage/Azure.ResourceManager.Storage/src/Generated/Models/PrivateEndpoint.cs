@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpoint(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public string Id { get; }
     }
 }
