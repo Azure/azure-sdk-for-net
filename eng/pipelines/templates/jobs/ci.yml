@@ -70,6 +70,10 @@ jobs:
           fetchTags: false
 
         - template: /eng/pipelines/templates/steps/install-dotnet.yml
+          parameters:
+            # The exhaustive restore fills the hosted agent disk; this one-shot validation has
+            # no downstream job that can reuse a cache, so do not archive it after parity succeeds.
+            EnableNuGetCache: false
 
         - pwsh: |
             $evidenceRoot = "$(Build.ArtifactStagingDirectory)/RepositoryProjectGraphParity"
