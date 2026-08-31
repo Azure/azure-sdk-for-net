@@ -38,7 +38,7 @@ SubscriptionAlias subscriptionAlias =
         Properties = new SubscriptionAliasProperties
         {
             DisplayName = "Contoso Subscription",
-            BillingScope = "/providers/Microsoft.Billing/billingAccounts/00000000",
+            BillingScope = "/billingAccounts/00000000/billingProfiles/00000000/invoiceSections/00000000",
             Workload = SubscriptionWorkload.Production,
         },
     };
