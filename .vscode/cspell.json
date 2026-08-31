@@ -775,13 +775,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
-      ]
-    },
-    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "ccyymmdd",

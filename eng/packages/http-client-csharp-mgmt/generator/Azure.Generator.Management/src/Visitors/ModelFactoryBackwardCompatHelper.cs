@@ -54,7 +54,9 @@ namespace Azure.Generator.Management.Visitors
 
                 if (bodyUpdated)
                 {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                    // Only the body changed. Passing the signature back would make MethodProvider rebuild the XML docs
+                    // from the (empty) signature description and drop the summary this method was created with.
+                    method.Update(bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -98,7 +100,7 @@ namespace Azure.Generator.Management.Visitors
                     {
                         updatedBodyStatements.RemoveAll(statement => IsUnusedLocalDeclaration(statement, unusedLocalVariables));
                     }
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                    method.Update(bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -165,7 +167,10 @@ namespace Azure.Generator.Management.Visitors
 
                 if (bodyUpdated)
                 {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                    // Deliberately does not re-supply the signature: it is this method's own signature, so passing it
+                    // changes nothing except forcing MethodProvider.Update to rebuild XmlDocs, discarding the
+                    // documentation regenerated when the overload was created.
+                    method.Update(bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -244,11 +249,16 @@ namespace Azure.Generator.Management.Visitors
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var parameterDescriptions = new Dictionary<string, FormattableString>(StringComparer.Ordinal);
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
+                    foreach (var parameterDocumentation in argument.ParameterDocumentation)
+                    {
+                        parameterDescriptions.TryAdd(parameterDocumentation.Parameter.Name, parameterDocumentation.Description);
+                    }
                 }
                 else
                 {
@@ -256,26 +266,44 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
+            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, parameterDescriptions);
             updatedMethod = new MethodProvider(
-                CreateBackwardCompatSignature(method.Signature),
+                signature,
                 Return(New.Instance(method.Signature.ReturnType, arguments)),
                 enclosingType);
             return true;
         }
 
-        private static MethodSignature CreateBackwardCompatSignature(MethodSignature signature)
+        /// <summary>
+        /// Creates the hidden compatibility signature, regenerating its documentation from the current model.
+        /// Every description comes from the current model; the previous contract supplies only the parameter list.
+        /// A parameter that no longer maps to the model has no current description, and the previous one is not
+        /// salvaged: it was parsed back out of generated C#, so it has already lost its cref text and accumulated
+        /// the writer's indentation.
+        /// </summary>
+        private static MethodSignature CreateBackwardCompatSignature(
+            MethodSignature signature,
+            ModelProvider modelProvider,
+            IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
         {
             var attributes = signature.Attributes.Any(attribute =>
                 attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute))
                     ? signature.Attributes
                     : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
 
+            foreach (var parameter in signature.Parameters)
+            {
+                parameter.Update(description: parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
+                    ? currentDescription
+                    : $"");
+            }
+
             return new MethodSignature(
                 signature.Name,
-                signature.Description,
+                modelProvider.Description,
                 signature.Modifiers,
                 signature.ReturnType,
-                signature.ReturnDescription,
+                $"A new {signature.ReturnType:C} instance for mocking.",
                 signature.Parameters,
                 attributes,
                 signature.GenericArguments,
@@ -547,7 +575,7 @@ namespace Azure.Generator.Management.Visitors
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
             foreach (var constructorParameter in constructorParameters)
             {
-                if (argumentsByName.TryGetValue(constructorParameter.Name, out var argument))
+                if (TryGetArgumentByName(argumentsByName, constructorParameter.Name, out var argument))
                 {
                     arguments.Add(argument);
                     usedArguments.Add(argument);
@@ -567,6 +595,36 @@ namespace Azure.Generator.Management.Visitors
             unusedArguments = newInstanceExpression.Parameters.Where(argument => !usedArguments.Contains(argument)).ToArray();
             updatedArguments = changed ? arguments : null;
             return changed;
+        }
+
+        private static bool TryGetArgumentByName(
+            IReadOnlyDictionary<string, ValueExpression> argumentsByName,
+            string parameterName,
+            [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            if (argumentsByName.TryGetValue(parameterName, out argument))
+            {
+                return true;
+            }
+
+            argument = null;
+            foreach (var candidate in argumentsByName)
+            {
+                if (!string.Equals(candidate.Key, parameterName, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (argument is not null)
+                {
+                    argument = null;
+                    return false;
+                }
+
+                argument = candidate.Value;
+            }
+
+            return argument is not null;
         }
 
         private static bool TryGetArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
@@ -602,7 +660,10 @@ namespace Azure.Generator.Management.Visitors
             // resolution uses combined/contextual names to avoid stealing outer parameters with the same name.
             if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter))
             {
-                argument = new CompatibilityArgument(BuildParameterArgument(directParameter, constructorParameter.Type), [directParameter]);
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(directParameter, constructorParameter.Type),
+                    [directParameter],
+                    [new ParameterDocumentation(directParameter, constructorParameter.Description)]);
                 return true;
             }
 
@@ -651,12 +712,14 @@ namespace Azure.Generator.Management.Visitors
             var nestedConstructorParameters = nestedModel.FullConstructor.Signature.Parameters;
             var nestedArguments = new List<ValueExpression>(nestedConstructorParameters.Count);
             var matchedParameters = new List<ParameterProvider>();
+            var parameterDocumentation = new List<ParameterDocumentation>();
             foreach (var nestedParameter in nestedConstructorParameters)
             {
                 if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, constructorParameter.Name, nestedParameter, visitedTypes, unavailableDirectParameterNames, out var nestedArgument))
                 {
                     nestedArguments.Add(nestedArgument.Argument);
                     matchedParameters.AddRange(nestedArgument.MatchedParameters);
+                    parameterDocumentation.AddRange(nestedArgument.ParameterDocumentation);
                 }
                 else
                 {
@@ -678,7 +741,7 @@ namespace Azure.Generator.Management.Visitors
             var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
-            argument = new CompatibilityArgument(expression, matchedParameters);
+            argument = new CompatibilityArgument(expression, matchedParameters, parameterDocumentation);
             visitedTypes.Remove(constructorParameter.Type);
             return true;
         }
@@ -704,7 +767,10 @@ namespace Azure.Generator.Management.Visitors
                 var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
                 if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, nestedParameter.Property, out var combinedParameter))
                 {
-                    argument = new CompatibilityArgument(BuildParameterArgument(combinedParameter, nestedParameter.Type), [combinedParameter]);
+                    argument = new CompatibilityArgument(
+                        BuildParameterArgument(combinedParameter, nestedParameter.Type),
+                        [combinedParameter],
+                        [new ParameterDocumentation(combinedParameter, nestedParameter.Description)]);
                     return true;
                 }
             }
@@ -716,7 +782,10 @@ namespace Azure.Generator.Management.Visitors
                 && nestedParameter.Property is not null
                 && TryGetContextualMethodParameter(method, parentName, nestedParameter, out var contextualParameter))
             {
-                argument = new CompatibilityArgument(BuildParameterArgument(contextualParameter, nestedParameter.Type), [contextualParameter]);
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(contextualParameter, nestedParameter.Type),
+                    [contextualParameter],
+                    [new ParameterDocumentation(contextualParameter, nestedParameter.Description)]);
                 return true;
             }
 
@@ -726,7 +795,10 @@ namespace Azure.Generator.Management.Visitors
             if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, nestedParameter.Property, out var directParameter)
                 && !unavailableDirectParameterNames.Contains(directParameter.Name))
             {
-                argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(directParameter, nestedParameter.Type),
+                    [directParameter],
+                    [new ParameterDocumentation(directParameter, nestedParameter.Description)]);
                 return true;
             }
 
@@ -900,6 +972,11 @@ namespace Azure.Generator.Management.Visitors
             return false;
         }
 
-        private record CompatibilityArgument(ValueExpression Argument, IReadOnlyList<ParameterProvider> MatchedParameters);
+        private record ParameterDocumentation(ParameterProvider Parameter, FormattableString Description);
+
+        private record CompatibilityArgument(
+            ValueExpression Argument,
+            IReadOnlyList<ParameterProvider> MatchedParameters,
+            IReadOnlyList<ParameterDocumentation> ParameterDocumentation);
     }
 }

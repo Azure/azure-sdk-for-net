@@ -195,7 +195,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<OriginGroupProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CdnEndpoint>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CdnEndpoint>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

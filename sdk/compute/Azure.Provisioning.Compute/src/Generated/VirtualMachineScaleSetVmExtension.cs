@@ -335,7 +335,7 @@ namespace Azure.Provisioning.Compute
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _vmssExtensionName = DefineProperty<string>(nameof(VmssExtensionName), new string[] { "vmssExtensionName" }, isOutput: true, isRequired: true);
-            _parent = DefineResource<VirtualMachineScaleSetVm>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSetVm>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
