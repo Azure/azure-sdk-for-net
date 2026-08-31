@@ -5,7 +5,7 @@
 ### Features Added
 
 - Upgraded API version to `2026-03-01`.
-- Added support for private frontends on Application Gateway for Containers, including the `PrivateEndpointConnectionResource` and `PrivateLinkResource` resources and the `TrafficControllerPublicNetworkAccess` property on frontends.
+- Added support for private frontends on Application Gateway for Containers, including the `PrivateEndpointConnectionResource` and `PrivateLinkResource` resources and the `PublicNetworkAccess` property (of type `TrafficControllerPublicNetworkAccess`) on `TrafficControllerFrontendData` and `FrontendUpdateProperties`.
 
 ### Breaking Changes
 
