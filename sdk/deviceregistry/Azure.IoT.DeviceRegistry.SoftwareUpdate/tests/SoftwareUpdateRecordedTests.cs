@@ -47,8 +47,8 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate.Tests
                 Response<UpdateContent> response = await client.GetUpdateAsync(Provider, Name, Version);
                 Assert.That(response.Value, Is.InstanceOf<UpdateContent>());
                 Assert.That(response.Value.ManifestVersion, Is.EqualTo("4.0"));
-                Assert.That(response.Value.ImportedDateTime, Is.Not.EqualTo(default(System.DateTimeOffset)));
-                Assert.That(response.Value.CreatedDateTime, Is.Not.EqualTo(default(System.DateTimeOffset)));
+                Assert.That(response.Value.ImportedOn, Is.Not.EqualTo(default(System.DateTimeOffset)));
+                Assert.That(response.Value.CreatedOn, Is.Not.EqualTo(default(System.DateTimeOffset)));
             }
             finally
             {

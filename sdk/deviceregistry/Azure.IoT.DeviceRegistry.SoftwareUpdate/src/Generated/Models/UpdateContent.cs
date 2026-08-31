@@ -22,16 +22,16 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="updateId"> Update identity. </param>
         /// <param name="compatibility"> List of update compatibility information. </param>
         /// <param name="manifestVersion"> Schema version of manifest used to import the update. </param>
-        /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
-        /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
-        internal UpdateContent(UpdateId updateId, IEnumerable<SoftwareUpdateCompatibility> compatibility, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime)
+        /// <param name="importedOn"> Date and time in UTC when the update was imported. </param>
+        /// <param name="createdOn"> Date and time in UTC when the update was created. </param>
+        internal UpdateContent(UpdateId updateId, IEnumerable<SoftwareUpdateCompatibility> compatibility, string manifestVersion, DateTimeOffset importedOn, DateTimeOffset createdOn)
         {
             UpdateId = updateId;
             Compatibility = compatibility.ToList();
             ReferencedBy = new ChangeTrackingList<UpdateId>();
             ManifestVersion = manifestVersion;
-            ImportedDateTime = importedDateTime;
-            CreatedDateTime = createdDateTime;
+            ImportedOn = importedOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateContent"/>. </summary>
@@ -49,11 +49,11 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="referencedBy"> List of update identities that reference this update. </param>
         /// <param name="scanResult"> Update aggregate scan result (calculated from payload file scan results). </param>
         /// <param name="manifestVersion"> Schema version of manifest used to import the update. </param>
-        /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
-        /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
+        /// <param name="importedOn"> Date and time in UTC when the update was imported. </param>
+        /// <param name="createdOn"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateContent(UpdateId updateId, string description, string friendlyName, bool? isDeployable, string updateType, string installedCriteria, IList<SoftwareUpdateCompatibility> compatibility, SoftwareUpdateInstructions instructions, IList<UpdateId> referencedBy, string scanResult, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateContent(UpdateId updateId, string description, string friendlyName, bool? isDeployable, string updateType, string installedCriteria, IList<SoftwareUpdateCompatibility> compatibility, SoftwareUpdateInstructions instructions, IList<UpdateId> referencedBy, string scanResult, string manifestVersion, DateTimeOffset importedOn, DateTimeOffset createdOn, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateId = updateId;
             Description = description;
@@ -66,8 +66,8 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             ReferencedBy = referencedBy;
             ScanResult = scanResult;
             ManifestVersion = manifestVersion;
-            ImportedDateTime = importedDateTime;
-            CreatedDateTime = createdDateTime;
+            ImportedOn = importedOn;
+            CreatedOn = createdOn;
             Etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -109,10 +109,10 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         public string ManifestVersion { get; }
 
         /// <summary> Date and time in UTC when the update was imported. </summary>
-        public DateTimeOffset ImportedDateTime { get; }
+        public DateTimeOffset ImportedOn { get; }
 
         /// <summary> Date and time in UTC when the update was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Update ETag. </summary>
         public ETag? Etag { get; }

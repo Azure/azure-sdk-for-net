@@ -116,13 +116,13 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility SoftwareUpdateCompatibility(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalProperties = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateInstructions SoftwareUpdateInstructions(System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateStep> steps = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateStep SoftwareUpdateStep(Azure.IoT.DeviceRegistry._SoftwareUpdate.StepType? type = default(Azure.IoT.DeviceRegistry._SoftwareUpdate.StepType?), string description = null, string handler = null, System.Collections.Generic.IDictionary<string, System.BinaryData> handlerProperties = null, System.Collections.Generic.IEnumerable<string> fileNames = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId updateId = null) { throw null; }
-        public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateContent UpdateContent(Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId updateId = null, string description = null, string friendlyName = null, bool? isDeployable = default(bool?), string updateType = null, string installedCriteria = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility> compatibility = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateInstructions instructions = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId> referencedBy = null, string scanResult = null, string manifestVersion = null, System.DateTimeOffset importedDateTime = default(System.DateTimeOffset), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateContent UpdateContent(Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId updateId = null, string description = null, string friendlyName = null, bool? isDeployable = default(bool?), string updateType = null, string installedCriteria = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility> compatibility = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateInstructions instructions = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId> referencedBy = null, string scanResult = null, string manifestVersion = null, System.DateTimeOffset importedOn = default(System.DateTimeOffset), System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateFile UpdateFile(string fileName = null, long sizeInBytes = (long)0, System.Collections.Generic.IDictionary<string, string> hashes = null, string mimeType = null, string scanResult = null, string scanDetails = null, System.Collections.Generic.IDictionary<string, string> properties = null, string fileId = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateFileBase> relatedFiles = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateFileDownloadHandler downloadHandler = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateFileBase UpdateFileBase(string fileName = null, long sizeInBytes = (long)0, System.Collections.Generic.IDictionary<string, string> hashes = null, string mimeType = null, string scanResult = null, string scanDetails = null, System.Collections.Generic.IDictionary<string, string> properties = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateFileDownloadHandler UpdateFileDownloadHandler(string id = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId UpdateId(string provider = null, string name = null, string version = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateInfo UpdateInfo(Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId updateId = null, string description = null, string friendlyName = null) { throw null; }
-        public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateOperation UpdateOperation(string operationId = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.OperationState status = default(Azure.IoT.DeviceRegistry._SoftwareUpdate.OperationState), Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateInfo update = null, string resourceLocation = null, Azure.ResponseError error = null, string traceId = null, System.DateTimeOffset lastActionDateTime = default(System.DateTimeOffset), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateOperation UpdateOperation(string operationId = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.OperationState status = default(Azure.IoT.DeviceRegistry._SoftwareUpdate.OperationState), Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateInfo update = null, string resourceLocation = null, Azure.ResponseError error = null, string traceId = null, System.DateTimeOffset lastActionOn = default(System.DateTimeOffset), System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
     }
     public partial class FileImportMetadata : System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.FileImportMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.FileImportMetadata>
     {
@@ -324,11 +324,11 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
     {
         internal UpdateContent() { }
         public System.Collections.Generic.IList<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility> Compatibility { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } }
-        public System.DateTimeOffset ImportedDateTime { get { throw null; } }
+        public System.DateTimeOffset ImportedOn { get { throw null; } }
         public string InstalledCriteria { get { throw null; } }
         public Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateInstructions Instructions { get { throw null; } }
         public bool? IsDeployable { get { throw null; } }
@@ -435,10 +435,10 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
     public partial class UpdateOperation : System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateOperation>
     {
         internal UpdateOperation() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ETag? Etag { get { throw null; } }
-        public System.DateTimeOffset LastActionDateTime { get { throw null; } }
+        public System.DateTimeOffset LastActionOn { get { throw null; } }
         public string OperationId { get { throw null; } }
         public string ResourceLocation { get { throw null; } }
         public Azure.IoT.DeviceRegistry._SoftwareUpdate.OperationState Status { get { throw null; } }

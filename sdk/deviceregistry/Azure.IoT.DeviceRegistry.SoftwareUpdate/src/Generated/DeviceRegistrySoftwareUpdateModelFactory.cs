@@ -82,11 +82,11 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="referencedBy"> List of update identities that reference this update. </param>
         /// <param name="scanResult"> Update aggregate scan result (calculated from payload file scan results). </param>
         /// <param name="manifestVersion"> Schema version of manifest used to import the update. </param>
-        /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
-        /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
+        /// <param name="importedOn"> Date and time in UTC when the update was imported. </param>
+        /// <param name="createdOn"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
         /// <returns> A new <see cref="_SoftwareUpdate.UpdateContent"/> instance for mocking. </returns>
-        public static UpdateContent UpdateContent(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, SoftwareUpdateInstructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
+        public static UpdateContent UpdateContent(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, SoftwareUpdateInstructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedOn = default, DateTimeOffset createdOn = default, ETag? etag = default)
         {
             compatibility ??= new ChangeTrackingList<SoftwareUpdateCompatibility>();
             referencedBy ??= new ChangeTrackingList<UpdateId>();
@@ -103,8 +103,8 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
                 referencedBy.ToList(),
                 scanResult,
                 manifestVersion,
-                importedDateTime,
-                createdDateTime,
+                importedOn,
+                createdOn,
                 etag,
                 additionalBinaryDataProperties: null);
         }
@@ -231,11 +231,11 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// Operation correlation identity that can used by Microsoft Support for
         /// troubleshooting.
         /// </param>
-        /// <param name="lastActionDateTime"> Date and time in UTC when the operation status was last updated. </param>
-        /// <param name="createdDateTime"> Date and time in UTC when the operation was created. </param>
+        /// <param name="lastActionOn"> Date and time in UTC when the operation status was last updated. </param>
+        /// <param name="createdOn"> Date and time in UTC when the operation was created. </param>
         /// <param name="etag"> Operation ETag. </param>
         /// <returns> A new <see cref="_SoftwareUpdate.UpdateOperation"/> instance for mocking. </returns>
-        public static UpdateOperation UpdateOperation(string operationId = default, OperationState status = default, UpdateInfo update = default, string resourceLocation = default, ResponseError error = default, string traceId = default, DateTimeOffset lastActionDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
+        public static UpdateOperation UpdateOperation(string operationId = default, OperationState status = default, UpdateInfo update = default, string resourceLocation = default, ResponseError error = default, string traceId = default, DateTimeOffset lastActionOn = default, DateTimeOffset createdOn = default, ETag? etag = default)
         {
             return new UpdateOperation(
                 operationId,
@@ -244,8 +244,8 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
                 resourceLocation,
                 error,
                 traceId,
-                lastActionDateTime,
-                createdDateTime,
+                lastActionOn,
+                createdOn,
                 etag,
                 additionalBinaryDataProperties: null);
         }
