@@ -251,6 +251,26 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
         }
 
+        [Test]
+        public void HandlesCaeChallengeWhenChallengeCacheIsEmpty()
+        {
+            // Regression: a CAE (insufficient_claims) challenge received for an authority that is not
+            // yet in the challenge cache must surface the service failure rather than throwing a
+            // NullReferenceException. Previously the claims branch dereferenced the null cached
+            // challenge on a cache miss.
+            MockTransport transport = new(new[]
+            {
+                new MockResponse(401).WithHeader(
+                    "WWW-Authenticate",
+                    @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsiYWNycyI6eyJlc3NlbnRpYWwiOnRydWUsInZhbHVlIjoiY3AxIn19fQ=="""),
+            });
+
+            SecretClientOptions options = new() { Transport = transport };
+            SecretClient client = new(VaultUri, new MockCredential(transport), options);
+
+            // Must surface as a service failure (401), not a NullReferenceException.
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetSecretAsync("test-secret"));
+        }
         private class MockTransportBuilder
         {
             private const string AuthorizationHeader = "Authorization";
