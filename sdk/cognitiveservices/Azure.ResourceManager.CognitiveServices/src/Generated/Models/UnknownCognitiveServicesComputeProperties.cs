@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,11 +16,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCognitiveServicesComputeProperties"/>. </summary>
         /// <param name="computeType"> The type of compute resource. </param>
+        /// <param name="location"> The location of the compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
         /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", provisioningState, errors, createdOn, additionalBinaryDataProperties)
+        internal UnknownCognitiveServicesComputeProperties(ComputeType computeType, AzureLocation location, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", location, provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
         }
     }
