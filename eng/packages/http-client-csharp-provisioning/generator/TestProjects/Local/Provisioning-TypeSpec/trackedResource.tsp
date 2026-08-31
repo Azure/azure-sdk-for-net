@@ -43,6 +43,9 @@ model ConfigurationStoreProperties {
   /** The backup policy for the configuration store. */
   backupPolicy?: BackupPolicy;
 
+  /** The string-discriminated backup policy for the configuration store. */
+  stringDiscriminatedBackupPolicy?: StringDiscriminatedBackupPolicy;
+
   /** Enables or disables public network access. */
   publicNetworkAccess?: PublicNetworkAccess;
 
