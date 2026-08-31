@@ -1,15 +1,5 @@
 <?xml version="1.0"?>
 <RunSettings>
-  <NUnit>
-    <ConsoleOut>0</ConsoleOut>
-  </NUnit>
-  <RunConfiguration>
-    <TargetPlatform>x64</TargetPlatform>
-  </RunConfiguration>
-  <TestRunParameters>
-    <Parameter name="TestMode" value="Playback" />
-    <Parameter name="EnableFiddler" value="false" />
-  </TestRunParameters>
   <DataCollectionRunSettings>
     <DataCollectors>
       <DataCollector friendlyName="XPlat Code Coverage" enabled="true">
