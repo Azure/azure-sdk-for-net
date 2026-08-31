@@ -106,7 +106,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             DefineProperty<string>("schedulePolicyType", new string[] { "schedulePolicyType" }, defaultValue: "SimpleSchedulePolicy");
             _scheduleRunFrequency = DefineProperty<ScheduleRunType>(nameof(ScheduleRunFrequency), new string[] { "scheduleRunFrequency" });
             _scheduleRunDays = DefineListProperty<BackupDayOfWeek>(nameof(ScheduleRunDays), new string[] { "scheduleRunDays" });
-            _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" });
+            _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" }, format: "O");
             _hourlySchedule = DefineModelProperty<BackupHourlySchedule>(nameof(HourlySchedule), new string[] { "hourlySchedule" });
             _scheduleWeeklyFrequency = DefineProperty<int>(nameof(ScheduleWeeklyFrequency), new string[] { "scheduleWeeklyFrequency" });
             DefineAdditionalProperties();

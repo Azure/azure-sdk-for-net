@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         private BicepValue<ContainerRegistryTaskRunType> _runType;
         private BicepValue<string> _agentPoolName;
         private BicepValue<DateTimeOffset> _createdOn;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _finishOn;
         private BicepList<ContainerRegistryTaskImageDescriptor> _outputImages;
         private BicepValue<string> _task;
@@ -102,13 +102,13 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             _runType = DefineProperty<ContainerRegistryTaskRunType>(nameof(RunType), new string[] { "runType" });
             _agentPoolName = DefineProperty<string>(nameof(AgentPoolName), new string[] { "agentPoolName" });
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createTime" }, format: "O");
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, format: "O");
             _outputImages = DefineListProperty<ContainerRegistryTaskImageDescriptor>(nameof(OutputImages), new string[] { "outputImages" });
             _task = DefineProperty<string>(nameof(Task), new string[] { "task" });
