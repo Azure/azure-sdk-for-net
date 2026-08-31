@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>One supported text part in a completed user turn.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceInputTextPart
 {
     /// <summary>Initializes a text content part.</summary>
@@ -20,6 +23,7 @@ public sealed class VoiceInputTextPart
 }
 
 /// <summary>A completed user text turn.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceUserMessageEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a completed user turn.</summary>
@@ -43,6 +47,7 @@ public sealed class VoiceUserMessageEvent : VoiceInboundMessage
 }
 
 /// <summary>A Bridge-generated no-input turn.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceUserNoInputEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a no-input event.</summary>
@@ -61,6 +66,7 @@ public sealed class VoiceUserNoInputEvent : VoiceInboundMessage
 }
 
 /// <summary>Advises that caller speech began while no response was open.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceUserSpeechStartedEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a speech-start event.</summary>
@@ -71,6 +77,7 @@ public sealed class VoiceUserSpeechStartedEvent : VoiceInboundMessage
 }
 
 /// <summary>Reports caller interruption and the played-text snapshot.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceBargeInEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a barge-in event.</summary>
@@ -98,6 +105,7 @@ public sealed class VoiceBargeInEvent : VoiceInboundMessage
 }
 
 /// <summary>Reports acceptance of a proactive response request.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseAcceptedEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a proactive acceptance event.</summary>
@@ -112,6 +120,7 @@ public sealed class VoiceResponseAcceptedEvent : VoiceInboundMessage
 }
 
 /// <summary>Reports that a proactive response request was dropped.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseDroppedEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a proactive drop event.</summary>
@@ -130,6 +139,7 @@ public sealed class VoiceResponseDroppedEvent : VoiceInboundMessage
 }
 
 /// <summary>Reports the winning self-cancel playback outcome.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseCancelledEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a response-cancelled event.</summary>
@@ -157,6 +167,7 @@ public sealed class VoiceResponseCancelledEvent : VoiceInboundMessage
 }
 
 /// <summary>Reports a response or pending-input timeout.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseTimeoutEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a timeout event.</summary>
@@ -184,6 +195,7 @@ public sealed class VoiceResponseTimeoutEvent : VoiceInboundMessage
 }
 
 /// <summary>Reports Bridge-initiated session termination.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceSessionEndEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a session-end event.</summary>
