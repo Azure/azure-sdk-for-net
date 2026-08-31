@@ -10,6 +10,7 @@ namespace Azure.Provisioning.Storage;
 
 public partial class SmbSetting
 {
+    // TypeSpec flattens this as MultichannelIsMultiChannelEnabled; retain the shipped IsMultiChannelEnabled name.
     /// <summary> Gets or sets whether multichannel is enabled. </summary>
     [CodeGenMember("MultichannelIsMultiChannelEnabled")]
     public BicepValue<bool> IsMultiChannelEnabled

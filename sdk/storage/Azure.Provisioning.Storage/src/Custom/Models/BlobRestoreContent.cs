@@ -32,8 +32,9 @@ public partial class BlobRestoreContent
 
     partial void DefineAdditionalProperties()
     {
-        // These request properties are also reachable through an output model graph. Remove this workaround when
-        // input and output model graphs are analyzed coherently: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // The generator omits writable TimeToRestore and BlobRanges because this request model is also reachable
+        // through an output model graph. Remove this workaround when input and output models are analyzed coherently:
+        // https://github.com/Azure/azure-sdk-for-net/issues/61011.
         _timeToRestore = DefineProperty<DateTimeOffset>(nameof(TimeToRestore), new string[] { "timeToRestore" }, format: "O");
         _blobRanges = DefineListProperty<BlobRestoreRange>(nameof(BlobRanges), new string[] { "blobRanges" });
     }

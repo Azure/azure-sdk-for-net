@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 [assembly: CodeGenEnumValue("StoragePublicAccessType", "Container", 1)]
 [assembly: CodeGenEnumValue("StoragePublicAccessType", "Blob", 2)]
 
+// TypeSpec emits the replacement Tls10-Tls13 names only; retain the shipped Tls1_0-Tls1_3 aliases and ordinals.
 [assembly: CodeGenEnumValue(
     "StorageMinimumTlsVersion",
     "Tls1_0",

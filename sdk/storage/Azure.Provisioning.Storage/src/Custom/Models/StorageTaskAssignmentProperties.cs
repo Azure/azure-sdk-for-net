@@ -12,6 +12,8 @@ namespace Azure.Provisioning.Storage;
 
 public partial class StorageTaskAssignmentProperties
 {
+    // The generator emits ProvisioningState with the task-specific enum; expose it under the shipped qualified name
+    // and retain the obsolete shared-enum property on the same response path.
     private BicepValue<StorageTaskAssignmentProvisioningState> _storageTaskAssignmentProvisioningState;
 #pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
     private BicepValue<StorageProvisioningState> _legacyProvisioningState;

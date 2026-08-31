@@ -8,9 +8,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage;
 
-/// <summary>
-/// The Storage Account Local User keys.
-/// </summary>
+// Provisioning generation omits custom ARM actions and their result models; retain the shipped listKeys result shape.
+// Remove this type when action generation is supported: https://github.com/Azure/azure-sdk-for-net/issues/56753.
+/// <summary> The Storage Account Local User keys. </summary>
 public partial class LocalUserKeys : ProvisionableConstruct
 {
     private BicepList<StorageSshPublicKey>? _sshAuthorizedKeys;

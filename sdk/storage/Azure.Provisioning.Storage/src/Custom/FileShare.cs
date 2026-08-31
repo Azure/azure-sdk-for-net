@@ -9,6 +9,7 @@ namespace Azure.Provisioning.Storage;
 
 public partial class FileShare
 {
+    // TypeSpec generates AccessTierChangedOn; retain the shipped AccessTierChangeOn compatibility alias.
     /// <summary> Gets the last modification time for the share access tier. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This property is obsoleted and will be removed in a future version. Please use AccessTierChangedOn instead.")]

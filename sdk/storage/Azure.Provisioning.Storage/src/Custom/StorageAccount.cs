@@ -96,6 +96,8 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // The generator emits ProvisioningState with the account-specific enum; expose it under the shipped qualified
+    // name and retain the obsolete shared-enum property on the same response path.
     /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This property is obsoleted and will be removed in a future version. Please use StorageAccountProvisioningState instead.")]
@@ -121,6 +123,9 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    // Generated flattened properties are getter-only because their resource-model parent is read-only. Forward
+    // through the custom writable nested properties until resource and create-body graphs are recursively combined:
+    // https://github.com/Azure/azure-sdk-for-net/issues/61011.
     /// <summary> Gets or sets the custom domain assigned to this storage account. </summary>
     [CodeGenMember("CustomDomain")]
     public StorageCustomDomain CustomDomain

@@ -11,6 +11,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Storage;
 
+// TypeSpec emits StoragePrivateEndpointConnection as a resource but omits this shipped data-model view, which the
+// obsolete PrivateEndpointConnections compatibility property still exposes.
 /// <summary>
 /// A class representing the StoragePrivateEndpointConnection data model.
 /// The Private Endpoint Connection resource.

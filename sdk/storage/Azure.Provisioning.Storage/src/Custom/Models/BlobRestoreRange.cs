@@ -31,8 +31,9 @@ public partial class BlobRestoreRange
 
     partial void DefineAdditionalProperties()
     {
-        // These request properties are also reachable through an output model graph. Remove this workaround when
-        // input and output model graphs are analyzed coherently: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+        // The generator omits writable StartRange and EndRange because this request model is also reachable through
+        // an output model graph. Remove this workaround when input and output models are analyzed coherently:
+        // https://github.com/Azure/azure-sdk-for-net/issues/61011.
         _startRange = DefineProperty<string>(nameof(StartRange), new string[] { "startRange" });
         _endRange = DefineProperty<string>(nameof(EndRange), new string[] { "endRange" });
     }

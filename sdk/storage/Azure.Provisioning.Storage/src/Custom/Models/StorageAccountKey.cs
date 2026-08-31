@@ -9,9 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage;
 
-/// <summary>
-/// An access key for the storage account.
-/// </summary>
+// Provisioning generation omits custom ARM actions and their result models; retain the shipped listKeys result shape.
+// Remove this type when action generation is supported: https://github.com/Azure/azure-sdk-for-net/issues/56753.
+/// <summary> An access key for the storage account. </summary>
 public partial class StorageAccountKey : ProvisionableConstruct
 {
     private BicepValue<string>? _keyName;

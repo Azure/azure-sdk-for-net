@@ -18,6 +18,7 @@ internal partial class StorageAccountProperties
     private BicepValue<StorageAccountAccessTier> _accessTier;
     private StorageAccountNetworkRuleSet _networkRuleSet;
 #pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
+    // TypeSpec uses StorageAccountProvisioningState; retain the shipped shared-enum view on the same response path.
     private BicepValue<StorageProvisioningState> _legacyProvisioningState;
 #pragma warning restore CS0618
 

@@ -3,9 +3,9 @@
 
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated FileService resource.
 public partial class FileService
 {
+    // TypeSpec exposes SMB settings as ProtocolSettings.SmbSetting; retain the shipped flattened ProtocolSmbSetting property.
     /// <summary> Gets or sets the SMB protocol settings. </summary>
     public SmbSetting ProtocolSmbSetting
     {

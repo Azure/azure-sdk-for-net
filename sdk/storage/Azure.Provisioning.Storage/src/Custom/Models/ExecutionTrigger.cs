@@ -30,7 +30,8 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     private BicepValue<ExecutionTriggerType>? _triggerType;
 #pragma warning restore CS0618
 
-    // Preserve the shipped TriggerType property by adding its original "type" path to the generated construct.
+    // The generator emits TaskExecutionTriggerType with a new enum type; retain the shipped TriggerType property
+    // and ExecutionTriggerType enum on the same "type" path.
     partial void DefineAdditionalProperties()
     {
 #pragma warning disable CS0618 // Compatibility property registration intentionally uses the obsolete shipped enum.

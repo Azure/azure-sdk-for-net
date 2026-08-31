@@ -6,9 +6,8 @@ using System.ComponentModel;
 
 namespace Azure.Provisioning.Storage;
 
-/// <summary>
-/// The trigger type of the storage task assignment execution.
-/// </summary>
+// TypeSpec generates TaskExecutionTriggerType instead; retain this shipped enum for obsolete TriggerType compatibility.
+/// <summary> The trigger type of the storage task assignment execution. </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Obsolete("This type is obsoleted and will be removed in a future version. Please use TaskExecutionTriggerType instead.")]
 public enum ExecutionTriggerType

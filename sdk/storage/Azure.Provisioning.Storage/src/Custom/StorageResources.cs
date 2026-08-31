@@ -16,9 +16,8 @@ namespace Azure.Provisioning;
 // look like.  Pulling the most common types out will help with discovery.
 // Adding ResourceResolver will help with easy of composition.
 
-/// <summary>
-/// Helpers to construct the most commonly used Azure Storage resources.
-/// </summary>
+// TypeSpec emits individual resources only; retain the shipped experimental convenience factory.
+/// <summary> Helpers to construct the most commonly used Azure Storage resources. </summary>
 public class StorageResources
 {
     /// <summary>

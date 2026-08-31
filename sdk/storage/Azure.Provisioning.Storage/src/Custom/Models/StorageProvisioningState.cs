@@ -7,9 +7,8 @@ using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Storage;
 
-/// <summary>
-/// Gets the status of the storage account at the time the operation was called.
-/// </summary>
+// TypeSpec splits this shipped enum into account- and task-assignment-specific enums; retain the combined type for compatibility.
+/// <summary> Gets the status of the storage account at the time the operation was called. </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Obsolete("This type is obsoleted and will be removed in a future version. Please use StorageAccountProvisioningState or StorageTaskAssignmentProvisioningState instead.")]
 public enum StorageProvisioningState

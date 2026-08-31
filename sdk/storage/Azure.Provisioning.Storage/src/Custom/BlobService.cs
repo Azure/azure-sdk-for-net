@@ -12,7 +12,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated BlobService resource.
+// TypeSpec does not emit the experimental IClientCreator integration; retain the shipped deployment-output client factory.
 public partial class BlobService
 #if EXPERIMENTAL_PROVISIONING
     : IClientCreator<BlobServiceClient, BlobClientOptions>
