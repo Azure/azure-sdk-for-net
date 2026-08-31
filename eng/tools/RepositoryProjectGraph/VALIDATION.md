@@ -22,6 +22,144 @@ All three are needed before production rollout. A structural audit alone cannot 
 arbitrary file access in an `Exec`, custom task, or test. A dynamic run alone proves only
 the host and matrix configurations that happened to run.
 
+## Hosted CI validation record (August 2026)
+
+This section is a standalone record of the two hosted validation campaigns used to assess the
+repository graph. It distinguishes a mathematical parity proof from a dynamic sparse-checkout
+burn-in: the former completed with exact equality, while the latter found no missing checkout
+closure but did expose one matrix-compatibility defect that was fixed locally and not rerun in
+hosted CI during this campaign.
+
+| Contract | Hosted run | Result |
+| --- | --- | --- |
+| `Language-Settings.ps1` indirect-package selection | [PR #62582](https://github.com/Azure/azure-sdk-for-net/pull/62582), [ADO build 6768099](https://dev.azure.com/azure-sdk/public/_build/results?buildId=6768099) | **Proven:** complete oracle and graph relations were equal, with zero PackageInfo mapping differences. |
+| Singleton sparse-checkout availability under the root PR matrix | [PR #62555](https://github.com/Azure/azure-sdk-for-net/pull/62555), [ADO build 6763030](https://dev.azure.com/azure-sdk/public/_build/results?buildId=6763030) | **Broad burn-in completed:** 46 of 55 host jobs passed; no failure was a missing sparse path. One source-only framework-selection defect remains to be rerun after its local fix. |
+
+### Complete dependency-relation parity
+
+The parity branch replaced `generate_target_service_test_matrix` fan-out with one exhaustive
+validation job. The normal `Language-Settings.ps1` lifecycle invoked
+`Validate-RepositoryProjectGraph.ps1 -DependencyRelation`, which generated production PackageInfo,
+collected the complete `MSBuildProjectReferenceOracle` relation in one `ResolveReferences`
+traversal, generated a fresh canonical repository graph, and compared both complete relations and
+their final PackageInfo mappings. Build, analyze, dependency-test, and test-matrix fan-out were
+disabled because they do not contribute to this proof.
+
+The fully green replacement ran on PR head `cf802a45d4e1624861b16d18e0dfb004b433efa3`
+and merge commit `43c61dd6edd1934597f85994a1230a79c57987b5`. Its
+[`Validate MSBuildProjectReferenceOracle parity` task](https://dev.azure.com/azure-sdk/public/_apis/build/builds/6768099/logs/35?api-version=7.1)
+emitted
+`MSBUILD_PROJECT_REFERENCE_ORACLE_PARITY_RESULT=proven` with these results:
+
+| Measurement | MSBuildProjectReferenceOracle | Repository graph | Difference |
+| --- | ---: | ---: | ---: |
+| Package-to-dependent-root relation | 2,820 | 2,820 | 0 / 0 |
+| Mapped PackageInfo relation | 2,755 | 2,755 | 0 / 0 |
+| Intentionally unmapped nested/test-root relation | 65 | 65 | 0 / 0 |
+
+Additional evidence:
+
+- 474 production PackageInfo entries were discovered through the production path.
+- The complete canonical graph contained 993 projects, 2,966 configurations, 22,749 configuration
+  edges, and 500 roots.
+- NuGet resolution completed 20,052 roots with zero unresolved roots and 4,683 derived edges.
+- Package discovery took 57.009 seconds, the oracle traversal 284.429 seconds, graph generation
+  and comparison 75.673 seconds, and the complete validation 482.647 seconds.
+- The 181,348,261-byte
+  [`RepositoryProjectGraphParity` artifact](https://dev.azure.com/azure-sdk/public/_build/results?buildId=6768099&view=artifacts&type=publishedArtifacts)
+  preserved raw oracle records, normalized relations, both empty directional differences,
+  PackageInfo mappings, the canonical graph, and provenance.
+- The companion [engineering-scripts build 6768100](https://dev.azure.com/azure-sdk/public/_build/results?buildId=6768100)
+  also succeeded.
+
+The task, job, phase, and complete replacement build all succeeded. An earlier proven run was
+`succeededWithIssues` only because an unnecessary post-job NuGet cache upload exhausted the hosted
+agent disk after evidence publication. Disabling that cache for the one-shot validation eliminated
+the post-job failure without changing parity behavior. Ten low-free-memory warnings during the
+oracle and one network-isolation shutdown warning did not affect graph completeness or package
+resolution.
+
+Because dependent selection distributes over changed-package unions, exact equality of the full
+relation proves equal indirect-package selection for every possible changed-package set under the
+validated production policy. The separate mapped and unmapped comparisons also prove that relation
+equality survives the final `Language-Settings.ps1` PackageInfo boundary.
+
+### Dynamic singleton sparse-checkout burn-in
+
+The sparse campaign generated the graph and PackageInfo once, then expanded every scheduling shard
+back into singleton artifact cases. Before each case, the runner cleaned an object-sharing local
+clone, materialized only that artifact's non-cone sparse-checkout paths, generated a singleton
+project-list override, restored CI setup dependencies, and ran `dotnet test eng/service.proj` with
+the host matrix's framework, configuration, and package/project-reference mode. A failed singleton
+was recorded without preventing later cases in the same job, so one artifact could not supply a
+missing path for another or hide later failures.
+
+The final replacement run used PR head `cf127a2d2719dc8cdbfd30149bc449e72f251077` and covered:
+
+- 478 artifact roots, including 7 validation-only roots for test projects outside all shipping
+  PackageInfo roots;
+- all 498 source-graph test projects, with zero uncovered projects and zero unavailable graph
+  roots; and
+- 55 native hosted jobs: 19 Linux, 17 Windows, and 19 macOS, staying below the 60-job campaign cap.
+
+The generated root PR matrix exercised net8, net9, and net10 across Linux, Windows, and macOS,
+Windows net462, Debug and Release entries, and package-reference and project-reference entries as
+selected by the matrix's normal sparse diagonal. The campaign validated the root unit-test
+contract; live, integration, performance, stress, sample, and service-specific custom pipeline
+contracts were outside its scope.
+
+| Host | Passed jobs | Failed jobs | Sparse-path omissions |
+| --- | ---: | ---: | ---: |
+| Linux | 17 | 2 | 0 |
+| Windows | 15 | 2 | 0 |
+| macOS | 14 | 5 | 0 |
+| **Total** | **46** | **9** | **0** |
+
+The failures were fully classified from ADO task logs:
+
+1. **Sparse validation matrix behavior:** three source-only artifacts inherited net9 and Windows
+   net462 scheduling frameworks that their projects do not target, producing `NETSDK1005` after
+   successful sparse materialization. The focused fix omits `dotnet test --framework` for
+   source-only artifacts so MSBuild builds their declared TFMs; test-bearing artifacts retain the
+   matrix framework. Its Pester coverage passed 8/8, but the fix was not pushed or rerun in this
+   hosted campaign.
+2. **Unrelated product dependency:** `Microsoft.Azure.Batch.Integration.Tests` produced `NU1605`
+   because it pins `Microsoft.Identity.Client` 4.61.3 while the evaluated `Azure.Core` requires
+   4.84.2 or newer. The same failure occurred on multiple hosts and was not changed for sparse
+   validation.
+3. **Hosted infrastructure:** three recordings fetches could not resolve `github.com`, and one
+   playback test timed out after test-proxy HTTP 500 responses. These cases reached setup or test
+   execution; they did not identify missing checkout paths.
+4. **Repository governance:** the PR's Compliance task rejected intended `eng/common` edits because
+   that directory is synchronized from `azure-sdk-tools`. This policy failure was independent of
+   graph construction and singleton execution.
+
+Earlier replacement runs also found and fixed four harness/setup problems before the final run:
+
+- generated matrix paths must remain rooted when Windows test and checkout drives differ;
+- source-only artifact cases must retain their source project instead of applying
+  `IncludeSrc=false` unconditionally;
+- tests that locate the repository through a `.git` directory require an object-sharing local
+  clone rather than a linked worktree whose `.git` is a file; and
+- the dedicated Windows clone requires `core.longPaths=true` before cleanup. All 17 final Windows
+  jobs ran without recurrence of the long-path cleanup cascade.
+
+### Combined conclusion and remaining evidence
+
+The hosted runs establish two strong results:
+
+- repository-graph dependency selection has strict, exhaustive parity with the independent
+  MSBuildProjectReferenceOracle for the validated merge commit; and
+- every final sparse failure was classified without finding a missing project, package, service
+  root, or repository input in a singleton checkout.
+
+They do **not** establish that every sparse test passed. The source-only framework fix needs a full
+hosted rerun, and transient/product failures need a clean run or an explicit baseline comparison.
+The campaigns also do not replace the evaluated structural audit across every graph-shaping MSBuild
+property described in Phase 4, nor do they validate live/integration/performance/stress or custom
+service pipeline setup. Those limits should remain explicit if this section is extracted into a
+standalone validation report or gist.
+
 ## Handoff instructions
 
 The implementing agent should:
