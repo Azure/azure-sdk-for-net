@@ -96,35 +96,36 @@ public class BasicCosmosDBTests
               name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
               location: location
               properties: {
+                consistencyPolicy: {
+                  defaultConsistencyLevel: 'Session'
+                }
+                databaseAccountOfferType: 'Standard'
                 locations: [
                   {
                     locationName: resourceGroup().location
                   }
                 ]
-                consistencyPolicy: {
-                  defaultConsistencyLevel: 'Session'
-                }
-                databaseAccountOfferType: 'Standard'
               }
             }
 
             resource db 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-11-15' = {
               name: dbName
               location: location
+              parent: cosmos
               properties: {
-                resource: {
-                  id: dbName
-                }
                 options: {
                   throughput: 400
                 }
+                resource: {
+                  id: dbName
+                }
               }
-              parent: cosmos
             }
 
             resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-11-15' = {
               name: containerName
               location: location
+              parent: db
               properties: {
                 resource: {
                   id: containerName
@@ -135,7 +136,6 @@ public class BasicCosmosDBTests
                   }
                 }
               }
-              parent: db
             }
 
             output containerName string = containerName
