@@ -15,7 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApplicationInsights
 {
     /// <summary> A workbook definition. </summary>
-    public partial class ApplicationInsightsWorkbook : ProvisionableResource
+    public partial class ApplicationInsightsWorkbookRevision : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -26,11 +26,12 @@ namespace Azure.Provisioning.ApplicationInsights
         private ManagedServiceIdentity _identity;
         private BicepValue<WorkbookSharedTypeKind> _kind;
         private BicepValue<ETag> _eTag;
+        private ResourceReference<ApplicationInsightsWorkbook> _parent;
 
-        /// <summary> Creates a new ApplicationInsightsWorkbook. </summary>
+        /// <summary> Creates a new ApplicationInsightsWorkbookRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApplicationInsightsWorkbook(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01")
+        public ApplicationInsightsWorkbookRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/workbooks/revisions", resourceVersion ?? "2023-06-01")
         {
         }
 
@@ -156,6 +157,21 @@ namespace Azure.Provisioning.ApplicationInsights
             {
                 Initialize();
                 _eTag.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public ApplicationInsightsWorkbook Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -334,7 +350,7 @@ namespace Azure.Provisioning.ApplicationInsights
             }
         }
 
-        /// <summary> Define all the provisionable properties for ApplicationInsightsWorkbook. </summary>
+        /// <summary> Define all the provisionable properties for ApplicationInsightsWorkbookRevision. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -347,20 +363,21 @@ namespace Azure.Provisioning.ApplicationInsights
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<WorkbookSharedTypeKind>(nameof(Kind), new string[] { "kind" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
+            _parent = DefineResource<ApplicationInsightsWorkbook>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ApplicationInsightsWorkbook. </summary>
+        /// <summary> Creates a reference to an existing ApplicationInsightsWorkbookRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ApplicationInsightsWorkbook FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ApplicationInsightsWorkbookRevision FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ApplicationInsightsWorkbook result = new ApplicationInsightsWorkbook(bicepIdentifier, resourceVersion);
+            ApplicationInsightsWorkbookRevision result = new ApplicationInsightsWorkbookRevision(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ApplicationInsightsWorkbook that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ApplicationInsightsWorkbookRevision that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>
