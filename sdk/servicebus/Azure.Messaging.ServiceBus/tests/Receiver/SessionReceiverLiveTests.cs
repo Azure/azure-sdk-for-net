@@ -85,7 +85,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enableSession: true,
                 lockDuration: TimeSpan.FromMinutes(5),
                 usePremiumNamespace: true);
-            await using var client = new ServiceBusClient(TestEnvironment.PremiumFullyQualifiedNamespace, TestEnvironment.Credential);
+            await using var client = new ServiceBusClient(
+                TestEnvironment.PremiumFullyQualifiedNamespace,
+                TestEnvironment.Credential,
+                new ServiceBusClientOptions { RetryOptions = { TryTimeout = TimeSpan.FromSeconds(5) } });
             ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
             // 1. Send a message to some session.
@@ -143,7 +146,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enableSession: true,
                 lockDuration: TimeSpan.FromMinutes(5),
                 usePremiumNamespace: true);
-            await using var client = new ServiceBusClient(TestEnvironment.PremiumFullyQualifiedNamespace, TestEnvironment.Credential);
+            await using var client = new ServiceBusClient(
+                TestEnvironment.PremiumFullyQualifiedNamespace,
+                TestEnvironment.Credential,
+                new ServiceBusClientOptions { RetryOptions = { TryTimeout = TimeSpan.FromSeconds(5) } });
             ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
             var sessionId = Guid.NewGuid().ToString();
@@ -218,7 +224,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(lockLossWindow, Is.LessThan(lockDuration), "The lock must outlast the window, so that ageing out cannot supply the loss under test.");
 
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration, usePremiumNamespace: true);
-            await using var client = new ServiceBusClient(TestEnvironment.PremiumFullyQualifiedNamespace, TestEnvironment.Credential);
+            await using var client = new ServiceBusClient(
+                TestEnvironment.PremiumFullyQualifiedNamespace,
+                TestEnvironment.Credential,
+                new ServiceBusClientOptions { RetryOptions = { TryTimeout = TimeSpan.FromSeconds(5) } });
             ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
             var sessionId = Guid.NewGuid().ToString();
