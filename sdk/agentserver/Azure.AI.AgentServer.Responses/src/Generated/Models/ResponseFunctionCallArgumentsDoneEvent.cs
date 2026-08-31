@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when function-call arguments are finalized. </summary>
-    public partial class ResponseFunctionCallArgumentsDoneEvent : ResponseStreamEvent
+    public partial class ResponseFunctionCallArgumentsDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallArgumentsDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the item. </param>
@@ -35,17 +39,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallArgumentsDoneEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="name"> The name of the function that was called. </param>
         /// <param name="outputIndex"> The index of the output item. </param>
         /// <param name="arguments"> The function-call arguments. </param>
-        internal ResponseFunctionCallArgumentsDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string name, long outputIndex, string arguments) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseFunctionCallArgumentsDoneEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, string name, long outputIndex, string arguments, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             Name = name;
             OutputIndex = outputIndex;
             Arguments = arguments;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the item. </summary>

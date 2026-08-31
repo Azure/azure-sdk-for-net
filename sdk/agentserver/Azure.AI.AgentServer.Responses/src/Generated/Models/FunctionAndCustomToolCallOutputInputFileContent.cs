@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Input file. </summary>
-    public partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput
+    internal partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>. </summary>
         public FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)

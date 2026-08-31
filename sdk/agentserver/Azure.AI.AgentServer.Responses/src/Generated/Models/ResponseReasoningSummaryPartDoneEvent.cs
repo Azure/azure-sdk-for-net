@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when a reasoning summary part is completed. </summary>
-    public partial class ResponseReasoningSummaryPartDoneEvent : ResponseStreamEvent
+    public partial class ResponseReasoningSummaryPartDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningSummaryPartDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the item this summary part is associated with. </param>
@@ -34,17 +38,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningSummaryPartDoneEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item this summary part is associated with. </param>
         /// <param name="outputIndex"> The index of the output item this summary part is associated with. </param>
         /// <param name="summaryIndex"> The index of the summary part within the reasoning summary. </param>
         /// <param name="part"> The completed summary part. </param>
-        internal ResponseReasoningSummaryPartDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long summaryIndex, ResponseReasoningSummaryPartDoneEventPart part) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseReasoningSummaryPartDoneEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, long outputIndex, long summaryIndex, ResponseReasoningSummaryPartDoneEventPart part, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
             SummaryIndex = summaryIndex;
             Part = part;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the item this summary part is associated with. </summary>

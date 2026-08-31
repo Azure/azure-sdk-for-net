@@ -7,18 +7,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when an output item is marked done. </summary>
-    public partial class ResponseOutputItemDoneEvent : ResponseStreamEvent
+    public partial class ResponseOutputItemDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseOutputItemDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item that was marked done. </param>
         /// <param name="item"> The output item that was marked done. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="item"/> is null. </exception>
-        public ResponseOutputItemDoneEvent(long sequenceNumber, long outputIndex, OutputItem item) : base(ResponseStreamEventType.ResponseOutputItemDone, sequenceNumber)
+        public ResponseOutputItemDoneEvent(long sequenceNumber, long outputIndex, ResponseItem item) : base(ResponseStreamEventType.ResponseOutputItemDone, sequenceNumber)
         {
             Argument.AssertNotNull(item, nameof(item));
 
@@ -29,19 +33,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseOutputItemDoneEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item that was marked done. </param>
         /// <param name="item"> The output item that was marked done. </param>
-        internal ResponseOutputItemDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, OutputItem item) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseOutputItemDoneEvent(ResponseStreamEventType @type, long sequenceNumber, long outputIndex, ResponseItem item, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             OutputIndex = outputIndex;
             Item = item;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The index of the output item that was marked done. </summary>
         public long OutputIndex { get; set; }
 
         /// <summary> The output item that was marked done. </summary>
-        public OutputItem Item { get; set; }
+        public ResponseItem Item { get; set; }
     }
 }

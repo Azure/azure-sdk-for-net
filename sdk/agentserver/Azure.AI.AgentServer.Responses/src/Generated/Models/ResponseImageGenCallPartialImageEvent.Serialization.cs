@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseImageGenCallPartialImageEvent. </summary>
-    public partial class ResponseImageGenCallPartialImageEvent : ResponseStreamEvent, IJsonModel<ResponseImageGenCallPartialImageEvent>
+    public partial class ResponseImageGenCallPartialImageEvent : StreamingResponseUpdate, IJsonModel<ResponseImageGenCallPartialImageEvent>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseImageGenCallPartialImageEvent"/> for deserialization. </summary>
         internal ResponseImageGenCallPartialImageEvent()
@@ -23,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseImageGenCallPartialImageEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,6 +97,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(PartialImageIndex);
             writer.WritePropertyName("partial_image_b64"u8);
             writer.WriteStringValue(PartialImageB64);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -104,7 +120,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseImageGenCallPartialImageEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -125,11 +141,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ResponseStreamEventType @type = default;
             long sequenceNumber = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long outputIndex = default;
             string itemId = default;
             long partialImageIndex = default;
             string partialImageB64 = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,11 +186,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new ResponseImageGenCallPartialImageEvent(
                 @type,
                 sequenceNumber,
-                additionalBinaryDataProperties,
                 outputIndex,
                 itemId,
                 partialImageIndex,
-                partialImageB64);
+                partialImageB64,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseMCPListToolsCompletedEvent. </summary>
-    public partial class ResponseMCPListToolsCompletedEvent : ResponseStreamEvent
+    public partial class ResponseMCPListToolsCompletedEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseMCPListToolsCompletedEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the MCP tool call item that produced this output. </param>
@@ -29,13 +33,14 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseMCPListToolsCompletedEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the MCP tool call item that produced this output. </param>
         /// <param name="outputIndex"> The index of the output item that was processed. </param>
-        internal ResponseMCPListToolsCompletedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseMCPListToolsCompletedEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, long outputIndex, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the MCP tool call item that produced this output. </summary>

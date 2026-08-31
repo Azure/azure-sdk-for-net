@@ -8,12 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when there is an additional text delta. </summary>
-    public partial class ResponseTextDeltaEvent : ResponseStreamEvent
+    public partial class ResponseTextDeltaEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseTextDeltaEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the output item that the text delta was added to. </param>
@@ -38,19 +42,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseTextDeltaEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the output item that the text delta was added to. </param>
         /// <param name="outputIndex"> The index of the output item that the text delta was added to. </param>
         /// <param name="contentIndex"> The index of the content part that the text delta was added to. </param>
         /// <param name="delta"> The text delta that was added. </param>
         /// <param name="logprobs"> The log probabilities of the tokens in the delta. </param>
-        internal ResponseTextDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string delta, IList<ResponseLogProb> logprobs) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseTextDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, long outputIndex, long contentIndex, string delta, IList<ResponseLogProb> logprobs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
             Delta = delta;
             Logprobs = logprobs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the output item that the text delta was added to. </summary>

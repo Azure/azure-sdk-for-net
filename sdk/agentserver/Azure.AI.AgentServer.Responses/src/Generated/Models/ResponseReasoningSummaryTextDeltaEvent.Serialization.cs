@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when a delta is added to a reasoning summary text. </summary>
-    public partial class ResponseReasoningSummaryTextDeltaEvent : ResponseStreamEvent, IJsonModel<ResponseReasoningSummaryTextDeltaEvent>
+    public partial class ResponseReasoningSummaryTextDeltaEvent : StreamingResponseUpdate, IJsonModel<ResponseReasoningSummaryTextDeltaEvent>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningSummaryTextDeltaEvent"/> for deserialization. </summary>
         internal ResponseReasoningSummaryTextDeltaEvent()
@@ -23,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseReasoningSummaryTextDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,6 +97,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(SummaryIndex);
             writer.WritePropertyName("delta"u8);
             writer.WriteStringValue(Delta);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -104,7 +120,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseReasoningSummaryTextDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -125,11 +141,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ResponseStreamEventType @type = default;
             long sequenceNumber = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             long outputIndex = default;
             long summaryIndex = default;
             string delta = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,11 +186,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new ResponseReasoningSummaryTextDeltaEvent(
                 @type,
                 sequenceNumber,
-                additionalBinaryDataProperties,
                 itemId,
                 outputIndex,
                 summaryIndex,
-                delta);
+                delta,
+                additionalBinaryDataProperties);
         }
     }
 }

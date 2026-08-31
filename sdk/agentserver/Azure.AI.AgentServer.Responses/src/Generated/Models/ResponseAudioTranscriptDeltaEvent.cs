@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when there is a partial transcript of audio. </summary>
-    public partial class ResponseAudioTranscriptDeltaEvent : ResponseStreamEvent
+    public partial class ResponseAudioTranscriptDeltaEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTranscriptDeltaEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="delta"> The partial transcript of the audio response. </param>
@@ -27,11 +31,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTranscriptDeltaEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="delta"> The partial transcript of the audio response. </param>
-        internal ResponseAudioTranscriptDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseAudioTranscriptDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, string delta, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             Delta = delta;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The partial transcript of the audio response. </summary>

@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct OutputContentType : IEquatable<OutputContentType>
+    internal readonly partial struct OutputContentType : IEquatable<OutputContentType>
     {
         private readonly string _value;
         private const string OutputTextValue = "output_text";

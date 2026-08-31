@@ -8,12 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when text content is finalized. </summary>
-    public partial class ResponseTextDoneEvent : ResponseStreamEvent
+    public partial class ResponseTextDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseTextDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the output item that the text content is finalized. </param>
@@ -38,19 +42,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseTextDoneEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the output item that the text content is finalized. </param>
         /// <param name="outputIndex"> The index of the output item that the text content is finalized. </param>
         /// <param name="contentIndex"> The index of the content part that the text content is finalized. </param>
         /// <param name="text"> The text content that is finalized. </param>
         /// <param name="logprobs"> The log probabilities of the tokens in the delta. </param>
-        internal ResponseTextDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string text, IList<ResponseLogProb> logprobs) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseTextDoneEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, long outputIndex, long contentIndex, string text, IList<ResponseLogProb> logprobs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
             Text = text;
             Logprobs = logprobs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the output item that the text content is finalized. </summary>

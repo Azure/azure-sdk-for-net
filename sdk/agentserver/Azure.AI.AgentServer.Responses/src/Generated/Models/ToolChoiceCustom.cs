@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Custom tool. </summary>
-    public partial class ToolChoiceCustom : ToolChoiceParam
+    internal partial class ToolChoiceCustom : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/>. </summary>
         /// <param name="name"> The name of the custom tool to call. </param>

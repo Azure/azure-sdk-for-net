@@ -6,12 +6,11 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.AgentServer.Responses
 {
     /// <summary></summary>
-    public readonly partial struct ItemType : IEquatable<ItemType>
+    internal readonly partial struct ItemType : IEquatable<ItemType>
     {
         private readonly string _value;
         private const string MessageValue = "message";
@@ -44,6 +43,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
+        private const string MemoryCommandPreviewCallValue = "memory_command_preview_call";
+        private const string MemoryCommandPreviewCallOutputValue = "memory_command_preview_call_output";
         private const string WorkflowActionValue = "workflow_action";
         private const string A2aPreviewCallValue = "a2a_preview_call";
         private const string A2aPreviewCallOutputValue = "a2a_preview_call_output";
@@ -63,6 +64,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string FabricDataagentPreviewCallOutputValue = "fabric_dataagent_preview_call_output";
         private const string AzureFunctionCallValue = "azure_function_call";
         private const string AzureFunctionCallOutputValue = "azure_function_call_output";
+        private const string ProgramValue = "program";
+        private const string ProgramOutputValue = "program_output";
 
         /// <summary> Initializes a new instance of <see cref="ItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -164,6 +167,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the MemorySearchCall. </summary>
         public static ItemType MemorySearchCall { get; } = new ItemType(MemorySearchCallValue);
 
+        /// <summary> Gets the MemoryCommandPreviewCall. </summary>
+        public static ItemType MemoryCommandPreviewCall { get; } = new ItemType(MemoryCommandPreviewCallValue);
+
+        /// <summary> Gets the MemoryCommandPreviewCallOutput. </summary>
+        public static ItemType MemoryCommandPreviewCallOutput { get; } = new ItemType(MemoryCommandPreviewCallOutputValue);
+
         /// <summary> Gets the WorkflowAction. </summary>
         public static ItemType WorkflowAction { get; } = new ItemType(WorkflowActionValue);
 
@@ -220,6 +229,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the AzureFunctionCallOutput. </summary>
         public static ItemType AzureFunctionCallOutput { get; } = new ItemType(AzureFunctionCallOutputValue);
+
+        /// <summary> Gets the Program. </summary>
+        public static ItemType Program { get; } = new ItemType(ProgramValue);
+
+        /// <summary> Gets the ProgramOutput. </summary>
+        public static ItemType ProgramOutput { get; } = new ItemType(ProgramOutputValue);
 
         /// <summary> Determines if two <see cref="ItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

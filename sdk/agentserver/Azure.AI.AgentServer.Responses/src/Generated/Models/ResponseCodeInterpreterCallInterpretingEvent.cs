@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when the code interpreter is actively interpreting the code snippet. </summary>
-    public partial class ResponseCodeInterpreterCallInterpretingEvent : ResponseStreamEvent
+    public partial class ResponseCodeInterpreterCallInterpretingEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseCodeInterpreterCallInterpretingEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item in the response for which the code interpreter is interpreting code. </param>
@@ -29,13 +33,14 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseCodeInterpreterCallInterpretingEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item in the response for which the code interpreter is interpreting code. </param>
         /// <param name="itemId"> The unique identifier of the code interpreter tool call item. </param>
-        internal ResponseCodeInterpreterCallInterpretingEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseCodeInterpreterCallInterpretingEvent(ResponseStreamEventType @type, long sequenceNumber, long outputIndex, string itemId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The index of the output item in the response for which the code interpreter is interpreting code. </summary>

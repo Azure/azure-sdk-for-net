@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ResponseStreamEventType : IEquatable<ResponseStreamEventType>
+    internal readonly partial struct ResponseStreamEventType : IEquatable<ResponseStreamEventType>
     {
         private readonly string _value;
         private const string ResponseAudioDeltaValue = "response.audio.delta";

@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> An event that is emitted when a response finishes as incomplete. </summary>
-    public partial class ResponseIncompleteEvent : ResponseStreamEvent, IJsonModel<ResponseIncompleteEvent>
+    public partial class ResponseIncompleteEvent : StreamingResponseUpdate, IJsonModel<ResponseIncompleteEvent>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteEvent"/> for deserialization. </summary>
         internal ResponseIncompleteEvent()
@@ -23,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseIncompleteEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -90,6 +91,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response"u8);
             writer.WriteObjectValue(Response, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -98,7 +114,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseIncompleteEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -119,8 +135,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ResponseStreamEventType @type = default;
             long sequenceNumber = default;
+            ResponseResult response = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponseObject response = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -135,7 +151,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("response"u8))
                 {
-                    response = ResponseObject.DeserializeResponseObject(prop.Value, options);
+                    response = ModelReaderWriter.Read<ResponseResult>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +159,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseIncompleteEvent(@type, sequenceNumber, additionalBinaryDataProperties, response);
+            return new ResponseIncompleteEvent(@type, sequenceNumber, response, additionalBinaryDataProperties);
         }
     }
 }

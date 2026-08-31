@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when a partial code snippet is streamed by the code interpreter. </summary>
-    public partial class ResponseCodeInterpreterCallCodeDeltaEvent : ResponseStreamEvent
+    public partial class ResponseCodeInterpreterCallCodeDeltaEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseCodeInterpreterCallCodeDeltaEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item in the response for which the code is being streamed. </param>
@@ -32,15 +36,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseCodeInterpreterCallCodeDeltaEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item in the response for which the code is being streamed. </param>
         /// <param name="itemId"> The unique identifier of the code interpreter tool call item. </param>
         /// <param name="delta"> The partial code snippet being streamed by the code interpreter. </param>
-        internal ResponseCodeInterpreterCallCodeDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseCodeInterpreterCallCodeDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, long outputIndex, string itemId, string delta, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
             Delta = delta;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The index of the output item in the response for which the code is being streamed. </summary>

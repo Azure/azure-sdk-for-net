@@ -88,13 +88,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("logprobs"u8);
-            writer.WriteStartArray();
-            foreach (LogProb item in Logprobs)
+            if (Optional.IsCollectionDefined(Logprobs))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteStartArray();
+                foreach (LogProb item in Logprobs)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -151,6 +154,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<LogProb> array = new List<LogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -164,7 +171,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs);
+            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<LogProb>());
         }
     }
 }

@@ -7,17 +7,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when the model response is complete. </summary>
-    public partial class ResponseCompletedEvent : ResponseStreamEvent
+    public partial class ResponseCompletedEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseCompletedEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="response"> Properties of the completed response. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        public ResponseCompletedEvent(long sequenceNumber, ResponseObject response) : base(ResponseStreamEventType.ResponseCompleted, sequenceNumber)
+        public ResponseCompletedEvent(long sequenceNumber, ResponseResult response) : base(ResponseStreamEventType.ResponseCompleted, sequenceNumber)
         {
             Argument.AssertNotNull(response, nameof(response));
 
@@ -27,14 +31,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseCompletedEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> Properties of the completed response. </param>
-        internal ResponseCompletedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseCompletedEvent(ResponseStreamEventType @type, long sequenceNumber, ResponseResult response, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             Response = response;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the completed response. </summary>
-        public ResponseObject Response { get; set; }
+        public ResponseResult Response { get; set; }
     }
 }

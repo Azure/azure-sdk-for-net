@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    public partial class ToolChoiceComputerUse : ToolChoiceParam
+    internal partial class ToolChoiceComputerUse : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceComputerUse"/>. </summary>
         public ToolChoiceComputerUse() : base(ToolChoiceParamType.ComputerUse)

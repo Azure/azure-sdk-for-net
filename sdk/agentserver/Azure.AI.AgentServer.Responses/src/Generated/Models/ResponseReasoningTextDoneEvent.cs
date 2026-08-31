@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when a reasoning text is completed. </summary>
-    public partial class ResponseReasoningTextDoneEvent : ResponseStreamEvent
+    public partial class ResponseReasoningTextDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningTextDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the item this reasoning text is associated with. </param>
@@ -34,17 +38,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningTextDoneEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item this reasoning text is associated with. </param>
         /// <param name="outputIndex"> The index of the output item this reasoning text is associated with. </param>
         /// <param name="contentIndex"> The index of the reasoning content part. </param>
         /// <param name="text"> The full text of the completed reasoning content. </param>
-        internal ResponseReasoningTextDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string text) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseReasoningTextDoneEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, long outputIndex, long contentIndex, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
             Text = text;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the item this reasoning text is associated with. </summary>

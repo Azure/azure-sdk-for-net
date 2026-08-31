@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallInputDone. </summary>
-    public partial class ResponseCustomToolCallInputDoneEvent : ResponseStreamEvent
+    public partial class ResponseCustomToolCallInputDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output this event applies to. </param>
@@ -32,15 +36,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDoneEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output this event applies to. </param>
         /// <param name="itemId"> Unique identifier for the API item associated with this event. </param>
         /// <param name="input"> The complete input data for the custom tool call. </param>
-        internal ResponseCustomToolCallInputDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string input) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseCustomToolCallInputDoneEvent(ResponseStreamEventType @type, long sequenceNumber, long outputIndex, string itemId, string input, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
             Input = input;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The index of the output this event applies to. </summary>

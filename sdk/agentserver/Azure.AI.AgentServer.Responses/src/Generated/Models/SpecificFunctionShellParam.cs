@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Specific shell tool choice. </summary>
-    public partial class SpecificFunctionShellParam : ToolChoiceParam
+    internal partial class SpecificFunctionShellParam : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="SpecificFunctionShellParam"/>. </summary>
         public SpecificFunctionShellParam() : base(ToolChoiceParamType.Shell)

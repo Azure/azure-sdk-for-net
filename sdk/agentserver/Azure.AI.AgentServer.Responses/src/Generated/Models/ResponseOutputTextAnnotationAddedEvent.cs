@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseOutputTextAnnotationAddedEvent. </summary>
-    public partial class ResponseOutputTextAnnotationAddedEvent : ResponseStreamEvent
+    public partial class ResponseOutputTextAnnotationAddedEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseOutputTextAnnotationAddedEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The unique identifier of the item to which the annotation is being added. </param>
@@ -36,19 +40,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseOutputTextAnnotationAddedEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The unique identifier of the item to which the annotation is being added. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="contentIndex"> The index of the content part within the output item. </param>
         /// <param name="annotationIndex"> The index of the annotation within the content part. </param>
         /// <param name="annotation"> The annotation object being added. (See annotation schema for details.). </param>
-        internal ResponseOutputTextAnnotationAddedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, long annotationIndex, Annotation annotation) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseOutputTextAnnotationAddedEvent(ResponseStreamEventType @type, long sequenceNumber, string itemId, long outputIndex, long contentIndex, long annotationIndex, Annotation annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
             AnnotationIndex = annotationIndex;
             Annotation = annotation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier of the item to which the annotation is being added. </summary>

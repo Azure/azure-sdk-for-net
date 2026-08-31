@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ItemFieldType : IEquatable<ItemFieldType>
+    internal readonly partial struct ItemFieldType : IEquatable<ItemFieldType>
     {
         private readonly string _value;
         private const string MessageValue = "message";

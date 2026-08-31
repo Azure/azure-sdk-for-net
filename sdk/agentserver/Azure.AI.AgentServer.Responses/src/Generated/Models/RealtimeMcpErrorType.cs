@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct RealtimeMcpErrorType : IEquatable<RealtimeMcpErrorType>
+    internal readonly partial struct RealtimeMcpErrorType : IEquatable<RealtimeMcpErrorType>
     {
         private readonly string _value;
         private const string ProtocolErrorValue = "protocol_error";

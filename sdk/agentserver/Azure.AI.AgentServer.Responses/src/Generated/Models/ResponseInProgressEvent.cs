@@ -7,17 +7,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when the response is in progress. </summary>
-    public partial class ResponseInProgressEvent : ResponseStreamEvent
+    public partial class ResponseInProgressEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseInProgressEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="response"> The response that is in progress. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        public ResponseInProgressEvent(long sequenceNumber, ResponseObject response) : base(ResponseStreamEventType.ResponseInProgress, sequenceNumber)
+        public ResponseInProgressEvent(long sequenceNumber, ResponseResult response) : base(ResponseStreamEventType.ResponseInProgress, sequenceNumber)
         {
             Argument.AssertNotNull(response, nameof(response));
 
@@ -27,14 +31,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseInProgressEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> The response that is in progress. </param>
-        internal ResponseInProgressEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseInProgressEvent(ResponseStreamEventType @type, long sequenceNumber, ResponseResult response, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             Response = response;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The response that is in progress. </summary>
-        public ResponseObject Response { get; set; }
+        public ResponseResult Response { get; set; }
     }
 }

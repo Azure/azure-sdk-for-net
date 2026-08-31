@@ -9,11 +9,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Message. </summary>
-    public partial class OutputItemMessage : OutputItem, IJsonModel<OutputItemMessage>
+    public partial class OutputItemMessage : ResponseItem, IJsonModel<OutputItemMessage>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemMessage"/> for deserialization. </summary>
         internal OutputItemMessage()
@@ -22,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputItemMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -97,6 +99,21 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToSerialString());
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -105,7 +122,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputItemMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -124,21 +141,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            OutputItemType @type = default;
+            ResponseItemKind @type = "message";
             BinaryData createdBy = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             MessageStatus status = default;
             MessageRole role = default;
             IList<MessageContent> content = default;
             MessagePhase? phase = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OutputItemType(prop.Value.GetString());
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -156,7 +173,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = ModelReaderWriter.Read<AgentReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -209,12 +226,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 createdBy,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties,
                 id,
                 status,
                 role,
                 content,
-                phase);
+                phase,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallInputDelta. </summary>
-    public partial class ResponseCustomToolCallInputDeltaEvent : ResponseStreamEvent, IJsonModel<ResponseCustomToolCallInputDeltaEvent>
+    public partial class ResponseCustomToolCallInputDeltaEvent : StreamingResponseUpdate, IJsonModel<ResponseCustomToolCallInputDeltaEvent>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDeltaEvent"/> for deserialization. </summary>
         internal ResponseCustomToolCallInputDeltaEvent()
@@ -23,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseCustomToolCallInputDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,6 +95,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(ItemId);
             writer.WritePropertyName("delta"u8);
             writer.WriteStringValue(Delta);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -102,7 +118,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseCustomToolCallInputDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -123,10 +139,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ResponseStreamEventType @type = default;
             long sequenceNumber = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long outputIndex = default;
             string itemId = default;
             string delta = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -162,10 +178,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new ResponseCustomToolCallInputDeltaEvent(
                 @type,
                 sequenceNumber,
-                additionalBinaryDataProperties,
                 outputIndex,
                 itemId,
-                delta);
+                delta,
+                additionalBinaryDataProperties);
         }
     }
 }

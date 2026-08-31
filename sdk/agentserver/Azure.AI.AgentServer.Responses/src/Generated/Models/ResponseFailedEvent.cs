@@ -7,17 +7,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> An event that is emitted when a response fails. </summary>
-    public partial class ResponseFailedEvent : ResponseStreamEvent
+    public partial class ResponseFailedEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseFailedEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="response"> The response that failed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        public ResponseFailedEvent(long sequenceNumber, ResponseObject response) : base(ResponseStreamEventType.ResponseFailed, sequenceNumber)
+        public ResponseFailedEvent(long sequenceNumber, ResponseResult response) : base(ResponseStreamEventType.ResponseFailed, sequenceNumber)
         {
             Argument.AssertNotNull(response, nameof(response));
 
@@ -27,14 +31,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseFailedEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> The response that failed. </param>
-        internal ResponseFailedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseFailedEvent(ResponseStreamEventType @type, long sequenceNumber, ResponseResult response, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             Response = response;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The response that failed. </summary>
-        public ResponseObject Response { get; set; }
+        public ResponseResult Response { get; set; }
     }
 }

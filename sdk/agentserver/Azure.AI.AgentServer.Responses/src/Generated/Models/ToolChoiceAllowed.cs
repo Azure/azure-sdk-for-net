@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Allowed tools. </summary>
-    public partial class ToolChoiceAllowed : ToolChoiceParam
+    internal partial class ToolChoiceAllowed : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceAllowed"/>. </summary>
         /// <param name="mode">

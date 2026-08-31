@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    public partial class ToolChoiceComputer : ToolChoiceParam, IJsonModel<ToolChoiceComputer>
+    internal partial class ToolChoiceComputer : ToolChoiceParam, IJsonModel<ToolChoiceComputer>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

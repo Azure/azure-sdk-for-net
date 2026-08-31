@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when a reasoning text is completed. </summary>
-    public partial class ResponseReasoningTextDoneEvent : ResponseStreamEvent, IJsonModel<ResponseReasoningTextDoneEvent>
+    public partial class ResponseReasoningTextDoneEvent : StreamingResponseUpdate, IJsonModel<ResponseReasoningTextDoneEvent>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningTextDoneEvent"/> for deserialization. </summary>
         internal ResponseReasoningTextDoneEvent()
@@ -23,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseReasoningTextDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,6 +97,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -104,7 +120,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseStreamEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override StreamingResponseUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseReasoningTextDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -125,11 +141,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ResponseStreamEventType @type = default;
             long sequenceNumber = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             long outputIndex = default;
             long contentIndex = default;
             string text = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,11 +186,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new ResponseReasoningTextDoneEvent(
                 @type,
                 sequenceNumber,
-                additionalBinaryDataProperties,
                 itemId,
                 outputIndex,
                 contentIndex,
-                text);
+                text,
+                additionalBinaryDataProperties);
         }
     }
 }

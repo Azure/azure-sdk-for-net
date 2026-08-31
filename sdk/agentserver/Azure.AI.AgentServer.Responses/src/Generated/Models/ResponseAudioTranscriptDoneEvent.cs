@@ -6,12 +6,16 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Emitted when the full audio transcript is completed. </summary>
-    public partial class ResponseAudioTranscriptDoneEvent : ResponseStreamEvent
+    public partial class ResponseAudioTranscriptDoneEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTranscriptDoneEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         public ResponseAudioTranscriptDoneEvent(long sequenceNumber) : base(ResponseStreamEventType.ResponseAudioTranscriptDone, sequenceNumber)
@@ -22,8 +26,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseAudioTranscriptDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseAudioTranscriptDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

@@ -6,13 +6,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallItem. </summary>
-    public partial class OutputItemCustomToolCall : OutputItem
+    public partial class OutputItemCustomToolCall : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCall"/>. </summary>
         /// <param name="callId"> An identifier used to map this custom tool call to a tool call output. </param>
         /// <param name="name"> The name of the custom tool being called. </param>
@@ -21,13 +25,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/>, <paramref name="name"/> or <paramref name="input"/> is null. </exception>
-        public OutputItemCustomToolCall(string callId, string name, string input, FunctionCallStatus status) : base(OutputItemType.CustomToolCall)
+        internal OutputItemCustomToolCall(string callId, string name, string input, FunctionCallStatus status) : base("custom_tool_call")
         {
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(input, nameof(input));
-
             CallId = callId;
             Name = name;
             Input = input;
@@ -36,9 +35,9 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the custom tool call in the OpenAI platform. </param>
         /// <param name="callId"> An identifier used to map this custom tool call to a tool call output. </param>
         /// <param name="namespace"> The namespace of the custom tool being called. </param>
@@ -48,8 +47,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemCustomToolCall(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, string @namespace, string name, string input, FunctionCallStatus status, BinaryData createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OutputItemCustomToolCall(ResponseItemKind @type, BinaryData createdBy, AgentReference agentReference, string responseId, string id, string callId, string @namespace, string name, string input, FunctionCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, createdBy, agentReference, responseId)
         {
             Id = id;
             CallId = callId;
@@ -57,28 +56,28 @@ namespace Azure.AI.AgentServer.Responses.Models
             Name = name;
             Input = input;
             Status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the custom tool call in the OpenAI platform. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> An identifier used to map this custom tool call to a tool call output. </summary>
-        public string CallId { get; set; }
+        public string CallId { get; }
 
         /// <summary> The namespace of the custom tool being called. </summary>
-        public string Namespace { get; set; }
+        public string Namespace { get; }
 
         /// <summary> The name of the custom tool being called. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The input for the custom tool call generated by the model. </summary>
-        public string Input { get; set; }
+        public string Input { get; }
 
         /// <summary>
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public FunctionCallStatus Status { get; set; }
-
+        public FunctionCallStatus Status { get; }
     }
 }

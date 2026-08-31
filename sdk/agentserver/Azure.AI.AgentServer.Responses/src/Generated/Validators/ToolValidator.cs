@@ -79,6 +79,7 @@ internal static partial class ToolValidator
 
     private static ValidationResult DispatchValidation(string typeValue, JsonElement element) => typeValue switch
     {
+        "a2a" => A2AToolValidator.Validate(element),
         "a2a_preview" => A2APreviewToolValidator.Validate(element),
         "apply_patch" => ApplyPatchToolParamValidator.Validate(element),
         "azure_ai_search" => AzureAISearchToolValidator.Validate(element),
@@ -92,6 +93,7 @@ internal static partial class ToolValidator
         "computer_use_preview" => ComputerUsePreviewToolValidator.Validate(element),
         "custom" => CustomToolParamValidator.Validate(element),
         "fabric_dataagent_preview" => MicrosoftFabricPreviewToolValidator.Validate(element),
+        "fabric_iq_preview" => FabricIQPreviewToolValidator.Validate(element),
         "file_search" => FileSearchToolValidator.Validate(element),
         "function" => FunctionToolValidator.Validate(element),
         "image_generation" => ImageGenToolValidator.Validate(element),
@@ -104,6 +106,7 @@ internal static partial class ToolValidator
         "sharepoint_grounding_preview" => SharepointPreviewToolValidator.Validate(element),
         "shell" => FunctionShellToolParamValidator.Validate(element),
         "tool_search" => ToolSearchToolParamValidator.Validate(element),
+        "web_iq_preview" => WebIQPreviewToolValidator.Validate(element),
         "web_search" => WebSearchToolValidator.Validate(element),
         "web_search_preview" => WebSearchPreviewToolValidator.Validate(element),
         "work_iq_preview" => WorkIQPreviewToolValidator.Validate(element),

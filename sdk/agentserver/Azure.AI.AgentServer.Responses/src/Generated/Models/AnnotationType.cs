@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct AnnotationType : IEquatable<AnnotationType>
+    internal readonly partial struct AnnotationType : IEquatable<AnnotationType>
     {
         private readonly string _value;
         private const string FileCitationValue = "file_citation";

@@ -19,13 +19,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="CompactResource"/>. </summary>
         /// <param name="id"> The unique identifier for the compacted response. </param>
         /// <param name="output"> The compacted list of output items. </param>
-        /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
+        /// <param name="createdOn"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
         /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
-        internal CompactResource(string id, IEnumerable<ItemField> output, DateTimeOffset createdAt, ResponseUsage usage)
+        internal CompactResource(string id, IEnumerable<ItemField> output, DateTimeOffset createdOn, ResponseUsage usage)
         {
             Id = id;
             Output = output.ToList();
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Usage = usage;
         }
 
@@ -33,15 +33,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique identifier for the compacted response. </param>
         /// <param name="object"> The object type. Always `response.compaction`. </param>
         /// <param name="output"> The compacted list of output items. </param>
-        /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
+        /// <param name="createdOn"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
         /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactResource(string id, string @object, IList<ItemField> output, DateTimeOffset createdAt, ResponseUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResource(string id, string @object, IList<ItemField> output, DateTimeOffset createdOn, ResponseUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
             Output = output;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Usage = usage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,7 +56,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IList<ItemField> Output { get; }
 
         /// <summary> Unix timestamp (in seconds) when the compacted conversation was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </summary>
         public ResponseUsage Usage { get; }

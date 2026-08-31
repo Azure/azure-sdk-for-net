@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Function tool. </summary>
-    public partial class ToolChoiceFunction : ToolChoiceParam
+    internal partial class ToolChoiceFunction : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>

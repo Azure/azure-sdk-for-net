@@ -7,17 +7,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseQueuedEvent. </summary>
-    public partial class ResponseQueuedEvent : ResponseStreamEvent
+    public partial class ResponseQueuedEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseQueuedEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="response"> The full response object that is queued. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        public ResponseQueuedEvent(long sequenceNumber, ResponseObject response) : base(ResponseStreamEventType.ResponseQueued, sequenceNumber)
+        public ResponseQueuedEvent(long sequenceNumber, ResponseResult response) : base(ResponseStreamEventType.ResponseQueued, sequenceNumber)
         {
             Argument.AssertNotNull(response, nameof(response));
 
@@ -27,14 +31,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseQueuedEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> The full response object that is queued. </param>
-        internal ResponseQueuedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseQueuedEvent(ResponseStreamEventType @type, long sequenceNumber, ResponseResult response, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             Response = response;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The full response object that is queued. </summary>
-        public ResponseObject Response { get; set; }
+        public ResponseResult Response { get; set; }
     }
 }

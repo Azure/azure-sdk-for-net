@@ -7,12 +7,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallInputDelta. </summary>
-    public partial class ResponseCustomToolCallInputDeltaEvent : ResponseStreamEvent
+    public partial class ResponseCustomToolCallInputDeltaEvent : StreamingResponseUpdate
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDeltaEvent"/>. </summary>
         /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output this delta applies to. </param>
@@ -32,15 +36,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDeltaEvent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="sequenceNumber"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output this delta applies to. </param>
         /// <param name="itemId"> Unique identifier for the API item associated with this event. </param>
         /// <param name="delta"> The incremental input data (delta) for the custom tool call. </param>
-        internal ResponseCustomToolCallInputDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseCustomToolCallInputDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, long outputIndex, string itemId, string delta, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
             Delta = delta;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The index of the output this delta applies to. </summary>

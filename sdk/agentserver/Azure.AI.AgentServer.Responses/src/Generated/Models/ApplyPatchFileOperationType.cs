@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ApplyPatchFileOperationType : IEquatable<ApplyPatchFileOperationType>
+    internal readonly partial struct ApplyPatchFileOperationType : IEquatable<ApplyPatchFileOperationType>
     {
         private readonly string _value;
         private const string CreateFileValue = "create_file";

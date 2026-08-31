@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ComputerActionType : IEquatable<ComputerActionType>
+    internal readonly partial struct ComputerActionType : IEquatable<ComputerActionType>
     {
         private readonly string _value;
         private const string ClickValue = "click";

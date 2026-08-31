@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ToolChoiceParamType : IEquatable<ToolChoiceParamType>
+    internal readonly partial struct ToolChoiceParamType : IEquatable<ToolChoiceParamType>
     {
         private readonly string _value;
         private const string AllowedToolsValue = "allowed_tools";

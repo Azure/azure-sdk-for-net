@@ -8,19 +8,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Message. </summary>
-    public partial class OutputItemMessage : OutputItem
+    public partial class OutputItemMessage : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="OutputItemMessage"/>. </summary>
         /// <param name="id"> The unique ID of the message. </param>
         /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
         /// <param name="content"> The content of the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        public OutputItemMessage(string id, MessageStatus status, MessageRole role, IEnumerable<MessageContent> content) : base(OutputItemType.Message)
+        public OutputItemMessage(string id, MessageStatus status, MessageRole role, IEnumerable<MessageContent> content) : base("message")
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -36,19 +41,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the message. </param>
         /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="phase"></param>
-        internal OutputItemMessage(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, MessageStatus status, MessageRole role, IList<MessageContent> content, MessagePhase? phase) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OutputItemMessage(ResponseItemKind @type, BinaryData createdBy, AgentReference agentReference, string responseId, string id, MessageStatus status, MessageRole role, IList<MessageContent> content, MessagePhase? phase, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, createdBy, agentReference, responseId)
         {
             Id = id;
             Status = status;
             Role = role;
             Content = content;
             Phase = phase;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the message. </summary>
