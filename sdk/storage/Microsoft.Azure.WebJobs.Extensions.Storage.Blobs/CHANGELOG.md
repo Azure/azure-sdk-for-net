@@ -1,14 +1,15 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.3.9 (2026-09-08)
 
 ### Bugs Fixed
 
+- Fixed queue scale metrics reporting `QueueLength=0` when messages were present but could not be decoded with the configured `MessageEncoding`, which prevented affected functions from scaling out. Scale metrics now read the queue using `QueueMessageEncoding.None`, so peek results are never filtered by decode failures. Message processing is unaffected and continues to use the configured encoding.
+- Fixed a bug where a failed `PeekMessages` call reset the reported queue length to zero instead of preserving `ApproximateMessagesCount`, which could cause premature scale-in while the queue still had messages.
+
 ### Other Changes
+
+- Replaced scaling warning/error log calls with the standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
 
 ## 5.3.8 (2026-03-19)
 
