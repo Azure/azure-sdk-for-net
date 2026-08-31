@@ -240,6 +240,113 @@ namespace Azure.ResourceManager.Resources.Policy
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class PolicyEnrollmentCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected PolicyEnrollmentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string policyEnrollmentName, Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string policyEnrollmentName, Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> Get(string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> GetAsync(string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetIfExists(string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> GetIfExistsAsync(string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PolicyEnrollmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>
+    {
+        public PolicyEnrollmentData() { }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? AssignmentScopeValidation { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PolicyAssignmentId { get { throw null; } set { } }
+        public System.Guid? PolicyAssignmentInstanceId { get { throw null; } }
+        public System.Collections.Generic.IList<string> PolicyDefinitionReferenceIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> ResourceSelectors { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PolicyEnrollmentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PolicyEnrollmentResource() { }
+        public virtual Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string policyEnrollmentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> Update(Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> UpdateAsync(Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PolicyExemptionCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected PolicyExemptionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string policyExemptionName, Azure.ResourceManager.Resources.Policy.PolicyExemptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string policyExemptionName, Azure.ResourceManager.Resources.Policy.PolicyExemptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> Get(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> GetAsync(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetIfExists(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> GetIfExistsAsync(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PolicyExemptionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>
+    {
+        public PolicyExemptionData() { }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? AssignmentScopeValidation { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory? ExemptionCategory { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode? ExemptionManagementMode { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
+        public string PolicyAssignmentId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PolicyDefinitionReferenceIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> ResourceSelectors { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.PolicyExemptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.PolicyExemptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PolicyExemptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PolicyExemptionResource() { }
+        public virtual Azure.ResourceManager.Resources.Policy.PolicyExemptionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string policyExemptionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.Policy.PolicyExemptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.PolicyExemptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.PolicyExemptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> Update(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> UpdateAsync(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class PolicySetDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource>, System.Collections.IEnumerable
     {
         protected PolicySetDefinitionCollection() { }
@@ -364,8 +471,6 @@ namespace Azure.ResourceManager.Resources.Policy
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult>> AcquireAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult> AcquireAtManagementGroup(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult>> AcquireAtManagementGroupAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult> AcquireAtResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult>> AcquireAtResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> CreateById(this Azure.ResourceManager.Resources.TenantResource tenantResource, string policyAssignmentId, Azure.ResourceManager.Resources.Policy.PolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource>> CreateByIdAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string policyAssignmentId, Azure.ResourceManager.Resources.Policy.PolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> DeleteById(this Azure.ResourceManager.Resources.TenantResource tenantResource, string policyAssignmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -391,13 +496,141 @@ namespace Azure.ResourceManager.Resources.Policy
         public static Azure.ResourceManager.Resources.Policy.PolicyDefinitionResource GetPolicyDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicyDefinitionCollection GetPolicyDefinitions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionResource GetPolicyDefinitionVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> GetPolicyEnrollmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource GetPolicyEnrollmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.PolicyEnrollmentCollection GetPolicyEnrollments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollments(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollmentsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollmentsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollmentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemption(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> GetPolicyExemptionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.PolicyExemptionResource GetPolicyExemptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.PolicyExemptionCollection GetPolicyExemptions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptions(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptionsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptionsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource> GetPolicySetDefinition(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource>> GetPolicySetDefinitionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource GetPolicySetDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicySetDefinitionCollection GetPolicySetDefinitions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicySetDefinitionVersionResource GetPolicySetDefinitionVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource> GetVariable(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource>> GetVariableAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.VariableResource GetVariableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.VariableCollection GetVariables(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.VariableValueResource GetVariableValueResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> UpdateById(this Azure.ResourceManager.Resources.TenantResource tenantResource, string policyAssignmentId, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource>> UpdateByIdAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string policyAssignmentId, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VariableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Policy.VariableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.VariableResource>, System.Collections.IEnumerable
+    {
+        protected VariableCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string variableName, Azure.ResourceManager.Resources.Policy.VariableData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string variableName, Azure.ResourceManager.Resources.Policy.VariableData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource> Get(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.VariableResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.VariableResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource>> GetAsync(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.VariableResource> GetIfExists(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.VariableResource>> GetIfExistsAsync(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.Policy.VariableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Policy.VariableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Policy.VariableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.VariableResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class VariableData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>
+    {
+        public VariableData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn> Columns { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.VariableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.VariableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VariableResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected VariableResource() { }
+        public virtual Azure.ResourceManager.Resources.Policy.VariableData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string variableName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.VariableValueResource> GetVariableValue(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableValueResource>> GetVariableValueAsync(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.VariableValueCollection GetVariableValues() { throw null; }
+        Azure.ResourceManager.Resources.Policy.VariableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.VariableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Policy.VariableData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Policy.VariableData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VariableValueCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Policy.VariableValueResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.VariableValueResource>, System.Collections.IEnumerable
+    {
+        protected VariableValueCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableValueResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string variableValueName, Azure.ResourceManager.Resources.Policy.VariableValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableValueResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string variableValueName, Azure.ResourceManager.Resources.Policy.VariableValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.VariableValueResource> Get(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.VariableValueResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.VariableValueResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableValueResource>> GetAsync(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.VariableValueResource> GetIfExists(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.Policy.VariableValueResource>> GetIfExistsAsync(string variableValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.Policy.VariableValueResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Policy.VariableValueResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Policy.VariableValueResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.VariableValueResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class VariableValueData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableValueData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>
+    {
+        public VariableValueData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.VariableValueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.VariableValueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VariableValueResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableValueData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected VariableValueResource() { }
+        public virtual Azure.ResourceManager.Resources.Policy.VariableValueData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string variableName, string variableValueName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.VariableValueResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableValueResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.Policy.VariableValueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.VariableValueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.VariableValueData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableValueResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Policy.VariableValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Policy.VariableValueResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Policy.VariableValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources.Policy.Mocking
@@ -412,8 +645,18 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         public virtual Azure.ResourceManager.Resources.Policy.PolicyAssignmentCollection GetPolicyAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Resources.Policy.PolicyDefinitionResource GetPolicyDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionResource GetPolicyDefinitionVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollment(Azure.Core.ResourceIdentifier scope, string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource>> GetPolicyEnrollmentAsync(Azure.Core.ResourceIdentifier scope, string policyEnrollmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource GetPolicyEnrollmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.PolicyEnrollmentCollection GetPolicyEnrollments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemption(Azure.Core.ResourceIdentifier scope, string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource>> GetPolicyExemptionAsync(Azure.Core.ResourceIdentifier scope, string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.PolicyExemptionResource GetPolicyExemptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.PolicyExemptionCollection GetPolicyExemptions(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource GetPolicySetDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Policy.PolicySetDefinitionVersionResource GetPolicySetDefinitionVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.VariableResource GetVariableResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.VariableValueResource GetVariableValueResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableResourcesPolicyManagementGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -422,14 +665,20 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult>> AcquireAtManagementGroupAsync(Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> GetPolicyAssignments(string filter = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> GetPolicyAssignmentsAsync(string filter = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollments(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollmentsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableResourcesPolicyResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableResourcesPolicyResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult> AcquireAtResourceGroup(Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.Models.PolicyTokenAcquisitionResult>> AcquireAtResourceGroupAsync(Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> GetPolicyAssignments(string filter = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyAssignmentResource> GetPolicyAssignmentsAsync(string filter = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollments(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollmentsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableResourcesPolicySubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -441,9 +690,16 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyDefinitionResource> GetPolicyDefinition(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicyDefinitionResource>> GetPolicyDefinitionAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.Policy.PolicyDefinitionCollection GetPolicyDefinitions() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollments(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyEnrollmentResource> GetPolicyEnrollmentsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Policy.PolicyExemptionResource> GetPolicyExemptionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource> GetPolicySetDefinition(string policySetDefinitionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.PolicySetDefinitionResource>> GetPolicySetDefinitionAsync(string policySetDefinitionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.Policy.PolicySetDefinitionCollection GetPolicySetDefinitions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource> GetVariable(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Policy.VariableResource>> GetVariableAsync(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.Policy.VariableCollection GetVariables() { throw null; }
     }
     public partial class MockableResourcesPolicyTenantResource : Azure.ResourceManager.ArmResource
     {
@@ -479,7 +735,11 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyDefinitionGroup PolicyDefinitionGroup(string name = null, string displayName = null, string category = null, string description = null, string additionalMetadataId = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyDefinitionReference PolicyDefinitionReference(string policyDefinitionId = null, string definitionVersion = null, string latestDefinitionVersion = null, string effectiveDefinitionVersion = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Policy.Models.PolicyParameterValue> parameters = null, string policyDefinitionReferenceId = null, System.Collections.Generic.IEnumerable<string> groupNames = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicyDefinitionVersionData PolicyDefinitionVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Policy.Models.PolicyType? policyType = default(Azure.ResourceManager.Resources.Policy.Models.PolicyType?), string mode = null, string displayName = null, string description = null, System.BinaryData policyRule = null, System.BinaryData metadata = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Policy.Models.PolicyParameterMetadata> parameters = null, string version = null, Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = null) { throw null; }
-        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEvaluationEndpointInvocationResult PolicyExternalEvaluationEndpointInvocationResult(Azure.ResourceManager.Resources.Policy.Models.PolicyLogInfo policyInfo = null, Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEndpointResult? result = default(Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEndpointResult?), string endpointKind = null, string message = null, System.DateTimeOffset? retryAfter = default(System.DateTimeOffset?), System.BinaryData claims = null, Azure.ResourceManager.Resources.Policy.Models.PolicyAction? policyAction = default(Azure.ResourceManager.Resources.Policy.Models.PolicyAction?), System.BinaryData policyEvaluationDetails = null, System.BinaryData additionalInfo = null, Azure.ResourceManager.Resources.Policy.Models.ComplianceState? complianceState = default(Azure.ResourceManager.Resources.Policy.Models.ComplianceState?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.PolicyEnrollmentData PolicyEnrollmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, System.Guid? policyAssignmentInstanceId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> policyDefinitionReferenceIds = null, string displayName = null, string description = null, System.BinaryData metadata = null, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? assignmentScopeValidation = default(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> resourceSelectors = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch PolicyEnrollmentPatch(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? assignmentScopeValidation = default(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> resourceSelectors = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.PolicyExemptionData PolicyExemptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string policyAssignmentId = null, System.Collections.Generic.IEnumerable<string> policyDefinitionReferenceIds = null, Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory? exemptionCategory = default(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string displayName = null, string description = null, System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> resourceSelectors = null, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? assignmentScopeValidation = default(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation?), Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode? exemptionManagementMode = default(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch PolicyExemptionPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> resourceSelectors = null, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? assignmentScopeValidation = default(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation?), Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode? exemptionManagementMode = default(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEvaluationEndpointInvocationResult PolicyExternalEvaluationEndpointInvocationResult(Azure.ResourceManager.Resources.Policy.Models.PolicyLogInfo policyInfo = null, Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEndpointResult? result = default(Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEndpointResult?), string endpointKind = null, string message = null, System.DateTimeOffset? retryAfter = default(System.DateTimeOffset?), System.BinaryData claims = null, Azure.ResourceManager.Resources.Policy.Models.PolicyAction? policyAction = default(Azure.ResourceManager.Resources.Policy.Models.PolicyAction?), System.BinaryData policyEvaluationDetails = null, System.BinaryData additionalInfo = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEvaluationEndpointSettings PolicyExternalEvaluationEndpointSettings(string kind = null, System.BinaryData details = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEvaluationEnforcementSettings PolicyExternalEvaluationEnforcementSettings(string missingTokenAction = null, string resultLifespan = null, Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEvaluationEndpointSettings endpointSettings = null, System.Collections.Generic.IEnumerable<string> roleDefinitionIds = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyLogInfo PolicyLogInfo(string policyDefinitionId = null, string policySetDefinitionId = null, string policyDefinitionReferenceId = null, string policySetDefinitionName = null, string policySetDefinitionVersion = null, string policyDefinitionName = null, string policyDefinitionVersion = null, string policyDefinitionEffect = null, string policyAssignmentId = null, string policyAssignmentName = null, string policyAssignmentVersion = null, string policyAssignmentScope = null) { throw null; }
@@ -490,7 +750,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyParameterValue PolicyParameterValue(System.BinaryData value = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector PolicyResourceSelector(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicySelector> selectors = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyResourceTypeAliases PolicyResourceTypeAliases(string resourceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyAlias> aliases = null) { throw null; }
-        public static Azure.ResourceManager.Resources.Policy.Models.PolicySelector PolicySelector(Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind? kind = default(Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind?), System.Collections.Generic.IEnumerable<string> @in = null, System.Collections.Generic.IEnumerable<string> notIn = null, int? progress = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicySelector PolicySelector(Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind? kind = default(Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind?), System.Collections.Generic.IEnumerable<string> @in = null, System.Collections.Generic.IEnumerable<string> notIn = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelfServeExemptionSettings PolicySelfServeExemptionSettings(bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> policyDefinitionReferenceIds = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicySetDefinitionData PolicySetDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Policy.Models.PolicyType? policyType = default(Azure.ResourceManager.Resources.Policy.Models.PolicyType?), string displayName = null, string description = null, System.BinaryData metadata = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Policy.Models.PolicyParameterMetadata> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyDefinitionReference> policyDefinitions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyDefinitionGroup> policyDefinitionGroups = null, string version = null, System.Collections.Generic.IEnumerable<string> versions = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.PolicySetDefinitionVersionData PolicySetDefinitionVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Policy.Models.PolicyType? policyType = default(Azure.ResourceManager.Resources.Policy.Models.PolicyType?), string displayName = null, string description = null, System.BinaryData metadata = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Policy.Models.PolicyParameterMetadata> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyDefinitionReference> policyDefinitions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyDefinitionGroup> policyDefinitionGroups = null, string version = null) { throw null; }
@@ -499,31 +759,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyTokenOperationInfo PolicyTokenOperationInfo(string uri = null, string httpMethod = null, System.BinaryData content = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyTokenRequestContent PolicyTokenRequestContent(Azure.ResourceManager.Resources.Policy.Models.PolicyTokenOperationInfo operation = null, string changeReference = null) { throw null; }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicyUserAssignedIdentity PolicyUserAssignedIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComplianceState : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.ComplianceState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComplianceState(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Compliant { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Conflict { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Error { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Exempt { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState NonCompliant { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Partial { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Protected { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.ComplianceState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Policy.Models.ComplianceState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Policy.Models.ComplianceState left, Azure.ResourceManager.Resources.Policy.Models.ComplianceState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.ComplianceState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.ComplianceState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Policy.Models.ComplianceState left, Azure.ResourceManager.Resources.Policy.Models.ComplianceState right) { throw null; }
-        public override string ToString() { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn PolicyVariableColumn(string columnName = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue PolicyVariableValueColumnValue(string columnName = null, System.BinaryData columnValue = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.VariableData VariableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn> columns = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.VariableValueData VariableValueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue> values = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyAction : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.PolicyAction>
@@ -699,6 +938,23 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PolicyAssignmentScopeValidation : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PolicyAssignmentScopeValidation(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation Default { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation DoNotValidate { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation left, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation left, Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyAssignmentType : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentType>
     {
         private readonly object _dummy;
@@ -805,6 +1061,71 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Policy.Models.PolicyEnforcementMode left, Azure.ResourceManager.Resources.Policy.Models.PolicyEnforcementMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PolicyEnrollmentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>
+    {
+        public PolicyEnrollmentPatch() { }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? AssignmentScopeValidation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> ResourceSelectors { get { throw null; } }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyEnrollmentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PolicyExemptionCategory : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PolicyExemptionCategory(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory Mitigated { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory Waiver { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory left, Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory left, Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PolicyExemptionManagementMode : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PolicyExemptionManagementMode(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode Admin { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode UserSelfServe { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode left, Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode left, Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PolicyExemptionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>
+    {
+        public PolicyExemptionPatch() { }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyAssignmentScopeValidation? AssignmentScopeValidation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionManagementMode? ExemptionManagementMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Policy.Models.PolicyResourceSelector> ResourceSelectors { get { throw null; } }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyExemptionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyExternalEndpointResult : System.IEquatable<Azure.ResourceManager.Resources.Policy.Models.PolicyExternalEndpointResult>
     {
@@ -827,7 +1148,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         internal PolicyExternalEvaluationEndpointInvocationResult() { }
         public System.BinaryData AdditionalInfo { get { throw null; } }
         public System.BinaryData Claims { get { throw null; } }
-        public Azure.ResourceManager.Resources.Policy.Models.ComplianceState? ComplianceState { get { throw null; } }
         public string EndpointKind { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string Message { get { throw null; } }
@@ -1065,7 +1385,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public System.Collections.Generic.IList<string> In { get { throw null; } }
         public Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind? Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NotIn { get { throw null; } }
-        public int? Progress { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicySelector JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicySelector PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1085,7 +1404,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind GroupPrincipalId { get { throw null; } }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind PolicyDefinitionReferenceId { get { throw null; } }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind ResourceLocation { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind ResourceRolloutPercentage { get { throw null; } }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind ResourceType { get { throw null; } }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind ResourceWithoutLocation { get { throw null; } }
         public static Azure.ResourceManager.Resources.Policy.Models.PolicySelectorKind UserPrincipalId { get { throw null; } }
@@ -1235,5 +1553,34 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         Azure.ResourceManager.Resources.Policy.Models.PolicyUserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyUserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyUserAssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyUserAssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PolicyVariableColumn : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>
+    {
+        public PolicyVariableColumn(string columnName) { }
+        public string ColumnName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableColumn>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PolicyVariableValueColumnValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>
+    {
+        public PolicyVariableValueColumnValue(string columnName, System.BinaryData columnValue) { }
+        public string ColumnName { get { throw null; } set { } }
+        public System.BinaryData ColumnValue { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Policy.Models.PolicyVariableValueColumnValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

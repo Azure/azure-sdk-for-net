@@ -28,14 +28,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="kind"> The selector kind. </param>
         /// <param name="in"> The list of values to filter in. </param>
         /// <param name="notIn"> The list of values to filter out. </param>
-        /// <param name="progress"> The percent of total resources that will be governed by the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySelector(PolicySelectorKind? kind, IList<string> @in, IList<string> notIn, int? progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicySelector(PolicySelectorKind? kind, IList<string> @in, IList<string> notIn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             In = @in;
             NotIn = notIn;
-            Progress = progress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,8 +45,5 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> The list of values to filter out. </summary>
         public IList<string> NotIn { get; }
-
-        /// <summary> The percent of total resources that will be governed by the policy. </summary>
-        public int? Progress { get; set; }
     }
 }

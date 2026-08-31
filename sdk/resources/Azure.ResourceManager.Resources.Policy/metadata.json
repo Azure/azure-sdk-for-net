@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "Microsoft.Authorization": "2026-07-01"
+    "Microsoft.Authorization": "2026-01-01-preview"
   }
 }

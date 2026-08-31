@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         private const string ResourceWithoutLocationValue = "resourceWithoutLocation";
         /// <summary> The selector kind to filter policies by the policy definition reference ID. </summary>
         private const string PolicyDefinitionReferenceIdValue = "policyDefinitionReferenceId";
-        /// <summary> The selector kind to filter policies by the resource rollout percentage. </summary>
-        private const string ResourceRolloutPercentageValue = "resourceRolloutPercentage";
         /// <summary> The selector kind to filter policies by the user principal ID. </summary>
         private const string UserPrincipalIdValue = "userPrincipalId";
         /// <summary> The selector kind to filter policies by the security group membership ID. </summary>
@@ -51,9 +49,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <summary> The selector kind to filter policies by the policy definition reference ID. </summary>
         public static PolicySelectorKind PolicyDefinitionReferenceId { get; } = new PolicySelectorKind(PolicyDefinitionReferenceIdValue);
-
-        /// <summary> The selector kind to filter policies by the resource rollout percentage. </summary>
-        public static PolicySelectorKind ResourceRolloutPercentage { get; } = new PolicySelectorKind(ResourceRolloutPercentageValue);
 
         /// <summary> The selector kind to filter policies by the user principal ID. </summary>
         public static PolicySelectorKind UserPrincipalId { get; } = new PolicySelectorKind(UserPrincipalIdValue);

@@ -109,11 +109,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Progress))
-            {
-                writer.WritePropertyName("progress"u8);
-                writer.WriteNumberValue(Progress.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             PolicySelectorKind? kind = default;
             IList<string> @in = default;
             IList<string> notIn = default;
-            int? progress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -214,21 +208,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     notIn = array;
                     continue;
                 }
-                if (prop.NameEquals("progress"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    progress = prop.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicySelector(kind, @in ?? new ChangeTrackingList<string>(), notIn ?? new ChangeTrackingList<string>(), progress, additionalBinaryDataProperties);
+            return new PolicySelector(kind, @in ?? new ChangeTrackingList<string>(), notIn ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
