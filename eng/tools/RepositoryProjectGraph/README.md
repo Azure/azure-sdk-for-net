@@ -82,7 +82,9 @@ are validation artifacts, not production graph components. The collector injects
 independent baseline the **MSBuildProjectReferenceOracle**. The validator compares its complete
 package-to-dependent-root relation with the repository graph and writes evidence only beneath
 `artifacts/validation/RepositoryProjectGraph`. Neither file is imported by
-`Language-Settings.ps1`, normal graph generation, or sparse-checkout projection.
+normal graph generation or sparse-checkout projection. The temporary exhaustive CI route enters
+the validator through `Invoke-dotnet-RepositoryProjectGraphParityValidation` in
+`Language-Settings.ps1`, keeping repository-specific validation on the matrix-generator lifecycle.
 
 ## Phase 1: Project discovery and graph expansion
 

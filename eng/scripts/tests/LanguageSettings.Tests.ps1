@@ -83,4 +83,28 @@ Describe "Language settings repository dependency selection" -Tag "UnitTest" {
             $Object -match '^##vso\[task\.logissue type=warning;code=RepositorySourceGraphFailure\]'
         }
     }
+
+    It "invokes exhaustive repository graph parity through the dotnet language lifecycle" {
+        $command = Get-Command Invoke-dotnet-RepositoryProjectGraphParityValidation
+        . (Join-Path $PSScriptRoot ".." "Validate-RepositoryProjectGraph.ps1")
+        Mock Invoke-DependencyRelationValidation {
+            param($RepositoryRoot, $ValidationRoot, $ReuseGraph)
+            return [pscustomobject]@{
+                result = 'proven'
+                repositoryRoot = $RepositoryRoot
+                validationRoot = $ValidationRoot
+                reuseGraph = $ReuseGraph
+            }
+        }
+
+        $result = Invoke-dotnet-RepositoryProjectGraphParityValidation `
+            -RepositoryRoot '/repository' `
+            -OutputRoot '/evidence'
+
+        $command.CommandType | Should -Be 'Function'
+        $result.repositoryRoot | Should -Be '/repository'
+        $result.validationRoot | Should -Be '/evidence'
+        $result.reuseGraph | Should -BeFalse
+        Should -Invoke Invoke-DependencyRelationValidation -Times 1 -Exactly
+    }
 }

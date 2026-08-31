@@ -91,6 +91,29 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   return $allPackageProps
 }
 
+function Invoke-dotnet-RepositoryProjectGraphParityValidation
+{
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)]
+    [string] $OutputRoot,
+    [string] $RepositoryRoot = $RepoRoot
+  )
+
+  # Keep the exhaustive oracle behind the .NET language lifecycle so the temporary
+  # matrix-generator CI route validates the same repository-specific integration boundary.
+  # Preserve the caller's paths because dot-sourcing the validator binds its own script parameters.
+  $validationRepositoryRoot = $RepositoryRoot
+  $validationOutputRoot = $OutputRoot
+  $validatorPath = Join-Path $PSScriptRoot 'Validate-RepositoryProjectGraph.ps1'
+  . $validatorPath
+  $provenance = Invoke-DependencyRelationValidation $validationRepositoryRoot $validationOutputRoot $false
+  if ($provenance.result -ne 'proven') {
+    throw "Repository project graph parity was not proven. Evidence: '$validationOutputRoot'."
+  }
+  return $provenance
+}
+
 function Get-dotnet-AdditionalValidationPackagesFromPackageSet(
   $LocatedPackages,
   $diffObj,

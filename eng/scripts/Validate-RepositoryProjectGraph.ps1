@@ -1,8 +1,8 @@
 #Requires -Version 7.0
 
 # VALIDATION ONLY: this orchestrator compares the production graph with independently collected
-# MSBuildProjectReferenceOracle evidence. It is not imported by Language-Settings.ps1 or graph
-# generation, and it writes only beneath artifacts/validation/RepositoryProjectGraph by default.
+# MSBuildProjectReferenceOracle evidence. The temporary CI validation route invokes it through
+# Language-Settings.ps1; graph generation does not import it. Evidence is validator-owned.
 [CmdletBinding()]
 param(
   [switch] $DependencyRelation,
@@ -500,6 +500,7 @@ function Invoke-LoggedNativeCommand(
     exitCode = $exitCode
     logPath = $LogPath
   }
+  Write-Host "[$Name] completed: elapsedSeconds=$($result.elapsedSeconds), exitCode=$exitCode, log=$LogPath"
   if ($exitCode -ne 0) {
     throw "Validation command '$Name' failed with exit code $exitCode. See '$LogPath'."
   }
@@ -882,6 +883,10 @@ function Invoke-DependencyRelationValidation(
   $graphRelationPath = Join-Path $relationDirectory 'graph.tsv'
   $oracleOnlyPath = Join-Path $relationDirectory 'msbuild-project-reference-oracle-only.tsv'
   $graphOnlyPath = Join-Path $relationDirectory 'graph-only.tsv'
+  $oraclePackageInfoOnlyPath = Join-Path $relationDirectory 'msbuild-project-reference-oracle-package-info-only.tsv'
+  $graphPackageInfoOnlyPath = Join-Path $relationDirectory 'graph-package-info-only.tsv'
+  $oracleUnmappedOnlyPath = Join-Path $relationDirectory 'msbuild-project-reference-oracle-unmapped-only.tsv'
+  $graphUnmappedOnlyPath = Join-Path $relationDirectory 'graph-unmapped-only.tsv'
   Write-Utf8Lines $oraclePath $oracle.Relation
   Write-Utf8Lines $graphRelationPath $graphRelation.Relation
   Write-Utf8Lines $oracleOnlyPath $comparison.MSBuildProjectReferenceOracleOnly
@@ -900,6 +905,10 @@ function Invoke-DependencyRelationValidation(
   Write-Utf8Lines (Join-Path $relationDirectory 'graph-unmapped-package-roots.tsv') $graphPackageInfo.Unmapped
   $mappedComparison = Compare-DependencyRelations $oraclePackageInfo.Mapped $graphPackageInfo.Mapped
   $unmappedComparison = Compare-DependencyRelations $oraclePackageInfo.Unmapped $graphPackageInfo.Unmapped
+  Write-Utf8Lines $oraclePackageInfoOnlyPath $mappedComparison.MSBuildProjectReferenceOracleOnly
+  Write-Utf8Lines $graphPackageInfoOnlyPath $mappedComparison.GraphOnly
+  Write-Utf8Lines $oracleUnmappedOnlyPath $unmappedComparison.MSBuildProjectReferenceOracleOnly
+  Write-Utf8Lines $graphUnmappedOnlyPath $unmappedComparison.GraphOnly
 
   $directExclusionFailures = [System.Collections.Generic.List[string]]::new()
   foreach ($package in $packageInfos) {
@@ -973,7 +982,11 @@ function Invoke-DependencyRelationValidation(
       oracleOnly = $comparison.MSBuildProjectReferenceOracleOnly.Count
       graphOnly = $comparison.GraphOnly.Count
       mappedPackageInfoRelations = $oraclePackageInfo.Mapped.Count
+      oracleMappedPackageInfoRelations = $oraclePackageInfo.Mapped.Count
+      graphMappedPackageInfoRelations = $graphPackageInfo.Mapped.Count
       unmappedPackageRootRelations = $oraclePackageInfo.Unmapped.Count
+      oracleUnmappedPackageRootRelations = $oraclePackageInfo.Unmapped.Count
+      graphUnmappedPackageRootRelations = $graphPackageInfo.Unmapped.Count
       nugetOnlyIdentities = $dependencyProvenance.NuGetOnlyIdentities.Count
       sourceRecords = $canonicalValidation.sourceRecordCount
       packageRecords = $canonicalValidation.packageRecordCount
@@ -1017,19 +1030,28 @@ function Invoke-DependencyRelationValidation(
       graph = Get-FileHashValue $graphRelationPath
       oracleOnly = Get-FileHashValue $oracleOnlyPath
       graphOnly = Get-FileHashValue $graphOnlyPath
+      oraclePackageInfo = Get-FileHashValue (Join-Path $relationDirectory 'msbuild-project-reference-oracle-package-info.tsv')
+      graphPackageInfo = Get-FileHashValue (Join-Path $relationDirectory 'graph-package-info.tsv')
+      oraclePackageInfoOnly = Get-FileHashValue $oraclePackageInfoOnlyPath
+      graphPackageInfoOnly = Get-FileHashValue $graphPackageInfoOnlyPath
+      oracleUnmappedOnly = Get-FileHashValue $oracleUnmappedOnlyPath
+      graphUnmappedOnly = Get-FileHashValue $graphUnmappedOnlyPath
     }
   }
   $validationStopwatch.Stop()
   $provenance.timings.totalSeconds = [Math]::Round($validationStopwatch.Elapsed.TotalSeconds, 3)
   $provenance | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $provenancePath -Encoding utf8
 
-  Write-Host "Dependency relation validation: packages=$($packageInfos.Count), oracle=$($oracle.Relation.Count), graph=$($graphRelation.Relation.Count), oracleOnly=$($comparison.MSBuildProjectReferenceOracleOnly.Count), graphOnly=$($comparison.GraphOnly.Count)."
-  Write-Host "Evidence: $relationDirectory"
+  Write-Host "MSBUILD_PROJECT_REFERENCE_ORACLE_RELATION_COUNTS packages=$($packageInfos.Count) oracle=$($oracle.Relation.Count) graph=$($graphRelation.Relation.Count) oracleOnly=$($comparison.MSBuildProjectReferenceOracleOnly.Count) graphOnly=$($comparison.GraphOnly.Count)"
+  Write-Host "MSBUILD_PROJECT_REFERENCE_ORACLE_PACKAGE_INFO_COUNTS oracleMapped=$($oraclePackageInfo.Mapped.Count) graphMapped=$($graphPackageInfo.Mapped.Count) oracleOnly=$($mappedComparison.MSBuildProjectReferenceOracleOnly.Count) graphOnly=$($mappedComparison.GraphOnly.Count) oracleUnmapped=$($oraclePackageInfo.Unmapped.Count) graphUnmapped=$($graphPackageInfo.Unmapped.Count) unmappedOracleOnly=$($unmappedComparison.MSBuildProjectReferenceOracleOnly.Count) unmappedGraphOnly=$($unmappedComparison.GraphOnly.Count)"
+  Write-Host "MSBUILD_PROJECT_REFERENCE_ORACLE_TIMINGS packageInfoSeconds=$($commands[0].elapsedSeconds) oracleSeconds=$($commands[1].elapsedSeconds) graphSeconds=$($commands[2].elapsedSeconds) totalSeconds=$($provenance.timings.totalSeconds)"
+  Write-Host "MSBUILD_PROJECT_REFERENCE_ORACLE_EVIDENCE directory=$relationDirectory provenance=$provenancePath"
+  Write-Host "MSBUILD_PROJECT_REFERENCE_ORACLE_PARITY_RESULT=$($provenance.result)"
   if ($classifications -match "`tunclassified`t") {
     throw "At least one dependency-relation mismatch could not be classified. See '$relationDirectory/mismatch-classification.tsv'."
   }
   if ($provenance.result -ne 'proven') {
-    throw "Repository dependency relations differ. See '$oracleOnlyPath' and '$graphOnlyPath'."
+    throw "Repository dependency relations or PackageInfo mappings differ. See '$oracleOnlyPath', '$graphOnlyPath', '$oraclePackageInfoOnlyPath', and '$graphPackageInfoOnlyPath'."
   }
   return [pscustomobject] $provenance
 }

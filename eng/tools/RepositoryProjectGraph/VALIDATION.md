@@ -67,6 +67,16 @@ used by production dependency selection or sparse checkout. Therefore, proving
 `R_oracle = R_graph` proves identical indirect-package output for every possible PR package set.
 It is unnecessary and wasteful to invoke the oracle once per package.
 
+### Temporary CI validation route
+
+The dedicated validation branch keeps the standard `generate_target_service_test_matrix` job
+identity, but replaces matrix generation for the `auto` PR pipeline with one exhaustive parity
+run. That job calls the .NET hook in `Language-Settings.ps1`, publishes
+`RepositoryProjectGraphParity`, and emits no build, analyze, or test fan-out. The validator fails
+closed unless the complete root relation, mapped PackageInfo relation, and unmapped-root relation
+are exactly equal; `dependency-relation/provenance.json` records counts, timings, hashes, and the
+source commit.
+
 ### Sparse-checkout artifact closure
 
 The atomic validation unit is a PackageInfo artifact, not a project and not a generated
