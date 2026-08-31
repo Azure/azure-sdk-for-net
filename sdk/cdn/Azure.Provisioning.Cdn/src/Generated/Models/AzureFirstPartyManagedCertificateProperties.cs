@@ -95,7 +95,7 @@ namespace Azure.Provisioning.Cdn
         {
             get
             {
-                return SecretSource.Id;
+                return SecretSource is null ? default : SecretSource.Id;
             }
         }
 
