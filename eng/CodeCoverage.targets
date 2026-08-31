@@ -21,6 +21,9 @@
   <Target Name="_PrepareMergedCodeCoverageRunSettings"
           BeforeTargets="VSTest"
           Condition="'$(_CollectCoverage)' == 'true' and '$(CodeCoverageExcludeByFile)' != '' and '$(VSTestSetting)' == '$(_BaseCoverageRunSettings)'">
+    <PropertyGroup>
+      <_NormalizedExcludeByFile>$([System.Text.RegularExpressions.Regex]::Replace($(CodeCoverageExcludeByFile), '\s+', ''))</_NormalizedExcludeByFile>
+    </PropertyGroup>
     <MakeDir Directories="$(_CoverageTempDir)" />
 
     <ReadLinesFromFile File="$(_BaseCoverageRunSettings)">
@@ -29,7 +32,7 @@
 
     <ItemGroup>
       <_CoveragePatchedLines Include="@(_CoverageBaseLines)">
-        <Text>$([System.String]::Copy('%(Identity)').Replace('&lt;ExcludeByFile&gt;&lt;/ExcludeByFile&gt;', '&lt;ExcludeByFile&gt;$(CodeCoverageExcludeByFile)&lt;/ExcludeByFile&gt;'))</Text>
+        <Text>$([System.String]::Copy('%(Identity)').Replace('&lt;ExcludeByFile&gt;&lt;/ExcludeByFile&gt;', '&lt;ExcludeByFile&gt;$(_NormalizedExcludeByFile)&lt;/ExcludeByFile&gt;'))</Text>
       </_CoveragePatchedLines>
     </ItemGroup>
 

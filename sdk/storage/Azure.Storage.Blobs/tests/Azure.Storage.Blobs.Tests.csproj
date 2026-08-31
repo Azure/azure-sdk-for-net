@@ -13,8 +13,11 @@
     <!-- Exclude generated and shared source files from code coverage -->
     <CodeCoverageExcludeByFile>
       **/CodeGenMemberAttribute.cs,
+      **/CodeGenMemberSerializationAttribute.cs,
+      **/CodeGenMemberSerializationHooksAttribute.cs,
       **/CodeGenSerializationAttribute.cs,
       **/CodeGenSuppressAttribute.cs,
+      **/CodeGenSuppressTypeAttribute.cs,
       **/CodeGenTypeAttribute.cs,
       **/ChangeTrackingDictionary.cs,
       **/ChangeTrackingList.cs,
