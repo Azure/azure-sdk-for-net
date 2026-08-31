@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RegistryEndpointAuthentication"/>. </summary>
+        protected RegistryEndpointAuthentication() : this(default)
+        {
+        }
+
         /// <summary> The authentication method. </summary>
         internal RegistryEndpointAuthenticationMethod Method { get; set; }
     }
