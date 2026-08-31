@@ -74,7 +74,7 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
 

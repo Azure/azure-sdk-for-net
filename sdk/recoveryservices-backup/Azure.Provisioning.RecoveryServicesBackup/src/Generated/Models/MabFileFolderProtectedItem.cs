@@ -24,6 +24,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new MabFileFolderProtectedItem. </summary>
         public MabFileFolderProtectedItem()
         {
+            ProtectedItemType.Assign("MabFileFolderProtectedItem");
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
@@ -135,7 +136,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "MabFileFolderProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _computerName = DefineProperty<string>(nameof(ComputerName), new string[] { "computerName" });
             _lastBackupStatus = DefineProperty<string>(nameof(LastBackupStatus), new string[] { "lastBackupStatus" });
