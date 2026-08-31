@@ -733,9 +733,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
             derivedEdgeCount.ToString(),
             unresolvedRoots.ToString(),
             elapsed.TotalSeconds.ToString("F3", System.Globalization.CultureInfo.InvariantCulture),
-            "nuget-restore-graph",
             bool.FalseString,
-            bool.TrueString,
             projectContextCount.ToString(),
             results.Count.ToString(),
             selectedPackages.ToString()));

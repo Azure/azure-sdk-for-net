@@ -19,9 +19,6 @@ parameters:
   - name: SkipPrValidation
     type: boolean
     default: false
-  - name: UseRepositorySourceGraph
-    type: boolean
-    default: true
   # Switch to canary to test canary 1es branch. 1es template validation will set this parameter
   # to canary on run.
   - name: oneESTemplateTag
@@ -43,6 +40,5 @@ extends:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
     EnableTestCheckoutNarrowing: true
-    UseRepositorySourceGraph: ${{ parameters.UseRepositorySourceGraph }}
     ExcludePaths:
       - eng/packages/http-client-csharp/

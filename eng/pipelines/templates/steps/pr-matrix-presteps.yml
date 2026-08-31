@@ -24,16 +24,9 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
-  - name: UseRepositorySourceGraph
-    type: boolean
-    default: true
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
-
-  - pwsh: |
-      Write-Host "##vso[task.setvariable variable=AZURESDK_USE_REPOSITORY_SOURCE_GRAPH;]${{ parameters.UseRepositorySourceGraph }}"
-    displayName: Select repository dependency authority
 
   # ForceDirect removes indirect packages before matrix generation, so avoid calculating them.
   - ${{ if eq(parameters.ForceDirect, true) }}:
@@ -64,83 +57,23 @@ steps:
 
   - ${{ if parameters.EnableTestCheckoutNarrowing }}:
     - pwsh: |
-        # Language-Settings.ps1 writes its reverse-dependency graph to this service.proj default.
-        # Reuse it when present; ForceDirect and empty-change passes intentionally do not create it.
-        $graphDirectory = "$(Build.SourcesDirectory)/artifacts/obj/RepositoryProjectGraph"
-        $graphPath = "$graphDirectory/repository-project-graph.reader.json"
         $checkoutGraphDirectory = "$(Build.ArtifactStagingDirectory)/TestCheckoutGraph"
-        $checkoutGraphPath = "$checkoutGraphDirectory/checkout-graph.json"
-        New-Item -ItemType Directory -Path $checkoutGraphDirectory -Force | Out-Null
+        $result = & "$(Build.SourcesDirectory)/eng/scripts/Prepare-TestCheckoutGraph.ps1" `
+          -RepoRoot "$(Build.SourcesDirectory)" `
+          -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -OutputDirectory $checkoutGraphDirectory `
+          -SourceCommit "$(Build.SourceVersion)"
 
-        function New-SparseCheckoutProjection {
-          dotnet msbuild /nologo /nr:false /v:minimal `
-            /t:CreateSparseCheckoutGraph `
-            "$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj" `
-            /p:SparseCheckoutPackageInfoDirectory="$(Build.ArtifactStagingDirectory)/PackageInfo" `
-            /p:SparseCheckoutRepoRoot="$(Build.SourcesDirectory)" `
-            /p:SparseCheckoutSourceGraphPath="$graphPath" `
-            /p:SparseCheckoutOutputPath="$checkoutGraphPath" `
-            /p:SparseCheckoutSourceCommit="$(Build.SourceVersion)"
-          if ($LASTEXITCODE -ne 0) {
-            throw "Sparse checkout projection failed with exit code $LASTEXITCODE."
-          }
+        if ($result.ReuseFailureReason) {
+          Write-Warning "The canonical repository graph could not be reused: $($result.ReuseFailureReason)"
         }
-
-        try {
-          $reusedGraph = $false
-          if (Test-Path -LiteralPath $graphPath) {
-            try {
-              # Projection validates commit provenance, Debug input coverage, NuGet
-              # completeness, and schema policy before accepting the reusable artifact.
-              New-SparseCheckoutProjection
-              $reusedGraph = $true
-              Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=reused'
-            }
-            catch {
-              Write-Warning "The canonical repository graph cannot be reused: $_"
-              Remove-Item -LiteralPath $checkoutGraphPath -Force -ErrorAction SilentlyContinue
-            }
-          }
-
-          if (-not $reusedGraph) {
-            # ForceDirect and other passes without dependency analysis still construct one graph.
-            dotnet msbuild /m /nr:false /nologo /tl:off `
-              /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
-              /p:RepositoryProjectGraphReaderPath="$graphPath" `
-              /p:SkipServiceProjectImports=true `
-              /p:IncludeRepositoryProjectGraphInputCheckoutRoots=true `
-              /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false `
-              /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-            if ($LASTEXITCODE -ne 0) {
-              throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
-            }
-
-            New-SparseCheckoutProjection
-            Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=generated'
-          }
-          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=available'
+        if ($result.RepositoryGraphResult) {
+          Write-Host "REPOSITORY_PROJECT_GRAPH_RESULT=$($result.RepositoryGraphResult)"
         }
-        catch {
-          # Sparse checkout is an optimization. Publish an explicit fallback artifact so graph
-          # incompleteness never prevents matrix generation or narrows a later test checkout.
-          $reason = $_.Exception.Message -replace "`r?`n", ' '
-          Write-Host "##vso[task.logissue type=warning]Sparse checkout graph is unavailable: $reason Tests will use a full checkout."
-          [ordered]@{
-            schemaVersion = 1
-            sourceCommit = "$(Build.SourceVersion)"
-            isComplete = $false
-            failureReason = $reason
-            alwaysIncludedPaths = @()
-            artifacts = @{}
-            adjacency = @{}
-            paths = @{}
-            diagnostics = @{}
-          } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $checkoutGraphPath -Encoding utf8NoBOM
-          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=fallback'
+        if ($result.FailureReason) {
+          Write-Host "##vso[task.logissue type=warning]Sparse checkout graph is unavailable: $($result.FailureReason) Tests will use a full checkout."
         }
-
-        Copy-Item ./eng/scripts/Resolve-SparseCheckoutPaths.ps1 `
-          "$checkoutGraphDirectory/Resolve-SparseCheckoutPaths.ps1"
+        Write-Host "SPARSE_CHECKOUT_GRAPH_RESULT=$($result.CheckoutGraphResult)"
       displayName: Build ProjectGraph test checkout graph
 
     - ${{ if eq(parameters.PublishArtifact, true) }}:

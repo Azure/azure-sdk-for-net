@@ -76,8 +76,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 8) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 8."
+  if ($graph.schemaVersion -ne 1) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 1."
   }
   return $graph
 }
@@ -87,8 +87,6 @@ function New-GraphIndexes($Graph) {
   $configurationsByProject = @{}
   $forward = @{}
   $reverse = @{}
-  $packageClosureUsesNuGet = $null -ne $Graph.diagnostics.packageClosure -and
-    $Graph.diagnostics.packageClosure.resolutionMode -eq 'nuget-restore-graph'
 
   foreach ($node in $Graph.nodes) {
     $nodes[$node.projectPath] = $node
@@ -119,11 +117,6 @@ function New-GraphIndexes($Graph) {
       $package = Get-PackageKey $node.packageId
       foreach ($configuration in $configurationsByProject[$node.projectPath]) {
         Add-AdjacencyEdge $reverse $package $configuration
-        if (!$packageClosureUsesNuGet) {
-          Add-AdjacencyEdge $forward $package $configuration
-          Add-AdjacencyEdge $reverse $configuration $package
-          Add-AdjacencyEdge $forward $configuration $package
-        }
       }
     }
   }
@@ -332,7 +325,7 @@ function Build-Graph {
         })
       }
       'PackageClosureSummary' {
-        if ($parts.Length -lt 9) { throw "Invalid package-closure summary record: $line" }
+        if ($parts.Length -ne 10) { throw "Invalid package-closure summary record: $line" }
         $packageClosureSummaryCount++
         $packageClosureSummary = [ordered]@{
           rootCount = [int]$parts[1]
@@ -340,13 +333,11 @@ function Build-Graph {
           derivedEdgeCount = [int]$parts[3]
           unresolvedRootCount = [int]$parts[4]
           elapsedSeconds = [double]::Parse($parts[5], [System.Globalization.CultureInfo]::InvariantCulture)
-          resolutionMode = $parts[6]
-          restoreEquivalent = [bool]::Parse($parts[7])
-          transitiveDependencyAssetFiltersApplied = [bool]::Parse($parts[8])
+          restoreEquivalent = [bool]::Parse($parts[6])
+          projectContextCount = [int]$parts[7]
+          restoreRequestCount = [int]$parts[8]
+          selectedPackageCount = [int]$parts[9]
         }
-        if ($parts.Length -ge 10) { $packageClosureSummary['projectContextCount'] = [int]$parts[9] }
-        if ($parts.Length -ge 11) { $packageClosureSummary['restoreRequestCount'] = [int]$parts[10] }
-        if ($parts.Length -ge 12) { $packageClosureSummary['selectedPackageCount'] = [int]$parts[11] }
       }
       'CheckoutRoot' {
         if ($parts.Length -lt 4) { throw "Invalid checkout-root record: $line" }
@@ -484,8 +475,7 @@ function Build-Graph {
     $packageClosureHasUnresolved = !$packageClosureSummaryConsistent -or
       $packageClosureSummary.unresolvedRootCount -gt 0 -or $unresolvedPackageClosure.Count -gt 0
   }
-  $requiresExactConfigurationGraph = $packageClosureAttempted -and $null -ne $packageClosureSummary -and
-    $packageClosureSummary.resolutionMode -eq 'nuget-restore-graph'
+  $requiresExactConfigurationGraph = $packageClosureAttempted
 
   # External package identities are retained in diagnostics, while the query graph contains
   # only repository package identities that can lead to source or test checkout paths.
@@ -494,7 +484,7 @@ function Build-Graph {
   })
 
   $graph = [ordered]@{
-    schemaVersion = 8
+    schemaVersion = 1
     repositoryRoot = $root.Replace('\', '/')
     sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {

@@ -40,7 +40,7 @@ Describe 'Repository project graph dependency-relation validation' -Tag 'UnitTes
             $packageBRoot = Join-Path $Root 'sdk/example/Azure.B'
             $dependentRoot = Join-Path $Root 'sdk/example/Azure.Dependent'
             return [pscustomobject]@{
-                schemaVersion = 8
+                schemaVersion = 1
                 repositoryRoot = $Root
                 nodes = @(
                     (New-TestNode 'sdk/example/Azure.B/src/Azure.B.csproj' 'Azure.B' 'sdk/example/Azure.B' $true `
@@ -220,7 +220,7 @@ Describe 'Repository project graph dependency-relation validation' -Tag 'UnitTes
         $rootDirect = Join-Path $root 'sdk/example/Direct'
         $rootTransitive = Join-Path $root 'sdk/example/Transitive'
         $graph = [pscustomobject]@{
-            schemaVersion = 8
+            schemaVersion = 1
             repositoryRoot = $root
             nodes = @(
                 (New-TestNode 'sdk/example/B/src/B.csproj' 'Azure.B' 'sdk/example/B' $true)
@@ -263,7 +263,7 @@ Describe 'Repository project graph dependency-relation validation' -Tag 'UnitTes
         $root = Join-Path $TestDrive 'non-assembly'
         $dependentRoot = Join-Path $root 'sdk/example/Dependent'
         $graph = [pscustomobject]@{
-            schemaVersion = 8
+            schemaVersion = 1
             repositoryRoot = $root
             nodes = @(
                 (New-TestNode 'sdk/example/Analyzer/src/Analyzer.csproj' 'Azure.Analyzer' 'sdk/example/Analyzer' $true)

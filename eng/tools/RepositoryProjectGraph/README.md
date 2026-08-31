@@ -182,8 +182,8 @@ The oracle can be rerun to investigate future drift:
 - Compare `oracle-only` and `graph-only` records to locate the first differing relationship.
 - Use project and target-framework records to distinguish evaluation differences from package
   mapping differences.
-- Use shadow mode to diagnose an unexpected production query without making the slower native path
-  authoritative in the normal CI workflow.
+- Compare a focused native-oracle run with the graph output when troubleshooting an unexpected
+  production query. The slower oracle remains independent of the normal CI workflow.
 
 Validation support lives in
 [`Validate-RepositoryProjectGraph.ps1`](../../scripts/Validate-RepositoryProjectGraph.ps1) and
@@ -200,6 +200,11 @@ The script queries the canonical graph with the changed package identities and m
 project or package roots back to `PackageInfo` entries. Those entries are marked for dependent
 validation before normal matrix batching. One graph query replaces native reference evaluation
 across every candidate project and target framework.
+
+The repository graph is the normal dependency-selection authority. If graph construction or the
+query throws, `Language-Settings.ps1` records a warning and runs the existing native
+`ResolveReferences` path for that build instead. This preserves package selection while keeping the
+native path out of successful graph-based runs.
 
 ### Test source selection
 
@@ -279,6 +284,8 @@ functions over reading the JSON with a new one-off parser.
 | [`CreateSparseCheckoutGraphTask`](CreateSparseCheckoutGraphTask.cs) | Projects the canonical graph and `PackageInfo` into the per-test checkout index |
 | [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) | Builds, validates, and queries the canonical artifact |
 | [`Language-Settings.ps1`](../../scripts/Language-Settings.ps1) | Selects projects affected by a changed package for CI |
+| [`Prepare-TestCheckoutGraph.ps1`](../../scripts/Prepare-TestCheckoutGraph.ps1) | Reuses or builds the graph projection published by matrix generation |
+| [`Get-TestCheckoutPaths.ps1`](../../scripts/Get-TestCheckoutPaths.ps1) | Resolves one test job's source paths or returns its full-checkout fallback |
 | [`Validate-RepositoryProjectGraph.ps1`](../../scripts/Validate-RepositoryProjectGraph.ps1) | Compares the graph with the independent native oracle |
 
 ## Development

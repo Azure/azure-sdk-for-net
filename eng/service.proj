@@ -59,14 +59,22 @@
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
+  <!-- Discover each project family once so normal traversal, override filtering, and repository
+       graph generation use the same project selection rules. -->
+  <ItemGroup>
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" />
+    <IntegrationTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\integration\**\*.csproj" />
+    <SharedProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\shared\**\*.csproj" />
+    <CommonProjects Include="..\common\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
     <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
     <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
@@ -80,15 +88,6 @@
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
-    <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <IntegrationTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\integration\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SampleApplications Include="..\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SharedProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\shared\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
     <ProjectReference Remove="@(TestProjects)" Condition="'$(IncludeTests)' == 'false'" />
     <ProjectReference Remove="@(SamplesProjects)" Condition="'$(IncludeSamples)' == 'false'" />
     <ProjectReference Remove="@(PerfProjects)" Condition="'$(IncludePerf)' == 'false'" />
@@ -204,7 +203,9 @@
 
   <Target Name="_GenerateRepositoryProjectGraphRecordsWithProjectGraph">
     <ItemGroup>
-      <_RepositoryProjectGraphReaderProject Include="$(RepoRoot)sdk/*/**/src/**/*.csproj;$(RepoRoot)sdk/*/**/gen/**/*.csproj;$(RepoRoot)sdk/*/**/shared/**/*.csproj;$(RepoRoot)common/**/*.csproj;$(RepoRoot)sdk/*/**/tests/**/*.csproj;$(RepoRoot)sdk/*/**/integration/**/*.csproj" />
+      <!-- Stress projects live beneath stress/src, so SrcProjects deliberately excludes them even
+           though they are part of the repository graph's source-project universe. -->
+      <_RepositoryProjectGraphReaderProject Include="@(SrcProjects);@(SourceGenerationProjects);@(SharedProjects);@(CommonProjects);@(TestProjects);@(IntegrationTestProjects);@(StressProjects)" />
       <_RepositoryProjectGraphRoot Include="@(ProjectReference)" Condition="'$(SkipServiceProjectImports)' != 'true'" />
     </ItemGroup>
     <RemoveDuplicates Inputs="@(_RepositoryProjectGraphReaderProject)">

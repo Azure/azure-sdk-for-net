@@ -10,7 +10,6 @@ Describe "Language settings repository dependency selection" -Tag "UnitTest" {
     }
 
     BeforeEach {
-        $env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH = $null
         $global:RepoRoot = $TestDrive
         $changedPackage = [pscustomobject]@{
             Name = "Azure.Changed"
@@ -42,32 +41,20 @@ Describe "Language settings repository dependency selection" -Tag "UnitTest" {
     }
 
     AfterEach {
-        $env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH = $null
         Remove-Variable RepoRoot -Scope Global -ErrorAction SilentlyContinue
     }
 
-    It "uses the repository source graph by default and warns on disagreement" {
+    It "uses only the repository source graph when it succeeds" {
         $result = @(Get-dotnet-AdditionalValidationPackagesFromPackageSet $changedPackage ([pscustomobject]@{}) $allPackages)
 
         $result.Name | Should -Be @("Azure.SourceGraphDependent")
-        Should -Invoke Invoke-LoggedMsbuildCommand -Times 2 -Exactly
+        Should -Invoke Invoke-LoggedMsbuildCommand -Times 1 -Exactly
         Should -Invoke Write-Host -Times 1 -Exactly -ParameterFilter {
-            $Object -match '^##vso\[task\.logissue type=warning;code=RepositorySourceGraphMismatch\]'
+            $Object -eq "REPOSITORY_DEPENDENCY_AUTHORITY=repository-source-graph selectedRootCount=1"
         }
     }
 
-    It "keeps evaluating the source graph but uses ResolveReferences in shadow mode" {
-        $env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH = 'false'
-        $result = @(Get-dotnet-AdditionalValidationPackagesFromPackageSet $changedPackage ([pscustomobject]@{}) $allPackages)
-
-        $result.Name | Should -Be @("Azure.ResolvedReferenceDependent")
-        Should -Invoke Invoke-LoggedMsbuildCommand -Times 2 -Exactly
-        Should -Invoke Write-Host -Times 1 -Exactly -ParameterFilter {
-            $Object -eq "REPOSITORY_DEPENDENCY_AUTHORITY=resolve-references selectedRootCount=1"
-        }
-    }
-
-    It "continues with ResolveReferences when source graph evaluation fails in shadow mode" {
+    It "falls back to ResolveReferences when repository graph evaluation fails" {
         Mock Invoke-LoggedMsbuildCommand {
             param($Command)
             if ($Command -like "*repository-source-graph.txt*") {
@@ -76,11 +63,15 @@ Describe "Language settings repository dependency selection" -Tag "UnitTest" {
             $resolvedReferencePackage.DirectoryPath | Set-Content (Join-Path $TestDrive "_dependencylist.txt")
         }
 
-        $result = @(Get-dotnet-AdditionalValidationPackagesFromPackageSet $changedPackage ([pscustomobject]@{}) $allPackages -UseRepositorySourceGraph $false)
+        $result = @(Get-dotnet-AdditionalValidationPackagesFromPackageSet $changedPackage ([pscustomobject]@{}) $allPackages)
 
         $result.Name | Should -Be @("Azure.ResolvedReferenceDependent")
+        Should -Invoke Invoke-LoggedMsbuildCommand -Times 2 -Exactly
         Should -Invoke Write-Host -Times 1 -Exactly -ParameterFilter {
-            $Object -match '^##vso\[task\.logissue type=warning;code=RepositorySourceGraphFailure\]'
+            $Object -match '^##vso\[task\.logissue type=warning;code=RepositorySourceGraphFallback\]'
+        }
+        Should -Invoke Write-Host -Times 1 -Exactly -ParameterFilter {
+            $Object -eq "REPOSITORY_DEPENDENCY_AUTHORITY=resolve-references-fallback selectedRootCount=1"
         }
     }
 }

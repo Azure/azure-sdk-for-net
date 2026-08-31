@@ -251,8 +251,8 @@ function Test-ProjectReached($Model, $Reachable, [string] $ProjectPath) {
 }
 
 function Get-GraphDependencyRelation($Graph, [object[]] $PackageInfos) {
-  if ($Graph.schemaVersion -ne 8) {
-    throw "Unsupported repository project graph schema version '$($Graph.schemaVersion)'. Expected 8."
+  if ($Graph.schemaVersion -ne 1) {
+    throw "Unsupported repository project graph schema version '$($Graph.schemaVersion)'. Expected 1."
   }
   if (!$Graph.diagnostics.isComplete) {
     throw 'Repository project graph is incomplete.'
@@ -528,7 +528,7 @@ function Test-CanonicalGraphContract(
   [string] $RepositoryRoot,
   [string] $SourceCommit) {
   $root = Normalize-AbsolutePath $RepositoryRoot
-  Assert-ValidationCondition ($Graph.schemaVersion -eq 8) 'Canonical graph schema must be 8.'
+  Assert-ValidationCondition ($Graph.schemaVersion -eq 1) 'Canonical graph schema must be 1.'
   Assert-ValidationCondition ($Graph.sourceCommit -eq $SourceCommit) 'Canonical graph source commit is stale.'
   Assert-ValidationCondition (
     [System.StringComparer]::OrdinalIgnoreCase.Equals(
@@ -539,7 +539,7 @@ function Test-CanonicalGraphContract(
   Assert-ValidationCondition ($Graph.diagnostics.generation.configuration -eq 'Debug') 'Canonical graph was not generated in Debug.'
   Assert-ValidationCondition $Graph.diagnostics.generation.includesInputCheckoutRoots 'Canonical graph omits evaluated input checkout roots.'
   Assert-ValidationCondition (
-    $Graph.diagnostics.packageClosure.resolutionMode -eq 'nuget-restore-graph') 'Canonical graph did not use the NuGet restore graph.'
+    $Graph.diagnostics.packageClosure.restoreEquivalent -eq $false) 'Canonical package closure incorrectly claims restore equivalence.'
   Assert-ValidationCondition (
     $Graph.diagnostics.packageClosure.unresolvedRootCount -eq 0) 'Canonical graph contains unresolved NuGet roots.'
 
@@ -637,7 +637,7 @@ function Test-CanonicalGraphContract(
         $unresolvedCount++
       }
       'PackageClosureSummary' {
-        Assert-ValidationCondition ($parts.Length -eq 12) "Invalid package closure summary '$line'."
+        Assert-ValidationCondition ($parts.Length -eq 10) "Invalid package closure summary '$line'."
         $summary = $parts
         $summaryCount++
       }
@@ -854,8 +854,7 @@ function Invoke-DependencyRelationValidation(
   if (!$graph.diagnostics.isComplete -or !$graph.diagnostics.configurationGraph.isExact) {
     throw 'Fresh repository graph is incomplete or contains inferred configuration edges.'
   }
-  if ($graph.diagnostics.packageClosure.resolutionMode -ne 'nuget-restore-graph' -or
-      $graph.diagnostics.packageClosure.unresolvedRootCount -ne 0) {
+  if ($graph.diagnostics.packageClosure.unresolvedRootCount -ne 0) {
     throw 'Fresh repository graph does not have a complete NuGet restore-graph closure.'
   }
   if (!$graph.diagnostics.checkoutRoots.isComplete) {

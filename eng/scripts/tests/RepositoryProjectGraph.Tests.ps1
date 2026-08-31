@@ -48,7 +48,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 8
+        $graph.schemaVersion | Should -Be 1
         $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
@@ -82,7 +82,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureGraphPath = Join-Path $TestDrive "closure.json"
         @(
             "TransitivePackageReference|$testProject|net9.0|Azure.B"
-            "PackageClosureSummary|1|1|1|0|0.125|nuget-restore-graph|false|true|1|1|2"
+            "PackageClosureSummary|1|1|1|0|0.125|false|1|1|2"
         ) | Set-Content $packageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
@@ -94,16 +94,14 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $edge.to | Should -Be "Azure.B"
         $edge.fromTargetFramework | Should -Be "net9.0"
         $graph.diagnostics.isComplete | Should -BeTrue
-        $graph.diagnostics.packageClosure.resolutionMode | Should -Be "nuget-restore-graph"
         $graph.diagnostics.packageClosure.restoreEquivalent | Should -BeFalse
-        $graph.diagnostics.packageClosure.transitiveDependencyAssetFiltersApplied | Should -BeTrue
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeFalse
     }
 
     It "fails closed when the package closure summary contradicts its detail records" {
         $packageRecordsPath = Join-Path $TestDrive "inconsistent-package-closure.records"
         $closureGraphPath = Join-Path $TestDrive "inconsistent-closure.json"
-        "PackageClosureSummary|1|0|0|1|0.125|nuget-restore-graph|false|true|1|1|0" | Set-Content $packageRecordsPath
+        "PackageClosureSummary|1|0|0|1|0.125|false|1|1|0" | Set-Content $packageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
@@ -162,7 +160,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             "DeclaredProject|$testProject"
             "Root|$testProject"
         ) | Set-Content $configurationRecordsPath
-        "PackageClosureSummary|1|1|0|0|0.001|nuget-restore-graph|false|true|1|1|1" |
+        "PackageClosureSummary|1|1|0|0|0.001|false|1|1|1" |
             Set-Content $configurationPackageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $configurationGraphPath -RecordsPath $configurationRecordsPath -PackageRecordsPath $configurationPackageRecordsPath -RepoRoot $repoRoot
@@ -344,9 +342,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureRecords | Should -Not -Contain "TransitivePackageReference|$nonAssemblyTestProject|net8.0|Azure.B"
         $summary = ($closureRecords | Where-Object { $_ -like "PackageClosureSummary|*" }).Split('|')
         $summary[1..4] | Should -Be @("5", "5", "3", "0")
-        $summary[6..8] | Should -Be @("nuget-restore-graph", "False", "True")
-        $summary[9..10] | Should -Be @("3", "3")
-        [int]$summary[11] | Should -BeGreaterThan 0
+        $summary[6] | Should -Be "False"
+        $summary[7..8] | Should -Be @("3", "3")
+        [int]$summary[9] | Should -BeGreaterThan 0
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $inputRecordsPath -PackageRecordsPath $closureRecordsPath -RepoRoot $fixtureRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
@@ -574,7 +572,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
         $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
         $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "dependency-only configurations that schema 8 cannot represent"
+        $output | Out-String | Should -Match "dependency-only configurations that schema 1 cannot represent"
         Test-Path $recordsPath | Should -BeFalse
     }
 }

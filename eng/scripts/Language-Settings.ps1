@@ -94,18 +94,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 function Get-dotnet-AdditionalValidationPackagesFromPackageSet(
   $LocatedPackages,
   $diffObj,
-  $AllPkgProps,
-  [bool] $UseRepositorySourceGraph = $true)
+  $AllPkgProps)
 {
   $additionalValidationPackages = @()
-
-  # Pipeline callers use the environment because the common package-selection hook passes only
-  # the first three arguments. Explicit PowerShell callers can override it with the parameter.
-  if (!$PSBoundParameters.ContainsKey('UseRepositorySourceGraph') -and $env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH) {
-    if (![bool]::TryParse($env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH, [ref]$UseRepositorySourceGraph)) {
-      throw "AZURESDK_USE_REPOSITORY_SOURCE_GRAPH must be 'true' or 'false'."
-    }
-  }
 
   # Changes to a package's project-scoped engineering files (ApiCompat baselines,
   # analyzer/NoWarn allow-lists, CPM overrides) live under eng/ and so are invisible to
@@ -161,48 +152,26 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet(
     " /p:OutputProjectFilePath=`"$resolvedReferenceOutputFilePath`""
 
   Remove-Item $repositorySourceGraphOutputFilePath, $resolvedReferenceOutputFilePath -Force -ErrorAction SilentlyContinue
-  $repositorySourceGraphAvailable = $false
+
+  # The repository graph is authoritative. ResolveReferences remains a compatibility fallback for
+  # graph construction or query failures so package selection can continue conservatively.
   try {
     Write-Host "Calculating dependencies using the repository source graph."
     Invoke-LoggedMsbuildCommand $repositorySourceGraphCommand
-    $repositorySourceGraphAvailable = $true
+    $dependentProjects = @(Get-Content $repositorySourceGraphOutputFilePath | Sort-Object -Unique)
+    $dependencyAuthority = 'repository-source-graph'
+    Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=succeeded"
   }
   catch {
-    if ($UseRepositorySourceGraph) {
-      throw
-    }
     $reason = $_.Exception.Message -replace "`r?`n", ' '
-    Write-Host "##vso[task.logissue type=warning;code=RepositorySourceGraphFailure]Repository source graph calculation failed in shadow mode: $reason"
-    Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=failed"
+    Write-Host "##vso[task.logissue type=warning;code=RepositorySourceGraphFallback]Repository source graph calculation failed: $reason Falling back to ResolveReferences."
+    Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=fallback"
+    Write-Host "Calculating dependencies using ResolveReferences."
+    Invoke-LoggedMsbuildCommand $resolvedReferenceCommand
+    $dependentProjects = @(Get-Content $resolvedReferenceOutputFilePath | Sort-Object -Unique)
+    $dependencyAuthority = 'resolve-references-fallback'
   }
 
-  Write-Host "Calculating dependencies using ResolveReferences."
-  Invoke-LoggedMsbuildCommand $resolvedReferenceCommand
-
-  $resolvedReferenceDependencies = @(Get-Content $resolvedReferenceOutputFilePath | Sort-Object -Unique)
-  $repositorySourceGraphDependencies = @(
-    if ($repositorySourceGraphAvailable) {
-      Get-Content $repositorySourceGraphOutputFilePath | Sort-Object -Unique
-    }
-  )
-
-  if ($repositorySourceGraphAvailable) {
-    $dependencyDifferences = @(Compare-Object $resolvedReferenceDependencies $repositorySourceGraphDependencies)
-    if ($dependencyDifferences.Count -gt 0) {
-      $dependencyDifferences | Format-Table | Out-String | Write-Host
-      Write-Host "##vso[task.logissue type=warning;code=RepositorySourceGraphMismatch]Repository source graph selected $($repositorySourceGraphDependencies.Count) package roots while ResolveReferences selected $($resolvedReferenceDependencies.Count)."
-      Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=mismatch"
-    } else {
-      Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=matched"
-    }
-  }
-
-  $dependentProjects = if ($UseRepositorySourceGraph) {
-    $repositorySourceGraphDependencies
-  } else {
-    $resolvedReferenceDependencies
-  }
-  $dependencyAuthority = if ($UseRepositorySourceGraph) { 'repository-source-graph' } else { 'resolve-references' }
   Write-Host "REPOSITORY_DEPENDENCY_AUTHORITY=$dependencyAuthority selectedRootCount=$($dependentProjects.Count)"
 
   foreach ($packageRootPath in $dependentProjects) {

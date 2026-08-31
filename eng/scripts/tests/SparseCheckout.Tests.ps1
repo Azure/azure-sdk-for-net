@@ -8,6 +8,8 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $script:RepositoryRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..')
         $script:TaskProject = Join-Path $script:RepositoryRoot 'eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj'
         $script:ResolvePathsPath = Join-Path $PSScriptRoot '..' 'Resolve-SparseCheckoutPaths.ps1'
+        $script:GetCheckoutPathsPath = Join-Path $PSScriptRoot '..' 'Get-TestCheckoutPaths.ps1'
+        $script:PrepareCheckoutGraphPath = Join-Path $PSScriptRoot '..' 'Prepare-TestCheckoutGraph.ps1'
 
         function Invoke-SparseCheckoutProjection(
             [string] $PackageInfoDirectory,
@@ -59,7 +61,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         } | ConvertTo-Json | Set-Content (Join-Path $packageInfo 'Azure.A.json')
 
         [ordered]@{
-            schemaVersion = 8
+            schemaVersion = 1
             repositoryRoot = $repo.Replace('\', '/')
             sourceCommit = $sourceCommit
             nodes = @(
@@ -93,7 +95,6 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
                     configuration = 'Debug'
                     includesInputCheckoutRoots = $true
                 }
-                packageClosure = @{ resolutionMode = 'nuget-restore-graph' }
                 checkoutRoots = @{ isComplete = $true }
             }
         } | ConvertTo-Json -Depth 20 | Set-Content $graphPath
@@ -126,7 +127,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $paths | Should -Contain '/common'
     }
 
-    It 'rejects incomplete and non-NuGet source graphs instead of narrowing' {
+    It 'rejects incomplete source graphs and unsupported generation policies instead of narrowing' {
         $graph = Get-Content $graphPath -Raw | ConvertFrom-Json
         $graph.diagnostics.isComplete = $false
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
@@ -135,12 +136,6 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             Should -Throw '*graph is incomplete*'
 
         $graph.diagnostics.isComplete = $true
-        $graph.diagnostics.packageClosure.resolutionMode = 'unsupported-resolution-mode'
-        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
-        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
-            Should -Throw '*requires the NuGet restore graph*'
-
-        $graph.diagnostics.packageClosure.resolutionMode = 'nuget-restore-graph'
         $graph.diagnostics.generation.includesInputCheckoutRoots = $false
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
@@ -222,10 +217,61 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
             -ExpectedSourceCommit 'stale') | Should -BeNullOrEmpty
 
+        Copy-Item -LiteralPath $script:ResolvePathsPath `
+            -Destination (Join-Path $TestDrive 'Resolve-SparseCheckoutPaths.ps1')
+        $selection = & $script:GetCheckoutPathsPath `
+            -GraphDirectory $TestDrive `
+            -ArtifactNames 'Azure.A,Azure.B' `
+            -ExpectedSourceCommit $sourceCommit
+        $selection.IsNarrowed | Should -BeTrue
+        $selection.FailureReason | Should -BeNullOrEmpty
+        @($selection.Paths) | Should -Be @(
+            '/*', '!/*/', '/eng', '/common', '/sdk/alpha/*', '/sdk/beta/*', '/sdk/shared/*')
+
+        $fallback = & $script:GetCheckoutPathsPath `
+            -GraphDirectory $TestDrive `
+            -ArtifactNames 'Azure.A' `
+            -ExpectedSourceCommit 'stale'
+        $fallback.IsNarrowed | Should -BeFalse
+        $fallback.FailureReason | Should -Match 'does not match job commit'
+        @($fallback.Paths) | Should -Be @('/*', '!SessionRecords', '/sdk/*/**/SessionRecords/*')
+
         $checkoutGraph = Get-Content $checkoutGraphPath -Raw | ConvertFrom-Json
         $checkoutGraph.paths.'configuration:Shared|net8.0' = @('/artifacts/obj/*')
         $checkoutGraph | ConvertTo-Json -Depth 10 | Set-Content $checkoutGraphPath
         @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
             -ExpectedSourceCommit $sourceCommit) | Should -BeNullOrEmpty
+    }
+
+    It 'publishes an explicit fallback when checkout graph preparation fails' {
+        $fixtureRoot = Join-Path $TestDrive 'preparation-repo'
+        $fixtureScripts = Join-Path $fixtureRoot 'eng/scripts'
+        $outputDirectory = Join-Path $TestDrive 'prepared-graph'
+        New-Item -ItemType Directory -Path $fixtureScripts -Force | Out-Null
+        Copy-Item -LiteralPath $script:ResolvePathsPath `
+            -Destination (Join-Path $fixtureScripts 'Resolve-SparseCheckoutPaths.ps1')
+
+        function global:dotnet { $global:LASTEXITCODE = 7 }
+        try {
+            $result = & $script:PrepareCheckoutGraphPath `
+                -RepoRoot $fixtureRoot `
+                -PackageInfoDirectory (Join-Path $TestDrive 'PackageInfo') `
+                -OutputDirectory $outputDirectory `
+                -SourceCommit 'fixture-commit'
+        }
+        finally {
+            Remove-Item Function:\global:dotnet -ErrorAction SilentlyContinue
+            $global:LASTEXITCODE = 0
+        }
+
+        $result.RepositoryGraphResult | Should -BeNullOrEmpty
+        $result.CheckoutGraphResult | Should -Be 'fallback'
+        $result.FailureReason | Should -Be 'RepositoryProjectGraph generation failed with exit code 7.'
+        Test-Path (Join-Path $outputDirectory 'Resolve-SparseCheckoutPaths.ps1') | Should -BeTrue
+        $fallbackGraph = Get-Content (Join-Path $outputDirectory 'checkout-graph.json') -Raw | ConvertFrom-Json
+        $fallbackGraph.schemaVersion | Should -Be 1
+        $fallbackGraph.sourceCommit | Should -Be 'fixture-commit'
+        $fallbackGraph.isComplete | Should -BeFalse
+        $fallbackGraph.failureReason | Should -Be $result.FailureReason
     }
 }

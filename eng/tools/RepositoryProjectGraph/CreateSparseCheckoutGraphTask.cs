@@ -16,7 +16,7 @@ namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 /// </summary>
 public sealed class CreateSparseCheckoutGraphTask : Task
 {
-    private const int SourceSchemaVersion = 8;
+    private const int SourceSchemaVersion = 1;
     private static readonly string[] AlwaysIncludedPaths = ["/*", "!/*/", "/eng", "/.config", "/common"];
     private static readonly StringComparer KeyComparer = StringComparer.OrdinalIgnoreCase;
     private static readonly JsonSerializerOptions ReadOptions = new()
@@ -377,11 +377,6 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         {
             throw new InvalidOperationException($"Repository project graph is incomplete. See diagnostics in '{graphPath}'.");
         }
-        if (graph.Diagnostics.PackageClosure?.ResolutionMode != "nuget-restore-graph")
-        {
-            throw new InvalidOperationException(
-                $"Sparse checkout requires the NuGet restore graph, but '{graph.Diagnostics.PackageClosure?.ResolutionMode}' was used.");
-        }
         if (graph.Diagnostics.Generation is null || !graph.Diagnostics.Generation.IncludesInputCheckoutRoots ||
             graph.Diagnostics.Generation.Configuration != "Debug")
         {
@@ -531,7 +526,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         }
     }
 
-    // Minimal schema-8 input model. System.Text.Json ignores canonical fields that projection does
+    // Minimal schema-1 input model. System.Text.Json ignores canonical fields that projection does
     // not consume, keeping the sparse-checkout contract narrower than the source artifact schema.
     private sealed class SourceGraph
     {
@@ -568,7 +563,6 @@ public sealed class CreateSparseCheckoutGraphTask : Task
     {
         public bool IsComplete { get; set; }
         public SourceGeneration Generation { get; set; }
-        public PackageClosure PackageClosure { get; set; }
         public CheckoutRootDiagnostics CheckoutRoots { get; set; }
     }
 
@@ -576,11 +570,6 @@ public sealed class CreateSparseCheckoutGraphTask : Task
     {
         public string Configuration { get; set; }
         public bool IncludesInputCheckoutRoots { get; set; }
-    }
-
-    private sealed class PackageClosure
-    {
-        public string ResolutionMode { get; set; }
     }
 
     private sealed class CheckoutRootDiagnostics
