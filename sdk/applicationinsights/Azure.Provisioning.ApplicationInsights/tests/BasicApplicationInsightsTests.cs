@@ -165,10 +165,10 @@ public class BasicApplicationInsightsTests
                     "",
                     "resource linkedStorage 'Microsoft.Insights/components/linkedStorageAccounts@2020-03-01-preview' = {",
                     "  name: 'ServiceProfiler'",
+                    "  parent: appInsights",
                     "  properties: {",
                     "    linkedStorageAccount: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/storage'",
                     "  }",
-                    "  parent: appInsights",
                     "}"
                 }));
     }
@@ -192,12 +192,12 @@ public class BasicApplicationInsightsTests
                     "resource revision 'Microsoft.Insights/workbooks/revisions@2023-06-01' = {",
                     "  name: 'revision-1'",
                     "  location: location",
+                    "  parent: workbook",
                     "  properties: {",
+                    "    category: 'workbook'",
                     "    displayName: 'Workbook revision'",
                     "    serializedData: '{}'",
-                    "    category: 'workbook'",
                     "  }",
-                    "  parent: workbook",
                     "}"
                 }));
     }
@@ -218,13 +218,13 @@ public class BasicApplicationInsightsTests
                     "  name: take('workbooktemplate${uniqueString(resourceGroup().id)}', 24)",
                     "  location: location",
                     "  properties: {",
-                    "    templateData: { }",
                     "    galleries: []",
                     "    localized: {",
                     "      'en-US': [",
                     "        { }",
                     "      ]",
                     "    }",
+                    "    templateData: { }",
                     "  }",
                     "}"
                 }));
