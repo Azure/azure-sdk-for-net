@@ -115,6 +115,7 @@ public class BasicNetworkTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
               name: vnetName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -136,7 +137,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -283,6 +283,7 @@ public class BasicNetworkTests
 
             resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
               name: publicIpName
+              location: location
               properties: {
                 dnsSettings: {
                   domainNameLabel: publicIpDns
@@ -291,7 +292,6 @@ public class BasicNetworkTests
                 publicIPAddressVersion: 'IPv4'
                 publicIPAllocationMethod: 'Static'
               }
-              location: location
               sku: {
                 name: 'Standard'
               }
@@ -299,6 +299,7 @@ public class BasicNetworkTests
 
             resource natGateway 'Microsoft.Network/natGateways@2020-06-01' = {
               name: natGatewayName
+              location: location
               properties: {
                 idleTimeoutInMinutes: 4
                 publicIpAddresses: [
@@ -307,7 +308,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
               sku: {
                 name: 'Standard'
               }
@@ -315,6 +315,7 @@ public class BasicNetworkTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
               name: vnetName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -337,7 +338,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -468,8 +468,8 @@ public class BasicNetworkTests
 
             resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
               name: storageAccountName
-              kind: 'StorageV2'
               location: location
+              kind: 'StorageV2'
               sku: {
                 name: 'Standard_LRS'
               }
@@ -482,6 +482,8 @@ public class BasicNetworkTests
 
             resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2022-01-01' = {
               name: '${networkWatcherName}/${flowLogName}'
+              location: location
+              parent: networkWatcher
               properties: {
                 enabled: true
                 format: {
@@ -495,8 +497,6 @@ public class BasicNetworkTests
                 storageId: storageAccount.id
                 targetResourceId: existingNSG
               }
-              location: location
-              parent: networkWatcher
             }
             """);
     }
@@ -648,6 +648,7 @@ public class BasicNetworkTests
 
             resource virtualNetwork 'Microsoft.Network/virtualNetworks@2020-05-01' = {
               name: virtualNetworkName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -666,7 +667,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -810,6 +810,7 @@ public class BasicNetworkTests
 
             resource vNetHub 'Microsoft.Network/virtualNetworks@2025-05-01' = {
               name: vNetHubName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -825,11 +826,11 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
 
             resource vNetSpoke 'Microsoft.Network/virtualNetworks@2025-05-01' = {
               name: vNetSpokeName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -845,11 +846,11 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
 
             resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
               name: 'peering-to-${vNetSpokeName}'
+              parent: vNetHub
               properties: {
                 allowForwardedTraffic: false
                 allowGatewayTransit: false
@@ -859,11 +860,11 @@ public class BasicNetworkTests
                 }
                 useRemoteGateways: false
               }
-              parent: vNetHub
             }
 
             resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
               name: 'peering-to-${vNetHubName}'
+              parent: vNetSpoke
               properties: {
                 allowForwardedTraffic: false
                 allowGatewayTransit: false
@@ -873,7 +874,6 @@ public class BasicNetworkTests
                 }
                 useRemoteGateways: false
               }
-              parent: vNetSpoke
             }
 
             resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
@@ -889,20 +889,20 @@ public class BasicNetworkTests
 
             resource bastionHost 'Microsoft.Network/bastionHosts@2025-05-01' = {
               name: bastionHostName
+              location: location
               properties: {
                 ipConfigurations: [
                   {
+                    name: 'ipconfig1'
                     properties: {
+                      privateIPAllocationMethod: 'Dynamic'
                       publicIPAddress: {
                         id: bastionPublicIP.id
                       }
-                      privateIPAllocationMethod: 'Dynamic'
                     }
-                    name: 'ipconfig1'
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -1024,28 +1024,29 @@ public class BasicNetworkTests
 
             resource workloadIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
               name: 'workload-ipgroup-${uniqueString(resourceGroup().id)}'
+              location: location
               properties: {
                 ipAddresses: [
                   '10.20.0.0/24'
                   '10.30.0.0/24'
                 ]
               }
-              location: location
             }
 
             resource infraIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
               name: 'infra-ipgroup-${uniqueString(resourceGroup().id)}'
+              location: location
               properties: {
                 ipAddresses: [
                   '10.40.0.0/24'
                   '10.50.0.0/24'
                 ]
               }
-              location: location
             }
 
             resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' = {
               name: virtualNetworkName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -1061,7 +1062,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
 
             resource publicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
@@ -1086,22 +1086,22 @@ public class BasicNetworkTests
 
             resource firewall 'Microsoft.Network/azureFirewalls@2025-05-01' = {
               name: firewallName
+              location: location
               properties: {
                 firewallPolicy: {
                   id: firewallPolicy.id
                 }
                 ipConfigurations: [
                   {
+                    name: 'IpConf0'
                     properties: {
                       publicIPAddress: {
                         id: publicIP.id
                       }
                     }
-                    name: 'IpConf0'
                   }
                 ]
               }
-              location: location
             }
             """);
     }
