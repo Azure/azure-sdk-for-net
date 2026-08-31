@@ -1,398 +1,299 @@
 # Repository project graph
 
-`RepositoryProjectGraph` builds one reusable, schema-versioned model of repository
-project and package reachability. PR matrix generation uses the same canonical graph
-for two directions:
+`RepositoryProjectGraph` is repository build infrastructure used by our repository to understand project dependencies and reverse project dependencies. This is used in our CI pipelines to identify jobs that are required to run as part of a build or test fanout.
 
-- **Reverse reachability:** a changed repository package selects every direct or
-  indirect dependent package that needs validation.
-- **Forward reachability:** a selected test artifact expands to the projects,
-  repository packages, and SDK service directories required by sparse checkout.
+For example, `RepositoryProjectGraph` is used to understand:
 
-The graph models identities and reachability, not compiler files or authoritative
-restore assets. It evaluates the repository once in `Debug`, preserves every declared
-target framework as a distinct configuration, and fails closed when exact repository
-reachability cannot be established. Sparse checkout is only an optimization: stale,
-incomplete, or unsupported data causes a full checkout.
+- Indirect project dependencies. This directly influences test package selection in PR builds.
+- Reverse project dependencies. This influences sparse checkout behavior in fanned out builds, to ensure we sparsely clone the repository to only include the `sdk` directories we need.
 
-For detailed design alternatives and limitations, see [`trade-off.md`](trade-off.md).
-For hosted sparse-checkout findings and validation, see
-[`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md). For the complete production-validation
-procedure, see [`VALIDATION.md`](VALIDATION.md).
+Both operations need project and package relationships, which is what this project graph provides.
 
-## Terminology
+Compared to native MSBuild evaluation (using `ResolveReferences`), the graph evaluates the repository once,
+avoiding repeating compiler-reference evaluation, and more accurately trims NuGet restore operations
+to the specific subset of packages that require NuGet package evaluation when obtaining indirect package
+dependencies.
 
-A **configuration** is one evaluated `(project path, target framework)` pair. `Debug`
-is the single build configuration, while `net8.0`, `net9.0`, and `net10.0` remain
-separate graph configurations where declared.
-
-A **checkout root** is a Git sparse-checkout pattern for an entire SDK service
-directory required by a configuration:
-
-```text
-project path:  sdk/core/Azure.Core/src/Azure.Core.csproj
-package root:  sdk/core/Azure.Core
-checkout root: /sdk/core/*
-```
-
-Checkout roots are deliberately coarser than exact MSBuild inputs. A project under
-`sdk/core` always contributes `/sdk/core/*`; an explicit linked input under
-`sdk/identity` additionally contributes `/sdk/identity/*`. Dynamic roots are limited
-to `/sdk/<service>/*`. Repository root files, `/eng`, `/.config`, and `/common` are
-included unconditionally, while generated `/artifacts` paths are not Git inputs.
+On our hosted CI, in August 2026, we measured that `RepositoryProjectGraph`  took **75.673 seconds**, compared with **284.429 seconds** for the
+native `ProjectDependsOn`/`ResolveReferences` collector: a **3.76× speed-up** and 208.756 seconds
+less elapsed time. `RepositoryProjectGraph` also has a much smaller memory footprint compiler-reference evaluation and releases graph memory. A local full-repository graph run peaked at only **~2GB** memory.
 
 ## Architecture
 
-```text
-MSBuild project paths
-    │
-    ▼
-1. ProjectGraph expansion ─────────────── in-memory ProjectGraph
-    │                                      │
-    │ source records                       │ isolated child process
-    ▼                                      │
-2. Synthetic NuGet resolution ─────────── in-memory DependencyGraphSpec/lock targets
-    │                                      │
-    │ package-closure records              │ child exits and releases graph memory
-    ▼                                      ▼
-3. Canonical artifact builder ─────────── repository-project-graph.reader.json
-    │                                      │
-    ├─ reverse query ─▶ dependent PackageInfo files
-    │
-    └─ forward projection ───────────────▶ checkout-graph.json
-                                              │
-                                              ▼
-                                        per-test-job BFS
-                                              │
-                                              ▼
-                                        git sparse-checkout
-```
-
-The filesystem record boundary between phases 1, 2, and 3 is intentional. NuGet does
-not consume the in-memory `ProjectGraph`; it reads the records emitted by phase 1.
-Both C# phases run in an isolated MSBuild process, which exits before PowerShell
-constructs the canonical JSON and releases the repository-wide evaluated graph.
-
-### Validation-only MSBuildProjectReferenceOracle
-
-[`Validate-RepositoryProjectGraph.ps1`](../../scripts/Validate-RepositoryProjectGraph.ps1)
-and [`CollectMSBuildProjectReferenceOracle.targets`](CollectMSBuildProjectReferenceOracle.targets)
-are validation artifacts, not production graph components. The collector injects the established
-`ProjectDependsOn`/`ResolveReferences` behavior into a full-checkout validation run and calls that
-independent baseline the **MSBuildProjectReferenceOracle**. The validator compares its complete
-package-to-dependent-root relation with the repository graph and writes evidence only beneath
-`artifacts/validation/RepositoryProjectGraph`. Neither file is imported by
-`Language-Settings.ps1`, normal graph generation, or sparse-checkout projection.
-
-## Phase 1: Project discovery and graph expansion
-
-**Related components**
-
-- [`service.proj`](../../service.proj) collects source, generator, shared, common,
-  test, and integration projects and invokes the graph tasks.
-- [`RepositoryProjectGraphTask`](RepositoryProjectGraphTask.cs) constructs the MSBuild
-  `ProjectGraph`, validates configuration identity, and emits records.
-- [`RepositoryProjectGraphRecord`](RepositoryProjectGraphRecord.cs) owns the typed,
-  line-oriented handoff shared with NuGet resolution.
-- [`RunIsolatedRepositoryProjectGraphTask`](RunIsolatedRepositoryProjectGraphTask.cs)
-  owns the process and memory boundary.
-
-**Input:** project paths as in-memory MSBuild `ITaskItem`s; project XML and imports on
-the filesystem.
-
-**Working output:** one in-memory `ProjectGraph` evaluated in `Debug`, with concrete
-inner nodes for all declared TFMs.
-
-**Boundary output:**
-`artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json.records`.
-
-The following conceptual records group fields by consumer for readability; field
-order here is not the line-format serialization contract:
-
-```csharp
-// One evaluated project/TFM configuration.
-record Node(
-    // Configuration identity used by every later edge and query.
-    string ProjectPath,
-    string TargetFramework,
-
-    // Repository identity used to map projects to package roots and shipping IDs.
-    string PackageId,
-    string PackageRoot,
-    bool IsClientLibrary,
-    bool IsGeneratorLibrary,
-    bool IsShippingLibrary,
-
-    // Restore-policy metadata consumed only while constructing the synthetic NuGet
-    // PackageSpec. These fields are intentionally omitted from canonical graph JSON.
-    bool CentralPackageTransitivePinningEnabled,
-    string AssetTargetFallback,
-    string PackageTargetFallback,
-    string RuntimeIdentifierGraphPath,
-    bool TreatWarningsAsErrors,
-    string WarningsAsErrors,
-    string NoWarn,
-    string WarningsNotAsErrors);
-
-record ProjectReference(
-    // TFM-aware source and destination configuration identity.
-    string ProjectPath,
-    string TargetFramework,
-    string ReferencedProjectPath,
-    string ReferencedTargetFramework,
-
-    // NuGet inclusion and asset-flow metadata. ReferenceOutputAssembly=false keeps
-    // the source/input relationship but excludes the P2P edge from restore metadata.
-    bool ReferenceOutputAssembly,
-    string PrivateAssets,
-    string IncludeAssets,
-    string ExcludeAssets);
-
-record PackageReference(
-    // Direct dependency identity for one project configuration.
-    string ProjectPath,
-    string TargetFramework,
-    string PackageId,
-    string VersionSpec,
-
-    // Asset-flow metadata needed by NuGet resolution, not by graph traversal itself.
-    string PrivateAssets,
-    string IncludeAssets,
-    string ExcludeAssets);
-
-record CheckoutRoot(
-    // Associates one configuration with a service-level Git pattern. Multiple
-    // records represent cross-service linked inputs without retaining exact files.
-    string ProjectPath,
-    string TargetFramework,
-    string Path); // for example, /sdk/core/*
-```
-
-The file also contains `GraphGeneration`, `DeclaredProject`, and `Root` records used
-for provenance and completeness checks. A representative line-oriented handoff is:
+The implementation uses MSBuild's `ProjectGraph` API directly. Imports,
+conditions, properties, central package versions, and target-framework-specific references are
+therefore evaluated by MSBuild. Graph construction and NuGet package resolution run in a child
+MSBuild process; canonical artifact construction and queries run after that process exits.
 
 ```text
-GraphGeneration|Debug|True
-Node|.../Azure.Core.csproj|net8.0|Azure.Core|.../sdk/core/Azure.Core|...
-ProjectReference|.../Tests.csproj|net8.0|.../Azure.Core.csproj|true|...|net8.0
-PackageReference|.../Tests.csproj|net8.0|NUnit|...|4.2.2
-CheckoutRoot|.../Azure.Core.csproj|net8.0|/sdk/core/*
+┌──────────────────────────── isolated MSBuild process ────────────────────────────┐
+│                                                                                 │
+│  project paths + project files/imports                                          │
+│                 │                                                               │
+│                 ▼                                                               │
+│  MSBuild ProjectGraph evaluation                                                │
+│                 │                                                               │
+│                 ▼                                                               │
+│  repository-project-graph.reader.json.records      [filesystem boundary 1]      │
+│                 │                                                               │
+│                 ▼                                                               │
+│  NuGet package resolution                                                       │
+│                 │                                                               │
+│                 ▼                                                               │
+│  repository-project-graph.reader.json.packages.records [filesystem boundary 2] │
+│                                                                                 │
+└────────────────────────────── process exits ─────────────────────────────────────┘
+                  │                                      │
+                  └──────────────────┬───────────────────┘
+                                     ▼
+                  PowerShell artifact construction
+                                     │
+                                     ▼
+                  repository-project-graph.reader.json    [canonical boundary]
+                                     │
+                         ┌───────────┴────────────┐
+                         ▼                        ▼
+              dependency-selection query   checkout projection
+                         │                        │
+                         ▼                        ▼
+              project/package root lines   checkout-graph.json
 ```
 
-When input checkout roots are requested, the task evaluates imports, explicit source
-and resource items, analyzers, analyzer configuration, Protobuf and TypeScript items,
-and local `Reference` hint paths. Each relevant path is immediately reduced to an SDK
-service checkout root. Exact files are never emitted.
+The graph is generated in three phases:
 
-## Phase 2: External NuGet package resolution
+1. **Evaluate project configurations.** [`RepositoryProjectGraphTask`](RepositoryProjectGraphTask.cs)
+   receives project paths as MSBuild items, creates one `ProjectGraph`, expands declared target
+   frameworks, and writes source-relationship records. A configuration is identified by project
+   path and target framework.
+2. **Resolve package paths.** [`ResolveExternalPackageClosureWithNuGetTask`](ResolveExternalPackageClosureWithNuGetTask.cs)
+   reads the source records, uses NuGet to follow external-package paths back to repository-owned
+   packages, and writes package-closure records. It does not write `project.assets.json` or claim
+   restore equivalence.
+3. **Construct the canonical graph.** After the child process exits,
+   [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) reads both record files,
+   validates completeness, and writes the schema-versioned JSON used by repository CI.
 
-**Related components**
+### Data boundaries
 
-- [`ResolveExternalPackageClosureWithNuGetTask`](ResolveExternalPackageClosureWithNuGetTask.cs)
-  reads source records, constructs the synthetic restore topology, and flattens
-  repository-package reachability.
-- [`RepositoryProjectGraphRecord`](RepositoryProjectGraphRecord.cs) parses the `Node`,
-  `ProjectReference`, and `PackageReference` input records and formats closure output.
-- [`service.proj`](../../service.proj) runs this task after graph expansion in the same
-  isolated child process.
+| Boundary | Producer | Format and location | Consumer |
+| --- | --- | --- | --- |
+| Project evaluation input | [`service.proj`](../../service.proj) | In-memory MSBuild items plus project files and imports | `RepositoryProjectGraphTask` |
+| Source graph records | `RepositoryProjectGraphTask` | Typed line records in `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json.records` | NuGet resolution and canonical artifact construction |
+| Package closure records | `ResolveExternalPackageClosureWithNuGetTask` | Typed line records in `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json.packages.records` | Canonical artifact construction |
+| Canonical repository graph | `RepositoryProjectGraph.ps1` | Schema-versioned JSON in `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json` | Dependency queries and checkout projection |
+| Dependency-selection result | Reverse graph query | Line-oriented project or package-root paths at the caller-provided output path | `Language-Settings.ps1` and PackageInfo generation |
+| Test checkout projection | [`CreateSparseCheckoutGraphTask`](CreateSparseCheckoutGraphTask.cs) | `checkout-graph.json` published as the `TestCheckoutGraph` pipeline artifact | Per-test-job path resolution |
 
-**Input:** the phase-1 record file on the filesystem—not the in-memory `ProjectGraph`.
+[`RepositoryProjectGraphRecord`](RepositoryProjectGraphRecord.cs) owns the two intermediate line
+formats. They are private handoff formats between graph generation, package resolution, and the
+artifact builder. [`RunIsolatedRepositoryProjectGraphTask`](RunIsolatedRepositoryProjectGraphTask.cs)
+owns the child-process boundary.
 
-**Working data:** an in-memory shared `DependencyGraphSpec`, multi-targeted
-`PackageSpec`s, NuGet restore requests, and lock-file targets. NuGet's global package
-and HTTP caches remain filesystem-backed.
+The canonical graph is the reusable repository-level boundary. It contains its schema version and
+source commit; physical projects and package ownership; project and repository-package
+relationships by target framework; graph roots and service-directory inputs; generation policy;
+and completeness diagnostics. Consumers must validate schema, provenance, and completeness before
+using it for a narrowed CI decision.
 
-**Boundary output:**
-`artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json.packages.records`.
+`ReferenceOutputAssembly=false` project references remain in the source graph because they can
+contribute build inputs. They are excluded from package restore metadata and from dependency
+selection where they do not contribute a compiler reference. Restore-only settings such as
+versions, warning properties, framework fallbacks, and asset filters are used during package
+resolution but are not copied into the canonical artifact. External package edges are removed
+after paths back to repository-owned packages have been summarized.
 
-Only repository-relevant closure and completeness information crosses the boundary:
+## Design differences compared to native MSBuild evaluation
+
+Native MSBuild reference evaluation and the Repository Project Graph are complementary tools.
+Native `ResolveReferences` answers, “Which exact files should the compiler receive for this
+build?” It performs package-asset selection, assembly probing, conflict resolution, framework
+resolution, and other work needed for compilation.
+
+The Repository Project Graph asks the narrower CI question, “Which project and package identities
+are connected?” It intentionally skips physical assembly resolution and produces one reusable map
+for relationship queries. Native MSBuild remains authoritative for restore and build; the graph is
+a specialized index for deciding what CI should process.
+
+| Design area | Native MSBuild evaluation | Repository Project Graph |
+| --- | --- | --- |
+| Main purpose | Produce the exact references needed to build a project | Describe project and package relationships for CI |
+| Work performed | Evaluates each candidate project and target framework, then resolves references | Evaluates the repository once and builds one reusable graph |
+| Result | Compiler-facing file paths such as `ReferencePath` | Project paths, package identities, and their relationships |
+| Target frameworks | Runs the relevant native targets for each framework and combines the result | Keeps each declared framework as a separate graph configuration |
+| Project references | Resolves or requests referenced project outputs | Reads evaluated project-reference edges directly |
+| External packages | Uses restored assets selected for the build | Uses NuGet to preserve paths that lead back to repository packages |
+| Assembly resolution | Full assembly probing and conflict resolution | Not performed |
+| Restore authority | Authoritative when restore assets are current | Not restore-equivalent; normal restore still owns build correctness |
+| Reuse | Produces the answer for the current invocation | Supports many queries about dependencies and projects affected by a change |
+| Failure behavior | Reports normal build or restore failures | Fails closed when the graph or package data is incomplete |
+| Performance profile | Repeats broad reference-resolution work across project/framework roots | Pays one repository-wide cost, then serves inexpensive queries |
+| Resource profile | Can accumulate repeated evaluation and compiler-reference work | Has a substantial fixed graph cost, isolated to a process that exits after generation |
+| Maintenance | Primarily owned by MSBuild and the .NET SDK | Repository owns the schema, package mapping, diagnostics, and tests |
+
+This narrower contract creates deliberate trade-offs:
+
+- The graph evaluates `Debug`, matching the repository's existing dependency-selection policy,
+  while retaining every declared target framework.
+- It models the host-neutral union of compile-time target frameworks. It does not claim operating
+  system, runtime-identifier, or runtime-asset equivalence.
+- Package closure is explicitly marked `restoreEquivalent=false`. The graph can identify a path
+  through packages without replacing a normal restore or build.
+- `EnableDefaultItems=false` avoids collecting every same-service source file because a reached SDK
+  project already includes its service directory. Explicit items, linked files, imports, analyzers,
+  and local reference paths remain evaluated.
+- External package resolution depends on NuGet cache and network state. A cold cache can reduce the
+  graph's time advantage.
+- Repository-wide graph evaluation has a fixed memory cost of roughly 2–3 GiB and currently uses
+  the repository's .NET 10 SDK.
+
+## Correctness and the MSBuildProjectReferenceOracle
+
+The graph has an independent validation baseline called the
+**MSBuildProjectReferenceOracle**. It runs the established native
+`ProjectDependsOn`/`ResolveReferences` path and records which repository packages are visible to
+each candidate project. The oracle is deliberately separate from production graph generation: it
+is a correctness and troubleshooting tool, not a graph dependency.
+
+An exhaustive hosted validation compared the complete oracle result with a fresh repository
+graph. The run covered 474 production package entries and produced exact equality:
+
+| Validation result | Native oracle | Repository graph | Difference |
+| --- | ---: | ---: | ---: |
+| Relationships from packages to projects that depend on them | 2,820 | 2,820 | 0 |
+| Relationships mapped to production package metadata | 2,755 | 2,755 | 0 |
+| Intentionally unmapped nested or test roots | 65 | 65 | 0 |
+
+The graph contained 993 projects, 2,966 target-framework configurations, and 22,749
+configuration relationships. NuGet resolved all 20,052 package roots with zero unresolved roots.
+The hosted run completed successfully and published the full comparison as the
+[`RepositoryProjectGraphParity` artifact](https://dev.azure.com/azure-sdk/public/_build/results?buildId=6768099&view=artifacts&type=publishedArtifacts).
+
+The oracle can remain useful after rollout:
+
+- Run it when MSBuild, NuGet, the graph schema, or repository project conventions change.
+- Compare `oracle-only` and `graph-only` records to locate the first relationship that drifted.
+- Use raw project/framework evidence to distinguish evaluation differences from package-mapping
+  differences.
+- Run it temporarily in shadow mode when a production query looks unexpected, without placing the
+  slower native path back in the normal CI workflow.
+
+Validation support lives in
+[`Validate-RepositoryProjectGraph.ps1`](../../scripts/Validate-RepositoryProjectGraph.ps1) and
+[`CollectMSBuildProjectReferenceOracle.targets`](CollectMSBuildProjectReferenceOracle.targets).
+Neither file is imported by normal graph generation or queries.
+
+## How CI uses it
+
+### Dependent package selection
+
+The `generate_target_service_test_matrix` job calls
+[`Language-Settings.ps1`](../../scripts/Language-Settings.ps1) to load production package metadata.
+The script queries the canonical graph with the changed package identities and maps the resulting
+project or package roots back to PackageInfo entries. Those entries are marked for dependent
+validation before normal matrix batching. One graph query replaces native reference evaluation
+across every candidate project and target framework.
+
+### Test source selection
+
+[`pr-matrix-presteps.yml`](../../pipelines/templates/steps/pr-matrix-presteps.yml) combines the
+canonical graph with the generated PackageInfo files. `CreateSparseCheckoutGraphTask` maps each
+artifact to its project configurations and writes `checkout-graph.json`. The `TestCheckoutGraph`
+artifact is then downloaded by each job defined in
+[`ci.tests.yml`](../../pipelines/templates/jobs/ci.tests.yml).
+
+For each test artifact, [`Resolve-SparseCheckoutPaths.ps1`](../../scripts/Resolve-SparseCheckoutPaths.ps1):
+
+1. starts from the artifact's project configurations;
+2. follows project and repository-package dependencies;
+3. maps reached projects and explicit cross-service inputs to SDK service directories; and
+4. adds the repository build and bootstrap paths required by every test job.
+
+An unknown artifact, stale source commit, incomplete graph, missing package root, unsupported
+input, malformed index, or empty result returns no paths. The job then retains the full-checkout
+fallback rather than using a known-partial source set.
+
+## Generating and querying the graph
+
+Generate the canonical artifact from the repository root:
+
+```pwsh
+dotnet msbuild /m /nr:false /nologo /tl:off `
+  /t:GenerateRepositoryProjectGraphWithProjectGraph eng/service.proj
+```
+
+The standard output is:
 
 ```text
-# This project/TFM reaches a repository-owned package through NuGet.
-TransitivePackageReference|.../Advisor.csproj|net10.0|Azure.Core
-
-# A known unresolved root makes the canonical artifact incomplete.
-UnresolvedPackageClosure|project|TFM|package|version|reason
-
-# Counts, timing, resolution mode, and the explicit non-equivalence contract.
-PackageClosureSummary|roots|resolved|derived|unresolved|seconds|
-                      nuget-restore-graph|False|True|...
+artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json
 ```
 
-The task does not persist or claim authoritative `project.assets.json` output. The
-artifact remains `restoreEquivalent=false`; missing package roots fail closed, while
-indirect external-package resolution may conservatively over-select.
+Query packages and projects that depend on one or more repository packages:
 
-## Phase 3: Canonical artifact construction
-
-**Related components**
-
-- [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) reads both
-  record files, validates completeness, builds schema 8, and implements forward and
-  reverse queries.
-- [`service.proj`](../../service.proj) invokes the PowerShell builder only after the
-  isolated graph/NuGet process exits.
-
-**Input:** both line-record files on the filesystem.
-
-**Working data:** in-memory PowerShell dictionaries and sets used to deduplicate
-records, merge direct and transitive package paths, and build diagnostics.
-
-**Output:** the canonical filesystem artifact
-`artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json`.
-
-```csharp
-record CanonicalGraph(
-    // Schema/provenance gates prevent stale or incompatible reuse.
-    int SchemaVersion,
-    string SourceCommit,
-
-    // Physical project metadata is stored once; TargetFrameworks enumerates its
-    // concrete configurations without repeating package metadata on every edge.
-    Node[] Nodes,
-
-    // Edges remain project/TFM-aware so traversal cannot leak dependencies between
-    // target frameworks. Package destinations use repository package identities.
-    // Project references retain ReferenceOutputAssembly so reverse dependency selection
-    // can match ReferencePath while forward sparse-checkout traversal keeps analyzer inputs.
-    ConfigurationEdge[] ConfigurationEdges,
-
-    // Configuration key -> one or more /sdk/<service>/* Git patterns.
-    Dictionary<string, string[]> CheckoutRoots,
-
-    // Entry-point and fail-closed consistency information.
-    string[] Roots,
-    Diagnostics Diagnostics);
+```pwsh
+dotnet msbuild /m /nr:false /nologo /tl:off `
+  /t:QueryRepositoryProjectGraphReverseWithProjectGraph eng/service.proj `
+  /p:TestDependsOnDependency="Azure.Core" `
+  /p:TestDependsIncludePackageRootDirectoryOnly=true `
+  /p:OutputProjectFilePath="artifacts/obj/RepositoryProjectGraph/dependent-projects.txt"
 ```
 
-Restore-only versions, warning properties, fallbacks, and asset filters have completed
-their purpose and are not copied into canonical JSON. External package edges are also
-removed after paths back to repository packages have been flattened.
+[`service.proj`](../../service.proj) defines the supported generation and query targets. Prefer
+those targets or the production [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1)
+functions over reading the JSON with a new one-off parser.
 
-## Phase 4: Direct and indirect PackageInfo generation
+## Failure behavior and limitations
 
-**Related components**
+- **Not a build replacement.** Native MSBuild and NuGet remain authoritative for compilation,
+  restore assets, runtime assets, and assembly conflict resolution.
+- **Incomplete means unusable.** Missing declared projects, unresolved repository package roots,
+  conflicting project identities, stale provenance, or unsupported graph records fail closed.
+- **Target-framework specific, not host specific.** The graph preserves framework differences but
+  does not add an operating-system or runtime-identifier query dimension.
+- **Conservative source selection.** Explicit linked inputs and cross-service references can add
+  an entire SDK service directory. Extra source is acceptable; silently omitting required source
+  is not.
+- **Custom build logic must be visible.** A custom target that reads arbitrary files must expose
+  them through evaluated items or imports to participate in graph-based source selection.
+- **Package cache matters.** Missing external packages may be downloaded during graph generation,
+  so cold-cache and network behavior can affect runtime.
+- **Normal build behavior is unchanged.** The graph does not modify `ResolveReferences`, restore,
+  or compilation targets.
 
-- [`Package-Properties.ps1`](../../common/scripts/Package-Properties.ps1) defines
-  `PackageProps` and maps changed files to directly affected packages.
-- [`Language-Settings.ps1`](../../scripts/Language-Settings.ps1) loads .NET package
-  metadata, runs the reverse graph query, compares shadow-mode results, and marks
-  dependent packages for validation.
-- [`Save-Package-Properties.ps1`](../../common/scripts/Save-Package-Properties.ps1)
-  writes one `<package>.json` file per selected package.
-- [`save-package-properties.yml`](../../common/pipelines/templates/steps/save-package-properties.yml)
-  connects package selection to PR matrix generation.
-- [`Apply-WeightedBatching.ps1`](../../scripts/Apply-WeightedBatching.ps1) batches
-  direct and indirect PackageInfo entries separately for test jobs.
+## Implementation map
 
-**Input:** the PR diff, repository package metadata, and the canonical graph.
+| Component | Responsibility |
+| --- | --- |
+| [`service.proj`](../../service.proj) | Defines repository projects and graph generation/query targets |
+| [`RepositoryProjectGraphTask`](RepositoryProjectGraphTask.cs) | Builds and validates the MSBuild project graph |
+| [`ResolveExternalPackageClosureWithNuGetTask`](ResolveExternalPackageClosureWithNuGetTask.cs) | Follows external package paths back to repository packages |
+| [`RepositoryProjectGraphRecord`](RepositoryProjectGraphRecord.cs) | Owns the typed intermediate record format |
+| [`RunIsolatedRepositoryProjectGraphTask`](RunIsolatedRepositoryProjectGraphTask.cs) | Runs graph work in a disposable child process |
+| [`CreateSparseCheckoutGraphTask`](CreateSparseCheckoutGraphTask.cs) | Projects the canonical graph and PackageInfo into the per-test checkout index |
+| [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) | Builds, validates, and queries the canonical artifact |
+| [`Language-Settings.ps1`](../../scripts/Language-Settings.ps1) | Selects projects affected by a changed package for CI |
+| [`Validate-RepositoryProjectGraph.ps1`](../../scripts/Validate-RepositoryProjectGraph.ps1) | Compares the graph with the independent native oracle |
 
-**Working data:** in-memory `PackageProps` objects. Direct changes begin with
-`IncludedForValidation=false`; reverse-reachable dependents are marked `true`.
+## Development
 
-**Output:** PackageInfo JSON files in the matrix seed job's artifact staging directory.
-An indirect PackageInfo is the same model as a direct one; only its selection reason
-differs:
+Build the task project:
 
-```csharp
-record PackageInfo(
-    // Matrix identity and sparse-projection lookup key.
-    string ArtifactName,
-
-    // Maps the artifact to every graph configuration below its package directory.
-    string DirectoryPath,
-    string ServiceDirectory,
-
-    // false: directly changed; true: selected only for dependent validation.
-    bool IncludedForValidation);
+```pwsh
+dotnet build eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj --no-restore
 ```
 
-```json
-{
-  "ArtifactName": "Azure.Some.Dependent",
-  "DirectoryPath": "sdk/example/Azure.Some.Dependent",
-  "ServiceDirectory": "example",
-  "IncludedForValidation": true
-}
+Run the focused test suites:
+
+```pwsh
+Invoke-Pester eng/scripts/tests/RepositoryProjectGraph.Tests.ps1
+Invoke-Pester eng/scripts/tests/RepositoryProjectGraphDependencyRelation.Tests.ps1
+Invoke-Pester eng/scripts/tests/LanguageSettings.Tests.ps1
+Invoke-Pester eng/scripts/tests/SparseCheckout.Tests.ps1
 ```
 
-Weighted batching retains one representative PackageInfo file and changes its
-`ArtifactName` to a comma-separated batch such as
-`Azure.Core,Azure.Identity,Azure.Storage.Blobs`. The test matrix passes that value as
-`$(ProjectNames)`; each original name remains independently queryable in the sparse
-projection.
+Graph changes should preserve these invariants:
 
-## Phase 5: Sparse-checkout projection
-
-**Related components**
-
-- [`CreateSparseCheckoutGraphTask`](CreateSparseCheckoutGraphTask.cs) projects the
-  canonical graph and PackageInfo files into a compact test-job index.
-- [`pr-matrix-presteps.yml`](../../pipelines/templates/steps/pr-matrix-presteps.yml)
-  reuses the canonical artifact when available, generates it once otherwise, and
-  publishes `TestCheckoutGraph`.
-
-**Input:** canonical graph JSON and PackageInfo JSON files on the filesystem.
-
-**Working data:** typed C# graph models and indexes held in memory for the duration of
-the projection.
-
-**Output:** `checkout-graph.json` plus the resolver script, published as the
-`TestCheckoutGraph` pipeline artifact.
-
-```csharp
-record SparseCheckoutProjection(
-    // A test job may consume the projection only for this exact source commit.
-    string SourceCommit,
-
-    // ArtifactName -> starting project/TFM configurations.
-    Dictionary<string, string[]> Artifacts,
-
-    // Configuration or repository package key -> forward dependency keys.
-    Dictionary<string, string[]> Adjacency,
-
-    // Reached configuration -> /sdk/<service>/* patterns.
-    Dictionary<string, string[]> Paths,
-
-    // Root files and build/bootstrap directories required by every test job.
-    string[] AlwaysIncludedPaths); // /*, !/*/, /eng, /.config, /common
-```
-
-Projection validates source commit, schema, `Debug` generation policy, input-root
-coverage, NuGet closure completeness, artifact seeds, and SDK-only paths. Failure
-produces an explicitly incomplete projection rather than a narrowed partial result.
-
-## Phase 6: Per-job sparse checkout
-
-**Related components**
-
-- [`Resolve-SparseCheckoutPaths.ps1`](../../scripts/Resolve-SparseCheckoutPaths.ps1)
-  performs the per-batch forward traversal.
-- [`ci.tests.yml`](../../pipelines/templates/jobs/ci.tests.yml) downloads
-  `TestCheckoutGraph`, resolves `$(ProjectNames)`, and sets the Azure DevOps variable
-  `TestSparseCheckoutPaths`.
-- [`sparse-checkout.yml`](../../common/pipelines/templates/steps/sparse-checkout.yml)
-  initializes non-cone sparse checkout and passes the resolved patterns to Git.
-
-**Input:** a comma-separated test batch, `checkout-graph.json`, and the expected source
-commit.
-
-**Working data:** PowerShell hash tables plus a queue and visited set for breadth-first
-search.
-
-**Output:** an in-memory list serialized through the Azure DevOps variable boundary,
-then written by Git to `.git/info/sparse-checkout`.
-
-```text
-ProjectNames
-    -> artifact configuration seeds
-    -> forward BFS through project/package adjacency
-    -> reached configurations
-    -> union /sdk/<service>/* checkout roots
-    -> add unconditional root/eng/.config/common patterns
-    -> git sparse-checkout add
-```
-
-An unknown artifact, stale commit, incomplete graph, missing index, unsupported path,
-or empty result returns no paths. The test job then logs `SPARSE_CHECKOUT_RESULT=full`
-and uses the full-checkout fallback; a known-partial graph never narrows source.
+- every declared project and target framework has an unambiguous identity;
+- every relationship points to a known configuration or repository package;
+- diagnostics report a complete graph before any narrowed CI decision is allowed;
+- package and project matching is case-insensitive where NuGet and Windows require it; and
+- the native MSBuild oracle remains independent enough to detect graph drift.
