@@ -44,17 +44,17 @@ public class BasicMapsTests
 
             resource account 'Microsoft.Maps/accounts@2025-10-01-preview' = {
               name: take('account-${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
               location: location
+              kind: 'Gen2'
               properties: {
                 disableLocalAuth: true
               }
               sku: {
                 name: 'G2'
               }
-              kind: 'Gen2'
+              tags: {
+                environment: 'test'
+              }
             }
             """);
     }
