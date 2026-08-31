@@ -47,5 +47,5 @@ After step 6, begin the next iteration. If the customization modified TypeSpec, 
 
 ## Troubleshooting
 
-- Requires `azure-sdk-mcp` server. Prompt user to configure MCP if unavailable.
+- Requires the `azure-sdk-mcp` server. If it is unavailable, direct the user to the [quick-start guide](https://github.com/Azure/azure-sdk-tools/blob/main/tools/azsdk-cli/Azure.Sdk.Tools.Cli/README.md#quick-start) to configure it before continuing.
 - Requires a local clone of the target SDK repository. If unavailable, prompt the user to clone it before continuing.
