@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
-using System;
 using System.Reflection;
 using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -61,7 +60,7 @@ namespace Azure.Generator.Mgmt.Tests
                 ]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
 
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: [method]);
 
             var updateParameterNames = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -133,7 +132,7 @@ namespace Azure.Generator.Mgmt.Tests
                 $"A test model.",
                 [new ParameterProvider("value", $"Value description", typeof(string))]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: []);
 
             var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -308,7 +307,7 @@ namespace Azure.Generator.Mgmt.Tests
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
             var customCodeView = new TestModelFactoryView(modelFactory.Name);
             customCodeView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, customCodeView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             ManagementMockHelpers.SetCustomCodeView(modelFactory, customCodeView);
             modelFactory.Update(methods: []);
 
@@ -613,14 +612,6 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             return builder.ToString().Replace("\r\n", "\n");
-        }
-
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
         }
 
         private class TestModelFactoryView : TypeProvider

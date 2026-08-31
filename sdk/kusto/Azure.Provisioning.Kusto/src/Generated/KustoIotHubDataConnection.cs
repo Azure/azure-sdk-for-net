@@ -174,12 +174,12 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets or sets the RetrievalStartOn. </summary>
-        public BicepValue<DateTimeOffset> RetrievalStartOn
+        /// <summary> Gets or sets the RetrievalStartsOn. </summary>
+        public BicepValue<DateTimeOffset> RetrievalStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.Kusto
                 {
                     Properties = new IotHubConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 

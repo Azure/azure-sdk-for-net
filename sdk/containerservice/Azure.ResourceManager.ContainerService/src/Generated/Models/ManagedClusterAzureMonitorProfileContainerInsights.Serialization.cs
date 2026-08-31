@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Azure Monitor Container Insights Profile for Kubernetes Events, Inventory and Container stdout &amp; stderr logs etc. See aka.ms/AzureMonitorContainerInsights for an overview. </summary>
+    /// <summary> Azure Monitor Container Insights profile. Represents the configuration for collecting Kubernetes events, inventory, and container stdout &amp; stderr logs. See aka.ms/AzureMonitorContainerInsights for an overview. </summary>
     public partial class ManagedClusterAzureMonitorProfileContainerInsights : IJsonModel<ManagedClusterAzureMonitorProfileContainerInsights>
     {
         /// <param name="data"> The data to parse. </param>
@@ -90,11 +90,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("syslogPort"u8);
                 writer.WriteNumberValue(SyslogPort.Value);
             }
-            if (Optional.IsDefined(IsCustomMetricsDisabled))
-            {
-                writer.WritePropertyName("disableCustomMetrics"u8);
-                writer.WriteBooleanValue(IsCustomMetricsDisabled.Value);
-            }
             if (Optional.IsDefined(IsPrometheusMetricsScrapingDisabled))
             {
                 writer.WritePropertyName("disablePrometheusMetricsScraping"u8);
@@ -150,7 +145,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             bool? isContainerInsightsEnabled = default;
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             long? syslogPort = default;
-            bool? isCustomMetricsDisabled = default;
             bool? isPrometheusMetricsScrapingDisabled = default;
             ContainerNetworkLogs? containerNetworkLogs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -183,15 +177,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     syslogPort = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("disableCustomMetrics"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isCustomMetricsDisabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("disablePrometheusMetricsScraping"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -219,7 +204,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 isContainerInsightsEnabled,
                 logAnalyticsWorkspaceResourceId,
                 syslogPort,
-                isCustomMetricsDisabled,
                 isPrometheusMetricsScrapingDisabled,
                 containerNetworkLogs,
                 additionalBinaryDataProperties);
