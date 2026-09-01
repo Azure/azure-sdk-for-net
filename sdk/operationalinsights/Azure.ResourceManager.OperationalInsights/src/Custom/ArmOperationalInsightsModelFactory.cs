@@ -115,3 +115,5 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
