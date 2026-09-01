@@ -79,6 +79,12 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -131,6 +137,12 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppAuthConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -280,6 +292,11 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -297,6 +314,11 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -321,6 +343,11 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentDaprComponent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -347,6 +374,11 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentStorage FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -768,6 +800,12 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -951,6 +989,10 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1134,6 +1176,12 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1151,6 +1199,10 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppManagedCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1191,6 +1243,12 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1208,6 +1266,12 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1232,6 +1296,12 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentDaprComponent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1303,6 +1373,12 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentStorage FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1365,6 +1441,12 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1618,6 +1700,12 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppSourceControl FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_10_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1805,6 +1893,8 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -1894,6 +1984,7 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -2073,6 +2164,8 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
             public static readonly string V2026_01_01;
         }
     }
