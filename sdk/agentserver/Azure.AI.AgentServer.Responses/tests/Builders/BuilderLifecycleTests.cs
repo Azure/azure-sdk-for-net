@@ -406,8 +406,8 @@ public class BuilderLifecycleTests
         var ig = stream.AddOutputItemImageGenCall();
         events.Add(ig.EmitAdded());
         events.Add(ig.EmitInProgress());
-        events.Add(ig.EmitPartialImage("base64chunk1"));
-        events.Add(ig.EmitPartialImage("base64chunk2"));
+        events.Add(ig.EmitPartialImage("YmFzZTY0Y2h1bmsx"));
+        events.Add(ig.EmitPartialImage("YmFzZTY0Y2h1bmsy"));
         events.Add(ig.EmitCompleted());
         events.Add(ig.EmitDone("dGVzdC1pbWFnZS1kYXRh"));
 

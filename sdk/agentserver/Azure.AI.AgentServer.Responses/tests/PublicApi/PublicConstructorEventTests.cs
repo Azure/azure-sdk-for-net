@@ -108,9 +108,10 @@ public class PublicConstructorEventTests
     }
 
     [Test]
-    public void AbstractResponseStreamEvent_RemainsAbstract()
+    public void AbstractResponseStreamEvent_IsNotDirectlyConstructible()
     {
-        Assert.That(typeof(ResponseStreamEvent).IsAbstract, Is.True);
+        // OpenAI models the event hierarchy with a concrete-but-uninstantiable base.
+        Assert.That(typeof(ResponseStreamEvent).GetConstructors(BindingFlags.Public | BindingFlags.Instance), Is.Empty);
     }
 
     [Test]

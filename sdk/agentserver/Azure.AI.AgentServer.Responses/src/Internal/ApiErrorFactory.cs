@@ -110,7 +110,21 @@ internal static class ApiErrorFactory
             code: error?.Code.ToString(),
             message: error?.Message ?? GenericServerErrorMessage,
             param: error?.Param,
-            type: error?.Patch.GetString("$.type"u8) ?? "server_error");
+            type: ReadErrorKind(error) ?? "server_error");
+
+    /// <summary>
+    /// Reads the Azure-only <c>type</c> discriminator, which lives in the patch because the
+    /// OpenAI error model does not declare it.
+    /// </summary>
+    private static string? ReadErrorKind(Error? error)
+    {
+        if (error is null)
+        {
+            return null;
+        }
+
+        return error.Patch.Contains("$.type"u8) ? error.Patch.GetString("$.type"u8) : null;
+    }
 
     /// <summary>
     /// Creates a <see cref="ResponsesApiException"/> with HTTP 500 and the

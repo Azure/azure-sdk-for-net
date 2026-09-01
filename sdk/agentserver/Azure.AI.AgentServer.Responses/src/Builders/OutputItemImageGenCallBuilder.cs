@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -44,7 +45,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this image generation call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemImageGenToolCall(BinaryData.FromString(string.Empty))
+        var item = new OutputItemImageGenToolCall(BinaryData.FromBytes(Array.Empty<byte>()))
         {
             Id = _itemId,
             Status = ImageGenerationCallStatus.InProgress,
@@ -82,7 +83,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     public virtual ResponseImageGenCallPartialImageEvent EmitPartialImage(string partialImageB64)
     {
         var index = _partialImageIndex++;
-        return new ResponseImageGenCallPartialImageEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, PartialImageIndex = (int)(index), PartialImageBytes = BinaryData.FromString(partialImageB64) };
+        return new ResponseImageGenCallPartialImageEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, PartialImageIndex = (int)(index), PartialImageBytes = BinaryData.FromBytes(Convert.FromBase64String(partialImageB64)) };
     }
 
     /// <summary>
@@ -113,7 +114,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this image generation call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone(string result)
     {
-        var item = new OutputItemImageGenToolCall(BinaryData.FromString(result))
+        var item = new OutputItemImageGenToolCall(BinaryData.FromBytes(Convert.FromBase64String(result)))
         {
             Id = _itemId,
             Status = ImageGenerationCallStatus.Completed,

@@ -146,7 +146,7 @@ public class ResponseSnapshotTests
 
         // Assert
         Assert.That(snapshot.Error, Is.Not.Null);
-        Assert.That(snapshot.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(snapshot.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(snapshot.Error.Message, Is.EqualTo("Something went wrong"));
     }
 

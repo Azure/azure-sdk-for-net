@@ -52,7 +52,7 @@ public class ResponsesModelFactoryTests
             message: "Something went wrong");
 
         Assert.That(error, Is.Not.Null);
-        Assert.That(error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("Something went wrong"));
     }
 

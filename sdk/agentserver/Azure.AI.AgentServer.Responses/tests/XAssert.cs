@@ -182,6 +182,17 @@ internal static class XAssert
     {
         Assert.That(actual, Is.InRange(low, high));
     }
+
+    /// <summary>
+    /// Asserts that a timestamp falls within the specified range. Wire timestamps are
+    /// expressed in whole seconds, so the bounds are widened to second precision.
+    /// </summary>
+    public static void InRange(DateTimeOffset actual, DateTimeOffset low, DateTimeOffset high)
+    {
+        var flooredLow = new DateTimeOffset(low.Ticks - (low.Ticks % TimeSpan.TicksPerSecond), low.Offset);
+        var ceilingHigh = high.AddSeconds(1);
+        Assert.That(actual, Is.InRange(flooredLow, ceilingHigh));
+    }
 }
 
 /// <summary>

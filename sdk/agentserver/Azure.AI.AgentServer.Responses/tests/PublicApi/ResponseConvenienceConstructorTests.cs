@@ -15,11 +15,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 public class ResponseConvenienceConstructorTests
 {
     [Test]
-    public void Response_HasTwoParamConvenienceConstructor()
+    public void Response_HasPublicParameterlessConstructor()
     {
-        var ctor = typeof(ResponseObject).GetConstructor(new[] { typeof(string), typeof(string) });
+        var ctor = typeof(ResponseObject).GetConstructor(Type.EmptyTypes);
         Assert.That(ctor, Is.Not.Null);
-        Assert.That(ctor!.IsPublic, Is.True, "Response(string, string) should be public");
+        Assert.That(ctor!.IsPublic, Is.True, "Response() should be public");
     }
 
     [Test]
@@ -31,10 +31,10 @@ public class ResponseConvenienceConstructorTests
     }
 
     [Test]
-    public void Response_ConvenienceConstructor_SetsCreatedAt()
+    public void Response_ModelFactory_SetsCreatedAt()
     {
         var before = DateTimeOffset.UtcNow;
-        var response = new ResponseObject { Id = "resp_123", Model = "gpt-4o" };
+        var response = AgentServerResponsesModelFactory.ResponseObject(id: "resp_123", model: "gpt-4o");
         var after = DateTimeOffset.UtcNow;
 
         XAssert.InRange(response.CreatedAt, before, after);

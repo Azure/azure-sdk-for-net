@@ -93,7 +93,7 @@ public class ResponseMutationsTests
         response.SetFailed(ResponseErrorCode.RateLimitExceeded, "Too many requests");
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
         Assert.That(response.Error.Message, Is.EqualTo("Too many requests"));
     }
 
@@ -105,7 +105,7 @@ public class ResponseMutationsTests
         response.SetFailed();
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(response.Error.Message, Is.EqualTo("An internal server error occurred."));
     }
 
@@ -129,7 +129,7 @@ public class ResponseMutationsTests
         response.SetFailed(ex);
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
         Assert.That(response.Error.Message, Is.EqualTo("Rate limit hit"));
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
@@ -143,7 +143,7 @@ public class ResponseMutationsTests
         response.SetFailed(ex);
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(response.Error.Message, Is.EqualTo("Model not supported"));
     }
 
@@ -156,7 +156,7 @@ public class ResponseMutationsTests
         response.SetFailed(ex);
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(response.Error.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 

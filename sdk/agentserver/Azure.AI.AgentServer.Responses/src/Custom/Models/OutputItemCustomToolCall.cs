@@ -32,7 +32,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal OutputItemCustomToolCall(string callId, string name, string input, global::OpenAI.Responses.FunctionCallStatus status) : base("custom_tool_call")
+        public OutputItemCustomToolCall(string callId, string name, string input, global::OpenAI.Responses.FunctionCallStatus status) : base("custom_tool_call")
         {
             CallId = callId;
             Name = name;

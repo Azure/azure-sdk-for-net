@@ -111,7 +111,7 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseError()
     {
         var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test");
-        Assert.That(error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }
 

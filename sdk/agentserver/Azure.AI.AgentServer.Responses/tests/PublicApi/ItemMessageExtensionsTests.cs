@@ -17,7 +17,7 @@ public class ItemMessageExtensionsTests
         var json = """[{"type":"input_text","text":"Hello"}]""";
         var msg = MessageItemFactory.Message(MessageRole.User, BinaryData.FromString(json));
         Assert.That(msg.Content, Is.Not.Null);
-        XAssert.Contains("Hello", msg.Content.ToString());
+        XAssert.Contains("Hello", msg.Content[0].Text);
     }
 
     [Test]

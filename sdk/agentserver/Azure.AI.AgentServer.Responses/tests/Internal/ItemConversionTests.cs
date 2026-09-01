@@ -91,17 +91,21 @@ public class ItemConversionTests
         var results = ItemConversion.ToOutputItems(items, PartitionKeyHint).ToList();
 
         Assert.That(results, Has.Count.EqualTo(2));
-        Assert.That(results.All(item => item.Id!.StartsWith("msg_")), Is.True);
+        // Input messages get the "msg" prefix; assistant messages get the output-message prefix.
+        Assert.That(results[0].Id, Does.StartWith("msg_"));
+        Assert.That(results[1].Id, Does.StartWith("om_"));
     }
 
     [Test]
     public void ToOutputItem_PropagatesThePartitionKey()
     {
         var message = MessageItemFactory.Message(MessageRole.User, "hi");
+        var responseId = IdGenerator.NewResponseId();
+        var partitionKey = IdGenerator.ExtractPartitionKey(responseId);
 
-        var result = ItemConversion.ToOutputItem(message, "resp_abc123");
+        var result = ItemConversion.ToOutputItem(message, responseId);
 
-        Assert.That(result!.Id, Does.Contain("abc123"));
+        Assert.That(result!.Id, Does.Contain(partitionKey));
     }
 
     [Test]

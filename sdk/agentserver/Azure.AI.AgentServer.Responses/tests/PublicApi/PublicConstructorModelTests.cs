@@ -21,18 +21,13 @@ public class PublicConstructorModelTests
         new object[] { typeof(OutputItemApplyPatchToolCall) },
         new object[] { typeof(OutputItemApplyPatchToolCallOutput) },
         new object[] { typeof(OutputItemCodeInterpreterToolCall) },
-        new object[] { typeof(OutputItemCompactionBody) },
         new object[] { typeof(OutputItemComputerToolCall) },
         new object[] { typeof(OutputItemComputerToolCallOutput) },
         new object[] { typeof(OutputItemCustomToolCall) },
         new object[] { typeof(OutputItemCustomToolCallOutput) },
         new object[] { typeof(OutputItemFileSearchToolCall) },
-        new object[] { typeof(OutputItemFunctionShellCall) },
-        new object[] { typeof(OutputItemFunctionShellCallOutput) },
         new object[] { typeof(OutputItemFunctionToolCall) },
         new object[] { typeof(OutputItemImageGenToolCall) },
-        new object[] { typeof(OutputItemLocalShellToolCall) },
-        new object[] { typeof(OutputItemLocalShellToolCallOutput) },
         new object[] { typeof(OutputItemMcpApprovalRequest) },
         new object[] { typeof(OutputItemMcpApprovalResponseResource) },
         new object[] { typeof(OutputItemMcpListTools) },
@@ -198,8 +193,8 @@ public class PublicConstructorModelTests
     // ========================================
 
     [Test]
-    public void AllOutputItemTypes_Count_Is46()
+    public void AllOutputItemTypes_Count_Is41()
     {
-        Assert.That(AllOutputItemTypes.Count(), Is.EqualTo(46));
+        Assert.That(AllOutputItemTypes.Count(), Is.EqualTo(41));
     }
 }

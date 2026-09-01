@@ -26,7 +26,7 @@ public class TypeSpecModelConverterFactoryTests
         string model = "gpt-4o",
         ResponseStatus status = ResponseStatus.Completed)
     {
-        return new ResponseObject { Id = id, Model = model, Status = status, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
+        return new ResponseObject { Id = id, Object = "response", Model = model, Status = status, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
     }
 
     // --- CanConvert ---

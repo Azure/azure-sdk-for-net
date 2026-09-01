@@ -33,7 +33,7 @@ public class ModelRoundTripTests
         string model = "gpt-4o",
         ResponseStatus status = ResponseStatus.Completed)
     {
-        return new ResponseObject { Id = id, Model = model, Status = status, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
+        return new ResponseObject { Id = id, Object = "response", Model = model, Status = status, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
     }
 
     // ========================================
@@ -170,10 +170,7 @@ public class ModelRoundTripTests
     public void Response_Serialize_WithMetadata_ContainsMetadataObject()
     {
         var options = CreateOptions();
-        var metadata = new Metadata();
-        metadata.AdditionalProperties["env"] = "test";
-
-        var response = new ResponseObject { Id = "resp_meta", Model = "gpt-4o", Status = ResponseStatus.Completed, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
+        var response = new ResponseObject { Id = "resp_meta", Object = "response", Model = "gpt-4o", Status = ResponseStatus.Completed, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero), Metadata = { ["env"] = "test" } };
 
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
@@ -311,7 +308,7 @@ public class ModelRoundTripTests
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Error, Is.Not.Null);
-        Assert.That(restored.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(restored.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
         Assert.That(restored.Error.Message, Is.EqualTo("Too many requests"));
     }
 
