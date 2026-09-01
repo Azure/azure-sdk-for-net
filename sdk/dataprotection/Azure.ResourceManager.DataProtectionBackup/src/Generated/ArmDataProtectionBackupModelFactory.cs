@@ -241,51 +241,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new AdlsBlobBackupDataSourceSettings(default, default, (containersList ?? new ChangeTrackingList<string>()).ToList());
         }
 
-        /// <param name="autoProtectionSettings"> AutoProtection settings. </param>
-        /// <returns> A new <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/> instance for mocking. </returns>
-        public static BlobBackupDatasourceParametersForAutoProtection BlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
-        {
-            return new BlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
-        }
-
-        /// <param name="enabled"> Flag to enable whether auto protection. </param>
-        /// <param name="rules">
-        /// Rules are evaluated in the order provided. Inclusion adds candidates; exclusion removes candidates.
-        /// If no rules are present, all containers are considered eligible when enabled = true.
-        /// </param>
-        /// <returns> A new <see cref="Models.BlobBackupRuleBasedAutoProtectionSettings"/> instance for mocking. </returns>
-        public static BlobBackupRuleBasedAutoProtectionSettings BlobBackupRuleBasedAutoProtectionSettings(bool enabled = default, IEnumerable<BlobBackupAutoProtectionRule> rules = default)
-        {
-            rules ??= new ChangeTrackingList<BlobBackupAutoProtectionRule>();
-
-            return new BlobBackupRuleBasedAutoProtectionSettings(default, enabled, default, (rules ?? new ChangeTrackingList<BlobBackupAutoProtectionRule>()).ToList());
-        }
-
-        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="mode"> Exclude removes candidates (after inclusion). </param>
-        /// <param name="type"> Pattern type: Prefix, only pattern type supported for now. </param>
-        /// <param name="pattern"> The string pattern to evaluate against container names. For now this accepts literal strings only (no wildcards or regex). </param>
-        /// <returns> A new <see cref="Models.BlobBackupAutoProtectionRule"/> instance for mocking. </returns>
-        public static BlobBackupAutoProtectionRule BlobBackupAutoProtectionRule(string objectType = default, BlobBackupRuleMode mode = default, BlobBackupPatternType @type = default, string pattern = default)
-        {
-            return new BlobBackupAutoProtectionRule(objectType, mode, @type, pattern, default);
-        }
-
-        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="enabled"> Flag to enable whether auto protection. </param>
-        /// <returns> A new <see cref="Models.BlobBackupAutoProtectionSettings"/> instance for mocking. </returns>
-        public static BlobBackupAutoProtectionSettings BlobBackupAutoProtectionSettings(string objectType = default, bool enabled = default)
-        {
-            return new UnknownBlobBackupAutoProtectionSettings(objectType, enabled, default);
-        }
-
-        /// <param name="autoProtectionSettings"> AutoProtection settings. </param>
-        /// <returns> A new <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/> instance for mocking. </returns>
-        public static AdlsBlobBackupDatasourceParametersForAutoProtection AdlsBlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
-        {
-            return new AdlsBlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
-        }
-
         /// <param name="protectionStatusErrorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
         /// <returns> A new <see cref="Models.BackupInstanceProtectionStatusDetails"/> instance for mocking. </returns>
