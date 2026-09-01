@@ -124,23 +124,6 @@ namespace Azure.Provisioning.PrivateDns
             }
         }
 
-        /// <summary> Gets or sets the PrivateDnsSoaRecord. </summary>
-        public PrivateDnsSoaRecordInfo PrivateDnsSoaRecord
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateDnsSoaRecord;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateDnsRecordSetProperties();
-                }
-                Properties.PrivateDnsSoaRecord = value;
-            }
-        }
-
         /// <summary> Gets or sets the PrivateDnsSrvRecords. </summary>
         public BicepList<PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords
         {

@@ -3,12 +3,21 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsAaaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsAaaaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -30,12 +39,21 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsARecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsARecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -59,10 +77,19 @@ namespace Azure.Provisioning.PrivateDns
         public PrivateDnsCnameRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -78,12 +105,21 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsMXRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsMXRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -115,12 +151,21 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsPtrRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsPtrRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -147,12 +192,21 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsSoaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsSoaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -180,12 +234,21 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsSrvRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsSrvRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -210,11 +273,20 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsTxtRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsTxtRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRegistered { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsARecordInfo> PrivateDnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsMXRecordInfo> PrivateDnsMXRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }

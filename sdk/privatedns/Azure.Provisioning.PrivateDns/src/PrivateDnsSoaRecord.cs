@@ -6,6 +6,7 @@
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
 
@@ -60,6 +61,7 @@ public partial class PrivateDnsSoaRecord : ProvisionableResource
     private BicepValue<long>? _ttlInSeconds;
 
     /// <summary> The SOA record in the record set. </summary>
+    [CodeGenMember("PrivateDnsSoaRecord")]
     public PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo
     {
         get { Initialize(); return _privateDnsSoaRecordInfo!; }
