@@ -100,6 +100,7 @@ namespace Microsoft.Extensions.Hosting
 
             builder.Services.AddAzureClientsCore();
             builder.Services.AddSingleton<EventHubClientFactory>();
+            builder.Services.AddSingleton<EventHubsConnectivityProbe>();
             builder.Services.AddSingleton<CheckpointClientProvider>();
             builder.Services.Configure<EventHubOptions>(configure);
             builder.Services.PostConfigure<EventHubOptions>(ConfigureOptions);
