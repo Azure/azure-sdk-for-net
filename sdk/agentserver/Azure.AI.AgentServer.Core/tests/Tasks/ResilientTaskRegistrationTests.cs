@@ -65,13 +65,32 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
-    public void RepeatedAddResilientTasksWithCredentialThrows()
+    public void CredentialCanBeAttachedAfterFlatTaskRegistration()
     {
         var services = new ServiceCollection();
-        services.AddResilientTasks();
+        services.AddResilientTask<string, string>(
+            "consumer-task",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+        var credential = new Azure.Core.TestFramework.MockCredential();
 
-        Assert.Throws<System.InvalidOperationException>(() =>
-            services.AddResilientTasks(new Azure.Core.TestFramework.MockCredential()));
+        Assert.DoesNotThrow(() => services.AddResilientTasks(credential));
+
+        using var provider = services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<TaskHostEnvironment>().Credential,
+            Is.SameAs(credential));
+    }
+
+    [Test]
+    public void DifferentCredentialAfterInitialConfigurationThrows()
+    {
+        var services = new ServiceCollection();
+        var first = new Azure.Core.TestFramework.MockCredential();
+        var second = new Azure.Core.TestFramework.MockCredential();
+        services.AddResilientTasks(first);
+
+        Assert.DoesNotThrow(() => services.AddResilientTasks(first));
+        Assert.Throws<System.InvalidOperationException>(() => services.AddResilientTasks(second));
     }
 
     [Test]

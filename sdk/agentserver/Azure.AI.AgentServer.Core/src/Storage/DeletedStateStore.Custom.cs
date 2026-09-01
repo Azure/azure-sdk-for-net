@@ -11,6 +11,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     public partial class DeletedStateStore
     {
         /// <summary>Gets the server-assigned identifier when the state store existed.</summary>
+        // Preserve the nullable annotation from the established public API.
         [CodeGenMember("Id")]
         public string? Id { get; }
 

@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary>Creates state-store model instances for mocking.</summary>
+    // Preserve the existing public factory name; the package-level emitter defaults to AgentServerCoreModelFactory.
     [CodeGenType("AgentServerCoreModelFactory")]
     [CodeGenSuppress("DeletedStateStore", typeof(string), typeof(string), typeof(bool))]
     [CodeGenSuppress("DeletedStateStoreItem", typeof(string), typeof(string), typeof(bool))]
