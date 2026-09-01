@@ -139,21 +139,21 @@ public sealed class ReconnectResponsesEndpointTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             id: "msg_1",
             content: new List<MessageContent>
             {
                 new MessageContentOutputTextContent("hello", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
             },
             status: MessageStatus.Completed);
-        yield return new ResponseOutputItemAddedEvent(1, outputIndex: 0, item: item);
+        yield return new ResponseOutputItemAddedEvent { OutputIndex = (int)(0), Item = item };
         yield return new ResponseOutputItemDoneEvent();
         yield return new ResponseOutputItemDoneEvent();
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 }

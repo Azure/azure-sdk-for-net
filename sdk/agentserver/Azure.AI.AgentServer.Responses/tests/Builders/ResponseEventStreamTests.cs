@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
@@ -154,7 +155,7 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitCreated();
 
-        // Models.ResponseObject is the stream-owned Models.ResponseObject
+        // ResponseObject is the stream-owned ResponseObject
         Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
@@ -229,8 +230,8 @@ public class ResponseEventStreamTests
         var stream = new ResponseEventStream(context, request);
         var evt = stream.EmitCreated();
 
-        // The stream builds its own Models.ResponseObject — it's not the same as any externally-created instance
-        var externalResponse = new Models.ResponseObject("resp_ext", "gpt-4o");
+        // The stream builds its own ResponseObject — it's not the same as any externally-created instance
+        var externalResponse = new ResponseObject { Id = "resp_ext", Model = "gpt-4o" };
         Assert.That(evt.Response, Is.Not.SameAs(externalResponse));
     }
 
@@ -283,7 +284,7 @@ public class ResponseEventStreamTests
 
         // Simulate accumulated output items
         var textContent = new MessageContentOutputTextContent("Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
@@ -330,7 +331,7 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         var textContent = new MessageContentOutputTextContent("partial", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
@@ -352,8 +353,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
-        Assert.That(evt.Response.IncompleteDetails, Is.Not.Null);
-        Assert.That(evt.Response.IncompleteDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
+        Assert.That(evt.Response.IncompleteStatusDetails, Is.Not.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
         Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
@@ -365,7 +366,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete();
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
-        Assert.That(evt.Response.IncompleteDetails, Is.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails, Is.Null);
         Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
@@ -375,7 +376,7 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         var textContent = new MessageContentOutputTextContent("so far", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });

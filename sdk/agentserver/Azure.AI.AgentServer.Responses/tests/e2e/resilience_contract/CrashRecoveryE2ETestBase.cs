@@ -69,8 +69,8 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         IDictionary<string, string>? queryParameters = null)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         var query = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -108,11 +108,11 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         int outputItems)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         for (var i = 0; i < outputItems; i++)
         {
-            envelope.Output.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
+            envelope.OutputItems.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
         }
 
         await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
@@ -130,8 +130,8 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
     private protected async Task SeedDurableEnvelopeAsync(string responseId)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
     }
 
@@ -140,11 +140,11 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
     private protected async Task SeedDurableEnvelopeWithOutputAsync(string responseId, int outputItems)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         for (var i = 0; i < outputItems; i++)
         {
-            envelope.Output.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
+            envelope.OutputItems.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
         }
 
         await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
@@ -157,14 +157,14 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         var streamRegistry = TestEventStreams.CreateFileBackedRegistry(ResponsesDir);
         var stream = await streamRegistry.GetOrCreateAsync(responseId);
         var publisher = await EventStreamObserver.CreateAsync(stream);
-        var response = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
+        var response = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
         long seq = 0;
-        await publisher.OnNextAsync(new ResponseCreatedEvent(seq++, response));
+        await publisher.OnNextAsync(new ResponseCreatedEvent { SequenceNumber = (int)(seq++), Response = response });
         for (var i = 0; i < outputItems; i++)
         {
             var item = NewOutputMessage($"msg_seed_{i}", $"phase-{i}");
-            await publisher.OnNextAsync(new ResponseOutputItemAddedEvent(seq++, outputIndex: i, item: item));
-            await publisher.OnNextAsync(new ResponseOutputItemDoneEvent(seq++, outputIndex: i, item: item));
+            await publisher.OnNextAsync(new ResponseOutputItemAddedEvent { OutputIndex = (int)(i), Item = item });
+            await publisher.OnNextAsync(new ResponseOutputItemDoneEvent { OutputIndex = (int)(i), Item = item });
         }
 
         // Simulate a crash: release the durable stream's exclusive writer lock WITHOUT writing a
@@ -272,11 +272,11 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         TaskCompletionSource signal,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await Task.Yield();
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
         signal.TrySetResult();
     }
 }

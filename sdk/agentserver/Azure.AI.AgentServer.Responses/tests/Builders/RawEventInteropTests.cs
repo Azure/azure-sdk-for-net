@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
@@ -22,7 +23,7 @@ public class RawEventInteropTests
 
         // Use NextSequenceNumber() for a manually constructed event
         var seq = stream.NextSequenceNumber();
-        var manualEvent = new ResponseCreatedEvent(seq, stream.Response);
+        var manualEvent = new ResponseCreatedEvent { SequenceNumber = (int)(seq), Response = stream.Response };
 
         Assert.That(manualEvent.SequenceNumber, Is.EqualTo(0));
 
@@ -83,11 +84,11 @@ public class RawEventInteropTests
             name: "manual_fn",
             arguments: "{}",
             status: ItemFunctionToolCallStatus.InProgress);
-        var rawAddedEvent = new ResponseOutputItemAddedEvent(rawSeq, 1, manualItem);
+        var rawAddedEvent = new ResponseOutputItemAddedEvent { SequenceNumber = (int)(rawSeq), OutputIndex = (int)(1), Item = manualItem };
         events.Add(rawAddedEvent);
 
         var rawSeq2 = stream.NextSequenceNumber(); // 8
-        var rawDoneEvent = new ResponseOutputItemDoneEvent(rawSeq2, 1, manualItem);
+        var rawDoneEvent = new ResponseOutputItemDoneEvent { SequenceNumber = (int)(rawSeq2), OutputIndex = (int)(1), Item = manualItem };
         events.Add(rawDoneEvent);
 
         events.Add(stream.EmitCompleted());    // 9
@@ -107,26 +108,22 @@ public class RawEventInteropTests
     {
         // This test validates that the existing pattern of hand-built events
         // still works correctly — zero breaking changes
-        var response = new Models.ResponseObject("resp_test", "gpt-4o");
+        var response = new ResponseObject { Id = "resp_test", Model = "gpt-4o" };
         var itemId = "msg_001";
 
         var events = new List<ResponseStreamEvent>
         {
-            new ResponseCreatedEvent(sequenceNumber: 0, response: response),
-            new ResponseInProgressEvent(sequenceNumber: 1, response: response),
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseInProgressEvent { SequenceNumber = (int)(1), Response = response },
 
-            new ResponseOutputItemAddedEvent(
-                sequenceNumber: 2, outputIndex: 0,
-                item: new OutputItemMessage(
+            new ResponseOutputItemAddedEvent { SequenceNumber = (int)(2), OutputIndex = (int)(0), Item = MessageItemFactory.OutputMessage(
                     id: itemId,
                     content: Array.Empty<MessageContent>(),
-                    status: MessageStatus.InProgress)),
+                    status: MessageStatus.InProgress) },
 
-            new ResponseContentPartAddedEvent(
-                sequenceNumber: 3, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                part: new OutputContentOutputTextContent(
+            new ResponseContentPartAddedEvent { SequenceNumber = (int)(3), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Part = new OutputContentOutputTextContent(
                     text: "", annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>())),
+                    logprobs: Array.Empty<LogProb>()) },
 
             new ResponseTextDeltaEvent(
                 sequenceNumber: 4, itemId: itemId, outputIndex: 0, contentIndex: 0,
@@ -136,23 +133,19 @@ public class RawEventInteropTests
                 sequenceNumber: 5, itemId: itemId, outputIndex: 0, contentIndex: 0,
                 text: "Hello!", logprobs: Array.Empty<ResponseLogProb>()),
 
-            new ResponseContentPartDoneEvent(
-                sequenceNumber: 6, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                part: new OutputContentOutputTextContent(
+            new ResponseContentPartDoneEvent { SequenceNumber = (int)(6), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Part = new OutputContentOutputTextContent(
                     text: "Hello!", annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>())),
+                    logprobs: Array.Empty<LogProb>()) },
 
-            new ResponseOutputItemDoneEvent(
-                sequenceNumber: 7, outputIndex: 0,
-                item: new OutputItemMessage(
+            new ResponseOutputItemDoneEvent { SequenceNumber = (int)(7), OutputIndex = (int)(0), Item = MessageItemFactory.OutputMessage(
                     id: itemId,
                     content: new[] { new MessageContentOutputTextContent(
                         text: "Hello!",
                         annotations: Array.Empty<Annotation>(),
                         logprobs: Array.Empty<LogProb>()) },
-                    status: MessageStatus.Completed)),
+                    status: MessageStatus.Completed) },
 
-            new ResponseCompletedEvent(sequenceNumber: 8, response: response),
+            new ResponseCompletedEvent { SequenceNumber = (int)(8), Response = response },
         };
 
         // Assert: all events created successfully

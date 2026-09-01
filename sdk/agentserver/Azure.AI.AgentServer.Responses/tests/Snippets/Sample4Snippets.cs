@@ -59,8 +59,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 if (toolOutput is not null)
                 {
                     // Turn 2: function output received — return the weather as a text message
-                    var weatherJson = toolOutput.Output is not null
-                        ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
+                    var weatherJson = toolOutput.FunctionOutput is not null
+                        ? JsonSerializer.Deserialize<string>(toolOutput.FunctionOutput) ?? "{}"
                         : "{}";
 
                     yield return stream.EmitCreated();
@@ -108,8 +108,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 if (toolOutput is not null)
                 {
                     // Turn 2: function output received — return the weather as a text message
-                    var weatherJson = toolOutput.Output is not null
-                        ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
+                    var weatherJson = toolOutput.FunctionOutput is not null
+                        ? JsonSerializer.Deserialize<string>(toolOutput.FunctionOutput) ?? "{}"
                         : "{}";
 
                     yield return stream.EmitCreated();

@@ -56,7 +56,7 @@ public class CancelAsyncTests : IDisposable
     {
         // After eviction, non-bg completed responses hit the provider path.
         // Spec: "Cannot cancel a synchronous response." (B1 — background check first)
-        var response = new Models.ResponseObject("resp_cancel_nbc", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_cancel_nbc", Model = "test", Status = ResponseStatus.Completed };
         await _provider.CreateResponseAsync(
             new Responses.CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
@@ -70,7 +70,7 @@ public class CancelAsyncTests : IDisposable
     {
         // Spec: "Cannot cancel a completed response." (B12)
         var execution = _tracker.Create("resp_cancel_c", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_cancel_c", "test") { Status = ResponseStatus.Completed };
+        execution.Response = new ResponseObject { Id = "resp_cancel_c", Model = "test", Status = ResponseStatus.Completed };
 
         var ex = Assert.ThrowsAsync<BadRequestException>(
             () => _orchestrator.CancelAsync("resp_cancel_c", PlatformContext.Empty));
@@ -82,7 +82,7 @@ public class CancelAsyncTests : IDisposable
     {
         // Spec: "Cannot cancel a failed response." (B12)
         var execution = _tracker.Create("resp_cancel_f", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_cancel_f", "test") { Status = ResponseStatus.Failed };
+        execution.Response = new ResponseObject { Id = "resp_cancel_f", Model = "test", Status = ResponseStatus.Failed };
 
         var ex = Assert.ThrowsAsync<BadRequestException>(
             () => _orchestrator.CancelAsync("resp_cancel_f", PlatformContext.Empty));
@@ -94,7 +94,7 @@ public class CancelAsyncTests : IDisposable
     {
         // Spec: "Cannot cancel a response in terminal state." (B12)
         var execution = _tracker.Create("resp_cancel_i", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_cancel_i", "test") { Status = ResponseStatus.Incomplete };
+        execution.Response = new ResponseObject { Id = "resp_cancel_i", Model = "test", Status = ResponseStatus.Incomplete };
 
         var ex = Assert.ThrowsAsync<BadRequestException>(
             () => _orchestrator.CancelAsync("resp_cancel_i", PlatformContext.Empty));
@@ -105,7 +105,7 @@ public class CancelAsyncTests : IDisposable
     public async Task AlreadyCancelled_ReturnsIdempotent()
     {
         var execution = _tracker.Create("resp_cancel_ac", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_cancel_ac", "test") { Status = ResponseStatus.Cancelled };
+        execution.Response = new ResponseObject { Id = "resp_cancel_ac", Model = "test", Status = ResponseStatus.Cancelled };
 
         var result = await _orchestrator.CancelAsync("resp_cancel_ac", PlatformContext.Empty);
 
@@ -117,7 +117,7 @@ public class CancelAsyncTests : IDisposable
     public async Task InProgress_SetsCancelRequested()
     {
         var execution = _tracker.Create("resp_cancel_ip", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_cancel_ip", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_cancel_ip", Model = "test", Status = ResponseStatus.InProgress };
 
         var result = await _orchestrator.CancelAsync("resp_cancel_ip", PlatformContext.Empty);
 

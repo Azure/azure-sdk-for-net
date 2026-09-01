@@ -44,6 +44,7 @@ public static class ResponseItemAttributionExtensions
     private static readonly ReadOnlyMemory<byte> DeltaPath = "$.delta"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> InputPath = "$.input"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> StatusPath = "$.status"u8.ToArray();
+    private static readonly ReadOnlyMemory<byte> ApprovalRequestIdPath = "$.approval_request_id"u8.ToArray();
 
     extension(ResponseItem item)
     {
@@ -90,6 +91,39 @@ public static class ResponseItemAttributionExtensions
         {
             get => GetUnixTime(ref response.Patch, CompletedAtPath.Span);
             set => SetOrClearUnixTime(ref response.Patch, CompletedAtPath.Span, value);
+        }
+
+        /// <summary>
+        /// Gets the concatenated text of every output text part across all assistant messages
+        /// in <see cref="ResponseResult.OutputItems"/>, or <see langword="null"/> when the
+        /// response produced no text.
+        /// </summary>
+        public string? OutputText
+        {
+            get
+            {
+                System.Text.StringBuilder? builder = null;
+                foreach (ResponseItem item in response.OutputItems)
+                {
+                    if (item is not MessageResponseItem message)
+                    {
+                        continue;
+                    }
+
+                    foreach (ResponseContentPart part in message.Content)
+                    {
+                        if (part.Kind != ResponseContentPartKind.OutputText)
+                        {
+                            continue;
+                        }
+
+                        builder ??= new System.Text.StringBuilder();
+                        builder.Append(part.Text);
+                    }
+                }
+
+                return builder?.ToString();
+            }
         }
     }
 
@@ -149,6 +183,25 @@ public static class ResponseItemAttributionExtensions
             get => GetString(ref mcpCall.Patch, StatusPath.Span);
             set => SetOrClear(ref mcpCall.Patch, StatusPath.Span, value);
         }
+
+        /// <summary>
+        /// Gets or sets the approval request that authorised the call, which OpenAI does not
+        /// model on this item.
+        /// </summary>
+        public string? ApprovalRequestId
+        {
+            get => GetString(ref mcpCall.Patch, ApprovalRequestIdPath.Span);
+            set => SetOrClear(ref mcpCall.Patch, ApprovalRequestIdPath.Span, value);
+        }
+    }
+
+    extension(ReasoningSummaryPart part)
+    {
+        /// <summary>
+        /// Gets the summary text when the part is a <see cref="ReasoningSummaryTextPart"/>,
+        /// or <see langword="null"/> otherwise.
+        /// </summary>
+        public string? Text => (part as ReasoningSummaryTextPart)?.Text;
     }
 
     private static int? GetInt32(ref JsonPatch patch, ReadOnlySpan<byte> path)

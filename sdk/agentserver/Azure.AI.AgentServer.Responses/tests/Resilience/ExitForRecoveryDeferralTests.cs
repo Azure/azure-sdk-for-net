@@ -406,22 +406,22 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         // No-op on the non-resilient path — must not throw, handler continues to terminal.
         await ctx.ExitForRecoveryAsync(ct);
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CreatedThenDeferLifecycle(
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         // On a store=false response ExitForRecoveryAsync throws InvalidOperationException (there is
         // no durable state to recover). The orchestrator catches it and marks the response failed.
@@ -429,7 +429,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
 
         // Unreachable on the store=false path (the throw unwinds the iterator).
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CheckpointThenSwallowedDeferLifecycle(

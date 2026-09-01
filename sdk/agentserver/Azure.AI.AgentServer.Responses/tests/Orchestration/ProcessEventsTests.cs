@@ -49,7 +49,7 @@ public class ProcessEventsTests : IDisposable
     {
         // B8: first event must be ResponseCreatedEvent
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseInProgressEvent(0, new Models.ResponseObject(ctx.ResponseId, "test")));
+            new ResponseInProgressEvent { SequenceNumber = (int)(0), Response = new ResponseObject { Id = ctx.ResponseId, Model = "test" } });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_01");
         var context = new ResponseContext("resp_proc_01");
@@ -82,11 +82,11 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task FirstEvent_ResponseCreated_SetsResponse()
     {
-        var response = new Models.ResponseObject("resp_proc_03", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.ResponseObject("resp_proc_03", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_proc_03", Model = "test", Status = ResponseStatus.InProgress };
+        var completedResponse = new ResponseObject { Id = "resp_proc_03", Model = "test", Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = (int)(1), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_03");
         var context = new ResponseContext("resp_proc_03");
@@ -99,18 +99,12 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task ResponseEvents_FullReplacement_ExecutionResponseIsEventResponse()
     {
-        // After ResponseCreatedEvent, execution.Response should be the event's Models.ResponseObject (full replacement)
-        var handlerResponse = new Models.ResponseObject("resp_proc_04", "custom-model")
-        {
-            Status = ResponseStatus.InProgress,
-        };
-        var completedResponse = new Models.ResponseObject("resp_proc_04", "custom-model")
-        {
-            Status = ResponseStatus.Completed,
-        };
+        // After ResponseCreatedEvent, execution.Response should be the event's ResponseObject (full replacement)
+        var handlerResponse = new ResponseObject { Id = "resp_proc_04", Model = "custom-model", Status = ResponseStatus.InProgress };
+        var completedResponse = new ResponseObject { Id = "resp_proc_04", Model = "custom-model", Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, handlerResponse),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = handlerResponse },
+            new ResponseCompletedEvent { SequenceNumber = (int)(1), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_04");
         var context = new ResponseContext("resp_proc_04");
@@ -124,35 +118,35 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task OutputItemEvents_UpdateOutputList()
     {
-        var response = new Models.ResponseObject("resp_proc_05", "test") { Status = ResponseStatus.InProgress };
+        var response = new ResponseObject { Id = "resp_proc_05", Model = "test", Status = ResponseStatus.InProgress };
         var outputItem = CreateOutputMessage("item_01", "hello");
-        var completedResponse = new Models.ResponseObject("resp_proc_05", "test") { Status = ResponseStatus.Completed };
-        completedResponse.Output.Add(outputItem);
+        var completedResponse = new ResponseObject { Id = "resp_proc_05", Model = "test", Status = ResponseStatus.Completed };
+        completedResponse.OutputItems.Add(outputItem);
 
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseOutputItemAddedEvent(1, 0, outputItem),
-            new ResponseCompletedEvent(2, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseOutputItemAddedEvent { SequenceNumber = (int)(1), OutputIndex = (int)(0), Item = outputItem },
+            new ResponseCompletedEvent { SequenceNumber = (int)(2), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_05");
         var context = new ResponseContext("resp_proc_05");
 
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
-        XAssert.Single(execution.Response.Output);
-        var msg = XAssert.IsType<OutputItemMessage>(execution.Response.Output[0]);
+        XAssert.Single(execution.Response.OutputItems);
+        var msg = XAssert.IsType<OutputItemMessage>(execution.Response.OutputItems[0]);
         Assert.That(msg.Id, Is.EqualTo("item_01"));
     }
 
     [Test]
     public async Task SnapshotEmbedded_EventResponseIsNotSameReference()
     {
-        var response = new Models.ResponseObject("resp_proc_06", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.ResponseObject("resp_proc_06", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_proc_06", Model = "test", Status = ResponseStatus.InProgress };
+        var completedResponse = new ResponseObject { Id = "resp_proc_06", Model = "test", Status = ResponseStatus.Completed };
 
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = (int)(1), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_06");
         var context = new ResponseContext("resp_proc_06");
@@ -172,12 +166,12 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task AllEvents_PublishedToPublisher()
     {
-        var response = new Models.ResponseObject("resp_proc_07", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.ResponseObject("resp_proc_07", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_proc_07", Model = "test", Status = ResponseStatus.InProgress };
+        var completedResponse = new ResponseObject { Id = "resp_proc_07", Model = "test", Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseInProgressEvent(1, response),
-            new ResponseCompletedEvent(2, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseInProgressEvent { SequenceNumber = (int)(1), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = (int)(2), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_07");
         var context = new ResponseContext("resp_proc_07");
@@ -207,11 +201,11 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task BackgroundWithStore_PersistsOnFirstEvent()
     {
-        var response = new Models.ResponseObject("resp_proc_08", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.ResponseObject("resp_proc_08", "test") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_proc_08", Model = "test", Status = ResponseStatus.InProgress };
+        var completedResponse = new ResponseObject { Id = "resp_proc_08", Model = "test", Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = (int)(1), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_08",
             isBackground: true, store: true);
@@ -227,15 +221,15 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task AutoStamp_OutputItemResponseIdSet()
     {
-        var response = new Models.ResponseObject("resp_proc_09", "test") { Status = ResponseStatus.InProgress };
+        var response = new ResponseObject { Id = "resp_proc_09", Model = "test", Status = ResponseStatus.InProgress };
         var outputItem = CreateOutputMessage("item_auto", "hello");
-        var completedResponse = new Models.ResponseObject("resp_proc_09", "test") { Status = ResponseStatus.Completed };
-        completedResponse.Output.Add(outputItem);
+        var completedResponse = new ResponseObject { Id = "resp_proc_09", Model = "test", Status = ResponseStatus.Completed };
+        completedResponse.OutputItems.Add(outputItem);
 
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseOutputItemAddedEvent(1, 0, outputItem),
-            new ResponseCompletedEvent(2, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response },
+            new ResponseOutputItemAddedEvent { SequenceNumber = (int)(1), OutputIndex = (int)(0), Item = outputItem },
+            new ResponseCompletedEvent { SequenceNumber = (int)(2), Response = completedResponse });
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_09");
         var context = new ResponseContext("resp_proc_09");
@@ -243,7 +237,7 @@ public class ProcessEventsTests : IDisposable
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
         // Auto-stamp should have set ResponseId on the output item
-        Assert.That(execution.Response.Output[0].ResponseId, Is.EqualTo("resp_proc_09"));
+        Assert.That(execution.Response.OutputItems[0].ResponseId, Is.EqualTo("resp_proc_09"));
     }
 
     // --- Helpers ---
@@ -287,7 +281,7 @@ public class ProcessEventsTests : IDisposable
             text: text,
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        return new OutputItemMessage(
+        return MessageItemFactory.OutputMessage(
             id: id,
             content: new List<MessageContent> { content },
             status: MessageStatus.Completed);

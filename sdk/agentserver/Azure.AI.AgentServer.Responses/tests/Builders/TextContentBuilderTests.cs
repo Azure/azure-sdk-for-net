@@ -74,7 +74,7 @@ public class TextContentBuilderTests
 
         var part = XAssert.IsType<OutputContentOutputTextContent>(evt.Part);
         Assert.That(part.Text, Is.EqualTo(""));
-        Assert.That(part.Annotations, Is.Empty);
+        Assert.That(part.OutputTextAnnotations, Is.Empty);
     }
 
     [Test]

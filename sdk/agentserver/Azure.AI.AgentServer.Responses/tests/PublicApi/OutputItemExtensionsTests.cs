@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
@@ -19,7 +20,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_OutputItemMessage_ReturnsFastPathId()
     {
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             id: "msg_abc123",
             status: MessageStatus.Completed,
             role: MessageRole.Assistant,
@@ -82,10 +83,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_OutputItemWebSearchToolCall_ReturnsFastPathId()
     {
-        var item = new OutputItemWebSearchToolCall(
-            id: "ws_001",
-            status: ItemWebSearchToolCallStatus.Completed,
-            action: BinaryData.FromObjectAsJson(new { type = "search", query = "test" }));
+        var item = new OutputItemWebSearchToolCall { Id = "ws_001", Status = ItemWebSearchToolCallStatus.Completed, Action = BinaryData.FromObjectAsJson(new { type = "search", query = "test" }) };
 
         Assert.That(item.GetId(), Is.EqualTo("ws_001"));
     }
@@ -111,10 +109,7 @@ public class OutputItemExtensionsTests
     public void GetId_NullId_ThrowsInvalidOperationException()
     {
         // Use FunctionToolCall where Id is a settable property (not validated in ctor)
-        var item = new OutputItemFunctionToolCall(
-            callId: "call_1",
-            name: "fn",
-            arguments: "{}");
+        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = "{}" };
         // Id is null by default (not set in ctor)
 
         var ex = Assert.Throws<InvalidOperationException>(() => item.GetId());
@@ -135,10 +130,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_IdSetAfterConstruction_ReturnsUpdatedId()
     {
-        var item = new OutputItemFunctionToolCall(
-            callId: "call_1",
-            name: "fn",
-            arguments: "{}");
+        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = "{}" };
 
         // Id is read-only — create a new instance with the desired Id
         var updated = CreateFunctionToolCallWithId("fc_updated");
@@ -152,7 +144,7 @@ public class OutputItemExtensionsTests
     {
         var items = new (OutputItem Item, string ExpectedId)[]
         {
-            (new OutputItemMessage("msg_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()), "msg_1"),
+            (MessageItemFactory.OutputMessage("msg_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()), "msg_1"),
             (new OutputItemReasoningItem("reason_1", Array.Empty<SummaryTextContent>()), "reason_1"),
             (CreateFunctionToolCallWithId("fc_1"), "fc_1"),
         };

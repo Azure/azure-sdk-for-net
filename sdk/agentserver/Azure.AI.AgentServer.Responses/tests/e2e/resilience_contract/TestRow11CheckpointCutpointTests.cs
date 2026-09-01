@@ -37,7 +37,7 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
             {
                 Assert.That(ctx.IsRecovery, Is.True);
                 Assert.That(ctx.PersistedResponse, Is.Not.Null);
-                Assert.That(ctx.PersistedResponse!.Output, Has.Count.EqualTo(1),
+                Assert.That(ctx.PersistedResponse!.OutputItems, Has.Count.EqualTo(1),
                     "the durable snapshot must expose the checkpointed phase");
                 return ResumingLifecycle(ctx, req, () => Interlocked.Increment(ref newPhaseCount), completed, ct);
             },
@@ -68,7 +68,7 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
             EventFactory = (req, ctx, ct) =>
             {
                 Assert.That(ctx.IsRecovery, Is.True);
-                Assert.That(ctx.PersistedResponse!.Output, Has.Count.EqualTo(0),
+                Assert.That(ctx.PersistedResponse!.OutputItems, Has.Count.EqualTo(0),
                     "the un-checkpointed phase must not appear in the durable snapshot");
                 return ResumingLifecycle(ctx, req, () => Interlocked.Increment(ref newPhaseCount), completed, ct);
             },
@@ -95,11 +95,11 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
     private async Task SeedCheckpointedResponseAsync(string responseId, int checkpointedPhaseCount)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         for (var i = 0; i < checkpointedPhaseCount; i++)
         {
-            envelope.Output.Add(CreateOutputMessage($"msg_seed_{i}", $"phase-{i}-original"));
+            envelope.OutputItems.Add(CreateOutputMessage($"msg_seed_{i}", $"phase-{i}-original"));
         }
 
         await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
@@ -125,7 +125,7 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
 
-        var start = stream.Response.Output.Count; // durable watermark: phases already checkpointed
+        var start = stream.Response.OutputItems.Count; // durable watermark: phases already checkpointed
         for (var phase = start; phase < TotalPhases; phase++)
         {
             var message = stream.AddOutputItemMessage();
@@ -163,7 +163,7 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
             text: text,
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        return new OutputItemMessage(
+        return MessageItemFactory.OutputMessage(
             id: id,
             content: new List<MessageContent> { content },
             status: MessageStatus.Completed);

@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Internal;
 
@@ -18,7 +19,7 @@ public class ItemConversionTests
     public void ToOutputItem_ItemMessage_ReturnsOutputItemMessage()
     {
         var content = BinaryData.FromObjectAsJson("Hello, world!");
-        var message = new ItemMessage(MessageRole.User, content);
+        var message = MessageItemFactory.Message(MessageRole.User, content);
 
         var result = ItemConversion.ToOutputItem(message, PartitionKeyHint);
 
@@ -33,7 +34,7 @@ public class ItemConversionTests
     public void ToOutputItem_ItemMessage_PreservesRole()
     {
         var content = BinaryData.FromObjectAsJson("System prompt");
-        var message = new ItemMessage(MessageRole.Developer, content);
+        var message = MessageItemFactory.Message(MessageRole.Developer, content);
 
         var result = ItemConversion.ToOutputItem(message, PartitionKeyHint);
 
@@ -64,15 +65,15 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_ItemFunctionToolCall_ReturnsOutputItemFunctionToolCall()
     {
-        var funcCall = new ItemFunctionToolCall("call_func", "get_weather", "{\"city\":\"Seattle\"}");
+        var funcCall = new ItemFunctionToolCall { CallId = "call_func", FunctionName = "get_weather", FunctionArguments = "{\"city\":\"Seattle\"}" };
 
         var result = ItemConversion.ToOutputItem(funcCall, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemFunctionToolCall>(result);
         XAssert.StartsWith("fc_", converted.Id);
         Assert.That(converted.CallId, Is.EqualTo("call_func"));
-        Assert.That(converted.Name, Is.EqualTo("get_weather"));
-        Assert.That(converted.Arguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
+        Assert.That(converted.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(converted.FunctionArguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
         Assert.That(converted.Status, Is.EqualTo(ItemFunctionToolCallStatus.Completed));
     }
 
@@ -125,9 +126,8 @@ public class ItemConversionTests
     public void ToOutputItem_ItemComputerToolCall_ReturnsOutputItemComputerToolCall()
     {
         var action = new DoubleClickAction(100, 200, Array.Empty<string>());
-        var computerCall = new ItemComputerToolCall("comp_id", "call_comp",
-            Array.Empty<ComputerCallSafetyCheckParam>(),
-            ItemComputerToolCallStatus.Completed);
+        var computerCall = new ItemComputerToolCall { Id = "comp_id", CallId = "call_comp", Status = ItemComputerToolCallStatus.Completed };
+ foreach (var __v in Array.Empty<ComputerCallSafetyCheckParam>() ?? []) computerCall.PendingSafetyChecks.Add(__v);
         computerCall.Action = action;
 
         var result = ItemConversion.ToOutputItem(computerCall, PartitionKeyHint);
@@ -157,9 +157,8 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_ItemFileSearchToolCall_ReturnsOutputItemFileSearchToolCall()
     {
-        var fileSearch = new ItemFileSearchToolCall("fs_id",
-            ItemFileSearchToolCallStatus.Completed,
-            new List<string> { "query1" });
+        var fileSearch = new ItemFileSearchToolCall { Id = "fs_id", Status = ItemFileSearchToolCallStatus.Completed };
+ foreach (var __v in new List<string> { "query1" } ?? []) fileSearch.Queries.Add(__v);
 
         var result = ItemConversion.ToOutputItem(fileSearch, PartitionKeyHint);
 
@@ -176,8 +175,7 @@ public class ItemConversionTests
     public void ToOutputItem_ItemWebSearchToolCall_ReturnsOutputItemWebSearchToolCall()
     {
         var action = BinaryData.FromObjectAsJson(new { type = "search", query = "test" });
-        var webSearch = new ItemWebSearchToolCall("ws_id",
-            ItemWebSearchToolCallStatus.Completed, action);
+        var webSearch = new ItemWebSearchToolCall { Id = "ws_id", Status = ItemWebSearchToolCallStatus.Completed, Action = action };
 
         var result = ItemConversion.ToOutputItem(webSearch, PartitionKeyHint);
 
@@ -199,7 +197,7 @@ public class ItemConversionTests
         var converted = XAssert.IsType<OutputItemImageGenToolCall>(result);
         XAssert.StartsWith("ig_", converted.Id);
         Assert.That(converted.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
-        Assert.That(converted.Result, Is.EqualTo("base64data"));
+        Assert.That(converted.ImageResultBytes, Is.EqualTo("base64data"));
     }
 
     // ── Code interpreter ────────────────────────────────────────────────
@@ -207,11 +205,8 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_ItemCodeInterpreterToolCall_ReturnsOutputItemCodeInterpreterToolCall()
     {
-        var codeInterpreter = new ItemCodeInterpreterToolCall("ci_id",
-            ItemCodeInterpreterToolCallStatus.Completed,
-            "container_1",
-            "print('hello')",
-            new List<BinaryData> { BinaryData.FromObjectAsJson("output") });
+        var codeInterpreter = new ItemCodeInterpreterToolCall { Id = "ci_id", Status = ItemCodeInterpreterToolCallStatus.Completed, ContainerId = "container_1", Code = "print('hello')" };
+ foreach (var __v in new List<BinaryData> { BinaryData.FromObjectAsJson("output") } ?? []) codeInterpreter.Outputs.Add(__v);
 
         var result = ItemConversion.ToOutputItem(codeInterpreter, PartitionKeyHint);
 
@@ -329,7 +324,7 @@ public class ItemConversionTests
     public void ToOutputItem_ApplyPatchToolCallItemParam_CreateFile_ReturnsOutputItemApplyPatchToolCall()
     {
         var operation = new ApplyPatchCreateFileOperationParam("src/main.cs", "+using System;");
-        var applyPatch = new ApplyPatchToolCallItemParam("call_ap", ApplyPatchCallStatusParam.Completed, operation);
+        var applyPatch = new ApplyPatchToolCallItemParam { CallId = "call_ap", Status = ApplyPatchCallStatusParam.Completed, Operation = operation };
 
         var result = ItemConversion.ToOutputItem(applyPatch, PartitionKeyHint);
 
@@ -346,7 +341,7 @@ public class ItemConversionTests
     public void ToOutputItem_ApplyPatchToolCallItemParam_DeleteFile()
     {
         var operation = new ApplyPatchDeleteFileOperationParam("old.txt");
-        var applyPatch = new ApplyPatchToolCallItemParam("call_del", ApplyPatchCallStatusParam.Completed, operation);
+        var applyPatch = new ApplyPatchToolCallItemParam { CallId = "call_del", Status = ApplyPatchCallStatusParam.Completed, Operation = operation };
 
         var result = ItemConversion.ToOutputItem(applyPatch, PartitionKeyHint);
 
@@ -359,7 +354,7 @@ public class ItemConversionTests
     public void ToOutputItem_ApplyPatchToolCallItemParam_UpdateFile()
     {
         var operation = new ApplyPatchUpdateFileOperationParam("readme.md", "+new line");
-        var applyPatch = new ApplyPatchToolCallItemParam("call_upd", ApplyPatchCallStatusParam.InProgress, operation);
+        var applyPatch = new ApplyPatchToolCallItemParam { CallId = "call_upd", Status = ApplyPatchCallStatusParam.InProgress, Operation = operation };
 
         var result = ItemConversion.ToOutputItem(applyPatch, PartitionKeyHint);
 
@@ -417,20 +412,16 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_ItemMcpToolCall_ReturnsOutputItemMcpToolCall()
     {
-        var mcpCall = new ItemMcpToolCall("mcp_tc", "server_2", "tool_name", "{}")
-        {
-            Output = "result",
-            ApprovalRequestId = "ar_1",
-        };
+        var mcpCall = new ItemMcpToolCall { Id = "mcp_tc", ServerLabel = "server_2", ToolName = "tool_name", ToolArguments = "{}", Output = "result", ApprovalRequestId = "ar_1" };
 
         var result = ItemConversion.ToOutputItem(mcpCall, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemMcpToolCall>(result);
         XAssert.StartsWith("mcp_", converted.Id);
         Assert.That(converted.ServerLabel, Is.EqualTo("server_2"));
-        Assert.That(converted.Name, Is.EqualTo("tool_name"));
-        Assert.That(converted.Arguments, Is.EqualTo("{}"));
-        Assert.That(converted.Output, Is.EqualTo("result"));
+        Assert.That(converted.ToolName, Is.EqualTo("tool_name"));
+        Assert.That(converted.ToolArguments, Is.EqualTo("{}"));
+        Assert.That(converted.ToolOutput, Is.EqualTo("result"));
         Assert.That(converted.ApprovalRequestId, Is.EqualTo("ar_1"));
         Assert.That(converted.Status, Is.EqualTo(MCPToolCallStatus.Completed));
     }
@@ -445,7 +436,7 @@ public class ItemConversionTests
         var converted = XAssert.IsType<OutputItemMcpApprovalRequest>(result);
         XAssert.StartsWith("mcpr_", converted.Id);
         Assert.That(converted.ServerLabel, Is.EqualTo("server_3"));
-        Assert.That(converted.Name, Is.EqualTo("dangerous_tool"));
+        Assert.That(converted.ToolName, Is.EqualTo("dangerous_tool"));
     }
 
     [Test]
@@ -458,7 +449,7 @@ public class ItemConversionTests
         var converted = XAssert.IsType<OutputItemMcpApprovalResponseResource>(result);
         XAssert.StartsWith("mcpa_", converted.Id);
         Assert.That(converted.ApprovalRequestId, Is.EqualTo("ar_2"));
-        Assert.That(converted.Approve, Is.True);
+        Assert.That(converted.Approved, Is.True);
         Assert.That(converted.Reason, Is.EqualTo("Looks safe"));
     }
 
@@ -477,8 +468,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemReasoningItem>(result);
         XAssert.StartsWith("rs_", converted.Id);
-        XAssert.Single(converted.Summary);
-        Assert.That(converted.Summary[0].Text, Is.EqualTo("thinking..."));
+        XAssert.Single(converted.SummaryParts);
+        Assert.That(converted.SummaryParts[0].Text, Is.EqualTo("thinking..."));
         Assert.That(converted.EncryptedContent, Is.EqualTo("encrypted_blob"));
         Assert.That(converted.Status, Is.EqualTo(ItemReasoningItemStatus.Completed));
     }
@@ -516,7 +507,7 @@ public class ItemConversionTests
     {
         var items = new List<Item>
         {
-            new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("Hello")),
+            MessageItemFactory.Message(MessageRole.User, BinaryData.FromObjectAsJson("Hello")),
             new ItemReferenceParam("ref_1"),
             new FunctionCallOutputItemParam("call_1", BinaryData.FromObjectAsJson("result")),
         };
@@ -545,9 +536,9 @@ public class ItemConversionTests
     {
         var items = new List<Item>
         {
-            new ItemFunctionToolCall("call_f", "func", "{}"),
+            new ItemFunctionToolCall { CallId = "call_f", FunctionName = "func", FunctionArguments = "{}" },
             new ItemCustomToolCall("call_c", "custom", "in"),
-            new ItemWebSearchToolCall("ws_id", ItemWebSearchToolCallStatus.Completed, BinaryData.FromObjectAsJson("search")),
+            new ItemWebSearchToolCall { Id = "ws_id", Status = ItemWebSearchToolCallStatus.Completed, Action = BinaryData.FromObjectAsJson("search") },
             new CompactionSummaryItemParam("enc"),
         };
 
@@ -569,8 +560,8 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_GeneratesUniqueIds_ForSameItemType()
     {
-        var msg1 = new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("a"));
-        var msg2 = new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("b"));
+        var msg1 = MessageItemFactory.Message(MessageRole.User, BinaryData.FromObjectAsJson("a"));
+        var msg2 = MessageItemFactory.Message(MessageRole.User, BinaryData.FromObjectAsJson("b"));
 
         var result1 = ItemConversion.ToOutputItem(msg1, PartitionKeyHint);
         var result2 = ItemConversion.ToOutputItem(msg2, PartitionKeyHint);
@@ -587,7 +578,7 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_StripsClientInjectedInternalMetadata()
     {
-        var message = new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("hello"));
+        var message = MessageItemFactory.Message(MessageRole.User, BinaryData.FromObjectAsJson("hello"));
         var raw = ModelReaderWriter.Write(message, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
         var node = JsonNode.Parse(raw.ToString())!;
         node["internal_metadata"] = JsonNode.Parse("""{"trace":"client"}""");
@@ -606,7 +597,7 @@ public class ItemConversionTests
     [Test]
     public void ToItem_StripsPersistedInternalMetadataBeforeIngress()
     {
-        var output = new OutputItemMessage(
+        var output = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
             MessageRole.Assistant,

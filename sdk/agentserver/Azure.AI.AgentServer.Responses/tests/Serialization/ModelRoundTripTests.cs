@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
 /// <summary>
 /// Tests for model serialization round-trips.
 /// T058: CreateResponse deserialization
-/// T059: Models.ResponseObject serialization
+/// T059: ResponseObject serialization
 /// T060: ResponseStreamEvent serialization
 /// T061: Full round-trip for all model types
 /// </summary>
@@ -28,16 +28,12 @@ public class ModelRoundTripTests
         return options;
     }
 
-    private static Models.ResponseObject CreateTestResponse(
+    private static ResponseObject CreateTestResponse(
         string id = "resp_test123",
         string model = "gpt-4o",
         ResponseStatus status = ResponseStatus.Completed)
     {
-        return new Models.ResponseObject(id, model)
-        {
-            Status = status,
-            CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
-        };
+        return new ResponseObject { Id = id, Model = model, Status = status, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
     }
 
     // ========================================
@@ -70,11 +66,11 @@ public class ModelRoundTripTests
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
         Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
-        Assert.That(request.Stream, Is.True);
+        Assert.That(request.StreamingEnabled, Is.True);
         Assert.That(request.Temperature, Is.EqualTo(0.7));
         Assert.That(request.TopP, Is.EqualTo(0.9));
-        Assert.That(request.MaxOutputTokens, Is.EqualTo(1024));
-        Assert.That(request.Store, Is.True);
+        Assert.That(request.MaxOutputTokenCount, Is.EqualTo(1024));
+        Assert.That(request.StoredOutputEnabled, Is.True);
         Assert.That(request.Metadata, Is.Not.Null);
         Assert.That(request.Metadata.AdditionalProperties["user_id"], Is.EqualTo("u123"));
         Assert.That(request.Metadata.AdditionalProperties["session_id"], Is.EqualTo("s456"));
@@ -91,7 +87,7 @@ public class ModelRoundTripTests
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
         Assert.That(request.Instructions, Is.Null);
-        Assert.That(request.Stream, Is.Null);
+        Assert.That(request.StreamingEnabled, Is.Null);
         Assert.That(request.Temperature, Is.Null);
     }
 
@@ -127,12 +123,12 @@ public class ModelRoundTripTests
         var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
 
         Assert.That(request, Is.Not.Null);
-        Assert.That(request!.Background, Is.True);
-        Assert.That(request.Stream, Is.False);
+        Assert.That(request!.BackgroundModeEnabled, Is.True);
+        Assert.That(request.StreamingEnabled, Is.False);
     }
 
     // ========================================
-    // T059: Models.ResponseObject Serialization
+    // T059: ResponseObject Serialization
     // ========================================
 
     [Test]
@@ -158,12 +154,7 @@ public class ModelRoundTripTests
     public void Response_Serialize_WithError_ContainsErrorObject()
     {
         var options = CreateOptions();
-        var response = new Models.ResponseObject("resp_err", "gpt-4o")
-        {
-            Status = ResponseStatus.Failed,
-            Error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "Internal failure"),
-            CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
-        };
+        var response = new ResponseObject { Id = "resp_err", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "Internal failure"), CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
@@ -182,12 +173,7 @@ public class ModelRoundTripTests
         var metadata = new Metadata();
         metadata.AdditionalProperties["env"] = "test";
 
-        var response = new Models.ResponseObject("resp_meta", "gpt-4o")
-        {
-            Status = ResponseStatus.Completed,
-            Metadata = metadata,
-            CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
-        };
+        var response = new ResponseObject { Id = "resp_meta", Model = "gpt-4o", Status = ResponseStatus.Completed, Metadata = metadata, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
@@ -218,7 +204,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCreatedEvent(1, response);
+        var evt = new ResponseCreatedEvent { SequenceNumber = (int)(1), Response = response };
 
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
@@ -231,7 +217,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCompletedEvent(2, response);
+        var evt = new ResponseCompletedEvent { SequenceNumber = (int)(2), Response = response };
 
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
@@ -244,7 +230,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse(status: ResponseStatus.Incomplete);
-        var evt = new ResponseIncompleteEvent(3, response);
+        var evt = new ResponseIncompleteEvent { SequenceNumber = (int)(3), Response = response };
 
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
@@ -257,7 +243,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCreatedEvent(42, response);
+        var evt = new ResponseCreatedEvent { SequenceNumber = (int)(42), Response = response };
 
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
@@ -270,7 +256,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse(id: "resp_nested");
-        var evt = new ResponseCreatedEvent(0, response);
+        var evt = new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
@@ -284,11 +270,7 @@ public class ModelRoundTripTests
     public void ResponseErrorEvent_Serialize_HasCorrectStructure()
     {
         var options = CreateOptions();
-        var evt = new ResponseErrorEvent(
-            sequenceNumber: 5,
-            code: "server_error",
-            message: "Something broke",
-            param: null);
+        var evt = new ResponseErrorEvent { SequenceNumber = (int)(5), Code = "server_error", Message = "Something broke" };
 
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
@@ -310,7 +292,7 @@ public class ModelRoundTripTests
         var original = CreateTestResponse(id: "resp_rt1", model: "gpt-4o-mini", status: ResponseStatus.Failed);
 
         var json = JsonSerializer.Serialize(original, options);
-        var restored = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
+        var restored = JsonSerializer.Deserialize<ResponseObject>(json, options);
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Id, Is.EqualTo("resp_rt1"));
@@ -322,15 +304,10 @@ public class ModelRoundTripTests
     public void Response_RoundTrip_WithError_PreservesError()
     {
         var options = CreateOptions();
-        var original = new Models.ResponseObject("resp_err_rt", "gpt-4o")
-        {
-            Status = ResponseStatus.Failed,
-            Error = new Models.ResponseErrorInfo(ResponseErrorCode.RateLimitExceeded, "Too many requests"),
-            CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
-        };
+        var original = new ResponseObject { Id = "resp_err_rt", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.RateLimitExceeded, "Too many requests"), CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(original, options);
-        var restored = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
+        var restored = JsonSerializer.Deserialize<ResponseObject>(json, options);
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Error, Is.Not.Null);
@@ -343,7 +320,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse(id: "resp_evtrt");
-        var original = new ResponseCreatedEvent(10, response);
+        var original = new ResponseCreatedEvent { SequenceNumber = (int)(10), Response = response };
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCreatedEvent>(json, options);
@@ -358,7 +335,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse(id: "resp_comprt", status: ResponseStatus.Completed);
-        var original = new ResponseCompletedEvent(20, response);
+        var original = new ResponseCompletedEvent { SequenceNumber = (int)(20), Response = response };
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCompletedEvent>(json, options);
@@ -381,9 +358,9 @@ public class ModelRoundTripTests
 
         foreach (var code in codes)
         {
-            var original = new Models.ResponseErrorInfo(code, $"Error: {code}");
+            var original = OpenAIModelFactory.CreateError(code, $"Error: {code}");
             var json = JsonSerializer.Serialize(original, options);
-            var restored = JsonSerializer.Deserialize<Models.ResponseErrorInfo>(json, options);
+            var restored = JsonSerializer.Deserialize<ResponseErrorInfo>(json, options);
 
             Assert.That(restored, Is.Not.Null);
             Assert.That(restored!.Code, Is.EqualTo(code));
@@ -433,7 +410,7 @@ public class ModelRoundTripTests
         Assert.That(roundTripped, Is.Not.Null);
         Assert.That(roundTripped!.Model, Is.EqualTo("gpt-4o"));
         Assert.That(roundTripped.Instructions, Is.EqualTo("Be concise."));
-        Assert.That(roundTripped.Stream, Is.True);
+        Assert.That(roundTripped.StreamingEnabled, Is.True);
         Assert.That(roundTripped.Temperature, Is.EqualTo(0.5));
     }
 
@@ -442,7 +419,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        ResponseStreamEvent original = new ResponseCreatedEvent(5, response);
+        ResponseStreamEvent original = new ResponseCreatedEvent { SequenceNumber = (int)(5), Response = response };
 
         // Serialize as base type
         var json = JsonSerializer.Serialize(original, original.GetType(), options);
@@ -459,7 +436,7 @@ public class ModelRoundTripTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        ResponseStreamEvent original = new ResponseCompletedEvent(15, response);
+        ResponseStreamEvent original = new ResponseCompletedEvent { SequenceNumber = (int)(15), Response = response };
 
         var json = JsonSerializer.Serialize(original, original.GetType(), options);
         var restored = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);

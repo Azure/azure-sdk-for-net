@@ -168,13 +168,11 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
 
         var message = stream.AddOutputItemMessage();
         // Set custom response_id before emitting
-        var outputMsg = new OutputItemMessage(
+        var outputMsg = MessageItemFactory.OutputMessage(
             id: message.ItemId,
             content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            ResponseId = customResponseId,
-        };
+            status: MessageStatus.InProgress);
+        outputMsg.ResponseId = customResponseId;
         yield return message.EmitAdded(outputMsg);
         yield return message.EmitDone(outputMsg);
 
@@ -221,20 +219,20 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
 
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         // Directly construct output item event without setting ResponseId
-        var outputItem = new OutputItemMessage(
+        var outputItem = MessageItemFactory.OutputMessage(
             id: "msg_direct_001",
             content: Array.Empty<MessageContent>(),
             status: MessageStatus.InProgress);
         // ResponseId intentionally NOT set — Layer 2 should stamp it
-        yield return new ResponseOutputItemAddedEvent(0, 0, outputItem);
-        yield return new ResponseOutputItemDoneEvent(0, 0, outputItem);
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = outputItem };
+        yield return new ResponseOutputItemDoneEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = outputItem };
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 }

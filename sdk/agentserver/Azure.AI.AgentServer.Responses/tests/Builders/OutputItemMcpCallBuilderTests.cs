@@ -50,7 +50,7 @@ public class OutputItemMcpCallBuilderTests
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.InProgress));
         Assert.That(item.ServerLabel, Is.EqualTo("my-server"));
-        Assert.That(item.Name, Is.EqualTo("tool_name"));
+        Assert.That(item.ToolName, Is.EqualTo("tool_name"));
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class OutputItemMcpCallBuilderTests
         var builder = stream.AddOutputItemMcpCall("srv", "fn");
         var evt = builder.EmitArgumentsDone("{\"key\":\"value\"}");
         XAssert.IsType<ResponseMCPCallArgumentsDoneEvent>(evt);
-        Assert.That(evt.Arguments, Is.EqualTo("{\"key\":\"value\"}"));
+        Assert.That(evt.ToolArguments, Is.EqualTo("{\"key\":\"value\"}"));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
     }
 
@@ -118,7 +118,7 @@ public class OutputItemMcpCallBuilderTests
         var item = XAssert.IsType<OutputItemMcpToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.Completed));
-        Assert.That(item.Arguments, Is.EqualTo("{\"key\":\"value\"}"));
+        Assert.That(item.ToolArguments, Is.EqualTo("{\"key\":\"value\"}"));
     }
 
     [Test]

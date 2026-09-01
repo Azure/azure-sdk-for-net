@@ -43,7 +43,7 @@ public class FinalizeExecutionTests : IDisposable
     public async Task FinalizeExecution_CompletesPublisher()
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_01");
-        execution.Response = new Models.ResponseObject("resp_fin_01", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_01", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         // Subscribe before finalize so we can observe OnCompleted
@@ -60,7 +60,7 @@ public class FinalizeExecutionTests : IDisposable
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_02",
             isBackground: true, store: true);
-        execution.Response = new Models.ResponseObject("resp_fin_02", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_02", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         // First create the response so UpdateResponseAsync can find it
@@ -79,7 +79,7 @@ public class FinalizeExecutionTests : IDisposable
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_03",
             isBackground: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_fin_03", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_03", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -101,7 +101,7 @@ public class FinalizeExecutionTests : IDisposable
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_stream_fg",
             isBackground: false, isStreaming: true, store: true);
         execution.SteeringRequested = true;
-        execution.Response = new Models.ResponseObject("resp_fin_stream_fg", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_stream_fg", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -119,7 +119,7 @@ public class FinalizeExecutionTests : IDisposable
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_stream_bg",
             isBackground: true, isStreaming: true, store: true);
         execution.SteeringRequested = true;
-        execution.Response = new Models.ResponseObject("resp_fin_stream_bg", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_stream_bg", Model = "test", Status = ResponseStatus.InProgress };
 
         // response.created wrote the in_progress snapshot durably.
         await _provider.CreateResponseAsync(new CreateResponsePersistRequest(execution.Response, null, null), PlatformContext.Empty);
@@ -142,7 +142,7 @@ public class FinalizeExecutionTests : IDisposable
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_stream_dbl",
             isBackground: false, isStreaming: true, store: true);
         execution.StreamingTerminalPersisted = true;
-        execution.Response = new Models.ResponseObject("resp_fin_stream_dbl", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_stream_dbl", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -157,7 +157,7 @@ public class FinalizeExecutionTests : IDisposable
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_04",
             isBackground: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_fin_04", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_04", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCancelled();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -172,7 +172,7 @@ public class FinalizeExecutionTests : IDisposable
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_05",
             isBackground: false, store: false);
-        execution.Response = new Models.ResponseObject("resp_fin_05", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_05", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -186,7 +186,7 @@ public class FinalizeExecutionTests : IDisposable
     public async Task FinalizeExecution_EvictsFromTracker()
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_06");
-        execution.Response = new Models.ResponseObject("resp_fin_06", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_06", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -199,7 +199,7 @@ public class FinalizeExecutionTests : IDisposable
     public async Task FinalizeExecution_SignalsFinalizedAfterEviction()
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_08");
-        execution.Response = new Models.ResponseObject("resp_fin_08", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new ResponseObject { Id = "resp_fin_08", Model = "test", Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
@@ -212,11 +212,11 @@ public class FinalizeExecutionTests : IDisposable
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_07",
             isBackground: true, store: true);
-        // Models.ResponseObject stays null — response.created was never emitted
+        // ResponseObject stays null — response.created was never emitted
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
 
-        // Models.ResponseObject is null -> no persistence regardless of store/bg
+        // ResponseObject is null -> no persistence regardless of store/bg
         Assert.ThrowsAsync<ResourceNotFoundException>(
             () => _provider.GetResponseAsync("resp_fin_07", PlatformContext.Empty));
     }

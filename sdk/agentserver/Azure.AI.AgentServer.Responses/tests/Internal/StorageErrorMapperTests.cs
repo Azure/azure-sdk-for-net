@@ -85,7 +85,7 @@ public class StorageErrorMapperTests
         Assert.That(ex.StatusCode, Is.EqualTo(500));
         Assert.That(ex.Error.Code, Is.EqualTo("internal_error"));
         Assert.That(ex.Error.Param, Is.EqualTo("request"));
-        Assert.That(ex.Error.Type, Is.EqualTo("server_error"));
+        Assert.That(ex.Error.Kind, Is.EqualTo("server_error"));
     }
 
     [Test]
@@ -100,7 +100,7 @@ public class StorageErrorMapperTests
         Assert.That(ex!.StatusCode, Is.EqualTo(500));
         Assert.That(ex.Error.Code, Is.EqualTo("upstream_error"));
         Assert.That(ex.Error.Message, Is.EqualTo("Bad gateway."));
-        Assert.That(ex.Error.Type, Is.EqualTo("server_error"));
+        Assert.That(ex.Error.Kind, Is.EqualTo("server_error"));
     }
 
     [Test]

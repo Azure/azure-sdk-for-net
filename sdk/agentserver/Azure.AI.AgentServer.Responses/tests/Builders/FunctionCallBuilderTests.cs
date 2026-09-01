@@ -107,8 +107,8 @@ public class FunctionCallBuilderTests
         var item = XAssert.IsType<OutputItemFunctionToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(fc.ItemId));
         Assert.That(item.CallId, Is.EqualTo("call_001"));
-        Assert.That(item.Name, Is.EqualTo("get_weather"));
-        Assert.That(item.Arguments, Is.EqualTo(""));
+        Assert.That(item.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(item.FunctionArguments, Is.EqualTo(""));
         Assert.That(item.Status, Is.EqualTo(ItemFunctionToolCallStatus.InProgress));
     }
 
@@ -148,9 +148,9 @@ public class FunctionCallBuilderTests
         var evt = fc.EmitArgumentsDone("{\"location\":\"Seattle\"}");
 
         XAssert.IsType<ResponseFunctionCallArgumentsDoneEvent>(evt);
-        Assert.That(evt.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(evt.FunctionArguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
         Assert.That(evt.ItemId, Is.EqualTo(fc.ItemId));
-        Assert.That(evt.Name, Is.EqualTo("get_weather"));
+        Assert.That(evt.FunctionName, Is.EqualTo("get_weather"));
         Assert.That(evt.OutputIndex, Is.EqualTo(fc.OutputIndex));
     }
 
@@ -183,8 +183,8 @@ public class FunctionCallBuilderTests
         var item = XAssert.IsType<OutputItemFunctionToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(fc.ItemId));
         Assert.That(item.CallId, Is.EqualTo("call_001"));
-        Assert.That(item.Name, Is.EqualTo("get_weather"));
-        Assert.That(item.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(item.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(item.FunctionArguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
         Assert.That(item.Status, Is.EqualTo(ItemFunctionToolCallStatus.Completed));
     }
 

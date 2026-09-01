@@ -93,7 +93,7 @@ public class ApiErrorFactoryTests
     [Test]
     public async Task FromApiException_PreservesStatusCodeAndError()
     {
-        var innerError = new Error("custom_code", "Custom message", "field", "custom_type", null!, null!, null!, null!);
+        var innerError = OpenAIModelFactory.CreateError("custom_code", "Custom message", "field", "custom_type");
         var ex = new ResponsesApiException(innerError, 422);
 
         var result = ApiErrorFactory.FromApiException(ex);
@@ -144,7 +144,7 @@ public class ApiErrorFactoryTests
         var error = ApiErrorFactory.NewServerError("Something broke");
 
         Assert.That(error.Code, Is.EqualTo("server_error"));
-        Assert.That(error.Type, Is.EqualTo("server_error"));
+        Assert.That(error.Kind, Is.EqualTo("server_error"));
         Assert.That(error.Message, Is.EqualTo("Something broke"));
     }
 
@@ -158,7 +158,7 @@ public class ApiErrorFactoryTests
         XAssert.IsType<ResponsesApiException>(ex);
         Assert.That(ex.StatusCode, Is.EqualTo(500));
         Assert.That(ex.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
-        Assert.That(ex.Error.Type, Is.EqualTo("server_error"));
+        Assert.That(ex.Error.Kind, Is.EqualTo("server_error"));
     }
 
     // --- SseErrorEvent ---
@@ -196,7 +196,7 @@ public class ApiErrorFactoryTests
     [Test]
     public void ToResponseError_ResponsesApiException_PreservesCodeAndMessage()
     {
-        var error = new Error("rate_limit_exceeded", "Too many requests", null!, "server_error", null!, null!, null!, null!);
+        var error = OpenAIModelFactory.CreateError("rate_limit_exceeded", "Too many requests", null, "server_error");
         var ex = new ResponsesApiException(error, 429);
 
         var result = ApiErrorFactory.ToResponseError(ex);
@@ -208,7 +208,7 @@ public class ApiErrorFactoryTests
     [Test]
     public void ToResponseError_ResponsesApiException_UnknownCode_PassesThroughAsExtensibleCode()
     {
-        var error = new Error("custom_unknown_code", "Something weird", null!, "server_error", null!, null!, null!, null!);
+        var error = OpenAIModelFactory.CreateError("custom_unknown_code", "Something weird", null, "server_error");
         var ex = new ResponsesApiException(error, 500);
 
         var result = ApiErrorFactory.ToResponseError(ex);
@@ -279,7 +279,7 @@ public class ApiErrorFactoryTests
     [Test]
     public void ToSseErrorEvent_ResponsesApiException_PreservesCodeAndMessage()
     {
-        var error = new Error("invalid_prompt", "Content policy violation", null!, "server_error", null!, null!, null!, null!);
+        var error = OpenAIModelFactory.CreateError("invalid_prompt", "Content policy violation", null, "server_error");
         var ex = new ResponsesApiException(error, 400);
 
         var result = ApiErrorFactory.ToSseErrorEvent(ex);

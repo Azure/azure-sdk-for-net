@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
@@ -57,13 +58,11 @@ public class OutputItemBuilderAutoStampTests
         var builder = stream.AddOutputItemMessage();
 
         // Create an item with handler-set ResponseId
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             id: builder.ItemId,
             content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            ResponseId = handlerResponseId,
-        };
+            status: MessageStatus.InProgress);
+        item.ResponseId = handlerResponseId;
         var evt = builder.EmitAdded(item);
 
         Assert.That(evt.Item.ResponseId, Is.EqualTo(handlerResponseId));
@@ -99,13 +98,11 @@ public class OutputItemBuilderAutoStampTests
         var stream = new ResponseEventStream(ctx, request);
         var builder = stream.AddOutputItemMessage();
 
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             id: builder.ItemId,
             content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            AgentReference = handlerAgentRef,
-        };
+            status: MessageStatus.InProgress);
+        item.AgentReference = handlerAgentRef;
         var evt = builder.EmitAdded(item);
 
         // Handler-set value takes precedence

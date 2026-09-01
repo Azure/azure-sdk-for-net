@@ -100,7 +100,7 @@ public class ResponsesApiExceptionTests
     [Test]
     public void Constructor_WithErrorAndStatusCode_SetsBoth()
     {
-        var error = new Error("rate_limit_exceeded", "Too many requests");
+        var error = OpenAIModelFactory.CreateError("rate_limit_exceeded", "Too many requests");
         var ex = new ResponsesApiException(error, 429);
 
         Assert.That(ex.Error, Is.SameAs(error));
@@ -112,7 +112,7 @@ public class ResponsesApiExceptionTests
     [Test]
     public void Constructor_WithErrorStatusCodeAndInnerException_SetsAll()
     {
-        var error = new Error("rate_limit_exceeded", "Too many requests");
+        var error = OpenAIModelFactory.CreateError("rate_limit_exceeded", "Too many requests");
         var inner = new HttpRequestException("upstream error");
         var ex = new ResponsesApiException(error, 429, inner);
 
@@ -124,7 +124,7 @@ public class ResponsesApiExceptionTests
     [Test]
     public void Message_ComesFromErrorMessage()
     {
-        var error = new Error("custom_code", "Custom error message");
+        var error = OpenAIModelFactory.CreateError("custom_code", "Custom error message");
         var ex = new ResponsesApiException(error, 503);
 
         Assert.That(ex.Message, Is.EqualTo("Custom error message"));
@@ -133,7 +133,7 @@ public class ResponsesApiExceptionTests
     [Test]
     public void IsException()
     {
-        var error = new Error("test", "test");
+        var error = OpenAIModelFactory.CreateError("test", "test");
         var ex = new ResponsesApiException(error, 500);
         XAssert.IsAssignableFrom<Exception>(ex);
     }
