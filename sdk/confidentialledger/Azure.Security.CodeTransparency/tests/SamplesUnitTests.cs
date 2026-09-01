@@ -221,13 +221,13 @@ namespace Azure.Security.CodeTransparency.Tests
             string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
             File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
             // Download and store the public keys for offline verification
-            Response<CodeTransparencyJwksDocument> ledgerKeys = client.GetPublicKeys();
-            CodeTransparencyOfflineKeys allKeys = new();
+            Response<CodeTransparencyVerificationKeySet> ledgerKeys = client.GetPublicKeys();
+            CodeTransparencyTrustStore allKeys = new();
 #if !SNIPPET
-            allKeys.Add("foo.bar.com", ledgerKeys.Value);
+            allKeys.SetKeys("foo.bar.com", ledgerKeys.Value);
 #endif
 #if SNIPPET
-            allKeys.Add("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
+            allKeys.SetKeys("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
 #endif
             string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");
             File.WriteAllBytes(keysFilePath, allKeys.ToBinaryData().ToArray());
@@ -246,8 +246,8 @@ namespace Azure.Security.CodeTransparency.Tests
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
                 UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
-                OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
-                OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+                TrustStore = CodeTransparencyTrustStore.FromBinaryData(BinaryData.FromBytes(keys)),
+                KeyResolutionMode = CodeTransparencyKeyResolutionMode.TrustStoreOnly
             };
             CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
 #if SNIPPET
@@ -361,20 +361,20 @@ namespace Azure.Security.CodeTransparency.Tests
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<CodeTransparencyJwksDocument> jwksDoc = client.GetPublicKeys();
-            CodeTransparencyJsonWebKey jsonWebKey = jwksDoc.Value.Keys[0];
+            Response<CodeTransparencyVerificationKeySet> jwksDoc = client.GetPublicKeys();
+            CodeTransparencyVerificationKey verificationKey = jwksDoc.Value.Keys[0];
             byte[] inputReceipt = readFileBytes("receipt.cose");
             byte[] inputSignedStatement = readFileBytes("input_signed_claims");
 
             #region Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
 #if SNIPPET
-            CodeTransparencyJsonWebKey jsonWebKey = new CodeTransparencyJsonWebKey(<.....>);
+            CodeTransparencyVerificationKey verificationKey = new CodeTransparencyVerificationKey("<key id>", <ECDsa public key>);
             byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
             byte[] inputReceipt = readFileBytes("<input_receipt>");
 #endif
             try
             {
-                CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, inputReceipt, inputSignedStatement);
+                CcfReceiptVerifier.Verify(inputReceipt, inputSignedStatement, verificationKey);
                 Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
             }
             catch (Exception e)

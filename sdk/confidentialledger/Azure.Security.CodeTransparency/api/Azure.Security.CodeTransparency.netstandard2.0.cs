@@ -8,9 +8,7 @@ namespace Azure.Security.CodeTransparency
     }
     public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureSecurityCodeTransparencyContext() { }
-        public static Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureSecurityCodeTransparencyContext() { }
     }
     public partial class CcfReceipt
     {
@@ -35,7 +33,9 @@ namespace Azure.Security.CodeTransparency
     public partial class CcfReceiptVerifier
     {
         public CcfReceiptVerifier() { }
-        public static void VerifyTransparentStatementReceipt(Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes) { }
+        public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationKey verificationKey) { }
+        public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet verificationKeys) { }
+        public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, string keyId, System.Security.Cryptography.ECDsa publicKey) { }
     }
     public static partial class CodeTransparencyCbor
     {
@@ -49,7 +49,9 @@ namespace Azure.Security.CodeTransparency
         public CodeTransparencyCertificateClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public virtual Azure.Response GetServiceIdentity(string ledgerId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Security.CodeTransparency.ServiceIdentityResult> GetServiceIdentity(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetServiceIdentityAsync(string ledgerId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.CodeTransparency.ServiceIdentityResult>> GetServiceIdentityAsync(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CodeTransparencyClient
@@ -66,58 +68,83 @@ namespace Azure.Security.CodeTransparency
         [System.ObsoleteAttribute("Use CreateEntry(BinaryData, bool, CancellationToken) instead.")]
         public virtual Azure.Security.CodeTransparency.CreateEntryOperation CreateEntry(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> CreateEntry(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateEntryAsync(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         [System.ObsoleteAttribute("Use CreateEntryAsync(BinaryData, bool, CancellationToken) instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Security.CodeTransparency.CreateEntryOperation> CreateEntryAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> CreateEntryAsync(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateEntryV09(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> CreateEntryV09(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateEntryV09Async(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> CreateEntryV09Async(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetEntry(string entryId, Azure.RequestContext context) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> GetEntry(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryAsync(string entryId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> GetEntryAsync(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static string GetEntryIdFromLocation(Azure.Response response) { throw null; }
         public virtual Azure.Response GetEntryStatement(string entryId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.BinaryData> GetEntryStatement(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryStatementAsync(string entryId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetEntryStatementAsync(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetEntryStatementV09(string entryId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.BinaryData> GetEntryStatementV09(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryStatementV09Async(string entryId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetEntryStatementV09Async(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetEntryV09(string entryId, Azure.RequestContext context) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> GetEntryV09(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryV09Async(string entryId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> GetEntryV09Async(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual Azure.Response GetOperation(string operationId, Azure.RequestContext context) { throw null; }
         [System.ObsoleteAttribute("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual Azure.NullableResponse<System.BinaryData> GetOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         [System.ObsoleteAttribute("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         [System.ObsoleteAttribute("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> GetOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetOperationV09(string operationId, Azure.RequestContext context) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> GetOperationV09(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationV09Async(string operationId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> GetOperationV09Async(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetPublicKeys(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument> GetPublicKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet> GetPublicKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPublicKeysAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>> GetPublicKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet>> GetPublicKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetScittKey(string kid, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.BinaryData> GetScittKey(string kid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyVerificationKey> GetScittKey(string kid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetScittKeyAsync(string kid, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetScittKeyAsync(string kid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyVerificationKey>> GetScittKeyAsync(string kid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetScittKeys(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.BinaryData> GetScittKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet> GetScittKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetScittKeysAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetScittKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet>> GetScittKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTransparencyConfigCbor(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("Use the static VerifyTransparentStatement method with options instead.")]
         public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
@@ -149,65 +176,14 @@ namespace Azure.Security.CodeTransparency
         public Azure.Security.CodeTransparency.CodeTransparencyClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
-    public partial class CodeTransparencyJsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>
+    public enum CodeTransparencyKeyResolutionMode
     {
-        internal CodeTransparencyJsonWebKey() { }
-        public string Alg { get { throw null; } }
-        public string Crv { get { throw null; } }
-        public string D { get { throw null; } }
-        public string Dp { get { throw null; } }
-        public string Dq { get { throw null; } }
-        public string E { get { throw null; } }
-        public string K { get { throw null; } }
-        public string Kid { get { throw null; } }
-        public string Kty { get { throw null; } }
-        public string N { get { throw null; } }
-        public string P { get { throw null; } }
-        public string Q { get { throw null; } }
-        public string Qi { get { throw null; } }
-        public string Use { get { throw null; } }
-        public string X { get { throw null; } }
-        public System.Collections.Generic.IList<string> X5c { get { throw null; } }
-        public string Y { get { throw null; } }
-        protected virtual Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CodeTransparencyJwksDocument : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>
-    {
-        internal CodeTransparencyJwksDocument() { }
-        public string ContentType { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey> Keys { get { throw null; } }
-        protected virtual Azure.Security.CodeTransparency.CodeTransparencyJwksDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.CodeTransparency.CodeTransparencyJwksDocument (Azure.Response response) { throw null; }
-        protected virtual Azure.Security.CodeTransparency.CodeTransparencyJwksDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Security.CodeTransparency.CodeTransparencyJwksDocument System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.CodeTransparency.CodeTransparencyJwksDocument System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyJwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        TrustStoreThenNetwork = 0,
+        TrustStoreOnly = 1,
     }
     public static partial class CodeTransparencyModelFactory
     {
-        public static Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey CodeTransparencyJsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5c = null, string y = null) { throw null; }
-        public static Azure.Security.CodeTransparency.CodeTransparencyJwksDocument CodeTransparencyJwksDocument(System.Collections.Generic.IEnumerable<Azure.Security.CodeTransparency.CodeTransparencyJsonWebKey> keys = null) { throw null; }
         public static Azure.Security.CodeTransparency.ServiceIdentityResult ServiceIdentityResult(string ledgerTlsCertificate) { throw null; }
-    }
-    public sealed partial class CodeTransparencyOfflineKeys
-    {
-        public CodeTransparencyOfflineKeys() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.CodeTransparency.CodeTransparencyJwksDocument> ByIssuer { get { throw null; } }
-        public void Add(string ledgerDomain, Azure.Security.CodeTransparency.CodeTransparencyJwksDocument jwksDocument) { }
-        public static Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys FromBinaryData(System.BinaryData json) { throw null; }
-        public System.BinaryData ToBinaryData() { throw null; }
     }
     public enum CodeTransparencyOperationStatus
     {
@@ -215,13 +191,35 @@ namespace Azure.Security.CodeTransparency
         Failed = 1,
         Succeeded = 2,
     }
+    public sealed partial class CodeTransparencyTrustStore
+    {
+        public CodeTransparencyTrustStore() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet> KeysByIssuer { get { throw null; } }
+        public static Azure.Security.CodeTransparency.CodeTransparencyTrustStore FromBinaryData(System.BinaryData data) { throw null; }
+        public bool RemoveKeys(string issuerDomain) { throw null; }
+        public void SetKeys(string issuerDomain, Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet keys) { }
+        public System.BinaryData ToBinaryData() { throw null; }
+        public bool TryGetKeys(string issuerDomain, out Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet keys) { throw null; }
+    }
+    public sealed partial class CodeTransparencyVerificationKey
+    {
+        public CodeTransparencyVerificationKey(string keyId, System.Security.Cryptography.ECDsa publicKey) { }
+        public string KeyId { get { throw null; } }
+        public System.Security.Cryptography.ECDsa ToECDsa() { throw null; }
+    }
+    public sealed partial class CodeTransparencyVerificationKeySet
+    {
+        public CodeTransparencyVerificationKeySet(System.Collections.Generic.IEnumerable<Azure.Security.CodeTransparency.CodeTransparencyVerificationKey> keys) { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Security.CodeTransparency.CodeTransparencyVerificationKey> Keys { get { throw null; } }
+        public bool TryGetKey(string keyId, out Azure.Security.CodeTransparency.CodeTransparencyVerificationKey key) { throw null; }
+    }
     public sealed partial class CodeTransparencyVerificationOptions
     {
         public CodeTransparencyVerificationOptions() { }
         public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
-        public Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys OfflineKeys { get { throw null; } set { } }
-        public Azure.Security.CodeTransparency.OfflineKeysBehavior OfflineKeysBehavior { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyKeyResolutionMode KeyResolutionMode { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyTrustStore TrustStore { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class CreateEntryOperation : Azure.Operation<System.BinaryData>
@@ -234,11 +232,6 @@ namespace Azure.Security.CodeTransparency
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public enum OfflineKeysBehavior
-    {
-        FallbackToNetwork = 0,
-        NoFallbackToNetwork = 1,
     }
     public partial class ServiceIdentityResult
     {

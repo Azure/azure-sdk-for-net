@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,35 +8,100 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Cose;
 using System.Text;
-using Azure.Core;
 using static Azure.Security.CodeTransparency.CcfReceipt;
 
 namespace Azure.Security.CodeTransparency
 {
     /// <summary>
-    /// CcfReceiptVerifier class contains the methods to verify the CCF SCITT receipt
-    /// integrity and the inclusion in the Signing Transparency Service. The verification
-    /// requires the receipt, the COSE_Sign1 envelope and the service certificate. The
-    /// COSE_Sign1 envelope is the payload that was submitted to the Signing Transparency
-    /// Service. The receipt is a cryptographic proof issued by the Signing Transparency
-    /// Service after the successful submission of the signature. The service certificate
-    /// is the public key of the Signing Transparency Service that was used to endorse the
-    /// receipt.
-    /// The receipt can also be embedded in the COSE_Sign1 envelope.
+    /// CcfReceiptVerifier contains the methods to verify a CCF SCITT receipt's integrity and its
+    /// inclusion in the Signing Transparency Service. Verification requires the receipt, the
+    /// COSE_Sign1 signed statement that was submitted to the service, and the service's public
+    /// receipt-verification key. The receipt can also be embedded in the COSE_Sign1 envelope.
     /// </summary>
     public class CcfReceiptVerifier
     {
         /// <summary>
-        /// Verify a CCF SCITT receipt.
-        /// If the verification fails, an exception is thrown explaining in which step the verification failed.
+        /// Initializes a new instance of <see cref="CcfReceiptVerifier"/>.
+        /// </summary>
+        public CcfReceiptVerifier()
+        {
+        }
+
+        /// <summary>
+        /// Verifies a CCF SCITT receipt against a signed statement using the supplied verification key.
+        /// If verification fails, an exception is thrown explaining which step failed.
         /// #1 Reference: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
         /// #2 Reference: https://datatracker.ietf.org/doc/draft-birkholz-cose-receipts-ccf-profile/
         /// </summary>
-        /// <param name="jsonWebKey">The service certificate key (JWK).</param>
-        /// <param name="receiptBytes">Receipt in COSE_Sign1 cbor bytes.</param>
-        /// <param name="signedStatementBytes">The input signed statement bytes.</param>
+        /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 CBOR bytes.</param>
+        /// <param name="signedStatementCoseSign1Bytes">The input signed statement bytes.</param>
+        /// <param name="verificationKey">The service public key used to verify the receipt.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="verificationKey"/> is null.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
-        public static void VerifyTransparentStatementReceipt(CodeTransparencyJsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
+        public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, CodeTransparencyVerificationKey verificationKey)
+        {
+            if (verificationKey == null)
+            {
+                throw new ArgumentNullException(nameof(verificationKey));
+            }
+
+            VerifyCore(receiptCoseSign1Bytes, signedStatementCoseSign1Bytes, verificationKey);
+        }
+
+        /// <summary>
+        /// Verifies a CCF SCITT receipt against a signed statement using a caller-owned <see cref="ECDsa"/> key.
+        /// The supplied key ID must match the key ID in the receipt.
+        /// </summary>
+        /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 CBOR bytes.</param>
+        /// <param name="signedStatementCoseSign1Bytes">The input signed statement bytes.</param>
+        /// <param name="keyId">The case-sensitive key ID that identifies <paramref name="publicKey"/>.</param>
+        /// <param name="publicKey">The caller-owned ECDSA public key used to verify the receipt.</param>
+        /// <exception cref="ArgumentException"><paramref name="keyId"/> is null or empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="publicKey"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
+        public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, string keyId, ECDsa publicKey)
+        {
+            var verificationKey = new CodeTransparencyVerificationKey(keyId, publicKey);
+            VerifyCore(receiptCoseSign1Bytes, signedStatementCoseSign1Bytes, verificationKey);
+        }
+
+        /// <summary>
+        /// Verifies a CCF SCITT receipt against a signed statement. The key ID is extracted from the receipt
+        /// and matched, case-sensitively, against the supplied key set.
+        /// </summary>
+        /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 CBOR bytes.</param>
+        /// <param name="signedStatementCoseSign1Bytes">The input signed statement bytes.</param>
+        /// <param name="verificationKeys">The service public keys used to verify the receipt.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="verificationKeys"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the verification fails or no matching key is found.</exception>
+        public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, CodeTransparencyVerificationKeySet verificationKeys)
+        {
+            if (verificationKeys == null)
+            {
+                throw new ArgumentNullException(nameof(verificationKeys));
+            }
+
+            string keyId = ExtractReceiptKeyId(receiptCoseSign1Bytes);
+            if (!verificationKeys.TryGetKey(keyId, out CodeTransparencyVerificationKey verificationKey))
+            {
+                throw new InvalidOperationException($"Key with ID '{keyId}' not found.");
+            }
+
+            VerifyCore(receiptCoseSign1Bytes, signedStatementCoseSign1Bytes, verificationKey);
+        }
+
+        private static string ExtractReceiptKeyId(byte[] receiptBytes)
+        {
+            CoseSign1Message receipt = CoseMessage.DecodeSign1(receiptBytes);
+            if (!receipt.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue kid))
+            {
+                throw new InvalidOperationException("KID not found.");
+            }
+
+            return Encoding.UTF8.GetString(kid.GetValueAsBytes());
+        }
+
+        private static void VerifyCore(byte[] receiptBytes, byte[] signedStatementBytes, CodeTransparencyVerificationKey verificationKey)
         {
             using SHA256 sha256 = SHA256.Create();
             byte[] claimsDigest = sha256.ComputeHash(signedStatementBytes);
@@ -44,7 +109,7 @@ namespace Azure.Security.CodeTransparency
             // Extract the expected KID from the public key used for verification,
             // and check it against the value set in the COSE header before using
             // it to verify the proofs.
-            byte[] expectedKid = Encoding.UTF8.GetBytes(jsonWebKey.Kid);
+            byte[] expectedKid = Encoding.UTF8.GetBytes(verificationKey.KeyId);
 
             CoseSign1Message receipt = CoseMessage.DecodeSign1(receiptBytes);
 
@@ -55,13 +120,11 @@ namespace Azure.Security.CodeTransparency
             }
 
             // Validate alg based on https://www.iana.org/assignments/cose/cose.xhtml#algorithms
-            // Get the ECDsa key size from the certificate
+            // The receipt algorithm must match the algorithm implied by the verification key's curve/size.
             int algValue = alg.GetValueAsInt32();
-
-            (ECCurve Curve, int Algorithm) curveParameters = GetCurveParameters(jsonWebKey.Crv);
-            if (algValue != curveParameters.Algorithm)
+            if (algValue != verificationKey.CoseAlgorithm)
             {
-                throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected {curveParameters.Algorithm} Found {algValue}");
+                throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected {verificationKey.CoseAlgorithm} Found {algValue}");
             }
 
             if (!receipt.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue kid) ||
@@ -109,6 +172,8 @@ namespace Azure.Security.CodeTransparency
             }
             proofsReader.ReadEndArray();
 
+            using ECDsa ecdsaKey = verificationKey.ToECDsa();
+
             // Retrieve all the inclusion proof, if any
             foreach (byte[] inclusionProofBytes in inclusionProofs)
             {
@@ -151,16 +216,6 @@ namespace Azure.Security.CodeTransparency
                     }
                 }
 
-                using ECDsa ecdsaKey = ECDsa.Create(new ECParameters
-                {
-                    Curve = curveParameters.Curve,
-                    Q = new ECPoint
-                    {
-                        X = Base64Url.Decode(jsonWebKey.X),
-                        Y = Base64Url.Decode(jsonWebKey.Y)
-                    }
-                });
-
                 if (!receipt.VerifyDetached(ecdsaKey, new ReadOnlySpan<byte>(accumulator)))
                 {
                     throw new InvalidOperationException("Signature verification failed");
@@ -172,17 +227,6 @@ namespace Azure.Security.CodeTransparency
                     throw new InvalidOperationException($"Claim digest mismatch: {BitConverter.ToString(leaf.DataHash)} != {BitConverter.ToString(claimsDigest)}");
                 }
             }
-        }
-
-        private static (ECCurve Curve, int Algorithm) GetCurveParameters(string curve)
-        {
-            return curve switch
-            {
-                "P-256" => (ECCurve.NamedCurves.nistP256, -7),
-                "P-384" => (ECCurve.NamedCurves.nistP384, -35),
-                "P-521" => (ECCurve.NamedCurves.nistP521, -36),
-                _ => throw new InvalidOperationException($"Unsupported ECDsa curve '{curve}'.")
-            };
         }
     }
 }

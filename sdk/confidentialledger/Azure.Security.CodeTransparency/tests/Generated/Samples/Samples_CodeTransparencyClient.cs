@@ -95,28 +95,6 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetPublicKeys_GetPublicKeys_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            Response<CodeTransparencyJwksDocument> response = client.GetPublicKeys();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetPublicKeys_GetPublicKeys_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            Response<CodeTransparencyJwksDocument> response = await client.GetPublicKeysAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetOperation_GetOperation()
         {
             Uri endpoint = new Uri("<endpoint>");

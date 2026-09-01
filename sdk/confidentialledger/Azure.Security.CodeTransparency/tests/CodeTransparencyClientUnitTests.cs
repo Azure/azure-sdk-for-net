@@ -881,7 +881,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            Response<CodeTransparencyJwksDocument> result = client.GetPublicKeys();
+            Response<CodeTransparencyVerificationKeySet> result = client.GetPublicKeys();
 
             Assert.NotNull(result);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -936,11 +936,11 @@ namespace Azure.Security.CodeTransparency.Tests
 #else
             var (_, options) = createClientOptionsWithValidPublicKeyResponse();
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<CodeTransparencyJwksDocument> keys = client.GetPublicKeys();
+            Response<CodeTransparencyVerificationKeySet> keys = client.GetPublicKeys();
             var statement = createStatementWithEmptyInclusionProof();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
-                CcfReceiptVerifier.VerifyTransparentStatementReceipt(keys.Value.Keys[0], statement.Receipt, statement.SignedStatement));
+                CcfReceiptVerifier.Verify(statement.Receipt, statement.SignedStatement, keys.Value.Keys[0]));
 
             StringAssert.Contains("At least one inclusion proof is expected", exception.Message);
 #endif
@@ -974,32 +974,29 @@ namespace Azure.Security.CodeTransparency.Tests
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            // Parse the JWKS JSON from the mocked response
-            string doc = "{\"foo.bar.com\":" + ValidSignedStatementJWKS + "}";
-            using (var jsonDoc = JsonDocument.Parse(doc))
+            // Build a trust store from the JWKS for the issuer domain.
+            var trustStore = new CodeTransparencyTrustStore();
+            trustStore.SetKeys("foo.bar.com", CodeTransparencyKeyParser.ParseJwksJson(System.Text.Encoding.UTF8.GetBytes(ValidSignedStatementJWKS)));
+
+            var mockTransport = new MockTransport(new MockResponse(503));
+            var options = new CodeTransparencyClientOptions
             {
-                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+                IdentityClientEndpoint = "https://some.identity.com",
+                Transport = mockTransport,
+            };
 
-                var mockTransport = new MockTransport(new MockResponse(503));
-                var options = new CodeTransparencyClientOptions
-                {
-                    IdentityClientEndpoint = "https://some.identity.com",
-                    Transport = mockTransport,
-                };
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                TrustStore = trustStore
+            };
 
-                var verificationOptions = new CodeTransparencyVerificationOptions
-                {
-                    AuthorizedDomains = new string[] { "foo.bar.com" },
-                    OfflineKeys = offlineStore
-                };
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
-                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            // Should not make any network calls since we're using the trust store
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 
-                // Should not make any network calls since we're using offline keys
-                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
-
-                Assert.AreEqual(0, mockTransport.Requests.Count);
-            }
+            Assert.AreEqual(0, mockTransport.Requests.Count);
 #endif
         }
 
@@ -1009,27 +1006,23 @@ namespace Azure.Security.CodeTransparency.Tests
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            // Parse the JWKS JSON from the mocked response
-            string doc = "{}";
-            using (var jsonDoc = JsonDocument.Parse(doc))
+            // An empty trust store falls back to the network.
+            var trustStore = new CodeTransparencyTrustStore();
+
+            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                TrustStore = trustStore
+            };
 
-                var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
-                var verificationOptions = new CodeTransparencyVerificationOptions
-                {
-                    AuthorizedDomains = new string[] { "foo.bar.com" },
-                    OfflineKeys = offlineStore
-                };
+            // Trust store is empty, so network fallback is expected; should make 1 network call
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 
-                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
-
-                // Offline keys are empty, so network fallback is expected; should make 1 network call
-                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
-
-                Assert.AreEqual(1, mockTransport.Requests.Count);
-            }
+            Assert.AreEqual(1, mockTransport.Requests.Count);
 #endif
         }
 
@@ -1039,31 +1032,27 @@ namespace Azure.Security.CodeTransparency.Tests
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            // Parse the JWKS JSON from the mocked response
-            string doc = "{}";
-            using (var jsonDoc = JsonDocument.Parse(doc))
+            // An empty trust store with TrustStoreOnly must not fall back to the network.
+            var trustStore = new CodeTransparencyTrustStore();
+
+            var mockTransport = new MockTransport(new MockResponse(503));
+            var options = new CodeTransparencyClientOptions
             {
-                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+                IdentityClientEndpoint = "https://some.identity.com",
+                Transport = mockTransport,
+            };
 
-                var mockTransport = new MockTransport(new MockResponse(503));
-                var options = new CodeTransparencyClientOptions
-                {
-                    IdentityClientEndpoint = "https://some.identity.com",
-                    Transport = mockTransport,
-                };
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                TrustStore = trustStore,
+                KeyResolutionMode = CodeTransparencyKeyResolutionMode.TrustStoreOnly
+            };
 
-                var verificationOptions = new CodeTransparencyVerificationOptions
-                {
-                    AuthorizedDomains = new string[] { "foo.bar.com" },
-                    OfflineKeys = offlineStore,
-                    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
-                };
-
-                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
-                var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-                StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
-                Assert.AreEqual(0, mockTransport.Requests.Count);
-            }
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+            StringAssert.Contains("Either a trust store is not configured or network resolution is disabled.", exception.Message);
+            Assert.AreEqual(0, mockTransport.Requests.Count);
 #endif
         }
 
@@ -1086,8 +1075,9 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
+            // The P-384 coordinates are labeled as P-521, so the key is rejected as malformed during normalization.
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-            Assert.AreEqual("The ECDsa key uses the wrong algorithm. Expected -36 Found -35", exception.InnerExceptions[0].Message);
+            StringAssert.Contains("malformed or not on the curve", exception.InnerExceptions[0].Message);
 #endif
         }
 
