@@ -18,6 +18,7 @@ namespace Azure.Provisioning.SignalR
         /// <summary> Creates a new SignalRThrottleByJwtCustomClaimRule. </summary>
         public SignalRThrottleByJwtCustomClaimRule()
         {
+            Type.Assign(ClientConnectionCountRuleDiscriminator.ThrottleByJwtCustomClaimRule);
         }
 
         /// <summary> Gets or sets the ClaimName. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.SignalR
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ThrottleByJwtCustomClaimRule");
             _claimName = DefineProperty<string>(nameof(ClaimName), new string[] { "claimName" }, isRequired: true);
             _maxCount = DefineProperty<int>(nameof(MaxCount), new string[] { "maxCount" });
             DefineAdditionalProperties();

@@ -23,6 +23,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new IaasVmBackupJobV2. </summary>
         public IaasVmBackupJobV2()
         {
+            JobType.Assign("AzureIaaSVMJobV2");
         }
 
         /// <summary> Gets the ActionsInfo. </summary>
@@ -89,7 +90,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AzureIaaSVMJobV2");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "containerName" });
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
