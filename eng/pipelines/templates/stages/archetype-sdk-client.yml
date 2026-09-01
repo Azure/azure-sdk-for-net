@@ -48,6 +48,9 @@ parameters:
   - name: LimitForPullRequest
     type: boolean
     default: false
+  - name: VerifyMgmtTypeSpecCommit
+    type: boolean
+    default: false
   - name: oneESTemplateTag
     type: string
     default: true
@@ -99,6 +102,7 @@ extends:
                 TestPipeline: true
               ArtifactName: packages
               LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
+              VerifyMgmtTypeSpecCommit: ${{ parameters.VerifyMgmtTypeSpecCommit }}
               BuildSnippets: ${{ parameters.BuildSnippets }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

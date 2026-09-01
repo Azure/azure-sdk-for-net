@@ -5,6 +5,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: computerecommender
+    VerifyMgmtTypeSpecCommit: true
     Artifacts:
     - name: Azure.ResourceManager.Compute.Recommender
       safeName: AzureResourceManagerComputeRecommender
