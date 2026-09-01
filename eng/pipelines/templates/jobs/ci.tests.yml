@@ -83,12 +83,17 @@ jobs:
     steps:
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
       
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+      - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        - checkout: self
+          fetchDepth: 1
+          fetchTags: false
+      - ${{ elseif not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            # we only need to checkout all sdk directories for All PR builds OR the
-            # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
-            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
+            # We only need to checkout all sdk directories for All PR builds OR the
+            # deprecating AdditionalDependency leg of the core/resource builds.
+            # ProjectListOverrideFilePropertyName will be set in the latter case.
+            ${{ if eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"

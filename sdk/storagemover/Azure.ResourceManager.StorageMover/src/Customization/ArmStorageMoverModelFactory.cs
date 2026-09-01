@@ -183,3 +183,5 @@ namespace Azure.ResourceManager.StorageMover.Models
             => StorageMoverEndpointData(id, name, resourceType, systemData, properties, null);
     }
 }
+
+// CI experiment: include this package in the 20-package timing workload.
