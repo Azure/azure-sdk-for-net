@@ -55,7 +55,8 @@ public class SseWriterTests
         var writer = new SseWriter(session, _jsonOptions);
 
         var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(3), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello" };
- foreach (var __v in Array.Empty<ResponseLogProb>() ?? []) evt.TokenLogProbabilities.Add(__v);
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
         await writer.WriteEventAsync(evt, 0, CancellationToken.None);
 
         var output = Encoding.UTF8.GetString(stream.ToArray());

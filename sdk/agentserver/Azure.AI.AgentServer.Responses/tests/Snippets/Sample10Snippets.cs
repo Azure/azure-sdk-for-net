@@ -83,7 +83,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // contributes content.
                 int seq = 0;
                 var conversationId = request.GetConversationId();
-                var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress,  AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ConversationReference(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
+                var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ConversationReference(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
                 yield return new ResponseCreatedEvent { SequenceNumber = (int)(seq++), Response = response };
                 yield return new ResponseInProgressEvent { SequenceNumber = (int)(seq++), Response = response };
 

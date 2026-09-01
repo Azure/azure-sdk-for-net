@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses.Models;
-using NUnit.Framework;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Responses.Tests;
 
@@ -46,7 +46,8 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseTextDeltaEvent()
     {
         var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(2), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello " };
- foreach (var __v in Array.Empty<ResponseLogProb>() ?? []) evt.TokenLogProbabilities.Add(__v);
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Delta.ToString(), Is.EqualTo("Hello "));
     }
@@ -55,7 +56,8 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseTextDoneEvent()
     {
         var evt = new ResponseTextDoneEvent { SequenceNumber = (int)(3), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Text = "Hello world" };
- foreach (var __v in Array.Empty<ResponseLogProb>() ?? []) evt.TokenLogProbabilities.Add(__v);
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Text, Is.EqualTo("Hello world"));
     }

@@ -4,8 +4,8 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Helpers;

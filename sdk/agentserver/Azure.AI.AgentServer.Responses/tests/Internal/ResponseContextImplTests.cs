@@ -5,8 +5,8 @@ using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
-using Microsoft.Extensions.Options;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Internal;
 

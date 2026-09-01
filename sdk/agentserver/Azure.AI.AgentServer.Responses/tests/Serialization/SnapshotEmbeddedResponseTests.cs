@@ -161,7 +161,8 @@ public class SnapshotEmbeddedResponseTests
     public void SnapshotEmbeddedResponse_TextDeltaEvent_IsLeftUnchanged()
     {
         var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(20), ItemId = "msg_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello" };
- foreach (var __v in Array.Empty<ResponseLogProb>() ?? []) evt.TokenLogProbabilities.Add(__v);
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
 
         // Should not throw — no lifecycle response to snapshot
         evt.SnapshotEmbeddedResponse(_accumulator);

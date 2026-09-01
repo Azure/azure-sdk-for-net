@@ -139,7 +139,7 @@ public class ResponseSnapshotTests
     public void Snapshot_PreservesErrorField()
     {
         // Arrange
-        var original = new ResponseObject { Id = "resp_snap7", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = ResponsesModelFactory.ResponseErrorInfo( code: ResponseErrorCode.ServerError, message: "Something went wrong") };
+        var original = new ResponseObject { Id = "resp_snap7", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = ResponsesModelFactory.ResponseErrorInfo(code: ResponseErrorCode.ServerError, message: "Something went wrong") };
 
         // Act
         var snapshot = original.Snapshot();

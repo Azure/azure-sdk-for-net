@@ -418,7 +418,8 @@ public class ResponseMutationsTests
     {
         var response = new ResponseObject { Id = "resp_test", Model = "gpt-4o", Status = ResponseStatus.InProgress };
         var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(0), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "delta" };
- foreach (var __v in Array.Empty<ResponseLogProb>() ?? []) evt.TokenLogProbabilities.Add(__v);
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
 
         response.UpdateFromEvent(evt);
 
