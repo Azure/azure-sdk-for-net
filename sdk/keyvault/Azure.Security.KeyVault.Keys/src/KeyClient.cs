@@ -330,6 +330,68 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Creates and stores a new Algorithm Key Pair (AKP) key. If the named key already exists,
+        /// a new version of the key is created. This operation requires the keys/create permission.
+        /// Only available with service version <see cref="KeyClientOptions.ServiceVersion.V2026_05_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="akpKeyOptions">The key options object containing information about the Algorithm Key Pair (AKP) key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="akpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<KeyVaultKey> CreateAkpKey(CreateAkpKeyOptions akpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(akpKeyOptions, nameof(akpKeyOptions));
+
+            var parameters = new KeyRequestParameters(akpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateAkpKey)}");
+            scope.AddAttribute(OTelKeyNameKey, akpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(akpKeyOptions.Name), cancellationToken, KeysPath, akpKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new Algorithm Key Pair (AKP) key. If the named key already exists,
+        /// a new version of the key is created. This operation requires the keys/create permission.
+        /// Only available with service version <see cref="KeyClientOptions.ServiceVersion.V2026_05_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="akpKeyOptions">The key options object containing information about the Algorithm Key Pair (AKP) key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="akpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<KeyVaultKey>> CreateAkpKeyAsync(CreateAkpKeyOptions akpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(akpKeyOptions, nameof(akpKeyOptions));
+
+            var parameters = new KeyRequestParameters(akpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateAkpKey)}");
+            scope.AddAttribute(OTelKeyNameKey, akpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(akpKeyOptions.Name), cancellationToken, KeysPath, akpKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Registers a Managed HSM key that points at material managed by an external HSM.
         /// This operation requires the keys/create permission. Only available with service version
         /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.

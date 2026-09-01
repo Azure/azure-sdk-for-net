@@ -12,6 +12,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V2026_05_01_Preview,
         KeyClientOptions.ServiceVersion.V2026_01_01_Preview,
         KeyClientOptions.ServiceVersion.V2025_07_01,
         KeyClientOptions.ServiceVersion.V7_6,
@@ -268,6 +269,40 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id.ToString(), unwrapResult.KeyId);
             Assert.AreEqual(SecureKeyWrapAlgorithm.RsaOaep256, unwrapResult.Algorithm);
             Assert.IsNotNull(unwrapResult.Key);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_05_01_Preview)]
+        [Ignore("AKP sign/verify requires an INT Managed HSM; skipping until AKP GA.")]
+        public async Task MLDsaSignVerifyRoundTrip()
+        {
+            string keyName = Recording.GenerateId();
+            CreateAkpKeyOptions options = new CreateAkpKeyOptions(keyName, AkpAlgorithm.MLDsa65, hardwareProtected: true);
+            KeyVaultKey key = await Client.CreateAkpKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            // ML-DSA sign/verify is remote-only; the algorithm is inferred from the key.
+            // TEMPORARY WORKAROUND: AKP keys require this in non-prod environments. The INT
+            // Managed HSM returns a key id whose host (e.g. "akp-sdk-test.managedhsm-int.azure-int.net")
+            // is not DNS-resolvable, so point the crypto client at the resolvable regional endpoint
+            // configured for the test. Can be removed and replaced with GetCryptoClient(key.Id, ...)
+            // when AKP goes GA and the returned key id host resolves.
+            Uri cryptoKeyId = new UriBuilder(key.Id) { Host = Uri.Host }.Uri;
+            CryptographyClient cryptoClient = GetCryptoClient(cryptoKeyId, forceRemote: true);
+
+            byte[] message = new byte[32];
+            Recording.Random.NextBytes(message);
+
+            SignResult signResult = await cryptoClient.SignAsync(new MLDsaSignOptions(message));
+
+            Assert.AreEqual(key.Id.ToString(), signResult.KeyId);
+            Assert.IsNotNull(signResult.Signature);
+
+            VerifyResult verifyResult = await cryptoClient.VerifyAsync(
+                new MLDsaVerifyOptions(message, signResult.Signature));
+
+            Assert.AreEqual(key.Id.ToString(), verifyResult.KeyId);
+            Assert.IsTrue(verifyResult.IsValid);
         }
 
         private KeyReleasePolicy GetReleasePolicy()

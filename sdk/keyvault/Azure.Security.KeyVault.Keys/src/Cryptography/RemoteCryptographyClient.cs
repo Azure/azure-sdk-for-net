@@ -398,6 +398,104 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
+        public virtual async Task<Response<SignResult>> SignAsync(MLDsaSignOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new KeySignParameters
+            {
+                Digest = options.Message,
+                ExternalMu = options.ExternalMu,
+                Context = options.Context,
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Sign)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new SignResult(), cancellationToken, "/sign").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<SignResult> Sign(MLDsaSignOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new KeySignParameters
+            {
+                Digest = options.Message,
+                ExternalMu = options.ExternalMu,
+                Context = options.Context,
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Sign)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new SignResult(), cancellationToken, "/sign");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<VerifyResult>> VerifyAsync(MLDsaVerifyOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new KeyVerifyParameters
+            {
+                Digest = options.Message,
+                Signature = options.Signature,
+                ExternalMu = options.ExternalMu,
+                Context = options.Context,
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Verify)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new VerifyResult { KeyId = _keyId.AbsoluteUri }, cancellationToken, "/verify").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<VerifyResult> Verify(MLDsaVerifyOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new KeyVerifyParameters
+            {
+                Digest = options.Message,
+                Signature = options.Signature,
+                ExternalMu = options.ExternalMu,
+                Context = options.Context,
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Verify)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new VerifyResult { KeyId = _keyId.AbsoluteUri }, cancellationToken, "/verify");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal virtual async Task<Response<KeyVaultKey>> GetKeyAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(GetKey)}");

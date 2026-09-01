@@ -10,10 +10,16 @@ namespace Azure.Security.KeyVault.Keys
     {
         private static readonly JsonEncodedText s_algorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
         private static readonly JsonEncodedText s_digestPropertyNameBytes = JsonEncodedText.Encode("value");
+        private static readonly JsonEncodedText s_externalMuPropertyNameBytes = JsonEncodedText.Encode("external_mu");
+        private static readonly JsonEncodedText s_contextPropertyNameBytes = JsonEncodedText.Encode("context");
 
         public string Algorithm { get; set; }
 
         public byte[] Digest { get; set; }
+
+        public byte[] ExternalMu { get; set; }
+
+        public byte[] Context { get; set; }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
@@ -24,6 +30,14 @@ namespace Azure.Security.KeyVault.Keys
             if (Digest != null)
             {
                 json.WriteString(s_digestPropertyNameBytes, Base64Url.Encode(Digest));
+            }
+            if (ExternalMu != null)
+            {
+                json.WriteString(s_externalMuPropertyNameBytes, Base64Url.Encode(ExternalMu));
+            }
+            if (Context != null)
+            {
+                json.WriteString(s_contextPropertyNameBytes, Base64Url.Encode(Context));
             }
         }
     }
