@@ -8,4 +8,5 @@
     <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 
+  <!-- CI experiment: include this package in the 20-package timing workload. -->
 </Project>
