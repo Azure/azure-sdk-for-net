@@ -71,7 +71,7 @@ public class OutputItemMcpCallBuilderTests
         var builder = stream.AddOutputItemMcpCall("srv", "fn");
         var evt = builder.EmitArgumentsDelta("{\"key");
         XAssert.IsType<ResponseMCPCallArgumentsDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("{\"key"));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("{\"key"));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
@@ -83,7 +83,7 @@ public class OutputItemMcpCallBuilderTests
         var builder = stream.AddOutputItemMcpCall("srv", "fn");
         var evt = builder.EmitArgumentsDone("{\"key\":\"value\"}");
         XAssert.IsType<ResponseMCPCallArgumentsDoneEvent>(evt);
-        Assert.That(evt.ToolArguments, Is.EqualTo("{\"key\":\"value\"}"));
+        Assert.That(evt.ToolArguments.ToString(), Is.EqualTo("{\"key\":\"value\"}"));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
     }
 
@@ -118,7 +118,7 @@ public class OutputItemMcpCallBuilderTests
         var item = XAssert.IsType<OutputItemMcpToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.Status, Is.EqualTo(MCPToolCallStatus.Completed));
-        Assert.That(item.ToolArguments, Is.EqualTo("{\"key\":\"value\"}"));
+        Assert.That(item.ToolArguments.ToString(), Is.EqualTo("{\"key\":\"value\"}"));
     }
 
     [Test]

@@ -102,7 +102,7 @@ public class ResponseSnapshotTests
         var snappedFunction = XAssert.IsType<OutputItemFunctionToolCall>(snapshot.OutputItems[1]);
         Assert.That(snappedFunction.CallId, Is.EqualTo("call_fn1"));
         Assert.That(snappedFunction.FunctionName, Is.EqualTo("get_weather"));
-        Assert.That(snappedFunction.FunctionArguments, Is.EqualTo("""{"location":"Seattle"}"""));
+        Assert.That(snappedFunction.FunctionArguments.ToString(), Is.EqualTo("""{"location":"Seattle"}"""));
     }
 
     [Test]
@@ -146,7 +146,7 @@ public class ResponseSnapshotTests
 
         // Assert
         Assert.That(snapshot.Error, Is.Not.Null);
-        Assert.That(snapshot.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(snapshot.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(snapshot.Error.Message, Is.EqualTo("Something went wrong"));
     }
 

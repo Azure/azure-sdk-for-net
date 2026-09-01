@@ -391,7 +391,7 @@ public class OpenAIWireComplianceTests
         var fc = XAssert.IsType<ItemFunctionToolCall>(items[0]);
         Assert.That(fc.CallId, Is.EqualTo("call_abc"));
         Assert.That(fc.FunctionName, Is.EqualTo("get_weather"));
-        Assert.That(fc.FunctionArguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
+        Assert.That(fc.FunctionArguments.ToString(), Is.EqualTo("{\"city\":\"Seattle\"}"));
     }
 
     [Test]
@@ -410,8 +410,7 @@ public class OpenAIWireComplianceTests
         Assert.That(items, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
         Assert.That(fco.CallId, Is.EqualTo("call_abc"));
-        using var doc = JsonDocument.Parse(fco.FunctionOutput);
-        Assert.That(doc.RootElement.GetString(), Is.EqualTo("72°F and sunny"));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72°F and sunny"));
     }
 
     [Test]
@@ -432,8 +431,8 @@ public class OpenAIWireComplianceTests
 
         Assert.That(items, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        using var doc = JsonDocument.Parse(fco.FunctionOutput);
-        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        // Array-form output is flattened to its text parts: the canonical shape is a string.
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("Result text"));
     }
 
     [Test]
@@ -578,7 +577,7 @@ public class OpenAIWireComplianceTests
         Assert.That(response.OutputItems, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputResponseItem>(response.OutputItems[0]);
         Assert.That(fco.CallId, Is.EqualTo("call_abc"));
-        Assert.That(fco.FunctionOutput, Is.EqualTo("72°F and sunny"));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72°F and sunny"));
     }
 
     [Test]
@@ -1018,8 +1017,7 @@ public class OpenAIWireComplianceTests
             { "model": "test", "input": [{ "type": "function_call_output", "call_id": "c1", "output": "72 degrees" }] }
             """);
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        using var doc = JsonDocument.Parse(fco.FunctionOutput);
-        Assert.That(doc.RootElement.GetString(), Is.EqualTo("72 degrees"));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72 degrees"));
     }
 
     [Test]
@@ -1041,9 +1039,7 @@ public class OpenAIWireComplianceTests
             }
             """);
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        using var doc = JsonDocument.Parse(fco.FunctionOutput);
-        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
-        Assert.That(doc.RootElement.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("Result"));
     }
 
     // ═══════════════════════════════════════════════════════════════════

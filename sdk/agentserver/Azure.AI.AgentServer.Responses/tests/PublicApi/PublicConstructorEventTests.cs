@@ -69,7 +69,7 @@ public class PublicConstructorEventTests
     [TestCaseSource(nameof(ConcreteEventTypes))]
     public void ConcreteEventType_HasAtLeastOnePublicConstructor(Type eventType)
     {
-        if (eventType.Assembly != typeof(CreateResponse).Assembly)
+        if (eventType.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
         {
             Assert.Ignore($"{eventType.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
         }
@@ -83,7 +83,7 @@ public class PublicConstructorEventTests
     [TestCaseSource(nameof(ConcreteEventTypes))]
     public void ConcreteEventType_FullCtorRemainsNonPublic(Type eventType)
     {
-        if (eventType.Assembly != typeof(CreateResponse).Assembly)
+        if (eventType.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
         {
             Assert.Ignore($"{eventType.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
         }
@@ -114,8 +114,8 @@ public class PublicConstructorEventTests
     }
 
     [Test]
-    public void ConcreteEventTypes_Count_Is53()
+    public void ConcreteEventTypes_Count_Is47()
     {
-        Assert.That(ConcreteEventTypes.Count(), Is.EqualTo(53));
+        Assert.That(ConcreteEventTypes.Count(), Is.EqualTo(47));
     }
 }

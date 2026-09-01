@@ -48,7 +48,7 @@ public class ExternalConsumerValidationTests
         var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(2), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello " };
  foreach (var __v in Array.Empty<ResponseLogProb>() ?? []) evt.TokenLogProbabilities.Add(__v);
         Assert.That(evt, Is.Not.Null);
-        Assert.That(evt.Delta, Is.EqualTo("Hello "));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("Hello "));
     }
 
     [Test]
@@ -111,7 +111,7 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseError()
     {
         var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test");
-        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }
 

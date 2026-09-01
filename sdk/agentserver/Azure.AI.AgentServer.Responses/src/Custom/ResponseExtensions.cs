@@ -50,10 +50,8 @@ public static class ResponseExtensions
     {
         Argument.AssertNotNull(response, nameof(response));
         Argument.AssertNotNull(toolChoice, nameof(toolChoice));
-        response.ToolChoice = ModelReaderWriter.Read<ResponseToolChoice>(
-            ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default);
+        response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
+            ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
     }
 
     /// <summary>
@@ -66,10 +64,8 @@ public static class ResponseExtensions
     public static void SetToolChoice(this ResponseObject response, ToolChoiceOptions toolChoice)
     {
         Argument.AssertNotNull(response, nameof(response));
-        response.ToolChoice = ModelReaderWriter.Read<ResponseToolChoice>(
-            BinaryData.FromObjectAsJson(toolChoice.ToSerialString()),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default);
+        response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
+            BinaryData.FromObjectAsJson(toolChoice.ToSerialString()));
     }
 
     /// <summary>

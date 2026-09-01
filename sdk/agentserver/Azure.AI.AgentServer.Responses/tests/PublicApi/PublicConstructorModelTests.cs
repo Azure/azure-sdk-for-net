@@ -104,7 +104,7 @@ public class PublicConstructorModelTests
     [TestCaseSource(nameof(AllOutputItemTypes))]
     public void OutputItemSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
-        if (type.Assembly != typeof(CreateResponse).Assembly)
+        if (type.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
         {
             Assert.Ignore($"{type.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
         }
@@ -121,7 +121,7 @@ public class PublicConstructorModelTests
     [TestCaseSource(nameof(OutputContentTypes))]
     public void OutputContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
-        if (type.Assembly != typeof(CreateResponse).Assembly)
+        if (type.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
         {
             Assert.Ignore($"{type.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
         }
@@ -134,7 +134,7 @@ public class PublicConstructorModelTests
     [TestCaseSource(nameof(MessageContentTypes))]
     public void MessageContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
-        if (type.Assembly != typeof(CreateResponse).Assembly)
+        if (type.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
         {
             Assert.Ignore($"{type.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
         }
@@ -174,9 +174,10 @@ public class PublicConstructorModelTests
     }
 
     [Test]
-    public void OutputItem_IsAbstract()
+    public void OutputItem_HasNoAccessiblePublicSurfaceForDirectConstruction()
     {
-        Assert.That(typeof(OutputItem).IsAbstract, Is.True);
+        // OpenAI models the item hierarchy with a concrete-but-uninstantiable base.
+        Assert.That(typeof(OutputItem).GetConstructors(BindingFlags.Public | BindingFlags.Instance), Is.Empty);
     }
 
     [Test]

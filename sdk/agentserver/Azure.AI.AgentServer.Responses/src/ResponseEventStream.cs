@@ -36,6 +36,8 @@ public class ResponseEventStream
         _response = new ResponseObject
         {
             Id = context.ResponseId,
+            Object = "response",
+            CreatedAt = DateTimeOffset.UtcNow,
             Model = request.Model ?? string.Empty,
             AgentReference = request.AgentReference,
             BackgroundModeEnabled = request.BackgroundModeEnabled,

@@ -52,9 +52,63 @@ internal static class WireShorthandNormalizer
         {
             foreach (var item in array)
             {
-                NormalizeMessageContent(item as JsonObject);
+                NormalizeItem(item as JsonObject);
             }
         }
+    }
+
+    /// <summary>
+    /// Normalizes a single input item: infers the omitted <c>type</c> discriminator and
+    /// expands the shorthand shapes of the item's payload.
+    /// </summary>
+    private static void NormalizeItem(JsonObject? item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        InferItemType(item);
+        NormalizeMessageContent(item);
+        NormalizeFunctionCallOutput(item);
+    }
+
+    /// <summary>
+    /// The <c>type</c> discriminator is optional on the wire; without it the OpenAI reader
+    /// falls back to its unknown-item type. A <c>role</c> identifies a message item.
+    /// </summary>
+    private static void InferItemType(JsonObject item)
+    {
+        if (item.ContainsKey("type") || !item.ContainsKey("role"))
+        {
+            return;
+        }
+
+        item["type"] = "message";
+    }
+
+    /// <summary>
+    /// A function call output may be sent as an array of content parts. The canonical shape
+    /// is a plain string, so the text parts are flattened into one.
+    /// </summary>
+    private static void NormalizeFunctionCallOutput(JsonObject item)
+    {
+        if (item["output"] is not JsonArray parts)
+        {
+            return;
+        }
+
+        var texts = new List<string>();
+        foreach (var part in parts)
+        {
+            if (part is JsonObject partObject && partObject["text"] is JsonValue partText &&
+                partText.TryGetValue<string>(out var s))
+            {
+                texts.Add(s);
+            }
+        }
+
+        item["output"] = string.Join("\n", texts);
     }
 
     /// <summary>
@@ -71,7 +125,7 @@ internal static class WireShorthandNormalizer
         var texts = new List<string>();
         foreach (var item in array)
         {
-            NormalizeMessageContent(item as JsonObject);
+            NormalizeItem(item as JsonObject);
             if (item is not JsonObject message || message["content"] is not JsonArray parts)
             {
                 continue;

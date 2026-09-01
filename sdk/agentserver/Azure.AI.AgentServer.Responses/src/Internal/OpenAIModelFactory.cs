@@ -24,6 +24,21 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 [Experimental("AAIP002")]
 internal static class OpenAIModelFactory
 {
+    /// <summary>
+    /// Reads an <see cref="OpenAI.Responses.ResponseToolChoice"/> from its wire form.
+    /// </summary>
+    /// <param name="json">The serialized tool choice.</param>
+    /// <returns>The deserialized tool choice.</returns>
+    public static OpenAI.Responses.ResponseToolChoice? ReadToolChoice(BinaryData json)
+    {
+        // The source-generated model context does not emit a builder for this type, so the
+        // reflection-based overload is the only one that can materialize it. The package is
+        // not trim/AOT-annotated, so the analyzer's AOT concern does not apply here.
+#pragma warning disable AZC0150
+        return ModelReaderWriter.Read<OpenAI.Responses.ResponseToolChoice>(json);
+#pragma warning restore AZC0150
+    }
+
     /// <summary>Creates a <see cref="OpenAI.Responses.ResponseError"/> with the supplied code and message.</summary>
     /// <param name="code">The error code written to <c>code</c>.</param>
     /// <param name="message">The human readable error message.</param>

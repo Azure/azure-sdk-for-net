@@ -50,7 +50,7 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this function call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemFunctionToolCall(_callId, _name, BinaryData.FromString("{}"))
+        var item = new OutputItemFunctionToolCall(_callId, _name, BinaryData.FromString(string.Empty))
         {
             Id = _itemId,
             Status = FunctionCallStatus.InProgress,

@@ -22,6 +22,7 @@ internal static class ResponseMutations
     /// </summary>
     internal static byte[]? SerializeSnapshotForDedup(ResponseObject snapshot)
     {
+        snapshot.EnsureEnvelopeDefaults();
         try
         {
             return ModelReaderWriter.Write(
@@ -35,11 +36,30 @@ internal static class ResponseMutations
     }
 
     /// <summary>
+    /// Stamps the envelope-level fields the Responses wire contract always requires but that the
+    /// OpenAI parameterless constructor leaves unset. Handlers construct <see cref="ResponseObject"/>
+    /// directly, so the server backfills <c>object</c> and <c>created_at</c> at every observation point.
+    /// </summary>
+    internal static void EnsureEnvelopeDefaults(this ResponseObject response)
+    {
+        if (string.IsNullOrEmpty(response.Object))
+        {
+            response.Object = "response";
+        }
+
+        if (response.CreatedAt == default)
+        {
+            response.CreatedAt = DateTimeOffset.UtcNow;
+        }
+    }
+
+    /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
     /// Sets <c>CompletedAt</c> and <c>Usage</c> (if provided).
     /// </summary>
     internal static void SetCompleted(this ResponseObject response, ResponseUsage? usage = null)
     {
+        response.EnsureEnvelopeDefaults();
         response.Status = ResponseStatus.Completed;
         response.CompletedAt = DateTimeOffset.UtcNow;
 
@@ -187,6 +207,7 @@ internal static class ResponseMutations
     /// </remarks>
     internal static void UpdateFromEvent(this ResponseObject response, ResponseStreamEvent evt)
     {
+        response.EnsureEnvelopeDefaults();
         switch (evt)
         {
             case ResponseOutputItemAddedEvent itemAdded when itemAdded.Item is not null:
@@ -237,6 +258,7 @@ internal static class ResponseMutations
 
         if (response is not null)
         {
+            response.EnsureEnvelopeDefaults();
             execution.Response = response.Snapshot();
         }
     }

@@ -307,7 +307,7 @@ public class ResponseEventStreamTests
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
         Assert.That(evt.Response.Error, Is.Not.Null);
-        Assert.That(evt.Response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(evt.Response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
         Assert.That(evt.Response.Error.Message, Is.EqualTo("Too many requests"));
         Assert.That(evt.Response.CompletedAt, Is.Null);
     }
@@ -321,7 +321,7 @@ public class ResponseEventStreamTests
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
         Assert.That(evt.Response.Error, Is.Not.Null);
-        Assert.That(evt.Response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(evt.Response.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(evt.Response.Error.Message, Is.EqualTo("An internal server error occurred."));
     }
 

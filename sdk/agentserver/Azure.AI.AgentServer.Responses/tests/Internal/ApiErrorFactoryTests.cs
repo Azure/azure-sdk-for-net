@@ -143,7 +143,7 @@ public class ApiErrorFactoryTests
     {
         var error = ApiErrorFactory.NewServerError("Something broke");
 
-        Assert.That(error.Code, Is.EqualTo("server_error"));
+        Assert.That(error.Code.ToString(), Is.EqualTo("server_error"));
         Assert.That(error.Kind, Is.EqualTo("server_error"));
         Assert.That(error.Message, Is.EqualTo("Something broke"));
     }

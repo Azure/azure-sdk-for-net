@@ -849,6 +849,8 @@ internal sealed class ResponseEndpointHandler
         return new ResponseObject
         {
             Id = responseId,
+            Object = "response",
+            CreatedAt = DateTimeOffset.UtcNow,
             Model = request.Model ?? string.Empty,
             Status = ResponseStatus.Queued,
         };

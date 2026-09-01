@@ -61,7 +61,7 @@ public class ModelRoundTripTests
             }
             """;
 
-        var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var request = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
 
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
@@ -82,7 +82,7 @@ public class ModelRoundTripTests
         var options = CreateOptions();
         var json = """{ "model": "gpt-4o" }""";
 
-        var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var request = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
 
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
@@ -102,7 +102,7 @@ public class ModelRoundTripTests
             }
             """;
 
-        var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var request = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
 
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.PreviousResponseId, Is.EqualTo("resp_prev123"));
@@ -120,7 +120,7 @@ public class ModelRoundTripTests
             }
             """;
 
-        var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var request = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
 
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.BackgroundModeEnabled, Is.True);
@@ -311,7 +311,7 @@ public class ModelRoundTripTests
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Error, Is.Not.Null);
-        Assert.That(restored.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(restored.Error.Code.ToString(), Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
         Assert.That(restored.Error.Message, Is.EqualTo("Too many requests"));
     }
 
@@ -401,7 +401,7 @@ public class ModelRoundTripTests
             }
             """;
 
-        var deserialized = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var deserialized = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
         Assert.That(deserialized, Is.Not.Null);
 
         var reserialized = JsonSerializer.Serialize(deserialized, options);

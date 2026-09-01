@@ -37,6 +37,13 @@ internal static class XAssert
     /// strongest assertion available.
     /// </para>
     /// </summary>
+    /// <summary>Asserts that <paramref name="obj"/> is assignable to <typeparamref name="T"/>.</summary>
+    public static T IsInstanceOf<T>(object obj)
+    {
+        Assert.That(obj, Is.InstanceOf<T>());
+        return (T)obj;
+    }
+
     public static T IsType<T>(object obj)
     {
         if (typeof(T).IsAbstract || obj?.GetType().Assembly != typeof(T).Assembly)

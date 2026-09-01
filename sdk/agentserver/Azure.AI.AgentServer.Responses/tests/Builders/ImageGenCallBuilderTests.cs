@@ -71,7 +71,7 @@ public class ImageGenCallBuilderTests
         var builder = stream.AddOutputItemImageGenCall();
         var evt = builder.EmitPartialImage("base64data");
         XAssert.IsType<ResponseImageGenCallPartialImageEvent>(evt);
-        Assert.That(evt.PartialImageBytes, Is.EqualTo("base64data"));
+        Assert.That(evt.PartialImageBytes.ToString(), Is.EqualTo("base64data"));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
@@ -119,7 +119,7 @@ public class ImageGenCallBuilderTests
         var item = XAssert.IsType<OutputItemImageGenToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.Status, Is.EqualTo(ImageGenerationCallStatus.Completed));
-        Assert.That(item.ImageResultBytes, Is.EqualTo("dGVzdC1pbWFnZS1kYXRh"));
+        Assert.That(item.ImageResultBytes.ToString(), Is.EqualTo("dGVzdC1pbWFnZS1kYXRh"));
     }
 
     [Test]

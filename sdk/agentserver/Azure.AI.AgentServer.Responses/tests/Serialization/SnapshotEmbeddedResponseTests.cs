@@ -166,6 +166,6 @@ public class SnapshotEmbeddedResponseTests
         // Should not throw — no lifecycle response to snapshot
         evt.SnapshotEmbeddedResponse(_accumulator);
 
-        Assert.That(evt.Delta, Is.EqualTo("Hello"));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("Hello"));
     }
 }

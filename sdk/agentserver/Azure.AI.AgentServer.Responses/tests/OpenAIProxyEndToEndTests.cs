@@ -545,7 +545,7 @@ public class OpenAIProxyEndToEndTests
         // Verify function call output came through
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[2]);
         Assert.That(fco.CallId, Is.EqualTo("call_input_001"));
-        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("\"result: 42\""));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("result: 42"));
     }
 
     /// <summary>

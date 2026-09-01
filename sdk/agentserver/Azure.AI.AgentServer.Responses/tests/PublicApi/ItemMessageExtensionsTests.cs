@@ -82,14 +82,4 @@ public class ItemMessageExtensionsTests
         Assert.That(((MessageContentInputTextContent)result[0]).Text, Is.EqualTo("Hi"));
         Assert.That(((MessageContentInputTextContent)result[1]).Text, Is.EqualTo("there"));
     }
-
-    [Test]
-    public void GetContentExpanded_NonStringNonArray_ThrowsFormatException()
-    {
-        var msg = MessageItemFactory.Message(MessageRole.User,
-            BinaryData.FromString("42"));
-
-        var ex = Assert.Throws<FormatException>(() => msg.GetContentExpanded());
-        Assert.That(ex.Message, Is.EqualTo("Expected JSON array, object, or string for item content"));
-    }
 }

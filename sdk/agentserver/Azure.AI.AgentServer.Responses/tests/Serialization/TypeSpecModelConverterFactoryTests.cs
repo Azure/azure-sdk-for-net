@@ -201,7 +201,7 @@ public class TypeSpecModelConverterFactoryTests
             }
             """;
 
-        var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
+        var request = JsonSerializer.Deserialize<CreateResponse>(OpenAIJson.Normalize(json), options);
 
         Assert.That(request, Is.Not.Null);
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));

@@ -92,6 +92,7 @@ internal static partial class AgentServerResponsesModelFactory
         var response = new ResponseObject
         {
             Id = id,
+            Object = "response",
             Model = model,
             Status = status,
             CreatedAt = createdAt,

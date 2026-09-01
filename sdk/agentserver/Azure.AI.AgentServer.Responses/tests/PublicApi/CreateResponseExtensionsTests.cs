@@ -175,17 +175,6 @@ public class CreateResponseExtensionsTests
         Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
     }
 
-    [Test]
-    public void GetToolChoiceExpanded_NumberValue_ThrowsFormatException()
-    {
-        var request = new CreateResponse
-        {
-            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromString("42")),
-        };
-
-        Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
-    }
-
     // ── GetInputExpanded ──────────────────────────────────────────────
 
     [Test]

@@ -66,12 +66,12 @@ public class FunctionCallResponseTests
         var argsDone = (ResponseFunctionCallArgumentsDoneEvent)events[6];
         Assert.That(argsDone.ItemId, Is.EqualTo(itemId));
         Assert.That(argsDone.FunctionName, Is.EqualTo("get_weather"));
-        Assert.That(argsDone.FunctionArguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(argsDone.FunctionArguments.ToString(), Is.EqualTo("{\"location\":\"Seattle\"}"));
 
         // Assert: done item has full arguments
         var doneItem = XAssert.IsType<OutputItemFunctionToolCall>(((ResponseOutputItemDoneEvent)events[7]).Item);
         Assert.That(doneItem.Id, Is.EqualTo(itemId));
-        Assert.That(doneItem.FunctionArguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(doneItem.FunctionArguments.ToString(), Is.EqualTo("{\"location\":\"Seattle\"}"));
         Assert.That(doneItem.Status, Is.EqualTo(FunctionCallStatus.Completed));
     }
 }

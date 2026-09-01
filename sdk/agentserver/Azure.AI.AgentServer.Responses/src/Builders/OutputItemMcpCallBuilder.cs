@@ -50,7 +50,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString("{}")) { Id = _itemId };
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(string.Empty)) { Id = _itemId };
         item.Status = MCPToolCallStatus.InProgress;
         return EmitAdded(item);
     }

@@ -102,7 +102,7 @@ public class TextContentBuilderTests
         var evt = text.EmitDelta("Hello, ");
 
         XAssert.IsType<ResponseTextDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("Hello, "));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("Hello, "));
     }
 
     [Test]
@@ -129,8 +129,8 @@ public class TextContentBuilderTests
         var d1 = text.EmitDelta("Hello, ");
         var d2 = text.EmitDelta("world!");
 
-        Assert.That(d1.Delta, Is.EqualTo("Hello, "));
-        Assert.That(d2.Delta, Is.EqualTo("world!"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("Hello, "));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("world!"));
     }
 
     [Test]

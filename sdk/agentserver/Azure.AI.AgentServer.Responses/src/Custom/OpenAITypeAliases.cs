@@ -44,7 +44,7 @@ global using FunctionShellCallOutputOutcomeParam = Azure.AI.AgentServer.Response
 global using ApplyPatchCallStatusParam = Azure.AI.AgentServer.Responses.Models.ApplyPatchCallStatus;
 global using ApplyPatchCallOutputStatusParam = Azure.AI.AgentServer.Responses.Models.ApplyPatchCallOutputStatus;
 global using ApplyPatchOperationParam = Azure.AI.AgentServer.Responses.Models.ApplyPatchFileOperation;
-global using ResponseIncompleteDetailsReason = Azure.AI.AgentServer.Responses.Models.CreateResponseResponseIncompleteDetailsReason;
+global using ResponseIncompleteDetailsReason = OpenAI.Responses.ResponseIncompleteStatusReason;
 global using ItemOutputMessageStatus = Azure.AI.AgentServer.Responses.Models.MessageStatus;
 global using OutputMessageContent = Azure.AI.AgentServer.Responses.Models.MessageContent;
 
