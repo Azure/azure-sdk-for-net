@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +13,7 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Container App registry information. </summary>
     public partial class ContainerAppRegistryInfo : ProvisionableConstruct
     {
-        private BicepValue<Uri> _registryServer;
+        private BicepValue<string> _registryServer;
         private BicepValue<string> _registryUserName;
         private BicepValue<string> _registryPassword;
 
@@ -24,7 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegistryServer. </summary>
-        public BicepValue<Uri> RegistryServer
+        public BicepValue<string> RegistryServer
         {
             get
             {
@@ -72,7 +71,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _registryServer = DefineProperty<Uri>(nameof(RegistryServer), new string[] { "registryUrl" });
+            _registryServer = DefineProperty<string>(nameof(RegistryServer), new string[] { "registryUrl" });
             _registryUserName = DefineProperty<string>(nameof(RegistryUserName), new string[] { "registryUserName" });
             _registryPassword = DefineProperty<string>(nameof(RegistryPassword), new string[] { "registryPassword" });
             DefineAdditionalProperties();

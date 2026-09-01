@@ -1563,7 +1563,7 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppRegistryInfo() { }
         public Azure.Provisioning.BicepValue<string> RegistryPassword { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Uri> RegistryServer { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RegistryServer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RegistryUserName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
