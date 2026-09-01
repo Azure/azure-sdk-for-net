@@ -16,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// item references are resolved via <see cref="ResponsesProvider.GetItemsAsync"/>
 /// and converted back to <see cref="Item"/>.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseContextImpl : ResponseContext
 {
     private readonly ResponsesProvider _provider;
@@ -145,7 +146,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         // A store=false response has no durable state to recover to, so deferral is impossible.
         // Mirror Python's RuntimeError (spec req b): throw rather than silently no-op. This is a
         // hard programming error the orchestrator surfaces as a failure.
-        if (_request.Store == false)
+        if (_request.StoredOutputEnabled == false)
         {
             throw new InvalidOperationException(
                 "ExitForRecoveryAsync() cannot be called on a store=false response — there is no durable state to recover.");
@@ -155,8 +156,8 @@ internal sealed class ResponseContextImpl : ResponseContext
         // background=true + store!=false). For any other configuration there is no next-lifetime
         // recovery to defer to, so completing without deferring matches the base no-op contract.
         var isResilientBackground = _resilientBackground
-            && _request.Background == true
-            && _request.Store != false;
+            && _request.BackgroundModeEnabled == true
+            && _request.StoredOutputEnabled != false;
 
         if (!isResilientBackground)
         {

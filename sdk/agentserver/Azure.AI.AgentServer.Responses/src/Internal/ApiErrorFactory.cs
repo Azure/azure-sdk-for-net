@@ -17,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </list>
 /// All user-facing error messages are sanitized here. Internal details are never exposed.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ApiErrorFactory
 {
     // --- Constants ---
@@ -39,7 +40,7 @@ internal static class ApiErrorFactory
         string? code = null,
         string? param = null)
     {
-        var error = ModelFactory.Error(code: code, message: message, param: param, type: type);
+        var error = ModelFactory.ApiError(code: code, message: message, param: param, type: type);
         return new ApiErrorResult(ModelFactory.ApiErrorResponse(error), statusCode);
     }
 
@@ -74,17 +75,17 @@ internal static class ApiErrorFactory
     /// </summary>
     internal static ApiErrorResult PayloadValidation(PayloadValidationException ex)
     {
-        var detailsList = new List<Models.Error>();
+        var detailsList = new List<Error>();
         foreach (var validationError in ex.Errors)
         {
-            detailsList.Add(ModelFactory.Error(
+            detailsList.Add(ModelFactory.ApiError(
                 code: "invalid_value",
                 message: validationError.Message,
                 param: validationError.Path,
                 type: "invalid_request_error"));
         }
 
-        var topLevelError = ModelFactory.Error(
+        var topLevelError = ModelFactory.ApiError(
             message: ex.Message,
             type: "invalid_request_error",
             details: detailsList);
@@ -98,8 +99,8 @@ internal static class ApiErrorFactory
     /// Creates a <see cref="Error"/> with <c>type: "server_error"</c>.
     /// Used when constructing <see cref="ResponsesApiException"/> to throw.
     /// </summary>
-    internal static Models.Error NewServerError(string message)
-        => ModelFactory.Error(code: "server_error", message: message, type: "server_error");
+    internal static Error NewServerError(string message)
+        => ModelFactory.ApiError(code: "server_error", message: message, type: "server_error");
 
     /// <summary>
     /// Creates a <see cref="ResponsesApiException"/> with HTTP 500 and the
@@ -155,10 +156,10 @@ internal static class ApiErrorFactory
     /// Maps any handler exception to a <see cref="ResponseErrorInfo"/> with the correct
     /// <see cref="ResponseErrorCode"/> and message.
     /// </summary>
-    internal static Models.ResponseErrorInfo ToResponseError(Exception exception)
+    internal static ResponseErrorInfo ToResponseError(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new Models.ResponseErrorInfo(ParseResponseErrorCode(code), message);
+        return new ResponseErrorInfo(ParseResponseErrorCode(code), message);
     }
 
     // --- SSE standalone error event ---
@@ -178,7 +179,7 @@ internal static class ApiErrorFactory
     internal static ResponseErrorEvent ToSseErrorEvent(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new ResponseErrorEvent(0, code, message, null!);
+        return new ResponseErrorEvent { SequenceNumber = (int)(0), Code = code, Message = message, Param = null! };
     }
 
     // --- Helpers ---

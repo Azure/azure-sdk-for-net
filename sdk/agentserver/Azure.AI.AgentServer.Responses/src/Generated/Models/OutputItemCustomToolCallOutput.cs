@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
@@ -13,6 +14,7 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallOutputItem. </summary>
+    [Experimental("AAIP002")]
     public partial class OutputItemCustomToolCallOutput : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI.Responses;
 
@@ -20,6 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOutputItem"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
+        [Experimental("AAIP002")]
         internal AgentsPagedResultOutputItem(IEnumerable<ResponseItem> data, bool hasMore)
         {
             Data = data.ToList();
@@ -32,6 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal AgentsPagedResultOutputItem(IList<ResponseItem> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
@@ -42,6 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The requested list of items. </summary>
+        [Experimental("AAIP002")]
         public IList<ResponseItem> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>

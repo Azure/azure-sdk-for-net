@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Specific apply patch tool choice. </summary>
-    internal partial class SpecificApplyPatchParam : ToolChoiceParam
+    public partial class SpecificApplyPatchParam : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="SpecificApplyPatchParam"/>. </summary>
         public SpecificApplyPatchParam() : base(ToolChoiceParamType.ApplyPatch)

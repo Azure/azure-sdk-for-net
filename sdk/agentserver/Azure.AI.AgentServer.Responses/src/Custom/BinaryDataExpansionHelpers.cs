@@ -13,6 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// Internal helpers for expanding BinaryData union-typed properties
 /// into their strongly-typed representations.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class BinaryDataExpansionHelpers
 {
     /// <summary>

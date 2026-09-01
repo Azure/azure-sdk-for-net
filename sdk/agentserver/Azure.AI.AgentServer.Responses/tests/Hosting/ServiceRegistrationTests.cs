@@ -231,7 +231,7 @@ public class ServiceRegistrationTests
 
     private sealed class StubResponsesProvider : ResponsesProvider
     {
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
         public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
         public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
@@ -260,7 +260,7 @@ public class ServiceRegistrationTests
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);

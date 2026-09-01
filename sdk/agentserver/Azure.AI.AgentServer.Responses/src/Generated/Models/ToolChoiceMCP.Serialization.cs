@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> MCP tool. </summary>
-    internal partial class ToolChoiceMCP : ToolChoiceParam, IJsonModel<ToolChoiceMCP>
+    public partial class ToolChoiceMCP : ToolChoiceParam, IJsonModel<ToolChoiceMCP>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/> for deserialization. </summary>
         internal ToolChoiceMCP()

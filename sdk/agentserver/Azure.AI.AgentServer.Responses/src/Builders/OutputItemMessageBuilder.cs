@@ -13,6 +13,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Child content builders are auto-tracked so <see cref="EmitDone"/> can build
 /// the final message from their accumulated state.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
 {
     private long _contentIndex;

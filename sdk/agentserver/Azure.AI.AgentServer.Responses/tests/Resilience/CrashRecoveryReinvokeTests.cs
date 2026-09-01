@@ -57,7 +57,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         var provider = new FileResponsesProvider(_responsesDir);
         var envelope = new Models.ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
         envelope.Background = true;
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         await CoreTaskRecoveryTestHelpers.SeedInterruptedTaskAsync(_tasksDir, new ResponseRecoveryPayload(
             responseId: responseId,

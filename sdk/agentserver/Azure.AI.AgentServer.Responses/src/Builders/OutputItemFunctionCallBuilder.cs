@@ -11,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a function call output item. Provides methods
 /// for the function call event lifecycle: added, arguments delta/done, and done events.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctionToolCall>
 {
     private readonly string _name;
@@ -71,8 +72,7 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseFunctionCallArgumentsDeltaEvent"/> with the delta.</returns>
     public virtual ResponseFunctionCallArgumentsDeltaEvent EmitArgumentsDelta(string delta)
     {
-        return new ResponseFunctionCallArgumentsDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, delta);
+        return new ResponseFunctionCallArgumentsDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), Delta = delta };
     }
 
     /// <summary>
@@ -83,8 +83,7 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     public virtual ResponseFunctionCallArgumentsDoneEvent EmitArgumentsDone(string arguments)
     {
         _finalArguments = arguments;
-        return new ResponseFunctionCallArgumentsDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _name, _outputIndex, arguments);
+        return new ResponseFunctionCallArgumentsDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, FunctionName = _name, OutputIndex = (int)(_outputIndex), FunctionArguments = arguments };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────

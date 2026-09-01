@@ -27,10 +27,11 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// window fully elapses since the last event was emitted.
 /// </para>
 /// </remarks>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     // --- Response envelopes ---
-    private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+    private readonly ConcurrentDictionary<string, ResponseObject> _responses = new();
 
     // --- User ID keys (response ID → creation-time user ID key) ---
     private readonly ConcurrentDictionary<string, string> _userIdKeys = new();
@@ -79,7 +80,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
-        CreateResponseRequest request,
+        CreateResponsePersistRequest request,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
@@ -131,7 +132,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
         // Deleted response → 404 (spec: post-deletion, response not found)
         bool isDeleted;
@@ -156,7 +157,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -395,18 +396,18 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <summary>
-    /// Extracts output items from <see cref="Models.ResponseObject.Output"/>, stores new ones in the item store,
+    /// Extracts output items from <see cref="ResponseObject.Output"/>, stores new ones in the item store,
     /// and updates the output item ID list for the response.
     /// </summary>
-    private void StoreOutputItems(Models.ResponseObject response)
+    private void StoreOutputItems(ResponseObject response)
     {
-        if (response.Output.Count == 0)
+        if (response.OutputItems.Count == 0)
         {
             return;
         }
 
         var outputIds = new List<string>();
-        foreach (var item in response.Output)
+        foreach (var item in response.OutputItems)
         {
             var id = GetItemId(item);
             if (id is not null)
@@ -426,9 +427,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// Adds input and output item IDs to the conversation if the response has a conversation ID.
     /// Called on <see cref="CreateResponseAsync"/>.
     /// </summary>
-    private void AddToConversation(Models.ResponseObject response)
+    private void AddToConversation(ResponseObject response)
     {
-        var conversationId = response.Conversation?.Id;
+        var conversationId = response.ConversationOptions?.Id;
         if (conversationId is null)
         {
             return;
@@ -449,9 +450,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// The response should already have been added to the conversation via
     /// <see cref="AddToConversation"/> during create.
     /// </summary>
-    private void AddOutputToConversation(Models.ResponseObject response)
+    private void AddOutputToConversation(ResponseObject response)
     {
-        var conversationId = response.Conversation?.Id;
+        var conversationId = response.ConversationOptions?.Id;
         if (conversationId is null)
         {
             return;

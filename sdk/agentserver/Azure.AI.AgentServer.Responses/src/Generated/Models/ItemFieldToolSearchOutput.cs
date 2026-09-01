@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI.Responses;
 
@@ -20,6 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
+        [Experimental("AAIP002")]
         internal ItemFieldToolSearchOutput(string id, string callId, ToolSearchExecutionType execution, IEnumerable<ResponseTool> tools, FunctionCallOutputStatusEnum status) : base(ItemFieldType.ToolSearchOutput)
         {
             Id = id;
@@ -38,6 +40,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
+        [Experimental("AAIP002")]
         internal ItemFieldToolSearchOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, IList<ResponseTool> tools, FunctionCallOutputStatusEnum status, string createdBy) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
@@ -58,6 +61,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public ToolSearchExecutionType Execution { get; }
 
         /// <summary> The loaded tool definitions returned by tool search. </summary>
+        [Experimental("AAIP002")]
         public IList<ResponseTool> Tools { get; }
 
         /// <summary> The status of the tool search output item that was recorded. </summary>

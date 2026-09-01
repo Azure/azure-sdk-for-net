@@ -11,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// <summary>
 /// Extension methods for <see cref="CreateResponse"/>.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class CreateResponseExtensions
 {
     /// <summary>
@@ -26,11 +27,11 @@ public static class CreateResponseExtensions
     {
         Argument.AssertNotNull(request, nameof(request));
 
-        if (request.Conversation is not null)
+        if (request.ConversationOptions is not null)
         {
             try
             {
-                using var doc = JsonDocument.Parse(request.Conversation.ToMemory());
+                using var doc = JsonDocument.Parse(request.ConversationOptions.ToMemory());
                 var root = doc.RootElement;
 
                 if (root.ValueKind == JsonValueKind.String)
@@ -97,7 +98,7 @@ public static class CreateResponseExtensions
     public static List<Item> GetInputExpanded(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
-        return BinaryDataExpansionHelpers.ExpandInput(request.Input);
+        return BinaryDataExpansionHelpers.ExpandInput(request.InputItems);
     }
 
     /// <summary>
@@ -141,7 +142,7 @@ public static class CreateResponseExtensions
     public static ConversationParam? GetConversationExpanded(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
-        return BinaryDataExpansionHelpers.ExpandConversation(request.Conversation);
+        return BinaryDataExpansionHelpers.ExpandConversation(request.ConversationOptions);
     }
 
     /// <summary>

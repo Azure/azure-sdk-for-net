@@ -9,7 +9,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
-using CreateResponseRequest = Azure.AI.AgentServer.Responses.CreateResponseRequest;
+using CreateResponsePersistRequest = Azure.AI.AgentServer.Responses.CreateResponsePersistRequest;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Orchestration;
 
@@ -64,7 +64,7 @@ public class FinalizeExecutionTests : IDisposable
         execution.Response.SetCompleted();
 
         // First create the response so UpdateResponseAsync can find it
-        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, null, null), PlatformContext.Empty);
+        await _provider.CreateResponseAsync(new CreateResponsePersistRequest(execution.Response, null, null), PlatformContext.Empty);
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
 
@@ -122,7 +122,7 @@ public class FinalizeExecutionTests : IDisposable
         execution.Response = new Models.ResponseObject("resp_fin_stream_bg", "test") { Status = ResponseStatus.InProgress };
 
         // response.created wrote the in_progress snapshot durably.
-        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, null, null), PlatformContext.Empty);
+        await _provider.CreateResponseAsync(new CreateResponsePersistRequest(execution.Response, null, null), PlatformContext.Empty);
         execution.Response.SetCompleted();
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);

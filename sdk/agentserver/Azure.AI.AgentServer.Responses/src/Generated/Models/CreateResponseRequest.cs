@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.Extensions.OpenAI;
@@ -78,6 +79,7 @@ namespace Azure.AI.AgentServer.Responses
         /// <param name="structuredInputs"> The structured inputs to the response that can participate in prompt template substitution or tool argument bindings. </param>
         /// <param name="userSecurityContext"> User security context contains several parameters that describe the application itself, and the end user that interacts with the application. These fields assist your security operations teams to investigate and mitigate security incidents by providing a comprehensive approach to protecting your AI applications. [Learn more](https://aka.ms/TP4AI/Documentation/EndUserContext) about protecting AI applications using Microsoft Defender for Cloud. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal CreateResponseRequest(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponseTool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseRequestTruncation? truncation, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, bool? stream, ResponseStreamOptions streamOptions, BinaryData conversation, IList<ContextManagementParam> contextManagement, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, AzureUserSecurityContext userSecurityContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
@@ -173,6 +175,7 @@ namespace Azure.AI.AgentServer.Responses
         public ResponseTextParam Text { get; }
 
         /// <summary> Gets the Tools. </summary>
+        [Experimental("AAIP002")]
         public IList<ResponseTool> Tools { get; }
 
         /// <summary>

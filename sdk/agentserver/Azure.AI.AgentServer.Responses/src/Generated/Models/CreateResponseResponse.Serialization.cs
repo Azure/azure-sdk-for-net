@@ -391,9 +391,9 @@ namespace Azure.AI.AgentServer.Responses
             IList<ResponseItem> output = default;
             BinaryData instructions = default;
             string outputText = default;
-            ResponseUsage usage = default;
+            ResponseTokenUsage usage = default;
             bool parallelToolCalls = default;
-            ConversationReference conversation = default;
+            ResponseConversationOptions conversation = default;
             AgentId agent = default;
             string agentSessionId = default;
             AgentReference agentReference = default;
@@ -687,7 +687,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<ResponseTokenUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))
@@ -702,7 +702,7 @@ namespace Azure.AI.AgentServer.Responses
                         conversation = null;
                         continue;
                     }
-                    conversation = ConversationReference.DeserializeConversationReference(prop.Value, options);
+                    conversation = ModelReaderWriter.Read<ResponseConversationOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("agent"u8))

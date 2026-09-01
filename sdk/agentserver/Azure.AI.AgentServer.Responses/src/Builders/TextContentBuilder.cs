@@ -11,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// lifecycle: <c>EmitAdded</c> → <c>EmitDelta</c> (0+) → <c>EmitTextDone</c>
 /// → <c>EmitAnnotationAdded</c> (0+) → <c>EmitDone</c>.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class TextContentBuilder
 {
     private readonly ResponseEventStream _stream;
@@ -70,8 +71,7 @@ public class TextContentBuilder
             text: "",
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        return new ResponseContentPartAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        return new ResponseContentPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 
     /// <summary>
@@ -87,9 +87,7 @@ public class TextContentBuilder
             throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
 
         _deltaFragments.Add(text);
-        return new ResponseTextDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
-            text, Array.Empty<ResponseLogProb>());
+        return new ResponseTextDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Delta = text, TokenLogProbabilities = Array.Empty<ResponseLogProb>() };
     }
 
     /// <summary>
@@ -112,9 +110,7 @@ public class TextContentBuilder
         _textDone = true;
         _finalText = finalText ?? string.Concat(_deltaFragments);
 
-        return new ResponseTextDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
-            _finalText, Array.Empty<ResponseLogProb>());
+        return new ResponseTextDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Text = _finalText, TokenLogProbabilities = Array.Empty<ResponseLogProb>() };
     }
 
     /// <summary>
@@ -133,8 +129,7 @@ public class TextContentBuilder
 
         _annotations.Add(annotation);
         var annotationIndex = _annotationIndex++;
-        return new ResponseOutputTextAnnotationAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, annotationIndex, annotation);
+        return new ResponseOutputTextAnnotationAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), AnnotationIndex = (int)(annotationIndex), Annotation = annotation };
     }
 
     /// <summary>
@@ -154,7 +149,6 @@ public class TextContentBuilder
             text: _finalText ?? string.Empty,
             annotations: _annotations,
             logprobs: Array.Empty<LogProb>());
-        return new ResponseContentPartDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        return new ResponseContentPartDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 }

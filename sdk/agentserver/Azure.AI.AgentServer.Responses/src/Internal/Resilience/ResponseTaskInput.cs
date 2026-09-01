@@ -12,7 +12,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// survive a process crash so the response can be re-invoked in a subsequent process lifetime.
 /// <para>
 /// Core serializes task inputs with plain <see cref="System.Text.Json.JsonSerializer"/>, whereas the
-/// <see cref="Models.CreateResponse"/> model serializes via <c>ModelReaderWriter</c>. This type
+/// <see cref="CreateResponse"/> model serializes via <c>ModelReaderWriter</c>. This type
 /// therefore carries a <see cref="JsonConverterAttribute"/> that emits/parses the exact 9-field
 /// wire schema shared with Python (<c>ResilientResponseInput.to_task_input()</c>) by delegating to
 /// the tested <see cref="ResponseRecoveryPayload.ToTaskInput"/> /

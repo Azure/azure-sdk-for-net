@@ -93,7 +93,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
             => throw new IOException("Simulated transient store read failure.");
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.CreateResponseAsync(request, context, cancellationToken);
 
         public override Task UpdateResponseAsync(

@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Specific apply patch tool choice. </summary>
-    internal partial class SpecificApplyPatchParam : ToolChoiceParam, IJsonModel<SpecificApplyPatchParam>
+    public partial class SpecificApplyPatchParam : ToolChoiceParam, IJsonModel<SpecificApplyPatchParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

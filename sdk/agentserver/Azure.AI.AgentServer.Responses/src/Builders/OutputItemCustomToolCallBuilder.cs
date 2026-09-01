@@ -10,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a custom tool call output item. Provides methods
 /// for lifecycle events and streaming input deltas.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCustomToolCall>
 {
     private readonly string _callId;
@@ -64,8 +65,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseCustomToolCallInputDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCustomToolCallInputDeltaEvent EmitInputDelta(string delta)
     {
-        return new ResponseCustomToolCallInputDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return new ResponseCustomToolCallInputDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = _outputIndex, ItemId = _itemId, Delta = delta };
     }
 
     /// <summary>
@@ -76,8 +76,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     public virtual ResponseCustomToolCallInputDoneEvent EmitInputDone(string input)
     {
         _finalInput = input;
-        return new ResponseCustomToolCallInputDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, input);
+        return new ResponseCustomToolCallInputDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = _outputIndex, ItemId = _itemId, Input = input };
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Specific shell tool choice. </summary>
-    internal partial class SpecificFunctionShellParam : ToolChoiceParam, IJsonModel<SpecificFunctionShellParam>
+    public partial class SpecificFunctionShellParam : ToolChoiceParam, IJsonModel<SpecificFunctionShellParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

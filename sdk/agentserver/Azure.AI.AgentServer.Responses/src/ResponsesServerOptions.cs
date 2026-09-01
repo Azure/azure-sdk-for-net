@@ -6,6 +6,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// <summary>
 /// Configuration options for the Responses API server SDK.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ResponsesServerOptions
 {
     /// <summary>
@@ -61,12 +62,12 @@ public class ResponsesServerOptions
     /// Gets or sets an optional hook that customizes the <c>queued</c> envelope returned to the
     /// caller when a new turn is queued behind an active steerable conversation (the .NET port of
     /// Python's <c>@app.response_acceptor</c>). The hook receives the incoming
-    /// <see cref="Models.CreateResponse"/> request and the turn's <see cref="ResponseContext"/> and
-    /// returns the <see cref="Models.ResponseObject"/> surfaced to the HTTP caller. When
+    /// <see cref="CreateResponse"/> request and the turn's <see cref="ResponseContext"/> and
+    /// returns the <see cref="ResponseObject"/> surfaced to the HTTP caller. When
     /// <see langword="null"/> (the default) a minimal envelope
     /// (<c>status="queued"</c>, empty output) is returned. If the hook throws, the framework falls
     /// back to the default envelope and logs a warning. The returned object's status is normalized
     /// to <see cref="Models.ResponseStatus.Queued"/> when unset.
     /// </summary>
-    public Func<Models.CreateResponse, ResponseContext, Models.ResponseObject>? ResponseAcceptor { get; set; }
+    public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 }

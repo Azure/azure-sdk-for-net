@@ -162,7 +162,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         var snapshot = stream.Response.Snapshot();
 
         var provider = new FileResponsesProvider(_root);
-        await provider.CreateResponseAsync(new CreateResponseRequest(snapshot, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(snapshot, null, null), PlatformContext.Empty);
         var retrieved = await provider.GetResponseAsync("resp_file_rt", PlatformContext.Empty);
 
         Assert.That(retrieved.Metadata, Is.Not.Null);

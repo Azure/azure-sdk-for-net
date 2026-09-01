@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- AAIP002: this package's own experimental gate. OPENAI001: the System.ClientModel model-reader
+         source generator emits a reference to OpenAI.OpenAIContext that cannot be attribute-stamped.
+         The public surface stays gated behind AAIP002. -->
+    <NoWarn>$(NoWarn);AAIP002;OPENAI001</NoWarn>
     <!-- Server-side ASP.NET Core library — no netstandard2.0 support needed. -->
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

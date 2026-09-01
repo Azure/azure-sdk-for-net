@@ -29,6 +29,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// event objects, and preserves the prior behavior in which a malformed handler event (e.g. one with no
 /// discriminator) was serialized once and never deserialized.
 /// </remarks>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ResponseWireStreamCodec
 {
     /// <summary>Serializes a response event into a client-ready Core event-stream wire item.</summary>

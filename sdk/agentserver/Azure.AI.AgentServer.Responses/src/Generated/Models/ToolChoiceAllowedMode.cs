@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    internal enum ToolChoiceAllowedMode
+    public enum ToolChoiceAllowedMode
     {
         /// <summary> Auto. </summary>
         Auto,

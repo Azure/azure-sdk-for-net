@@ -204,7 +204,7 @@ public class CancelConsistencyTests : IDisposable
         public ConcurrentBag<Models.ResponseObject> CreateCalls { get; } = new();
         public ConcurrentBag<Models.ResponseObject> UpdateCalls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = request.Response.Snapshot();

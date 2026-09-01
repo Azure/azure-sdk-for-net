@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Maps HTTP error responses from the Foundry storage API to SDK exceptions.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class StorageErrorMapper
 {
     /// <summary>
@@ -51,7 +52,7 @@ internal static class StorageErrorMapper
                 var error = new Error(errorInfo.Code ?? "storage_error", errorInfo.Message)
                 {
                     Param = errorInfo.Param,
-                    Type = errorInfo.Type ?? "server_error",
+                    Kind = errorInfo.Type ?? "server_error",
                 };
                 var ex = new ResponsesApiException(error, 500);
                 ex.Data[PlatformErrorDataKey] = true;

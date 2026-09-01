@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Allowed tools. </summary>
-    internal partial class ToolChoiceAllowed : ToolChoiceParam, IJsonModel<ToolChoiceAllowed>
+    public partial class ToolChoiceAllowed : ToolChoiceParam, IJsonModel<ToolChoiceAllowed>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceAllowed"/> for deserialization. </summary>
         internal ToolChoiceAllowed()

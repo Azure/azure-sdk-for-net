@@ -424,7 +424,7 @@ public class PersistenceFailureTests : IDisposable
         public IReadOnlyCollection<string> Calls => _calls;
 
         public override async Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("CreateResponseAsync");
             var count = Interlocked.Increment(ref _createCallCount);

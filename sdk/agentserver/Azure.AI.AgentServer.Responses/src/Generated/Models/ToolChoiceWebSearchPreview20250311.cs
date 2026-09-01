@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    internal partial class ToolChoiceWebSearchPreview20250311 : ToolChoiceParam
+    public partial class ToolChoiceWebSearchPreview20250311 : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceWebSearchPreview20250311"/>. </summary>
         public ToolChoiceWebSearchPreview20250311() : base(ToolChoiceParamType.WebSearchPreview20250311)

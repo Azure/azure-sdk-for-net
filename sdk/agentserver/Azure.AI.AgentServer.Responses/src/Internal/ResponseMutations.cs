@@ -10,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Extension methods that centralize all mutations to the <see cref="Response"/> object,
 /// ensuring consistent terminal state regardless of delivery mode.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ResponseMutations
 {
     /// <summary>
@@ -19,7 +20,7 @@ internal static class ResponseMutations
     /// subsequent checkpoint whose snapshot is byte-identical to the last persisted one is skipped.
     /// Returns <c>null</c> if the snapshot cannot be serialized (treated as "no recorded snapshot").
     /// </summary>
-    internal static byte[]? SerializeSnapshotForDedup(Models.ResponseObject snapshot)
+    internal static byte[]? SerializeSnapshotForDedup(ResponseObject snapshot)
     {
         try
         {
@@ -37,7 +38,7 @@ internal static class ResponseMutations
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
     /// Sets <c>CompletedAt</c> and <c>Usage</c> (if provided).
     /// </summary>
-    internal static void SetCompleted(this Models.ResponseObject response, ResponseUsage? usage = null)
+    internal static void SetCompleted(this ResponseObject response, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Completed;
         response.CompletedAt = DateTimeOffset.UtcNow;
@@ -53,10 +54,10 @@ internal static class ResponseMutations
     /// Clears <c>Output</c> to an empty list.
     /// Does NOT set <c>CompletedAt</c> (cancelled responses have no completion timestamp).
     /// </summary>
-    internal static void SetCancelled(this Models.ResponseObject response, ResponseUsage? usage = null)
+    internal static void SetCancelled(this ResponseObject response, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Cancelled;
-        response.Output.Clear();
+        response.OutputItems.Clear();
 
         if (usage is not null)
         {
@@ -75,7 +76,7 @@ internal static class ResponseMutations
     /// and are not tagged.
     /// </summary>
     internal static void SetFailed(
-        this Models.ResponseObject response,
+        this ResponseObject response,
         ResponseErrorCode code,
         string message,
         string? shutdownReason,
@@ -90,11 +91,11 @@ internal static class ResponseMutations
         }
     }
 
-    private static Models.ResponseErrorInfo CreateError(ResponseErrorCode code, string message, string? shutdownReason)
+    private static ResponseErrorInfo CreateError(ResponseErrorCode code, string message, string? shutdownReason)
     {
         if (string.IsNullOrEmpty(shutdownReason))
         {
-            return new Models.ResponseErrorInfo(code, message);
+            return new ResponseErrorInfo(code, message);
         }
 
         var additionalProperties = new ChangeTrackingDictionary<string, BinaryData>
@@ -102,7 +103,7 @@ internal static class ResponseMutations
             ["shutdown_reason"] = BinaryData.FromObjectAsJson(shutdownReason),
         };
 
-        return new Models.ResponseErrorInfo(code, message, additionalProperties);
+        return new ResponseErrorInfo(code, message, additionalProperties);
     }
 
     /// <summary>
@@ -111,13 +112,13 @@ internal static class ResponseMutations
     /// and <c>Usage</c> (if provided).
     /// </summary>
     internal static void SetFailed(
-        this Models.ResponseObject response,
+        this ResponseObject response,
         ResponseErrorCode code,
         string message = ApiErrorFactory.GenericServerErrorMessage,
         ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Failed;
-        response.Error = new Models.ResponseErrorInfo(code, message);
+        response.Error = new ResponseErrorInfo(code, message);
 
         if (usage is not null)
         {
@@ -130,7 +131,7 @@ internal static class ResponseMutations
     /// <see cref="ResponseErrorCode.ServerError"/>.
     /// </summary>
     internal static void SetFailed(
-        this Models.ResponseObject response,
+        this ResponseObject response,
         string message = ApiErrorFactory.GenericServerErrorMessage,
         ResponseUsage? usage = null)
     {
@@ -142,7 +143,7 @@ internal static class ResponseMutations
     /// error details from the given exception. Delegates to
     /// <see cref="ApiErrorFactory.ToResponseError"/> for exception → error mapping.
     /// </summary>
-    internal static void SetFailed(this Models.ResponseObject response, Exception exception, ResponseUsage? usage = null)
+    internal static void SetFailed(this ResponseObject response, Exception exception, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Failed;
         response.Error = ApiErrorFactory.ToResponseError(exception);
@@ -160,7 +161,7 @@ internal static class ResponseMutations
     /// Does NOT set <c>CompletedAt</c> — per B6, only <c>completed</c> status has a non-null <c>CompletedAt</c>.
     /// </summary>
     internal static void SetIncomplete(
-        this Models.ResponseObject response,
+        this ResponseObject response,
         ResponseIncompleteDetailsReason? reason = null,
         ResponseUsage? usage = null)
     {
@@ -168,7 +169,7 @@ internal static class ResponseMutations
 
         if (reason is not null)
         {
-            response.IncompleteDetails = new ResponseIncompleteDetails { Reason = reason };
+            response.IncompleteStatusDetails = new ResponseIncompleteDetails { Reason = reason };
         }
 
         if (usage is not null)
@@ -188,15 +189,15 @@ internal static class ResponseMutations
     /// <see cref="ReplaceResponse"/> (full replacement — B37). Terminal status
     /// consistency is enforced by validation in the orchestrator pipeline.
     /// </remarks>
-    internal static void UpdateFromEvent(this Models.ResponseObject response, ResponseStreamEvent evt)
+    internal static void UpdateFromEvent(this ResponseObject response, ResponseStreamEvent evt)
     {
         switch (evt)
         {
             case ResponseOutputItemAddedEvent itemAdded when itemAdded.Item is not null:
-                response.Output.SetOutputItemAtIndex((int)itemAdded.OutputIndex, itemAdded.Item);
+                response.OutputItems.SetOutputItemAtIndex((int)itemAdded.OutputIndex, itemAdded.Item);
                 break;
             case ResponseOutputItemDoneEvent itemDone when itemDone.Item is not null:
-                response.Output.SetOutputItemAtIndex((int)itemDone.OutputIndex, itemDone.Item);
+                response.OutputItems.SetOutputItemAtIndex((int)itemDone.OutputIndex, itemDone.Item);
                 break;
         }
     }
@@ -211,11 +212,11 @@ internal static class ResponseMutations
     /// Not used by <see cref="UpdateFromEvent"/> — handler-yielded <c>response.*</c>
     /// events use <see cref="ReplaceResponse"/> for full replacement (B37).
     /// </remarks>
-    internal static void CopyTerminalFields(Models.ResponseObject source, Models.ResponseObject target)
+    internal static void CopyTerminalFields(ResponseObject source, ResponseObject target)
     {
         target.CompletedAt = source.CompletedAt;
         target.Error = source.Error;
-        target.IncompleteDetails = source.IncompleteDetails;
+        target.IncompleteStatusDetails = source.IncompleteStatusDetails;
         target.Usage = source.Usage;
     }
 
@@ -282,11 +283,11 @@ internal static class ResponseMutations
     /// </summary>
     internal static void StampRequestEchoFields(ResponseExecution execution, CreateResponse request)
     {
-        execution.Response!.Background = request.Background;
+        execution.Response!.BackgroundModeEnabled = request.BackgroundModeEnabled;
         execution.Response!.PreviousResponseId = request.PreviousResponseId;
 
         var conversationId = request.GetConversationId();
-        execution.Response!.Conversation = conversationId != null
+        execution.Response!.ConversationOptions = conversationId != null
             ? new ConversationReference(conversationId)
             : null;
     }

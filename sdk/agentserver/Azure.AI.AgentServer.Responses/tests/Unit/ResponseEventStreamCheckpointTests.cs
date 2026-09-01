@@ -209,7 +209,7 @@ public class ResponseEventStreamCheckpointTests : IDisposable
         public int FailUpdateCallNumber { get; init; }
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);

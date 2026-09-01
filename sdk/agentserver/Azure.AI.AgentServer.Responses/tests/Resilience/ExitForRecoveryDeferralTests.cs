@@ -527,7 +527,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         public int CreateCount => Volatile.Read(ref _createCount);
         public int UpdateCount => Volatile.Read(ref _updateCount);
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);

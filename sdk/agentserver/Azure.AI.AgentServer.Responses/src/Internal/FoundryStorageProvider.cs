@@ -13,6 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// state to the Azure AI Foundry storage API using an Azure.Core
 /// <see cref="HttpPipeline"/> for retry, authentication, telemetry, and tracing.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class FoundryStorageProvider : ResponsesProvider
 {
     private const string ApiVersion = "v1";
@@ -108,7 +109,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
     /// <inheritdoc/>
     public override async Task CreateResponseAsync(
-        CreateResponseRequest request,
+        CreateResponsePersistRequest request,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
@@ -122,7 +123,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <inheritdoc/>
-    public override async Task<Models.ResponseObject> GetResponseAsync(
+    public override async Task<ResponseObject> GetResponseAsync(
         string responseId,
         PlatformContext context,
         CancellationToken cancellationToken = default)
@@ -139,7 +140,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
     /// <inheritdoc/>
     public override async Task UpdateResponseAsync(
-        Models.ResponseObject response,
+        ResponseObject response,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {

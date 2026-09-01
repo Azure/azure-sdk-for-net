@@ -414,7 +414,7 @@ public class ResponseContextImplTests
         public void SetHistoryItemIds(string previousResponseId, string[] ids)
             => _historyItemIds[previousResponseId] = ids;
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
             => Task.CompletedTask;
 
         public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)

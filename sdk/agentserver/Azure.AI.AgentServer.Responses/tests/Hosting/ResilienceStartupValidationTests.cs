@@ -124,7 +124,7 @@ public sealed class ResilienceStartupValidationTests
 
     private sealed class DurableStubProvider : ResponsesProvider
     {
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default) => throw new ResourceNotFoundException(responseId);
         public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;

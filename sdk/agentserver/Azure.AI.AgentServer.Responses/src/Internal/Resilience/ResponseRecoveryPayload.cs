@@ -26,6 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// deterministic <see cref="RecoveryPayloadFormatException"/> (never a partial re-invoke).
 /// </para>
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseRecoveryPayload
 {
     /// <summary>Disposition: re-invoke the handler in the next lifetime (Row 1).</summary>

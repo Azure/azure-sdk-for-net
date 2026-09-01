@@ -22,6 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Contains the endpoint handler methods for the Responses API.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseEndpointHandler
 {
     /// <summary>
@@ -127,9 +128,9 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Detect mode flags (read-only on generated model)
-        var isStreaming = request.Stream == true;
-        var isBackground = request.Background == true;
-        var store = request.Store ?? true;
+        var isStreaming = request.StreamingEnabled == true;
+        var isBackground = request.BackgroundModeEnabled == true;
+        var store = request.StoredOutputEnabled ?? true;
 
         // B13: background=true requires store=true
         if (isBackground && !store)
@@ -576,7 +577,7 @@ internal sealed class ResponseEndpointHandler
                 httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = finalResponse.AgentSessionId;
                 _logger.LogInformation(
                     "Foreground resilient response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                    responseId, finalResponse.Status, finalResponse.Output.Count);
+                    responseId, finalResponse.Status, finalResponse.OutputItems.Count);
                 return JsonForClient(finalResponse);
             }
 
@@ -597,7 +598,7 @@ internal sealed class ResponseEndpointHandler
 
             _logger.LogInformation(
                 "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                responseId, execution.Response!.Status, execution.Response!.Output.Count);
+                responseId, execution.Response!.Status, execution.Response!.OutputItems.Count);
             return JsonForClient(execution.Response!.Snapshot());
         }
     }
@@ -621,8 +622,8 @@ internal sealed class ResponseEndpointHandler
         // mark-failed (Row 2), so the recovery scan marks it failed instead of re-invoking. Deriving it
         // keeps every entry correct and matches the dispatch truth table exactly.
         var disposition = ResponseResilienceDispatch.DecideDisposition(
-            store: request.Store != false,
-            background: request.Background == true,
+            store: request.StoredOutputEnabled != false,
+            background: request.BackgroundModeEnabled == true,
             resilientBackground: _options.Value.ResilientBackground);
 
         var payload = new ResponseRecoveryPayload(
@@ -766,7 +767,7 @@ internal sealed class ResponseEndpointHandler
                 new Error("conversation_fork_not_supported",
                     "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.")
                 {
-                    Type = "conflict",
+                    Kind = "conflict",
                     Param = "previous_response_id",
                 },
                 StatusCodes.Status409Conflict);
@@ -780,7 +781,7 @@ internal sealed class ResponseEndpointHandler
                 new Error("conversation_locked",
                     $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}")
                 {
-                    Type = "conflict",
+                    Kind = "conflict",
                 },
                 StatusCodes.Status409Conflict);
         }
@@ -793,7 +794,7 @@ internal sealed class ResponseEndpointHandler
                 new Error("conversation_locked",
                     "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.")
                 {
-                    Type = "conflict",
+                    Kind = "conflict",
                 },
                 StatusCodes.Status409Conflict);
         }
@@ -917,7 +918,7 @@ internal sealed class ResponseEndpointHandler
 
                 // B2: SSE replay requires background mode. Non-bg responses never
                 // have event streams (they use NullPublisher).
-                if (persisted.Background != true)
+                if (persisted.BackgroundModeEnabled != true)
                 {
                     throw new BadRequestException(
                         "This response cannot be streamed because it was not created with background=true.",
@@ -962,7 +963,7 @@ internal sealed class ResponseEndpointHandler
         httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation(
             "Retrieved response {ResponseId}: Status={Status} OutputCount={OutputCount}",
-            responseId, response.Status, response.Output.Count);
+            responseId, response.Status, response.OutputItems.Count);
         return JsonForClient(response);
     }
     /// <summary>

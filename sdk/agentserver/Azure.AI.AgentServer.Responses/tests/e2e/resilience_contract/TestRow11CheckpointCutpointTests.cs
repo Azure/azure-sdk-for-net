@@ -102,7 +102,7 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
             envelope.Output.Add(CreateOutputMessage($"msg_seed_{i}", $"phase-{i}-original"));
         }
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,

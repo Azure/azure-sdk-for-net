@@ -14,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// <see cref="ResponseEventStream"/>; the mutable <c>Response</c> object is
 /// not exposed.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ResponseContext
 {
     /// <summary>
@@ -86,9 +87,9 @@ public class ResponseContext
     /// for each <paramref name="resolveReferences"/> mode.
     /// </summary>
     /// <param name="resolveReferences">
-    /// When <c>true</c> (the default), <see cref="Models.ItemReferenceParam"/> items
+    /// When <c>true</c> (the default), <see cref="ItemReferenceParam"/> items
     /// are resolved via the provider and returned as their concrete <see cref="Item"/> subtype.
-    /// When <c>false</c>, item references are left as <see cref="Models.ItemReferenceParam"/>
+    /// When <c>false</c>, item references are left as <see cref="ItemReferenceParam"/>
     /// in the returned list.
     /// </param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>

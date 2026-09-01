@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for an MCP list tools output item. Provides methods
 /// for lifecycle events with success or failure terminal states.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpListTools>
 {
     private readonly string _serverLabel;
@@ -53,8 +54,7 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsInProgressEvent"/>.</returns>
     public virtual ResponseMCPListToolsInProgressEvent EmitInProgress()
     {
-        return new ResponseMCPListToolsInProgressEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -64,8 +64,7 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsCompletedEvent"/>.</returns>
     public virtual ResponseMCPListToolsCompletedEvent EmitCompleted()
     {
-        return new ResponseMCPListToolsCompletedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -75,8 +74,7 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsFailedEvent"/>.</returns>
     public virtual ResponseMCPListToolsFailedEvent EmitFailed()
     {
-        return new ResponseMCPListToolsFailedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsFailedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>

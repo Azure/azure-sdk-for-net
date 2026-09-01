@@ -87,7 +87,7 @@ public class TestSteerableConversationContractTests
         var antecedent = new ResponseObject(antecedentId, "test-model");
         antecedent.SetCompleted();
         await seedProvider.CreateResponseAsync(
-            new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(antecedent, null, null), PlatformContext.Empty);
 
         var invoker = new FakeTaskInvoker
         {
@@ -254,7 +254,7 @@ public class TestSteerableConversationContractTests
         var antecedent = new ResponseObject(antecedentId, "test-model");
         antecedent.SetCompleted();
         await seedProvider.CreateResponseAsync(
-            new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(antecedent, null, null), PlatformContext.Empty);
 
         var invoker = new FakeTaskInvoker
         {
@@ -411,7 +411,7 @@ public class TestSteerableConversationContractTests
         var antecedent = new ResponseObject(antecedentId, "test-model");
         antecedent.SetCompleted();
         await seedProvider.CreateResponseAsync(
-            new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(antecedent, null, null), PlatformContext.Empty);
 
         var invoker = new FakeTaskInvoker { NextIsQueued = true };
         try

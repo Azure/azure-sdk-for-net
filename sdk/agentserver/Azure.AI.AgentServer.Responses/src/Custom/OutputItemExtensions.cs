@@ -12,6 +12,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// Extension methods for <see cref="OutputItem"/> that provide efficient
 /// access to the <c>Id</c> property without reflection.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class OutputItemExtensions
 {
     /// <summary>

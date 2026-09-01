@@ -14,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// to BinaryData properties like <see cref="ResponseObject.ToolChoice"/> and
 /// <see cref="ResponseObject.Instructions"/>.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class ResponseExtensions
 {
     /// <summary>

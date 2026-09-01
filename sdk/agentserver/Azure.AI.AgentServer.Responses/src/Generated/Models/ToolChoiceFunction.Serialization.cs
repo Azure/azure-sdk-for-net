@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Function tool. </summary>
-    internal partial class ToolChoiceFunction : ToolChoiceParam, IJsonModel<ToolChoiceFunction>
+    public partial class ToolChoiceFunction : ToolChoiceParam, IJsonModel<ToolChoiceFunction>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/> for deserialization. </summary>
         internal ToolChoiceFunction()

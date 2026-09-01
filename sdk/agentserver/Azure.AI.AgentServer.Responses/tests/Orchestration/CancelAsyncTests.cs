@@ -58,7 +58,7 @@ public class CancelAsyncTests : IDisposable
         // Spec: "Cannot cancel a synchronous response." (B1 — background check first)
         var response = new Models.ResponseObject("resp_cancel_nbc", "test") { Status = ResponseStatus.Completed };
         await _provider.CreateResponseAsync(
-            new Responses.CreateResponseRequest(response, null, null), PlatformContext.Empty);
+            new Responses.CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         var ex = Assert.ThrowsAsync<BadRequestException>(
             () => _orchestrator.CancelAsync("resp_cancel_nbc", PlatformContext.Empty));

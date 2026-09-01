@@ -71,7 +71,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         var provider = new FileResponsesProvider(ResponsesDir);
         var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
         envelope.Background = true;
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         var query = new Dictionary<string, string>(StringComparer.Ordinal);
         if (queryParameters is not null)
@@ -115,7 +115,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
             envelope.Output.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
         }
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
@@ -132,7 +132,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         var provider = new FileResponsesProvider(ResponsesDir);
         var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
         envelope.Background = true;
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
     }
 
     /// <summary>Seeds a durable in-progress envelope carrying <paramref name="outputItems"/> already-emitted
@@ -147,7 +147,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
             envelope.Output.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
         }
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
     }
 
     /// <summary>Publishes a pre-crash durable SSE stream: created(0) + one output-item added(1)/done(2) per

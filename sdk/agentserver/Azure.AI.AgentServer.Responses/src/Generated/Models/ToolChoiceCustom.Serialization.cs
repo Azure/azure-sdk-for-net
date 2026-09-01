@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Custom tool. </summary>
-    internal partial class ToolChoiceCustom : ToolChoiceParam, IJsonModel<ToolChoiceCustom>
+    public partial class ToolChoiceCustom : ToolChoiceParam, IJsonModel<ToolChoiceCustom>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/> for deserialization. </summary>
         internal ToolChoiceCustom()

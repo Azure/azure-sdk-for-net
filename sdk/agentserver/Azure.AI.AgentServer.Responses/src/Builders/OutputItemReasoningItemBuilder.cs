@@ -12,6 +12,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Child summary builders are auto-tracked so <see cref="EmitDone"/> can build
 /// the final reasoning item from their accumulated state.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReasoningItem>
 {
     private long _summaryIndex;
