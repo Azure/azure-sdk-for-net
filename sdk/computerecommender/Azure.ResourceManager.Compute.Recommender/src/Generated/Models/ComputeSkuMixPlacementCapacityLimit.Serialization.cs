@@ -13,57 +13,60 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> A single VM size allocation within a deployment choice. </summary>
-    public partial class ComputeSkuMixPlacementItem : IJsonModel<ComputeSkuMixPlacementItem>
+    /// <summary>
+    /// Capacity availability for a single requested (VM size, zone) combination, independent of the
+    /// recommended placement.
+    /// </summary>
+    public partial class ComputeSkuMixPlacementCapacityLimit : IJsonModel<ComputeSkuMixPlacementCapacityLimit>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementItem"/> for deserialization. </summary>
-        internal ComputeSkuMixPlacementItem()
+        /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementCapacityLimit"/> for deserialization. </summary>
+        internal ComputeSkuMixPlacementCapacityLimit()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeSkuMixPlacementItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeSkuMixPlacementCapacityLimit PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementCapacityLimit>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeSkuMixPlacementItem(document.RootElement, options);
+                        return DeserializeComputeSkuMixPlacementCapacityLimit(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementCapacityLimit)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementCapacityLimit>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementCapacityLimit)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeSkuMixPlacementItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeSkuMixPlacementCapacityLimit>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeSkuMixPlacementItem IPersistableModel<ComputeSkuMixPlacementItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeSkuMixPlacementCapacityLimit IPersistableModel<ComputeSkuMixPlacementCapacityLimit>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeSkuMixPlacementItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSkuMixPlacementCapacityLimit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeSkuMixPlacementItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeSkuMixPlacementCapacityLimit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,22 +77,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementCapacityLimit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementCapacityLimit)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("priority"u8);
             writer.WriteStringValue(Priority.ToString());
-            writer.WritePropertyName("capacity"u8);
-            writer.WriteNumberValue(Capacity);
             if (Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
+            writer.WritePropertyName("limit"u8);
+            writer.WriteNumberValue(Limit);
+            writer.WritePropertyName("reason"u8);
+            writer.WriteStringValue(Reason.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -109,24 +114,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeSkuMixPlacementItem IJsonModel<ComputeSkuMixPlacementItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeSkuMixPlacementCapacityLimit IJsonModel<ComputeSkuMixPlacementCapacityLimit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeSkuMixPlacementItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeSkuMixPlacementCapacityLimit JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementCapacityLimit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementCapacityLimit)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeSkuMixPlacementItem(document.RootElement, options);
+            return DeserializeComputeSkuMixPlacementCapacityLimit(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeSkuMixPlacementItem DeserializeComputeSkuMixPlacementItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeSkuMixPlacementCapacityLimit DeserializeComputeSkuMixPlacementCapacityLimit(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,8 +139,9 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
             string name = default;
             SkuMixPlacementPriority priority = default;
-            int capacity = default;
             string zone = default;
+            int limit = default;
+            SkuMixPlacementCapacityLimitReason reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,14 +155,19 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     priority = new SkuMixPlacementPriority(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("capacity"u8))
-                {
-                    capacity = prop.Value.GetInt32();
-                    continue;
-                }
                 if (prop.NameEquals("zone"u8))
                 {
                     zone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("limit"u8))
+                {
+                    limit = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("reason"u8))
+                {
+                    reason = new SkuMixPlacementCapacityLimitReason(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +175,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuMixPlacementItem(name, priority, capacity, zone, additionalBinaryDataProperties);
+            return new ComputeSkuMixPlacementCapacityLimit(
+                name,
+                priority,
+                zone,
+                limit,
+                reason,
+                additionalBinaryDataProperties);
         }
     }
 }
