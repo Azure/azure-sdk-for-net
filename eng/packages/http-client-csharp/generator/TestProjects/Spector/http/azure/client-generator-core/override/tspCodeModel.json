@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "model",
       "name": "GroupParametersOptions",
+      "apiVersions": [],
       "namespace": "Customization",
       "crossLanguageDefinitionId": "Customization.GroupParametersOptions",
       "usage": "Input",
@@ -19,6 +20,7 @@
           "$id": "2",
           "kind": "property",
           "name": "param1",
+          "apiVersions": [],
           "type": {
             "$id": "3",
             "kind": "string",
@@ -40,6 +42,7 @@
           "$id": "4",
           "kind": "property",
           "name": "param2",
+          "apiVersions": [],
           "type": {
             "$id": "5",
             "kind": "string",

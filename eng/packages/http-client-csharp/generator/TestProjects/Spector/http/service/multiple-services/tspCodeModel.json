@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "VersionsA",
+      "apiVersions": [
+        "av1",
+        "av2"
+      ],
       "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.VersionsA",
       "valueType": {
         "$id": "2",
@@ -58,6 +62,10 @@
       "$id": "5",
       "kind": "enum",
       "name": "VersionsB",
+      "apiVersions": [
+        "bv1",
+        "bv2"
+      ],
       "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.VersionsB",
       "valueType": {
         "$id": "6",

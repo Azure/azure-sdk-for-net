@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ThingModelOptionalLiteralString",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "2",
@@ -49,6 +50,7 @@
       "$id": "5",
       "kind": "enum",
       "name": "ThingModelOptionalLiteralInt",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "6",
@@ -89,6 +91,7 @@
       "$id": "9",
       "kind": "enum",
       "name": "ThingModelOptionalLiteralFloat",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "10",
@@ -129,6 +132,10 @@
       "$id": "13",
       "kind": "enum",
       "name": "StringFixedEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.StringFixedEnum",
       "valueType": {
         "$id": "14",
@@ -193,6 +200,10 @@
       "$id": "18",
       "kind": "enum",
       "name": "StringExtensibleEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.StringExtensibleEnum",
       "valueType": {
         "$id": "19",
@@ -257,6 +268,10 @@
       "$id": "23",
       "kind": "enum",
       "name": "IntExtensibleEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.IntExtensibleEnum",
       "valueType": {
         "$id": "24",
@@ -321,6 +336,10 @@
       "$id": "28",
       "kind": "enum",
       "name": "FloatExtensibleEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.FloatExtensibleEnum",
       "valueType": {
         "$id": "29",
@@ -385,6 +404,10 @@
       "$id": "33",
       "kind": "enum",
       "name": "FloatExtensibleEnumWithIntValue",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.FloatExtensibleEnumWithIntValue",
       "valueType": {
         "$id": "34",
@@ -449,6 +472,10 @@
       "$id": "38",
       "kind": "enum",
       "name": "FloatFixedEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.FloatFixedEnum",
       "valueType": {
         "$id": "39",
@@ -513,6 +540,10 @@
       "$id": "43",
       "kind": "enum",
       "name": "FloatFixedEnumWithIntValue",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.FloatFixedEnumWithIntValue",
       "valueType": {
         "$id": "44",
@@ -577,6 +608,10 @@
       "$id": "48",
       "kind": "enum",
       "name": "IntFixedEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.IntFixedEnum",
       "valueType": {
         "$id": "49",
@@ -641,6 +676,10 @@
       "$id": "53",
       "kind": "enum",
       "name": "DaysOfWeekExtensibleEnum",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.DaysOfWeekExtensibleEnum",
       "valueType": {
         "$id": "54",
@@ -760,6 +799,10 @@
       "$id": "62",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "crossLanguageDefinitionId": "BasicTypeSpec.Versions",
       "valueType": {
         "$id": "63",
@@ -2207,6 +2250,10 @@
       "$id": "230",
       "kind": "model",
       "name": "ThingModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ThingModel",
       "usage": "Input,Output,Spread,Json",
@@ -2223,6 +2270,10 @@
           "$id": "231",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "name",
           "doc": "name of the ThingModel",
           "type": {
@@ -2250,6 +2301,10 @@
           "$id": "233",
           "kind": "property",
           "name": "requiredUnion",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredUnion",
           "doc": "required Union",
           "type": {
@@ -2308,6 +2363,10 @@
           "$id": "239",
           "kind": "property",
           "name": "requiredLiteralString",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredLiteralString",
           "doc": "required literal string",
           "type": {
@@ -2331,6 +2390,10 @@
           "$id": "240",
           "kind": "property",
           "name": "requiredLiteralInt",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredLiteralInt",
           "doc": "required literal int",
           "type": {
@@ -2354,6 +2417,10 @@
           "$id": "241",
           "kind": "property",
           "name": "requiredLiteralFloat",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredLiteralFloat",
           "doc": "required literal float",
           "type": {
@@ -2377,6 +2444,10 @@
           "$id": "242",
           "kind": "property",
           "name": "requiredLiteralBool",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredLiteralBool",
           "doc": "required literal bool",
           "type": {
@@ -2400,6 +2471,10 @@
           "$id": "243",
           "kind": "property",
           "name": "optionalLiteralString",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalLiteralString",
           "doc": "optional literal string",
           "type": {
@@ -2423,6 +2498,10 @@
           "$id": "244",
           "kind": "property",
           "name": "optionalLiteralInt",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalLiteralInt",
           "doc": "optional literal int",
           "type": {
@@ -2446,6 +2525,10 @@
           "$id": "245",
           "kind": "property",
           "name": "optionalLiteralFloat",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalLiteralFloat",
           "doc": "optional literal float",
           "type": {
@@ -2469,6 +2552,10 @@
           "$id": "246",
           "kind": "property",
           "name": "optionalLiteralBool",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalLiteralBool",
           "doc": "optional literal bool",
           "type": {
@@ -2492,6 +2579,10 @@
           "$id": "247",
           "kind": "property",
           "name": "requiredBadDescription",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredBadDescription",
           "doc": "description with xml <|endoftext|>",
           "type": {
@@ -2519,6 +2610,10 @@
           "$id": "249",
           "kind": "property",
           "name": "optionalNullableList",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalNullableList",
           "doc": "optional nullable collection",
           "type": {
@@ -2558,6 +2653,10 @@
           "$id": "253",
           "kind": "property",
           "name": "requiredNullableList",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredNullableList",
           "doc": "required nullable collection",
           "type": {
@@ -2588,6 +2687,10 @@
       "$id": "255",
       "kind": "model",
       "name": "RoundTripModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.RoundTripModel",
       "usage": "Input,Output,Json",
@@ -2613,6 +2716,10 @@
           "$id": "256",
           "kind": "property",
           "name": "requiredString",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredString",
           "doc": "Required string, illustrating a reference type property.",
           "type": {
@@ -2640,6 +2747,10 @@
           "$id": "258",
           "kind": "property",
           "name": "requiredInt",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredInt",
           "doc": "Required int, illustrating a value type property.",
           "type": {
@@ -2667,6 +2778,10 @@
           "$id": "260",
           "kind": "property",
           "name": "requiredCollection",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredCollection",
           "doc": "Required collection of enums",
           "type": {
@@ -2697,6 +2812,10 @@
           "$id": "262",
           "kind": "property",
           "name": "requiredDictionary",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredDictionary",
           "doc": "Required dictionary of enums",
           "type": {
@@ -2732,6 +2851,10 @@
           "$id": "265",
           "kind": "property",
           "name": "requiredModel",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredModel",
           "doc": "Required model",
           "type": {
@@ -2755,6 +2878,10 @@
           "$id": "266",
           "kind": "property",
           "name": "intExtensibleEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intExtensibleEnum",
           "doc": "this is an int based extensible enum",
           "type": {
@@ -2778,6 +2905,10 @@
           "$id": "267",
           "kind": "property",
           "name": "intExtensibleEnumCollection",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intExtensibleEnumCollection",
           "doc": "this is a collection of int based extensible enum",
           "type": {
@@ -2808,6 +2939,10 @@
           "$id": "269",
           "kind": "property",
           "name": "floatExtensibleEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "floatExtensibleEnum",
           "doc": "this is a float based extensible enum",
           "type": {
@@ -2831,6 +2966,10 @@
           "$id": "270",
           "kind": "property",
           "name": "floatExtensibleEnumWithIntValue",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "floatExtensibleEnumWithIntValue",
           "doc": "this is a float based extensible enum",
           "type": {
@@ -2854,6 +2993,10 @@
           "$id": "271",
           "kind": "property",
           "name": "floatExtensibleEnumCollection",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "floatExtensibleEnumCollection",
           "doc": "this is a collection of float based extensible enum",
           "type": {
@@ -2884,6 +3027,10 @@
           "$id": "273",
           "kind": "property",
           "name": "floatFixedEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "floatFixedEnum",
           "doc": "this is a float based fixed enum",
           "type": {
@@ -2907,6 +3054,10 @@
           "$id": "274",
           "kind": "property",
           "name": "floatFixedEnumWithIntValue",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "floatFixedEnumWithIntValue",
           "doc": "this is a float based fixed enum",
           "type": {
@@ -2930,6 +3081,10 @@
           "$id": "275",
           "kind": "property",
           "name": "floatFixedEnumCollection",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "floatFixedEnumCollection",
           "doc": "this is a collection of float based fixed enum",
           "type": {
@@ -2960,6 +3115,10 @@
           "$id": "277",
           "kind": "property",
           "name": "intFixedEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intFixedEnum",
           "doc": "this is a int based fixed enum",
           "type": {
@@ -2983,6 +3142,10 @@
           "$id": "278",
           "kind": "property",
           "name": "intFixedEnumCollection",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intFixedEnumCollection",
           "doc": "this is a collection of int based fixed enum",
           "type": {
@@ -3013,6 +3176,10 @@
           "$id": "280",
           "kind": "property",
           "name": "stringFixedEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "stringFixedEnum",
           "doc": "this is a string based fixed enum",
           "type": {
@@ -3036,6 +3203,10 @@
           "$id": "281",
           "kind": "property",
           "name": "requiredUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredUnknown",
           "doc": "required unknown",
           "type": {
@@ -3063,6 +3234,10 @@
           "$id": "283",
           "kind": "property",
           "name": "optionalUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalUnknown",
           "doc": "optional unknown",
           "type": {
@@ -3090,6 +3265,10 @@
           "$id": "285",
           "kind": "property",
           "name": "requiredRecordUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredRecordUnknown",
           "doc": "required record of unknown",
           "type": {
@@ -3129,6 +3308,10 @@
           "$id": "289",
           "kind": "property",
           "name": "optionalRecordUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalRecordUnknown",
           "doc": "optional record of unknown",
           "type": {
@@ -3152,6 +3335,10 @@
           "$id": "290",
           "kind": "property",
           "name": "readOnlyRequiredRecordUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "readOnlyRequiredRecordUnknown",
           "doc": "required readonly record of unknown",
           "type": {
@@ -3175,6 +3362,10 @@
           "$id": "291",
           "kind": "property",
           "name": "readOnlyOptionalRecordUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "readOnlyOptionalRecordUnknown",
           "doc": "optional readonly record of unknown",
           "type": {
@@ -3198,12 +3389,20 @@
           "$id": "292",
           "kind": "property",
           "name": "modelWithRequiredNullable",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "modelWithRequiredNullable",
           "doc": "this is a model with required nullable properties",
           "type": {
             "$id": "293",
             "kind": "model",
             "name": "ModelWithRequiredNullableProperties",
+            "apiVersions": [
+              "2024-07-16-preview",
+              "2024-08-16-preview"
+            ],
             "namespace": "BasicTypeSpec",
             "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithRequiredNullableProperties",
             "usage": "Input,Output,Json",
@@ -3220,6 +3419,10 @@
                 "$id": "294",
                 "kind": "property",
                 "name": "requiredNullablePrimitive",
+                "apiVersions": [
+                  "2024-07-16-preview",
+                  "2024-08-16-preview"
+                ],
                 "serializedName": "requiredNullablePrimitive",
                 "doc": "required nullable primitive type",
                 "type": {
@@ -3252,6 +3455,10 @@
                 "$id": "297",
                 "kind": "property",
                 "name": "requiredExtensibleEnum",
+                "apiVersions": [
+                  "2024-07-16-preview",
+                  "2024-08-16-preview"
+                ],
                 "serializedName": "requiredExtensibleEnum",
                 "doc": "required nullable extensible enum type",
                 "type": {
@@ -3280,6 +3487,10 @@
                 "$id": "299",
                 "kind": "property",
                 "name": "requiredFixedEnum",
+                "apiVersions": [
+                  "2024-07-16-preview",
+                  "2024-08-16-preview"
+                ],
                 "serializedName": "requiredFixedEnum",
                 "doc": "required nullable fixed enum type",
                 "type": {
@@ -3324,6 +3535,10 @@
           "$id": "301",
           "kind": "property",
           "name": "requiredBytes",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "requiredBytes",
           "doc": "Required bytes",
           "type": {
@@ -3357,6 +3572,10 @@
       "$id": "303",
       "kind": "model",
       "name": "FriendModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.NotFriend",
       "usage": "Output,Spread,Json",
@@ -3373,6 +3592,10 @@
           "$id": "304",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "name",
           "doc": "name of the NotFriend",
           "type": {
@@ -3402,6 +3625,10 @@
       "$id": "306",
       "kind": "model",
       "name": "RenamedModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithClientName",
       "usage": "Output,Spread,Json",
@@ -3418,6 +3645,10 @@
           "$id": "307",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "name",
           "doc": "name of the ModelWithClientName",
           "type": {
@@ -3447,6 +3678,10 @@
       "$id": "309",
       "kind": "model",
       "name": "ReturnsAnonymousModelResponse",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.returnsAnonymousModel.Response.anonymous",
       "usage": "Output,Json",
@@ -3463,6 +3698,10 @@
       "$id": "310",
       "kind": "model",
       "name": "ListWithNextLinkResponse",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithNextLink.Response.anonymous",
       "usage": "Output,Json",
@@ -3478,6 +3717,10 @@
           "$id": "311",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$id": "312",
@@ -3507,6 +3750,10 @@
           "$id": "313",
           "kind": "property",
           "name": "next",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "next",
           "type": {
             "$id": "314",
@@ -3535,6 +3782,10 @@
       "$id": "315",
       "kind": "model",
       "name": "ListWithStringNextLinkResponse",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithStringNextLink.Response.anonymous",
       "usage": "Output,Json",
@@ -3550,6 +3801,10 @@
           "$id": "316",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$ref": "312"
@@ -3572,6 +3827,10 @@
           "$id": "317",
           "kind": "property",
           "name": "next",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "next",
           "type": {
             "$id": "318",
@@ -3600,6 +3859,7 @@
       "$id": "319",
       "kind": "model",
       "name": "ListWithHeaderNextLinkResponse",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithHeaderNextLink.Response.anonymous",
       "usage": "Output,Json",
@@ -3615,6 +3875,10 @@
           "$id": "320",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$ref": "312"
@@ -3639,6 +3903,7 @@
       "$id": "321",
       "kind": "model",
       "name": "ListWithHeaderNextLinkWithMaxPageResponse",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithHeaderNextLinkWithMaxPage.Response.anonymous",
       "usage": "Output,Json",
@@ -3654,6 +3919,10 @@
           "$id": "322",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$ref": "312"
@@ -3678,6 +3947,10 @@
       "$id": "323",
       "kind": "model",
       "name": "ListWithContinuationTokenResponse",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithContinuationToken.Response.anonymous",
       "usage": "Output,Json",
@@ -3693,6 +3966,10 @@
           "$id": "324",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$ref": "312"
@@ -3715,6 +3992,10 @@
           "$id": "325",
           "kind": "property",
           "name": "nextToken",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "nextToken",
           "type": {
             "$id": "326",
@@ -3743,6 +4024,10 @@
       "$id": "327",
       "kind": "model",
       "name": "ListWithContinuationTokenWithMaxPageResponse",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithContinuationTokenWithMaxPage.Response.anonymous",
       "usage": "Output,Json",
@@ -3758,6 +4043,10 @@
           "$id": "328",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$ref": "312"
@@ -3780,6 +4069,10 @@
           "$id": "329",
           "kind": "property",
           "name": "nextToken",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "nextToken",
           "type": {
             "$id": "330",
@@ -3808,6 +4101,7 @@
       "$id": "331",
       "kind": "model",
       "name": "ListWithContinuationTokenHeaderResponseResponse",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithContinuationTokenHeaderResponse.Response.anonymous",
       "usage": "Output,Json",
@@ -3823,6 +4117,10 @@
           "$id": "332",
           "kind": "property",
           "name": "things",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "things",
           "type": {
             "$ref": "312"
@@ -3847,6 +4145,10 @@
       "$id": "333",
       "kind": "model",
       "name": "PageThingModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.Page",
       "usage": "Output,Json",
@@ -3862,6 +4164,10 @@
           "$id": "334",
           "kind": "property",
           "name": "items",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "items",
           "type": {
             "$ref": "312"
@@ -3886,6 +4192,10 @@
       "$id": "335",
       "kind": "model",
       "name": "MultipartRequestRequest",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.MultipartRequest.Request.anonymous",
       "usage": "Input,MultipartFormData",
@@ -3897,6 +4207,10 @@
           "$id": "336",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "name",
           "type": {
             "$id": "337",
@@ -3931,6 +4245,10 @@
       "$id": "338",
       "kind": "model",
       "name": "DataFactoryElementModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.DataFactoryElementModel",
       "usage": "Input,Output,Json,External",
@@ -3947,6 +4265,10 @@
           "$id": "339",
           "kind": "property",
           "name": "stringProperty",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "stringProperty",
           "doc": "String property with DFE pattern",
           "type": {
@@ -3990,6 +4312,10 @@
           "$id": "342",
           "kind": "property",
           "name": "intProperty",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intProperty",
           "doc": "Int property with DFE pattern",
           "type": {
@@ -4033,6 +4359,10 @@
           "$id": "345",
           "kind": "property",
           "name": "boolProperty",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "boolProperty",
           "doc": "Bool property with DFE pattern",
           "type": {
@@ -4076,6 +4406,10 @@
           "$id": "348",
           "kind": "property",
           "name": "stringArrayProperty",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "stringArrayProperty",
           "doc": "String array property with DFE pattern",
           "type": {
@@ -4117,6 +4451,10 @@
       "$id": "350",
       "kind": "model",
       "name": "XmlAdvancedModel",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.XmlAdvancedModel",
       "usage": "Input,Output,Xml",
@@ -4142,6 +4480,10 @@
           "$id": "351",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "name",
           "doc": "A simple string property",
           "type": {
@@ -4171,6 +4513,10 @@
           "$id": "353",
           "kind": "property",
           "name": "age",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "age",
           "doc": "An integer property",
           "type": {
@@ -4200,6 +4546,10 @@
           "$id": "355",
           "kind": "property",
           "name": "enabled",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "enabled",
           "doc": "A boolean property",
           "type": {
@@ -4229,6 +4579,10 @@
           "$id": "357",
           "kind": "property",
           "name": "score",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "score",
           "doc": "A float property",
           "type": {
@@ -4258,6 +4612,10 @@
           "$id": "359",
           "kind": "property",
           "name": "optionalString",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalString",
           "doc": "An optional string",
           "type": {
@@ -4287,6 +4645,10 @@
           "$id": "361",
           "kind": "property",
           "name": "optionalInt",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalInt",
           "doc": "An optional integer",
           "type": {
@@ -4316,6 +4678,10 @@
           "$id": "363",
           "kind": "property",
           "name": "nullableString",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "nullableString",
           "doc": "A nullable string",
           "type": {
@@ -4350,6 +4716,10 @@
           "$id": "366",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "id",
           "doc": "A string as XML attribute",
           "type": {
@@ -4384,6 +4754,10 @@
           "$id": "368",
           "kind": "property",
           "name": "version",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "version",
           "doc": "An integer as XML attribute",
           "type": {
@@ -4418,6 +4792,10 @@
           "$id": "370",
           "kind": "property",
           "name": "isActive",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "isActive",
           "doc": "A boolean as XML attribute",
           "type": {
@@ -4452,6 +4830,10 @@
           "$id": "372",
           "kind": "property",
           "name": "originalName",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "RenamedProperty",
           "doc": "A property with a custom XML element name",
           "type": {
@@ -4488,6 +4870,10 @@
           "$id": "374",
           "kind": "property",
           "name": "xmlIdentifier",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "xml-id",
           "doc": "An attribute with a custom XML name",
           "type": {
@@ -4528,6 +4914,10 @@
           "$id": "376",
           "kind": "property",
           "name": "content",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "content",
           "doc": "Text content in the element (unwrapped string)",
           "type": {
@@ -4562,6 +4952,10 @@
           "$id": "378",
           "kind": "property",
           "name": "unwrappedStrings",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "unwrappedStrings",
           "doc": "An unwrapped array of strings - items appear directly without wrapper",
           "type": {
@@ -4593,6 +4987,10 @@
           "$id": "379",
           "kind": "property",
           "name": "unwrappedCounts",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "unwrappedCounts",
           "doc": "An unwrapped array of integers",
           "type": {
@@ -4624,6 +5022,10 @@
           "$id": "380",
           "kind": "property",
           "name": "unwrappedItems",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "unwrappedItems",
           "doc": "An unwrapped array of models",
           "type": {
@@ -4634,6 +5036,10 @@
               "$id": "382",
               "kind": "model",
               "name": "XmlItem",
+              "apiVersions": [
+                "2024-07-16-preview",
+                "2024-08-16-preview"
+              ],
               "namespace": "BasicTypeSpec",
               "crossLanguageDefinitionId": "BasicTypeSpec.XmlItem",
               "usage": "Input,Output,Xml",
@@ -4659,6 +5065,10 @@
                   "$id": "383",
                   "kind": "property",
                   "name": "itemName",
+                  "apiVersions": [
+                    "2024-07-16-preview",
+                    "2024-08-16-preview"
+                  ],
                   "serializedName": "itemName",
                   "doc": "The item name",
                   "type": {
@@ -4688,6 +5098,10 @@
                   "$id": "385",
                   "kind": "property",
                   "name": "itemValue",
+                  "apiVersions": [
+                    "2024-07-16-preview",
+                    "2024-08-16-preview"
+                  ],
                   "serializedName": "itemValue",
                   "doc": "The item value",
                   "type": {
@@ -4717,6 +5131,10 @@
                   "$id": "387",
                   "kind": "property",
                   "name": "itemId",
+                  "apiVersions": [
+                    "2024-07-16-preview",
+                    "2024-08-16-preview"
+                  ],
                   "serializedName": "itemId",
                   "doc": "Item ID as attribute",
                   "type": {
@@ -4778,6 +5196,10 @@
           "$id": "389",
           "kind": "property",
           "name": "wrappedColors",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "wrappedColors",
           "doc": "A wrapped array of strings (default)",
           "type": {
@@ -4804,6 +5226,10 @@
           "$id": "390",
           "kind": "property",
           "name": "items",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "ItemCollection",
           "doc": "A wrapped array with custom wrapper name",
           "type": {
@@ -4837,12 +5263,20 @@
           "$id": "391",
           "kind": "property",
           "name": "nestedModel",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "nestedModel",
           "doc": "A nested model property",
           "type": {
             "$id": "392",
             "kind": "model",
             "name": "XmlNestedModel",
+            "apiVersions": [
+              "2024-07-16-preview",
+              "2024-08-16-preview"
+            ],
             "namespace": "BasicTypeSpec",
             "crossLanguageDefinitionId": "BasicTypeSpec.XmlNestedModel",
             "usage": "Input,Output,Xml",
@@ -4861,6 +5295,10 @@
                 "$id": "393",
                 "kind": "property",
                 "name": "value",
+                "apiVersions": [
+                  "2024-07-16-preview",
+                  "2024-08-16-preview"
+                ],
                 "serializedName": "value",
                 "doc": "The value of the nested model",
                 "type": {
@@ -4890,6 +5328,10 @@
                 "$id": "395",
                 "kind": "property",
                 "name": "nestedId",
+                "apiVersions": [
+                  "2024-07-16-preview",
+                  "2024-08-16-preview"
+                ],
                 "serializedName": "nestedId",
                 "doc": "An attribute on the nested model",
                 "type": {
@@ -4942,6 +5384,10 @@
           "$id": "397",
           "kind": "property",
           "name": "optionalNestedModel",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalNestedModel",
           "doc": "An optional nested model",
           "type": {
@@ -4967,6 +5413,10 @@
           "$id": "398",
           "kind": "property",
           "name": "metadata",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "metadata",
           "doc": "A dictionary property",
           "type": {
@@ -5008,6 +5458,10 @@
           "$id": "402",
           "kind": "property",
           "name": "createdAt",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "createdAt",
           "doc": "A date-time property",
           "type": {
@@ -5045,6 +5499,10 @@
           "$id": "405",
           "kind": "property",
           "name": "duration",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "duration",
           "doc": "A duration property",
           "type": {
@@ -5082,6 +5540,10 @@
           "$id": "408",
           "kind": "property",
           "name": "data",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "data",
           "doc": "A bytes property",
           "type": {
@@ -5112,6 +5574,10 @@
           "$id": "410",
           "kind": "property",
           "name": "optionalRecordUnknown",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalRecordUnknown",
           "doc": "optional record of unknown",
           "type": {
@@ -5137,6 +5603,10 @@
           "$id": "411",
           "kind": "property",
           "name": "fixedEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "fixedEnum",
           "doc": "A fixed enum property",
           "type": {
@@ -5162,6 +5632,10 @@
           "$id": "412",
           "kind": "property",
           "name": "extensibleEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "extensibleEnum",
           "doc": "An extensible enum property",
           "type": {
@@ -5187,6 +5661,10 @@
           "$id": "413",
           "kind": "property",
           "name": "optionalFixedEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalFixedEnum",
           "doc": "An optional fixed enum property",
           "type": {
@@ -5212,6 +5690,10 @@
           "$id": "414",
           "kind": "property",
           "name": "optionalExtensibleEnum",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "optionalExtensibleEnum",
           "doc": "An optional extensible enum property",
           "type": {
@@ -5237,6 +5719,10 @@
           "$id": "415",
           "kind": "property",
           "name": "label",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "label",
           "type": {
             "$id": "416",
@@ -5356,6 +5842,10 @@
           "$id": "422",
           "kind": "property",
           "name": "daysUsed",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "daysUsed",
           "type": {
             "$id": "423",
@@ -5409,6 +5899,10 @@
           "$id": "425",
           "kind": "property",
           "name": "fooItems",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "fooItems",
           "type": {
             "$ref": "236"
@@ -5446,6 +5940,10 @@
           "$id": "426",
           "kind": "property",
           "name": "anotherModel",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "anotherModel",
           "type": {
             "$ref": "392"
@@ -5482,6 +5980,10 @@
           "$id": "427",
           "kind": "property",
           "name": "modelsWithNamespaces",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "modelsWithNamespaces",
           "type": {
             "$id": "428",
@@ -5491,6 +5993,10 @@
               "$id": "429",
               "kind": "model",
               "name": "XmlModelWithNamespace",
+              "apiVersions": [
+                "2024-07-16-preview",
+                "2024-08-16-preview"
+              ],
               "namespace": "BasicTypeSpec",
               "crossLanguageDefinitionId": "BasicTypeSpec.XmlModelWithNamespace",
               "usage": "Input,Output,Xml",
@@ -5520,6 +6026,10 @@
                   "$id": "430",
                   "kind": "property",
                   "name": "foo",
+                  "apiVersions": [
+                    "2024-07-16-preview",
+                    "2024-08-16-preview"
+                  ],
                   "serializedName": "foo",
                   "type": {
                     "$id": "431",
@@ -5574,6 +6084,10 @@
           "$id": "432",
           "kind": "property",
           "name": "unwrappedModelsWithNamespaces",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "unwrappedModelsWithNamespaces",
           "type": {
             "$ref": "428"
@@ -5604,6 +6118,10 @@
           "$id": "433",
           "kind": "property",
           "name": "listOfListFoo",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "listOfListFoo",
           "type": {
             "$id": "434",
@@ -5636,6 +6154,10 @@
           "$id": "435",
           "kind": "property",
           "name": "dictionaryFoo",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "dictionaryFoo",
           "type": {
             "$id": "436",
@@ -5672,6 +6194,10 @@
           "$id": "438",
           "kind": "property",
           "name": "dictionaryOfDictionaryFoo",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "dictionaryOfDictionaryFoo",
           "type": {
             "$id": "439",
@@ -5708,6 +6234,10 @@
           "$id": "441",
           "kind": "property",
           "name": "dictionaryListFoo",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "dictionaryListFoo",
           "type": {
             "$id": "442",
@@ -5744,6 +6274,10 @@
           "$id": "444",
           "kind": "property",
           "name": "listOfDictionaryFoo",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "listOfDictionaryFoo",
           "type": {
             "$id": "445",
@@ -5787,6 +6321,10 @@
       "$id": "446",
       "kind": "model",
       "name": "Cat",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.Cat",
       "usage": "Input,MultipartFormData",
@@ -5798,6 +6336,10 @@
           "$id": "447",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "id",
           "type": {
             "$id": "448",
@@ -5830,6 +6372,10 @@
           "$id": "449",
           "kind": "property",
           "name": "boolPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "boolPart",
           "type": {
             "$id": "450",
@@ -5862,6 +6408,10 @@
           "$id": "451",
           "kind": "property",
           "name": "int32Part",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "int32Part",
           "type": {
             "$id": "452",
@@ -5894,6 +6444,10 @@
           "$id": "453",
           "kind": "property",
           "name": "int64Part",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "int64Part",
           "type": {
             "$id": "454",
@@ -5926,6 +6480,10 @@
           "$id": "455",
           "kind": "property",
           "name": "float32Part",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "float32Part",
           "type": {
             "$id": "456",
@@ -5958,6 +6516,10 @@
           "$id": "457",
           "kind": "property",
           "name": "float64Part",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "float64Part",
           "type": {
             "$id": "458",
@@ -5990,6 +6552,10 @@
           "$id": "459",
           "kind": "property",
           "name": "decimalPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "decimalPart",
           "type": {
             "$id": "460",
@@ -6022,6 +6588,10 @@
           "$id": "461",
           "kind": "property",
           "name": "int8Part",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "int8Part",
           "type": {
             "$id": "462",
@@ -6054,6 +6624,10 @@
           "$id": "463",
           "kind": "property",
           "name": "uint8Part",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "uint8Part",
           "type": {
             "$id": "464",
@@ -6086,6 +6660,10 @@
           "$id": "465",
           "kind": "property",
           "name": "dictionaryPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "dictionaryPart",
           "type": {
             "$ref": "399"
@@ -6114,6 +6692,10 @@
           "$id": "466",
           "kind": "property",
           "name": "dictionaryModelPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "dictionaryModelPart",
           "type": {
             "$id": "467",
@@ -6154,6 +6736,10 @@
           "$id": "469",
           "kind": "property",
           "name": "listPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "listPart",
           "type": {
             "$ref": "236"
@@ -6182,6 +6768,10 @@
           "$id": "470",
           "kind": "property",
           "name": "listModelPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "listModelPart",
           "type": {
             "$ref": "312"
@@ -6210,6 +6800,10 @@
           "$id": "471",
           "kind": "property",
           "name": "multipleListPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "multipleListPart",
           "type": {
             "$id": "472",
@@ -6249,11 +6843,16 @@
           "$id": "474",
           "kind": "property",
           "name": "profileImage",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "profileImage",
           "type": {
             "$id": "475",
             "kind": "model",
             "name": "File",
+            "apiVersions": [],
             "namespace": "TypeSpec.Http",
             "crossLanguageDefinitionId": "TypeSpec.Http.File",
             "usage": "Input",
@@ -6268,6 +6867,7 @@
                 "$id": "476",
                 "kind": "property",
                 "name": "contentType",
+                "apiVersions": [],
                 "summary": "The allowed media (MIME) types of the file contents.",
                 "doc": "The allowed media (MIME) types of the file contents.\n\nIn file bodies, this value comes from the `Content-Type` header of the request or response. In JSON bodies,\nthis value is serialized as a field in the response.\n\nNOTE: this is not _necessarily_ the same as the `Content-Type` header of the request or response, but\nit will be for file bodies. It may be different if the file is serialized as a JSON object. It always refers to the\n_contents_ of the file, and not necessarily the way the file itself is transmitted or serialized.",
                 "type": {
@@ -6291,6 +6891,7 @@
                 "$id": "478",
                 "kind": "property",
                 "name": "filename",
+                "apiVersions": [],
                 "summary": "The name of the file, if any.",
                 "doc": "The name of the file, if any.\n\nIn file bodies, this value comes from the `filename` parameter of the `Content-Disposition` header of the response\nor multipart payload. In JSON bodies, this value is serialized as a field in the response.\n\nNOTE: By default, `filename` cannot be sent in request payloads and can only be sent in responses and multipart\npayloads, as the `Content-Disposition` header is not valid in requests. If you want to send the `filename` in a request,\nyou must extend the `File` model and override the `filename` property with a different location defined by HTTP metadata\ndecorators.",
                 "type": {
@@ -6314,6 +6915,7 @@
                 "$id": "480",
                 "kind": "property",
                 "name": "contents",
+                "apiVersions": [],
                 "summary": "The contents of the file.",
                 "doc": "The contents of the file.\n\nIn file bodies, this value comes from the body of the request, response, or multipart payload. In JSON bodies,\nthis value is serialized as a field in the response.",
                 "type": {
@@ -6432,6 +7034,10 @@
           "$id": "486",
           "kind": "property",
           "name": "extensibleEnumPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "extensibleEnumPart",
           "type": {
             "$ref": "18"
@@ -6460,6 +7066,10 @@
           "$id": "487",
           "kind": "property",
           "name": "fixedEnumPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "fixedEnumPart",
           "type": {
             "$ref": "13"
@@ -6488,6 +7098,10 @@
           "$id": "488",
           "kind": "property",
           "name": "intExtensibleEnumPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intExtensibleEnumPart",
           "type": {
             "$ref": "23"
@@ -6516,6 +7130,10 @@
           "$id": "489",
           "kind": "property",
           "name": "intFixedEnumPart",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "intFixedEnumPart",
           "type": {
             "$ref": "48"
@@ -6546,6 +7164,7 @@
       "$id": "490",
       "kind": "model",
       "name": "File",
+      "apiVersions": [],
       "namespace": "TypeSpec.Http",
       "crossLanguageDefinitionId": "TypeSpec.Http.File",
       "usage": "Input",
@@ -6571,6 +7190,10 @@
       "$id": "491",
       "kind": "model",
       "name": "StreamingItem",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.StreamingItem",
       "usage": "Input,Output,Json",
@@ -6586,6 +7209,10 @@
           "$id": "492",
           "kind": "property",
           "name": "message",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "message",
           "type": {
             "$id": "493",
@@ -6614,6 +7241,10 @@
       "$id": "494",
       "kind": "model",
       "name": "Tree",
+      "apiVersions": [
+        "2024-07-16-preview",
+        "2024-08-16-preview"
+      ],
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.Tree",
       "usage": "Input,Output,Json,Xml",
@@ -6635,6 +7266,10 @@
         "$id": "495",
         "kind": "model",
         "name": "Plant",
+        "apiVersions": [
+          "2024-07-16-preview",
+          "2024-08-16-preview"
+        ],
         "namespace": "BasicTypeSpec",
         "crossLanguageDefinitionId": "BasicTypeSpec.Plant",
         "usage": "Input,Output,Json,Xml",
@@ -6655,6 +7290,10 @@
           "$id": "496",
           "kind": "property",
           "name": "species",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "species",
           "doc": "The species of plant",
           "type": {
@@ -6691,6 +7330,10 @@
             "$id": "498",
             "kind": "property",
             "name": "id",
+            "apiVersions": [
+              "2024-07-16-preview",
+              "2024-08-16-preview"
+            ],
             "serializedName": "id",
             "doc": "The unique identifier of the plant",
             "type": {
@@ -6723,6 +7366,10 @@
             "$id": "500",
             "kind": "property",
             "name": "height",
+            "apiVersions": [
+              "2024-07-16-preview",
+              "2024-08-16-preview"
+            ],
             "serializedName": "height",
             "doc": "The height of the plant in centimeters",
             "type": {
@@ -6763,6 +7410,10 @@
           "$id": "502",
           "kind": "property",
           "name": "species",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "species",
           "type": {
             "$ref": "76"
@@ -6790,6 +7441,10 @@
           "$id": "503",
           "kind": "property",
           "name": "age",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "serializedName": "age",
           "doc": "The age of the tree in years",
           "type": {
@@ -6827,6 +7482,7 @@
       "$id": "505",
       "kind": "model",
       "name": "JsonlStreamStreamingItem",
+      "apiVersions": [],
       "namespace": "TypeSpec.Http.Streams",
       "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream",
       "usage": "None",
@@ -6839,6 +7495,10 @@
           "$id": "506",
           "kind": "property",
           "name": "contentType",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "type": {
             "$ref": "192"
           },
@@ -6856,6 +7516,10 @@
           "$id": "507",
           "kind": "property",
           "name": "body",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
           "type": {
             "$id": "508",
             "kind": "bytes",
@@ -8989,6 +9653,7 @@
                 "$id": "617",
                 "kind": "enum",
                 "name": "ThingModelOptionalLiteralString",
+                "apiVersions": [],
                 "crossLanguageDefinitionId": "",
                 "valueType": {
                   "$id": "618",
@@ -9045,6 +9710,7 @@
                 "$id": "622",
                 "kind": "enum",
                 "name": "ThingModelOptionalLiteralInt",
+                "apiVersions": [],
                 "crossLanguageDefinitionId": "",
                 "valueType": {
                   "$id": "623",
@@ -9101,6 +9767,7 @@
                 "$id": "627",
                 "kind": "enum",
                 "name": "ThingModelOptionalLiteralFloat",
+                "apiVersions": [],
                 "crossLanguageDefinitionId": "",
                 "valueType": {
                   "$id": "628",
