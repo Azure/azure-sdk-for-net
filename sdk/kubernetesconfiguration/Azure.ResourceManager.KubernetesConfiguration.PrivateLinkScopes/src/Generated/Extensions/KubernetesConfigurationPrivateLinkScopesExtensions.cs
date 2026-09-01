@@ -38,24 +38,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationPrivateLinkScopesArmClient.GetKubernetesConfigurationPrivateLinkScopeResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> object. </returns>
-        public static KubernetesConfigurationPrivateLinkScopeResource GetKubernetesConfigurationPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableKubernetesConfigurationPrivateLinkScopesArmClient(client).GetKubernetesConfigurationPrivateLinkScopeResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -89,6 +71,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKubernetesConfigurationPrivateLinkScopesArmClient(client).GetKubernetesConfigurationPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationPrivateLinkScopesArmClient.GetKubernetesConfigurationPrivateLinkScopeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkScopeResource"/> object. </returns>
+        public static KubernetesConfigurationPrivateLinkScopeResource GetKubernetesConfigurationPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableKubernetesConfigurationPrivateLinkScopesArmClient(client).GetKubernetesConfigurationPrivateLinkScopeResource(id);
         }
 
         /// <summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public readonly partial struct SapDiscoveryProvisioningState : IEquatable<SapDiscoveryProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The provisioning state Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The provisioning state Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The provisioning state Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The provisioning state Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The provisioning state Cancelled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The provisioning state Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The provisioning state Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The provisioning state Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoveryProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapDiscoveryProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string UpdatingValue = "Updating";
-        private const string FailedValue = "Failed";
-        private const string CreatingValue = "Creating";
-        private const string CanceledValue = "Canceled";
-        private const string AcceptedValue = "Accepted";
-        private const string DeletingValue = "Deleting";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> The provisioning state Succeeded. </summary>
         public static SapDiscoveryProvisioningState Succeeded { get; } = new SapDiscoveryProvisioningState(SucceededValue);
+
         /// <summary> The provisioning state Updating. </summary>
         public static SapDiscoveryProvisioningState Updating { get; } = new SapDiscoveryProvisioningState(UpdatingValue);
+
         /// <summary> The provisioning state Failed. </summary>
         public static SapDiscoveryProvisioningState Failed { get; } = new SapDiscoveryProvisioningState(FailedValue);
+
         /// <summary> The provisioning state Creating. </summary>
         public static SapDiscoveryProvisioningState Creating { get; } = new SapDiscoveryProvisioningState(CreatingValue);
+
         /// <summary> The provisioning state Cancelled. </summary>
         public static SapDiscoveryProvisioningState Canceled { get; } = new SapDiscoveryProvisioningState(CanceledValue);
+
         /// <summary> The provisioning state Accepted. </summary>
         public static SapDiscoveryProvisioningState Accepted { get; } = new SapDiscoveryProvisioningState(AcceptedValue);
+
         /// <summary> The provisioning state Deleting. </summary>
         public static SapDiscoveryProvisioningState Deleting { get; } = new SapDiscoveryProvisioningState(DeletingValue);
+
         /// <summary> The provisioning state Unknown. </summary>
         public static SapDiscoveryProvisioningState Unknown { get; } = new SapDiscoveryProvisioningState(UnknownValue);
+
         /// <summary> Determines if two <see cref="SapDiscoveryProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapDiscoveryProvisioningState left, SapDiscoveryProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapDiscoveryProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapDiscoveryProvisioningState left, SapDiscoveryProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapDiscoveryProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapDiscoveryProvisioningState(string value) => new SapDiscoveryProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapDiscoveryProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapDiscoveryProvisioningState?(string value) => value == null ? null : new SapDiscoveryProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapDiscoveryProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapDiscoveryProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

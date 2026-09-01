@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string serviceGatewayApiVersion);
             _serviceGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceGatewaysRestClient = new ServiceGateways(_serviceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGatewayApiVersion ?? "2025-07-01");
+            _serviceGatewaysRestClient = new ServiceGateways(_serviceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGatewayApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -569,11 +569,10 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates address locations in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAddressLocationsAsync(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceGatewayActionResult>> UpdateAddressLocationsAsync(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -586,13 +585,13 @@ namespace Azure.ResourceManager.Network
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -619,7 +618,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -627,11 +626,10 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates address locations in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpdateAddressLocations(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceGatewayActionResult> UpdateAddressLocations(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -644,13 +642,13 @@ namespace Azure.ResourceManager.Network
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -675,7 +673,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -683,11 +681,10 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates services in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateServicesAsync(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceGatewayActionResult>> UpdateServicesAsync(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -700,13 +697,13 @@ namespace Azure.ResourceManager.Network
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -731,7 +728,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -739,11 +736,10 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates services in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpdateServices(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceGatewayActionResult> UpdateServices(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -756,13 +752,13 @@ namespace Azure.ResourceManager.Network
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {

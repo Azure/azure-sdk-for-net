@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<bool> _rebootPending;
         private BicepValue<int> _criticalAndSecurityPatchCount;
         private BicepValue<int> _otherPatchCount;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _lastModifiedOn;
         private ComputeApiError _error;
 
@@ -78,13 +78,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Compute
             _rebootPending = DefineProperty<bool>(nameof(RebootPending), new string[] { "rebootPending" }, isOutput: true);
             _criticalAndSecurityPatchCount = DefineProperty<int>(nameof(CriticalAndSecurityPatchCount), new string[] { "criticalAndSecurityPatchCount" }, isOutput: true);
             _otherPatchCount = DefineProperty<int>(nameof(OtherPatchCount), new string[] { "otherPatchCount" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
             _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true, format: "O");
             _error = DefineModelProperty<ComputeApiError>(nameof(Error), new string[] { "error" }, isOutput: true);
             DefineAdditionalProperties();

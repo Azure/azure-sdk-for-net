@@ -73,10 +73,14 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(VoiceResponseAudio)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Output))
+            writer.WritePropertyName("content"u8);
+            writer.WriteStringValue(Content);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output, options);
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -120,7 +124,9 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            VoiceResponseAudioOutput output = default;
+            string content = default;
+            WorkingMemoryEntryType @type = default;
+            DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    output = VoiceResponseAudioOutput.DeserializeVoiceResponseAudioOutput(prop.Value, options);
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceResponseAudio(output, additionalBinaryDataProperties);
+            return new WorkingMemoryEntry(content, @type, createdOn, additionalBinaryDataProperties);
         }
     }
 }

@@ -113,9 +113,9 @@ namespace Azure.Provisioning.ContainerRegistry
             base.DefineProvisionableProperties();
             _tokenId = DefineProperty<ResourceIdentifier>(nameof(TokenId), new string[] { "tokenId" }, isRequired: true);
             _schedule = DefineProperty<string>(nameof(Schedule), new string[] { "schedule" });
-            _syncWindow = DefineProperty<TimeSpan>(nameof(SyncWindow), new string[] { "syncWindow" });
-            _messageTtl = DefineProperty<TimeSpan>(nameof(MessageTtl), new string[] { "messageTtl" }, isRequired: true);
-            _lastSyncOn = DefineProperty<DateTimeOffset>(nameof(LastSyncOn), new string[] { "lastSyncTime" }, isOutput: true);
+            _syncWindow = DefineProperty<TimeSpan>(nameof(SyncWindow), new string[] { "syncWindow" }, format: "P");
+            _messageTtl = DefineProperty<TimeSpan>(nameof(MessageTtl), new string[] { "messageTtl" }, isRequired: true, format: "P");
+            _lastSyncOn = DefineProperty<DateTimeOffset>(nameof(LastSyncOn), new string[] { "lastSyncTime" }, isOutput: true, format: "O");
             _gatewayEndpoint = DefineProperty<string>(nameof(GatewayEndpoint), new string[] { "gatewayEndpoint" }, isOutput: true);
             DefineAdditionalProperties();
         }

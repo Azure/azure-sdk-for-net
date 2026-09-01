@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ResourceHealth
       safeName: AzureResourceManagerResourceHealth
+    - name: Azure.Provisioning.ResourceHealth
+      safeName: AzureProvisioningResourceHealth

@@ -2,10 +2,10 @@
   "main": "dist/src/index.js",
   "dependencies": {
     "client-plugin": "file:../../../../eng/packages/plugins/client",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260821.2"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260828.11"
   },
   "devDependencies": {
-    "@azure-tools/typespec-client-generator-core": "0.71.1",
+    "@azure-tools/typespec-client-generator-core": "0.71.2",
     "@typespec/compiler": "1.15.0",
     "@typespec/http": "1.15.0",
     "@typespec/openapi": "1.15.0",

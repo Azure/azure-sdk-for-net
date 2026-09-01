@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 resourceType,
                 systemData,
-                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), null, (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
+                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = managedOutboundIPCount.HasValue
                 ? new ManagedClusterManagedOutboundIPProfile { Count = managedOutboundIPCount }
                 : null;
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), null, null, idleTimeoutInMinutes, null);
+            return new ManagedClusterNatGatewayProfile(null, managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), null, null, idleTimeoutInMinutes, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = outboundPublicIPs is null
                 ? null
                 : new ManagedClusterLoadBalancerProfileOutboundIPs(outboundPublicIPs.ToList(), null);
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundIPPrefixes, outboundIPs, effectiveOutboundIPs?.ToList(), allocatedOutboundPorts, idleTimeoutInMinutes, isMultipleStandardLoadBalancersEnabled, backendPoolType, null, null);
+            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundIPPrefixes, outboundIPs, effectiveOutboundIPs?.ToList(), allocatedOutboundPorts, idleTimeoutInMinutes, isMultipleStandardLoadBalancersEnabled, backendPoolType, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterIngressProfileGatewayConfiguration gatewayApi = gatewayApiInstallation.HasValue
                 ? new ManagedClusterIngressProfileGatewayConfiguration(gatewayApiInstallation, null)
                 : null;
-            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, null, null);
+            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory inserted the
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.AgentPoolUpgradeSettings"/> instance for mocking. </returns>
         public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge = null, string maxUnavailable = null, int? drainTimeoutInMinutes = default, int? nodeSoakDurationInMinutes = default, UndrainableNodeBehavior? undrainableNodeBehavior = default)
         {
-            return new AgentPoolUpgradeSettings(maxSurge, maxUnavailable, null, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior, null);
+            return new AgentPoolUpgradeSettings(maxSurge, maxUnavailable, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.AgentPoolUpgradeProfileData"/>. </summary>

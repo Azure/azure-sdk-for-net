@@ -1,6 +1,16 @@
 # Release History
 
-## 3.0.0-beta.1 (Unreleased)
+## 3.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 3.0.0-beta.1 (2026-08-24)
 
 This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/MigrationGuide.md) for step-by-step upgrade guidance.
 
@@ -92,8 +102,6 @@ This release migrates the library from emitting its own copies of the OpenAI Res
   - **Skills:** `ContainerSkill`, `LocalSkillParam`, `ResponsesInlineSkillParam`, `ResponsesInlineSkillSourceParam`, `ResponsesSkillReferenceParam`.
 
   These tool kinds remain reachable on the wire because `ResponseToolKind` is an extensible enum and the corresponding tool slots accept a raw object payload, but strongly-typed construction is not available. Native support for each will return once the upstream OpenAI .NET SDK models the tool kind. The Azure Foundry toolbox search capability remains available, now surfaced as the `OpenAI.Responses.ResponseToolKind.ToolboxSearchPreview` tool kind (the previously generated `ResponsesToolboxSearchPreviewTool` type is no longer emitted).
-
-### Bugs Fixed
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`. `2.11.0` reshaped `OpenAI.Responses.ResponsesClientOptions` to derive directly from `System.ClientModel.Primitives.ClientPipelineOptions` (a sibling of `OpenAI.OpenAIClientOptions` rather than a subclass), which is why `ProjectResponsesClientOptions` now derives from `ResponsesClientOptions`. `2.12.0` adds strongly-typed conversation support (`OpenAI.Conversations.ConversationResource`, `ConversationCreationOptions`, `ConversationUpdateOptions`); the conversation data models previously emitted by this package are no longer generated, and the temporary local convenience layer now delegates to the upstream types.

@@ -184,8 +184,17 @@ namespace OpenAI
             object rankingOptions = default;
             BinaryData filters = default;
             string name = default;
-            string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
+            string displayName = default;
+            Guid? uuid = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            AssetState? state = default;
+            string externalId = default;
+            IList<string> labels = default;
+            bool? wildcard = default;
+            string discoGroupName = default;
+            IList<AuditTrailItem> auditTrail = default;
+            string reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +233,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    createdDate = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updatedDate"u8))
@@ -233,7 +242,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    updatedDate = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -325,9 +334,19 @@ namespace OpenAI
                 rankingOptions,
                 filters,
                 name,
-                description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                additionalBinaryDataProperties);
+                displayName,
+                uuid,
+                createdOn,
+                updatedOn,
+                state,
+                externalId,
+                labels ?? new ChangeTrackingList<string>(),
+                wildcard,
+                discoGroupName,
+                auditTrail ?? new ChangeTrackingList<AuditTrailItem>(),
+                reason,
+                additionalBinaryDataProperties,
+                asset);
         }
     }
 }

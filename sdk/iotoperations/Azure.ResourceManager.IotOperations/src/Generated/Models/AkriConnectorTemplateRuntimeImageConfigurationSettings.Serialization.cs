@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("imagePullPolicy"u8);
                 writer.WriteStringValue(ImagePullPolicy.Value.ToString());
             }
+            if (Optional.IsDefined(ReadinessProbe))
+            {
+                writer.WritePropertyName("readinessProbe"u8);
+                writer.WriteObjectValue(ReadinessProbe, options);
+            }
             if (Optional.IsDefined(Replicas))
             {
                 writer.WritePropertyName("replicas"u8);
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             string imageName = default;
             AkriConnectorsImagePullPolicy? imagePullPolicy = default;
+            AkriConnectorTemplateReadinessProbe readinessProbe = default;
             int? replicas = default;
             AkriConnectorsRegistrySettings registrySettings = default;
             AkriConnectorsTagDigestSettings tagDigestSettings = default;
@@ -163,6 +169,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                         continue;
                     }
                     imagePullPolicy = new AkriConnectorsImagePullPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("readinessProbe"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    readinessProbe = AkriConnectorTemplateReadinessProbe.DeserializeAkriConnectorTemplateReadinessProbe(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("replicas"u8))
@@ -200,6 +215,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorTemplateRuntimeImageConfigurationSettings(
                 imageName,
                 imagePullPolicy,
+                readinessProbe,
                 replicas,
                 registrySettings,
                 tagDigestSettings,
