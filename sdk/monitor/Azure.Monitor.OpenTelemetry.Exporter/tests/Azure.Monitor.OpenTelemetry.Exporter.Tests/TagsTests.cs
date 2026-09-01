@@ -92,6 +92,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void TagObjects_NullKey_IsSkippedAndDoesNotAbortConversion()
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            IDictionary<string, string> properties = new Dictionary<string, string>();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" };
+            using var activity = CreateTestActivity(tagObjects);
+
+            // Activity does not reject a null key, and instrumentation can supply one.
+            activity.AddTag(null!, "nullKeyValue");
+
+            activityTagsProcessor.CategorizeTags(activity);
+            TraceHelper.AddPropertiesToTelemetry(properties, ref activityTagsProcessor.UnMappedTags);
+
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
+
+            // The tag that follows the null-keyed one must still reach the telemetry item.
+            Assert.Equal("value", properties["somekey"]);
+        }
+
+        [Fact]
         public void TagObjects_Mapped()
         {
             var activityTagsProcessor = new ActivityTagsProcessor();

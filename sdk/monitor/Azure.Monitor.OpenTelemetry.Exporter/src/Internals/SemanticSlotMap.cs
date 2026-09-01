@@ -75,6 +75,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeMicrosoftUserAccountId] = SemanticSlot.MicrosoftUserAccountId,
         };
 
-        public static bool TryGetSlot(string key, out SemanticSlot slot) => s_slots.TryGetValue(key, out slot);
+        /// <remarks>
+        /// <see cref="System.Diagnostics.Activity"/> does not reject a null tag key, and
+        /// <see cref="Dictionary{TKey, TValue}.TryGetValue"/> throws on one, so null is treated
+        /// as unrecognized.
+        /// </remarks>
+        public static bool TryGetSlot(string? key, out SemanticSlot slot)
+        {
+            if (key == null)
+            {
+                slot = default;
+                return false;
+            }
+
+            return s_slots.TryGetValue(key, out slot);
+        }
     }
 }

@@ -37,6 +37,9 @@
 - Pooled tag buffers no longer keep activity tag keys and values alive after they are returned to the shared array pool.
   ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
 
+- An activity tag with a null key no longer prevents the remaining tags from being exported as custom properties. `Activity` does not reject a null key; the tag is now skipped during categorization rather than failing partway through building the custom properties.
+  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
+
 - Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
 - Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
 

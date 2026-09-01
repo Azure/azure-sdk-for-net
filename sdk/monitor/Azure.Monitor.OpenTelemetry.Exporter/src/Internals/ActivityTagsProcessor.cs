@@ -56,7 +56,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
-                if (tag.Value == null)
+                // A tag with no key cannot be exported, and Activity does not reject one.
+                if (tag.Key is null || tag.Value == null)
                 {
                     continue;
                 }
