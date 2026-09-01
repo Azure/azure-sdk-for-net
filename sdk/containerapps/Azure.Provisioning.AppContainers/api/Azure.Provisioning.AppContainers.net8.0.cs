@@ -1361,6 +1361,12 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2026_01_01;
         }
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum ContainerAppManagedEnvironmentOutBoundType
+    {
+        LoadBalancer = 0,
+        UserDefinedRouting = 1,
+    }
     public partial class ContainerAppManagedEnvironmentStorage : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerAppManagedEnvironmentStorage(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
