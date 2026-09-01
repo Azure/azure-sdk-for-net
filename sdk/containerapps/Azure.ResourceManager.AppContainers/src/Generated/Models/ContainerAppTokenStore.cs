@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("azureBlobStorage")]
         internal BlobStorageTokenStore AzureBlobStorage { get; set; }
 
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
+        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
         [WirePath("azureBlobStorage.sasUrlSettingName")]
         public string AzureBlobStorageSasUrlSettingName
         {

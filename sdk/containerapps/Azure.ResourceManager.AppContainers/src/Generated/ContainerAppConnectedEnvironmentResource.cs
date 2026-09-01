@@ -212,8 +212,11 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
             scope.Start();
             try
@@ -261,8 +264,11 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ContainerAppConnectedEnvironmentResource> Update(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
             scope.Start();
             try

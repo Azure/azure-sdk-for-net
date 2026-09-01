@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new ContainerAppJobDetectorPropertyCollection(client, Id));
         }
 
-        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <summary> Get the properties for a given Container App Job. </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetContainerAppJobDetectorProperties().GetAsync(apiName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <summary> Get the properties for a given Container App Job. </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
