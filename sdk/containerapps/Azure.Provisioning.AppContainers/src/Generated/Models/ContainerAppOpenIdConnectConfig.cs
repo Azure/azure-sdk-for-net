@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _authorizationEndpoint;
         private BicepValue<string> _tokenEndpoint;
         private BicepValue<string> _issuer;
-        private BicepValue<string> _certificationUri;
+        private BicepValue<Uri> _certificationUri;
         private BicepValue<string> _wellKnownOpenIdConfiguration;
 
         /// <summary> Creates a new ContainerAppOpenIdConnectConfig. </summary>
@@ -70,7 +71,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificationUri. </summary>
-        public BicepValue<string> CertificationUri
+        public BicepValue<Uri> CertificationUri
         {
             get
             {
@@ -106,7 +107,7 @@ namespace Azure.Provisioning.AppContainers
             _authorizationEndpoint = DefineProperty<string>(nameof(AuthorizationEndpoint), new string[] { "authorizationEndpoint" });
             _tokenEndpoint = DefineProperty<string>(nameof(TokenEndpoint), new string[] { "tokenEndpoint" });
             _issuer = DefineProperty<string>(nameof(Issuer), new string[] { "issuer" });
-            _certificationUri = DefineProperty<string>(nameof(CertificationUri), new string[] { "certificationUri" });
+            _certificationUri = DefineProperty<Uri>(nameof(CertificationUri), new string[] { "certificationUri" });
             _wellKnownOpenIdConfiguration = DefineProperty<string>(nameof(WellKnownOpenIdConfiguration), new string[] { "wellKnownOpenIdConfiguration" });
             DefineAdditionalProperties();
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppSecretKeyVaultProperties : ProvisionableConstruct
     {
         private BicepValue<string> _identity;
-        private BicepValue<string> _keyVaultUri;
+        private BicepValue<Uri> _keyVaultUri;
 
         /// <summary> Creates a new ContainerAppSecretKeyVaultProperties. </summary>
         public ContainerAppSecretKeyVaultProperties()
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the KeyVaultUri. </summary>
-        public BicepValue<string> KeyVaultUri
+        public BicepValue<Uri> KeyVaultUri
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.AppContainers
         {
             base.DefineProvisionableProperties();
             _identity = DefineProperty<string>(nameof(Identity), new string[] { "identity" });
-            _keyVaultUri = DefineProperty<string>(nameof(KeyVaultUri), new string[] { "keyVaultUrl" });
+            _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyVaultUrl" });
             DefineAdditionalProperties();
         }
 

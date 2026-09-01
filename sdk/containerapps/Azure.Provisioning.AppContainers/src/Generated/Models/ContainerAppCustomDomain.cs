@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepValue<string> _name;
         private BicepValue<ContainerAppCustomDomainBindingType> _bindingType;
-        private BicepValue<string> _certificateId;
+        private BicepValue<ResourceIdentifier> _certificateId;
 
         /// <summary> Creates a new ContainerAppCustomDomain. </summary>
         public ContainerAppCustomDomain()
@@ -53,7 +54,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificateId. </summary>
-        public BicepValue<string> CertificateId
+        public BicepValue<ResourceIdentifier> CertificateId
         {
             get
             {
@@ -73,7 +74,7 @@ namespace Azure.Provisioning.AppContainers
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _bindingType = DefineProperty<ContainerAppCustomDomainBindingType>(nameof(BindingType), new string[] { "bindingType" });
-            _certificateId = DefineProperty<string>(nameof(CertificateId), new string[] { "certificateId" });
+            _certificateId = DefineProperty<ResourceIdentifier>(nameof(CertificateId), new string[] { "certificateId" });
             DefineAdditionalProperties();
         }
 

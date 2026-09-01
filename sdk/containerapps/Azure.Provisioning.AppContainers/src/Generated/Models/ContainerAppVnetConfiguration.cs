@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppVnetConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isInternal;
-        private BicepValue<string> _infrastructureSubnetId;
+        private BicepValue<ResourceIdentifier> _infrastructureSubnetId;
         private BicepValue<string> _dockerBridgeCidr;
         private BicepValue<string> _platformReservedCidr;
         private BicepValue<string> _platformReservedDnsIP;
@@ -40,7 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InfrastructureSubnetId. </summary>
-        public BicepValue<string> InfrastructureSubnetId
+        public BicepValue<ResourceIdentifier> InfrastructureSubnetId
         {
             get
             {
@@ -104,7 +105,7 @@ namespace Azure.Provisioning.AppContainers
         {
             base.DefineProvisionableProperties();
             _isInternal = DefineProperty<bool>(nameof(IsInternal), new string[] { "internal" });
-            _infrastructureSubnetId = DefineProperty<string>(nameof(InfrastructureSubnetId), new string[] { "infrastructureSubnetId" });
+            _infrastructureSubnetId = DefineProperty<ResourceIdentifier>(nameof(InfrastructureSubnetId), new string[] { "infrastructureSubnetId" });
             _dockerBridgeCidr = DefineProperty<string>(nameof(DockerBridgeCidr), new string[] { "dockerBridgeCidr" });
             _platformReservedCidr = DefineProperty<string>(nameof(PlatformReservedCidr), new string[] { "platformReservedCidr" });
             _platformReservedDnsIP = DefineProperty<string>(nameof(PlatformReservedDnsIP), new string[] { "platformReservedDnsIP" });

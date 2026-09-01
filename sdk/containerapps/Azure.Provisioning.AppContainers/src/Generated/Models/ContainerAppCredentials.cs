@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepValue<string> _clientId;
         private BicepValue<string> _clientSecret;
-        private BicepValue<string> _tenantId;
+        private BicepValue<Guid> _tenantId;
         private BicepValue<string> _kind;
         private BicepValue<string> _subscriptionId;
 
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
-        public BicepValue<string> TenantId
+        public BicepValue<Guid> TenantId
         {
             get
             {
@@ -105,7 +106,7 @@ namespace Azure.Provisioning.AppContainers
             base.DefineProvisionableProperties();
             _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" });
             _clientSecret = DefineProperty<string>(nameof(ClientSecret), new string[] { "clientSecret" });
-            _tenantId = DefineProperty<string>(nameof(TenantId), new string[] { "tenantId" });
+            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" });
             DefineAdditionalProperties();

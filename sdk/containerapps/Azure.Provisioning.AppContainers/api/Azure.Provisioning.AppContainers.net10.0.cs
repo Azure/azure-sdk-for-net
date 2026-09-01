@@ -428,14 +428,14 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppCustomDomain : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerAppCustomDomain() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppCustomDomainBindingType> BindingType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CertificateId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CertificateId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1423,7 +1423,7 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppOpenIdConnectConfig() { }
         public Azure.Provisioning.BicepValue<string> AuthorizationEndpoint { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CertificationUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> CertificationUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Issuer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TokenEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WellKnownOpenIdConfiguration { get { throw null; } set { } }
@@ -1693,14 +1693,14 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppSecretKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppServiceBind : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerAppServiceBind() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ServiceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppSourceControl : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1801,7 +1801,7 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppVnetConfiguration() { }
         public Azure.Provisioning.BicepValue<string> DockerBridgeCidr { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> InfrastructureSubnetId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> InfrastructureSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsInternal { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PlatformReservedCidr { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PlatformReservedDnsIP { get { throw null; } set { } }
@@ -1838,7 +1838,7 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppWritableSecret() { }
         public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

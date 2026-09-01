@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
     public partial class ContainerAppServiceBind : ProvisionableConstruct
     {
-        private BicepValue<string> _serviceId;
+        private BicepValue<ResourceIdentifier> _serviceId;
         private BicepValue<string> _name;
 
         /// <summary> Creates a new ContainerAppServiceBind. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceId. </summary>
-        public BicepValue<string> ServiceId
+        public BicepValue<ResourceIdentifier> ServiceId
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _serviceId = DefineProperty<string>(nameof(ServiceId), new string[] { "serviceId" });
+            _serviceId = DefineProperty<ResourceIdentifier>(nameof(ServiceId), new string[] { "serviceId" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();
         }
