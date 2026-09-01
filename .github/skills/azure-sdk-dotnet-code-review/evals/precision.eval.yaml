@@ -1,0 +1,133 @@
+name: azure-sdk-dotnet-code-review-precision-eval
+description: Initial precision checks for open-ended findings, deterministic repository rules, and false-positive suppression.
+
+type: capability
+
+environment:
+  skills:
+    - ".."
+
+tags:
+  area: code-review
+  type: precision
+
+defaults:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: retain-open-ended-bug-review
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      changed line and return findings only:
+      `for (int i = 0; i <= items.Count; i++) total += items[i];`
+      The surrounding method is otherwise correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)IndexOutOfRangeException|ArgumentOutOfRangeException|one past'
+
+  - name: report-test-project-suppression
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      Azure SDK test-project diff and return findings only:
+      `<NoWarn>$(NoWarn);CA2000</NoWarn>` was added to the test csproj.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-contains
+        config:
+          substring: "CA2000"
+      - type: output-contains
+        config:
+          substring: "suppression"
+
+  - name: allow-prerelease-dependency-in-prerelease-library
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      csproj diff and return findings only. The package version is `1.0.0-beta.2` and it adds a
+      PackageReference that resolves to `2.0.0-beta.1`. There are no other changes. If there is no
+      finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: ignore-unrelated-unchanged-code
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic PR
+      and return findings only. The only changed line fixes a spelling error in README.md. An
+      unchanged source file elsewhere has a public `DateTime StartTime` property. Do not review
+      unchanged code. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: do-not-repeat-normal-ci-diagnostic
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic PR
+      and return findings only. CI already reports AZC0015 for a changed client constructor. The PR
+      adds no suppression, opt-out, baseline, or allow-list entry. If there is no finding, return
+      exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: report-analyzer-opt-out
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      csproj diff and return findings only:
+      `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` was added.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-contains
+        config:
+          substring: "DisableEnhancedAnalysis"
+      - type: output-contains
+        config:
+          substring: "suppression"
+
+  - name: report-missing-client-settings-schema
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      hand-written client-library diff and return findings only. It adds a public
+      `WidgetClientSettings` type for appsettings configuration but adds no ConfigurationSchema.json
+      file.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-contains
+        config:
+          substring: "ConfigurationSchema.json"

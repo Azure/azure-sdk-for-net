@@ -48,3 +48,12 @@ For detailed workflow instructions, see [SDK Release](https://github.com/Azure/a
 ## Pre-Commit Validation
 
 Before committing changes to SDK packages under `sdk/`, always run the pre-commit validation checks described in the `pre-commit-checks` skill. These checks run `dotnet format`, regenerate public API listings, update snippets, and regenerate code as needed. They may produce additional file changes that must be included in the commit.
+
+## Code Review
+
+Before inspecting or commenting on any pull request, diff, patch, commit, or local changes for code
+review, load and follow
+[`azure-sdk-dotnet-code-review`](skills/azure-sdk-dotnet-code-review/SKILL.md) as the first review
+step. When Agent Skill invocation is available, invoke `azure-sdk-dotnet-code-review` before
+reviewing. Its Azure SDK-specific rules augment rather than replace the normal open-ended review
+for bugs, security, correctness, reliability, and maintainability.
