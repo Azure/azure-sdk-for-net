@@ -1,10 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Provisioning.AppContainers
 {
     public partial class ContainerAppManagedEnvironmentStorage
     {
+        /// <summary> Azure file properties. </summary>
+        // The TypeSpec generator preserves AzureFile only on Properties instead of flattening it onto the resource.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use Properties.AzureFile instead.")]
+        public ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile
+        {
+            get => Properties.AzureFile;
+            set => Properties.AzureFile = value;
+        }
+
         public static partial class ResourceVersions
         {
             // Preserve historical API versions that shipped from the reflection-based provisioning generator.

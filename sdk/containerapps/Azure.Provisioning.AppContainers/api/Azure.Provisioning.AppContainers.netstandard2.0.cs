@@ -1373,6 +1373,8 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppManagedEnvironmentStorage(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Properties.AzureFile instead.")]
+        public Azure.Provisioning.AppContainers.ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment Parent { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ManagedEnvironmentStorageProperties Properties { get { throw null; } set { } }
