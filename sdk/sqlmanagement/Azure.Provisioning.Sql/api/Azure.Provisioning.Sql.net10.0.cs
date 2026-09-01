@@ -1572,8 +1572,8 @@ namespace Azure.Provisioning.Sql
     public partial class ManagedInstancePairInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstancePairInfo() { }
-        public Azure.Provisioning.BicepValue<string> PartnerManagedInstanceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PrimaryManagedInstanceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PartnerManagedInstanceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrimaryManagedInstanceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedInstancePecProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1912,7 +1912,7 @@ namespace Azure.Provisioning.Sql
     public partial class PartnerRegionInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PartnerRegionInfo() { }
-        public Azure.Provisioning.BicepValue<string> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.InstanceFailoverGroupReplicationRole> ReplicationRole { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1920,7 +1920,7 @@ namespace Azure.Provisioning.Sql
     {
         public PartnerServerInfo() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.FailoverGroupReplicationRole> ReplicationRole { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -3935,7 +3935,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlServicePrincipalType> PrincipalType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SqlServicePrincipalType

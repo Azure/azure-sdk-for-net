@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,8 +14,8 @@ namespace Azure.Provisioning.Sql
     /// <summary> Pairs of Managed Instances in the failover group. </summary>
     public partial class ManagedInstancePairInfo : ProvisionableConstruct
     {
-        private BicepValue<string> _primaryManagedInstanceId;
-        private BicepValue<string> _partnerManagedInstanceId;
+        private BicepValue<ResourceIdentifier> _primaryManagedInstanceId;
+        private BicepValue<ResourceIdentifier> _partnerManagedInstanceId;
 
         /// <summary> Creates a new ManagedInstancePairInfo. </summary>
         public ManagedInstancePairInfo()
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the PrimaryManagedInstanceId. </summary>
-        public BicepValue<string> PrimaryManagedInstanceId
+        public BicepValue<ResourceIdentifier> PrimaryManagedInstanceId
         {
             get
             {
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the PartnerManagedInstanceId. </summary>
-        public BicepValue<string> PartnerManagedInstanceId
+        public BicepValue<ResourceIdentifier> PartnerManagedInstanceId
         {
             get
             {
@@ -55,8 +56,8 @@ namespace Azure.Provisioning.Sql
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _primaryManagedInstanceId = DefineProperty<string>(nameof(PrimaryManagedInstanceId), new string[] { "primaryManagedInstanceId" });
-            _partnerManagedInstanceId = DefineProperty<string>(nameof(PartnerManagedInstanceId), new string[] { "partnerManagedInstanceId" });
+            _primaryManagedInstanceId = DefineProperty<ResourceIdentifier>(nameof(PrimaryManagedInstanceId), new string[] { "primaryManagedInstanceId" });
+            _partnerManagedInstanceId = DefineProperty<ResourceIdentifier>(nameof(PartnerManagedInstanceId), new string[] { "partnerManagedInstanceId" });
             DefineAdditionalProperties();
         }
 

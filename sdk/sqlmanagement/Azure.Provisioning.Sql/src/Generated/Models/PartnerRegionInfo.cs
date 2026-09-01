@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Sql
     /// <summary> Partner region information for the failover group. </summary>
     public partial class PartnerRegionInfo : ProvisionableConstruct
     {
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepValue<InstanceFailoverGroupReplicationRole> _replicationRole;
 
         /// <summary> Creates a new PartnerRegionInfo. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -50,7 +51,7 @@ namespace Azure.Provisioning.Sql
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _replicationRole = DefineProperty<InstanceFailoverGroupReplicationRole>(nameof(ReplicationRole), new string[] { "replicationRole" }, isOutput: true);
             DefineAdditionalProperties();
         }

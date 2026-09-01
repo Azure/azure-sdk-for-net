@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql
     public partial class PartnerServerInfo : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepValue<FailoverGroupReplicationRole> _replicationRole;
 
         /// <summary> Creates a new PartnerServerInfo. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Azure.Provisioning.Sql
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isRequired: true);
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" }, isOutput: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _replicationRole = DefineProperty<FailoverGroupReplicationRole>(nameof(ReplicationRole), new string[] { "replicationRole" }, isOutput: true);
             DefineAdditionalProperties();
         }

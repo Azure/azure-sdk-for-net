@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql
     {
         private BicepValue<Guid> _principalId;
         private BicepValue<Guid> _clientId;
-        private BicepValue<string> _tenantId;
+        private BicepValue<Guid> _tenantId;
         private BicepValue<SqlServicePrincipalType> _principalType;
 
         /// <summary> Creates a new SqlServicePrincipal. </summary>
@@ -45,7 +45,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the TenantId. </summary>
-        public BicepValue<string> TenantId
+        public BicepValue<Guid> TenantId
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Azure.Provisioning.Sql
             base.DefineProvisionableProperties();
             _principalId = DefineProperty<Guid>(nameof(PrincipalId), new string[] { "principalId" }, isOutput: true);
             _clientId = DefineProperty<Guid>(nameof(ClientId), new string[] { "clientId" }, isOutput: true);
-            _tenantId = DefineProperty<string>(nameof(TenantId), new string[] { "tenantId" }, isOutput: true);
+            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" }, isOutput: true);
             _principalType = DefineProperty<SqlServicePrincipalType>(nameof(PrincipalType), new string[] { "type" });
             DefineAdditionalProperties();
         }
