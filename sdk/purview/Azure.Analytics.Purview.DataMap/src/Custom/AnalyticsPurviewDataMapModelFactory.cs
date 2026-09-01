@@ -9,3 +9,5 @@ namespace Azure.Analytics.Purview.DataMap;
 public partial class AnalyticsPurviewDataMapModelFactory
 {
 }
+
+// Test comment for batching validation - DO NOT MERGE

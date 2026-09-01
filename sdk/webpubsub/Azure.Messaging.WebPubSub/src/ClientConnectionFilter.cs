@@ -104,3 +104,5 @@ namespace Azure.Messaging.WebPubSub
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -18,3 +18,4 @@ namespace Azure.ResourceManager.StreamAnalytics
         public DateTimeOffset? TimeWindow { get; set; }
     }
 }
+// Test comment for batching validation - DO NOT MERGE

@@ -253,6 +253,8 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
+        // Test comment for batching validation - DO NOT MERGE
+
         private AppendBlobRestClient BuildAppendBlobRestClient(Uri blobUri)
         {
             return new AppendBlobRestClient(

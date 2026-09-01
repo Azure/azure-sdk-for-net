@@ -17,3 +17,5 @@ namespace Microsoft.Extensions.Azure
         TClient CreateClient(string name);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

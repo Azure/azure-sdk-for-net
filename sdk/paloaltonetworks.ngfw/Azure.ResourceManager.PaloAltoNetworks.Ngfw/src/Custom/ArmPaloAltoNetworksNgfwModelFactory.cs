@@ -158,3 +158,5 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             => GlobalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

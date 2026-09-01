@@ -15,3 +15,4 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public partial class RedisEnterpriseClusterPatch
     { }
 }
+// Test comment for batching validation - DO NOT MERGE
