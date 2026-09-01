@@ -33,15 +33,12 @@
 
 ### Other Changes
 
-- Reworked how activity tags are stored and read while converting an activity. Recognized attributes are assigned a dense index during categorization and read by array index, rather than by scanning the requested key against every mapped tag; a single conversion performs 13 to 26 such reads. They are held in that index alone rather than also being appended to a list, so a conversion rents two pooled buffers instead of three. Every span shape measures faster, and the shape performing the most reads, a span carrying Application Insights override attributes, converts about a third faster.
+- Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion allocates less. Standard metrics no longer collect the tags they never read.
   ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-  - Standard metrics no longer collect the attributes they do not read. Extracting the dependency duration metric categorized every tag on the activity, including the ones destined for custom properties, and then used only the recognized ones. Skipping the rest measures 18% to 31% faster depending on tag count.
-  - Building the values for a multi-attribute read no longer allocates two arrays per call.
-  - Removed two attribute lookups that could never succeed. `http.server_name` and `server.socket.address` are not recognized when activity tags are categorized, so they were never present in the list that the request-url and dependency-target logic searched. Both attributes continue to be exported as custom properties, unchanged.
-  - Fixed pooled buffers being leaked from the shared array pool when converting an activity fails. The buffers were returned only on the success path, so every conversion failure permanently removed two buffers from the pool and forced later conversions to allocate.
-  - Fixed the size used to rent those buffers being held in shared mutable state. A single activity with an unusually large number of tags permanently raised the rent size for every subsequent activity in the process, and the value was written from multiple exporter threads without synchronization.
-  - Fixed pooled tag buffers keeping activity tag keys and values alive after they are returned to the shared array pool.
-  - Fixed an activity tag with a null key preventing the remaining tags from being exported as custom properties. `Activity` does not reject a null key; the tag is now skipped during categorization rather than failing partway through building the custom properties.
+  - Fixed pooled tag buffers being leaked whenever converting an activity failed, and retaining tag keys and values after being returned to the pool.
+  - Fixed the buffer rent size being process-wide mutable state written without synchronization.
+  - Fixed an activity tag with a null key dropping the remaining tags from custom properties.
+  - Removed two attribute lookups that could never match. `http.server_name` and `server.socket.address` are still exported as custom properties, unchanged.
 
 ## 1.8.3 (2026-07-24)
 
