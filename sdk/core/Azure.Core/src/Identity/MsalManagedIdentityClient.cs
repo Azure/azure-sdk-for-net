@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
+using MtlsBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength;
+using PoPOptions = Microsoft.Identity.Client.AppConfig.PoPOptions;
 
 namespace Azure.Identity
 {
@@ -177,13 +179,7 @@ namespace Azure.Identity
 
             if (ShouldAttemptMtlsPop(requestContext, isTokenBindingAvailable))
             {
-                var withAttestationSupport = s_withAttestationSupport.Value;
-                if (withAttestationSupport != null)
-                {
-                    builder.WithMtlsProofOfPossession();
-                    AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, "Managed identity token request configured with mTLS proof-of-possession.");
-                    builder = withAttestationSupport(builder);
-                }
+                builder = ConfigureMtlsPop(builder, s_withAttestationSupport.Value);
             }
 
             if (_isForceRefreshEnabled)
@@ -220,7 +216,21 @@ namespace Azure.Identity
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
-        private bool ShouldAttemptMtlsPop(TokenRequestContext requestContext, bool isTokenBindingAvailable) =>
+        internal static AcquireTokenForManagedIdentityParameterBuilder ConfigureMtlsPop(
+            AcquireTokenForManagedIdentityParameterBuilder builder,
+            Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport)
+        {
+            if (withAttestationSupport == null)
+            {
+                return builder;
+            }
+
+            builder.WithMtlsProofOfPossession(new PoPOptions { MinStrength = MtlsBindingStrength.KeyGuard });
+            AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, "Managed identity token request configured with mTLS proof-of-possession.");
+            return withAttestationSupport(builder);
+        }
+
+        internal bool ShouldAttemptMtlsPop(TokenRequestContext requestContext, bool isTokenBindingAvailable) =>
             !_disableMtlsProofOfPossession &&
             requestContext.IsProofOfPossessionEnabled &&
             isTokenBindingAvailable;

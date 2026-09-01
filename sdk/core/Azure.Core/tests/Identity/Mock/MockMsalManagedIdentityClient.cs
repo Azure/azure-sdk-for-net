@@ -18,6 +18,7 @@ namespace Azure.Core.Tests.Identity.Mock
     {
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
+        public bool? LastIsTokenBindingAvailable { get; private set; }
 
         /// <summary>
         /// When set, this is invoked by <see cref="GetManagedIdentityCapabilitiesAsync"/> to produce the
@@ -54,6 +55,8 @@ namespace Azure.Core.Tests.Identity.Mock
 
         public override ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
+            LastIsTokenBindingAvailable = isTokenBindingAvailable;
+
             if (AcquireTokenForManagedIdentityAsyncFactory != null)
             {
                 return new ValueTask<AuthenticationResult>(AcquireTokenForManagedIdentityAsyncFactory(requestContext, cancellationToken));
@@ -98,10 +101,14 @@ namespace Azure.Core.Tests.Identity.Mock
         /// Tests use this with <see cref="GetManagedIdentityCapabilitiesFactory"/> to drive the credential down a
         /// specific code path (for example, <c>None</c> to reach the token-acquisition call).
         /// </summary>
-        internal static ManagedIdentityCapabilities CreateCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
-            => CreateManagedIdentityCapabilities(source);
+        internal static ManagedIdentityCapabilities CreateCapabilities(
+            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source,
+            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength maxSupportedBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None)
+            => CreateManagedIdentityCapabilities(source, maxSupportedBindingStrength);
 
-        private static ManagedIdentityCapabilities CreateManagedIdentityCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
+        private static ManagedIdentityCapabilities CreateManagedIdentityCapabilities(
+            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source,
+            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength maxSupportedBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None)
         {
             ConstructorInfo ctor = typeof(ManagedIdentityCapabilities).GetConstructor(
                 BindingFlags.Instance | BindingFlags.NonPublic,
@@ -116,7 +123,7 @@ namespace Azure.Core.Tests.Identity.Mock
                     "The MSAL library version may have changed its internal API. Update the reflection call to match the current constructor signature.");
             }
 
-            return (ManagedIdentityCapabilities)ctor.Invoke([source, Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None, null]);
+            return (ManagedIdentityCapabilities)ctor.Invoke([source, maxSupportedBindingStrength, null]);
         }
 
         private AuthenticationResult SendDirectImdsRequest(TokenRequestContext requestContext, CancellationToken cancellationToken)

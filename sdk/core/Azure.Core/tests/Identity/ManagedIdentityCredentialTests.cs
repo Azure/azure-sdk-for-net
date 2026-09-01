@@ -17,6 +17,7 @@ using Azure.Identity;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using MtlsBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength;
 namespace Azure.Core.Tests.Identity
 {
     [NonParallelizable]
@@ -346,6 +347,65 @@ namespace Azure.Core.Tests.Identity
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
+        }
+
+        [TestCase(MtlsBindingStrength.None, false)]
+        [TestCase(MtlsBindingStrength.Software, false)]
+        [TestCase(MtlsBindingStrength.KeyGuard, true)]
+        [TestCase((MtlsBindingStrength)4, true)]
+        public async Task ManagedIdentityMtlsPopRequiresKeyGuard(MtlsBindingStrength maxSupportedBindingStrength, bool expectedTokenBindingAvailable)
+        {
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions(),
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
+                            maxSupportedBindingStrength);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                        AuthenticationResultFactory.Create(ExpectedToken);
+                });
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            // ClientTestBase runs this through GetToken for the synchronous fixture.
+            AccessToken token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.AreEqual(expectedTokenBindingAvailable, mockMsal.LastIsTokenBindingAvailable);
+        }
+
+        [Test]
+        public void ManagedIdentityMinStrengthNotMetDoesNotFallback()
+        {
+            int acquisitionCount = 0;
+            var failure = new MsalClientException(MsalError.MinStrengthNotMet, "The host cannot satisfy the requested minimum binding strength.");
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions(),
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
+                            MtlsBindingStrength.KeyGuard);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                    {
+                        acquisitionCount++;
+                        throw failure;
+                    };
+                });
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            // ClientTestBase runs this through GetToken for the synchronous fixture.
+            AuthenticationFailedException exception =
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(context, default));
+
+            Assert.AreSame(failure, exception.InnerException);
+            Assert.AreEqual(1, acquisitionCount);
         }
 
         [NonParallelizable]
