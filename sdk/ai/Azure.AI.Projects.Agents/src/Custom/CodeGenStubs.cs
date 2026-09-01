@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 global using Microsoft.TypeSpec.Generator.Customizations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -46,7 +47,6 @@ public partial class ProjectsAgentRecord
 [CodeGenType("Location")] internal partial class InternalLocation { }
 [CodeGenType("LogProb")] internal partial class InternalLogProb { }
 [CodeGenType("MCPListToolsTool")] internal partial class InternalMCPListToolsTool { }
-[CodeGenType("RealtimeMCPListTools")] internal partial class InternalRealtimeMCPListTools { }
 [CodeGenType("MCPTool")] internal partial class InternalMCPTool { }
 [CodeGenType("MCPToolAllowedTools1")] internal partial class InternalMCPToolAllowedTools1 { }
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }
@@ -61,3 +61,4 @@ public partial class ProjectsAgentRecord
 [CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
 [CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
 [CodeGenType("ToolSearchExecutionType")] public partial struct ToolSearchExecutionKind { }
+[CodeGenType("VoiceResponseBase")][Experimental("AAIP002")] public partial class VoiceResponseBase { }

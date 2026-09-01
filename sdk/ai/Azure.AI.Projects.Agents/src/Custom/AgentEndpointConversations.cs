@@ -6,7 +6,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using System.Threading.Tasks;
 using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -154,13 +156,13 @@ public partial class AgentEndpointConversations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<RealtimeConversationItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<RealtimeItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
-        return new InternalOpenAICollectionResultOfT<RealtimeConversationItem>(
+        return new InternalOpenAICollectionResultOfT<RealtimeItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentConversationResponseItemsRequest(
@@ -172,7 +174,7 @@ public partial class AgentEndpointConversations
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeConversationItem>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeItem>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId, responseId]),
             cancellationToken.ToRequestOptions());
     }
@@ -208,13 +210,13 @@ public partial class AgentEndpointConversations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<RealtimeConversationItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<RealtimeItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
-        return new InternalOpenAIAsyncCollectionResultOfT<RealtimeConversationItem>(
+        return new InternalOpenAIAsyncCollectionResultOfT<RealtimeItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentConversationResponseItemsRequest(
@@ -226,7 +228,7 @@ public partial class AgentEndpointConversations
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeConversationItem>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeItem>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId, responseId]),
             cancellationToken.ToRequestOptions());
     }
@@ -260,12 +262,12 @@ public partial class AgentEndpointConversations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<RealtimeConversationItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<RealtimeItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-        return new InternalOpenAICollectionResultOfT<RealtimeConversationItem>(
+        return new InternalOpenAICollectionResultOfT<RealtimeItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentConversationItemsRequest(
@@ -276,7 +278,7 @@ public partial class AgentEndpointConversations
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeConversationItem>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeItem>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId]),
             cancellationToken.ToRequestOptions());
     }
@@ -310,12 +312,12 @@ public partial class AgentEndpointConversations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<RealtimeConversationItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<RealtimeItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-        return new InternalOpenAIAsyncCollectionResultOfT<RealtimeConversationItem>(
+        return new InternalOpenAIAsyncCollectionResultOfT<RealtimeItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentConversationItemsRequest(
@@ -326,7 +328,7 @@ public partial class AgentEndpointConversations
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeConversationItem>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<RealtimeItem>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId]),
             cancellationToken.ToRequestOptions());
     }
@@ -429,5 +431,57 @@ public partial class AgentEndpointConversations
             dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<VoiceResponse>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId]),
             cancellationToken.ToRequestOptions());
+    }
+
+    /// <summary>
+    /// Retrieves a single item from the specified conversation by its id, including its transcript. An
+    /// `input_audio`/`output_audio` content part indicates that audio is available for the item; the canonical per-item
+    /// audio metadata is the `/items/{item_id}/audio` resource, and the bytes are streamed by
+    /// `/items/{item_id}/audio/content`. Returns `404` when the conversation or item was not persisted
+    /// (`store = false`).
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+    /// <param name="itemId"> The id of the conversation item to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP002")]
+    public virtual ClientResult<RealtimeItem> GetAgentConversationItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+        Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+        ClientResult result = GetAgentConversationItem(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+        RealtimeItem item = ModelReaderWriter.Read<RealtimeItem>(result.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+        return ClientResult.FromValue(item, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Retrieves a single item from the specified conversation by its id, including its transcript. An
+    /// `input_audio`/`output_audio` content part indicates that audio is available for the item; the canonical per-item
+    /// audio metadata is the `/items/{item_id}/audio` resource, and the bytes are streamed by
+    /// `/items/{item_id}/audio/content`. Returns `404` when the conversation or item was not persisted
+    /// (`store = false`).
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+    /// <param name="itemId"> The id of the conversation item to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP002")]
+    public virtual async Task<ClientResult<RealtimeItem>> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+        Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+        ClientResult result = await GetAgentConversationItemAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        RealtimeItem item = ModelReaderWriter.Read<RealtimeItem>(result.GetRawResponse().Content, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+        return ClientResult.FromValue(item, result.GetRawResponse());
     }
 }

@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -168,7 +169,7 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             VoiceResponseBaseObject? @object = default;
             VoiceResponseBaseStatus? status = default;
-            RealtimeResponseStatusDetails statusDetails = default;
+            OpenAI.RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
             string conversationId = default;
             IList<VoiceResponseBaseOutputModality> outputModalities = default;
@@ -205,7 +206,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    statusDetails = RealtimeResponseStatusDetails.DeserializeRealtimeResponseStatusDetails(prop.Value, options);
+                    statusDetails = OpenAI.RealtimeResponseStatusDetails.DeserializeRealtimeResponseStatusDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -214,7 +215,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    usage = RealtimeResponseUsage.DeserializeRealtimeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("conversation_id"u8))

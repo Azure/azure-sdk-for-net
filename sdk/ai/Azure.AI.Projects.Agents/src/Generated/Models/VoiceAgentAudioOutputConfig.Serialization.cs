@@ -6,7 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -210,7 +210,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            RealtimeAudioFormats format = default;
+            RealtimeAudioFormat format = default;
             string voice = default;
             VoiceType? voiceType = default;
             string voiceLocale = default;
@@ -234,7 +234,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    format = RealtimeAudioFormats.DeserializeRealtimeAudioFormats(prop.Value, options);
+                    format = ModelReaderWriter.Read<RealtimeAudioFormat>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("voice"u8))

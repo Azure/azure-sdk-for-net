@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {

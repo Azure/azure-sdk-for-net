@@ -4,6 +4,7 @@
 
 using System.ClientModel.Primitives;
 using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -185,9 +186,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InternalMCPToolRequireApproval))]
     [ModelReaderWriterBuildable(typeof(InternalNamespaceToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalRankingOptions))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.InternalRealtimeMCPListTools is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(InternalRealtimeMCPListTools))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.InternalRealtimeMCPListTools is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalToolChoiceParam))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalWebSearchPreviewTool))]
@@ -237,39 +235,27 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.PromotionInfo is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
-    [ModelReaderWriterBuildable(typeof(RealtimeAudioFormats))]
-    [ModelReaderWriterBuildable(typeof(RealtimeAudioFormatsAudioPcm))]
-    [ModelReaderWriterBuildable(typeof(RealtimeAudioFormatsAudioPcma))]
-    [ModelReaderWriterBuildable(typeof(RealtimeAudioFormatsAudioPcmu))]
-#pragma warning disable AAIP001 // global::OpenAI.RealtimeConversationItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeConversationItem))]
-#pragma warning restore AAIP001 // global::OpenAI.RealtimeConversationItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::OpenAI.RealtimeConversationItemFunctionCall is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeConversationItemFunctionCall))]
-#pragma warning restore AAIP001 // global::OpenAI.RealtimeConversationItemFunctionCall is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::OpenAI.RealtimeConversationItemFunctionCallOutput is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeConversationItemFunctionCallOutput))]
-#pragma warning restore AAIP001 // global::OpenAI.RealtimeConversationItemFunctionCallOutput is experimental and may change in future versions.
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeAudioFormat is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeAudioFormat))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeAudioFormat is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeFunctionToolParameters))]
-#pragma warning disable AAIP001 // global::OpenAI.RealtimeMCPApprovalRequest is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPApprovalRequest))]
-#pragma warning restore AAIP001 // global::OpenAI.RealtimeMCPApprovalRequest is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::OpenAI.RealtimeMCPApprovalResponse is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPApprovalResponse))]
-#pragma warning restore AAIP001 // global::OpenAI.RealtimeMCPApprovalResponse is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPError))]
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPHTTPError))]
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPProtocolError))]
-#pragma warning disable AAIP001 // global::OpenAI.RealtimeMCPToolCall is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPToolCall))]
-#pragma warning restore AAIP001 // global::OpenAI.RealtimeMCPToolCall is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPToolExecutionError))]
-    [ModelReaderWriterBuildable(typeof(RealtimeResponseStatusDetails))]
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeItem))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseInputCachedTokenUsageDetails is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeResponseInputCachedTokenUsageDetails))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseInputCachedTokenUsageDetails is experimental and may change in future versions.
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseInputTokenUsageDetails is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeResponseInputTokenUsageDetails))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseInputTokenUsageDetails is experimental and may change in future versions.
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseOutputTokenUsageDetails is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeResponseOutputTokenUsageDetails))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseOutputTokenUsageDetails is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(OpenAI.RealtimeResponseStatusDetails))]
     [ModelReaderWriterBuildable(typeof(RealtimeResponseStatusDetailsError))]
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeResponseUsage))]
-    [ModelReaderWriterBuildable(typeof(RealtimeResponseUsageInputTokenDetails))]
-    [ModelReaderWriterBuildable(typeof(RealtimeResponseUsageInputTokenDetailsCachedTokensDetails))]
-    [ModelReaderWriterBuildable(typeof(RealtimeResponseUsageOutputTokenDetails))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReminderPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
@@ -348,11 +334,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(UnknownFunctionShellToolParamEnvironment))]
     [ModelReaderWriterBuildable(typeof(UnknownInternalToolChoiceParam))]
     [ModelReaderWriterBuildable(typeof(UnknownOpenApiAuthenticationDetails))]
-    [ModelReaderWriterBuildable(typeof(UnknownRealtimeAudioFormats))]
-#pragma warning disable AAIP001 // global::OpenAI.UnknownRealtimeConversationItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownRealtimeConversationItem))]
-#pragma warning restore AAIP001 // global::OpenAI.UnknownRealtimeConversationItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownRealtimeMCPError))]
     [ModelReaderWriterBuildable(typeof(UnknownTelemetryEndpoint))]
     [ModelReaderWriterBuildable(typeof(UnknownTelemetryEndpointAuthentication))]
     [ModelReaderWriterBuildable(typeof(UnknownTool))]
@@ -478,7 +459,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResponseAudioOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
+#pragma warning disable AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResponseBase))]
+#pragma warning restore AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WebIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebIQPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WebIQPreviewTool is experimental and may change in future versions.

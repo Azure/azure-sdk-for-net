@@ -375,9 +375,11 @@ namespace Azure.AI.Projects.Agents
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationAudioContentAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetAgentConversationAudioContentAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetAgentConversationItem(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult<OpenAI.RealtimeConversationItem> GetAgentConversationItem(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public virtual System.ClientModel.ClientResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationItem(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.RealtimeConversationItem>> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Realtime.RealtimeItem>> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceItemAudioResponse> GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -386,14 +388,14 @@ namespace Azure.AI.Projects.Agents
         public virtual System.ClientModel.ClientResult<System.BinaryData> GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<OpenAI.RealtimeConversationItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.RealtimeConversationItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetAgentConversationResponse(string agentName, string conversationId, string responseId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceResponse> GetAgentConversationResponse(string agentName, string conversationId, string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceResponse>> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<OpenAI.RealtimeConversationItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.RealtimeConversationItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.VoiceResponse> GetAgentConversationResponses(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.VoiceResponse> GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.VoiceConversation> GetAgentConversations(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2283,33 +2285,9 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.PromotionInfo PromotionInfo(System.DateTimeOffset promotedOn = default(System.DateTimeOffset), string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProtocolConfiguration ProtocolConfiguration(Azure.AI.Projects.Agents.ActivityProtocolConfiguration activity = null, Azure.AI.Projects.Agents.ResponsesProtocolConfiguration responses = null, Azure.AI.Projects.Agents.A2AProtocolConfiguration a2a = null, Azure.AI.Projects.Agents.McpProtocolConfiguration mcp = null, Azure.AI.Projects.Agents.InvocationsProtocolConfiguration invocations = null, Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration invocationsWs = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProtocolVersionRecord ProtocolVersionRecord(Azure.AI.Projects.Agents.ProjectsAgentProtocol protocol = default(Azure.AI.Projects.Agents.ProjectsAgentProtocol), string version = null) { throw null; }
-        public static OpenAI.RealtimeAudioFormats RealtimeAudioFormats(string type = null) { throw null; }
-        public static OpenAI.RealtimeAudioFormatsAudioPcm RealtimeAudioFormatsAudioPcm(OpenAI.RealtimeAudioFormatsAudioPcmRate? rate = default(OpenAI.RealtimeAudioFormatsAudioPcmRate?)) { throw null; }
-        public static OpenAI.RealtimeAudioFormatsAudioPcma RealtimeAudioFormatsAudioPcma() { throw null; }
-        public static OpenAI.RealtimeAudioFormatsAudioPcmu RealtimeAudioFormatsAudioPcmu() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static OpenAI.RealtimeConversationItem RealtimeConversationItem(string type = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static OpenAI.RealtimeConversationItemFunctionCall RealtimeConversationItemFunctionCall(string id = null, OpenAI.RealtimeConversationItemFunctionCallObject? @object = default(OpenAI.RealtimeConversationItemFunctionCallObject?), OpenAI.RealtimeConversationItemFunctionCallStatus? status = default(OpenAI.RealtimeConversationItemFunctionCallStatus?), string callId = null, string name = null, string arguments = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string responseId = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static OpenAI.RealtimeConversationItemFunctionCallOutput RealtimeConversationItemFunctionCallOutput(string id = null, OpenAI.RealtimeConversationItemFunctionCallOutputObject? @object = default(OpenAI.RealtimeConversationItemFunctionCallOutputObject?), OpenAI.RealtimeConversationItemFunctionCallOutputStatus? status = default(OpenAI.RealtimeConversationItemFunctionCallOutputStatus?), string callId = null, string output = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string responseId = null, string name = null) { throw null; }
         public static OpenAI.RealtimeFunctionToolParameters RealtimeFunctionToolParameters() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static OpenAI.RealtimeMCPApprovalRequest RealtimeMCPApprovalRequest(string id = null, string serverLabel = null, string name = null, string arguments = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string responseId = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static OpenAI.RealtimeMCPApprovalResponse RealtimeMCPApprovalResponse(string id = null, string approvalRequestId = null, bool approve = false, string reason = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string responseId = null) { throw null; }
-        public static OpenAI.RealtimeMCPError RealtimeMCPError(string type = null) { throw null; }
-        public static OpenAI.RealtimeMCPHTTPError RealtimeMCPHTTPError(long code = (long)0, string message = null) { throw null; }
-        public static OpenAI.RealtimeMCPProtocolError RealtimeMCPProtocolError(long code = (long)0, string message = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static OpenAI.RealtimeMCPToolCall RealtimeMCPToolCall(string id = null, string serverLabel = null, string name = null, string arguments = null, string approvalRequestId = null, string output = null, OpenAI.RealtimeMCPError error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string responseId = null) { throw null; }
-        public static OpenAI.RealtimeMCPToolExecutionError RealtimeMCPToolExecutionError(string message = null) { throw null; }
         public static OpenAI.RealtimeResponseStatusDetails RealtimeResponseStatusDetails(OpenAI.RealtimeResponseStatusDetailsType? type = default(OpenAI.RealtimeResponseStatusDetailsType?), OpenAI.RealtimeResponseStatusDetailsReason? reason = default(OpenAI.RealtimeResponseStatusDetailsReason?), OpenAI.RealtimeResponseStatusDetailsError error = null) { throw null; }
         public static OpenAI.RealtimeResponseStatusDetailsError RealtimeResponseStatusDetailsError(string type = null, string code = null) { throw null; }
-        public static OpenAI.RealtimeResponseUsage RealtimeResponseUsage(long? totalTokens = default(long?), long? inputTokens = default(long?), long? outputTokens = default(long?), OpenAI.RealtimeResponseUsageInputTokenDetails inputTokenDetails = null, OpenAI.RealtimeResponseUsageOutputTokenDetails outputTokenDetails = null) { throw null; }
-        public static OpenAI.RealtimeResponseUsageInputTokenDetails RealtimeResponseUsageInputTokenDetails(long? cachedTokens = default(long?), long? textTokens = default(long?), long? imageTokens = default(long?), long? audioTokens = default(long?), OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails cachedTokensDetails = null) { throw null; }
-        public static OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails RealtimeResponseUsageInputTokenDetailsCachedTokensDetails(long? textTokens = default(long?), long? imageTokens = default(long?), long? audioTokens = default(long?)) { throw null; }
-        public static OpenAI.RealtimeResponseUsageOutputTokenDetails RealtimeResponseUsageOutputTokenDetails(long? textTokens = default(long?), long? audioTokens = default(long?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.ReminderPreviewToolboxTool ReminderPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null) { throw null; }
         public static Azure.AI.Projects.Agents.ResponsesProtocolConfiguration ResponsesProtocolConfiguration() { throw null; }
@@ -2363,9 +2341,9 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAudioConfig VoiceAgentAudioConfig(Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig input = null, Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig output = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig VoiceAgentAudioInputConfig(OpenAI.RealtimeAudioFormats format = null, Azure.AI.Projects.Agents.VoiceAgentNoiseReduction noiseReduction = null, Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig turnDetection = null, Azure.AI.Projects.Agents.VoiceAgentEchoCancellation echoCancellation = null, Azure.AI.Projects.Agents.VoiceAgentInputTranscription transcription = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig VoiceAgentAudioInputConfig(OpenAI.Realtime.RealtimeAudioFormat format = null, Azure.AI.Projects.Agents.VoiceAgentNoiseReduction noiseReduction = null, Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig turnDetection = null, Azure.AI.Projects.Agents.VoiceAgentEchoCancellation echoCancellation = null, Azure.AI.Projects.Agents.VoiceAgentInputTranscription transcription = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig VoiceAgentAudioOutputConfig(OpenAI.RealtimeAudioFormats format = null, string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, float? speed = default(float?), float? voiceTemperature = default(float?), System.Uri customLexiconUrl = null, System.Uri customTextNormalizationUrl = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string style = null, string pitch = null, string volume = null, string customVoiceEndpointId = null, string personalVoiceModel = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentAudioTimestampType> outputAudioTimestampTypes = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig VoiceAgentAudioOutputConfig(OpenAI.Realtime.RealtimeAudioFormat format = null, string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, float? speed = default(float?), float? voiceTemperature = default(float?), System.Uri customLexiconUrl = null, System.Uri customTextNormalizationUrl = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string style = null, string pitch = null, string volume = null, string customVoiceEndpointId = null, string personalVoiceModel = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentAudioTimestampType> outputAudioTimestampTypes = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAvatarConfig VoiceAgentAvatarConfig(Azure.AI.Projects.Agents.VoiceAgentAvatarType type = default(Azure.AI.Projects.Agents.VoiceAgentAvatarType), string character = null, string style = null, bool? customized = default(bool?), Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol? outputProtocol = default(Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol?), string model = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams video = null, Azure.AI.Projects.Agents.VoiceAgentAvatarScene scene = null, bool? outputAuditAudio = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.VoiceAgentAvatarScene VoiceAgentAvatarScene(float? zoom = default(float?), float? positionX = default(float?), float? positionY = default(float?), float? rotationX = default(float?), float? rotationY = default(float?), float? rotationZ = default(float?), float? amplitude = default(float?)) { throw null; }
@@ -2420,12 +2398,13 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceRecordingResponse VoiceRecordingResponse(string conversationId = null, Azure.AI.Projects.Agents.VoiceAudioContainerFormat format = default(Azure.AI.Projects.Agents.VoiceAudioContainerFormat), int sampleRate = 0, int channels = 0, Azure.AI.Projects.Agents.VoiceRecordingChannelLayout channelLayout = null, System.TimeSpan durationMs = default(System.TimeSpan), System.Uri blobUri = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceResponse VoiceResponse(Azure.AI.Projects.Agents.VoiceResponseBaseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseBaseObject?), OpenAI.VoiceResponseBaseStatus? status = default(OpenAI.VoiceResponseBaseStatus?), OpenAI.RealtimeResponseStatusDetails statusDetails = null, OpenAI.RealtimeResponseUsage usage = null, System.Collections.Generic.IEnumerable<OpenAI.VoiceResponseBaseOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null, string id = null, System.Collections.Generic.IEnumerable<OpenAI.RealtimeConversationItem> output = null, string conversationId = null, Azure.AI.Projects.Agents.VoiceResponseAudio audio = null, System.Collections.Generic.IDictionary<string, string> metadata = null, float? temperature = default(float?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceResponse VoiceResponse(Azure.AI.Projects.Agents.VoiceResponseBaseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseBaseObject?), OpenAI.VoiceResponseBaseStatus? status = default(OpenAI.VoiceResponseBaseStatus?), OpenAI.RealtimeResponseStatusDetails statusDetails = null, OpenAI.Realtime.RealtimeResponseUsage usage = null, System.Collections.Generic.IEnumerable<OpenAI.VoiceResponseBaseOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null, string id = null, System.Collections.Generic.IEnumerable<OpenAI.Realtime.RealtimeItem> output = null, string conversationId = null, Azure.AI.Projects.Agents.VoiceResponseAudio audio = null, System.Collections.Generic.IDictionary<string, string> metadata = null, float? temperature = default(float?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceResponseAudio VoiceResponseAudio(Azure.AI.Projects.Agents.VoiceResponseAudioOutput output = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, OpenAI.RealtimeAudioFormats format = null) { throw null; }
-        public static Azure.AI.Projects.Agents.VoiceResponseBase VoiceResponseBase(string id = null, Azure.AI.Projects.Agents.VoiceResponseBaseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseBaseObject?), OpenAI.VoiceResponseBaseStatus? status = default(OpenAI.VoiceResponseBaseStatus?), OpenAI.RealtimeResponseStatusDetails statusDetails = null, OpenAI.RealtimeResponseUsage usage = null, string conversationId = null, System.Collections.Generic.IEnumerable<OpenAI.VoiceResponseBaseOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, OpenAI.Realtime.RealtimeAudioFormat format = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public static Azure.AI.Projects.Agents.VoiceResponseBase VoiceResponseBase(string id = null, Azure.AI.Projects.Agents.VoiceResponseBaseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseBaseObject?), OpenAI.VoiceResponseBaseStatus? status = default(OpenAI.VoiceResponseBaseStatus?), OpenAI.RealtimeResponseStatusDetails statusDetails = null, OpenAI.Realtime.RealtimeResponseUsage usage = null, string conversationId = null, System.Collections.Generic.IEnumerable<OpenAI.VoiceResponseBaseOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = null, string serverLabel = null, System.BinaryData requireApproval = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -3278,7 +3257,7 @@ namespace Azure.AI.Projects.Agents
     {
         public VoiceAgentAudioInputConfig() { }
         public Azure.AI.Projects.Agents.VoiceAgentEchoCancellation EchoCancellation { get { throw null; } set { } }
-        public OpenAI.RealtimeAudioFormats Format { get { throw null; } set { } }
+        public OpenAI.Realtime.RealtimeAudioFormat Format { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.VoiceAgentNoiseReduction NoiseReduction { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.VoiceAgentInputTranscription Transcription { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig TurnDetection { get { throw null; } set { } }
@@ -3299,7 +3278,7 @@ namespace Azure.AI.Projects.Agents
         public System.Uri CustomLexiconUrl { get { throw null; } set { } }
         public System.Uri CustomTextNormalizationUrl { get { throw null; } set { } }
         public string CustomVoiceEndpointId { get { throw null; } set { } }
-        public OpenAI.RealtimeAudioFormats Format { get { throw null; } set { } }
+        public OpenAI.Realtime.RealtimeAudioFormat Format { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentAudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
         public string PersonalVoiceModel { get { throw null; } set { } }
         public string Pitch { get { throw null; } set { } }
@@ -4085,7 +4064,7 @@ namespace Azure.AI.Projects.Agents
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string Object { get { throw null; } }
         public Azure.AI.Projects.Agents.VoiceConversationStatus Status { get { throw null; } }
-        public OpenAI.RealtimeResponseUsage Usage { get { throw null; } }
+        public OpenAI.Realtime.RealtimeResponseUsage Usage { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.VoiceConversation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.Agents.VoiceConversation (System.ClientModel.ClientResult result) { throw null; }
@@ -4227,7 +4206,7 @@ namespace Azure.AI.Projects.Agents
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public new string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<OpenAI.RealtimeConversationItem> Output { get { throw null; } }
+        public System.Collections.Generic.IList<OpenAI.Realtime.RealtimeItem> Output { get { throw null; } }
         public float? Temperature { get { throw null; } }
         protected override Azure.AI.Projects.Agents.VoiceResponseBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4259,7 +4238,7 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceResponseAudioOutput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>
     {
         public VoiceResponseAudioOutput() { }
-        public OpenAI.RealtimeAudioFormats Format { get { throw null; } set { } }
+        public OpenAI.Realtime.RealtimeAudioFormat Format { get { throw null; } set { } }
         public string Voice { get { throw null; } set { } }
         public string VoiceLocale { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.VoiceType? VoiceType { get { throw null; } set { } }
@@ -4273,6 +4252,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
     public partial class VoiceResponseBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseBase>
     {
         internal VoiceResponseBase() { }
@@ -4283,7 +4263,8 @@ namespace Azure.AI.Projects.Agents
         public System.Collections.Generic.IList<OpenAI.VoiceResponseBaseOutputModality> OutputModalities { get { throw null; } }
         public OpenAI.VoiceResponseBaseStatus? Status { get { throw null; } }
         public OpenAI.RealtimeResponseStatusDetails StatusDetails { get { throw null; } }
-        public OpenAI.RealtimeResponseUsage Usage { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public OpenAI.Realtime.RealtimeResponseUsage Usage { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.VoiceResponseBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.VoiceResponseBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4552,73 +4533,6 @@ namespace OpenAI
         string System.ClientModel.Primitives.IPersistableModel<OpenAI.ProgrammaticToolCallingParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.ProgrammaticToolCallingParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class RealtimeAudioFormats : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormats>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormats>
-    {
-        internal RealtimeAudioFormats() { }
-        protected virtual OpenAI.RealtimeAudioFormats JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.RealtimeAudioFormats PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeAudioFormats System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormats>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormats>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeAudioFormats System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormats>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormats>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormats>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeAudioFormatsAudioPcm : OpenAI.RealtimeAudioFormats, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcm>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcm>
-    {
-        public RealtimeAudioFormatsAudioPcm() { }
-        public OpenAI.RealtimeAudioFormatsAudioPcmRate? Rate { get { throw null; } set { } }
-        protected override OpenAI.RealtimeAudioFormats JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeAudioFormats PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeAudioFormatsAudioPcm System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcm>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcm>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeAudioFormatsAudioPcm System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcm>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcm>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcm>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeAudioFormatsAudioPcma : OpenAI.RealtimeAudioFormats, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcma>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcma>
-    {
-        public RealtimeAudioFormatsAudioPcma() { }
-        protected override OpenAI.RealtimeAudioFormats JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeAudioFormats PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeAudioFormatsAudioPcma System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcma>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcma>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeAudioFormatsAudioPcma System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcma>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcma>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcma>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RealtimeAudioFormatsAudioPcmRate : System.IEquatable<OpenAI.RealtimeAudioFormatsAudioPcmRate>
-    {
-        private readonly int _dummyPrimitive;
-        public RealtimeAudioFormatsAudioPcmRate(int value) { throw null; }
-        public static OpenAI.RealtimeAudioFormatsAudioPcmRate _24000 { get { throw null; } }
-        public bool Equals(OpenAI.RealtimeAudioFormatsAudioPcmRate other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(OpenAI.RealtimeAudioFormatsAudioPcmRate left, OpenAI.RealtimeAudioFormatsAudioPcmRate right) { throw null; }
-        public static implicit operator OpenAI.RealtimeAudioFormatsAudioPcmRate (int value) { throw null; }
-        public static bool operator !=(OpenAI.RealtimeAudioFormatsAudioPcmRate left, OpenAI.RealtimeAudioFormatsAudioPcmRate right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RealtimeAudioFormatsAudioPcmu : OpenAI.RealtimeAudioFormats, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcmu>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcmu>
-    {
-        public RealtimeAudioFormatsAudioPcmu() { }
-        protected override OpenAI.RealtimeAudioFormats JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeAudioFormats PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeAudioFormatsAudioPcmu System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcmu>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeAudioFormatsAudioPcmu>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeAudioFormatsAudioPcmu System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcmu>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcmu>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeAudioFormatsAudioPcmu>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RealtimeClientEventType : System.IEquatable<OpenAI.RealtimeClientEventType>
     {
@@ -4646,109 +4560,6 @@ namespace OpenAI
         public static bool operator !=(OpenAI.RealtimeClientEventType left, OpenAI.RealtimeClientEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-    public abstract partial class RealtimeConversationItem : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItem>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItem>
-    {
-        internal RealtimeConversationItem() { }
-        protected virtual OpenAI.RealtimeConversationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator OpenAI.RealtimeConversationItem (System.ClientModel.ClientResult result) { throw null; }
-        protected virtual OpenAI.RealtimeConversationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeConversationItem System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeConversationItem System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-    public partial class RealtimeConversationItemFunctionCall : OpenAI.RealtimeConversationItem, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItemFunctionCall>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCall>
-    {
-        public RealtimeConversationItemFunctionCall(string name, string arguments) { }
-        public string Arguments { get { throw null; } set { } }
-        public string CallId { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public OpenAI.RealtimeConversationItemFunctionCallObject? Object { get { throw null; } set { } }
-        public string ResponseId { get { throw null; } }
-        public OpenAI.RealtimeConversationItemFunctionCallStatus? Status { get { throw null; } set { } }
-        protected override OpenAI.RealtimeConversationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeConversationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeConversationItemFunctionCall System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItemFunctionCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItemFunctionCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeConversationItemFunctionCall System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RealtimeConversationItemFunctionCallObject : System.IEquatable<OpenAI.RealtimeConversationItemFunctionCallObject>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RealtimeConversationItemFunctionCallObject(string value) { throw null; }
-        public static OpenAI.RealtimeConversationItemFunctionCallObject RealtimeItem { get { throw null; } }
-        public bool Equals(OpenAI.RealtimeConversationItemFunctionCallObject other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(OpenAI.RealtimeConversationItemFunctionCallObject left, OpenAI.RealtimeConversationItemFunctionCallObject right) { throw null; }
-        public static implicit operator OpenAI.RealtimeConversationItemFunctionCallObject (string value) { throw null; }
-        public static implicit operator OpenAI.RealtimeConversationItemFunctionCallObject? (string value) { throw null; }
-        public static bool operator !=(OpenAI.RealtimeConversationItemFunctionCallObject left, OpenAI.RealtimeConversationItemFunctionCallObject right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-    public partial class RealtimeConversationItemFunctionCallOutput : OpenAI.RealtimeConversationItem, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItemFunctionCallOutput>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCallOutput>
-    {
-        public RealtimeConversationItemFunctionCallOutput(string callId, string output) { }
-        public string CallId { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public OpenAI.RealtimeConversationItemFunctionCallOutputObject? Object { get { throw null; } set { } }
-        public string Output { get { throw null; } set { } }
-        public string ResponseId { get { throw null; } }
-        public OpenAI.RealtimeConversationItemFunctionCallOutputStatus? Status { get { throw null; } set { } }
-        protected override OpenAI.RealtimeConversationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeConversationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeConversationItemFunctionCallOutput System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItemFunctionCallOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeConversationItemFunctionCallOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeConversationItemFunctionCallOutput System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeConversationItemFunctionCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RealtimeConversationItemFunctionCallOutputObject : System.IEquatable<OpenAI.RealtimeConversationItemFunctionCallOutputObject>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RealtimeConversationItemFunctionCallOutputObject(string value) { throw null; }
-        public static OpenAI.RealtimeConversationItemFunctionCallOutputObject RealtimeItem { get { throw null; } }
-        public bool Equals(OpenAI.RealtimeConversationItemFunctionCallOutputObject other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(OpenAI.RealtimeConversationItemFunctionCallOutputObject left, OpenAI.RealtimeConversationItemFunctionCallOutputObject right) { throw null; }
-        public static implicit operator OpenAI.RealtimeConversationItemFunctionCallOutputObject (string value) { throw null; }
-        public static implicit operator OpenAI.RealtimeConversationItemFunctionCallOutputObject? (string value) { throw null; }
-        public static bool operator !=(OpenAI.RealtimeConversationItemFunctionCallOutputObject left, OpenAI.RealtimeConversationItemFunctionCallOutputObject right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum RealtimeConversationItemFunctionCallOutputStatus
-    {
-        Completed = 0,
-        Incomplete = 1,
-        InProgress = 2,
-    }
-    public enum RealtimeConversationItemFunctionCallStatus
-    {
-        Completed = 0,
-        Incomplete = 1,
-        InProgress = 2,
-    }
     public partial class RealtimeFunctionToolParameters : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeFunctionToolParameters>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>
     {
         public RealtimeFunctionToolParameters() { }
@@ -4761,126 +4572,6 @@ namespace OpenAI
         OpenAI.RealtimeFunctionToolParameters System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-    public partial class RealtimeMCPApprovalRequest : OpenAI.RealtimeConversationItem, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPApprovalRequest>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalRequest>
-    {
-        public RealtimeMCPApprovalRequest(string id, string serverLabel, string name, string arguments) { }
-        public string Arguments { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string ResponseId { get { throw null; } }
-        public string ServerLabel { get { throw null; } set { } }
-        protected override OpenAI.RealtimeConversationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeConversationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPApprovalRequest System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPApprovalRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPApprovalRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPApprovalRequest System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-    public partial class RealtimeMCPApprovalResponse : OpenAI.RealtimeConversationItem, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPApprovalResponse>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalResponse>
-    {
-        public RealtimeMCPApprovalResponse(string id, string approvalRequestId, bool approve) { }
-        public string ApprovalRequestId { get { throw null; } set { } }
-        public bool Approve { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Reason { get { throw null; } set { } }
-        public string ResponseId { get { throw null; } }
-        protected override OpenAI.RealtimeConversationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeConversationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPApprovalResponse System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPApprovalResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPApprovalResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPApprovalResponse System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPApprovalResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class RealtimeMCPError : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPError>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPError>
-    {
-        internal RealtimeMCPError() { }
-        protected virtual OpenAI.RealtimeMCPError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.RealtimeMCPError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPError System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPError System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeMCPHTTPError : OpenAI.RealtimeMCPError, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPHTTPError>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPHTTPError>
-    {
-        public RealtimeMCPHTTPError(long code, string message) { }
-        public long Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-        protected override OpenAI.RealtimeMCPError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeMCPError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPHTTPError System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPHTTPError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPHTTPError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPHTTPError System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPHTTPError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPHTTPError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPHTTPError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeMCPProtocolError : OpenAI.RealtimeMCPError, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPProtocolError>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPProtocolError>
-    {
-        public RealtimeMCPProtocolError(long code, string message) { }
-        public long Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-        protected override OpenAI.RealtimeMCPError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeMCPError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPProtocolError System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPProtocolError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPProtocolError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPProtocolError System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPProtocolError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPProtocolError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPProtocolError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-    public partial class RealtimeMCPToolCall : OpenAI.RealtimeConversationItem, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPToolCall>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolCall>
-    {
-        public RealtimeMCPToolCall(string id, string serverLabel, string name, string arguments) { }
-        public string ApprovalRequestId { get { throw null; } set { } }
-        public string Arguments { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public OpenAI.RealtimeMCPError Error { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Output { get { throw null; } set { } }
-        public string ResponseId { get { throw null; } }
-        public string ServerLabel { get { throw null; } set { } }
-        protected override OpenAI.RealtimeConversationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeConversationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPToolCall System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPToolCall System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeMCPToolExecutionError : OpenAI.RealtimeMCPError, System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPToolExecutionError>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolExecutionError>
-    {
-        public RealtimeMCPToolExecutionError(string message) { }
-        public string Message { get { throw null; } set { } }
-        protected override OpenAI.RealtimeMCPError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override OpenAI.RealtimeMCPError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeMCPToolExecutionError System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPToolExecutionError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeMCPToolExecutionError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeMCPToolExecutionError System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolExecutionError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolExecutionError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeMCPToolExecutionError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RealtimeResponseStatusDetails : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseStatusDetails>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseStatusDetails>
     {
@@ -4926,73 +4617,6 @@ namespace OpenAI
         Cancelled = 1,
         Failed = 2,
         Incomplete = 3,
-    }
-    public partial class RealtimeResponseUsage : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsage>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsage>
-    {
-        public RealtimeResponseUsage() { }
-        public OpenAI.RealtimeResponseUsageInputTokenDetails InputTokenDetails { get { throw null; } set { } }
-        public long? InputTokens { get { throw null; } set { } }
-        public OpenAI.RealtimeResponseUsageOutputTokenDetails OutputTokenDetails { get { throw null; } set { } }
-        public long? OutputTokens { get { throw null; } set { } }
-        public long? TotalTokens { get { throw null; } set { } }
-        protected virtual OpenAI.RealtimeResponseUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.RealtimeResponseUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeResponseUsage System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeResponseUsage System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeResponseUsageInputTokenDetails : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageInputTokenDetails>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetails>
-    {
-        public RealtimeResponseUsageInputTokenDetails() { }
-        public long? AudioTokens { get { throw null; } set { } }
-        public long? CachedTokens { get { throw null; } set { } }
-        public OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails CachedTokensDetails { get { throw null; } set { } }
-        public long? ImageTokens { get { throw null; } set { } }
-        public long? TextTokens { get { throw null; } set { } }
-        protected virtual OpenAI.RealtimeResponseUsageInputTokenDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.RealtimeResponseUsageInputTokenDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeResponseUsageInputTokenDetails System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageInputTokenDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageInputTokenDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeResponseUsageInputTokenDetails System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeResponseUsageInputTokenDetailsCachedTokensDetails : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>
-    {
-        public RealtimeResponseUsageInputTokenDetailsCachedTokensDetails() { }
-        public long? AudioTokens { get { throw null; } set { } }
-        public long? ImageTokens { get { throw null; } set { } }
-        public long? TextTokens { get { throw null; } set { } }
-        protected virtual OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RealtimeResponseUsageOutputTokenDetails : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>
-    {
-        public RealtimeResponseUsageOutputTokenDetails() { }
-        public long? AudioTokens { get { throw null; } set { } }
-        public long? TextTokens { get { throw null; } set { } }
-        protected virtual OpenAI.RealtimeResponseUsageOutputTokenDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.RealtimeResponseUsageOutputTokenDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.RealtimeResponseUsageOutputTokenDetails System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.RealtimeResponseUsageOutputTokenDetails System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeResponseUsageOutputTokenDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SkillReferenceParam : OpenAI.ContainerSkill, System.ClientModel.Primitives.IJsonModel<OpenAI.SkillReferenceParam>, System.ClientModel.Primitives.IPersistableModel<OpenAI.SkillReferenceParam>
     {

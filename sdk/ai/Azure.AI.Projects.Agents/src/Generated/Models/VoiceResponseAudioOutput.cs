@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The BCP-47 locale of the voice used for the response's audio output. </param>
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceResponseAudioOutput(string voice, VoiceType? voiceType, string voiceLocale, RealtimeAudioFormats format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceResponseAudioOutput(string voice, VoiceType? voiceType, string voiceLocale, RealtimeAudioFormat format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Voice = voice;
             VoiceType = voiceType;
@@ -46,6 +46,6 @@ namespace Azure.AI.Projects.Agents
         public string VoiceLocale { get; set; }
 
         /// <summary> The audio format used for the response's audio output. </summary>
-        public RealtimeAudioFormats Format { get; set; }
+        public RealtimeAudioFormat Format { get; set; }
     }
 }
