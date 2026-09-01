@@ -37,11 +37,11 @@ namespace Azure.Messaging.WebPubSub.Chat
             CancellationToken cancellationToken = default)
         {
             options ??= ClientAccessUriOptions.Default;
-            DateTimeOffset expiresAt = DateTimeOffset.UtcNow.Add(GetExpiresAfter(options));
+            TimeSpan expiresAfter = GetExpiresAfter(options);
 
             string token = _keyCredential != null
-                ? GenerateClientToken(options, expiresAt)
-                : RequestClientToken(options, expiresAt, cancellationToken);
+                ? GenerateClientToken(options, expiresAfter)
+                : RequestClientToken(options, expiresAfter, cancellationToken);
             return CreateClientAccessUri(token);
         }
 #pragma warning restore AZC0015
@@ -59,16 +59,16 @@ namespace Azure.Messaging.WebPubSub.Chat
             CancellationToken cancellationToken = default)
         {
             options ??= ClientAccessUriOptions.Default;
-            DateTimeOffset expiresAt = DateTimeOffset.UtcNow.Add(GetExpiresAfter(options));
+            TimeSpan expiresAfter = GetExpiresAfter(options);
 
             string token = _keyCredential != null
-                ? GenerateClientToken(options, expiresAt)
-                : await RequestClientTokenAsync(options, expiresAt, cancellationToken).ConfigureAwait(false);
+                ? GenerateClientToken(options, expiresAfter)
+                : await RequestClientTokenAsync(options, expiresAfter, cancellationToken).ConfigureAwait(false);
             return CreateClientAccessUri(token);
         }
 #pragma warning restore AZC0015
 
-        private string GenerateClientToken(ClientAccessUriOptions options, DateTimeOffset expiresAt)
+        private string GenerateClientToken(ClientAccessUriOptions options, TimeSpan expiresAfter)
         {
             if (_keyCredential == null)
             {
@@ -84,22 +84,22 @@ namespace Azure.Messaging.WebPubSub.Chat
             return WebPubSubClientAccessTokenGenerator.Generate(
                 _keyCredential,
                 $"{endpoint}{GetRelativeClientEndpoint()}",
-                expiresAt,
+                DateTimeOffset.UtcNow.Add(expiresAfter),
                 options.UserId,
                 ChatClientRoles);
         }
 
-        private string RequestClientToken(ClientAccessUriOptions options, DateTimeOffset expiresAt, CancellationToken cancellationToken)
+        private string RequestClientToken(ClientAccessUriOptions options, TimeSpan expiresAfter, CancellationToken cancellationToken)
         {
             EnsureTokenCredential();
-            int minutesToExpire = Math.Max((int)expiresAt.Subtract(DateTimeOffset.UtcNow).TotalMinutes, 1);
+            int minutesToExpire = Math.Max((int)expiresAfter.TotalMinutes, 1);
             return GenerateClientToken(options.UserId, ChatClientRoles, minutesToExpire, cancellationToken).Value.Token;
         }
 
-        private async Task<string> RequestClientTokenAsync(ClientAccessUriOptions options, DateTimeOffset expiresAt, CancellationToken cancellationToken)
+        private async Task<string> RequestClientTokenAsync(ClientAccessUriOptions options, TimeSpan expiresAfter, CancellationToken cancellationToken)
         {
             EnsureTokenCredential();
-            int minutesToExpire = Math.Max((int)expiresAt.Subtract(DateTimeOffset.UtcNow).TotalMinutes, 1);
+            int minutesToExpire = Math.Max((int)expiresAfter.TotalMinutes, 1);
             Response<GenerateClientTokenResponse> response = await GenerateClientTokenAsync(options.UserId, ChatClientRoles, minutesToExpire, cancellationToken).ConfigureAwait(false);
             return response.Value.Token;
         }

@@ -178,7 +178,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             Uri accessUri = client.GetClientAccessUri(new ClientAccessUriOptions
             {
                 UserId = "user1",
-                ExpiresAfter = TimeSpan.FromSeconds(121),
+                ExpiresAfter = TimeSpan.FromMinutes(2),
             });
 
             Uri requestUri = transport.SingleRequest.Uri.ToUri();
