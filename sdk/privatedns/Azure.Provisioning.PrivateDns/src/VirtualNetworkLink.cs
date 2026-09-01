@@ -177,13 +177,8 @@ public partial class VirtualNetworkLink : ProvisionableResource
     /// <summary>
     /// Supported VirtualNetworkLink resource versions.
     /// </summary>
-    public static class ResourceVersions
+    public static partial class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01.
-        /// </summary>
-        public static readonly string V2024_06_01 = "2024-06-01";
-
         /// <summary>
         /// 2020-06-01.
         /// </summary>
