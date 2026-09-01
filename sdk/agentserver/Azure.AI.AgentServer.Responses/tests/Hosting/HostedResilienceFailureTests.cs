@@ -40,6 +40,21 @@ public class HostedResilienceFailureTests
     }
 
     [Test]
+    [NonParallelizable]
+    public void HostedMode_ComposesWhenConsumerTaskIsRegisteredFirst()
+    {
+        ConfigureHostedEnvironment();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddResilientTask<string, string>(
+            "consumer-task",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+
+        Assert.DoesNotThrow(() =>
+            services.AddResponsesServer(o => o.ResilientBackground = true));
+    }
+
+    [Test]
     public void HostedMode_ResilientBackground_EngagesTaskSubsystem()
     {
         using var provider = BuildHostedResilientProvider();
@@ -83,13 +98,7 @@ public class HostedResilienceFailureTests
 
     private static ServiceProvider BuildHostedResilientProvider()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
-        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com/project");
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "test-agent");
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
-        FoundryEnvironment.Reload();
-
-        Assert.That(FoundryEnvironment.IsHosted, Is.True, "Hosted flag must be set for this test.");
+        ConfigureHostedEnvironment();
 
         var services = new ServiceCollection();
         services.AddLogging();
@@ -99,6 +108,17 @@ public class HostedResilienceFailureTests
         services.AddResponsesServer(o => o.ResilientBackground = true);
 
         return services.BuildServiceProvider();
+    }
+
+    private static void ConfigureHostedEnvironment()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com/project");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "test-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
+        FoundryEnvironment.Reload();
+
+        Assert.That(FoundryEnvironment.IsHosted, Is.True, "Hosted flag must be set for this test.");
     }
 
     private static void InvokeValidateResilientComposition(IServiceProvider provider)
