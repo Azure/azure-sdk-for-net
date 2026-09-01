@@ -58,7 +58,7 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new ResponseReasoningSummaryPartAddedEventPart(text: "");
+        var part = new ReasoningSummaryTextPart(string.Empty);
         return new ResponseReasoningSummaryPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), SummaryIndex = (int)(_summaryIndex), Part = part };
     }
 
@@ -103,7 +103,7 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new ResponseReasoningSummaryPartDoneEventPart(text: _finalText ?? string.Empty);
+        var part = new ReasoningSummaryTextPart(_finalText ?? string.Empty);
         return new ResponseReasoningSummaryPartDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), SummaryIndex = (int)(_summaryIndex), Part = part };
     }
 }

@@ -34,7 +34,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this web search call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemWebSearchToolCall { Id = _itemId, Status = ItemWebSearchToolCallStatus.InProgress, Action = new BinaryData("{}") };
+        var item = new OutputItemWebSearchToolCall { Id = _itemId, Status = WebSearchCallStatus.InProgress };
         return EmitAdded(item);
     }
 
@@ -71,7 +71,7 @@ public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSea
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this web search call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemWebSearchToolCall { Id = _itemId, Status = ItemWebSearchToolCallStatus.Completed, Action = new BinaryData("{}") };
+        var item = new OutputItemWebSearchToolCall { Id = _itemId, Status = WebSearchCallStatus.Completed };
         return EmitDone(item);
     }
 }

@@ -42,10 +42,9 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this message.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var message = new OutputItemMessage(
-            id: _itemId,
-            status: MessageStatus.InProgress,
-            content: Array.Empty<MessageContent>());
+        var message = ResponseItem.CreateAssistantMessageItem(Array.Empty<MessageContent>());
+        message.Id = _itemId;
+        message.Status = MessageStatus.InProgress;
         return EmitAdded(message);
     }
 
@@ -210,10 +209,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
                     ]);
                 }
 
-                completedContents.Add(new MessageContentOutputTextContent(
-                    text: tc.FinalText!,
-                    annotations: tc.Annotations,
-                    logprobs: Array.Empty<LogProb>()));
+                completedContents.Add(ResponseContentPart.CreateOutputTextPart(tc.FinalText!, tc.Annotations));
             }
             else if (builder is RefusalContentBuilder rc)
             {
@@ -225,15 +221,13 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
                     ]);
                 }
 
-                completedContents.Add(new MessageContentRefusalContent(
-                    refusal: rc.FinalRefusal!));
+                completedContents.Add(ResponseContentPart.CreateRefusalPart(rc.FinalRefusal!));
             }
         }
 
-        var message = new OutputItemMessage(
-            id: _itemId,
-            status: MessageStatus.Completed,
-            content: completedContents);
+        var message = ResponseItem.CreateAssistantMessageItem(completedContents);
+        message.Id = _itemId;
+        message.Status = MessageStatus.Completed;
         return EmitDone(message);
     }
 }

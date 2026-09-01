@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Responses.Internal;
 using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -53,7 +54,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: "",
-            status: FunctionCallStatus.InProgress);
+            status: Models.FunctionCallStatus.InProgress);
         item.Id = _itemId;
         return EmitAdded(item);
     }
@@ -65,7 +66,15 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseCustomToolCallInputDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCustomToolCallInputDeltaEvent EmitInputDelta(string delta)
     {
-        return new ResponseCustomToolCallInputDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = _outputIndex, ItemId = _itemId, Delta = delta };
+        return OpenAIModelFactory.CreateStreamingUpdate(
+            "response.custom_tool_call_input.delta",
+            (int)_stream.NextSequenceNumber(),
+            writer =>
+            {
+                writer.WriteNumber("output_index"u8, _outputIndex);
+                writer.WriteString("item_id"u8, _itemId);
+                writer.WriteString("delta"u8, delta);
+            });
     }
 
     /// <summary>
@@ -76,7 +85,15 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     public virtual ResponseCustomToolCallInputDoneEvent EmitInputDone(string input)
     {
         _finalInput = input;
-        return new ResponseCustomToolCallInputDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = _outputIndex, ItemId = _itemId, Input = input };
+        return OpenAIModelFactory.CreateStreamingUpdate(
+            "response.custom_tool_call_input.done",
+            (int)_stream.NextSequenceNumber(),
+            writer =>
+            {
+                writer.WriteNumber("output_index"u8, _outputIndex);
+                writer.WriteString("item_id"u8, _itemId);
+                writer.WriteString("input"u8, input);
+            });
     }
 
     /// <summary>
@@ -120,7 +137,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: _finalInput ?? "",
-            status: FunctionCallStatus.Completed);
+            status: Models.FunctionCallStatus.Completed);
         item.Id = _itemId;
         return EmitDone(item);
     }

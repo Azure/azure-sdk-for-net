@@ -34,8 +34,11 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this file search call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemFileSearchToolCall { Id = _itemId, Status = ItemFileSearchToolCallStatus.InProgress };
- foreach (var __v in Array.Empty<string>() ?? []) item.Queries.Add(__v);
+        var item = new OutputItemFileSearchToolCall(Array.Empty<string>())
+        {
+            Id = _itemId,
+            Status = FileSearchCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -72,8 +75,11 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this file search call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemFileSearchToolCall { Id = _itemId, Status = ItemFileSearchToolCallStatus.Completed };
- foreach (var __v in Array.Empty<string>() ?? []) item.Queries.Add(__v);
+        var item = new OutputItemFileSearchToolCall(Array.Empty<string>())
+        {
+            Id = _itemId,
+            Status = FileSearchCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

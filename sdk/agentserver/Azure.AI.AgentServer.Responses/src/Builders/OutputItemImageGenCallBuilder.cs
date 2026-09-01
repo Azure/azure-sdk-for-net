@@ -44,10 +44,11 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this image generation call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemImageGenToolCall(
-            id: _itemId,
-            status: ItemImageGenToolCallStatus.InProgress,
-            result: "");
+        var item = new OutputItemImageGenToolCall(BinaryData.FromString(string.Empty))
+        {
+            Id = _itemId,
+            Status = ImageGenerationCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -81,7 +82,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     public virtual ResponseImageGenCallPartialImageEvent EmitPartialImage(string partialImageB64)
     {
         var index = _partialImageIndex++;
-        return new ResponseImageGenCallPartialImageEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, PartialImageIndex = (int)(index), PartialImageBytes = partialImageB64 };
+        return new ResponseImageGenCallPartialImageEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, PartialImageIndex = (int)(index), PartialImageBytes = BinaryData.FromString(partialImageB64) };
     }
 
     /// <summary>
@@ -112,10 +113,11 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this image generation call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone(string result)
     {
-        var item = new OutputItemImageGenToolCall(
-            id: _itemId,
-            status: ItemImageGenToolCallStatus.Completed,
-            result: result);
+        var item = new OutputItemImageGenToolCall(BinaryData.FromString(result))
+        {
+            Id = _itemId,
+            Status = ImageGenerationCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

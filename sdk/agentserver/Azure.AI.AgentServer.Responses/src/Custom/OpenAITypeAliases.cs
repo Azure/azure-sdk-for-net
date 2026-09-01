@@ -178,3 +178,21 @@ global using ResponseLogProb = OpenAI.Responses.ResponseTokenLogProbabilityDetai
 global using ResponseReasoningSummaryPartAddedEventPart = OpenAI.Responses.ReasoningSummaryPart;
 global using ResponseReasoningSummaryPartDoneEventPart = OpenAI.Responses.ReasoningSummaryPart;
 global using ResponseErrorCode = OpenAI.Responses.ResponseErrorCode;
+
+// Item status enums. The spec declares these as inline unions, so the emitter synthesizes
+// Azure duplicates that have no addressable TypeSpec name to map away. Aliasing them here
+// binds every consumer outside the Models namespace to the OpenAI enum that the OpenAI item
+// properties actually expect; the generated Models code keeps resolving its own copies,
+// because an in-namespace declaration wins over a using alias.
+global using CodeInterpreterCallStatus = OpenAI.Responses.CodeInterpreterCallStatus;
+global using FileSearchCallStatus = OpenAI.Responses.FileSearchCallStatus;
+global using ReasoningStatus = OpenAI.Responses.ReasoningStatus;
+global using WebSearchCallStatus = OpenAI.Responses.WebSearchCallStatus;
+global using MessageStatus = OpenAI.Responses.MessageStatus;
+global using FunctionCallStatus = OpenAI.Responses.FunctionCallStatus;
+global using ImageGenerationCallStatus = OpenAI.Responses.ImageGenerationCallStatus;
+global using McpToolDefinition = OpenAI.Responses.McpToolDefinition;
+global using ReasoningSummaryPart = OpenAI.Responses.ReasoningSummaryPart;
+global using ReasoningSummaryTextPart = OpenAI.Responses.ReasoningSummaryTextPart;
+global using ResponseContentPart = OpenAI.Responses.ResponseContentPart;
+global using ResponseItem = OpenAI.Responses.ResponseItem;

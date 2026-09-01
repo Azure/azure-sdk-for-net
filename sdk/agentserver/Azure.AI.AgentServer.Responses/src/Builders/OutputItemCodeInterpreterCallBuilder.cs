@@ -37,8 +37,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this code interpreter call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemCodeInterpreterToolCall { Id = _itemId, Status = ItemCodeInterpreterToolCallStatus.InProgress, ContainerId = "", Code = "" };
- foreach (var __v in Array.Empty<BinaryData>() ?? []) item.Outputs.Add(__v);
+        var item = new OutputItemCodeInterpreterToolCall(string.Empty)
+        {
+            Id = _itemId,
+            Status = CodeInterpreterCallStatus.InProgress,
+            ContainerId = string.Empty,
+        };
         return EmitAdded(item);
     }
 
@@ -132,8 +136,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this code interpreter call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemCodeInterpreterToolCall { Id = _itemId, Status = ItemCodeInterpreterToolCallStatus.Completed, ContainerId = "", Code = _finalCode ?? "" };
- foreach (var __v in Array.Empty<BinaryData>() ?? []) item.Outputs.Add(__v);
+        var item = new OutputItemCodeInterpreterToolCall(_finalCode ?? string.Empty)
+        {
+            Id = _itemId,
+            Status = CodeInterpreterCallStatus.Completed,
+            ContainerId = string.Empty,
+        };
         return EmitDone(item);
     }
 }

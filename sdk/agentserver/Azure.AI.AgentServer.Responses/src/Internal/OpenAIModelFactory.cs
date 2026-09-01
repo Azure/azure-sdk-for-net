@@ -64,6 +64,34 @@ internal static class OpenAIModelFactory
             writer.WriteEndObject();
         });
 
+    /// <summary>
+    /// Creates a <see cref="StreamingResponseUpdate"/> for an event kind that the OpenAI library
+    /// models only as the shared base type.
+    /// </summary>
+    /// <param name="type">The <c>type</c> discriminator of the SSE event.</param>
+    /// <param name="sequenceNumber">The value of <c>sequence_number</c>.</param>
+    /// <param name="writeAdditionalProperties">Writes the event-specific properties.</param>
+    /// <returns>A populated <see cref="StreamingResponseUpdate"/>.</returns>
+    /// <remarks>
+    /// A handful of event kinds (the audio events and the custom-tool-call input events) have no
+    /// dedicated <c>Streaming*Update</c> subclass. They cannot be subclassed here either, because
+    /// <see cref="StreamingResponseUpdate"/>'s only constructor is <c>private protected</c>. The
+    /// event is therefore materialized from its wire form; the properties remain reachable through
+    /// <c>Patch</c>.
+    /// </remarks>
+    public static StreamingResponseUpdate CreateStreamingUpdate(
+        string type,
+        int sequenceNumber,
+        Action<Utf8JsonWriter>? writeAdditionalProperties = null)
+        => Read<StreamingResponseUpdate>(writer =>
+        {
+            writer.WriteStartObject();
+            writer.WriteString("type"u8, type);
+            writer.WriteNumber("sequence_number"u8, sequenceNumber);
+            writeAdditionalProperties?.Invoke(writer);
+            writer.WriteEndObject();
+        });
+
     private static T Read<T>(Action<Utf8JsonWriter> write)
         where T : class, IJsonModel<T>
     {

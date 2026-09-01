@@ -50,18 +50,11 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this function call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: _itemId,
-            callId: _callId,
-            @namespace: null,
-            name: _name,
-            arguments: "",
-            status: ItemFunctionToolCallStatus.InProgress);
+        var item = new OutputItemFunctionToolCall(_callId, _name, BinaryData.FromString("{}"))
+        {
+            Id = _itemId,
+            Status = FunctionCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -72,7 +65,7 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseFunctionCallArgumentsDeltaEvent"/> with the delta.</returns>
     public virtual ResponseFunctionCallArgumentsDeltaEvent EmitArgumentsDelta(string delta)
     {
-        return new ResponseFunctionCallArgumentsDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), Delta = delta };
+        return new ResponseFunctionCallArgumentsDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), Delta = BinaryData.FromString(delta) };
     }
 
     /// <summary>
@@ -83,7 +76,7 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     public virtual ResponseFunctionCallArgumentsDoneEvent EmitArgumentsDone(string arguments)
     {
         _finalArguments = arguments;
-        return new ResponseFunctionCallArgumentsDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, FunctionName = _name, OutputIndex = (int)(_outputIndex), FunctionArguments = arguments };
+        return new ResponseFunctionCallArgumentsDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, FunctionName = _name, OutputIndex = (int)(_outputIndex), FunctionArguments = BinaryData.FromString(arguments) };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -128,18 +121,11 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this function call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: _itemId,
-            callId: _callId,
-            @namespace: null,
-            name: _name,
-            arguments: _finalArguments ?? "",
-            status: ItemFunctionToolCallStatus.Completed);
+        var item = new OutputItemFunctionToolCall(_callId, _name, BinaryData.FromString(_finalArguments ?? "{}"))
+        {
+            Id = _itemId,
+            Status = FunctionCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

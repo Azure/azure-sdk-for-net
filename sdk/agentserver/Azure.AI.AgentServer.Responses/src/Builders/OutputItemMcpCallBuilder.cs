@@ -50,8 +50,8 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemMcpToolCall { Id = _itemId, ServerLabel = _serverLabel, ToolName = _name, ToolArguments = "" };
-        item.Status = MCPToolCallStatus.InProgress;
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString("{}")) { Id = _itemId };
+        item.Status = MCPToolCallStatus.InProgress.ToString();
         return EmitAdded(item);
     }
 
@@ -71,7 +71,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseMCPCallArgumentsDeltaEvent"/> with the delta.</returns>
     public virtual ResponseMCPCallArgumentsDeltaEvent EmitArgumentsDelta(string delta)
     {
-        return new ResponseMCPCallArgumentsDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, Delta = delta };
+        return new ResponseMCPCallArgumentsDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, Delta = BinaryData.FromString(delta) };
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseMCPCallArgumentsDoneEvent EmitArgumentsDone(string arguments)
     {
         _finalArguments = arguments;
-        return new ResponseMCPCallArgumentsDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, Arguments = arguments };
+        return new ResponseMCPCallArgumentsDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, ToolArguments = BinaryData.FromString(arguments) };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -151,8 +151,8 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemMcpToolCall { Id = _itemId, ServerLabel = _serverLabel, ToolName = _name, ToolArguments = _finalArguments ?? "" };
-        item.Status = _terminalStatus ?? MCPToolCallStatus.Completed;
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(_finalArguments ?? "{}")) { Id = _itemId };
+        item.Status = (_terminalStatus ?? MCPToolCallStatus.Completed).ToString();
         return EmitDone(item);
     }
 }

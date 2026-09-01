@@ -67,10 +67,7 @@ public class TextContentBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new OutputContentOutputTextContent(
-            text: "",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var part = ResponseContentPart.CreateOutputTextPart(string.Empty);
         return new ResponseContentPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 
@@ -87,7 +84,7 @@ public class TextContentBuilder
             throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
 
         _deltaFragments.Add(text);
-        return new ResponseTextDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Delta = text, TokenLogProbabilities = Array.Empty<ResponseLogProb>() };
+        return new ResponseTextDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Delta = text };
     }
 
     /// <summary>
@@ -110,7 +107,7 @@ public class TextContentBuilder
         _textDone = true;
         _finalText = finalText ?? string.Concat(_deltaFragments);
 
-        return new ResponseTextDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Text = _finalText, TokenLogProbabilities = Array.Empty<ResponseLogProb>() };
+        return new ResponseTextDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Text = _finalText };
     }
 
     /// <summary>
@@ -145,10 +142,7 @@ public class TextContentBuilder
             throw new InvalidOperationException("Must call EmitTextDone() before EmitDone().");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new OutputContentOutputTextContent(
-            text: _finalText ?? string.Empty,
-            annotations: _annotations,
-            logprobs: Array.Empty<LogProb>());
+        var part = ResponseContentPart.CreateOutputTextPart(_finalText ?? string.Empty, _annotations);
         return new ResponseContentPartDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 }

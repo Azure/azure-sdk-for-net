@@ -60,7 +60,7 @@ public class RefusalContentBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new OutputContentRefusalContent(refusal: "");
+        var part = ResponseContentPart.CreateRefusalPart(string.Empty);
         return new ResponseContentPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 
@@ -110,8 +110,7 @@ public class RefusalContentBuilder
             throw new InvalidOperationException("Must call EmitRefusalDone() before EmitDone().");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new OutputContentRefusalContent(
-            refusal: _finalRefusal ?? string.Empty);
+        var part = ResponseContentPart.CreateRefusalPart(_finalRefusal ?? string.Empty);
         return new ResponseContentPartDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 }

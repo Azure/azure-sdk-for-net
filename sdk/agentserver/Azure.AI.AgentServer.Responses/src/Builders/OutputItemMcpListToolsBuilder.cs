@@ -41,10 +41,10 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this MCP list tools item.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemMcpListTools(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            tools: Array.Empty<MCPListToolsTool>());
+        var item = new OutputItemMcpListTools(_serverLabel, Array.Empty<McpToolDefinition>())
+        {
+            Id = _itemId,
+        };
         return EmitAdded(item);
     }
 
@@ -85,10 +85,10 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP list tools item.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemMcpListTools(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            tools: Array.Empty<MCPListToolsTool>());
+        var item = new OutputItemMcpListTools(_serverLabel, Array.Empty<McpToolDefinition>())
+        {
+            Id = _itemId,
+        };
         return EmitDone(item);
     }
 }
