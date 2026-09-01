@@ -3,97 +3,150 @@
 
 using System;
 using System.Buffers;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal readonly struct AzMonList : IEnumerable
+    /// <remarks>
+    /// An instance holds either recognized attributes (in the slot array) or unrecognized tags
+    /// (in the list buffer), not both. Each buffer is rented only if that kind is stored.
+    /// </remarks>
+    internal readonly struct AzMonList
     {
-        private static int s_allocationSize = 8;
+        private const int DefaultCapacity = 8;
 
-        private readonly KeyValuePair<string, object?>[] data;
+        private readonly KeyValuePair<string, object?>[]? data;
 
-        private AzMonList(KeyValuePair<string, object?>[] data, int length)
+        private readonly object?[]? slots;
+
+        private AzMonList(KeyValuePair<string, object?>[]? data, int length, object?[]? slots)
         {
             this.data = data;
             this.Length = length;
+            this.slots = slots;
         }
 
         public int Length { get; }
 
         public ref KeyValuePair<string, object?> this[int index]
         {
-            get => ref this.data[index];
+            get => ref this.data![index];
+        }
+
+        /// <summary>
+        /// Reads a recognized attribute in constant time. Returns <see langword="null"/> when the
+        /// attribute is absent.
+        /// </summary>
+        public object? this[SemanticSlot slot]
+        {
+            get => this.slots?[(int)slot];
         }
 
         public static AzMonList Initialize()
         {
-            return new AzMonList(ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(s_allocationSize), 0);
+            return new AzMonList(ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(DefaultCapacity), 0, null);
         }
 
+        /// <summary>
+        /// Initializes a list that will only hold recognized attributes, so no list buffer is rented.
+        /// </summary>
+        public static AzMonList InitializeForMappedTags()
+        {
+            return new AzMonList(null, 0, RentSlots());
+        }
+
+        private static object?[] RentSlots()
+        {
+            var slots = ArrayPool<object?>.Shared.Rent((int)SemanticSlot.Count);
+
+            // The shared pool is process-wide, so a rented buffer cannot be assumed clean.
+            Array.Clear(slots, 0, (int)SemanticSlot.Count);
+
+            return slots;
+        }
+
+        /// <summary>
+        /// Adds a tag, resolving its slot so it can later be read by <see cref="SemanticSlot"/>.
+        /// </summary>
         public static void Add(ref AzMonList list, KeyValuePair<string, object?> keyValuePair)
         {
-            var data = list.data ?? throw new InvalidOperationException("AzMonList instance is not initialized.");
+            if (SemanticSlotMap.TryGetSlot(keyValuePair.Key, out var slot))
+            {
+                AddMapped(ref list, slot, keyValuePair);
+            }
+            else
+            {
+                AddUnmapped(ref list, keyValuePair);
+            }
+        }
+
+        /// <summary>
+        /// Adds a tag whose slot the caller has already resolved.
+        /// </summary>
+        public static void AddMapped(ref AzMonList list, SemanticSlot slot, KeyValuePair<string, object?> keyValuePair)
+        {
+            var slots = list.slots ?? RentSlots();
+            var length = list.Length;
+
+            // First write wins, matching the first-match behaviour of GetTagValue.
+            if (slots[(int)slot] == null)
+            {
+                slots[(int)slot] = keyValuePair.Value;
+                length++;
+            }
+
+            list = new AzMonList(list.data, length, slots);
+        }
+
+        /// <summary>
+        /// Adds a tag that is not a recognized attribute.
+        /// </summary>
+        public static void AddUnmapped(ref AzMonList list, KeyValuePair<string, object?> keyValuePair)
+        {
+            var data = list.data ?? ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(DefaultCapacity);
 
             if (list.Length >= data.Length)
             {
-                s_allocationSize = data.Length * 2;
                 var previousData = data;
 
-                data = ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(s_allocationSize);
+                data = ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(previousData.Length * 2);
 
-                var span = previousData.AsSpan();
-                span.CopyTo(data);
+                previousData.AsSpan(0, list.Length).CopyTo(data);
+
+                // Entries hold references to caller-owned tag keys and values, so the used
+                // region is cleared before the buffer goes back to the shared pool.
+                Array.Clear(previousData, 0, list.Length);
                 ArrayPool<KeyValuePair<string, object?>>.Shared.Return(previousData);
             }
 
             data[list.Length] = keyValuePair;
-            list = new AzMonList(data, list.Length + 1);
-        }
-
-        public static void Clear(ref AzMonList list)
-        {
-            list = new AzMonList(list.data, 0);
+            list = new AzMonList(data, list.Length + 1, list.slots);
         }
 
         public static object? GetTagValue(ref AzMonList list, string tagName)
         {
+            if (list.slots != null && SemanticSlotMap.TryGetSlot(tagName, out var slot))
+            {
+                return list.slots[(int)slot];
+            }
+
+            var data = list.data;
+            if (data == null)
+            {
+                return null;
+            }
+
             int length = list.Length;
 
             for (int i = 0; i < length; i++)
             {
-                if (string.Equals(list[i].Key, tagName, StringComparison.Ordinal))
+                if (string.Equals(data[i].Key, tagName, StringComparison.Ordinal))
                 {
-                    return list[i].Value;
+                    return data[i].Value;
                 }
             }
 
             return null;
-        }
-
-        internal static object?[] GetTagValues(ref AzMonList list, params string[] tagNames)
-        {
-            int lengthTagNames = tagNames.Length;
-            int lengthList = list.Length;
-            object?[] values = new object[lengthTagNames];
-
-            for (int i = 0; i < lengthList; i++)
-            {
-                var index = Array.IndexOf(tagNames, list[i].Key);
-                if (index >= 0)
-                {
-                    values[index] = list[i].Value;
-                    lengthTagNames--;
-
-                    if (lengthTagNames == 0)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return values;
         }
 
         public void Return()
@@ -101,49 +154,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var data = this.data;
             if (data != null)
             {
+                // Every return path clears its own used region, so unused slots are already clean.
+                Array.Clear(data, 0, Math.Min(this.Length, data.Length));
                 ArrayPool<KeyValuePair<string, object?>>.Shared.Return(data);
             }
-        }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(in this);
-        }
-
-        public struct Enumerator : IEnumerator
-        {
-            private readonly KeyValuePair<string, object?>[] data;
-            private readonly int length;
-            private int index;
-            private KeyValuePair<string, object?> current;
-
-            public Enumerator(in AzMonList list)
+            var slots = this.slots;
+            if (slots != null)
             {
-                this.data = list.data;
-                this.length = list.Length;
-                this.index = 0;
-                this.current = default;
-            }
-
-            public object Current { get => this.current; }
-
-            public bool MoveNext()
-            {
-                if (this.index < this.length)
-                {
-                    this.current = this.data[this.index++];
-                    return true;
-                }
-
-                this.index = this.length + 1;
-                this.current = default;
-                return false;
-            }
-
-            void IEnumerator.Reset()
-            {
-                this.index = 0;
-                this.current = default;
+                Array.Clear(slots, 0, (int)SemanticSlot.Count);
+                ArrayPool<object?>.Shared.Return(slots);
             }
         }
     }

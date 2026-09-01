@@ -9,86 +9,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal struct ActivityTagsProcessor
     {
-        private static readonly string[] s_semantics = {
-            SemanticConventions.AttributeDbStatement,
-            SemanticConventions.AttributeDbQueryText,
-            SemanticConventions.AttributeDbSystem,
-            SemanticConventions.AttributeDbSystemName,
-            SemanticConventions.AttributeDbName,
-            SemanticConventions.AttributeDbNamespace,
-
-            // required - HTTP
-            SemanticConventions.AttributeHttpMethod,
-            SemanticConventions.AttributeHttpUrl,
-            SemanticConventions.AttributeHttpStatusCode,
-            SemanticConventions.AttributeHttpScheme,
-            SemanticConventions.AttributeHttpHost,
-            SemanticConventions.AttributeHttpHostPort,
-            SemanticConventions.AttributeHttpTarget,
-            SemanticConventions.AttributeHttpUserAgent,
-            SemanticConventions.AttributeHttpRoute,
-
-            // required - HTTP V2
-            SemanticConventions.AttributeHttpRequestMethod,
-            SemanticConventions.AttributeHttpResponseStatusCode,
-            SemanticConventions.AttributeServerAddress,
-            SemanticConventions.AttributeServerPort,
-            SemanticConventions.AttributeUrlFull,
-            SemanticConventions.AttributeUrlPath,
-            SemanticConventions.AttributeUrlScheme,
-            SemanticConventions.AttributeUrlQuery,
-            SemanticConventions.AttributeUserAgentOriginal,
-            SemanticConventions.AttributeClientAddress,
-
-            // required - Azure
-            SemanticConventions.AttributeAzureNameSpace,
-
-            SemanticConventions.AttributePeerService,
-            SemanticConventions.AttributeNetPeerName,
-            SemanticConventions.AttributeNetPeerIp,
-            SemanticConventions.AttributeNetPeerPort,
-            SemanticConventions.AttributeNetHostPort,
-            SemanticConventions.AttributeNetHostName,
-            "otel.status_code",
-
-            // required - Messaging
-            SemanticConventions.AttributeMessagingSystem,
-            SemanticConventions.AttributeMessagingDestinationName,
-            SemanticConventions.AttributeNetworkProtocolName,
-
-            // Others
-            SemanticConventions.AttributeEnduserId,
-            SemanticConventions.AttributeEnduserPseudoId,
-            SemanticConventions.AttributeMicrosoftClientIp,
-
-            // Microsoft Application Insights Override Attributes
-            SemanticConventions.AttributeMicrosoftDependencyData,
-            SemanticConventions.AttributeMicrosoftDependencyName,
-            SemanticConventions.AttributeMicrosoftOperationName,
-            SemanticConventions.AttributeMicrosoftDependencyResultCode,
-            SemanticConventions.AttributeMicrosoftDependencyTarget,
-            SemanticConventions.AttributeMicrosoftDependencyType,
-            SemanticConventions.AttributeMicrosoftRequestName,
-            SemanticConventions.AttributeMicrosoftRequestUrl,
-            SemanticConventions.AttributeMicrosoftRequestSource,
-            SemanticConventions.AttributeMicrosoftRequestResultCode,
-
-            // Context tag attributes from Application Insights shim
-            SemanticConventions.AttributeMicrosoftSessionId,
-            SemanticConventions.AttributeAiDeviceId,
-            SemanticConventions.AttributeAiDeviceModel,
-            SemanticConventions.AttributeAiDeviceType,
-            SemanticConventions.AttributeAiDeviceOsVersion,
-            SemanticConventions.AttributeMicrosoftSyntheticSource,
-            SemanticConventions.AttributeMicrosoftUserAccountId,
-        };
-
-        internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
+        private readonly bool _includeUnmappedTags;
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
 
-        public OperationType activityType { get; set; }
+        public OperationType activityType { get; private set; }
+
+        /// <summary>
+        /// Whether the activity carried the newer semantic conventions.
+        /// </summary>
+        public readonly bool IsV2 => activityType.HasFlag(OperationType.V2);
+
+        /// <summary>
+        /// The operation type without the schema-version flag, for dispatching on the operation alone.
+        /// </summary>
+        public readonly OperationType BaseActivityType => activityType & ~OperationType.V2;
 
         public string? AzureNamespace { get; private set; } = null;
 
@@ -100,8 +36,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public ActivityTagsProcessor()
         {
-            MappedTags = AzMonList.Initialize();
+            _includeUnmappedTags = true;
+            MappedTags = AzMonList.InitializeForMappedTags();
             UnMappedTags = AzMonList.Initialize();
+        }
+
+        /// <summary>
+        /// Callers that only read <see cref="MappedTags"/> can skip collecting the unmapped
+        /// tags, which avoids a pooled buffer and the string conversion of array-valued tags.
+        /// </summary>
+        public ActivityTagsProcessor(bool includeUnmappedTags)
+        {
+            _includeUnmappedTags = includeUnmappedTags;
+            MappedTags = AzMonList.InitializeForMappedTags();
+            UnMappedTags = includeUnmappedTags ? AzMonList.Initialize() : default;
         }
 
         public void CategorizeTags(Activity activity)
@@ -113,68 +61,73 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     continue;
                 }
 
-                if (s_semanticsSet.Contains(tag.Key))
+                if (SemanticSlotMap.TryGetSlot(tag.Key, out var slot))
                 {
-                    switch (tag.Key)
+                    switch (slot)
                     {
-                        case SemanticConventions.AttributeHttpMethod:
+                        case SemanticSlot.HttpMethod:
                             activityType = OperationType.Http;
                             break;
-                        case SemanticConventions.AttributeHttpRequestMethod:
+                        case SemanticSlot.HttpRequestMethod:
                             activityType = OperationType.Http | OperationType.V2;
                             break;
-                        case SemanticConventions.AttributeDbSystemName:
+                        case SemanticSlot.DbSystemName:
                             activityType = OperationType.Db | OperationType.V2;
                             break;
-                        case SemanticConventions.AttributeDbSystem:
+                        case SemanticSlot.DbSystem:
                             activityType = OperationType.Db;
                             break;
-                        case SemanticConventions.AttributeMessagingSystem:
+                        case SemanticSlot.MessagingSystem:
                             activityType = OperationType.Messaging;
                             break;
-                        case SemanticConventions.AttributeAzureNameSpace:
+                        case SemanticSlot.AzureNameSpace:
                             AzureNamespace = tag.Value.ToString();
                             break;
-                        case SemanticConventions.AttributeEnduserId:
+                        case SemanticSlot.EnduserId:
                             EndUserId = tag.Value.ToString();
                             continue;
-                        case SemanticConventions.AttributeEnduserPseudoId:
+                        case SemanticSlot.EnduserPseudoId:
                             EndUserPseudoId = tag.Value.ToString();
                             continue;
-                        case SemanticConventions.AttributeMicrosoftSessionId:
-                        case SemanticConventions.AttributeAiDeviceId:
-                        case SemanticConventions.AttributeAiDeviceModel:
-                        case SemanticConventions.AttributeAiDeviceType:
-                        case SemanticConventions.AttributeAiDeviceOsVersion:
-                        case SemanticConventions.AttributeMicrosoftSyntheticSource:
-                        case SemanticConventions.AttributeMicrosoftUserAccountId:
-                        case SemanticConventions.AttributeMicrosoftDependencyData:
-                        case SemanticConventions.AttributeMicrosoftDependencyName:
-                        case SemanticConventions.AttributeMicrosoftDependencyTarget:
-                        case SemanticConventions.AttributeMicrosoftDependencyType:
-                        case SemanticConventions.AttributeMicrosoftDependencyResultCode:
-                        case SemanticConventions.AttributeMicrosoftOperationName:
-                        case SemanticConventions.AttributeMicrosoftRequestName:
-                        case SemanticConventions.AttributeMicrosoftRequestUrl:
-                        case SemanticConventions.AttributeMicrosoftRequestSource:
-                        case SemanticConventions.AttributeMicrosoftRequestResultCode:
+                        case SemanticSlot.MicrosoftSessionId:
+                        case SemanticSlot.AiDeviceId:
+                        case SemanticSlot.AiDeviceModel:
+                        case SemanticSlot.AiDeviceType:
+                        case SemanticSlot.AiDeviceOsVersion:
+                        case SemanticSlot.MicrosoftSyntheticSource:
+                        case SemanticSlot.MicrosoftUserAccountId:
+                        case SemanticSlot.MicrosoftDependencyData:
+                        case SemanticSlot.MicrosoftDependencyName:
+                        case SemanticSlot.MicrosoftDependencyTarget:
+                        case SemanticSlot.MicrosoftDependencyType:
+                        case SemanticSlot.MicrosoftDependencyResultCode:
+                        case SemanticSlot.MicrosoftOperationName:
+                        case SemanticSlot.MicrosoftRequestName:
+                        case SemanticSlot.MicrosoftRequestUrl:
+                        case SemanticSlot.MicrosoftRequestSource:
+                        case SemanticSlot.MicrosoftRequestResultCode:
                             HasOverrideAttributes = true;
                             break;
                     }
 
-                    AzMonList.Add(ref MappedTags, tag);
+                    AzMonList.AddMapped(ref MappedTags, slot, tag);
                 }
                 else
                 {
+                    if (!_includeUnmappedTags)
+                    {
+                        continue;
+                    }
+
                     // If the tag value is an array, there is no need to check for semantics;
                     // directly add it to the Unmapped list.
                     if (tag.Value is Array array)
                     {
-                        AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(tag.Key, array.ToCommaDelimitedString()));
+                        AzMonList.AddUnmapped(ref UnMappedTags, new KeyValuePair<string, object?>(tag.Key, array.ToCommaDelimitedString()));
                         continue;
                     }
 
-                    AzMonList.Add(ref UnMappedTags, tag);
+                    AzMonList.AddUnmapped(ref UnMappedTags, tag);
                 }
             }
         }

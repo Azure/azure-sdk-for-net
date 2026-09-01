@@ -38,42 +38,49 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var activityTagsProcessor = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
-                    // Check for Exceptions events
-                    if (activity.Events.Any())
+                    try
                     {
-                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, ref telemetrySchemaTypeCounter);
+                        telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+
+                        // Check for Exceptions events
+                        if (activity.Events.Any())
+                        {
+                            AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, ref telemetrySchemaTypeCounter);
+                        }
+
+                        switch (activity.GetTelemetryType())
+                        {
+                            case TelemetryType.Request:
+                                var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
+                                // Only set Name if not already set by override attribute
+                                if (string.IsNullOrEmpty(requestData.Name))
+                                {
+                                    requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+                                }
+                                telemetryItem.Data = new MonitorBase
+                                {
+                                    BaseType = "RequestData",
+                                    BaseData = requestData,
+                                };
+                                telemetrySchemaTypeCounter.IncrementRequest(requestData.Success);
+                                break;
+                            case TelemetryType.Dependency:
+                                var dependencyData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor);
+                                telemetryItem.Data = new MonitorBase
+                                {
+                                    BaseType = "RemoteDependencyData",
+                                    BaseData = dependencyData,
+                                };
+                                telemetrySchemaTypeCounter.IncrementDependency(dependencyData.Success);
+                                break;
+                        }
+                    }
+                    finally
+                    {
+                        activityTagsProcessor.Return();
                     }
 
-                    switch (activity.GetTelemetryType())
-                    {
-                        case TelemetryType.Request:
-                            var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
-                            // Only set Name if not already set by override attribute
-                            if (string.IsNullOrEmpty(requestData.Name))
-                            {
-                                requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
-                            }
-                            telemetryItem.Data = new MonitorBase
-                            {
-                                BaseType = "RequestData",
-                                BaseData = requestData,
-                            };
-                            telemetrySchemaTypeCounter.IncrementRequest(requestData.Success);
-                            break;
-                        case TelemetryType.Dependency:
-                            var dependencyData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor);
-                            telemetryItem.Data = new MonitorBase
-                            {
-                                BaseType = "RemoteDependencyData",
-                                BaseData = dependencyData,
-                            };
-                            telemetrySchemaTypeCounter.IncrementDependency(dependencyData.Success);
-                            break;
-                    }
-
-                    activityTagsProcessor.Return();
                     telemetryItems.Add(telemetryItem);
                 }
                 catch (Exception ex)
@@ -188,19 +195,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true)
         {
-            var activityTagsProcessor = new ActivityTagsProcessor();
+            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags);
             activityTagsProcessor.CategorizeTags(activity);
             return activityTagsProcessor;
         }
 
         internal static string GetOperationName(Activity activity, ref AzMonList MappedTags)
         {
-            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpMethod)?.ToString();
+            var httpMethod = MappedTags[SemanticSlot.HttpMethod]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
             {
-                var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+                var httpRoute = MappedTags[SemanticSlot.HttpRoute]?.ToString();
 
                 // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
                 // To work around that we will use path from httpUrl.
@@ -209,7 +216,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return $"{httpMethod} {httpRoute}";
                 }
 
-                var httpUrl = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpUrl)?.ToString();
+                var httpUrl = MappedTags[SemanticSlot.HttpUrl]?.ToString();
                 if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
                     return $"{httpMethod} {uri.AbsolutePath}";
@@ -221,10 +228,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string GetOperationNameV2(Activity activity, ref AzMonList MappedTags)
         {
-            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+            var httpMethod = MappedTags[SemanticSlot.HttpRequestMethod]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
             {
-                var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+                var httpRoute = MappedTags[SemanticSlot.HttpRoute]?.ToString();
 
                 // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
                 // To work around that we will use path from url.path.
@@ -233,7 +240,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return $"{httpMethod} {httpRoute}";
                 }
 
-                var httpPath = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeUrlPath)?.ToString();
+                var httpPath = MappedTags[SemanticSlot.UrlPath]?.ToString();
                 if (!string.IsNullOrWhiteSpace(httpPath))
                 {
                     return $"{httpMethod} {httpPath}";

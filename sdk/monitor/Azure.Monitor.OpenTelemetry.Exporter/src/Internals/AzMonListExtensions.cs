@@ -26,7 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/http.md#http-server-semantic-conventions
             // http.url
             // http.scheme, http.host, http.target
-            // http.scheme, http.server_name, net.host.port, http.target
             // http.scheme, net.host.name, net.host.port, http.target
             string? url = null;
             url = tagObjects.GetUrlUsingHttpUrl();
@@ -35,10 +34,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return url;
             }
 
-            var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
+            var httpScheme = tagObjects[SemanticSlot.HttpScheme]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
-                var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
+                var httpTarget = tagObjects[SemanticSlot.HttpTarget]?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
                 if (string.IsNullOrWhiteSpace(httpTarget))
@@ -53,19 +52,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return url;
                 }
 
-                var httpServerName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpServerName)?.ToString();
-                string? host;
-                if (!string.IsNullOrWhiteSpace(httpServerName))
-                {
-                    host = httpServerName;
-                }
-                else
-                {
-                    host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostName)?.ToString();
-                }
+                var host = tagObjects[SemanticSlot.NetHostName]?.ToString();
                 if (!string.IsNullOrWhiteSpace(host))
                 {
-                    var netHostPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostPort)?.ToString();
+                    var netHostPort = tagObjects[SemanticSlot.NetHostPort]?.ToString();
                     if (!string.IsNullOrWhiteSpace(netHostPort))
                     {
                         url = tagObjects.GetUrlUsingHostAndPort(httpScheme!, host!, netHostPort!, defaultPort, httpTarget!);
@@ -95,10 +85,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return url;
             }
 
-            var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
+            var httpScheme = tagObjects[SemanticSlot.HttpScheme]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
-                var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
+                var httpTarget = tagObjects[SemanticSlot.HttpTarget]?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
                 if (string.IsNullOrWhiteSpace(httpTarget))
@@ -116,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var host = tagObjects.GetHostUsingNetPeerAttributes();
                 if (!string.IsNullOrWhiteSpace(host))
                 {
-                    var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
+                    var netPeerPort = tagObjects[SemanticSlot.NetPeerPort]?.ToString();
                     if (!string.IsNullOrWhiteSpace(netPeerPort))
                     {
                         url = tagObjects.GetUrlUsingHostAndPort(httpScheme!, host!, netPeerPort!, defaultPort, httpTarget!);
@@ -170,7 +160,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static string? GetUrlUsingHttpUrl(this AzMonList tagObjects)
         {
             string? url = null;
-            var httpUrl = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpUrl)?.ToString();
+            var httpUrl = tagObjects[SemanticSlot.HttpUrl]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpUrl))
             {
                 url = httpUrl;
@@ -182,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static string? GetUrlUsingHttpHost(this AzMonList tagObjects, string httpScheme, string defaultPort, string httpTarget)
         {
             string? url = null;
-            var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
+            var httpHost = tagObjects[SemanticSlot.HttpHost]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpHost))
             {
                 string portSection = $":{defaultPort}";
@@ -217,7 +207,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? GetHostUsingNetPeerAttributes(this AzMonList tagObjects)
         {
-            var netPeerName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerName)?.ToString();
+            var netPeerName = tagObjects[SemanticSlot.NetPeerName]?.ToString();
             string? host;
             if (!string.IsNullOrWhiteSpace(netPeerName))
             {
@@ -225,7 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             else
             {
-                host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerIp)?.ToString();
+                host = tagObjects[SemanticSlot.NetPeerIp]?.ToString();
             }
 
             return host;
@@ -237,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? target = tagObjects.GetHostUsingNetPeerAttributes();
             if (!string.IsNullOrWhiteSpace(target))
             {
-                var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
+                var netPeerPort = tagObjects[SemanticSlot.NetPeerPort]?.ToString();
                 if (!string.IsNullOrWhiteSpace(netPeerPort) && netPeerPort != defaultPort)
                 {
                     target = $"{target}:{netPeerPort}";
@@ -250,9 +240,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string defaultPort)
         {
-            var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
-            string? target = values[0]?.ToString() ?? values[1]?.ToString();
-            var port = values[2]?.ToString();
+            string? target = tagObjects[SemanticSlot.ServerAddress]?.ToString();
+            var port = tagObjects[SemanticSlot.ServerPort]?.ToString();
             if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
             {
                 target = target + ":" + port;
@@ -264,12 +253,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string? GetTargetUsingServerAddressAndPort(this AzMonList tagObjects)
         {
-            var serverAttributes = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerPort);
-
-            var serverAddress = serverAttributes[0]?.ToString();
+            var serverAddress = tagObjects[SemanticSlot.ServerAddress]?.ToString();
             if (!string.IsNullOrEmpty(serverAddress))
             {
-                var serverPort = serverAttributes[1]?.ToString();
+                var serverPort = tagObjects[SemanticSlot.ServerPort]?.ToString();
 
                 return string.IsNullOrEmpty(serverPort)
                     ? serverAddress
@@ -285,15 +272,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static string? GetHttpDependencyTarget(this AzMonList tagObjects)
         {
             string? target;
-            string defaultPort = GetDefaultHttpPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString());
-            var peerService = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributePeerService)?.ToString();
+            string defaultPort = GetDefaultHttpPort(tagObjects[SemanticSlot.HttpScheme]?.ToString());
+            var peerService = tagObjects[SemanticSlot.PeerService]?.ToString();
             if (!string.IsNullOrWhiteSpace(peerService))
             {
                 target = peerService;
                 return target;
             }
 
-            var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
+            var httpHost = tagObjects[SemanticSlot.HttpHost]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpHost))
             {
                 string portSection = $":{defaultPort}";
@@ -309,7 +296,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return target;
             }
 
-            var httpUrl = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpUrl)?.ToString();
+            var httpUrl = tagObjects[SemanticSlot.HttpUrl]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpUrl)
                 && Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri)
                 && uri.IsAbsoluteUri)
@@ -331,26 +318,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///</summary>
         internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects, bool isNewSchemaVersion)
         {
-            string statementDbNameKey;
-            string statementDbSystemKey;
+            SemanticSlot dbNameSlot;
+            SemanticSlot dbSystemSlot;
             if (isNewSchemaVersion) {
-                statementDbNameKey = SemanticConventions.AttributeDbNamespace;
-                statementDbSystemKey = SemanticConventions.AttributeDbSystemName;
+                dbNameSlot = SemanticSlot.DbNamespace;
+                dbSystemSlot = SemanticSlot.DbSystemName;
             } else {
-                statementDbNameKey = SemanticConventions.AttributeDbName;
-                statementDbSystemKey = SemanticConventions.AttributeDbSystem;
+                dbNameSlot = SemanticSlot.DbName;
+                dbSystemSlot = SemanticSlot.DbSystem;
             }
 
-            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, statementDbSystemKey);
-            string? target = peerServiceAndDbSystem[0]?.ToString();
-            var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
+            string? target = tagObjects[SemanticSlot.PeerService]?.ToString();
+            var defaultPort = GetDefaultDbPort(tagObjects[dbSystemSlot]?.ToString());
 
             if (string.IsNullOrWhiteSpace(target))
             {
                 target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
-            var dbName = AzMonList.GetTagValue(ref tagObjects, statementDbNameKey)?.ToString();
+            var dbName = tagObjects[dbNameSlot]?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
@@ -363,7 +349,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             else if (isTargetEmpty && isDbNameEmpty)
             {
-                target = AzMonList.GetTagValue(ref tagObjects, statementDbSystemKey)?.ToString();
+                target = tagObjects[dbSystemSlot]?.ToString();
             }
 
             return (DbName: dbName, DbTarget: target);
@@ -394,7 +380,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return null;
             }
 
-            var httpMethod = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpMethod)?.ToString();
+            var httpMethod = tagObjects[SemanticSlot.HttpMethod]?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
             {
                 if (Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
@@ -416,12 +402,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                 case OperationType.Db:
                     {
-                        var dbSystem = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
+                        var dbSystem = tagObjects[SemanticSlot.DbSystem]?.ToString();
                         return AzMonListExtensions.s_dbSystems.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     }
                 case OperationType.Messaging:
                     {
-                        return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeMessagingSystem)?.ToString();
+                        return tagObjects[SemanticSlot.MessagingSystem]?.ToString();
                     }
             }
 

@@ -37,8 +37,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Empty(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(0, activityTagsProcessor.UnMappedTags.Length);
         }
 
         [Fact]
@@ -50,8 +50,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Empty(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(0, activityTagsProcessor.UnMappedTags.Length);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
             Assert.Equal(2, activityTagsProcessor.UnMappedTags.Length);
             Assert.Null(AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "key1"));
             Assert.Equal("test", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "key2"));
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
             Assert.Equal("value", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "somekey"));
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(OperationType.Http, activityTagsProcessor.activityType);
             Assert.Equal(4, activityTagsProcessor.MappedTags.Length);
-            Assert.Single(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal("https", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpScheme));
             Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHost));
@@ -206,8 +206,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Single(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal("1,2,3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "intArray"));
         }
@@ -226,8 +226,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Single(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal("1.1,2.2,3.3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "doubleArray"));
         }
@@ -246,8 +246,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Single(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal("test1,test2,test3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "strArray"));
         }
@@ -266,8 +266,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Single(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal("True,False,True", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "boolArray"));
         }
@@ -286,8 +286,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
-            Assert.Single(activityTagsProcessor.UnMappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal("Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test,Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test,Azure.Monitor.OpenTelemetry.Exporter.Tests.TagsTests+Test", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "objArray"));
         }
@@ -311,7 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Unknown, activityTagsProcessor.activityType);
-            Assert.Empty(activityTagsProcessor.MappedTags);
+            Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
             Assert.Equal(6, activityTagsProcessor.UnMappedTags.Length);
 
             Assert.Equal(1, AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "intKey"));

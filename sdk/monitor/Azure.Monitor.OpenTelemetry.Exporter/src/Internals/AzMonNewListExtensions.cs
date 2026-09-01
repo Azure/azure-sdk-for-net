@@ -16,14 +16,12 @@ internal static class AzMonNewListExtensions
     {
         try
         {
-            var requestUrlTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeUrlScheme, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerPort, SemanticConventions.AttributeUrlPath, SemanticConventions.AttributeUrlQuery);
-
-            var scheme = requestUrlTagObjects[0]?.ToString() ?? string.Empty; // requestUrlTagObjects[0] => SemanticConventions.AttributeUrlScheme.
-            var host = requestUrlTagObjects[1]?.ToString() ?? string.Empty; // requestUrlTagObjects[1] => SemanticConventions.AttributeServerAddress.
-            var port = requestUrlTagObjects[2]?.ToString(); // requestUrlTagObjects[2] => SemanticConventions.AttributeServerPort.
+            var scheme = tagObjects[SemanticSlot.UrlScheme]?.ToString() ?? string.Empty;
+            var host = tagObjects[SemanticSlot.ServerAddress]?.ToString() ?? string.Empty;
+            var port = tagObjects[SemanticSlot.ServerPort]?.ToString();
             port = port != null ? port = $":{port}" : string.Empty;
-            var path = requestUrlTagObjects[3]?.ToString() ?? string.Empty; // requestUrlTagObjects[3] => SemanticConventions.AttributeUrlPath.
-            var queryString = requestUrlTagObjects[4]?.ToString() ?? string.Empty; // requestUrlTagObjects[4] => SemanticConventions.AttributeUrlQuery.
+            var path = tagObjects[SemanticSlot.UrlPath]?.ToString() ?? string.Empty;
+            var queryString = tagObjects[SemanticSlot.UrlQuery]?.ToString() ?? string.Empty;
 
             var length = scheme.Length + Uri.SchemeDelimiter.Length + host.Length + port.Length + path.Length + queryString.Length;
 
@@ -55,15 +53,12 @@ internal static class AzMonNewListExtensions
 
         try
         {
-            var host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString()
-                        ?? AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerName)?.ToString();
+            var host = tagObjects[SemanticSlot.ServerAddress]?.ToString()
+                        ?? tagObjects[SemanticSlot.NetPeerName]?.ToString();
             if (!string.IsNullOrEmpty(host))
             {
-                object?[] messagingTagObjects;
-
-                messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingDestinationName);
-                var protocolName = messagingTagObjects[0]?.ToString() ?? string.Empty; // messagingTagObjects[0] => SemanticConventions.AttributeNetworkProtocolName.
-                var destinationName = messagingTagObjects[1]?.ToString() ?? string.Empty; // messagingTagObjects[1] => SemanticConventions.AttributeMessagingDestinationName.
+                var protocolName = tagObjects[SemanticSlot.NetworkProtocolName]?.ToString() ?? string.Empty;
+                var destinationName = tagObjects[SemanticSlot.MessagingDestinationName]?.ToString() ?? string.Empty;
 
                 if (destinationName.Length > 0)
                 {
@@ -96,9 +91,8 @@ internal static class AzMonNewListExtensions
     ///</summary>
     internal static string? GetNewSchemaHttpDependencyTarget(this AzMonList tagObjects)
     {
-        var tagValues = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerPort);
-        var serverAddress = tagValues[0]?.ToString(); // tagValues[0] => SemanticConventions.AttributeServerAddress.
-        var serverPort = tagValues[1]?.ToString(); // tagValues[1] => SemanticConventions.AttributeServerPort.
+        var serverAddress = tagObjects[SemanticSlot.ServerAddress]?.ToString();
+        var serverPort = tagObjects[SemanticSlot.ServerPort]?.ToString();
 
         if (string.IsNullOrWhiteSpace(serverAddress))
         {
@@ -120,7 +114,7 @@ internal static class AzMonNewListExtensions
             return null;
         }
 
-        var httpMethod = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+        var httpMethod = tagObjects[SemanticSlot.HttpRequestMethod]?.ToString();
         if (!string.IsNullOrWhiteSpace(httpMethod))
         {
             if (Uri.TryCreate(httpUrl!.ToString(), UriKind.Absolute, out var uri) && uri.IsAbsoluteUri)
