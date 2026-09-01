@@ -68,4 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
             return Response.FromValue(response.Value is null ? null : new ProductGroupData(response.Value), response.GetRawResponse());
         }
     }
+
+    // Test comment for batching validation - DO NOT MERGE
 }
