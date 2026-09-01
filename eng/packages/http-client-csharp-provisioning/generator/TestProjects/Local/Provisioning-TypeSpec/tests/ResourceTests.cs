@@ -111,11 +111,11 @@ public class ResourceTests
 
             resource specialized 'ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles@2024-05-01' = {
               name: take('specialized-${uniqueString(resourceGroup().id)}', 24)
-              parent: store
-              kind: 'Specialized'
               properties: {
                 description: 'specialized profile'
               }
+              kind: 'Specialized'
+              parent: store
             }
             """);
     }

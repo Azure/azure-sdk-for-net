@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.SignalR
     /// </summary>
     public partial class SignalRClientConnectionCountRule : ProvisionableConstruct
     {
+        private BicepValue<ClientConnectionCountRuleDiscriminator> _type;
+
         /// <summary> Creates a new SignalRClientConnectionCountRule. </summary>
         public SignalRClientConnectionCountRule()
         {
+        }
+
+        /// <summary> Gets the Type. </summary>
+        internal BicepValue<ClientConnectionCountRuleDiscriminator> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Define all the provisionable properties for SignalRClientConnectionCountRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<ClientConnectionCountRuleDiscriminator>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

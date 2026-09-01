@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ServiceFabric
     public partial class ServiceResourceProperties : ServiceResourcePropertiesBase
     {
         private BicepValue<string> _provisioningState;
+        private BicepValue<ApplicationServiceKind> _serviceKind;
         private BicepValue<string> _serviceTypeName;
         private PartitionSchemeDescription _partitionDescription;
         private BicepValue<ArmServicePackageActivationMode> _servicePackageActivationMode;
@@ -33,6 +34,16 @@ namespace Azure.Provisioning.ServiceFabric
             {
                 Initialize();
                 return _provisioningState;
+            }
+        }
+
+        /// <summary> The kind of service (Stateless or Stateful). </summary>
+        internal BicepValue<ApplicationServiceKind> ServiceKind
+        {
+            get
+            {
+                Initialize();
+                return _serviceKind;
             }
         }
 
@@ -101,6 +112,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _serviceKind = DefineProperty<ApplicationServiceKind>(nameof(ServiceKind), new string[] { "serviceKind" }, isRequired: true);
             _serviceTypeName = DefineProperty<string>(nameof(ServiceTypeName), new string[] { "serviceTypeName" });
             _partitionDescription = DefineModelProperty<PartitionSchemeDescription>(nameof(PartitionDescription), new string[] { "partitionDescription" });
             _servicePackageActivationMode = DefineProperty<ArmServicePackageActivationMode>(nameof(ServicePackageActivationMode), new string[] { "servicePackageActivationMode" });

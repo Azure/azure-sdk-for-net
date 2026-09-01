@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new HeaderActionProperties. </summary>
         public HeaderActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters);
         }
 
         /// <summary> Gets or sets the HeaderAction. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleHeaderActionParameters");
             _headerAction = DefineProperty<HeaderAction>(nameof(HeaderAction), new string[] { "headerAction" }, isRequired: true);
             _headerName = DefineProperty<string>(nameof(HeaderName), new string[] { "headerName" }, isRequired: true);
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });

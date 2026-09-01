@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new StoragePrivateEndpointConnectionData(
                 id,
@@ -3108,7 +3108,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(default, connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
