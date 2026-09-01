@@ -134,6 +134,11 @@ internal sealed partial class TaskEngine : IDisposable
         // turn is done explicitly via GetActiveRunAsync(name, taskId, inputId).
         if (_activeRuns.TryGetValue(taskId, out IActiveRun? existing))
         {
+            if (existing.DeleteRequested)
+            {
+                throw CreateDeletingConflict(taskId);
+            }
+
             if (!multiTurn)
             {
                 return existing.GetHandle<TOutput>();
@@ -491,6 +496,27 @@ internal sealed partial class TaskEngine : IDisposable
         return runState.ToHandle();
     }
 
+    private async Task RejectQueuedInputIfDeletingAsync<TOutput>(
+        ActiveRun<TOutput> run,
+        QueuedInput<TOutput> queued,
+        TaskRunState<TOutput> runState)
+    {
+        if (!run.DeleteRequested)
+        {
+            return;
+        }
+
+        run.Steering.Remove(queued);
+        await CloseStreamAsync(runState).ConfigureAwait(false);
+        throw CreateDeletingConflict(run.TaskId);
+    }
+
+    private static ResilientTaskException CreateDeletingConflict(string taskId)
+        => new(ResilientTaskErrorCode.Conflict, $"Task '{taskId}' is being deleted.")
+        {
+            CurrentStatus = TaskRunStatus.InProgress,
+        };
+
     // Patches the next-turn input + ids + re-stamps _turn_started_at, clears the prior
     // turn's retry counter, and re-acquires the lease (→ in_progress) in one write.
     private Task<TaskRecord> DriveTurnAsync(
@@ -533,6 +559,10 @@ internal sealed partial class TaskEngine : IDisposable
     {
         var run = (ActiveRun<TOutput>)existing;
         string taskId = run.TaskId;
+        if (run.DeleteRequested)
+        {
+            throw CreateDeletingConflict(taskId);
+        }
 
         // Promote oversized steering inputs (> 20 KiB) to a `_steering_input_<seq>` attachment at
         // APPEND time, leaving only a tiny ref slot in pending_inputs (Python parity:
@@ -585,6 +615,7 @@ internal sealed partial class TaskEngine : IDisposable
 
         // Capacity is enforced here (throws ResilientTaskException/QueueFull before any persist).
         run.Steering.Enqueue(queued);
+        await RejectQueuedInputIfDeletingAsync(run, queued, runState).ConfigureAwait(false);
 
         try
         {
@@ -606,6 +637,8 @@ internal sealed partial class TaskEngine : IDisposable
             run.Steering.Remove(queued);
             throw;
         }
+
+        await RejectQueuedInputIfDeletingAsync(run, queued, runState).ConfigureAwait(false);
 
         // Cause-before-cancel (C-CAN-2): bump the pending count, then nudge the running turn.
         await run.SignalSteeringAsync().ConfigureAwait(false);
@@ -717,6 +750,12 @@ internal sealed partial class TaskEngine : IDisposable
                     registration, handler, scopedHandler, retry, activeRun, currentRun, currentInput, taskId, currentInputId,
                     currentMode, steered, TaskEngineConstants.ResolveTaskTimeout(registration.Options?.Timeout), currentCts).ConfigureAwait(false);
 
+                if (activeRun.DeleteRequested)
+                {
+                    await CompleteDeletedRunAsync(taskId, multiTurn, currentRun).ConfigureAwait(false);
+                    return;
+                }
+
                 if (outcome.Kind == TurnOutcomeKind.Deferred)
                 {
                     // Exit-for-recovery: lease already released, record stays in_progress. Deferral is
@@ -725,6 +764,11 @@ internal sealed partial class TaskEngine : IDisposable
                     // caller that does not want to wait can bail via Completion.WaitAsync(token).
                     _activeRuns.TryRemove(taskId, out _);
                     _serializer.Remove(taskId);
+                    if (activeRun.DeleteRequested)
+                    {
+                        await CloseStreamAsync(currentRun).ConfigureAwait(false);
+                    }
+
                     return;
                 }
 
@@ -910,6 +954,17 @@ internal sealed partial class TaskEngine : IDisposable
         }
         catch (Exception fatal)
         {
+            if (activeRun.DeleteRequested)
+            {
+                if (fatal is not OperationCanceledException)
+                {
+                    _logger.HandlerFailure(taskId, 0, fatal.GetType().Name);
+                }
+
+                await CompleteDeletedRunAsync(taskId, multiTurn, currentRun).ConfigureAwait(false);
+                return;
+            }
+
             FinishTurn(taskId, multiTurn);
             currentRun.SetException(fatal);
         }
@@ -1379,9 +1434,10 @@ internal sealed partial class TaskEngine : IDisposable
         }
 
         // Cancel an in-flight turn and resolve its caller as cancelled.
-        _activeRuns.TryRemove(taskId, out IActiveRun? run);
+        _activeRuns.TryGetValue(taskId, out IActiveRun? run);
         if (run is not null)
         {
+            run.RequestDeletion();
             await run.CancelAsync().ConfigureAwait(false);
         }
 
@@ -1401,16 +1457,23 @@ internal sealed partial class TaskEngine : IDisposable
 
         if (run is not null)
         {
-            try
+            // The executor normally owns active-stream closure after the handler unwinds. If it
+            // detached this exact run while deletion was acquiring it, the handler has already
+            // unwound and the delete path must close the captured stream instead.
+            if (!_activeRuns.TryGetValue(taskId, out IActiveRun? current)
+                || !ReferenceEquals(current, run))
             {
-                await run.CloseCurrentStreamAsync().ConfigureAwait(false);
-            }
-            catch (Exception closeException)
-            {
-                _logger.StreamCloseFailure(
-                    taskId,
-                    run.InputId,
-                    closeException.GetType().Name);
+                try
+                {
+                    await run.CloseCurrentStreamAsync().ConfigureAwait(false);
+                }
+                catch (Exception closeException)
+                {
+                    _logger.StreamCloseFailure(
+                        taskId,
+                        run.InputId,
+                        closeException.GetType().Name);
+                }
             }
         }
         else if (record?.Payload[TaskWireKeys.PayloadLastInputId] is JsonValue inputIdNode
@@ -1419,6 +1482,16 @@ internal sealed partial class TaskEngine : IDisposable
         {
             await ClosePersistedStreamAsync(taskId, inputId).ConfigureAwait(false);
         }
+    }
+
+    private async Task CompleteDeletedRunAsync<TOutput>(
+        string taskId,
+        bool multiTurn,
+        TaskRunState<TOutput> runState)
+    {
+        await CloseStreamAsync(runState).ConfigureAwait(false);
+        FinishTurn(taskId, multiTurn);
+        runState.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
     }
 
     private void FinishTurn(string taskId, bool multiTurn)
@@ -2164,6 +2237,10 @@ internal sealed partial class TaskEngine : IDisposable
 
         int SteeringCount { get; }
 
+        bool DeleteRequested { get; }
+
+        void RequestDeletion();
+
         Task CancelAsync();
 
         Task CloseCurrentStreamAsync();
@@ -2227,6 +2304,10 @@ internal sealed partial class TaskEngine : IDisposable
 
         /// <summary>Whether a cancel was requested (honored even if it raced the executor launch).</summary>
         public volatile bool CancelRequested;
+
+        private int _deleteRequested;
+
+        public bool DeleteRequested => Volatile.Read(ref _deleteRequested) != 0;
 
         public CancellationTokenSource? HandlerCts { get; set; }
 
@@ -2328,6 +2409,8 @@ internal sealed partial class TaskEngine : IDisposable
             await DrainQueuedAsCancelledAsync().ConfigureAwait(false);
             await _state.RequestCancellationAsync().ConfigureAwait(false);
         }
+
+        public void RequestDeletion() => Interlocked.Exchange(ref _deleteRequested, 1);
 
         public Task CloseCurrentStreamAsync()
             => _state.StreamState.CloseAsync().AsTask();

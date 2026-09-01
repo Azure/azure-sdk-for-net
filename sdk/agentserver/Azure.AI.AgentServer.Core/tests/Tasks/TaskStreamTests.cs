@@ -149,6 +149,106 @@ public sealed class TaskStreamTests
     }
 
     [Test]
+    public async Task DeleteDefersStreamClosureUntilCancelledHandlerUnwinds()
+    {
+        using TaskTestHost host = TaskTestHost.Create(
+            configureStreams: options => options.UseInMemoryReplay());
+        var started = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseTerminalEmit = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var terminalEmitted = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        host.Builder.AddMultiTurnTask<string, string>(
+            "delete-stream",
+            async (context, cancellationToken) =>
+            {
+                await context.Stream.EmitAsync(
+                    new SseItem<string>("started", "status") { EventId = "1" },
+                    cancellationToken);
+                started.TrySetResult();
+                try
+                {
+                    await Task.Delay(Timeout.Infinite, context.Cancellation);
+                }
+                catch (OperationCanceledException)
+                {
+                    await releaseTerminalEmit.Task;
+                    await context.Stream.EmitAsync(
+                        new SseItem<string>("cancelled", "status") { EventId = "2" },
+                        CancellationToken.None);
+                    terminalEmitted.TrySetResult();
+                    throw;
+                }
+
+                return "unreachable";
+            });
+
+        TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
+            "delete-stream",
+            "input",
+            new RunOptions { TaskId = "delete-stream-1" });
+        await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        await host.Engine.DeleteAsync("delete-stream-1").WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.That(terminalEmitted.Task.IsCompleted, Is.False);
+
+        releaseTerminalEmit.TrySetResult();
+        await terminalEmitted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.ThrowsAsync<OperationCanceledException>(
+            async () => await run.Completion);
+        List<SseItem<string>> events = await ReadAllAsync(run.Stream);
+        Assert.That(
+            events.Select(item => item.Data),
+            Is.EqualTo(new[] { "started", "cancelled" }));
+        Assert.That(await host.Store.GetAsync("delete-stream-1"), Is.Null);
+    }
+
+    [Test]
+    public async Task DeleteReturnsBeforeNonCooperativeHandlerAndRejectsNewSteering()
+    {
+        using TaskTestHost host = TaskTestHost.Create(
+            configureStreams: options => options.UseInMemoryReplay());
+        var started = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseHandler = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        host.Builder.AddMultiTurnTask<string, string>(
+            "delete-non-cooperative",
+            async (context, cancellationToken) =>
+            {
+                started.TrySetResult();
+                await releaseHandler.Task;
+                return context.Input;
+            },
+            steerable: true);
+
+        TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
+            "delete-non-cooperative",
+            "input",
+            new RunOptions { TaskId = "delete-non-cooperative-1" });
+        await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        await host.Engine.DeleteAsync("delete-non-cooperative-1")
+            .WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.That(run.Completion.IsCompleted, Is.False);
+
+        ResilientTaskException error = Assert.ThrowsAsync<ResilientTaskException>(
+            async () => await host.Invoker.StartAsync<string, string>(
+                "delete-non-cooperative",
+                "steered",
+                new RunOptions { TaskId = "delete-non-cooperative-1" }))!;
+        Assert.That(error.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.Conflict));
+
+        releaseHandler.TrySetResult();
+        Assert.ThrowsAsync<OperationCanceledException>(
+            async () => await run.Completion);
+        Assert.That(await ReadAllAsync(run.Stream), Is.Empty);
+        Assert.That(await host.Store.GetAsync("delete-non-cooperative-1"), Is.Null);
+    }
+
+    [Test]
     public async Task MultiTurnUsesDistinctStreamForEachInput()
     {
         using TaskTestHost host = TaskTestHost.Create(
