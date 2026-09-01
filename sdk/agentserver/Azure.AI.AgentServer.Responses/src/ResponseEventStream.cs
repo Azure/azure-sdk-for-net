@@ -33,14 +33,25 @@ public class ResponseEventStream
         ArgumentNullException.ThrowIfNull(request);
 
         var conversationId = request.GetConversationId();
-        _response = new ResponseObject(context.ResponseId, request.Model ?? string.Empty)
+        _response = new ResponseObject
         {
-            Metadata = request.Metadata!,
+            Id = context.ResponseId,
+            Model = request.Model ?? string.Empty,
             AgentReference = request.AgentReference,
             BackgroundModeEnabled = request.BackgroundModeEnabled,
-            ConversationOptions = conversationId != null ? new ConversationReference(conversationId) : null,
+            ConversationOptions = conversationId != null
+                ? new ConversationReference { ConversationId = conversationId }
+                : null,
             PreviousResponseId = request.PreviousResponseId,
         };
+
+        if (request.Metadata is { } metadata)
+        {
+            foreach (var entry in metadata)
+            {
+                _response.Metadata[entry.Key] = entry.Value;
+            }
+        }
     }
 
     /// <summary>
@@ -583,7 +594,7 @@ public class ResponseEventStream
     {
         var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
         var builder = AddOutputItem<OutputItemFunctionToolCallOutput>(itemId);
-        var item = new OutputItemFunctionToolCallOutput { Id = itemId, CallId = callId, FunctionOutput = output };
+        var item = new OutputItemFunctionToolCallOutput(callId, output.ToString()) { Id = itemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -694,8 +705,11 @@ public class ResponseEventStream
         ItemComputerToolCallStatus status)
     {
         var builder = AddOutputItemComputerCall();
-        var item = new OutputItemComputerToolCall(builder.ItemId, callId, pendingSafetyChecks, status);
-        item.Action = action;
+        var item = new OutputItemComputerToolCall(callId, action, pendingSafetyChecks)
+        {
+            Id = builder.ItemId,
+            Status = status,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -710,10 +724,10 @@ public class ResponseEventStream
     /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
     public IEnumerable<ResponseStreamEvent> OutputItemComputerCallOutput(
         string callId,
-        ComputerScreenshotImage output)
+        ComputerCallOutput output)
     {
         var builder = AddOutputItemComputerCallOutput();
-        var item = new OutputItemComputerToolCallOutput { Id = builder.ItemId, CallId = callId, Output = output };
+        var item = new OutputItemComputerToolCallOutput(callId, output) { Id = builder.ItemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -733,7 +747,11 @@ public class ResponseEventStream
         ApplyPatchFileOperation operation)
     {
         var builder = AddOutputItemApplyPatchCall();
-        var item = new OutputItemApplyPatchToolCall(builder.ItemId, callId, status, operation);
+        var item = new OutputItemApplyPatchToolCall(callId, operation)
+        {
+            Id = builder.ItemId,
+            Status = status,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -751,7 +769,7 @@ public class ResponseEventStream
         ApplyPatchCallOutputStatus status)
     {
         var builder = AddOutputItemApplyPatchCallOutput();
-        var item = new OutputItemApplyPatchToolCallOutput(builder.ItemId, callId, status);
+        var item = new OutputItemApplyPatchToolCallOutput(callId, status) { Id = builder.ItemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -767,7 +785,7 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
     {
         var builder = AddOutputItemCustomToolCallOutput();
-        var item = new OutputItemCustomToolCallOutput(callId, output, FunctionCallOutputStatusEnum.Completed);
+        var item = new OutputItemCustomToolCallOutput(callId, output, Models.FunctionCallOutputStatusEnum.Completed);
         item.Id = builder.ItemId;
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
@@ -788,7 +806,7 @@ public class ResponseEventStream
         string arguments)
     {
         var builder = AddOutputItemMcpApprovalRequest();
-        var item = new OutputItemMcpApprovalRequest(builder.ItemId, serverLabel, name, arguments);
+        var item = new OutputItemMcpApprovalRequest(serverLabel, name, BinaryData.FromString(arguments)) { Id = builder.ItemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -806,7 +824,7 @@ public class ResponseEventStream
         bool approve)
     {
         var builder = AddOutputItemMcpApprovalResponse();
-        var item = new OutputItemMcpApprovalResponseResource(builder.ItemId, approvalRequestId, approve);
+        var item = new OutputItemMcpApprovalResponseResource(approvalRequestId, approve) { Id = builder.ItemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -851,12 +869,11 @@ public class ResponseEventStream
 
         if (map.Count == 0)
         {
-            _response.Metadata?.AdditionalProperties.Remove(InternalMetadataEgress.ResponseInternalMetadataKey);
+            _response.Metadata.Remove(InternalMetadataEgress.ResponseInternalMetadataKey);
             return;
         }
 
-        _response.Metadata ??= new Models.Metadata();
-        _response.Metadata.AdditionalProperties[InternalMetadataEgress.ResponseInternalMetadataKey] =
+        _response.Metadata[InternalMetadataEgress.ResponseInternalMetadataKey] =
             JsonSerializer.Serialize(map);
     }
 
@@ -867,7 +884,7 @@ public class ResponseEventStream
     private Dictionary<string, string> ReadPersistedInternalMetadata()
     {
         if (_response?.Metadata is { } metadata &&
-            metadata.AdditionalProperties.TryGetValue(InternalMetadataEgress.ResponseInternalMetadataKey, out var json) &&
+            metadata.TryGetValue(InternalMetadataEgress.ResponseInternalMetadataKey, out var json) &&
             !string.IsNullOrEmpty(json))
         {
             try

@@ -246,22 +246,19 @@ internal static class IdGenerator
     {
         return item switch
         {
-            Models.ItemMessage => NewMessageItemId(partitionKeyHint),
-            ItemOutputMessage => NewOutputMessageItemId(partitionKeyHint),
+            MessageResponseItem message => message.Role == MessageRole.Assistant
+                ? NewOutputMessageItemId(partitionKeyHint)
+                : NewMessageItemId(partitionKeyHint),
             ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
             FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
-            ItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
-            ItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
+            Models.OutputItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
+            Models.OutputItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
             ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),
             ComputerCallOutputItemParam => NewComputerCallOutputItemId(partitionKeyHint),
             ItemFileSearchToolCall => NewFileSearchCallItemId(partitionKeyHint),
             ItemWebSearchToolCall => NewWebSearchCallItemId(partitionKeyHint),
             ItemImageGenToolCall => NewImageGenCallItemId(partitionKeyHint),
             ItemCodeInterpreterToolCall => NewCodeInterpreterCallItemId(partitionKeyHint),
-            ItemLocalShellToolCall => NewLocalShellCallItemId(partitionKeyHint),
-            ItemLocalShellToolCallOutput => NewLocalShellCallOutputItemId(partitionKeyHint),
-            FunctionShellCallItemParam => NewFunctionShellCallItemId(partitionKeyHint),
-            FunctionShellCallOutputItemParam => NewFunctionShellCallOutputItemId(partitionKeyHint),
             ApplyPatchToolCallItemParam => NewApplyPatchCallItemId(partitionKeyHint),
             ApplyPatchToolCallOutputItemParam => NewApplyPatchCallOutputItemId(partitionKeyHint),
             ItemMcpListTools => NewMcpListToolsItemId(partitionKeyHint),
@@ -269,8 +266,10 @@ internal static class IdGenerator
             ItemMcpApprovalRequest => NewMcpApprovalRequestItemId(partitionKeyHint),
             MCPApprovalResponse => NewMcpApprovalResponseItemId(partitionKeyHint),
             ItemReasoningItem => NewReasoningItemId(partitionKeyHint),
-            CompactionSummaryItemParam => NewCompactionItemId(partitionKeyHint),
             ItemReferenceParam => null, // resolved externally
+
+            // The shell and compaction items exist only on the request side of the spec
+            // (the ItemField union); they are never response items, so they fall through.
             _ => null,
         };
     }

@@ -196,3 +196,6 @@ global using ReasoningSummaryPart = OpenAI.Responses.ReasoningSummaryPart;
 global using ReasoningSummaryTextPart = OpenAI.Responses.ReasoningSummaryTextPart;
 global using ResponseContentPart = OpenAI.Responses.ResponseContentPart;
 global using ResponseItem = OpenAI.Responses.ResponseItem;
+global using MessageResponseItem = OpenAI.Responses.MessageResponseItem;
+global using MessageRole = OpenAI.Responses.MessageRole;
+global using ComputerCallOutput = OpenAI.Responses.ComputerCallOutput;
