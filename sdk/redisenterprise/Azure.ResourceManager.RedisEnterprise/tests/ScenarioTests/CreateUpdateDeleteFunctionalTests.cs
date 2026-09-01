@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
             Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Monday, clusterResponse.Data.MaintenanceWindows[0].ScheduleDayOfWeek);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Tuesday, clusterResponse.Data.MaintenanceWindows[1].ScheduleDayOfWeek);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Wednesday, clusterResponse.Data.MaintenanceWindows[2].ScheduleDayOfWeek);
+            Assert.That(clusterResponse.Data.MaintenanceWindows, Has.Exactly(1).Matches<RedisEnterpriseMaintenanceWindow>(w => w.ScheduleDayOfWeek == RedisEnterpriseMaintenanceDayOfWeek.Monday));
+            Assert.That(clusterResponse.Data.MaintenanceWindows, Has.Exactly(1).Matches<RedisEnterpriseMaintenanceWindow>(w => w.ScheduleDayOfWeek == RedisEnterpriseMaintenanceDayOfWeek.Tuesday));
+            Assert.That(clusterResponse.Data.MaintenanceWindows, Has.Exactly(1).Matches<RedisEnterpriseMaintenanceWindow>(w => w.ScheduleDayOfWeek == RedisEnterpriseMaintenanceDayOfWeek.Wednesday));
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
