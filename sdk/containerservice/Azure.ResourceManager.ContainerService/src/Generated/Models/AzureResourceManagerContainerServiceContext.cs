@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(AgentPoolNetworkInterface))]
     [ModelReaderWriterBuildable(typeof(AgentPoolNetworkPortRange))]
     [ModelReaderWriterBuildable(typeof(AgentPoolNetworkProfile))]
-    [ModelReaderWriterBuildable(typeof(AgentPoolNICPublicIPAddressConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentPoolNicPublicIPAddressConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentPoolNvidiaGpuProfile))]
     [ModelReaderWriterBuildable(typeof(AgentPoolRecentlyUsedVersion))]
     [ModelReaderWriterBuildable(typeof(AgentPoolScaleProfile))]

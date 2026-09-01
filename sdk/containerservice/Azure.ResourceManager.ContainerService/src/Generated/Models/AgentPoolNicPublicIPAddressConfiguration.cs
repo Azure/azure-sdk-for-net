@@ -13,25 +13,25 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Public IP configuration applied to a secondary NIC on an agent pool. `ipTags` and `publicIPPrefixID` are mutually exclusive, matching the primary NIC's behavior. For more information, see https://aka.ms/aks/multi-nic. </summary>
-    public partial class AgentPoolNICPublicIPAddressConfiguration
+    public partial class AgentPoolNicPublicIPAddressConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolNICPublicIPAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNicPublicIPAddressConfiguration"/>. </summary>
         /// <param name="publicIPAddressVersion"> IP version of the public IP provisioned for this NIC. Required: its presence is what enables public IP provisioning, so an empty configuration allocates nothing. `IPv4` is the only accepted value. </param>
-        public AgentPoolNICPublicIPAddressConfiguration(AgentPoolNICPublicIPAddressVersion publicIPAddressVersion)
+        public AgentPoolNicPublicIPAddressConfiguration(AgentPoolNicPublicIPAddressVersion publicIPAddressVersion)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
             IPTags = new ChangeTrackingList<ContainerServiceIPTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolNICPublicIPAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNicPublicIPAddressConfiguration"/>. </summary>
         /// <param name="publicIPAddressVersion"> IP version of the public IP provisioned for this NIC. Required: its presence is what enables public IP provisioning, so an empty configuration allocates nothing. `IPv4` is the only accepted value. </param>
         /// <param name="ipTags"> IP tags to attach to the public IP allocated for this NIC. Each tag's `ipTagType` must be `FirstPartyUsage`, `NetworkDomain`, or `RoutingPreference`. Mutually exclusive with `publicIPPrefixID`. </param>
         /// <param name="publicIPPrefixID"> The resource ID of a public IP prefix to draw this NIC's public IP from. Mutually exclusive with `ipTags`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNICPublicIPAddressConfiguration(AgentPoolNICPublicIPAddressVersion publicIPAddressVersion, IList<ContainerServiceIPTag> ipTags, ResourceIdentifier publicIPPrefixID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNicPublicIPAddressConfiguration(AgentPoolNicPublicIPAddressVersion publicIPAddressVersion, IList<ContainerServiceIPTag> ipTags, ResourceIdentifier publicIPPrefixID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
             IPTags = ipTags;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> IP version of the public IP provisioned for this NIC. Required: its presence is what enables public IP provisioning, so an empty configuration allocates nothing. `IPv4` is the only accepted value. </summary>
         [WirePath("publicIPAddressVersion")]
-        public AgentPoolNICPublicIPAddressVersion PublicIPAddressVersion { get; set; }
+        public AgentPoolNicPublicIPAddressVersion PublicIPAddressVersion { get; set; }
 
         /// <summary> IP tags to attach to the public IP allocated for this NIC. Each tag's `ipTagType` must be `FirstPartyUsage`, `NetworkDomain`, or `RoutingPreference`. Mutually exclusive with `publicIPPrefixID`. </summary>
         [WirePath("ipTags")]

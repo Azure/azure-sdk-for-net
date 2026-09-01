@@ -15,56 +15,56 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Public IP configuration applied to a secondary NIC on an agent pool. `ipTags` and `publicIPPrefixID` are mutually exclusive, matching the primary NIC's behavior. For more information, see https://aka.ms/aks/multi-nic. </summary>
-    public partial class AgentPoolNICPublicIPAddressConfiguration : IJsonModel<AgentPoolNICPublicIPAddressConfiguration>
+    public partial class AgentPoolNicPublicIPAddressConfiguration : IJsonModel<AgentPoolNicPublicIPAddressConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentPoolNICPublicIPAddressConfiguration"/> for deserialization. </summary>
-        internal AgentPoolNICPublicIPAddressConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNicPublicIPAddressConfiguration"/> for deserialization. </summary>
+        internal AgentPoolNicPublicIPAddressConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentPoolNICPublicIPAddressConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentPoolNicPublicIPAddressConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentPoolNICPublicIPAddressConfiguration(document.RootElement, options);
+                        return DeserializeAgentPoolNicPublicIPAddressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNICPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNicPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNICPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNicPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentPoolNICPublicIPAddressConfiguration IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentPoolNicPublicIPAddressConfiguration IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentPoolNICPublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentPoolNicPublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNICPublicIPAddressConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNicPublicIPAddressConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("publicIPAddressVersion"u8);
             writer.WriteStringValue(PublicIPAddressVersion.ToString());
@@ -116,30 +116,30 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentPoolNICPublicIPAddressConfiguration IJsonModel<AgentPoolNICPublicIPAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentPoolNicPublicIPAddressConfiguration IJsonModel<AgentPoolNicPublicIPAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentPoolNICPublicIPAddressConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentPoolNicPublicIPAddressConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNICPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNicPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNICPublicIPAddressConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNicPublicIPAddressConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentPoolNICPublicIPAddressConfiguration(document.RootElement, options);
+            return DeserializeAgentPoolNicPublicIPAddressConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentPoolNICPublicIPAddressConfiguration DeserializeAgentPoolNICPublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentPoolNicPublicIPAddressConfiguration DeserializeAgentPoolNicPublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AgentPoolNICPublicIPAddressVersion publicIPAddressVersion = default;
+            AgentPoolNicPublicIPAddressVersion publicIPAddressVersion = default;
             IList<ContainerServiceIPTag> ipTags = default;
             ResourceIdentifier publicIPPrefixID = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (prop.NameEquals("publicIPAddressVersion"u8))
                 {
-                    publicIPAddressVersion = new AgentPoolNICPublicIPAddressVersion(prop.Value.GetString());
+                    publicIPAddressVersion = new AgentPoolNicPublicIPAddressVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipTags"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolNICPublicIPAddressConfiguration(publicIPAddressVersion, ipTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), publicIPPrefixID, additionalBinaryDataProperties);
+            return new AgentPoolNicPublicIPAddressConfiguration(publicIPAddressVersion, ipTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), publicIPPrefixID, additionalBinaryDataProperties);
         }
     }
 }

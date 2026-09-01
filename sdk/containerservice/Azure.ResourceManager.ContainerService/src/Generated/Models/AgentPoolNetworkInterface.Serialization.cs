@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             AgentPoolNetworkInterfaceType? @type = default;
             ResourceIdentifier vnetSubnetId = default;
             bool? enableAcceleratedNetworking = default;
-            AgentPoolNICPublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            AgentPoolNicPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = AgentPoolNICPublicIPAddressConfiguration.DeserializeAgentPoolNICPublicIPAddressConfiguration(prop.Value, options);
+                    publicIPAddressConfiguration = AgentPoolNicPublicIPAddressConfiguration.DeserializeAgentPoolNicPublicIPAddressConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

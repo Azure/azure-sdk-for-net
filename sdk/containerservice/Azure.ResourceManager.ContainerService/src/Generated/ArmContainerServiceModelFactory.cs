@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="enableAcceleratedNetworking"> Whether accelerated networking is enabled on this secondary NIC. If omitted, this defaults to true only when the agent pool VM SKU supports accelerated networking. Validation will fail if it is enabled on an unsupported SKU or NIC configuration. </param>
         /// <param name="publicIPAddressConfiguration"> Public IP configuration for this secondary NIC. Only valid when `type` is `Standard`. Set `publicIPAddressVersion` to provision a per-VM instance-level public IP for the NIC, then optionally shape it with `ipTags` or `publicIPPrefixID`. If omitted, no public IP is provisioned. Idle timeout is not configurable. For more information, see https://aka.ms/aks/multi-nic. </param>
         /// <returns> A new <see cref="Models.AgentPoolNetworkInterface"/> instance for mocking. </returns>
-        public static AgentPoolNetworkInterface AgentPoolNetworkInterface(AgentPoolNetworkInterfaceType? @type = default, ResourceIdentifier vnetSubnetId = default, bool? enableAcceleratedNetworking = default, AgentPoolNICPublicIPAddressConfiguration publicIPAddressConfiguration = default)
+        public static AgentPoolNetworkInterface AgentPoolNetworkInterface(AgentPoolNetworkInterfaceType? @type = default, ResourceIdentifier vnetSubnetId = default, bool? enableAcceleratedNetworking = default, AgentPoolNicPublicIPAddressConfiguration publicIPAddressConfiguration = default)
         {
             return new AgentPoolNetworkInterface(@type, vnetSubnetId, enableAcceleratedNetworking, publicIPAddressConfiguration, default);
         }
@@ -542,12 +542,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="publicIPAddressVersion"> IP version of the public IP provisioned for this NIC. Required: its presence is what enables public IP provisioning, so an empty configuration allocates nothing. `IPv4` is the only accepted value. </param>
         /// <param name="ipTags"> IP tags to attach to the public IP allocated for this NIC. Each tag's `ipTagType` must be `FirstPartyUsage`, `NetworkDomain`, or `RoutingPreference`. Mutually exclusive with `publicIPPrefixID`. </param>
         /// <param name="publicIPPrefixID"> The resource ID of a public IP prefix to draw this NIC's public IP from. Mutually exclusive with `ipTags`. </param>
-        /// <returns> A new <see cref="Models.AgentPoolNICPublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static AgentPoolNICPublicIPAddressConfiguration AgentPoolNICPublicIPAddressConfiguration(AgentPoolNICPublicIPAddressVersion publicIPAddressVersion = default, IEnumerable<ContainerServiceIPTag> ipTags = default, ResourceIdentifier publicIPPrefixID = default)
+        /// <returns> A new <see cref="Models.AgentPoolNicPublicIPAddressConfiguration"/> instance for mocking. </returns>
+        public static AgentPoolNicPublicIPAddressConfiguration AgentPoolNicPublicIPAddressConfiguration(AgentPoolNicPublicIPAddressVersion publicIPAddressVersion = default, IEnumerable<ContainerServiceIPTag> ipTags = default, ResourceIdentifier publicIPPrefixID = default)
         {
             ipTags ??= new ChangeTrackingList<ContainerServiceIPTag>();
 
-            return new AgentPoolNICPublicIPAddressConfiguration(publicIPAddressVersion, (ipTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(), publicIPPrefixID, default);
+            return new AgentPoolNicPublicIPAddressConfiguration(publicIPAddressVersion, (ipTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(), publicIPPrefixID, default);
         }
 
         /// <param name="isVtpmEnabled"> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </param>
@@ -3185,7 +3185,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="type"> The type of the extended location. </param>
         /// <returns> A new <see cref="Models.ContainerServiceVmSkuLocationInfo"/> instance for mocking. </returns>
-        public static ContainerServiceVmSkuLocationInfo ContainerServiceVmSkuLocationInfo(string location = default, IEnumerable<string> zones = default, IEnumerable<ContainerServiceVmSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ContainerServiceExtendedLocationType? @type = default)
+        public static ContainerServiceVmSkuLocationInfo ContainerServiceVmSkuLocationInfo(AzureLocation? location = default, IEnumerable<string> zones = default, IEnumerable<ContainerServiceVmSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ContainerServiceExtendedLocationType? @type = default)
         {
             zones ??= new ChangeTrackingList<string>();
             zoneDetails ??= new ChangeTrackingList<ContainerServiceVmSkuZoneDetails>();
