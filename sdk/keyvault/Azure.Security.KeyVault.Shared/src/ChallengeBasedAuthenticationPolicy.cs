@@ -42,10 +42,15 @@ namespace Azure.Security.KeyVault
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            // If this policy doesn't have challenge parameters cached try to get it from the static challenge cache.
-            if (_challenge == null)
+            // Always resolve the challenge for the current request's authority. A single
+            // ChallengeBasedAuthenticationPolicy instance can process requests to more than one endpoint, so a
+            // challenge (and the token acquired for its scope and tenant) that was cached for one authority
+            // must not be reused for a request bound to a different authority: a token acquired for one vault
+            // must never be attached to a request to another. Only fall back to the static cache when the
+            // current per-instance challenge does not belong to this request's authority.
+            string authority = GetRequestAuthority(message.Request);
+            if (_challenge == null || !_challenge.MatchesAuthority(authority))
             {
-                string authority = GetRequestAuthority(message.Request);
                 s_challengeCache.TryGetValue(authority, out _challenge);
             }
 
@@ -174,7 +179,7 @@ namespace Azure.Security.KeyVault
                     throw new UriFormatException($"The challenge authorization URI '{authorization}' is invalid.");
                 }
 
-                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
+                _challenge = new ChallengeParameters(authority, authorizationUri, new string[] { scope });
                 s_challengeCache[authority] = _challenge;
             }
 
@@ -268,8 +273,9 @@ namespace Azure.Security.KeyVault
 
         internal class ChallengeParameters
         {
-            internal ChallengeParameters(Uri authorizationUri, string[] scopes)
+            internal ChallengeParameters(string sourceAuthority, Uri authorizationUri, string[] scopes)
             {
+                SourceAuthority = sourceAuthority;
                 AuthorizationUri = authorizationUri;
                 TenantId = authorizationUri.Segments[1].Trim('/');
                 if (TenantId.Equals("dstsv2", StringComparison.OrdinalIgnoreCase) && authorizationUri.Segments.Length > 2)
@@ -278,6 +284,20 @@ namespace Azure.Security.KeyVault
                 }
                 Scopes = scopes;
             }
+
+            /// <summary>
+            /// Gets the Key Vault or Managed HSM endpoint authority (host and port) that produced this challenge.
+            /// Used to ensure a cached challenge, and the token acquired for it, is only ever applied to
+            /// requests targeting the same authority.
+            /// </summary>
+            public string SourceAuthority { get; }
+
+            /// <summary>
+            /// Determines whether this challenge was produced by the specified request authority.
+            /// </summary>
+            /// <param name="authority">The request authority (host and port) to compare against.</param>
+            internal bool MatchesAuthority(string authority)
+                => string.Equals(SourceAuthority, authority, StringComparison.OrdinalIgnoreCase);
 
             /// <summary>
             /// Gets the "authorization" or "authorization_uri" parameter from the challenge response.
