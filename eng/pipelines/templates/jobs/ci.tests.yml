@@ -26,6 +26,9 @@ parameters:
     default: ''
   - name: OSName
     type: string
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -54,6 +57,8 @@ jobs:
         ServiceDirectory: '*'
       ${{ else }}:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        TestSparseCheckoutPaths: '["/*","!SessionRecords","/sdk/*/**/SessionRecords/*"]'
 
     templateContext:
       outputs:
@@ -82,22 +87,69 @@ jobs:
 
     steps:
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
-      
+
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        - task: DownloadPipelineArtifact@2
+          displayName: Download MSBuild test checkout map
+          continueOnError: true
+          inputs:
+            artifact: TestCheckoutMap
+            path: $(Agent.TempDirectory)/TestCheckoutMap
+
+        - pwsh: |
+            $fallback = @('/*', '!SessionRecords', '/sdk/*/**/SessionRecords/*')
+            $directory = '$(Agent.TempDirectory)/TestCheckoutMap'
+            $resolver = Get-ChildItem -LiteralPath $directory -Filter Resolve-SparseCheckoutPaths.ps1 `
+              -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            $map = Get-ChildItem -LiteralPath $directory -Filter checkout-map.json `
+              -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+
+            $paths = $null
+            if ($resolver -and $map) {
+              try {
+                $paths = @(& $resolver.FullName -MapPath $map.FullName -ArtifactNames '$(ProjectNames)')
+              }
+              catch {
+                Write-Warning "Unable to resolve the MSBuild checkout map: $_"
+              }
+            }
+            else {
+              Write-Warning 'The MSBuild checkout map artifact is unavailable.'
+            }
+
+            if (-not $paths) {
+              $paths = $fallback
+              Write-Warning 'Falling back to the full test checkout.'
+              Write-Host 'SPARSE_CHECKOUT_RESULT=full'
+            }
+            else {
+              Write-Host "SPARSE_CHECKOUT_RESULT=narrowed pathCount=$($paths.Count)"
+            }
+            $json = $paths | ConvertTo-Json -Compress -AsArray
+            Write-Host "Sparse checkout paths: $($paths -join ' ')"
+            Write-Host "##vso[task.setvariable variable=TestSparseCheckoutPaths]$json"
+          displayName: Resolve MSBuild test checkout paths
+
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            # we only need to checkout all sdk directories for All PR builds OR the
-            # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
-            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
-            ${{ else }}:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-                - "/sdk/*/**/SessionRecords/*"
+        - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              Paths: $(TestSparseCheckoutPaths)
+        - ${{ else }}:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              # we only need to checkout all sdk directories for All PR builds OR the
+              # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
+              ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
+                Paths:
+                  - "/*"
+                  - "!SessionRecords"
+                  - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
+              ${{ else }}:
+                Paths:
+                  - "/*"
+                  - "!SessionRecords"
+                  - "/sdk/*/**/SessionRecords/*"
 
       - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
         - task: DownloadPipelineArtifact@2

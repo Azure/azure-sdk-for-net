@@ -7,4 +7,5 @@
   </ItemGroup>
 
   <Import Project="$(RepoEngPath)\Directory.Build.Common.targets" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
+  <Import Project="$(MSBuildThisFileDirectory)eng\SparseCheckout.targets" Condition="'$(SparseCheckoutTargetsImported)' != 'true' and Exists('$(MSBuildThisFileDirectory)eng\SparseCheckout.targets')" />
 </Project>
