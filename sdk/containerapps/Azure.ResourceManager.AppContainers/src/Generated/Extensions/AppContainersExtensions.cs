@@ -1552,15 +1552,15 @@ namespace Azure.ResourceManager.AppContainers
         /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetUsagesAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetUsagesAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerAppUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContainerAppUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1571,15 +1571,15 @@ namespace Azure.ResourceManager.AppContainers
         /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetUsages(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetUsages(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerAppUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<ContainerAppUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

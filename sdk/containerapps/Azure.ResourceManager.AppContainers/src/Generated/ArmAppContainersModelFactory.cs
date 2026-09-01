@@ -847,8 +847,8 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="minReplicas"> Optional. Minimum number of container replicas. </param>
         /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
-        /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period. Defaults to 300 seconds if not set. </param>
-        /// <param name="pollingInterval"> Optional. KEDA Polling Interval. Defaults to 30 seconds if not set. </param>
+        /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if not set. </param>
+        /// <param name="pollingInterval"> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </param>
         /// <param name="rules"> Scaling rules. </param>
         /// <returns> A new <see cref="Models.ContainerAppScale"/> instance for mocking. </returns>
         public static ContainerAppScale ContainerAppScale(int? minReplicas = default, int? maxReplicas = default, int? cooldownPeriod = default, int? pollingInterval = default, IEnumerable<ContainerAppScaleRule> rules = default)
@@ -2084,7 +2084,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
         /// </param>
-        /// <param name="azureBlobStorageSasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </param>
+        /// <param name="azureBlobStorageSasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </param>
         /// <param name="blobContainerUri"> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </param>
         /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
         /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
@@ -3052,7 +3052,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ManagedEnvironmentStorageProperties(azureFile, nfsAzureFile, default);
         }
 
-        /// <param name="server"> Server for NFS azure file. </param>
+        /// <param name="server"> Server for NFS azure file. Specify the Azure storage account server address. </param>
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> NFS Azure file share name. </param>
         /// <returns> A new <see cref="Models.ContainerAppNfsAzureFileProperties"/> instance for mocking. </returns>
@@ -3636,7 +3636,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="containerApp"> Container App Name to route requests to. </param>
         /// <param name="revision"> Revision to route requests to. </param>
-        /// <param name="label"> Label/Revision to route requests to. </param>
+        /// <param name="label"> Label to route requests to. </param>
         /// <param name="weight"> Weighted routing. </param>
         /// <returns> A new <see cref="Models.ContainerAppHttpRouteTarget"/> instance for mocking. </returns>
         public static ContainerAppHttpRouteTarget ContainerAppHttpRouteTarget(string containerApp = default, string revision = default, string label = default, int? weight = default)
