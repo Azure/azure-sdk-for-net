@@ -54,7 +54,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: "",
-            status: Models.FunctionCallStatus.InProgress);
+            status: global::OpenAI.Responses.FunctionCallStatus.InProgress);
         item.Id = _itemId;
         return EmitAdded(item);
     }
@@ -137,7 +137,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: _finalInput ?? "",
-            status: Models.FunctionCallStatus.Completed);
+            status: global::OpenAI.Responses.FunctionCallStatus.Completed);
         item.Id = _itemId;
         return EmitDone(item);
     }

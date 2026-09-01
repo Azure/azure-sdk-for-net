@@ -35,10 +35,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_OutputItemOutputMessage_ReturnsFastPathId()
     {
-        var item = new OutputItemOutputMessage(
-            id: "msg_output_001",
-            content: Array.Empty<OutputMessageContent>(),
-            status: ItemOutputMessageStatus.Completed);
+        var item = MessageItemFactory.OutputMessage("msg_output_001", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>());
 
         Assert.That(item.GetId(), Is.EqualTo("msg_output_001"));
     }
@@ -54,12 +51,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_OutputItemReasoningItem_ReturnsFastPathId()
     {
-        var item = new OutputItemReasoningItem(
-            id: "reasoning_001",
-            summary: new List<SummaryTextContent>
-            {
-                new SummaryTextContent("Thinking..."),
-            });
+        var item = new OutputItemReasoningItem(new[] { new OpenAI.Responses.ReasoningSummaryTextPart("Thinking...") }) { Id = "reasoning_001" };
 
         Assert.That(item.GetId(), Is.EqualTo("reasoning_001"));
     }
@@ -71,7 +63,7 @@ public class OutputItemExtensionsTests
             callId: "call_custom",
             name: "my_tool",
             input: "{}",
-            status: FunctionCallStatus.InProgress);
+            status: OpenAI.Responses.FunctionCallStatus.InProgress);
         item.Id = "ct_001";
 
         Assert.That(item.GetId(), Is.EqualTo("ct_001"));
@@ -80,7 +72,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_OutputItemWebSearchToolCall_ReturnsFastPathId()
     {
-        var item = new OutputItemWebSearchToolCall { Id = "ws_001", Status = ItemWebSearchToolCallStatus.Completed, Action = BinaryData.FromObjectAsJson(new { type = "search", query = "test" }) };
+        var item = new OutputItemWebSearchToolCall { Id = "ws_001", Status = WebSearchCallStatus.Completed, Action = new WebSearchSearchAction { Queries = { "test" } } };
 
         Assert.That(item.GetId(), Is.EqualTo("ws_001"));
     }
@@ -94,8 +86,10 @@ public class OutputItemExtensionsTests
             callId: "call_a2a",
             name: "agent_b",
             arguments: "{}",
-            status: ToolCallStatus.Completed,
-            id: "a2a_001");
+            status: Azure.AI.Extensions.OpenAI.ToolCallStatus.Completed)
+        {
+            Id = "a2a_001",
+        };
 
         Assert.That(item.GetId(), Is.EqualTo("a2a_001"));
     }
@@ -106,7 +100,7 @@ public class OutputItemExtensionsTests
     public void GetId_NullId_ThrowsInvalidOperationException()
     {
         // Use FunctionToolCall where Id is a settable property (not validated in ctor)
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "fn", BinaryData.FromString("{}"));
         // Id is null by default (not set in ctor)
 
         var ex = Assert.Throws<InvalidOperationException>(() => item.GetId());
@@ -127,7 +121,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_IdSetAfterConstruction_ReturnsUpdatedId()
     {
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "fn", BinaryData.FromString("{}"));
 
         // Id is read-only — create a new instance with the desired Id
         var updated = CreateFunctionToolCallWithId("fc_updated");
@@ -142,7 +136,7 @@ public class OutputItemExtensionsTests
         var items = new (OutputItem Item, string ExpectedId)[]
         {
             (MessageItemFactory.OutputMessage("msg_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()), "msg_1"),
-            (new OutputItemReasoningItem("reason_1", Array.Empty<SummaryTextContent>()), "reason_1"),
+            (new OutputItemReasoningItem(Array.Empty<OpenAI.Responses.ReasoningSummaryPart>()) { Id = "reason_1" }, "reason_1"),
             (CreateFunctionToolCallWithId("fc_1"), "fc_1"),
         };
 
@@ -154,8 +148,6 @@ public class OutputItemExtensionsTests
 
     private static OutputItemFunctionToolCall CreateFunctionToolCallWithId(string id)
     {
-        return new OutputItemFunctionToolCall(
-            ResponseItemKind.FunctionCall, null, null, null, new Dictionary<string, BinaryData>(),
-            id, "call", null, "fn", "{}", null);
+        return new OutputItemFunctionToolCall("call", "fn", BinaryData.FromString("{}")) { Id = id };
     }
 }

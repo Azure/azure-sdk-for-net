@@ -189,13 +189,10 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
 
     /// <summary>Builds a completed output message item with a single text content.</summary>
     private protected static OutputItemMessage NewOutputMessage(string id, string text)
-        => new(
-            id: id,
-            content: new List<ResponseContentPart>
+        => MessageItemFactory.OutputMessage(id, MessageStatus.Completed, MessageRole.Assistant, new List<ResponseContentPart>
             {
                 ResponseContentPart.CreateOutputTextPart(text, Array.Empty<Annotation>()),
-            },
-            status: MessageStatus.Completed);
+            });
 
     /// <summary>Builds a fresh host over the same durable directories, enabling resilient background.</summary>
     private protected TestWebApplicationFactory NewRecoveringHost(TestHandler handler)

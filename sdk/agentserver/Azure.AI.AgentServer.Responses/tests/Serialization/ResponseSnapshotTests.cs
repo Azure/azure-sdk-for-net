@@ -83,7 +83,7 @@ public class ResponseSnapshotTests
             MessageRole.Assistant,
             Array.Empty<ResponseContentPart>());
 
-        var functionCall = new OutputItemFunctionToolCall { CallId = "call_fn1", FunctionName = "get_weather", FunctionArguments = BinaryData.FromString("""{"location":"Seattle"}""") };
+        var functionCall = new OutputItemFunctionToolCall("call_fn1", "get_weather", BinaryData.FromString("""{"location":"Seattle"}"""));
 
         var original = new ResponseObject { Id = "resp_snap4", Model = "gpt-4o", Status = ResponseStatus.Completed };
         original.OutputItems.Add(message);
@@ -109,30 +109,30 @@ public class ResponseSnapshotTests
     public void Snapshot_PreservesMetadata()
     {
         // Arrange
-        var original = new ResponseObject { Id = "resp_snap5", Model = "gpt-4o", Status = ResponseStatus.InProgress, Metadata = new Metadata { AdditionalProperties = { ["user_id"] = "u_123", ["session"] = "s_456" }, } };
+        var original = new ResponseObject { Id = "resp_snap5", Model = "gpt-4o", Status = ResponseStatus.InProgress, Metadata = { ["user_id"] = "u_123", ["session"] = "s_456" } };
 
         // Act
         var snapshot = original.Snapshot();
 
         // Assert
         Assert.That(snapshot.Metadata, Is.Not.Null);
-        Assert.That(snapshot.Metadata.AdditionalProperties["user_id"], Is.EqualTo("u_123"));
-        Assert.That(snapshot.Metadata.AdditionalProperties["session"], Is.EqualTo("s_456"));
+        Assert.That(snapshot.Metadata["user_id"], Is.EqualTo("u_123"));
+        Assert.That(snapshot.Metadata["session"], Is.EqualTo("s_456"));
     }
 
     [Test]
     public void Snapshot_MetadataMutationDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new ResponseObject { Id = "resp_snap6", Model = "gpt-4o", Status = ResponseStatus.InProgress, Metadata = new Metadata { AdditionalProperties = { ["key1"] = "value1" }, } };
+        var original = new ResponseObject { Id = "resp_snap6", Model = "gpt-4o", Status = ResponseStatus.InProgress, Metadata = { ["key1"] = "value1" } };
 
         // Act
         var snapshot = original.Snapshot();
-        original.Metadata.AdditionalProperties["key2"] = "value2";
+        original.Metadata["key2"] = "value2";
 
         // Assert — snapshot unaffected by mutation of original's metadata
-        Assert.That(snapshot.Metadata.AdditionalProperties.ContainsKey("key2"), Is.False);
-        XAssert.Single(snapshot.Metadata.AdditionalProperties);
+        Assert.That(snapshot.Metadata.ContainsKey("key2"), Is.False);
+        XAssert.Single(snapshot.Metadata);
     }
 
     [Test]

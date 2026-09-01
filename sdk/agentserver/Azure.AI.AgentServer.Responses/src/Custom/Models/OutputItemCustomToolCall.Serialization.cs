@@ -103,7 +103,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WritePropertyName("input"u8);
             writer.WriteStringValue(Input);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status switch
+            {
+                global::OpenAI.Responses.FunctionCallStatus.InProgress => "in_progress",
+                global::OpenAI.Responses.FunctionCallStatus.Completed => "completed",
+                global::OpenAI.Responses.FunctionCallStatus.Incomplete => "incomplete",
+                _ => Status.ToString(),
+            });
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,7 +161,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string @namespace = default;
             string name = default;
             string input = default;
-            FunctionCallStatus status = default;
+            global::OpenAI.Responses.FunctionCallStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -214,7 +220,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToFunctionCallStatus();
+                    status = prop.Value.GetString() switch
+                    {
+                        "in_progress" => global::OpenAI.Responses.FunctionCallStatus.InProgress,
+                        "completed" => global::OpenAI.Responses.FunctionCallStatus.Completed,
+                        "incomplete" => global::OpenAI.Responses.FunctionCallStatus.Incomplete,
+                        _ => default,
+                    };
                     continue;
                 }
                 if (options.Format != "W")

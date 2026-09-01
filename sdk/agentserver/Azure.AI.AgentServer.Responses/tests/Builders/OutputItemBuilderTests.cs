@@ -39,7 +39,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_ReturnsResponseOutputItemAddedEvent()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -51,7 +51,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_SetsOutputIndex()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 5, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -63,7 +63,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_WrapsTheCorrectItem()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -75,7 +75,7 @@ public class OutputItemBuilderTests
     public void EmitAdded_AssignsSequenceNumber()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var ev = builder.EmitAdded(item);
@@ -91,7 +91,7 @@ public class OutputItemBuilderTests
     public void EmitDone_ReturnsResponseOutputItemDoneEvent()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         builder.EmitAdded(item);
@@ -104,7 +104,7 @@ public class OutputItemBuilderTests
     public void EmitDone_SetsOutputIndex()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 7, "fc_test");
 
         builder.EmitAdded(item);
@@ -117,7 +117,7 @@ public class OutputItemBuilderTests
     public void EmitDone_WrapsTheSameItem()
     {
         var stream = CreateStream();
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         builder.EmitAdded(item);
@@ -135,7 +135,7 @@ public class OutputItemBuilderTests
     {
         var stream = CreateStream();
         var addedItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString(""));
-        var doneItem = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{\"result\":1}") };
+        var doneItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{\"result\":1}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var added = builder.EmitAdded(addedItem);
@@ -154,8 +154,8 @@ public class OutputItemBuilderTests
     public void EmitAdded_ThenEmitDone_SequenceNumbersIncrement()
     {
         var stream = CreateStream();
-        var addedItem = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
-        var doneItem = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "myFunc", FunctionArguments = BinaryData.FromString("{}") };
+        var addedItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
+        var doneItem = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{}"));
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 0, "fc_test");
 
         var added = builder.EmitAdded(addedItem);

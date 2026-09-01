@@ -72,8 +72,8 @@ public class ModelRoundTripTests
         Assert.That(request.MaxOutputTokenCount, Is.EqualTo(1024));
         Assert.That(request.StoredOutputEnabled, Is.True);
         Assert.That(request.Metadata, Is.Not.Null);
-        Assert.That(request.Metadata.AdditionalProperties["user_id"], Is.EqualTo("u123"));
-        Assert.That(request.Metadata.AdditionalProperties["session_id"], Is.EqualTo("s456"));
+        Assert.That(request.Metadata["user_id"], Is.EqualTo("u123"));
+        Assert.That(request.Metadata["session_id"], Is.EqualTo("s456"));
     }
 
     [Test]
@@ -173,7 +173,7 @@ public class ModelRoundTripTests
         var metadata = new Metadata();
         metadata.AdditionalProperties["env"] = "test";
 
-        var response = new ResponseObject { Id = "resp_meta", Model = "gpt-4o", Status = ResponseStatus.Completed, Metadata = metadata, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
+        var response = new ResponseObject { Id = "resp_meta", Model = "gpt-4o", Status = ResponseStatus.Completed, CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
@@ -358,12 +358,12 @@ public class ModelRoundTripTests
 
         foreach (var code in codes)
         {
-            var original = OpenAIModelFactory.CreateError(code, $"Error: {code}");
+            var original = OpenAIModelFactory.CreateError(code.ToString(), $"Error: {code}");
             var json = JsonSerializer.Serialize(original, options);
             var restored = JsonSerializer.Deserialize<ResponseErrorInfo>(json, options);
 
             Assert.That(restored, Is.Not.Null);
-            Assert.That(restored!.Code, Is.EqualTo(code));
+            Assert.That(restored!.Code.ToString(), Is.EqualTo(code.ToString()));
             Assert.That(restored.Message, Is.EqualTo($"Error: {code}"));
         }
     }

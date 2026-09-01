@@ -43,7 +43,7 @@ public sealed class RecoveryContextParityProtocolTests : CrashRecoveryE2ETestBas
             BackgroundModeEnabled = true,
             StoredOutputEnabled = true,
             StreamingEnabled = false,
-            Input = BinaryData.FromObjectAsJson("recover this input"),
+            InputItems = { ResponseItem.CreateUserMessageItem("recover this input") },
         };
 
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(

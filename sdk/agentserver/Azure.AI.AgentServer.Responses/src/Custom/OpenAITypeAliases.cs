@@ -171,6 +171,7 @@ global using ResponseUsageOutputTokensDetails = OpenAI.Responses.ResponseOutputT
 
 // Types the spec now maps onto their OpenAI counterparts via @@alternateType.
 global using ConversationReference = OpenAI.Responses.ResponseConversationOptions;
+global using ResponseConversationOptions = OpenAI.Responses.ResponseConversationOptions;
 global using ResponseStreamEventType = OpenAI.Responses.StreamingResponseUpdateKind;
 global using OutputContentOutputTextContent = OpenAI.Responses.ResponseContentPart;
 global using OutputContentRefusalContent = OpenAI.Responses.ResponseContentPart;
@@ -188,6 +189,9 @@ global using CodeInterpreterCallStatus = OpenAI.Responses.CodeInterpreterCallSta
 global using FileSearchCallStatus = OpenAI.Responses.FileSearchCallStatus;
 global using ReasoningStatus = OpenAI.Responses.ReasoningStatus;
 global using WebSearchCallStatus = OpenAI.Responses.WebSearchCallStatus;
+global using WebSearchSearchAction = OpenAI.Responses.WebSearchSearchAction;
+global using FilePath = OpenAI.Responses.FilePathMessageAnnotation;
+global using FileCitationBody = OpenAI.Responses.FileCitationMessageAnnotation;
 global using MessageStatus = OpenAI.Responses.MessageStatus;
 global using FunctionCallStatus = OpenAI.Responses.FunctionCallStatus;
 global using ImageGenerationCallStatus = OpenAI.Responses.ImageGenerationCallStatus;

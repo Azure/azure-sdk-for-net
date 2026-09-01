@@ -371,7 +371,6 @@ public class OpenAIWireComplianceTests
         Assert.That(((ItemMessage)items[1]).Role, Is.EqualTo(MessageRole.Assistant));
         Assert.That(((ItemMessage)items[2]).Role, Is.EqualTo(MessageRole.Developer));
         Assert.That(((ItemMessage)items[3]).Role, Is.EqualTo(MessageRole.System));
-        Assert.That(((ItemMessage)items[4]).Role, Is.EqualTo(MessageRole.Tool));
     }
 
     [Test]
@@ -747,7 +746,7 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_ItemMessage_ToResponseItem()
     {
-        var msg = MessageItemFactory.Message(MessageRole.User, new List<Models.MessageContent>
+        var msg = MessageItemFactory.Message(MessageRole.User, new List<ResponseContentPart>
         {
             ResponseContentPart.CreateInputTextPart("Hello from Azure"),
         });
@@ -760,7 +759,7 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_FunctionCall_ToResponseItem()
     {
-        var fc = new ItemFunctionToolCall { CallId = "call_1", FunctionName = "my_func", FunctionArguments = BinaryData.FromString("{\"x\":1}") };
+        var fc = new ItemFunctionToolCall("call_1", "my_func", BinaryData.FromString("{\"x\":1}"));
 
         var openAiItem = fc.Translate().To<ResponseItem>();
         Assert.That(openAiItem, Is.InstanceOf<FunctionCallResponseItem>());
@@ -772,7 +771,7 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_FunctionCallOutput_ToResponseItem()
     {
-        var fco = new FunctionCallOutputItemParam("call_1", BinaryData.FromObjectAsJson("result"));
+        var fco = new FunctionCallOutputItemParam("call_1", "result");
 
         var openAiItem = fco.Translate().To<ResponseItem>();
         Assert.That(openAiItem, Is.InstanceOf<FunctionCallOutputResponseItem>());

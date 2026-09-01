@@ -32,7 +32,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal OutputItemCustomToolCall(string callId, string name, string input, FunctionCallStatus status) : base("custom_tool_call")
+        internal OutputItemCustomToolCall(string callId, string name, string input, global::OpenAI.Responses.FunctionCallStatus status) : base("custom_tool_call")
         {
             CallId = callId;
             Name = name;
@@ -52,7 +52,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputItemCustomToolCall(ResponseItemKind @type, string id, string callId, string @namespace, string name, string input, FunctionCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal OutputItemCustomToolCall(ResponseItemKind @type, string id, string callId, string @namespace, string name, string input, global::OpenAI.Responses.FunctionCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             CallId = callId;
@@ -79,6 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public FunctionCallStatus Status { get; }
+        public global::OpenAI.Responses.FunctionCallStatus Status { get; }
     }
 }

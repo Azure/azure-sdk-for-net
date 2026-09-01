@@ -387,11 +387,13 @@ public class ResponseContextImplTests
 
     private static CreateResponse CreateRequestWithJsonInput(string inputJson)
     {
-        return new CreateResponse
+        var request = new CreateResponse { Model = "test" };
+        foreach (var item in OpenAIJson.Items(inputJson))
         {
-            Model = "test",
-            Input = BinaryData.FromString(inputJson),
-        };
+            request.InputItems.Add(item);
+        }
+
+        return request;
     }
 
     private static OutputItemMessage MakeMessage(string id, string text)

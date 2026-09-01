@@ -85,7 +85,6 @@ public class PublicConstructorModelTests
     public static IEnumerable<object[]> OutputContentTypes => new[]
     {
         new object[] { typeof(OutputContentOutputTextContent) },
-        new object[] { typeof(OutputContentReasoningTextContent) },
         new object[] { typeof(OutputContentRefusalContent) },
     };
 
@@ -170,19 +169,6 @@ public class PublicConstructorModelTests
     public void OutputItem_IsAbstract()
     {
         Assert.That(typeof(OutputItem).IsAbstract, Is.True);
-    }
-
-    [Test]
-    public void OutputContent_HasNoPublicConstructors()
-    {
-        var publicCtors = typeof(OutputContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.That(publicCtors, Is.Empty);
-    }
-
-    [Test]
-    public void OutputContent_IsAbstract()
-    {
-        Assert.That(typeof(OutputContent).IsAbstract, Is.True);
     }
 
     [Test]

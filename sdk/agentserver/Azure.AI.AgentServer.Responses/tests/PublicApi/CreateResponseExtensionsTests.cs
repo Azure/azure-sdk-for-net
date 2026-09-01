@@ -39,7 +39,7 @@ public class CreateResponseExtensionsTests
         var request = new CreateResponse
         {
             PreviousResponseId = "caresp_prev",
-            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
+            ConversationOptions = new ResponseConversationOptions(conversationId),
         };
 
         Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
@@ -51,7 +51,7 @@ public class CreateResponseExtensionsTests
         var conversationId = "conv_abc123";
         var request = new CreateResponse
         {
-            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
+            ConversationOptions = new ResponseConversationOptions(conversationId),
         };
 
         Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
@@ -63,21 +63,10 @@ public class CreateResponseExtensionsTests
         var conversationId = "conv_obj123";
         var request = new CreateResponse
         {
-            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(new { id = conversationId })),
+            ConversationOptions = new ResponseConversationOptions(conversationId),
         };
 
         Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
-    }
-
-    [Test]
-    public void GetConversationId_ConversationObjectWithoutId_ReturnsNull()
-    {
-        var request = new CreateResponse
-        {
-            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(new { name = "test" })),
-        };
-
-        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     [Test]
@@ -85,18 +74,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize("")),
-        };
-
-        Assert.That(request.GetConversationId(), Is.Null);
-    }
-
-    [Test]
-    public void GetConversationId_ConversationInvalidJson_ReturnsNull()
-    {
-        var request = new CreateResponse
-        {
-            ConversationOptions = BinaryData.FromString("not valid json {{{"),
+            ConversationOptions = new ResponseConversationOptions(string.Empty),
         };
 
         Assert.That(request.GetConversationId(), Is.Null);
@@ -135,7 +113,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("auto"),
+            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("auto")),
         };
 
         var result = request.GetToolChoiceExpanded();
@@ -150,7 +128,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("required"),
+            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("required")),
         };
 
         var result = request.GetToolChoiceExpanded();
@@ -165,7 +143,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("none"),
+            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("none")),
         };
 
         Assert.That(request.GetToolChoiceExpanded(), Is.Null);
@@ -177,7 +155,7 @@ public class CreateResponseExtensionsTests
         var json = """{"type":"allowed_tools","mode":"auto","tools":[]}""";
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromString(json),
+            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromString(json)),
         };
 
         var result = request.GetToolChoiceExpanded();
@@ -191,7 +169,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("invalid_value"),
+            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("invalid_value")),
         };
 
         Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
@@ -202,7 +180,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromString("42"),
+            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromString("42")),
         };
 
         Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
@@ -230,7 +208,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Input = BinaryData.FromObjectAsJson("Hello world"),
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello world") },
         };
 
         var result = request.GetInputExpanded();
@@ -248,10 +226,11 @@ public class CreateResponseExtensionsTests
     public void GetInputExpanded_TypedArray_DeserializesPolymorphically()
     {
         var json = """[{"type":"message","role":"user","content":[{"type":"input_text","text":"Hi"}]}]""";
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         var result = request.GetInputExpanded();
 
@@ -264,10 +243,11 @@ public class CreateResponseExtensionsTests
     public void GetInputExpanded_UntypedArray_FallsBackToItemMessage()
     {
         var json = """[{"role":"user","content":[{"type":"input_text","text":"Hi"}]}]""";
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         var result = request.GetInputExpanded();
 
@@ -277,46 +257,22 @@ public class CreateResponseExtensionsTests
     }
 
     [Test]
-    public void GetInputExpanded_NumberValue_ThrowsFormatException()
-    {
-        var request = new CreateResponse
-        {
-            Input = BinaryData.FromString("42"),
-        };
-
-        var ex = Assert.Throws<FormatException>(() => request.GetInputExpanded());
-        Assert.That(ex.Message, Is.EqualTo("Expected a string or array for Input, but got Number."));
-    }
-
-    [Test]
-    public void GetInputExpanded_MalformedJson_ThrowsFormatException()
-    {
-        var request = new CreateResponse
-        {
-            Input = BinaryData.FromString("{{{invalid"),
-        };
-
-        var ex = Assert.Throws<FormatException>(() => request.GetInputExpanded());
-        Assert.That(ex.Message, Is.EqualTo("Failed to convert input items"));
-        Assert.That(ex.InnerException, Is.Not.Null);
-    }
-
-    [Test]
     public void GetInputExpanded_StringContent_NormalizedToArray()
     {
         // content is a plain JSON string — should be auto-expanded to array form
         var json = """[{"type":"message","role":"user","content":"Hello world"}]""";
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         var result = request.GetInputExpanded();
 
         var itemMsg = XAssert.IsType<ItemMessage>(XAssert.Single(result));
 
         // Content BinaryData should now be a JSON array, not a string
-        using var doc = System.Text.Json.JsonDocument.Parse(itemMsg.Content.ToMemory());
+        using var doc = System.Text.Json.JsonDocument.Parse(BinaryData.FromObjectAsJson(itemMsg.Content).ToMemory());
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
         // GetContentExpanded should still work correctly
@@ -330,15 +286,16 @@ public class CreateResponseExtensionsTests
     {
         // content is already an array — should pass through without re-serialization
         var json = """[{"type":"message","role":"user","content":[{"type":"input_text","text":"Already expanded"}]}]""";
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         var result = request.GetInputExpanded();
 
         var itemMsg = XAssert.IsType<ItemMessage>(XAssert.Single(result));
-        using var doc = System.Text.Json.JsonDocument.Parse(itemMsg.Content.ToMemory());
+        using var doc = System.Text.Json.JsonDocument.Parse(BinaryData.FromObjectAsJson(itemMsg.Content).ToMemory());
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
         var content = itemMsg.GetContentExpanded();
@@ -356,10 +313,11 @@ public class CreateResponseExtensionsTests
             {"type":"message","role":"user","content":[{"type":"input_text","text":"Second message"}]}
         ]
         """;
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         var result = request.GetInputText();
         Assert.That(result, Is.EqualTo("First message\nSecond message"));
@@ -386,7 +344,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Input = BinaryData.FromObjectAsJson("Hello world"),
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello world") },
         };
 
         Assert.That(request.GetInputText(), Is.EqualTo("Hello world"));
@@ -401,10 +359,11 @@ public class CreateResponseExtensionsTests
             {"type":"message","role":"user","content":[{"type":"input_text","text":"World"}]}
         ]
         """;
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         var result = request.GetInputText();
         Assert.That(result, Is.EqualTo("Hello\nWorld"));
@@ -422,10 +381,11 @@ public class CreateResponseExtensionsTests
             ]}
         ]
         """;
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         Assert.That(request.GetInputText(), Is.EqualTo("Look at this"));
     }
@@ -434,10 +394,11 @@ public class CreateResponseExtensionsTests
     public void GetInputText_NonMessageItems_ReturnsEmptyString()
     {
         var json = """[{"type":"function_call_output","call_id":"call_1","output":"result"}]""";
-        var request = new CreateResponse
+        var request = new CreateResponse();
+        foreach (var __item in OpenAIJson.Items(BinaryData.FromString(json)))
         {
-            Input = BinaryData.FromString(json),
-        };
+            request.InputItems.Add(__item);
+        }
 
         Assert.That(request.GetInputText(), Is.EqualTo(string.Empty));
     }
@@ -463,7 +424,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ConversationOptions = BinaryData.FromObjectAsJson("conv_abc123"),
+            ConversationOptions = new ResponseConversationOptions("conv_abc123"),
         };
 
         var result = request.GetConversationExpanded();
@@ -475,27 +436,15 @@ public class CreateResponseExtensionsTests
     [Test]
     public void GetConversationExpanded_ObjectForm_Deserialized()
     {
-        var json = """{"id":"conv_xyz"}""";
         var request = new CreateResponse
         {
-            ConversationOptions = BinaryData.FromString(json),
+            ConversationOptions = new ResponseConversationOptions("conv_xyz"),
         };
 
         var result = request.GetConversationExpanded();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Id, Is.EqualTo("conv_xyz"));
-    }
-
-    [Test]
-    public void GetConversationExpanded_UnexpectedShape_ThrowsFormatException()
-    {
-        var request = new CreateResponse
-        {
-            ConversationOptions = BinaryData.FromString("42"),
-        };
-
-        Assert.Throws<FormatException>(() => request.GetConversationExpanded());
     }
 
     // ── GetInstructionsBinaryData ──────────────────────────────────────

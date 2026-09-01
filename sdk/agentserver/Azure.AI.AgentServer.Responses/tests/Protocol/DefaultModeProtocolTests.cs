@@ -135,9 +135,7 @@ public class DefaultModeProtocolTests : ProtocolTestBase
         yield return text.EmitAdded();
 
         // Input is BinaryData containing raw JSON — deserialize the string value
-        var inputText = request.InputItems is not null
-            ? JsonSerializer.Deserialize<string>(request.InputItems)
-            : "Hello!";
+        var inputText = request.GetInputText() is { Length: > 0 } t ? t : "Hello!";
         var echoText = $"Echo: {inputText}";
         yield return text.EmitDelta(echoText);
         yield return text.EmitTextDone(echoText);

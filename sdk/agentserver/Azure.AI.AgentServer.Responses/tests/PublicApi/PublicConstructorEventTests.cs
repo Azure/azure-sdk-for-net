@@ -17,10 +17,6 @@ public class PublicConstructorEventTests
     /// </summary>
     public static IEnumerable<object[]> ConcreteEventTypes => new[]
     {
-        new object[] { typeof(ResponseAudioDeltaEvent) },
-        new object[] { typeof(ResponseAudioDoneEvent) },
-        new object[] { typeof(ResponseAudioTranscriptDeltaEvent) },
-        new object[] { typeof(ResponseAudioTranscriptDoneEvent) },
         new object[] { typeof(ResponseCodeInterpreterCallCodeDeltaEvent) },
         new object[] { typeof(ResponseCodeInterpreterCallCodeDoneEvent) },
         new object[] { typeof(ResponseCodeInterpreterCallCompletedEvent) },
@@ -61,8 +57,6 @@ public class PublicConstructorEventTests
         new object[] { typeof(ResponseReasoningSummaryPartDoneEvent) },
         new object[] { typeof(ResponseReasoningSummaryTextDeltaEvent) },
         new object[] { typeof(ResponseReasoningSummaryTextDoneEvent) },
-        new object[] { typeof(ResponseReasoningTextDeltaEvent) },
-        new object[] { typeof(ResponseReasoningTextDoneEvent) },
         new object[] { typeof(ResponseRefusalDeltaEvent) },
         new object[] { typeof(ResponseRefusalDoneEvent) },
         new object[] { typeof(ResponseTextDeltaEvent) },

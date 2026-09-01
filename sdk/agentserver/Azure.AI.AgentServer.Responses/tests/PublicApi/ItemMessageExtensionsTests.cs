@@ -49,8 +49,7 @@ public class ItemMessageExtensionsTests
     {
         // Use the internal parameterless constructor via deserialization
         var json = """{"type":"message","id":"msg1","status":"completed","role":"user"}""";
-        using var doc = System.Text.Json.JsonDocument.Parse(json);
-        var msg = ItemMessage.DeserializeItemMessage(doc.RootElement, System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
+        var msg = (ItemMessage)OpenAIJson.Read<Item>(json);
         var result = msg.GetContentExpanded();
         Assert.That(result, Is.Empty);
     }

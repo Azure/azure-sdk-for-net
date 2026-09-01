@@ -142,8 +142,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         await Task.CompletedTask;
         var stream = new ResponseEventStream(ctx, request);
         // Handler initializes Metadata and sets custom value via ResponseObject property (B37)
-        stream.Response.Metadata = new Metadata();
-        stream.Response.Metadata.AdditionalProperties["handler_key"] = "from_handler";
+        stream.Response.Metadata["handler_key"] = "from_handler";
         yield return stream.EmitCreated();
         yield return stream.EmitCompleted();
     }
@@ -156,7 +155,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         await Task.CompletedTask;
         var stream = new ResponseEventStream(ctx, request);
         // Handler sets custom instructions via ResponseObject property (B37)
-        stream.Response.Instructions = BinaryData.FromObjectAsJson("Custom handler instructions");
+        stream.Response.Instructions.Add(ResponseItem.CreateDeveloperMessageItem("Custom handler instructions"));
         yield return stream.EmitCreated();
         yield return stream.EmitCompleted();
     }
@@ -167,8 +166,8 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         // Handler constructs raw events without using ResponseEventStream (B37)
-        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Metadata = new Metadata(), Status = ResponseStatus.InProgress };
-        response.Metadata.AdditionalProperties["raw_key"] = "raw_value";
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Status = ResponseStatus.InProgress };
+        response.Metadata["raw_key"] = "raw_value";
         yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         response.SetCompleted();

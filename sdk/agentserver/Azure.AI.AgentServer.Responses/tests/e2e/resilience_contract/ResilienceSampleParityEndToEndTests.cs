@@ -125,7 +125,7 @@ public sealed class ResilienceSampleParityEndToEndTests
 
         string[] phaseOrder = { "analyze", "generate", "refine" };
         int start = context.IsRecovery
-            ? Math.Min(context.PersistedResponse?.Output?.Count ?? 0, phaseOrder.Length)
+            ? Math.Min(context.PersistedResponse?.OutputItems?.Count ?? 0, phaseOrder.Length)
             : 0;
         for (int i = start; i < phaseOrder.Length; i++)
         {

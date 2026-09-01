@@ -115,7 +115,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         var request = new CreateResponse
         {
             Model = "test",
-            ConversationOptions = BinaryData.FromString("\"conv_xyz\"")
+            ConversationOptions = new ResponseConversationOptions("conv_xyz")
         };
 
         source.PropagateResponseBaggage(request, "caresp_789", EmptyHeaders());
@@ -209,7 +209,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         {
             Model = "test",
             StreamingEnabled = true,
-            ConversationOptions = BinaryData.FromString("\"conv_xyz\"")
+            ConversationOptions = new ResponseConversationOptions("conv_xyz")
         };
         var headers = new HeaderDictionary { ["X-Request-Id"] = "req-999" };
 

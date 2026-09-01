@@ -29,7 +29,7 @@ public class ResponseExtensionsTests
     [Test]
     public void GetToolChoiceExpanded_Auto_ReturnsToolChoiceAllowedAuto()
     {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", ToolChoice = BinaryData.FromObjectAsJson("auto") };
+        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("auto")) };
 
         var result = response.GetToolChoiceExpanded();
 
@@ -40,7 +40,7 @@ public class ResponseExtensionsTests
     [Test]
     public void GetToolChoiceExpanded_None_ReturnsNull()
     {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", ToolChoice = BinaryData.FromObjectAsJson("none") };
+        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("none")) };
 
         Assert.That(response.GetToolChoiceExpanded(), Is.Null);
     }
@@ -122,7 +122,7 @@ public class ResponseExtensionsTests
     [Test]
     public void GetInstructionItems_StringInstructions_ReturnsSingleItemMessage()
     {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", Instructions = BinaryData.FromObjectAsJson("You are helpful.") };
+        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", Instructions = { ResponseItem.CreateDeveloperMessageItem("You are helpful.") } };
 
         var result = response.GetInstructionItems();
 
@@ -138,8 +138,7 @@ public class ResponseExtensionsTests
     [Test]
     public void GetInstructionItems_ArrayInstructions_DeserializesCorrectly()
     {
-        var json = """[{"type":"message","role":"developer","content":[{"type":"input_text","text":"Be concise."}]}]""";
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", Instructions = BinaryData.FromString(json) };
+        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", Instructions = { ResponseItem.CreateDeveloperMessageItem("Be concise.") } };
 
         var result = response.GetInstructionItems();
 
