@@ -268,10 +268,22 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $result.CheckoutGraphResult | Should -Be 'fallback'
         $result.FailureReason | Should -Be 'RepositoryProjectGraph generation failed with exit code 7.'
         Test-Path (Join-Path $outputDirectory 'Resolve-SparseCheckoutPaths.ps1') | Should -BeTrue
+        Test-Path (Join-Path $outputDirectory 'Get-TestCheckoutPaths.ps1') | Should -BeTrue
         $fallbackGraph = Get-Content (Join-Path $outputDirectory 'checkout-graph.json') -Raw | ConvertFrom-Json
         $fallbackGraph.schemaVersion | Should -Be 1
         $fallbackGraph.sourceCommit | Should -Be 'fixture-commit'
         $fallbackGraph.isComplete | Should -BeFalse
         $fallbackGraph.failureReason | Should -Be $result.FailureReason
+
+        # Test jobs start without a source checkout, so the published artifact must be able to
+        # choose its conservative fallback without loading any script from the repository.
+        $artifactSelector = Join-Path $outputDirectory 'Get-TestCheckoutPaths.ps1'
+        $selection = & $artifactSelector `
+            -GraphDirectory $outputDirectory `
+            -ArtifactNames 'Azure.A' `
+            -ExpectedSourceCommit 'fixture-commit'
+        $selection.IsNarrowed | Should -BeFalse
+        $selection.FailureReason | Should -Match 'generation failed with exit code 7'
+        @($selection.Paths) | Should -Be @('/*', '!SessionRecords', '/sdk/*/**/SessionRecords/*')
     }
 }

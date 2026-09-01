@@ -97,8 +97,17 @@ jobs:
             path: $(Agent.TempDirectory)/TestCheckoutGraph
 
         - pwsh: |
-            $result = & '$(Build.SourcesDirectory)/eng/scripts/Get-TestCheckoutPaths.ps1' `
-              -GraphDirectory '$(Agent.TempDirectory)/TestCheckoutGraph' `
+            $graphDirectory = '$(Agent.TempDirectory)/TestCheckoutGraph'
+            $selector = Get-ChildItem -LiteralPath $graphDirectory -Filter 'Get-TestCheckoutPaths.ps1' `
+              -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            if (!$selector) {
+              Write-Warning 'The MSBuild checkout graph selector is unavailable. Falling back to the full test checkout.'
+              Write-Host 'SPARSE_CHECKOUT_RESULT=full'
+              return
+            }
+
+            $result = & $selector.FullName `
+              -GraphDirectory $graphDirectory `
               -ArtifactNames '$(ProjectNames)' `
               -ExpectedSourceCommit '$(Build.SourceVersion)'
             if (!$result.IsNarrowed) {

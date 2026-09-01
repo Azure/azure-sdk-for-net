@@ -33,6 +33,7 @@ $checkoutGraphPath = Join-Path $OutputDirectory 'checkout-graph.json'
 $taskProject = Join-Path $RepoRoot 'eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj'
 $serviceProject = Join-Path $RepoRoot 'eng/service.proj'
 $resolverPath = Join-Path $RepoRoot 'eng/scripts/Resolve-SparseCheckoutPaths.ps1'
+$selectorPath = Join-Path $PSScriptRoot 'Get-TestCheckoutPaths.ps1'
 $repositoryGraphResult = ''
 $checkoutGraphResult = ''
 $reuseFailureReason = ''
@@ -110,6 +111,9 @@ catch {
 }
 
 Copy-Item -LiteralPath $resolverPath -Destination (Join-Path $OutputDirectory 'Resolve-SparseCheckoutPaths.ps1') -Force
+# Test jobs begin with checkout: none, so publish the selector with the graph it must query. The
+# pipeline can then determine sparse-checkout paths before any repository files are materialized.
+Copy-Item -LiteralPath $selectorPath -Destination (Join-Path $OutputDirectory 'Get-TestCheckoutPaths.ps1') -Force
 
 return [pscustomobject]@{
   RepositoryGraphResult = $repositoryGraphResult
