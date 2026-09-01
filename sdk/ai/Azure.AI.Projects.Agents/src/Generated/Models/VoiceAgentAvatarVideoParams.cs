@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoParams"/>. </summary>
-        /// <param name="bitrate"></param>
+        /// <param name="bitrate"> The target video bitrate in bits per second. </param>
         /// <param name="crop"></param>
         /// <param name="resolution"></param>
         /// <param name="background"></param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Bitrate. </summary>
+        /// <summary> The target video bitrate in bits per second. </summary>
         public int? Bitrate { get; set; }
 
         /// <summary> Gets or sets the Crop. </summary>

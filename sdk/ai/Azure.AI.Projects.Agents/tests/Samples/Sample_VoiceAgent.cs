@@ -61,21 +61,21 @@ public class Sample_VoiceAgent : SamplesBase
                     model: modelDeploymentName)
                 {
                     Instructions = "Respond briefly and helpfully.",
-                    Audio = new VoiceAudioConfig
+                    Audio = new VoiceAgentAudioConfig
                     {
-                        Input = new VoiceAudioInputConfig
+                        Input = new VoiceAgentAudioInputConfig
                         {
-                            Format = new VoiceAudioFormat(VoiceAudioFormatType.Pcm) { Rate = 24000 },
-                            NoiseReduction = new VoiceNoiseReduction(VoiceNoiseReductionType.NearField),
-                            TurnDetection = new VoiceServerVadTurnDetection
+                            Format = new RealtimeAudioFormatsAudioPcm { Rate = 24000 },
+                            NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
+                            TurnDetection = new VoiceAgentServerVadTurnDetection
                             {
                                 Threshold = 0.5,
                                 PrefixPaddingMs = 300,
                                 SilenceDurationMs = 500
                             },
-                            Transcription = new VoiceInputTranscription(VoiceInputTranscriptionModel.Whisper1)
+                            Transcription = new VoiceAgentInputTranscription(VoiceAgentInputTranscriptionModel.Whisper1)
                         },
-                        Output = new VoiceAudioOutputConfig
+                        Output = new VoiceAgentAudioOutputConfig
                         {
                             Voice = "alloy",
                             VoiceType = VoiceType.Openai
@@ -84,7 +84,7 @@ public class Sample_VoiceAgent : SamplesBase
                     Store = true
                 };
                 definition.OutputModalities.Add(VoiceOutputModality.Audio);
-                definition.Tools.Add(new VoiceSystemTool(VoiceSystemToolName.EndConversation));
+                definition.Tools.Add(new VoiceAgentSystemTool(VoiceAgentSystemToolName.EndConversation));
                 agentVersion = await agentsClient.CreateAgentVersionAsync(
                     agentName,
                     new ProjectsAgentVersionCreationOptions(definition));

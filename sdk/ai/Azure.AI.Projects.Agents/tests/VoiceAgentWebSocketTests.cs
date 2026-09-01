@@ -27,21 +27,21 @@ public class VoiceAgentWebSocketTests
         VoiceAgentDefinition definition = new(VoiceModelType.SelfDeployed, "voice-model")
         {
             Instructions = "Keep replies short and natural.",
-            Audio = new VoiceAudioConfig
+            Audio = new VoiceAgentAudioConfig
             {
-                Input = new VoiceAudioInputConfig
+                Input = new VoiceAgentAudioInputConfig
                 {
-                    Format = new VoiceAudioFormat(VoiceAudioFormatType.Pcm) { Rate = 24000 },
-                    NoiseReduction = new VoiceNoiseReduction(VoiceNoiseReductionType.NearField),
-                    TurnDetection = new VoiceServerVadTurnDetection
+                    Format = new RealtimeAudioFormatsAudioPcm { Rate = 24000 },
+                    NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
+                    TurnDetection = new VoiceAgentServerVadTurnDetection
                     {
                         Threshold = 0.5,
                         PrefixPaddingMs = 300,
                         SilenceDurationMs = 500
                     },
-                    Transcription = new VoiceInputTranscription(VoiceInputTranscriptionModel.Whisper1)
+                    Transcription = new VoiceAgentInputTranscription(VoiceAgentInputTranscriptionModel.Whisper1)
                 },
-                Output = new VoiceAudioOutputConfig
+                Output = new VoiceAgentAudioOutputConfig
                 {
                     Voice = "en-US-AvaNeural",
                     VoiceType = VoiceType.AzureStandard
@@ -50,7 +50,7 @@ public class VoiceAgentWebSocketTests
             Store = true
         };
         definition.OutputModalities.Add(VoiceOutputModality.Audio);
-        definition.Tools.Add(new VoiceSystemTool(VoiceSystemToolName.EndConversation));
+        definition.Tools.Add(new VoiceAgentSystemTool(VoiceAgentSystemToolName.EndConversation));
 
         BinaryData data = ((IPersistableModel<VoiceAgentDefinition>)definition).Write(ModelReaderWriterOptions.Json);
         using JsonDocument document = JsonDocument.Parse(data);
@@ -98,7 +98,9 @@ public class VoiceAgentWebSocketTests
         VoiceResponse response = VoiceResponse.DeserializeVoiceResponse(
             document.RootElement,
             ModelReaderWriterOptions.Json);
-        VoiceAssistantMessageItem assistantMessage = ModelReaderWriter.Read<VoiceAssistantMessageItem>(
+        // "message" is no longer a modeled RealtimeConversationItem discriminator in this spec revision
+        // (only function-call/MCP item types remain); it now round-trips via the base type.
+        RealtimeConversationItem assistantMessage = ModelReaderWriter.Read<RealtimeConversationItem>(
             response.Output.Single());
         using JsonDocument outputDocument = JsonDocument.Parse(response.Output.Single());
 
@@ -107,12 +109,12 @@ public class VoiceAgentWebSocketTests
             Assert.That(response.Id, Is.EqualTo("resp_123"));
             Assert.That(response.ConversationId, Is.EqualTo("conv_123"));
             Assert.That(response.OutputModalities, Has.Count.EqualTo(1));
-            Assert.That(response.OutputModalities[0], Is.EqualTo(VoiceResponseOutputModality.Audio));
+            Assert.That(response.OutputModalities[0], Is.EqualTo(VoiceResponseBaseOutputModality.Audio));
             Assert.That(response.Output, Has.Count.EqualTo(1));
+            Assert.That(assistantMessage, Is.Not.Null);
             Assert.That(outputDocument.RootElement.GetProperty("type").GetString(), Is.EqualTo("message"));
-            Assert.That(assistantMessage, Is.InstanceOf<RealtimeConversationItemMessageAssistant>());
-            Assert.That(assistantMessage.Id, Is.EqualTo("item_123"));
-            Assert.That(assistantMessage.ResponseId, Is.EqualTo("resp_123"));
+            Assert.That(outputDocument.RootElement.GetProperty("id").GetString(), Is.EqualTo("item_123"));
+            Assert.That(outputDocument.RootElement.GetProperty("response_id").GetString(), Is.EqualTo("resp_123"));
         });
     }
 

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -18,7 +17,7 @@ namespace Azure.AI.Projects.Agents
     /// durable ordering extensions.
     /// </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceResponse : VoiceResponseProperties
+    public partial class VoiceResponse : VoiceResponseBase
     {
         /// <summary> Initializes a new instance of <see cref="VoiceResponse"/>. </summary>
         /// <param name="id"> The unique id of the response. </param>
@@ -26,10 +25,9 @@ namespace Azure.AI.Projects.Agents
         internal VoiceResponse(string id, string conversationId)
         {
             Id = id;
-            Output = new ChangeTrackingList<BinaryData>();
+            Output = new ChangeTrackingList<RealtimeConversationItem>();
             ConversationId = conversationId;
             Metadata = new ChangeTrackingDictionary<string, string>();
-            OutputModalities = new ChangeTrackingList<VoiceResponseOutputModality>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponse"/>. </summary>
@@ -69,84 +67,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="conversationId0"> The id of the conversation this response belongs to. </param>
         /// <param name="audio"> The audio configuration used for the response, including the voice and audio format used for output. </param>
         /// <param name="metadata"> A set of key-value pairs attached to the response. </param>
-        /// <param name="outputModalities0"> The output modalities used for the response, e.g. `["text", "audio"]`. Audio output always includes a text transcript. </param>
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResponse(string id, VoiceResponseObject? @object, VoiceResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<BinaryData> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, IList<VoiceResponseOutputModality> outputModalities0, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResponse(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<RealtimeConversationItem> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
             Id = id0;
             Output = output;
             ConversationId = conversationId0;
             Audio = audio;
             Metadata = metadata;
-            OutputModalities = outputModalities0;
             Temperature = temperature;
             CreatedAt = createdAt;
             CompletedAt = completedAt;
         }
 
-        /// <summary>
-        /// The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="VoiceSystemMessageItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceUserMessageItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceAssistantMessageItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceFunctionCallItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceFunctionCallOutputItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceMcpListToolsItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceMcpCallItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceMcpApprovalRequestItem"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceMcpApprovalResponseItem"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Output { get; }
+        /// <summary> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </summary>
+        public IList<RealtimeConversationItem> Output { get; }
 
         /// <summary> The audio configuration used for the response, including the voice and audio format used for output. </summary>
         public VoiceResponseAudio Audio { get; }

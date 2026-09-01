@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> Realtime MCP list tools. </summary>
+    [Experimental("AAIP001")]
     public partial class RealtimeMCPListTools : RealtimeConversationItem
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPListTools"/>. </summary>
@@ -31,11 +33,15 @@ namespace OpenAI
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        internal RealtimeMCPListTools(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<VoiceMcpListToolsTool> tools) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        internal RealtimeMCPListTools(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<VoiceMcpListToolsTool> tools, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
             Tools = tools;
+            CreatedAt = createdAt;
+            ResponseId = responseId;
         }
 
         /// <summary> The unique ID of the list. </summary>
@@ -46,5 +52,11 @@ namespace OpenAI
 
         /// <summary> The tools available on the server. </summary>
         public IList<VoiceMcpListToolsTool> Tools { get; }
+
+        /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
+        public DateTimeOffset? CreatedAt { get; }
+
+        /// <summary> The id of the response that produced this item, when applicable. </summary>
+        public string ResponseId { get; }
     }
 }

@@ -10,13 +10,13 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Avatar settings accepted by the stable voice-agent WebSocket contract. </summary>
     [Experimental("AAIP001")]
-    internal partial class VoiceAgentSessionAvatarConfig : VoiceAvatarConfig
+    internal partial class VoiceAgentSessionAvatarConfig : VoiceAgentAvatarConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSessionAvatarConfig"/>. </summary>
         /// <param name="type"> The avatar type. </param>
         /// <param name="character"> The avatar character identifier, e.g. 'lisa'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="character"/> is null. </exception>
-        public VoiceAgentSessionAvatarConfig(VoiceAvatarType @type, string character) : base(@type, character)
+        public VoiceAgentSessionAvatarConfig(VoiceAgentAvatarType @type, string character) : base(@type, character)
         {
             Argument.AssertNotNull(character, nameof(character));
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="outputAuditAudio"> Whether audit audio is emitted with avatar output. Defaults to false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="iceServers"></param>
-        internal VoiceAgentSessionAvatarConfig(VoiceAvatarType @type, string character, string style, bool? customized, VoiceAvatarOutputProtocol? outputProtocol, string model, VoiceAgentAvatarVideoParams video, VoiceAgentAvatarScene scene, bool? outputAuditAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<VoiceAgentAvatarIceServer> iceServers) : base(@type, character, style, customized, outputProtocol, model, video, scene, outputAuditAudio, additionalBinaryDataProperties)
+        internal VoiceAgentSessionAvatarConfig(VoiceAgentAvatarType @type, string character, string style, bool? customized, VoiceAgentAvatarOutputProtocol? outputProtocol, string model, VoiceAgentAvatarVideoParams video, VoiceAgentAvatarScene scene, bool? outputAuditAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<VoiceAgentAvatarIceServer> iceServers) : base(@type, character, style, customized, outputProtocol, model, video, scene, outputAuditAudio, additionalBinaryDataProperties)
         {
             IceServers = iceServers;
         }

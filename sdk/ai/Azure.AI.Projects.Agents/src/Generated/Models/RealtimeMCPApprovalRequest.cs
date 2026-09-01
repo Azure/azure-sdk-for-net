@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> Realtime MCP approval request. </summary>
+    [Experimental("AAIP001")]
     public partial class RealtimeMCPApprovalRequest : RealtimeConversationItem
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPApprovalRequest"/>. </summary>
@@ -37,12 +39,16 @@ namespace OpenAI
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal RealtimeMCPApprovalRequest(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        internal RealtimeMCPApprovalRequest(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
+            CreatedAt = createdAt;
+            ResponseId = responseId;
         }
 
         /// <summary> The unique ID of the approval request. </summary>
@@ -56,5 +62,11 @@ namespace OpenAI
 
         /// <summary> A JSON string of arguments for the tool. </summary>
         public string Arguments { get; set; }
+
+        /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
+        public DateTimeOffset? CreatedAt { get; }
+
+        /// <summary> The id of the response that produced this item, when applicable. </summary>
+        public string ResponseId { get; }
     }
 }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> Realtime MCP tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class RealtimeMCPToolCall : RealtimeConversationItem
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPToolCall"/>. </summary>
@@ -40,7 +42,9 @@ namespace OpenAI
         /// <param name="approvalRequestId"></param>
         /// <param name="output"></param>
         /// <param name="error"></param>
-        internal RealtimeMCPToolCall(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string approvalRequestId, string output, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        internal RealtimeMCPToolCall(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string approvalRequestId, string output, RealtimeMCPError error, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -49,6 +53,8 @@ namespace OpenAI
             ApprovalRequestId = approvalRequestId;
             Output = output;
             Error = error;
+            CreatedAt = createdAt;
+            ResponseId = responseId;
         }
 
         /// <summary> The unique ID of the tool call. </summary>
@@ -71,5 +77,11 @@ namespace OpenAI
 
         /// <summary> Gets or sets the Error. </summary>
         public RealtimeMCPError Error { get; set; }
+
+        /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
+        public DateTimeOffset? CreatedAt { get; }
+
+        /// <summary> The id of the response that produced this item, when applicable. </summary>
+        public string ResponseId { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Avatar settings accepted by the stable voice-agent WebSocket contract. </summary>
-    internal partial class VoiceAgentSessionAvatarConfig : VoiceAvatarConfig, IJsonModel<VoiceAgentSessionAvatarConfig>
+    internal partial class VoiceAgentSessionAvatarConfig : VoiceAgentAvatarConfig, IJsonModel<VoiceAgentSessionAvatarConfig>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSessionAvatarConfig"/> for deserialization. </summary>
         internal VoiceAgentSessionAvatarConfig()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAvatarConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentAvatarConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSessionAvatarConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,7 +94,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAvatarConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentAvatarConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSessionAvatarConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -113,11 +113,11 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            VoiceAvatarType @type = default;
+            VoiceAgentAvatarType @type = default;
             string character = default;
             string style = default;
             bool? customized = default;
-            VoiceAvatarOutputProtocol? outputProtocol = default;
+            VoiceAgentAvatarOutputProtocol? outputProtocol = default;
             string model = default;
             VoiceAgentAvatarVideoParams video = default;
             VoiceAgentAvatarScene scene = default;
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VoiceAvatarType(prop.Value.GetString());
+                    @type = new VoiceAgentAvatarType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("character"u8))
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    outputProtocol = new VoiceAvatarOutputProtocol(prop.Value.GetString());
+                    outputProtocol = new VoiceAgentAvatarOutputProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))

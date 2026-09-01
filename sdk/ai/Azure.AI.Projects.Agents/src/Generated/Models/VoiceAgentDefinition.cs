@@ -74,7 +74,7 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType modelType, string model, string instructions, VoiceGreetingConfig greeting, VoiceAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, BinaryData interimResponse, VoiceAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType modelType, string model, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
@@ -103,13 +103,13 @@ namespace Azure.AI.Projects.Agents
         public string Instructions { get; set; }
 
         /// <summary> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </summary>
-        public VoiceGreetingConfig Greeting { get; set; }
+        public VoiceAgentGreetingConfig Greeting { get; set; }
 
         /// <summary>
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </summary>
-        public VoiceAudioConfig Audio { get; set; }
+        public VoiceAgentAudioConfig Audio { get; set; }
 
         /// <summary>
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
@@ -161,49 +161,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Additional fields to include in service outputs. </summary>
         public IList<VoiceAgentSessionIncludeOption> Include { get; }
 
-        /// <summary>
-        /// Interim-response settings for latency and tool execution.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="VoiceAgentStaticInterimResponseConfig"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceAgentLlmInterimResponseConfig"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData InterimResponse { get; set; }
+        /// <summary> Interim-response settings for latency and tool execution. </summary>
+        public VoiceAgentInterimResponseConfig InterimResponse { get; set; }
 
         /// <summary> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </summary>
-        public VoiceAvatarConfig Avatar { get; set; }
+        public VoiceAgentAvatarConfig Avatar { get; set; }
 
         /// <summary>
         /// The tools the voice agent may use. Supported tool kinds are `function` (executed by the client), `mcp`,

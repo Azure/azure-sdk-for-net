@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool usable by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentFunctionTool"/>, <see cref="VoiceAgentMcpTool"/>, <see cref="VoiceSystemTool"/>, and <see cref="VoiceToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentFunctionTool"/>, <see cref="VoiceAgentMcpTool"/>, <see cref="VoiceAgentSystemTool"/>, and <see cref="VoiceAgentToolboxTool"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class VoiceAgentTool

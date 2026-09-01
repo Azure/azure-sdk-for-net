@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenAI
 {
@@ -11,6 +12,7 @@ namespace OpenAI
     /// A single item within a Realtime conversation.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeConversationItemFunctionCall"/>, <see cref="RealtimeConversationItemFunctionCallOutput"/>, <see cref="RealtimeMCPApprovalResponse"/>, <see cref="RealtimeMCPListTools"/>, <see cref="RealtimeMCPToolCall"/>, and <see cref="RealtimeMCPApprovalRequest"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class RealtimeConversationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

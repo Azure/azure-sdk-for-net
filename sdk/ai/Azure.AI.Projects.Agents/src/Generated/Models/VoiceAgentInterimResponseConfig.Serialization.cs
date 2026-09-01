@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (VoiceAgentInterimResponseTrigger item in Triggers)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

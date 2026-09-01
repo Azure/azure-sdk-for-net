@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
 public partial class VoiceResponse
 {
-    // The base OmitProperties-derived contract (VoiceResponseProperties) already declares these
+    // The base VoiceResponseBase-derived contract already declares these
     // members and is where the values are actually populated during deserialization (the wire
     // property names collide with the ones re-declared directly on this model, so the generated
     // constructor parameters below are never populated from JSON). The setters exist only so the
@@ -28,7 +29,7 @@ public partial class VoiceResponse
     }
 
     /// <summary> The output modalities used for the response, e.g. `["text", "audio"]`. Audio output always includes a text transcript. </summary>
-    public new IList<VoiceResponseOutputModality> OutputModalities
+    public new IList<VoiceResponseBaseOutputModality> OutputModalities
     {
         get => base.OutputModalities;
         private set { }

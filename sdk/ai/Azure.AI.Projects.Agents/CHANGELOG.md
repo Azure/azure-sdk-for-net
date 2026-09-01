@@ -14,6 +14,9 @@
 
 ### Breaking Changes
 
+- Renamed voice-agent configuration models to the `VoiceAgent*` family (e.g. `VoiceAudioConfig` → `VoiceAgentAudioConfig`, `VoiceSystemTool` → `VoiceAgentSystemTool`, `VoiceTurnDetection` → `VoiceAgentTurnDetectionConfig`) and renamed `VoiceResponse`'s base contract members (e.g. `VoiceResponseOutputModality` → `VoiceResponseBaseOutputModality`).
+- Removed the dedicated "message" conversation item models (`VoiceAssistantMessageItem`, `VoiceUserMessageItem`, `VoiceSystemMessageItem`, and the underlying `RealtimeConversationItemMessage*` types); persisted "message" items now round-trip through the `RealtimeConversationItem` base type instead of a dedicated typed model.
+- Changed voice-agent audio format configuration to use the shared `RealtimeAudioFormatsAudioPcm`/`RealtimeAudioFormatsAudioPcma`/`RealtimeAudioFormatsAudioPcmu` models instead of `VoiceAudioFormat`.
 - Renamed Agent Optimization models to the `AgentOptimization*` family and renamed `OptimizationAgentIdentifier` to `OptimizedAgentIdentifier`.
 - Agent Optimization list operations now return complete `AgentOptimizationJob` models instead of `OptimizationJobListItem` models.
 - Persisted voice conversation item list operations and `VoiceResponse.Output` now return `BinaryData`.

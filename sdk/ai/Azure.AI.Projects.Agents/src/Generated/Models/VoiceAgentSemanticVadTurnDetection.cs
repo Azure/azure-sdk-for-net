@@ -9,10 +9,10 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> OpenAI semantic VAD turn-detection settings. </summary>
-    public partial class VoiceAgentSemanticVadTurnDetection : VoiceTurnDetection
+    public partial class VoiceAgentSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSemanticVadTurnDetection"/>. </summary>
-        public VoiceAgentSemanticVadTurnDetection() : base(VoiceTurnDetectionType.SemanticVad)
+        public VoiceAgentSemanticVadTurnDetection() : base(VoiceAgentTurnDetectionType.SemanticVad)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eagerness"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
-        internal VoiceAgentSemanticVadTurnDetection(VoiceTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSemanticVadTurnDetectionEagerness? eagerness, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceAgentSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSemanticVadTurnDetectionEagerness? eagerness, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Eagerness = eagerness;
             CreateResponse = createResponse;

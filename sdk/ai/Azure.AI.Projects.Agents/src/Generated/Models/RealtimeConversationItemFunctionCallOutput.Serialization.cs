@@ -96,6 +96,21 @@ namespace OpenAI
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("output"u8);
             writer.WriteStringValue(Output);
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            {
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt.Value, "U");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -130,6 +145,9 @@ namespace OpenAI
             RealtimeConversationItemFunctionCallOutputStatus? status = default;
             string callId = default;
             string output = default;
+            DateTimeOffset? createdAt = default;
+            string responseId = default;
+            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,6 +188,25 @@ namespace OpenAI
                     output = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -182,7 +219,10 @@ namespace OpenAI
                 @object,
                 status,
                 callId,
-                output);
+                output,
+                createdAt,
+                responseId,
+                name);
         }
     }
 }

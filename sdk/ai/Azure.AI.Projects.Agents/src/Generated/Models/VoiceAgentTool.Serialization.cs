@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool usable by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentFunctionTool"/>, <see cref="VoiceAgentMcpTool"/>, <see cref="VoiceSystemTool"/>, and <see cref="VoiceToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentFunctionTool"/>, <see cref="VoiceAgentMcpTool"/>, <see cref="VoiceAgentSystemTool"/>, and <see cref="VoiceAgentToolboxTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceAgentTool))]
     public abstract partial class VoiceAgentTool : IJsonModel<VoiceAgentTool>
@@ -131,9 +131,9 @@ namespace Azure.AI.Projects.Agents
                     case "mcp":
                         return VoiceAgentMcpTool.DeserializeVoiceAgentMcpTool(element, options);
                     case "system":
-                        return VoiceSystemTool.DeserializeVoiceSystemTool(element, options);
+                        return VoiceAgentSystemTool.DeserializeVoiceAgentSystemTool(element, options);
                     case "toolbox":
-                        return VoiceToolboxTool.DeserializeVoiceToolboxTool(element, options);
+                        return VoiceAgentToolboxTool.DeserializeVoiceAgentToolboxTool(element, options);
                 }
             }
             return UnknownVoiceAgentTool.DeserializeUnknownVoiceAgentTool(element, options);

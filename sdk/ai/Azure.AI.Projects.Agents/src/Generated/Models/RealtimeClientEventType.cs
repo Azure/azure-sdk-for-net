@@ -23,6 +23,7 @@ namespace OpenAI
         private const string ResponseCancelValue = "response.cancel";
         private const string ResponseCreateValue = "response.create";
         private const string SessionUpdateValue = "session.update";
+        private const string SessionAvatarConnectValue = "session.avatar.connect";
 
         /// <summary> Initializes a new instance of <see cref="RealtimeClientEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -66,6 +67,9 @@ namespace OpenAI
 
         /// <summary> Gets the SessionUpdate. </summary>
         public static RealtimeClientEventType SessionUpdate { get; } = new RealtimeClientEventType(SessionUpdateValue);
+
+        /// <summary> Gets the SessionAvatarConnect. </summary>
+        public static RealtimeClientEventType SessionAvatarConnect { get; } = new RealtimeClientEventType(SessionAvatarConnectValue);
 
         /// <summary> Determines if two <see cref="RealtimeClientEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

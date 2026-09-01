@@ -85,6 +85,16 @@ namespace OpenAI
             writer.WriteStringValue(Name);
             writer.WritePropertyName("arguments"u8);
             writer.WriteStringValue(Arguments);
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            {
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt.Value, "U");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,6 +128,8 @@ namespace OpenAI
             string serverLabel = default;
             string name = default;
             string arguments = default;
+            DateTimeOffset? createdAt = default;
+            string responseId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -145,6 +157,20 @@ namespace OpenAI
                     arguments = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -156,7 +182,9 @@ namespace OpenAI
                 id,
                 serverLabel,
                 name,
-                arguments);
+                arguments,
+                createdAt,
+                responseId);
         }
     }
 }

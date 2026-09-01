@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
     /// (`GET .../responses/{response_id}/items`) for its output items. `created_at`/`completed_at` are Foundry
     /// durable ordering extensions.
     /// </summary>
-    public partial class VoiceResponse : VoiceResponseProperties, IJsonModel<VoiceResponse>
+    public partial class VoiceResponse : VoiceResponseBase, IJsonModel<VoiceResponse>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceResponse"/> for deserialization. </summary>
         internal VoiceResponse()
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceResponseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceResponseBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,21 +98,9 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (BinaryData item in Output)
+                foreach (RealtimeConversationItem item in Output)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,16 +127,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(OutputModalities))
-            {
-                writer.WritePropertyName("output_modalities"u8);
-                writer.WriteStartArray();
-                foreach (VoiceResponseOutputModality item in OutputModalities)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -172,7 +150,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceResponseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceResponseBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -192,20 +170,19 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string id = default;
-            VoiceResponseObject? @object = default;
-            VoiceResponseStatus? status = default;
+            VoiceResponseBaseObject? @object = default;
+            VoiceResponseBaseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
             string conversationId = default;
-            IList<VoiceResponseOutputModality> outputModalities = default;
+            IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id0 = default;
-            IList<BinaryData> output = default;
+            IList<RealtimeConversationItem> output = default;
             string conversationId0 = default;
             VoiceResponseAudio audio = default;
             IDictionary<string, string> metadata = default;
-            IList<VoiceResponseOutputModality> outputModalities0 = default;
             float? temperature = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? completedAt = default;
@@ -222,7 +199,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    @object = new VoiceResponseObject(prop.Value.GetString());
+                    @object = new VoiceResponseBaseObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -231,7 +208,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = new VoiceResponseStatus(prop.Value.GetString());
+                    status = prop.Value.GetString().ToVoiceResponseBaseStatus();
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -263,10 +240,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<VoiceResponseOutputModality> array = new List<VoiceResponseOutputModality>();
+                    List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new VoiceResponseOutputModality(item.GetString()));
+                        array.Add(item.GetString().ToVoiceResponseBaseOutputModality());
                     }
                     outputModalities = array;
                     continue;
@@ -291,17 +268,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<BinaryData> array = new List<BinaryData>();
+                    List<RealtimeConversationItem> array = new List<RealtimeConversationItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
+                        array.Add(RealtimeConversationItem.DeserializeRealtimeConversationItem(item, options));
                     }
                     output = array;
                     continue;
@@ -339,20 +309,6 @@ namespace Azure.AI.Projects.Agents
                         }
                     }
                     metadata = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("output_modalities"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<VoiceResponseOutputModality> array = new List<VoiceResponseOutputModality>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new VoiceResponseOutputModality(item.GetString()));
-                    }
-                    outputModalities0 = array;
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
@@ -394,15 +350,14 @@ namespace Azure.AI.Projects.Agents
                 statusDetails,
                 usage,
                 conversationId,
-                outputModalities ?? new ChangeTrackingList<VoiceResponseOutputModality>(),
+                outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties,
                 id0,
-                output ?? new ChangeTrackingList<BinaryData>(),
+                output ?? new ChangeTrackingList<RealtimeConversationItem>(),
                 conversationId0,
                 audio,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                outputModalities0 ?? new ChangeTrackingList<VoiceResponseOutputModality>(),
                 temperature,
                 createdAt,
                 completedAt);

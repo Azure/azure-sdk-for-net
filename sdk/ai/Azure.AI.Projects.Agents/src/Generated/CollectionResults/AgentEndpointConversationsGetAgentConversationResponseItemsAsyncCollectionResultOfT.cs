@@ -8,11 +8,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     [Experimental("AAIP001")]
-    internal partial class AgentEndpointConversationsGetAgentConversationResponseItemsAsyncCollectionResultOfT : AsyncCollectionResult<BinaryData>
+    internal partial class AgentEndpointConversationsGetAgentConversationResponseItemsAsyncCollectionResultOfT : AsyncCollectionResult<RealtimeConversationItem>
     {
         private readonly AgentEndpointConversations _client;
         private readonly string _agentName;
@@ -72,7 +73,7 @@ namespace Azure.AI.Projects.Agents
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultVoiceConversationItem)result).LastId;
+                nextToken = ((AgentsPagedResultRealtimeConversationItem)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
@@ -86,7 +87,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultVoiceConversationItem)page).LastId;
+            string nextPage = ((AgentsPagedResultRealtimeConversationItem)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
@@ -100,9 +101,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<BinaryData> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<RealtimeConversationItem> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (BinaryData item in ((AgentsPagedResultVoiceConversationItem)page).Data)
+            foreach (RealtimeConversationItem item in ((AgentsPagedResultRealtimeConversationItem)page).Data)
             {
                 yield return item;
                 await Task.Yield();

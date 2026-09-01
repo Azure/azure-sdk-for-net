@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Agents
                     List<VoiceAgentInterimResponseTrigger> array = new List<VoiceAgentInterimResponseTrigger>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVoiceAgentInterimResponseTrigger());
+                        array.Add(new VoiceAgentInterimResponseTrigger(item.GetString()));
                     }
                     triggers = array;
                     continue;

@@ -58,6 +58,17 @@ namespace OpenAI
         private const string ResponseMcpCallInProgressValue = "response.mcp_call.in_progress";
         private const string ResponseMcpCallCompletedValue = "response.mcp_call.completed";
         private const string ResponseMcpCallFailedValue = "response.mcp_call.failed";
+        private const string WarningValue = "warning";
+        private const string SessionAvatarConnectingValue = "session.avatar.connecting";
+        private const string SessionAvatarSwitchToSpeakingValue = "session.avatar.switch_to_speaking";
+        private const string SessionAvatarSwitchToIdleValue = "session.avatar.switch_to_idle";
+        private const string ResponseAudioTimestampDeltaValue = "response.audio_timestamp.delta";
+        private const string ResponseAudioTimestampDoneValue = "response.audio_timestamp.done";
+        private const string ResponseAnimationBlendshapesDeltaValue = "response.animation_blendshapes.delta";
+        private const string ResponseAnimationBlendshapesDoneValue = "response.animation_blendshapes.done";
+        private const string ResponseAnimationVisemeDeltaValue = "response.animation_viseme.delta";
+        private const string ResponseAnimationVisemeDoneValue = "response.animation_viseme.done";
+        private const string ResponseVideoDeltaValue = "response.video.delta";
 
         /// <summary> Initializes a new instance of <see cref="RealtimeServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -206,6 +217,39 @@ namespace OpenAI
 
         /// <summary> Gets the ResponseMcpCallFailed. </summary>
         public static RealtimeServerEventType ResponseMcpCallFailed { get; } = new RealtimeServerEventType(ResponseMcpCallFailedValue);
+
+        /// <summary> Gets the Warning. </summary>
+        public static RealtimeServerEventType Warning { get; } = new RealtimeServerEventType(WarningValue);
+
+        /// <summary> Gets the SessionAvatarConnecting. </summary>
+        public static RealtimeServerEventType SessionAvatarConnecting { get; } = new RealtimeServerEventType(SessionAvatarConnectingValue);
+
+        /// <summary> Gets the SessionAvatarSwitchToSpeaking. </summary>
+        public static RealtimeServerEventType SessionAvatarSwitchToSpeaking { get; } = new RealtimeServerEventType(SessionAvatarSwitchToSpeakingValue);
+
+        /// <summary> Gets the SessionAvatarSwitchToIdle. </summary>
+        public static RealtimeServerEventType SessionAvatarSwitchToIdle { get; } = new RealtimeServerEventType(SessionAvatarSwitchToIdleValue);
+
+        /// <summary> Gets the ResponseAudioTimestampDelta. </summary>
+        public static RealtimeServerEventType ResponseAudioTimestampDelta { get; } = new RealtimeServerEventType(ResponseAudioTimestampDeltaValue);
+
+        /// <summary> Gets the ResponseAudioTimestampDone. </summary>
+        public static RealtimeServerEventType ResponseAudioTimestampDone { get; } = new RealtimeServerEventType(ResponseAudioTimestampDoneValue);
+
+        /// <summary> Gets the ResponseAnimationBlendshapesDelta. </summary>
+        public static RealtimeServerEventType ResponseAnimationBlendshapesDelta { get; } = new RealtimeServerEventType(ResponseAnimationBlendshapesDeltaValue);
+
+        /// <summary> Gets the ResponseAnimationBlendshapesDone. </summary>
+        public static RealtimeServerEventType ResponseAnimationBlendshapesDone { get; } = new RealtimeServerEventType(ResponseAnimationBlendshapesDoneValue);
+
+        /// <summary> Gets the ResponseAnimationVisemeDelta. </summary>
+        public static RealtimeServerEventType ResponseAnimationVisemeDelta { get; } = new RealtimeServerEventType(ResponseAnimationVisemeDeltaValue);
+
+        /// <summary> Gets the ResponseAnimationVisemeDone. </summary>
+        public static RealtimeServerEventType ResponseAnimationVisemeDone { get; } = new RealtimeServerEventType(ResponseAnimationVisemeDoneValue);
+
+        /// <summary> Gets the ResponseVideoDelta. </summary>
+        public static RealtimeServerEventType ResponseVideoDelta { get; } = new RealtimeServerEventType(ResponseVideoDeltaValue);
 
         /// <summary> Determines if two <see cref="RealtimeServerEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

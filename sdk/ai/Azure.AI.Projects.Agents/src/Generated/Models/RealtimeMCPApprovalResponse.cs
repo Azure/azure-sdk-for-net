@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
     /// <summary> Realtime MCP approval response. </summary>
+    [Experimental("AAIP001")]
     public partial class RealtimeMCPApprovalResponse : RealtimeConversationItem
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPApprovalResponse"/>. </summary>
@@ -33,12 +35,16 @@ namespace OpenAI
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal RealtimeMCPApprovalResponse(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        internal RealtimeMCPApprovalResponse(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
             Reason = reason;
+            CreatedAt = createdAt;
+            ResponseId = responseId;
         }
 
         /// <summary> The unique ID of the approval response. </summary>
@@ -52,5 +58,11 @@ namespace OpenAI
 
         /// <summary> Gets or sets the Reason. </summary>
         public string Reason { get; set; }
+
+        /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
+        public DateTimeOffset? CreatedAt { get; }
+
+        /// <summary> The id of the response that produced this item, when applicable. </summary>
+        public string ResponseId { get; }
     }
 }

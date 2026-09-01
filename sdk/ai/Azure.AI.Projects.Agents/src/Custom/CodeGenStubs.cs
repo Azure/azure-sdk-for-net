@@ -61,10 +61,6 @@ public partial class ProjectsAgentRecord
 [CodeGenType("ToolChoiceImageGeneration")] internal partial class InternalVoiceImageGenerationToolChoice { }
 [CodeGenType("ToolChoiceWebSearchPreview")] internal partial class InternalVoiceWebSearchPreviewToolChoice { }
 [CodeGenType("ToolChoiceWebSearchPreview20250311")] internal partial class InternalVoiceWebSearchPreview20250311ToolChoice { }
-[CodeGenType("OmitPropertiesOutputModality")] public readonly partial struct VoiceResponseOutputModality { }
-[CodeGenType("OmitPropertiesRealtimeResponse")] public partial class VoiceResponseProperties { }
-[CodeGenType("OmitPropertiesRealtimeResponseObject")] public readonly partial struct VoiceResponseObject { }
-[CodeGenType("OmitPropertiesStatus")] public readonly partial struct VoiceResponseStatus { }
 [CodeGenType("MCPTool")] internal partial class InternalMCPTool { }
 [CodeGenType("MCPToolAllowedTools1")] internal partial class InternalMCPToolAllowedTools1 { }
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }

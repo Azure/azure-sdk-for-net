@@ -134,14 +134,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(InterimResponse))
             {
                 writer.WritePropertyName("interim_response"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(InterimResponse);
-#else
-                using (JsonDocument document = JsonDocument.Parse(InterimResponse))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(InterimResponse, options);
             }
             if (Optional.IsDefined(Avatar))
             {
@@ -224,13 +217,13 @@ namespace Azure.AI.Projects.Agents
             VoiceModelType modelType = default;
             string model = default;
             string instructions = default;
-            VoiceGreetingConfig greeting = default;
-            VoiceAudioConfig audio = default;
+            VoiceAgentGreetingConfig greeting = default;
+            VoiceAgentAudioConfig audio = default;
             IList<VoiceOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
-            BinaryData interimResponse = default;
-            VoiceAvatarConfig avatar = default;
+            VoiceAgentInterimResponseConfig interimResponse = default;
+            VoiceAgentAvatarConfig avatar = default;
             IList<VoiceAgentTool> tools = default;
             BinaryData toolChoice = default;
             bool? parallelToolCalls = default;
@@ -273,7 +266,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    greeting = VoiceGreetingConfig.DeserializeVoiceGreetingConfig(prop.Value, options);
+                    greeting = VoiceAgentGreetingConfig.DeserializeVoiceAgentGreetingConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("audio"u8))
@@ -282,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    audio = VoiceAudioConfig.DeserializeVoiceAudioConfig(prop.Value, options);
+                    audio = VoiceAgentAudioConfig.DeserializeVoiceAgentAudioConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -328,7 +321,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    interimResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    interimResponse = VoiceAgentInterimResponseConfig.DeserializeVoiceAgentInterimResponseConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("avatar"u8))
@@ -337,7 +330,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    avatar = VoiceAvatarConfig.DeserializeVoiceAvatarConfig(prop.Value, options);
+                    avatar = VoiceAgentAvatarConfig.DeserializeVoiceAgentAvatarConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))

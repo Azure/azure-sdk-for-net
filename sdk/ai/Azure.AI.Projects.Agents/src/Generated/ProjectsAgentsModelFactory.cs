@@ -15,6 +15,36 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProjectsAgentsModelFactory
     {
+        /// <summary> The ProjectsAgentRecord. </summary>
+        /// <param name="id"> The unique identifier of the agent. </param>
+        /// <param name="name"> The name of the agent. </param>
+        /// <param name="state"> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </param>
+        /// <param name="stateSource"> The source of the agent's operational state. When the agent is disabled, indicates where the disabled state originates from. Empty when not derived from a specific source. </param>
+        /// <param name="versions"> The latest version of the agent. </param>
+        /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
+        /// <param name="instanceIdentity"> The instance identity of the agent. </param>
+        /// <param name="blueprint"> The blueprint for the agent. </param>
+        /// <param name="blueprintReference"> The blueprint for the agent. </param>
+        /// <param name="agentCard"></param>
+        /// <returns> A new <see cref="Agents.ProjectsAgentRecord"/> instance for mocking. </returns>
+        public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, DigitalWorkerType? digitalWorkerType = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
+        {
+            return new ProjectsAgentRecord(
+                "agent",
+                id,
+                name,
+                state,
+                stateSource,
+                versions,
+                agentEndpoint,
+                digitalWorkerType,
+                instanceIdentity,
+                blueprint,
+                blueprintReference,
+                agentCard,
+                additionalBinaryDataProperties: null);
+        }
 
         /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
@@ -219,7 +249,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Session defaults applied to sessions created for a hosted agent version. </summary>
         /// <param name="idleTimeoutSeconds">
         /// The idle duration, in seconds, before a session's sandbox is suspended. Optional — when
-        /// unset, the server default of 900 seconds is used. Must be between 300 and 3600 seconds
+        /// unset, the server default of 900 seconds is used. Must be between 120 and 3600 seconds
         /// (inclusive).
         /// </param>
         /// <returns> A new <see cref="Agents.SessionConfiguration"/> instance for mocking. </returns>
@@ -868,6 +898,44 @@ namespace Azure.AI.Projects.Agents
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// The ContainerSkill.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.SkillReferenceParam"/> and <see cref="OpenAI.InlineSkillParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
+        public static ContainerSkill ContainerSkill(string @type = default)
+        {
+            return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SkillReferenceParam. </summary>
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
+        /// <returns> A new <see cref="OpenAI.SkillReferenceParam"/> instance for mocking. </returns>
+        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
+        {
+            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
+        }
+
+        /// <summary> The InlineSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="source"> Inline skill payload. </param>
+        /// <returns> A new <see cref="OpenAI.InlineSkillParam"/> instance for mocking. </returns>
+        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
+        {
+            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
+        }
+
+        /// <summary> Inline skill payload. </summary>
+        /// <param name="data"> Base64-encoded skill zip bundle. </param>
+        /// <returns> A new <see cref="OpenAI.InlineSkillSourceParam"/> instance for mocking. </returns>
+        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
+        {
+            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The EmptyModelParam. </summary>
         /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
         public static EmptyModelParam EmptyModelParam()
@@ -1006,7 +1074,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType modelType = default, string model = default, string instructions = default, VoiceGreetingConfig greeting = default, VoiceAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, BinaryData interimResponse = default, VoiceAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, bool? store = default)
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType modelType = default, string model = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, bool? store = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
             include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -1036,43 +1104,43 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Session-start greeting configuration for a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TemplateVoiceGreetingConfig"/> and <see cref="Agents.LlmGeneratedVoiceGreetingConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentTemplateGreetingConfig"/> and <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/>.
         /// </summary>
         /// <param name="type"> The greeting mode. </param>
-        /// <returns> A new <see cref="Agents.VoiceGreetingConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentGreetingConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceGreetingConfig VoiceGreetingConfig(string @type = default)
+        public static VoiceAgentGreetingConfig VoiceAgentGreetingConfig(string @type = default)
         {
-            return new UnknownVoiceGreetingConfig(@type, additionalBinaryDataProperties: null);
+            return new UnknownVoiceAgentGreetingConfig(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A deterministic greeting rendered with the voice agent's structured inputs and synthesized without model-authored generation. </summary>
         /// <param name="text"> The Handlebars text template spoken at session start. </param>
-        /// <returns> A new <see cref="Agents.TemplateVoiceGreetingConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentTemplateGreetingConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TemplateVoiceGreetingConfig TemplateVoiceGreetingConfig(string text = default)
+        public static VoiceAgentTemplateGreetingConfig VoiceAgentTemplateGreetingConfig(string text = default)
         {
-            return new TemplateVoiceGreetingConfig("template", additionalBinaryDataProperties: null, text);
+            return new VoiceAgentTemplateGreetingConfig("template", additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> A greeting authored by the session model from a scoped opening-turn prompt. </summary>
         /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
         /// <param name="toolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
-        /// <returns> A new <see cref="Agents.LlmGeneratedVoiceGreetingConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static LlmGeneratedVoiceGreetingConfig LlmGeneratedVoiceGreetingConfig(string prompt = default, BinaryData toolChoice = default)
+        public static VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = default, BinaryData toolChoice = default)
         {
-            return new LlmGeneratedVoiceGreetingConfig("llm_generated", additionalBinaryDataProperties: null, prompt, toolChoice);
+            return new VoiceAgentLlmGeneratedGreetingConfig("llm_generated", additionalBinaryDataProperties: null, prompt, toolChoice);
         }
 
         /// <summary> The audio configuration for a voice agent. These values are session defaults and may be overridden when connecting. </summary>
         /// <param name="input"> Input (microphone) audio configuration. </param>
         /// <param name="output"> Output (agent speech) audio configuration. </param>
-        /// <returns> A new <see cref="Agents.VoiceAudioConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAudioConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAudioConfig VoiceAudioConfig(VoiceAudioInputConfig input = default, VoiceAudioOutputConfig output = default)
+        public static VoiceAgentAudioConfig VoiceAgentAudioConfig(VoiceAgentAudioInputConfig input = default, VoiceAgentAudioOutputConfig output = default)
         {
-            return new VoiceAudioConfig(input, output, additionalBinaryDataProperties: null);
+            return new VoiceAgentAudioConfig(input, output, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input audio configuration for a voice agent. </summary>
@@ -1081,11 +1149,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="turnDetection"> Turn (end-of-speech) detection. Server-side turn detection is enabled by default; set to null to disable it, in which case the client must trigger responses manually. </param>
         /// <param name="echoCancellation"> Optional server-side echo cancellation settings. </param>
         /// <param name="transcription"> Asynchronous input-audio transcription. Set to null to disable transcription. </param>
-        /// <returns> A new <see cref="Agents.VoiceAudioInputConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAudioInputConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAudioInputConfig VoiceAudioInputConfig(VoiceAudioFormat format = default, VoiceNoiseReduction noiseReduction = default, VoiceTurnDetection turnDetection = default, VoiceAgentEchoCancellation echoCancellation = default, VoiceInputTranscription transcription = default)
+        public static VoiceAgentAudioInputConfig VoiceAgentAudioInputConfig(RealtimeAudioFormats format = default, VoiceAgentNoiseReduction noiseReduction = default, VoiceAgentTurnDetectionConfig turnDetection = default, VoiceAgentEchoCancellation echoCancellation = default, VoiceAgentInputTranscription transcription = default)
         {
-            return new VoiceAudioInputConfig(
+            return new VoiceAgentAudioInputConfig(
                 format,
                 noiseReduction,
                 turnDetection,
@@ -1094,36 +1162,59 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An audio format. Follows the OpenAI Realtime session schema; `type` carries the media subtype. </summary>
-        /// <param name="type"> The audio format type, e.g. 'audio/pcm' (16-bit PCM), 'audio/pcmu' (G.711 mu-law), or 'audio/pcma' (G.711 A-law). </param>
-        /// <param name="rate"> The sample rate in Hz. Applies to 'audio/pcm' (e.g. 24000); omit for telephony G.711 formats (8 kHz). </param>
-        /// <returns> A new <see cref="Agents.VoiceAudioFormat"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceAudioFormat VoiceAudioFormat(VoiceAudioFormatType @type = default, int? rate = default)
+        /// <summary>
+        /// The RealtimeAudioFormats.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeAudioFormatsAudioPcm"/>, <see cref="OpenAI.RealtimeAudioFormatsAudioPcmu"/>, and <see cref="OpenAI.RealtimeAudioFormatsAudioPcma"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormats"/> instance for mocking. </returns>
+        public static RealtimeAudioFormats RealtimeAudioFormats(string @type = default)
         {
-            return new VoiceAudioFormat(@type, rate, additionalBinaryDataProperties: null);
+            return new UnknownRealtimeAudioFormats(new RealtimeAudioFormatsType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RealtimeAudioFormatsAudioPcm. </summary>
+        /// <param name="rate"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormatsAudioPcm"/> instance for mocking. </returns>
+        public static RealtimeAudioFormatsAudioPcm RealtimeAudioFormatsAudioPcm(RealtimeAudioFormatsAudioPcmRate? rate = default)
+        {
+            return new RealtimeAudioFormatsAudioPcm(RealtimeAudioFormatsType.AudioPcm, additionalBinaryDataProperties: null, rate);
+        }
+
+        /// <summary> The RealtimeAudioFormatsAudioPcmu. </summary>
+        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormatsAudioPcmu"/> instance for mocking. </returns>
+        public static RealtimeAudioFormatsAudioPcmu RealtimeAudioFormatsAudioPcmu()
+        {
+            return new RealtimeAudioFormatsAudioPcmu(RealtimeAudioFormatsType.AudioPcmu, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RealtimeAudioFormatsAudioPcma. </summary>
+        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormatsAudioPcma"/> instance for mocking. </returns>
+        public static RealtimeAudioFormatsAudioPcma RealtimeAudioFormatsAudioPcma()
+        {
+            return new RealtimeAudioFormatsAudioPcma(RealtimeAudioFormatsType.AudioPcma, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input audio noise reduction configuration. </summary>
         /// <param name="type"> The noise reduction mode. </param>
-        /// <returns> A new <see cref="Agents.VoiceNoiseReduction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentNoiseReduction"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceNoiseReduction VoiceNoiseReduction(VoiceNoiseReductionType @type = default)
+        public static VoiceAgentNoiseReduction VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType @type = default)
         {
-            return new VoiceNoiseReduction(@type, additionalBinaryDataProperties: null);
+            return new VoiceAgentNoiseReduction(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Turn-detection configuration for a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceServerVadTurnDetection"/>, <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/>, <see cref="Agents.VoiceAzureSemanticVadTurnDetection"/>, <see cref="Agents.VoiceAzureSemanticVadEnTurnDetection"/>, and <see cref="Agents.VoiceAzureSemanticVadMultilingualTurnDetection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentServerVadTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>, and <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/>.
         /// </summary>
         /// <param name="type"> The turn-detection strategy. </param>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
-        /// <returns> A new <see cref="Agents.VoiceTurnDetection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentTurnDetectionConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceTurnDetection VoiceTurnDetection(string @type = default, bool? autoTruncate = default)
+        public static VoiceAgentTurnDetectionConfig VoiceAgentTurnDetectionConfig(string @type = default, bool? autoTruncate = default)
         {
-            return new UnknownVoiceTurnDetection(new VoiceTurnDetectionType(@type), autoTruncate, additionalBinaryDataProperties: null);
+            return new UnknownVoiceAgentTurnDetectionConfig(new VoiceAgentTurnDetectionType(@type), autoTruncate, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Server-side voice activity detection. </summary>
@@ -1136,12 +1227,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="idleTimeoutMs"></param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        /// <returns> A new <see cref="Agents.VoiceServerVadTurnDetection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentServerVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceServerVadTurnDetection VoiceServerVadTurnDetection(bool? autoTruncate = default, double? threshold = default, long? prefixPaddingMs = default, long? silenceDurationMs = default, bool? createResponse = default, bool? interruptResponse = default, long? idleTimeoutMs = default, TimeSpan? speechDurationMs = default, VoiceEndOfUtteranceDetection endOfUtteranceDetection = default)
+        public static VoiceAgentServerVadTurnDetection VoiceAgentServerVadTurnDetection(bool? autoTruncate = default, double? threshold = default, long? prefixPaddingMs = default, long? silenceDurationMs = default, bool? createResponse = default, bool? interruptResponse = default, long? idleTimeoutMs = default, TimeSpan? speechDurationMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default)
         {
-            return new VoiceServerVadTurnDetection(
-                VoiceTurnDetectionType.ServerVad,
+            return new VoiceAgentServerVadTurnDetection(
+                VoiceAgentTurnDetectionType.ServerVad,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
@@ -1158,29 +1249,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The semantic detection model. </param>
         /// <param name="thresholdLevel"> The sensitivity threshold. </param>
         /// <param name="timeoutMs"> The detection timeout in milliseconds. </param>
-        /// <returns> A new <see cref="Agents.VoiceEndOfUtteranceDetection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentEndOfUtteranceDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceEndOfUtteranceDetection VoiceEndOfUtteranceDetection(VoiceEndOfUtteranceDetectionModel model = default, VoiceEndOfUtteranceThresholdLevel? thresholdLevel = default, TimeSpan? timeoutMs = default)
+        public static VoiceAgentEndOfUtteranceDetection VoiceAgentEndOfUtteranceDetection(VoiceAgentEndOfUtteranceDetectionModel model = default, VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel = default, TimeSpan? timeoutMs = default)
         {
-            return new VoiceEndOfUtteranceDetection(model, thresholdLevel, timeoutMs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> OpenAI semantic VAD turn-detection settings. </summary>
-        /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
-        /// <param name="eagerness"></param>
-        /// <param name="createResponse"></param>
-        /// <param name="interruptResponse"></param>
-        /// <returns> A new <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceAgentSemanticVadTurnDetection VoiceAgentSemanticVadTurnDetection(bool? autoTruncate = default, VoiceAgentSemanticVadTurnDetectionEagerness? eagerness = default, bool? createResponse = default, bool? interruptResponse = default)
-        {
-            return new VoiceAgentSemanticVadTurnDetection(
-                VoiceTurnDetectionType.SemanticVad,
-                autoTruncate,
-                additionalBinaryDataProperties: null,
-                eagerness,
-                createResponse,
-                interruptResponse);
+            return new VoiceAgentEndOfUtteranceDetection(model, thresholdLevel, timeoutMs, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Azure semantic voice activity detection. </summary>
@@ -1195,14 +1268,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
-        /// <returns> A new <see cref="Agents.VoiceAzureSemanticVadTurnDetection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAzureSemanticVadTurnDetection VoiceAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
-            return new VoiceAzureSemanticVadTurnDetection(
-                VoiceTurnDetectionType.AzureSemanticVad,
+            return new VoiceAgentAzureSemanticVadTurnDetection(
+                VoiceAgentTurnDetectionType.AzureSemanticVad,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
@@ -1228,12 +1301,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
         /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
-        /// <returns> A new <see cref="Agents.VoiceAzureSemanticVadEnTurnDetection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAzureSemanticVadEnTurnDetection VoiceAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
+        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
         {
-            return new VoiceAzureSemanticVadEnTurnDetection(
-                VoiceTurnDetectionType.AzureSemanticVadEn,
+            return new VoiceAgentAzureSemanticVadEnTurnDetection(
+                VoiceAgentTurnDetectionType.AzureSemanticVadEn,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
@@ -1259,14 +1332,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
-        /// <returns> A new <see cref="Agents.VoiceAzureSemanticVadMultilingualTurnDetection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAzureSemanticVadMultilingualTurnDetection VoiceAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
-            return new VoiceAzureSemanticVadMultilingualTurnDetection(
-                VoiceTurnDetectionType.AzureSemanticVadMultilingual,
+            return new VoiceAgentAzureSemanticVadMultilingualTurnDetection(
+                VoiceAgentTurnDetectionType.AzureSemanticVadMultilingual,
                 autoTruncate,
                 additionalBinaryDataProperties: null,
                 threshold,
@@ -1279,6 +1352,24 @@ namespace Azure.AI.Projects.Agents
                 createResponse,
                 interruptResponse,
                 languages.ToList());
+        }
+
+        /// <summary> OpenAI semantic VAD turn-detection settings. </summary>
+        /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
+        /// <param name="eagerness"></param>
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSemanticVadTurnDetection VoiceAgentSemanticVadTurnDetection(bool? autoTruncate = default, VoiceAgentSemanticVadTurnDetectionEagerness? eagerness = default, bool? createResponse = default, bool? interruptResponse = default)
+        {
+            return new VoiceAgentSemanticVadTurnDetection(
+                VoiceAgentTurnDetectionType.SemanticVad,
+                autoTruncate,
+                additionalBinaryDataProperties: null,
+                eagerness,
+                createResponse,
+                interruptResponse);
         }
 
         /// <summary> Server-side echo cancellation settings for input audio. </summary>
@@ -1314,14 +1405,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
-        /// <returns> A new <see cref="Agents.VoiceInputTranscription"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceInputTranscription VoiceInputTranscription(string language = default, string prompt = default, VoiceAudioInputConfigTranscriptionDelay? delay = default, VoiceInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
         {
             customSpeech ??= new ChangeTrackingDictionary<string, string>();
             phraseList ??= new ChangeTrackingList<string>();
 
-            return new VoiceInputTranscription(
+            return new VoiceAgentInputTranscription(
                 language,
                 prompt,
                 delay,
@@ -1354,14 +1445,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="customVoiceEndpointId"> The Azure custom-voice deployment endpoint identifier. Applies only when `voice_type` is `azure-custom`. </param>
         /// <param name="personalVoiceModel"> The Azure personal or avatar voice model. Applies only when `voice_type` is `azure-personal` or `avatar-voice-sync`. </param>
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
-        /// <returns> A new <see cref="Agents.VoiceAudioOutputConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAudioOutputConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAudioOutputConfig VoiceAudioOutputConfig(VoiceAudioFormat format = default, string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAudioTimestampType> outputAudioTimestampTypes = default)
+        public static VoiceAgentAudioOutputConfig VoiceAgentAudioOutputConfig(RealtimeAudioFormats format = default, string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAgentAudioTimestampType> outputAudioTimestampTypes = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
-            outputAudioTimestampTypes ??= new ChangeTrackingList<VoiceAudioTimestampType>();
+            outputAudioTimestampTypes ??= new ChangeTrackingList<VoiceAgentAudioTimestampType>();
 
-            return new VoiceAudioOutputConfig(
+            return new VoiceAgentAudioOutputConfig(
                 format,
                 voice,
                 voiceType,
@@ -1380,19 +1471,6 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A static interim response selected from configured text. </summary>
-        /// <param name="triggers"> Conditions that may trigger one interim response. </param>
-        /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
-        /// <param name="texts"> Candidate text values for the interim response. </param>
-        /// <returns> A new <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> instance for mocking. </returns>
-        public static VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, IEnumerable<string> texts = default)
-        {
-            triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
-            texts ??= new ChangeTrackingList<string>();
-
-            return new VoiceAgentStaticInterimResponseConfig("static_interim_response", triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null, texts.ToList());
-        }
-
         /// <summary>
         /// Fields shared by interim-response configurations.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> and <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/>.
@@ -1406,6 +1484,19 @@ namespace Azure.AI.Projects.Agents
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
 
             return new UnknownVoiceAgentInterimResponseConfig(@type, triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A static interim response selected from configured text. </summary>
+        /// <param name="triggers"> Conditions that may trigger one interim response. </param>
+        /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
+        /// <param name="texts"> Candidate text values for the interim response. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> instance for mocking. </returns>
+        public static VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, IEnumerable<string> texts = default)
+        {
+            triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
+            texts ??= new ChangeTrackingList<string>();
+
+            return new VoiceAgentStaticInterimResponseConfig("static_interim_response", triggers.ToList(), latencyThresholdMs, additionalBinaryDataProperties: null, texts.ToList());
         }
 
         /// <summary> An interim response generated by a language model. </summary>
@@ -1439,11 +1530,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="video"> Avatar video encoder and presentation settings. </param>
         /// <param name="scene"> Avatar placement and motion settings. </param>
         /// <param name="outputAuditAudio"> Whether audit audio is emitted with avatar output. Defaults to false. </param>
-        /// <returns> A new <see cref="Agents.VoiceAvatarConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentAvatarConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAvatarConfig VoiceAvatarConfig(VoiceAvatarType @type = default, string character = default, string style = default, bool? customized = default, VoiceAvatarOutputProtocol? outputProtocol = default, string model = default, VoiceAgentAvatarVideoParams video = default, VoiceAgentAvatarScene scene = default, bool? outputAuditAudio = default)
+        public static VoiceAgentAvatarConfig VoiceAgentAvatarConfig(VoiceAgentAvatarType @type = default, string character = default, string style = default, bool? customized = default, VoiceAgentAvatarOutputProtocol? outputProtocol = default, string model = default, VoiceAgentAvatarVideoParams video = default, VoiceAgentAvatarScene scene = default, bool? outputAuditAudio = default)
         {
-            return new VoiceAvatarConfig(
+            return new VoiceAgentAvatarConfig(
                 @type,
                 character,
                 style,
@@ -1457,7 +1548,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Avatar video encoder and presentation settings. </summary>
-        /// <param name="bitrate"></param>
+        /// <param name="bitrate"> The target video bitrate in bits per second. </param>
         /// <param name="crop"></param>
         /// <param name="resolution"></param>
         /// <param name="background"></param>
@@ -1528,7 +1619,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool usable by a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentFunctionTool"/>, <see cref="Agents.VoiceAgentMcpTool"/>, <see cref="Agents.VoiceSystemTool"/>, and <see cref="Agents.VoiceToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentFunctionTool"/>, <see cref="Agents.VoiceAgentMcpTool"/>, <see cref="Agents.VoiceAgentSystemTool"/>, and <see cref="Agents.VoiceAgentToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The tool kind. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentTool"/> instance for mocking. </returns>
@@ -1602,22 +1693,22 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A service-managed control that acts on the active voice session without customer code or external authentication. </summary>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
         /// <param name="description"> An optional description of the system tool. </param>
-        /// <returns> A new <see cref="Agents.VoiceSystemTool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentSystemTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceSystemTool VoiceSystemTool(VoiceSystemToolName name = default, string description = default)
+        public static VoiceAgentSystemTool VoiceAgentSystemTool(VoiceAgentSystemToolName name = default, string description = default)
         {
-            return new VoiceSystemTool("system", additionalBinaryDataProperties: null, name, description);
+            return new VoiceAgentSystemTool("system", additionalBinaryDataProperties: null, name, description);
         }
 
         /// <summary> A reference to a Foundry toolbox, which is a versioned bundle of tools executed through its MCP endpoint. </summary>
         /// <param name="toolboxName"> The name of the toolbox to attach. </param>
         /// <param name="toolboxVersion"> The immutable version of the toolbox to attach. </param>
         /// <param name="responseScheduling"> When the toolbox invocation creates a follow-up response. Defaults to `when_idle`. </param>
-        /// <returns> A new <see cref="Agents.VoiceToolboxTool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAgentToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceToolboxTool VoiceToolboxTool(string toolboxName = default, string toolboxVersion = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
+        public static VoiceAgentToolboxTool VoiceAgentToolboxTool(string toolboxName = default, string toolboxVersion = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
         {
-            return new VoiceToolboxTool("toolbox", additionalBinaryDataProperties: null, toolboxName, toolboxVersion, responseScheduling);
+            return new VoiceAgentToolboxTool("toolbox", additionalBinaryDataProperties: null, toolboxName, toolboxVersion, responseScheduling);
         }
 
         /// <summary> The AgentIdentity. </summary>
@@ -1653,12 +1744,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocolConfiguration"> Per-protocol configuration for the agent endpoint. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
+        /// <param name="publishApprovalStatus"> The Microsoft Agent Certification review status of the Microsoft 365 store title published for this agent. Server-populated and best-effort: it is absent when the status could not be determined, and an absent value must not be interpreted as the agent not being published. No value is terminal, because publishing a new version of an agent reuses the same store title and sends it back through review. </param>
         /// <returns> A new <see cref="Agents.AgentEndpointConfiguration"/> instance for mocking. </returns>
-        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, ProtocolConfiguration protocolConfiguration = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
+        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, ProtocolConfiguration protocolConfiguration = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default, PublishApprovalStatus? publishApprovalStatus = default)
         {
             authorizationSchemes ??= new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
 
-            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes.ToList(), publishApprovalStatus, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The VersionSelector. </summary>
@@ -1714,10 +1806,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Configuration specific to the activity protocol. </summary>
         /// <param name="enableM365PublicEndpoint"> Whether to enable the M365 public endpoint for the activity protocol. </param>
+        /// <param name="accessBoundaries"> The access boundaries for the activity protocol. </param>
         /// <returns> A new <see cref="Agents.ActivityProtocolConfiguration"/> instance for mocking. </returns>
-        public static ActivityProtocolConfiguration ActivityProtocolConfiguration(bool? enableM365PublicEndpoint = default)
+        public static ActivityProtocolConfiguration ActivityProtocolConfiguration(bool? enableM365PublicEndpoint = default, IEnumerable<ActivityProtocolAccessBoundary> accessBoundaries = default)
         {
-            return new ActivityProtocolConfiguration(enableM365PublicEndpoint, additionalBinaryDataProperties: null);
+            accessBoundaries ??= new ChangeTrackingList<ActivityProtocolAccessBoundary>();
+
+            return new ActivityProtocolConfiguration(enableM365PublicEndpoint, accessBoundaries.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration specific to the responses protocol. </summary>
@@ -2073,18 +2168,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="conversationId0"> The id of the conversation this response belongs to. </param>
         /// <param name="audio"> The audio configuration used for the response, including the voice and audio format used for output. </param>
         /// <param name="metadata"> A set of key-value pairs attached to the response. </param>
-        /// <param name="outputModalities0"> The output modalities used for the response, e.g. `["text", "audio"]`. Audio output always includes a text transcript. </param>
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponse VoiceResponse(string id = default, VoiceResponseObject? @object = default, VoiceResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id0 = default, IEnumerable<BinaryData> output = default, string conversationId0 = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, IEnumerable<VoiceResponseOutputModality> outputModalities0 = default, float? temperature = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default)
+        public static VoiceResponse VoiceResponse(string id = default, VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id0 = default, IEnumerable<RealtimeConversationItem> output = default, string conversationId0 = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default)
         {
-            outputModalities ??= new ChangeTrackingList<VoiceResponseOutputModality>();
-            output ??= new ChangeTrackingList<BinaryData>();
+            outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
+            output ??= new ChangeTrackingList<RealtimeConversationItem>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
-            outputModalities0 ??= new ChangeTrackingList<VoiceResponseOutputModality>();
 
             return new VoiceResponse(
                 id,
@@ -2101,197 +2194,24 @@ namespace Azure.AI.Projects.Agents
                 conversationId,
                 audio,
                 metadata,
-                outputModalities.ToList(),
                 temperature,
                 createdAt,
                 completedAt);
         }
 
-        /// <summary> A system message item. Only `input_text` content is valid for system messages. </summary>
-        /// <param name="role"></param>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceSystemMessageItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceSystemMessageItem VoiceSystemMessageItem(string role = default, string id = default, RealtimeConversationItemMessageSystemObject? @object = default, RealtimeConversationItemMessageSystemStatus? status = default, IEnumerable<RealtimeConversationItemMessageSystemContent> content = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            content ??= new ChangeTrackingList<RealtimeConversationItemMessageSystemContent>();
-
-            return new VoiceSystemMessageItem(
-                new RealtimeConversationItemMessageType(role),
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                content.ToList(),
-                createdAt,
-                responseId);
-        }
-
-        /// <summary> Realtime system message item. </summary>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageSystem"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessageSystem RealtimeConversationItemMessageSystem(string id = default, RealtimeConversationItemMessageSystemObject? @object = default, RealtimeConversationItemMessageSystemStatus? status = default, IEnumerable<RealtimeConversationItemMessageSystemContent> content = default)
-        {
-            content ??= new ChangeTrackingList<RealtimeConversationItemMessageSystemContent>();
-
-            return new RealtimeConversationItemMessageSystem(
-                RealtimeConversationItemMessageType.System,
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                content.ToList());
-        }
-
-        /// <summary> The RealtimeConversationItemMessageSystemContent. </summary>
-        /// <param name="type"></param>
-        /// <param name="text"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageSystemContent"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessageSystemContent RealtimeConversationItemMessageSystemContent(RealtimeConversationItemMessageSystemContentType? @type = default, string text = default)
-        {
-            return new RealtimeConversationItemMessageSystemContent(@type, text, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
-        /// The RealtimeConversationItemMessage.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeConversationItemMessageSystem"/>, <see cref="OpenAI.RealtimeConversationItemMessageUser"/>, and <see cref="OpenAI.RealtimeConversationItemMessageAssistant"/>.
+        /// A single item within a Realtime conversation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeConversationItemFunctionCall"/>, <see cref="OpenAI.RealtimeConversationItemFunctionCallOutput"/>, <see cref="OpenAI.RealtimeMCPApprovalResponse"/>, <see cref="OpenAI.RealtimeMCPListTools"/>, <see cref="OpenAI.RealtimeMCPToolCall"/>, and <see cref="OpenAI.RealtimeMCPApprovalRequest"/>.
         /// </summary>
-        /// <param name="role"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessage"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessage RealtimeConversationItemMessage(string role = default)
-        {
-            return new UnknownRealtimeConversationItemMessage(new RealtimeConversationItemMessageType(role), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Realtime user message item. </summary>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageUser"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessageUser RealtimeConversationItemMessageUser(string id = default, RealtimeConversationItemMessageUserObject? @object = default, RealtimeConversationItemMessageUserStatus? status = default, IEnumerable<RealtimeConversationItemMessageUserContent> content = default)
-        {
-            content ??= new ChangeTrackingList<RealtimeConversationItemMessageUserContent>();
-
-            return new RealtimeConversationItemMessageUser(
-                RealtimeConversationItemMessageType.User,
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                content.ToList());
-        }
-
-        /// <summary> The RealtimeConversationItemMessageUserContent. </summary>
         /// <param name="type"></param>
-        /// <param name="text"></param>
-        /// <param name="audio"></param>
-        /// <param name="imageUrl"></param>
-        /// <param name="detail"></param>
-        /// <param name="transcript"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageUserContent"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessageUserContent RealtimeConversationItemMessageUserContent(RealtimeConversationItemMessageUserContentType? @type = default, string text = default, string audio = default, Uri imageUrl = default, RealtimeConversationItemMessageUserContentDetail? detail = default, string transcript = default)
-        {
-            return new RealtimeConversationItemMessageUserContent(
-                @type,
-                text,
-                audio,
-                imageUrl,
-                detail,
-                transcript,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Realtime assistant message item. </summary>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageAssistant"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessageAssistant RealtimeConversationItemMessageAssistant(string id = default, RealtimeConversationItemMessageAssistantObject? @object = default, RealtimeConversationItemMessageAssistantStatus? status = default, IEnumerable<RealtimeConversationItemMessageAssistantContent> content = default)
-        {
-            content ??= new ChangeTrackingList<RealtimeConversationItemMessageAssistantContent>();
-
-            return new RealtimeConversationItemMessageAssistant(
-                RealtimeConversationItemMessageType.Assistant,
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                content.ToList());
-        }
-
-        /// <summary> The RealtimeConversationItemMessageAssistantContent. </summary>
-        /// <param name="type"></param>
-        /// <param name="text"></param>
-        /// <param name="audio"></param>
-        /// <param name="transcript"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageAssistantContent"/> instance for mocking. </returns>
-        public static RealtimeConversationItemMessageAssistantContent RealtimeConversationItemMessageAssistantContent(RealtimeConversationItemMessageAssistantContentType? @type = default, string text = default, string audio = default, string transcript = default)
-        {
-            return new RealtimeConversationItemMessageAssistantContent(@type, text, audio, transcript, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A user message item. `input_text`, `input_audio`, and `input_image` content are valid for user messages. </summary>
-        /// <param name="role"></param>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceUserMessageItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceUserMessageItem VoiceUserMessageItem(string role = default, string id = default, RealtimeConversationItemMessageUserObject? @object = default, RealtimeConversationItemMessageUserStatus? status = default, IEnumerable<RealtimeConversationItemMessageUserContent> content = default, DateTimeOffset? createdAt = default, string responseId = default)
+        public static RealtimeConversationItem RealtimeConversationItem(string @type = default)
         {
-            content ??= new ChangeTrackingList<RealtimeConversationItemMessageUserContent>();
-
-            return new VoiceUserMessageItem(
-                new RealtimeConversationItemMessageType(role),
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                content.ToList(),
-                createdAt,
-                responseId);
+            return new UnknownRealtimeConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An assistant message item. Only `output_text` and `output_audio` content are valid for assistant messages. </summary>
-        /// <param name="role"></param>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceAssistantMessageItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceAssistantMessageItem VoiceAssistantMessageItem(string role = default, string id = default, RealtimeConversationItemMessageAssistantObject? @object = default, RealtimeConversationItemMessageAssistantStatus? status = default, IEnumerable<RealtimeConversationItemMessageAssistantContent> content = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            content ??= new ChangeTrackingList<RealtimeConversationItemMessageAssistantContent>();
-
-            return new VoiceAssistantMessageItem(
-                new RealtimeConversationItemMessageType(role),
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                content.ToList(),
-                createdAt,
-                responseId);
-        }
-
-        /// <summary> A function call request item. </summary>
-        /// <param name="type"></param>
+        /// <summary> Realtime function call item. </summary>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
@@ -2300,12 +2220,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="arguments"> The arguments of the function call. This is a JSON-encoded string representing the arguments passed to the function, for example `{"arg1": "value1", "arg2": 42}`. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceFunctionCallItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemFunctionCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceFunctionCallItem VoiceFunctionCallItem(string @type = default, string id = default, RealtimeConversationItemFunctionCallObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default, DateTimeOffset? createdAt = default, string responseId = default)
+        public static RealtimeConversationItemFunctionCall RealtimeConversationItemFunctionCall(string id = default, RealtimeConversationItemFunctionCallObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
-            return new VoiceFunctionCallItem(
-                new RealtimeConversationItemType(@type),
+            return new RealtimeConversationItemFunctionCall(
+                RealtimeConversationItemType.FunctionCall,
                 additionalBinaryDataProperties: null,
                 id,
                 @object,
@@ -2317,46 +2237,18 @@ namespace Azure.AI.Projects.Agents
                 responseId);
         }
 
-        /// <summary> Realtime function call item. </summary>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="callId"> The ID of the function call. </param>
-        /// <param name="name"> The name of the function being called. </param>
-        /// <param name="arguments"> The arguments of the function call. This is a JSON-encoded string representing the arguments passed to the function, for example `{"arg1": "value1", "arg2": 42}`. </param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemFunctionCall"/> instance for mocking. </returns>
-        public static RealtimeConversationItemFunctionCall RealtimeConversationItemFunctionCall(string id = default, RealtimeConversationItemFunctionCallObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default)
-        {
-            return new RealtimeConversationItemFunctionCall(
-                RealtimeConversationItemType.FunctionCall,
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                callId,
-                name,
-                arguments);
-        }
-
-        /// <summary>
-        /// A single item within a Realtime conversation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeConversationItemFunctionCall"/>, <see cref="OpenAI.RealtimeConversationItemFunctionCallOutput"/>, <see cref="OpenAI.RealtimeMCPApprovalResponse"/>, <see cref="OpenAI.RealtimeMCPListTools"/>, <see cref="OpenAI.RealtimeMCPToolCall"/>, and <see cref="OpenAI.RealtimeMCPApprovalRequest"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItem"/> instance for mocking. </returns>
-        public static RealtimeConversationItem RealtimeConversationItem(string @type = default)
-        {
-            return new UnknownRealtimeConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Realtime function call output item. </summary>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
         /// <param name="callId"> The ID of the function call this output is for. </param>
         /// <param name="output"> The output of the function call, this is free text and can contain any information or simply be empty. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <param name="name"> The name of the function that was called. A Foundry extension: OpenAI's function_call_output does not carry the function name, only `call_id`. </param>
         /// <returns> A new <see cref="OpenAI.RealtimeConversationItemFunctionCallOutput"/> instance for mocking. </returns>
-        public static RealtimeConversationItemFunctionCallOutput RealtimeConversationItemFunctionCallOutput(string id = default, RealtimeConversationItemFunctionCallOutputObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default)
+        [Experimental("AAIP001")]
+        public static RealtimeConversationItemFunctionCallOutput RealtimeConversationItemFunctionCallOutput(string id = default, RealtimeConversationItemFunctionCallOutputObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default, DateTimeOffset? createdAt = default, string responseId = default, string name = default)
         {
             return new RealtimeConversationItemFunctionCallOutput(
                 RealtimeConversationItemType.FunctionCallOutput,
@@ -2365,7 +2257,10 @@ namespace Azure.AI.Projects.Agents
                 @object,
                 status,
                 callId,
-                output);
+                output,
+                createdAt,
+                responseId,
+                name);
         }
 
         /// <summary> Realtime MCP approval response. </summary>
@@ -2373,8 +2268,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="OpenAI.RealtimeMCPApprovalResponse"/> instance for mocking. </returns>
-        public static RealtimeMCPApprovalResponse RealtimeMCPApprovalResponse(string id = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        [Experimental("AAIP001")]
+        public static RealtimeMCPApprovalResponse RealtimeMCPApprovalResponse(string id = default, string approvalRequestId = default, bool approve = default, string reason = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             return new RealtimeMCPApprovalResponse(
                 RealtimeConversationItemType.McpApprovalResponse,
@@ -2382,19 +2280,31 @@ namespace Azure.AI.Projects.Agents
                 id,
                 approvalRequestId,
                 approve,
-                reason);
+                reason,
+                createdAt,
+                responseId);
         }
 
         /// <summary> Realtime MCP list tools. </summary>
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="OpenAI.RealtimeMCPListTools"/> instance for mocking. </returns>
-        public static RealtimeMCPListTools RealtimeMCPListTools(string id = default, string serverLabel = default, IEnumerable<VoiceMcpListToolsTool> tools = default)
+        [Experimental("AAIP001")]
+        public static RealtimeMCPListTools RealtimeMCPListTools(string id = default, string serverLabel = default, IEnumerable<VoiceMcpListToolsTool> tools = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             tools ??= new ChangeTrackingList<VoiceMcpListToolsTool>();
 
-            return new RealtimeMCPListTools(RealtimeConversationItemType.McpListTools, additionalBinaryDataProperties: null, id, serverLabel, tools.ToList());
+            return new RealtimeMCPListTools(
+                RealtimeConversationItemType.McpListTools,
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                tools.ToList(),
+                createdAt,
+                responseId);
         }
 
         /// <summary> MCP list tools tool. </summary>
@@ -2430,8 +2340,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="approvalRequestId"></param>
         /// <param name="output"></param>
         /// <param name="error"></param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="OpenAI.RealtimeMCPToolCall"/> instance for mocking. </returns>
-        public static RealtimeMCPToolCall RealtimeMCPToolCall(string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default)
+        [Experimental("AAIP001")]
+        public static RealtimeMCPToolCall RealtimeMCPToolCall(string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             return new RealtimeMCPToolCall(
                 RealtimeConversationItemType.McpCall,
@@ -2442,7 +2355,9 @@ namespace Azure.AI.Projects.Agents
                 arguments,
                 approvalRequestId,
                 output,
-                error);
+                error,
+                createdAt,
+                responseId);
         }
 
         /// <summary>
@@ -2487,8 +2402,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="OpenAI.RealtimeMCPApprovalRequest"/> instance for mocking. </returns>
-        public static RealtimeMCPApprovalRequest RealtimeMCPApprovalRequest(string id = default, string serverLabel = default, string name = default, string arguments = default)
+        [Experimental("AAIP001")]
+        public static RealtimeMCPApprovalRequest RealtimeMCPApprovalRequest(string id = default, string serverLabel = default, string name = default, string arguments = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             return new RealtimeMCPApprovalRequest(
                 RealtimeConversationItemType.McpApprovalRequest,
@@ -2496,130 +2414,7 @@ namespace Azure.AI.Projects.Agents
                 id,
                 serverLabel,
                 name,
-                arguments);
-        }
-
-        /// <summary> A function call output item. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
-        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
-        /// <param name="callId"> The ID of the function call this output is for. </param>
-        /// <param name="output"> The output of the function call, this is free text and can contain any information or simply be empty. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="name"> The name of the function that was called. A Foundry extension: OpenAI's function_call_output does not carry the function name, only `call_id`. </param>
-        /// <returns> A new <see cref="Agents.VoiceFunctionCallOutputItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceFunctionCallOutputItem VoiceFunctionCallOutputItem(string @type = default, string id = default, RealtimeConversationItemFunctionCallOutputObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default, DateTimeOffset? createdAt = default, string responseId = default, string name = default)
-        {
-            return new VoiceFunctionCallOutputItem(
-                new RealtimeConversationItemType(@type),
-                additionalBinaryDataProperties: null,
-                id,
-                @object,
-                status,
-                callId,
-                output,
-                createdAt,
-                responseId,
-                name);
-        }
-
-        /// <summary> An MCP list-tools item. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"> The unique ID of the list. </param>
-        /// <param name="serverLabel"> The label of the MCP server. </param>
-        /// <param name="tools"> The tools available on the server. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceMcpListToolsItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpListToolsItem VoiceMcpListToolsItem(string @type = default, string id = default, string serverLabel = default, IEnumerable<VoiceMcpListToolsTool> tools = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            tools ??= new ChangeTrackingList<VoiceMcpListToolsTool>();
-
-            return new VoiceMcpListToolsItem(
-                new RealtimeConversationItemType(@type),
-                additionalBinaryDataProperties: null,
-                id,
-                serverLabel,
-                tools.ToList(),
-                createdAt,
-                responseId);
-        }
-
-        /// <summary> An MCP call item. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"> The unique ID of the tool call. </param>
-        /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
-        /// <param name="name"> The name of the tool that was run. </param>
-        /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
-        /// <param name="approvalRequestId"></param>
-        /// <param name="output"></param>
-        /// <param name="error"></param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceMcpCallItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpCallItem VoiceMcpCallItem(string @type = default, string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            return new VoiceMcpCallItem(
-                new RealtimeConversationItemType(@type),
-                additionalBinaryDataProperties: null,
-                id,
-                serverLabel,
-                name,
                 arguments,
-                approvalRequestId,
-                output,
-                error,
-                createdAt,
-                responseId);
-        }
-
-        /// <summary> An MCP approval request item. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"> The unique ID of the approval request. </param>
-        /// <param name="serverLabel"> The label of the MCP server making the request. </param>
-        /// <param name="name"> The name of the tool to run. </param>
-        /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceMcpApprovalRequestItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpApprovalRequestItem VoiceMcpApprovalRequestItem(string @type = default, string id = default, string serverLabel = default, string name = default, string arguments = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            return new VoiceMcpApprovalRequestItem(
-                new RealtimeConversationItemType(@type),
-                additionalBinaryDataProperties: null,
-                id,
-                serverLabel,
-                name,
-                arguments,
-                createdAt,
-                responseId);
-        }
-
-        /// <summary> An MCP approval response item (client-created). </summary>
-        /// <param name="type"></param>
-        /// <param name="id"> The unique ID of the approval response. </param>
-        /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
-        /// <param name="approve"> Whether the request was approved. </param>
-        /// <param name="reason"></param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceMcpApprovalResponseItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpApprovalResponseItem VoiceMcpApprovalResponseItem(string @type = default, string id = default, string approvalRequestId = default, bool approve = default, string reason = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            return new VoiceMcpApprovalResponseItem(
-                new RealtimeConversationItemType(@type),
-                additionalBinaryDataProperties: null,
-                id,
-                approvalRequestId,
-                approve,
-                reason,
                 createdAt,
                 responseId);
         }
@@ -2645,40 +2440,7 @@ namespace Azure.AI.Projects.Agents
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// The RealtimeAudioFormats.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeAudioFormatsAudioPcm"/>, <see cref="OpenAI.RealtimeAudioFormatsAudioPcmu"/>, and <see cref="OpenAI.RealtimeAudioFormatsAudioPcma"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormats"/> instance for mocking. </returns>
-        public static RealtimeAudioFormats RealtimeAudioFormats(string @type = default)
-        {
-            return new UnknownRealtimeAudioFormats(new RealtimeAudioFormatsType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The RealtimeAudioFormatsAudioPcm. </summary>
-        /// <param name="rate"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormatsAudioPcm"/> instance for mocking. </returns>
-        public static RealtimeAudioFormatsAudioPcm RealtimeAudioFormatsAudioPcm(RealtimeAudioFormatsAudioPcmRate? rate = default)
-        {
-            return new RealtimeAudioFormatsAudioPcm(RealtimeAudioFormatsType.AudioPcm, additionalBinaryDataProperties: null, rate);
-        }
-
-        /// <summary> The RealtimeAudioFormatsAudioPcmu. </summary>
-        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormatsAudioPcmu"/> instance for mocking. </returns>
-        public static RealtimeAudioFormatsAudioPcmu RealtimeAudioFormatsAudioPcmu()
-        {
-            return new RealtimeAudioFormatsAudioPcmu(RealtimeAudioFormatsType.AudioPcmu, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The RealtimeAudioFormatsAudioPcma. </summary>
-        /// <returns> A new <see cref="OpenAI.RealtimeAudioFormatsAudioPcma"/> instance for mocking. </returns>
-        public static RealtimeAudioFormatsAudioPcma RealtimeAudioFormatsAudioPcma()
-        {
-            return new RealtimeAudioFormatsAudioPcma(RealtimeAudioFormatsType.AudioPcma, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The template for omitting properties. </summary>
+        /// <summary> Properties shared by persisted voice responses. </summary>
         /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
@@ -2709,12 +2471,12 @@ namespace Azure.AI.Projects.Agents
         /// Maximum number of output tokens for a single assistant response,
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
-        /// <returns> A new <see cref="Agents.VoiceResponseProperties"/> instance for mocking. </returns>
-        public static VoiceResponseProperties VoiceResponseProperties(string id = default, VoiceResponseObject? @object = default, VoiceResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
+        /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
+        public static VoiceResponseBase VoiceResponseBase(string id = default, VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
         {
-            outputModalities ??= new ChangeTrackingList<VoiceResponseOutputModality>();
+            outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
 
-            return new VoiceResponseProperties(
+            return new VoiceResponseBase(
                 id,
                 @object,
                 status,
@@ -2820,7 +2582,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -2926,6 +2688,86 @@ namespace Azure.AI.Projects.Agents
                 userLocation,
                 searchContextSize,
                 customSearchConfiguration);
+        }
+
+        /// <summary> A shell tool stored in a toolbox. This model is additive to toolbox configuration and does not modify the OpenAI tool contract or existing toolbox tool definitions. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="environment"> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </param>
+        /// <returns> A new <see cref="Agents.ShellToolboxTool"/> instance for mocking. </returns>
+        public static ShellToolboxTool ShellToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ToolboxShellEnvironment environment = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ShellToolboxTool(
+                ToolboxToolType.Shell,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                environment);
+        }
+
+        /// <summary>
+        /// An execution environment for a shell tool stored in a toolbox. This environment model is scoped to toolbox configuration and does not modify the OpenAI shell environment contract.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> and <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/>.
+        /// </summary>
+        /// <param name="type"> The type of the shell execution environment. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellEnvironment"/> instance for mocking. </returns>
+        public static ToolboxShellEnvironment ToolboxShellEnvironment(string @type = default)
+        {
+            return new UnknownToolboxShellEnvironment(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
+        /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> instance for mocking. </returns>
+        public static ToolboxShellContainerAutoEnvironment ToolboxShellContainerAutoEnvironment(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ToolboxShellNetworkPolicy networkPolicy = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            skills ??= new ChangeTrackingList<ContainerSkill>();
+
+            return new ToolboxShellContainerAutoEnvironment(
+                "container_auto",
+                additionalBinaryDataProperties: null,
+                fileIds.ToList(),
+                memoryLimit,
+                skills.ToList(),
+                networkPolicy);
+        }
+
+        /// <summary>
+        /// Network access policy for an automatically provisioned toolbox shell container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/>.
+        /// </summary>
+        /// <param name="type"> The type of network access policy. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicy"/> instance for mocking. </returns>
+        public static ToolboxShellNetworkPolicy ToolboxShellNetworkPolicy(string @type = default)
+        {
+            return new UnknownToolboxShellNetworkPolicy(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A network policy that disables outbound access from a toolbox shell container. </summary>
+        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/> instance for mocking. </returns>
+        public static ToolboxShellNetworkPolicyDisabled ToolboxShellNetworkPolicyDisabled()
+        {
+            return new ToolboxShellNetworkPolicyDisabled("disabled", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An existing container environment for a shell tool stored in a toolbox. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/> instance for mocking. </returns>
+        public static ToolboxShellContainerReferenceEnvironment ToolboxShellContainerReferenceEnvironment(string containerId = default)
+        {
+            return new ToolboxShellContainerReferenceEnvironment("container_reference", additionalBinaryDataProperties: null, containerId);
         }
 
         /// <summary> An MCP tool stored in a toolbox. </summary>
@@ -3618,9 +3460,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default, AgentBlueprintReference blueprintReference = default, bool? draft = default)
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3629,6 +3472,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 definition,
                 blueprintReference,
+                digitalWorkerType,
                 draft,
                 additionalBinaryDataProperties: null);
         }
@@ -3676,7 +3520,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
         {
-            return ProjectsAgentRecord(id: id, name: name, state: default);
+            return ProjectsAgentRecord(id: id, name: name, state: default, stateSource: default, versions: default, agentEndpoint: default, digitalWorkerType: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentCard: default);
         }
 
         /// <summary> The ProjectsAgentVersion. </summary>
@@ -3810,7 +3654,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition)
         {
-            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, draft: default);
+            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, digitalWorkerType: default, draft: default);
         }
     }
 }

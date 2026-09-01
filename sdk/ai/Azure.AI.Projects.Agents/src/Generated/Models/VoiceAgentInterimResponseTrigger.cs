@@ -2,14 +2,64 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A condition that may trigger an interim response. </summary>
-    public enum VoiceAgentInterimResponseTrigger
+    public readonly partial struct VoiceAgentInterimResponseTrigger : IEquatable<VoiceAgentInterimResponseTrigger>
     {
-        /// <summary> Latency. </summary>
-        Latency,
-        /// <summary> Tool. </summary>
-        Tool
+        private readonly string _value;
+        private const string LatencyValue = "latency";
+        private const string ToolValue = "tool";
+
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentInterimResponseTrigger"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VoiceAgentInterimResponseTrigger(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Latency. </summary>
+        public static VoiceAgentInterimResponseTrigger Latency { get; } = new VoiceAgentInterimResponseTrigger(LatencyValue);
+
+        /// <summary> Gets the Tool. </summary>
+        public static VoiceAgentInterimResponseTrigger Tool { get; } = new VoiceAgentInterimResponseTrigger(ToolValue);
+
+        /// <summary> Determines if two <see cref="VoiceAgentInterimResponseTrigger"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VoiceAgentInterimResponseTrigger left, VoiceAgentInterimResponseTrigger right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VoiceAgentInterimResponseTrigger"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VoiceAgentInterimResponseTrigger left, VoiceAgentInterimResponseTrigger right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentInterimResponseTrigger"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentInterimResponseTrigger(string value) => new VoiceAgentInterimResponseTrigger(value);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentInterimResponseTrigger"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentInterimResponseTrigger?(string value) => value == null ? null : new VoiceAgentInterimResponseTrigger(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VoiceAgentInterimResponseTrigger other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(VoiceAgentInterimResponseTrigger other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

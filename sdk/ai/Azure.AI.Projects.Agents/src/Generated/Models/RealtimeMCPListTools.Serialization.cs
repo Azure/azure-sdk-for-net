@@ -91,6 +91,16 @@ namespace OpenAI
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            {
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt.Value, "U");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +133,8 @@ namespace OpenAI
             string id = default;
             string serverLabel = default;
             IList<VoiceMcpListToolsTool> tools = default;
+            DateTimeOffset? createdAt = default;
+            string responseId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -150,12 +162,33 @@ namespace OpenAI
                     tools = array;
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeMCPListTools(@type, additionalBinaryDataProperties, id, serverLabel, tools);
+            return new RealtimeMCPListTools(
+                @type,
+                additionalBinaryDataProperties,
+                id,
+                serverLabel,
+                tools,
+                createdAt,
+                responseId);
         }
     }
 }
