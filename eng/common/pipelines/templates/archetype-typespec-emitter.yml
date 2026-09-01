@@ -72,6 +72,15 @@ parameters:
   type: string
   default: ''
 
+# Balance regeneration jobs using existing C# LOC plus a per-package base cost.
+- name: UseLocWeighting
+  type: boolean
+  default: false
+
+- name: LocBaseCost
+  type: number
+  default: 30000
+
 # Paths to sparse checkout
 - name: SparseCheckoutPaths
   type: object
@@ -388,6 +397,8 @@ extends:
                 -MinimumPerJob ${{ parameters.MinimumPerJob }}
                 -OnlyTypespec ${{ parameters.OnlyGenerateTypespec }}
                 -DirectoryFilterPattern '${{ parameters.DirectoryFilterPattern }}'
+                -UseLocWeighting ${{ parameters.UseLocWeighting }}
+                -LocBaseCost ${{ parameters.LocBaseCost }}
               workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
