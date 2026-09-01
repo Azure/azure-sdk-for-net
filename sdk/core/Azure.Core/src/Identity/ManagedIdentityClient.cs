@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensibility;
 using MSAL = Microsoft.Identity.Client.ManagedIdentity;
+using MtlsBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength;
 
 namespace Azure.Identity
 {
@@ -119,9 +120,10 @@ namespace Azure.Identity
             try
             {
                 // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
+                bool isKeyGuardAvailable = capabilities.MaxSupportedBindingStrength >= MtlsBindingStrength.KeyGuard;
                 result = async ?
-                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, capabilities.IsMtlsPopSupportedByHost, cancellationToken).ConfigureAwait(false) :
-                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, capabilities.IsMtlsPopSupportedByHost, cancellationToken);
+                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false) :
+                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, isKeyGuardAvailable, cancellationToken);
             }
             // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
             catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
