@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
+        /// <param name="isOutOfSupport"> Whether the Kubernetes version is out of support. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview, bool? isOutOfSupport, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            IsOutOfSupport = isOutOfSupport;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether the Kubernetes version is currently in preview. </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
+
+        /// <summary> Whether the Kubernetes version is out of support. </summary>
+        [WirePath("isOutOfSupport")]
+        public bool? IsOutOfSupport { get; }
     }
 }
