@@ -9,12 +9,20 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
 
 /// <summary>
 /// PrivateDnsMXRecord.
 /// </summary>
+[CodeGenSuppress("PrivateDnsARecords")]
+[CodeGenSuppress("PrivateDnsAaaaRecords")]
+[CodeGenSuppress("PrivateDnsPtrRecords")]
+[CodeGenSuppress("PrivateDnsSoaRecord")]
+[CodeGenSuppress("PrivateDnsSrvRecords")]
+[CodeGenSuppress("PrivateDnsTxtRecords")]
+[CodeGenSuppress("Cname")]
 public partial class PrivateDnsMXRecord : ProvisionableResource
 {
     /// <summary>
