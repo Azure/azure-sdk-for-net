@@ -282,7 +282,7 @@ namespace Azure.Core.Tests.Identity
                 initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
             var credential = new ChainedTokenCredential(managedIdentity, new MockCredential());
 
-            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            AccessToken token = await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default));
 
             Assert.That(token.Token, Does.StartWith("TEST TOKEN"));
             Assert.AreEqual(1, probeCallCount);
@@ -359,11 +359,12 @@ namespace Azure.Core.Tests.Identity
                             Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software);
                     };
                     mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
-                });
+                },
+                instrument: false);
 
-            AccessToken token = await credential.GetTokenAsync(
-                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true),
-                default);
+            AccessToken token = await GetTokenAsync(
+                credential,
+                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
 
             Assert.AreEqual(ExpectedToken, token.Token);
             Assert.AreEqual(1, capabilityCallCount);
