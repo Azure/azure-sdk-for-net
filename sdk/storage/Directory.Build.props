@@ -12,6 +12,27 @@
   <PropertyGroup>
     <IsStorageTest Condition="'$(IsStorageTest)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsStorageTest>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsStorageTest)' == 'true' and '$(IsClientLibrary)' == 'true'">
+    <CodeCoverageExcludeByFile>
+      **/CodeGenMemberAttribute.cs,
+      **/CodeGenMemberSerializationAttribute.cs,
+      **/CodeGenMemberSerializationHooksAttribute.cs,
+      **/CodeGenSerializationAttribute.cs,
+      **/CodeGenSuppressAttribute.cs,
+      **/CodeGenSuppressTypeAttribute.cs,
+      **/CodeGenTypeAttribute.cs,
+      **/ChangeTrackingDictionary.cs,
+      **/ChangeTrackingList.cs,
+      **/ErrorResult.cs,
+      **/Generated/Models/Internal/ListBlobsIncludeItemExtensions.cs,
+      **/Generated/Internal/Utf8JsonRequestContent.cs,
+      **/Generated/Models/BlobDeleteType.Serialization.cs,
+      **/Generated/Models/BlobExpiryOptions.cs,
+      **/Generated/Models/FilterBlobsIncludeItem.Serialization.cs,
+      **/Generated/Models/ListContainersIncludeType.Serialization.cs
+    </CodeCoverageExcludeByFile>
+  </PropertyGroup>
   
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
   

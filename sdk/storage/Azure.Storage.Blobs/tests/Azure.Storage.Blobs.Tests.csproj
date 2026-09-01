@@ -9,27 +9,6 @@
   <PropertyGroup>
     <DefineConstants>BlobSDK</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup>
-    <!-- Exclude generated and shared source files from code coverage -->
-    <CodeCoverageExcludeByFile>
-      **/CodeGenMemberAttribute.cs,
-      **/CodeGenMemberSerializationAttribute.cs,
-      **/CodeGenMemberSerializationHooksAttribute.cs,
-      **/CodeGenSerializationAttribute.cs,
-      **/CodeGenSuppressAttribute.cs,
-      **/CodeGenSuppressTypeAttribute.cs,
-      **/CodeGenTypeAttribute.cs,
-      **/ChangeTrackingDictionary.cs,
-      **/ChangeTrackingList.cs,
-      **/ErrorResult.cs,
-      **/Generated/Models/Internal/ListBlobsIncludeItemExtensions.cs,
-      **/Generated/Internal/Utf8JsonRequestContent.cs,
-      **/Generated/Models/BlobDeleteType.Serialization.cs,
-      **/Generated/Models/BlobExpiryOptions.cs,
-      **/Generated/Models/FilterBlobsIncludeItem.Serialization.cs,
-      **/Generated/Models/ListContainersIncludeType.Serialization.cs,
-    </CodeCoverageExcludeByFile>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
     <!-- Microsoft and Newtonsoft dependencies for testing clientside encryption backwards compatibility -->
