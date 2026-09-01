@@ -28,31 +28,20 @@
 - Statsbeat no longer holds up process exit. It exports once more as its meter provider is disposed, which put an ingestion round trip on the exit path; that final export now runs in the background, and its network timeout is bounded at five seconds rather than the pipeline default of 100 seconds. The customer SDK stats meter provider is instead left to live for the process lifetime, so it never exports on the exit path at all; its stats are delivered by its own periodic reader.
   ([#62340](https://github.com/Azure/azure-sdk-for-net/pull/62340))
 
-- The pooled buffers used to categorize activity tags are no longer leaked from the shared array pool when converting an activity fails. The buffers were returned only on the success path, so every conversion failure permanently removed two buffers from the pool and forced later conversions to allocate.
-  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-
-- The size used to rent those buffers is no longer held in shared mutable state. A single activity with an unusually large number of tags permanently raised the rent size for every subsequent activity in the process, and the value was written from multiple exporter threads without synchronization.
-  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-
-- Pooled tag buffers no longer keep activity tag keys and values alive after they are returned to the shared array pool.
-  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-
-- An activity tag with a null key no longer prevents the remaining tags from being exported as custom properties. `Activity` does not reject a null key; the tag is now skipped during categorization rather than failing partway through building the custom properties.
-  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-
 - Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
 - Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
 
 ### Other Changes
 
-- Reading a recognized attribute while converting an activity is now a constant-time array index rather than a scan that compared the requested key against every mapped tag. A single conversion performs 13 to 26 such reads, and recognized attributes are held in that index alone rather than also being appended to a list, so a conversion rents two pooled buffers instead of three. Every span shape measures faster; the shape performing the most reads, a span carrying Application Insights override attributes, converts about a third faster. Building the values for a multi-attribute read no longer allocates two arrays per call.
+- Reworked how activity tags are stored and read while converting an activity. Recognized attributes are assigned a dense index during categorization and read by array index, rather than by scanning the requested key against every mapped tag; a single conversion performs 13 to 26 such reads. They are held in that index alone rather than also being appended to a list, so a conversion rents two pooled buffers instead of three. Every span shape measures faster, and the shape performing the most reads, a span carrying Application Insights override attributes, converts about a third faster.
   ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-
-- Removed two attribute lookups that could never succeed. `http.server_name` and `server.socket.address` are not recognized when activity tags are categorized, so they were never present in the list that the request-url and dependency-target logic searched. Both attributes continue to be exported as custom properties, unchanged.
-  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
-
-- Standard metrics no longer collect the attributes they do not read. Extracting the dependency duration metric categorized every tag on the activity, including the ones destined for custom properties, and then used only the recognized ones. Skipping the rest avoids a pooled buffer and the string conversion of array-valued tags on every dependency span, and measures 18% to 31% faster depending on tag count.
-  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
+  - Standard metrics no longer collect the attributes they do not read. Extracting the dependency duration metric categorized every tag on the activity, including the ones destined for custom properties, and then used only the recognized ones. Skipping the rest measures 18% to 31% faster depending on tag count.
+  - Building the values for a multi-attribute read no longer allocates two arrays per call.
+  - Removed two attribute lookups that could never succeed. `http.server_name` and `server.socket.address` are not recognized when activity tags are categorized, so they were never present in the list that the request-url and dependency-target logic searched. Both attributes continue to be exported as custom properties, unchanged.
+  - Fixed pooled buffers being leaked from the shared array pool when converting an activity fails. The buffers were returned only on the success path, so every conversion failure permanently removed two buffers from the pool and forced later conversions to allocate.
+  - Fixed the size used to rent those buffers being held in shared mutable state. A single activity with an unusually large number of tags permanently raised the rent size for every subsequent activity in the process, and the value was written from multiple exporter threads without synchronization.
+  - Fixed pooled tag buffers keeping activity tag keys and values alive after they are returned to the shared array pool.
+  - Fixed an activity tag with a null key preventing the remaining tags from being exported as custom properties. `Activity` does not reject a null key; the tag is now skipped during categorization rather than failing partway through building the custom properties.
 
 ## 1.8.3 (2026-07-24)
 
