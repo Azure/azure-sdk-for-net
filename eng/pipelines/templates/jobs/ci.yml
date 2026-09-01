@@ -248,6 +248,7 @@ jobs:
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
                 EnableTestRuntimeWeighting: true
+                CacheKey: 'GenerateTest'
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
