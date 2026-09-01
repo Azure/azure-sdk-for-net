@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text
         /// <param name="entityType"> The entity name. </param>
         /// <param name="synonyms"> The entity synonyms. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="synonyms"/> is null. </exception>
-        public EntitySynonyms(EntityCategory entityType, IEnumerable<EntitySynonym> synonyms)
+        public EntitySynonyms(PiiCategoriesExclude entityType, IEnumerable<EntitySynonym> synonyms)
         {
             Argument.AssertNotNull(synonyms, nameof(synonyms));
 
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
         /// <param name="entityType"> The entity name. </param>
         /// <param name="synonyms"> The entity synonyms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySynonyms(EntityCategory entityType, IList<EntitySynonym> synonyms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySynonyms(PiiCategoriesExclude entityType, IList<EntitySynonym> synonyms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityType = entityType;
             Synonyms = synonyms;
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> The entity name. </summary>
-        public EntityCategory EntityType { get; }
+        public PiiCategoriesExclude EntityType { get; }
 
         /// <summary> The entity synonyms. </summary>
         public IList<EntitySynonym> Synonyms { get; }

@@ -98,10 +98,10 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(IsDefaultPolicy))
+            if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isDefaultPolicy"u8);
-                writer.WriteBooleanValue(IsDefaultPolicy.Value);
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
