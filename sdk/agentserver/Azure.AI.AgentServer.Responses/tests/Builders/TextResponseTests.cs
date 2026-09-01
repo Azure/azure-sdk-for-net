@@ -209,10 +209,10 @@ public class TextResponseTests
     [Test]
     public async Task Configure_IsCalledBeforeCreatedEvent()
     {
-        double? capturedTemp = null;
+        float? capturedTemp = null;
 
         var response = new TextResponse(CreateContext(), CreateRequest(),
-            configure: r => r.Temperature = 0.7,
+            configure: r => r.Temperature = 0.7f,
             createText: ct => Task.FromResult("hi"));
 
         var events = await CollectEventsAsync(response);
@@ -237,7 +237,7 @@ public class TextResponseTests
     public async Task Configure_WorksWithStreamingMode()
     {
         var response = new TextResponse(CreateContext(), CreateRequest(),
-            configure: r => r.Temperature = 0.9,
+            configure: r => r.Temperature = 0.9f,
             createTextStream: ct => ToAsyncEnumerable("hi"));
 
         var events = await CollectEventsAsync(response);

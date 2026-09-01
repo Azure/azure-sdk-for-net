@@ -144,9 +144,9 @@ public sealed class ReconnectResponsesEndpointTests : IDisposable
 
         var item = MessageItemFactory.OutputMessage(
             id: "msg_1",
-            content: new List<MessageContent>
+            content: new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent("hello", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
+                ResponseContentPart.CreateOutputTextPart("hello", Array.Empty<Annotation>()),
             },
             status: MessageStatus.Completed);
         yield return new ResponseOutputItemAddedEvent { OutputIndex = (int)(0), Item = item };

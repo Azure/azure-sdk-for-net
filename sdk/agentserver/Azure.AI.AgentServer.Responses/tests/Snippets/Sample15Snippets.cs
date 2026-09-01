@@ -54,7 +54,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     new FilePath(fileId: "/exports/data.csv", index: 1),
                     new FilePath(fileId: "/images/chart.png", index: 2),
                     new FileCitationBody(fileId: "/sources/research-paper.pdf", index: 3, filename: "research-paper.pdf"),
-                    new UrlCitationBody(url: new Uri("https://example.com/docs/guide"), startIndex: 0, endIndex: 29, title: "Developer Guide"),
+                    new UriCitationMessageAnnotation { Uri = new Uri("https://example.com/docs/guide"), StartIndex = (int)(0), EndIndex = (int)(29), Title = "Developer Guide" },
                 };
 
                 // Emit a message with the annotations attached to the text content.

@@ -72,6 +72,6 @@ public class FunctionCallResponseTests
         var doneItem = XAssert.IsType<OutputItemFunctionToolCall>(((ResponseOutputItemDoneEvent)events[7]).Item);
         Assert.That(doneItem.Id, Is.EqualTo(itemId));
         Assert.That(doneItem.FunctionArguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
-        Assert.That(doneItem.Status, Is.EqualTo(ItemFunctionToolCallStatus.Completed));
+        Assert.That(doneItem.Status, Is.EqualTo(FunctionCallStatus.Completed));
     }
 }

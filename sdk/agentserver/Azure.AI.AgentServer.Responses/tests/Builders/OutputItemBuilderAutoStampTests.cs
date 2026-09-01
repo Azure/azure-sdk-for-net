@@ -60,7 +60,7 @@ public class OutputItemBuilderAutoStampTests
         // Create an item with handler-set ResponseId
         var item = MessageItemFactory.OutputMessage(
             id: builder.ItemId,
-            content: Array.Empty<MessageContent>(),
+            content: Array.Empty<ResponseContentPart>(),
             status: MessageStatus.InProgress);
         item.ResponseId = handlerResponseId;
         var evt = builder.EmitAdded(item);
@@ -74,7 +74,7 @@ public class OutputItemBuilderAutoStampTests
     public void EmitAdded_StampsAgentReference_WhenNotSetByHandler()
     {
         var responseId = "resp_auto_004";
-        var agentRef = new AgentReference("my-agent") { Version = "1.0" };
+        var agentRef = new AgentReference("my-agent", "1.0");
         var request = new CreateResponse { Model = "test", AgentReference = agentRef };
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
@@ -92,7 +92,7 @@ public class OutputItemBuilderAutoStampTests
     {
         var responseId = "resp_auto_005";
         var requestAgentRef = new AgentReference("request-agent");
-        var handlerAgentRef = new AgentReference("handler-agent") { Version = "2.0" };
+        var handlerAgentRef = new AgentReference("handler-agent", "2.0");
         var request = new CreateResponse { Model = "test", AgentReference = requestAgentRef };
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
@@ -100,7 +100,7 @@ public class OutputItemBuilderAutoStampTests
 
         var item = MessageItemFactory.OutputMessage(
             id: builder.ItemId,
-            content: Array.Empty<MessageContent>(),
+            content: Array.Empty<ResponseContentPart>(),
             status: MessageStatus.InProgress);
         item.AgentReference = handlerAgentRef;
         var evt = builder.EmitAdded(item);

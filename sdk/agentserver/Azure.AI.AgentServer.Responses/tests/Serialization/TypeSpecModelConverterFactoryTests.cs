@@ -115,7 +115,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Serialize_ResponseError_ProducesCorrectStructure()
     {
         var options = CreateOptions();
-        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "Something went wrong");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Something went wrong");
 
         var json = JsonSerializer.Serialize(error, options);
         using var doc = JsonDocument.Parse(json);
@@ -171,7 +171,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Deserialize_ResponseError_PreservesCodeAndMessage()
     {
         var options = CreateOptions();
-        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "test error");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test error");
 
         var json = JsonSerializer.Serialize(error, options);
         var deserialized = JsonSerializer.Deserialize<ResponseErrorInfo>(json, options);
@@ -249,7 +249,7 @@ public class TypeSpecModelConverterFactoryTests
     public void RoundTrip_Response_PreservesAllSetFields()
     {
         var options = CreateOptions();
-        var original = new ResponseObject { Id = "resp_roundtrip", Model = "gpt-4o-mini", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.InvalidPrompt, "bad prompt"), CreatedAt = new DateTimeOffset(2026, 1, 15, 8, 30, 0, TimeSpan.Zero) };
+        var original = new ResponseObject { Id = "resp_roundtrip", Model = "gpt-4o-mini", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.InvalidPrompt.ToString(), "bad prompt"), CreatedAt = new DateTimeOffset(2026, 1, 15, 8, 30, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseObject>(json, options);

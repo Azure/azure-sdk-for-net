@@ -40,9 +40,9 @@ public sealed class RecoveryContextParityProtocolTests : CrashRecoveryE2ETestBas
         var request = new CreateResponse
         {
             Model = "test-model",
-            Background = true,
-            Store = true,
-            Stream = false,
+            BackgroundModeEnabled = true,
+            StoredOutputEnabled = true,
+            StreamingEnabled = false,
             Input = BinaryData.FromObjectAsJson("recover this input"),
         };
 

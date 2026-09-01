@@ -37,7 +37,7 @@ public class ResponseMutationsTests
     public void SetCompleted_WithUsage_SetsUsage()
     {
         var response = new ResponseObject { Id = "resp_test", Model = "gpt-4o" };
-        var usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 20, new ResponseUsageOutputTokensDetails(0), 30);
+        var usage = new ResponseUsage { InputTokenCount = (int)(10), InputTokenDetails = new ResponseUsageInputTokensDetails { CachedTokenCount = (int)(0) }, OutputTokenCount = (int)(20), OutputTokenDetails = new ResponseUsageOutputTokensDetails { ReasoningTokenCount = (int)(0) }, TotalTokenCount = (int)(30) };
 
         response.SetCompleted(usage);
 
@@ -61,9 +61,9 @@ public class ResponseMutationsTests
         var msg = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[]
+            new ResponseContentPart[]
             {
-                new MessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+                ResponseContentPart.CreateOutputTextPart("Hello ", Array.Empty<Annotation>())
             });
         response.OutputItems.Add(msg);
 
@@ -164,7 +164,7 @@ public class ResponseMutationsTests
     public void SetFailed_WithUsage_SetsUsage()
     {
         var response = new ResponseObject { Id = "resp_test", Model = "gpt-4o" };
-        var usage = new ResponseUsage(5, new ResponseUsageInputTokensDetails(0), 10, new ResponseUsageOutputTokensDetails(0), 15);
+        var usage = new ResponseUsage { InputTokenCount = (int)(5), InputTokenDetails = new ResponseUsageInputTokensDetails { CachedTokenCount = (int)(0) }, OutputTokenCount = (int)(10), OutputTokenDetails = new ResponseUsageOutputTokensDetails { ReasoningTokenCount = (int)(0) }, TotalTokenCount = (int)(15) };
 
         response.SetFailed(usage: usage);
 
@@ -178,9 +178,9 @@ public class ResponseMutationsTests
         var msg = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[]
+            new ResponseContentPart[]
             {
-                new MessageContentOutputTextContent("Partial", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+                ResponseContentPart.CreateOutputTextPart("Partial", Array.Empty<Annotation>())
             });
         response.OutputItems.Add(msg);
 
@@ -237,7 +237,7 @@ public class ResponseMutationsTests
     public void SetIncomplete_WithUsage_SetsUsage()
     {
         var response = new ResponseObject { Id = "resp_test", Model = "gpt-4o" };
-        var usage = new ResponseUsage(5, new ResponseUsageInputTokensDetails(0), 3, new ResponseUsageOutputTokensDetails(0), 8);
+        var usage = new ResponseUsage { InputTokenCount = (int)(5), InputTokenDetails = new ResponseUsageInputTokensDetails { CachedTokenCount = (int)(0) }, OutputTokenCount = (int)(3), OutputTokenDetails = new ResponseUsageOutputTokensDetails { ReasoningTokenCount = (int)(0) }, TotalTokenCount = (int)(8) };
 
         response.SetIncomplete(usage: usage);
 
@@ -251,9 +251,9 @@ public class ResponseMutationsTests
         var msg = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[]
+            new ResponseContentPart[]
             {
-                new MessageContentOutputTextContent("Partial output", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+                ResponseContentPart.CreateOutputTextPart("Partial output", Array.Empty<Annotation>())
             });
         response.OutputItems.Add(msg);
 
@@ -268,7 +268,7 @@ public class ResponseMutationsTests
     [Test]
     public void CopyTerminalFields_CopiesMutableFieldsExceptStatusAndOutput()
     {
-        var source = new ResponseObject { Id = "resp_src", Model = "gpt-4o", Status = ResponseStatus.Completed, CompletedAt = DateTimeOffset.UtcNow, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "test"), IncompleteDetails = new ResponseIncompleteDetails { Reason = ResponseIncompleteDetailsReason.MaxOutputTokens }, Usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 20, new ResponseUsageOutputTokensDetails(0), 30) };
+        var source = new ResponseObject { Id = "resp_src", Model = "gpt-4o", Status = ResponseStatus.Completed, CompletedAt = DateTimeOffset.UtcNow, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test"), IncompleteStatusDetails = OpenAIModelFactory.CreateIncompleteDetails((ResponseIncompleteDetailsReason.MaxOutputTokens).ToString()), Usage = new ResponseUsage { InputTokenCount = (int)(10), InputTokenDetails = new ResponseUsageInputTokensDetails { CachedTokenCount = (int)(0) }, OutputTokenCount = (int)(20), OutputTokenDetails = new ResponseUsageOutputTokensDetails { ReasoningTokenCount = (int)(0) }, TotalTokenCount = (int)(30) } };
 
         var target = new ResponseObject { Id = "resp_tgt", Model = "gpt-4o", Status = ResponseStatus.InProgress };
 
@@ -324,7 +324,7 @@ public class ResponseMutationsTests
     {
         // UpdateFromEvent no longer auto-sets terminal status;
         // handler is source of truth. ReplaceResponse handles full replacement (B37).
-        var source = new ResponseObject { Id = "resp_src", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "Oops") };
+        var source = new ResponseObject { Id = "resp_src", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Oops") };
         var target = new ResponseObject { Id = "resp_tgt", Model = "gpt-4o" };
         var evt = new ResponseFailedEvent { SequenceNumber = (int)(0), Response = source };
 
@@ -340,7 +340,7 @@ public class ResponseMutationsTests
     {
         // UpdateFromEvent no longer auto-sets terminal status;
         // handler is source of truth. ReplaceResponse handles full replacement (B37).
-        var source = new ResponseObject { Id = "resp_src", Model = "gpt-4o", Status = ResponseStatus.Incomplete, IncompleteDetails = new ResponseIncompleteDetails { Reason = ResponseIncompleteDetailsReason.MaxOutputTokens } };
+        var source = new ResponseObject { Id = "resp_src", Model = "gpt-4o", Status = ResponseStatus.Incomplete, IncompleteStatusDetails = OpenAIModelFactory.CreateIncompleteDetails((ResponseIncompleteDetailsReason.MaxOutputTokens).ToString()) };
         var target = new ResponseObject { Id = "resp_tgt", Model = "gpt-4o" };
         var evt = new ResponseIncompleteEvent { SequenceNumber = (int)(0), Response = source };
 
@@ -388,7 +388,7 @@ public class ResponseMutationsTests
         var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.InProgress,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
         var evt = new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = item };
 
         response.UpdateFromEvent(evt);
@@ -404,7 +404,7 @@ public class ResponseMutationsTests
         var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
         var evt = new ResponseOutputItemDoneEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = item };
 
         response.UpdateFromEvent(evt);
@@ -435,7 +435,7 @@ public class ResponseMutationsTests
         var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
 
         output.SetOutputItemAtIndex(2, item);
 
@@ -449,8 +449,8 @@ public class ResponseMutationsTests
     public void SetOutputItemAtIndex_ReplacesExistingItem()
     {
         var output = new List<OutputItem>();
-        var item1 = MessageItemFactory.OutputMessage("msg_1", MessageStatus.InProgress, Array.Empty<MessageContent>());
-        var item2 = MessageItemFactory.OutputMessage("msg_1", MessageStatus.Completed, Array.Empty<MessageContent>());
+        var item1 = MessageItemFactory.OutputMessage("msg_1", MessageStatus.InProgress, Array.Empty<ResponseContentPart>());
+        var item2 = MessageItemFactory.OutputMessage("msg_1", MessageStatus.Completed, Array.Empty<ResponseContentPart>());
 
         output.SetOutputItemAtIndex(0, item1);
         output.SetOutputItemAtIndex(0, item2);

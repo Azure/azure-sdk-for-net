@@ -23,9 +23,9 @@ public class ItemMessageExtensionsTests
     [Test]
     public void Content_ViaConvenienceConstructor_RoundTrips()
     {
-        var content = new List<MessageContent>
+        var content = new List<ResponseContentPart>
         {
-            new MessageContentInputTextContent("Hello world"),
+            ResponseContentPart.CreateInputTextPart("Hello world"),
         };
         var msg = MessageItemFactory.Message(MessageRole.User, content);
 

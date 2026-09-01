@@ -71,7 +71,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ErrorPath()
     {
-        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "failed");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "failed");
         var response = new ResponseObject { Id = "resp_err", Model = "gpt-4o" };
         response.Error = error;
         var evt = new ResponseFailedEvent { SequenceNumber = (int)(5), Response = response };
@@ -83,15 +83,12 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_OutputItemMessage()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(text: "Hello world", annotations: Array.Empty<Annotation>());
         Assert.That(content, Is.Not.Null);
 
         var outputMsg = MessageItemFactory.OutputMessage(
             id: "msg_test",
-            content: new List<MessageContent> { content },
+            content: new List<ResponseContentPart> { content },
             status: MessageStatus.Completed);
         Assert.That(outputMsg, Is.Not.Null);
     }
@@ -99,13 +96,10 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseOutputItemDoneEvent()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(text: "Hello world", annotations: Array.Empty<Annotation>());
         var outputMsg = MessageItemFactory.OutputMessage(
             id: "msg_test",
-            content: new List<MessageContent> { content },
+            content: new List<ResponseContentPart> { content },
             status: MessageStatus.Completed);
         var evt = new ResponseOutputItemDoneEvent { SequenceNumber = (int)(6), OutputIndex = (int)(0), Item = outputMsg };
 
@@ -116,7 +110,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseError()
     {
-        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "test");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test");
         Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }
@@ -157,8 +151,8 @@ public class ExternalConsumerValidationTests
         {
             Model = "gpt-4o",
             Instructions = "You are a helpful assistant.",
-            Stream = true,
-            Background = false,
+            StreamingEnabled = true,
+            BackgroundModeEnabled = false,
         };
 
         Assert.That(request.Model, Is.EqualTo("gpt-4o"));

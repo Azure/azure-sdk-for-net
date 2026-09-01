@@ -150,12 +150,11 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
         var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
         yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
-        var textContent = new MessageContentOutputTextContent(
-            "Hello", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("Hello", Array.Empty<Annotation>());
         var msg = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(1), OutputIndex = (int)(0), Item = msg };
         yield return new ResponseOutputItemDoneEvent { SequenceNumber = (int)(2), OutputIndex = (int)(0), Item = msg };
 

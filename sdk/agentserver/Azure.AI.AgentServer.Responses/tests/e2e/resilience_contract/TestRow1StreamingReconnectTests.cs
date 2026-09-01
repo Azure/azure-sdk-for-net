@@ -191,9 +191,9 @@ public sealed class TestRow1StreamingReconnectTests : IDisposable
     private static OutputItemMessage NewItem(string id)
         => new(
             id: id,
-            content: new List<MessageContent>
+            content: new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent("x", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
+                ResponseContentPart.CreateOutputTextPart("x", Array.Empty<Annotation>()),
             },
             status: MessageStatus.Completed);
 }

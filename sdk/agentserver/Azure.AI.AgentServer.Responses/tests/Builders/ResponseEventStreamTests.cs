@@ -253,7 +253,7 @@ public class ResponseEventStreamTests
     public void EmitCompleted_WithUsage_SetsStatusCompletedAtAndUsage()
     {
         var stream = CreateStream();
-        var usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 5, new ResponseUsageOutputTokensDetails(0), 15);
+        var usage = new ResponseUsage { InputTokenCount = (int)(10), InputTokenDetails = new ResponseUsageInputTokensDetails { CachedTokenCount = (int)(0) }, OutputTokenCount = (int)(5), OutputTokenDetails = new ResponseUsageOutputTokensDetails { ReasoningTokenCount = (int)(0) }, TotalTokenCount = (int)(15) };
 
         var before = DateTimeOffset.UtcNow;
         var evt = stream.EmitCompleted(usage);
@@ -283,11 +283,11 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         // Simulate accumulated output items
-        var textContent = new MessageContentOutputTextContent("Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("Hello world", Array.Empty<Annotation>());
         var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
         var evt = stream.EmitCompleted();
@@ -330,11 +330,11 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("partial", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("partial", Array.Empty<Annotation>());
         var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
         var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "err");
@@ -375,11 +375,11 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("so far", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("so far", Array.Empty<Annotation>());
         var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);

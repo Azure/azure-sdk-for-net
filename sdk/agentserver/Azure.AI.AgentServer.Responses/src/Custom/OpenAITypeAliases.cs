@@ -205,3 +205,7 @@ global using ApplyPatchOperation = OpenAI.Responses.ApplyPatchOperation;
 global using ApplyPatchCallStatus = OpenAI.Responses.ApplyPatchCallStatus;
 global using ApplyPatchCallOutputStatus = OpenAI.Responses.ApplyPatchCallOutputStatus;
 global using ResponseToolChoice = OpenAI.Responses.ResponseToolChoice;
+global using ResponseItemKind = OpenAI.Responses.ResponseItemKind;
+global using ResponseContentPartKind = OpenAI.Responses.ResponseContentPartKind;
+global using ResponseMessageAnnotation = OpenAI.Responses.ResponseMessageAnnotation;
+global using UriCitationMessageAnnotation = OpenAI.Responses.UriCitationMessageAnnotation;

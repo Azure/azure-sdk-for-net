@@ -749,7 +749,7 @@ public class OpenAIWireComplianceTests
     {
         var msg = MessageItemFactory.Message(MessageRole.User, new List<Models.MessageContent>
         {
-            new MessageContentInputTextContent("Hello from Azure"),
+            ResponseContentPart.CreateInputTextPart("Hello from Azure"),
         });
 
         var openAiItem = msg.Translate().To<ResponseItem>();
@@ -760,7 +760,7 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_FunctionCall_ToResponseItem()
     {
-        var fc = new ItemFunctionToolCall { CallId = "call_1", FunctionName = "my_func", FunctionArguments = "{\"x\":1}" };
+        var fc = new ItemFunctionToolCall { CallId = "call_1", FunctionName = "my_func", FunctionArguments = BinaryData.FromString("{\"x\":1}") };
 
         var openAiItem = fc.Translate().To<ResponseItem>();
         Assert.That(openAiItem, Is.InstanceOf<FunctionCallResponseItem>());

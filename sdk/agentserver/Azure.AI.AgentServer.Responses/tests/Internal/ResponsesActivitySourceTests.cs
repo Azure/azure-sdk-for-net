@@ -82,7 +82,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         Assert.That(parent, Is.Not.Null);
 
         var source = new ResponsesActivitySource();
-        var request = new CreateResponse { Model = "gpt-4o", Stream = true };
+        var request = new CreateResponse { Model = "gpt-4o", StreamingEnabled = true };
 
         source.PropagateResponseBaggage(request, "caresp_123", EmptyHeaders());
 
@@ -115,7 +115,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         var request = new CreateResponse
         {
             Model = "test",
-            Conversation = BinaryData.FromString("\"conv_xyz\"")
+            ConversationOptions = BinaryData.FromString("\"conv_xyz\"")
         };
 
         source.PropagateResponseBaggage(request, "caresp_789", EmptyHeaders());
@@ -208,8 +208,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         var request = new CreateResponse
         {
             Model = "test",
-            Stream = true,
-            Conversation = BinaryData.FromString("\"conv_xyz\"")
+            StreamingEnabled = true,
+            ConversationOptions = BinaryData.FromString("\"conv_xyz\"")
         };
         var headers = new HeaderDictionary { ["X-Request-Id"] = "req-999" };
 

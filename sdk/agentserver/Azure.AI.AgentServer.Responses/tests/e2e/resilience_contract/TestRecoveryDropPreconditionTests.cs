@@ -33,7 +33,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: IdGenerator.NewResponseId(),
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
 
         var handler = new TestHandler();
         using var factory = NewRecoveringHost(handler);

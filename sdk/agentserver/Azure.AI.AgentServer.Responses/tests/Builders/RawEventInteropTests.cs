@@ -72,18 +72,7 @@ public class RawEventInteropTests
 
         // Use raw event for a custom output item manually
         var rawSeq = stream.NextSequenceNumber(); // 7
-        var manualItem = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: "raw_item_001",
-            callId: "call_raw",
-            @namespace: null,
-            name: "manual_fn",
-            arguments: "{}",
-            status: ItemFunctionToolCallStatus.InProgress);
+        var manualItem = new OutputItemFunctionToolCall("call_raw", "manual_fn", BinaryData.FromString("{}")) { Id = "raw_item_001", Status = FunctionCallStatus.InProgress };
         var rawAddedEvent = new ResponseOutputItemAddedEvent { SequenceNumber = (int)(rawSeq), OutputIndex = (int)(1), Item = manualItem };
         events.Add(rawAddedEvent);
 
@@ -118,31 +107,20 @@ public class RawEventInteropTests
 
             new ResponseOutputItemAddedEvent { SequenceNumber = (int)(2), OutputIndex = (int)(0), Item = MessageItemFactory.OutputMessage(
                     id: itemId,
-                    content: Array.Empty<MessageContent>(),
+                    content: Array.Empty<ResponseContentPart>(),
                     status: MessageStatus.InProgress) },
 
-            new ResponseContentPartAddedEvent { SequenceNumber = (int)(3), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Part = new OutputContentOutputTextContent(
-                    text: "", annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>()) },
+            new ResponseContentPartAddedEvent { SequenceNumber = (int)(3), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Part = ResponseContentPart.CreateOutputTextPart("", Array.Empty<OpenAI.Responses.ResponseMessageAnnotation>()) },
 
-            new ResponseTextDeltaEvent(
-                sequenceNumber: 4, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                delta: "Hello!", logprobs: Array.Empty<ResponseLogProb>()),
+            new ResponseTextDeltaEvent { SequenceNumber = (int)(4), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello!" },
 
-            new ResponseTextDoneEvent(
-                sequenceNumber: 5, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                text: "Hello!", logprobs: Array.Empty<ResponseLogProb>()),
+            new ResponseTextDoneEvent { SequenceNumber = (int)(5), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Text = "Hello!" },
 
-            new ResponseContentPartDoneEvent { SequenceNumber = (int)(6), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Part = new OutputContentOutputTextContent(
-                    text: "Hello!", annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>()) },
+            new ResponseContentPartDoneEvent { SequenceNumber = (int)(6), ItemId = itemId, OutputIndex = (int)(0), ContentIndex = (int)(0), Part = ResponseContentPart.CreateOutputTextPart("Hello!", Array.Empty<OpenAI.Responses.ResponseMessageAnnotation>()) },
 
             new ResponseOutputItemDoneEvent { SequenceNumber = (int)(7), OutputIndex = (int)(0), Item = MessageItemFactory.OutputMessage(
                     id: itemId,
-                    content: new[] { new MessageContentOutputTextContent(
-                        text: "Hello!",
-                        annotations: Array.Empty<Annotation>(),
-                        logprobs: Array.Empty<LogProb>()) },
+                    content: new[] { ResponseContentPart.CreateOutputTextPart(text: "Hello!", annotations: Array.Empty<Annotation>()) },
                     status: MessageStatus.Completed) },
 
             new ResponseCompletedEvent { SequenceNumber = (int)(8), Response = response },

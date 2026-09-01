@@ -94,7 +94,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: disposition,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true, Stream = stream },
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true, StreamingEnabled = stream },
             clientHeaders: headers,
             queryParameters: query));
     }
@@ -120,7 +120,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: disposition,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true, Stream = false },
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true, StreamingEnabled = false },
             clientHeaders: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
             queryParameters: new Dictionary<string, string>(StringComparer.Ordinal)));
     }
@@ -185,15 +185,15 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         => SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true, Stream = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true, StreamingEnabled = true }));
 
     /// <summary>Builds a completed output message item with a single text content.</summary>
     private protected static OutputItemMessage NewOutputMessage(string id, string text)
         => new(
             id: id,
-            content: new List<MessageContent>
+            content: new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent(text, Array.Empty<Annotation>(), Array.Empty<LogProb>()),
+                ResponseContentPart.CreateOutputTextPart(text, Array.Empty<Annotation>()),
             },
             status: MessageStatus.Completed);
 

@@ -57,9 +57,9 @@ public class ResponseContextImplTests
             "msg_existing",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            new List<MessageContent>
+            new List<ResponseContentPart>
             {
-                new MessageContentInputTextContent("I'm a resolved item")
+                ResponseContentPart.CreateInputTextPart("I'm a resolved item")
             });
 
         var provider = new StubProvider();
@@ -105,7 +105,7 @@ public class ResponseContextImplTests
         var provider = new RecordingProvider();
         provider.AddItem("ref_1", MessageItemFactory.OutputMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -129,7 +129,7 @@ public class ResponseContextImplTests
         var provider = new StubProvider();
         provider.AddItem("ref_middle", MessageItemFactory.OutputMessage(
             "ref_middle", MessageStatus.Completed, MessageRole.Assistant,
-            new List<MessageContent> { new MessageContentInputTextContent("middle ref") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("middle ref") }));
 
         var request = CreateRequestWithJsonInput("""
             [
@@ -209,7 +209,7 @@ public class ResponseContextImplTests
         var provider = new RecordingProvider();
         provider.AddItem("ref_1", MessageItemFactory.OutputMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -226,7 +226,7 @@ public class ResponseContextImplTests
         var provider = new RecordingProvider();
         provider.AddItem("ref_1", MessageItemFactory.OutputMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("resolved") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("resolved") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -398,7 +398,7 @@ public class ResponseContextImplTests
     {
         return MessageItemFactory.OutputMessage(
             id, MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent(text) });
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart(text) });
     }
 
     // ═══════════════════════════════════════════════════════════════════════

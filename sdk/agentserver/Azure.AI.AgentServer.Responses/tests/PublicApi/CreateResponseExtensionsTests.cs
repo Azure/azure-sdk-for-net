@@ -39,7 +39,7 @@ public class CreateResponseExtensionsTests
         var request = new CreateResponse
         {
             PreviousResponseId = "caresp_prev",
-            Conversation = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
+            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
         };
 
         Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
@@ -51,7 +51,7 @@ public class CreateResponseExtensionsTests
         var conversationId = "conv_abc123";
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
+            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
         };
 
         Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
@@ -63,7 +63,7 @@ public class CreateResponseExtensionsTests
         var conversationId = "conv_obj123";
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString(JsonSerializer.Serialize(new { id = conversationId })),
+            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(new { id = conversationId })),
         };
 
         Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
@@ -74,7 +74,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString(JsonSerializer.Serialize(new { name = "test" })),
+            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize(new { name = "test" })),
         };
 
         Assert.That(request.GetConversationId(), Is.Null);
@@ -85,7 +85,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString(JsonSerializer.Serialize("")),
+            ConversationOptions = BinaryData.FromString(JsonSerializer.Serialize("")),
         };
 
         Assert.That(request.GetConversationId(), Is.Null);
@@ -96,7 +96,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString("not valid json {{{"),
+            ConversationOptions = BinaryData.FromString("not valid json {{{"),
         };
 
         Assert.That(request.GetConversationId(), Is.Null);
@@ -108,7 +108,7 @@ public class CreateResponseExtensionsTests
         var request = new CreateResponse
         {
             PreviousResponseId = "",
-            Conversation = null,
+            ConversationOptions = null,
         };
 
         Assert.That(request.GetConversationId(), Is.Null);
@@ -463,7 +463,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromObjectAsJson("conv_abc123"),
+            ConversationOptions = BinaryData.FromObjectAsJson("conv_abc123"),
         };
 
         var result = request.GetConversationExpanded();
@@ -478,7 +478,7 @@ public class CreateResponseExtensionsTests
         var json = """{"id":"conv_xyz"}""";
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString(json),
+            ConversationOptions = BinaryData.FromString(json),
         };
 
         var result = request.GetConversationExpanded();
@@ -492,7 +492,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            Conversation = BinaryData.FromString("42"),
+            ConversationOptions = BinaryData.FromString("42"),
         };
 
         Assert.Throws<FormatException>(() => request.GetConversationExpanded());

@@ -38,7 +38,7 @@ public class ResponseSnapshotTests
             "msg_1",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
         original.OutputItems.Add(message);
 
         // Act
@@ -47,7 +47,7 @@ public class ResponseSnapshotTests
             "msg_2",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
         original.OutputItems.Add(message2);
 
         // Assert
@@ -81,9 +81,9 @@ public class ResponseSnapshotTests
             "msg_poly",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
 
-        var functionCall = new OutputItemFunctionToolCall { CallId = "call_fn1", FunctionName = "get_weather", FunctionArguments = """{"location":"Seattle"}""" };
+        var functionCall = new OutputItemFunctionToolCall { CallId = "call_fn1", FunctionName = "get_weather", FunctionArguments = BinaryData.FromString("""{"location":"Seattle"}""") };
 
         var original = new ResponseObject { Id = "resp_snap4", Model = "gpt-4o", Status = ResponseStatus.Completed };
         original.OutputItems.Add(message);

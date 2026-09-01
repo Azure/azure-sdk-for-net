@@ -141,7 +141,7 @@ public class FileResponsesProviderTests : IDisposable
     {
         var writer = NewProvider();
         var response = new ResponseObject { Id = "resp_items", Model = "gpt-4o", Status = ResponseStatus.Completed };
-        var inputItem = MessageItemFactory.OutputMessage("msg_in_1", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>());
+        var inputItem = MessageItemFactory.OutputMessage("msg_in_1", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>());
         await writer.CreateResponseAsync(
             new CreateResponsePersistRequest(response, new OutputItem[] { inputItem }, null),
             PlatformContext.Empty);

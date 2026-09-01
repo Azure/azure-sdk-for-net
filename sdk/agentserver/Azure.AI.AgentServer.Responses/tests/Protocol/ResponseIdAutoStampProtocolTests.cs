@@ -170,7 +170,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         // Set custom response_id before emitting
         var outputMsg = MessageItemFactory.OutputMessage(
             id: message.ItemId,
-            content: Array.Empty<MessageContent>(),
+            content: Array.Empty<ResponseContentPart>(),
             status: MessageStatus.InProgress);
         outputMsg.ResponseId = customResponseId;
         yield return message.EmitAdded(outputMsg);
@@ -226,7 +226,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         // Directly construct output item event without setting ResponseId
         var outputItem = MessageItemFactory.OutputMessage(
             id: "msg_direct_001",
-            content: Array.Empty<MessageContent>(),
+            content: Array.Empty<ResponseContentPart>(),
             status: MessageStatus.InProgress);
         // ResponseId intentionally NOT set — Layer 2 should stamp it
         yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = outputItem };

@@ -27,12 +27,9 @@ public class SnapshotEmbeddedResponseTests
             id: "msg_1",
             status: MessageStatus.Completed,
             role: MessageRole.Assistant,
-            content: new List<MessageContent>
+            content: new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent(
-                    text: "Hello",
-                    annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>()),
+                ResponseContentPart.CreateOutputTextPart(text: "Hello", annotations: Array.Empty<Annotation>()),
             }));
     }
 
@@ -150,7 +147,7 @@ public class SnapshotEmbeddedResponseTests
             id: "msg_out",
             status: MessageStatus.InProgress,
             role: MessageRole.Assistant,
-            content: Array.Empty<MessageContent>());
+            content: Array.Empty<ResponseContentPart>());
         var evt = new ResponseOutputItemAddedEvent { SequenceNumber = (int)(10), OutputIndex = (int)(0), Item = outputMsg };
 
         // Should not throw or modify anything

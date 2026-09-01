@@ -24,12 +24,9 @@ public class OutputItemExtensionsTests
             id: "msg_abc123",
             status: MessageStatus.Completed,
             role: MessageRole.Assistant,
-            content: new List<MessageContent>
+            content: new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent(
-                    text: "Hello",
-                    annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>()),
+                ResponseContentPart.CreateOutputTextPart(text: "Hello", annotations: Array.Empty<Annotation>()),
             });
 
         Assert.That(item.GetId(), Is.EqualTo("msg_abc123"));
@@ -109,7 +106,7 @@ public class OutputItemExtensionsTests
     public void GetId_NullId_ThrowsInvalidOperationException()
     {
         // Use FunctionToolCall where Id is a settable property (not validated in ctor)
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = "{}" };
+        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = BinaryData.FromString("{}") };
         // Id is null by default (not set in ctor)
 
         var ex = Assert.Throws<InvalidOperationException>(() => item.GetId());
@@ -130,7 +127,7 @@ public class OutputItemExtensionsTests
     [Test]
     public void GetId_IdSetAfterConstruction_ReturnsUpdatedId()
     {
-        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = "{}" };
+        var item = new OutputItemFunctionToolCall { CallId = "call_1", FunctionName = "fn", FunctionArguments = BinaryData.FromString("{}") };
 
         // Id is read-only — create a new instance with the desired Id
         var updated = CreateFunctionToolCallWithId("fc_updated");
@@ -144,7 +141,7 @@ public class OutputItemExtensionsTests
     {
         var items = new (OutputItem Item, string ExpectedId)[]
         {
-            (MessageItemFactory.OutputMessage("msg_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()), "msg_1"),
+            (MessageItemFactory.OutputMessage("msg_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()), "msg_1"),
             (new OutputItemReasoningItem("reason_1", Array.Empty<SummaryTextContent>()), "reason_1"),
             (CreateFunctionToolCallWithId("fc_1"), "fc_1"),
         };
@@ -158,7 +155,7 @@ public class OutputItemExtensionsTests
     private static OutputItemFunctionToolCall CreateFunctionToolCallWithId(string id)
     {
         return new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall, null, null, null, new Dictionary<string, BinaryData>(),
+            ResponseItemKind.FunctionCall, null, null, null, new Dictionary<string, BinaryData>(),
             id, "call", null, "fn", "{}", null);
     }
 }

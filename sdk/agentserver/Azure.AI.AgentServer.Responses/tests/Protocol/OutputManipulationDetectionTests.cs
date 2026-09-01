@@ -67,7 +67,7 @@ public class OutputManipulationDetectionTests : ProtocolTestBase
         stream.Response.OutputItems.Add(MessageItemFactory.OutputMessage(
             "fake-item-id",
             MessageStatus.Completed,
-            Array.Empty<MessageContent>()));
+            Array.Empty<ResponseContentPart>()));
 
         yield return stream.EmitCompleted();
     }

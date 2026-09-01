@@ -247,7 +247,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
             var msg = MessageItemFactory.OutputMessage(
                 $"msg_{i}", MessageStatus.Completed, MessageRole.Assistant,
-                Array.Empty<MessageContent>());
+                Array.Empty<ResponseContentPart>());
             items.Add(msg);
             yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(i), Item = msg };
 
@@ -273,14 +273,14 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
         var msg1 = MessageItemFactory.OutputMessage(
             "msg_1", MessageStatus.Completed, MessageRole.Assistant,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
         yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(0), Item = msg1 };
 
         await Task.Yield(); // Ensure async
 
         var msg2 = MessageItemFactory.OutputMessage(
             "msg_2", MessageStatus.Completed, MessageRole.Assistant,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
         yield return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(0), OutputIndex = (int)(1), Item = msg2 };
 
         var completedResponse = new ResponseObject { Id = ctx.ResponseId, Model = "test-model", Status = ResponseStatus.Completed };

@@ -181,9 +181,9 @@ public class ResponseExtensionsTests
         var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
         var items = new List<Item>
         {
-            MessageItemFactory.Message(MessageRole.Developer, new List<MessageContent>
+            MessageItemFactory.Message(MessageRole.Developer, new List<ResponseContentPart>
             {
-                new MessageContentInputTextContent("Be helpful."),
+                ResponseContentPart.CreateInputTextPart("Be helpful."),
             }),
         };
 

@@ -62,7 +62,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         await CoreTaskRecoveryTestHelpers.SeedInterruptedTaskAsync(_tasksDir, new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: disposition,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
     }
 
     private TestWebApplicationFactory NewRecoveringHost(TestHandler handler)
@@ -151,7 +151,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         await CoreTaskRecoveryTestHelpers.SeedInterruptedTaskAsync(_tasksDir, new ResponseRecoveryPayload(
             responseId: IdGenerator.NewResponseId(),
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
 
         var handler = new TestHandler();
         using var factory = NewRecoveringHost(handler);

@@ -318,13 +318,10 @@ public class LiveOutputTrackingTests : IDisposable
 
     private static OutputItemMessage CreateOutputMessage(string id, string text)
     {
-        var content = new MessageContentOutputTextContent(
-            text: text,
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(text: text, annotations: Array.Empty<Annotation>());
         return MessageItemFactory.OutputMessage(
             id: id,
-            content: new List<MessageContent> { content },
+            content: new List<ResponseContentPart> { content },
             status: MessageStatus.Completed);
     }
 

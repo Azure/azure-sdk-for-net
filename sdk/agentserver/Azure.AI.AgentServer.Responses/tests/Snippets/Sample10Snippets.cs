@@ -83,7 +83,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // contributes content.
                 int seq = 0;
                 var conversationId = request.GetConversationId();
-                var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, Metadata = request.Metadata!, AgentReference = request.AgentReference, Background = request.BackgroundModeEnabled, Conversation = conversationId != null ? new ConversationReference(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
+                var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, Metadata = request.Metadata!, AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ConversationReference(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
                 yield return new ResponseCreatedEvent { SequenceNumber = (int)(seq++), Response = response };
                 yield return new ResponseInProgressEvent { SequenceNumber = (int)(seq++), Response = response };
 
@@ -135,7 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 if (upstreamFailed)
                 {
                     response.Status = ResponseStatus.Failed;
-                    response.Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "Upstream request failed");
+                    response.Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Upstream request failed");
                     yield return new ResponseFailedEvent { SequenceNumber = (int)(seq++), Response = response };
                 }
                 else

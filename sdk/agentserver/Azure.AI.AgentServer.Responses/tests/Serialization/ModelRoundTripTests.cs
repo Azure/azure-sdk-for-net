@@ -154,7 +154,7 @@ public class ModelRoundTripTests
     public void Response_Serialize_WithError_ContainsErrorObject()
     {
         var options = CreateOptions();
-        var response = new ResponseObject { Id = "resp_err", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError, "Internal failure"), CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
+        var response = new ResponseObject { Id = "resp_err", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Internal failure"), CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
@@ -304,7 +304,7 @@ public class ModelRoundTripTests
     public void Response_RoundTrip_WithError_PreservesError()
     {
         var options = CreateOptions();
-        var original = new ResponseObject { Id = "resp_err_rt", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.RateLimitExceeded, "Too many requests"), CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
+        var original = new ResponseObject { Id = "resp_err_rt", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = OpenAIModelFactory.CreateError(ResponseErrorCode.RateLimitExceeded.ToString(), "Too many requests"), CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero) };
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseObject>(json, options);
