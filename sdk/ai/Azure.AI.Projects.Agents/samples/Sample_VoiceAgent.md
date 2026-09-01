@@ -288,13 +288,13 @@ private static async Task<string> ReadPersistedConversationAsync(
             cancellationToken);
         Console.WriteLine($"Response {responseId}: {detail.Status}");
 
-        await foreach (BinaryData itemData in conversationsClient.GetAgentConversationResponseItemsAsync(
+        await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
             agentName,
             conversationId,
             responseId,
             cancellationToken: cancellationToken))
         {
-            using JsonDocument itemDocument = JsonDocument.Parse(itemData);
+            using JsonDocument itemDocument = JsonDocument.Parse(ModelReaderWriter.Write(conversationItem));
             JsonElement item = itemDocument.RootElement;
             string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
             Console.WriteLine($"Response item: {itemType}");
@@ -308,12 +308,12 @@ private static async Task<string> ReadPersistedConversationAsync(
         }
     }
 
-    await foreach (BinaryData itemData in conversationsClient.GetAgentConversationItemsAsync(
+    await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationItemsAsync(
         agentName,
         conversationId,
         cancellationToken: cancellationToken))
     {
-        using JsonDocument itemDocument = JsonDocument.Parse(itemData);
+        using JsonDocument itemDocument = JsonDocument.Parse(ModelReaderWriter.Write(conversationItem));
         JsonElement item = itemDocument.RootElement;
         string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
         Console.WriteLine($"Conversation item: {itemType}");

@@ -15,36 +15,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProjectsAgentsModelFactory
     {
-        /// <summary> The ProjectsAgentRecord. </summary>
-        /// <param name="id"> The unique identifier of the agent. </param>
-        /// <param name="name"> The name of the agent. </param>
-        /// <param name="state"> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </param>
-        /// <param name="stateSource"> The source of the agent's operational state. When the agent is disabled, indicates where the disabled state originates from. Empty when not derived from a specific source. </param>
-        /// <param name="versions"> The latest version of the agent. </param>
-        /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
-        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
-        /// <param name="instanceIdentity"> The instance identity of the agent. </param>
-        /// <param name="blueprint"> The blueprint for the agent. </param>
-        /// <param name="blueprintReference"> The blueprint for the agent. </param>
-        /// <param name="agentCard"></param>
-        /// <returns> A new <see cref="Agents.ProjectsAgentRecord"/> instance for mocking. </returns>
-        public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, DigitalWorkerType? digitalWorkerType = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
-        {
-            return new ProjectsAgentRecord(
-                "agent",
-                id,
-                name,
-                state,
-                stateSource,
-                versions,
-                agentEndpoint,
-                digitalWorkerType,
-                instanceIdentity,
-                blueprint,
-                blueprintReference,
-                agentCard,
-                additionalBinaryDataProperties: null);
-        }
 
         /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
@@ -3520,7 +3490,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
         {
-            return ProjectsAgentRecord(id: id, name: name, state: default, stateSource: default, versions: default, agentEndpoint: default, digitalWorkerType: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentCard: default);
+            return ProjectsAgentRecord(id: id, name: name, state: default, digitalWorkerType: default);
         }
 
         /// <summary> The ProjectsAgentVersion. </summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.WebSockets;
@@ -358,13 +359,13 @@ public class Sample_VoiceAgent : SamplesBase
                 cancellationToken);
             Console.WriteLine($"Response {responseId}: {detail.Status}");
 
-            await foreach (BinaryData itemData in conversationsClient.GetAgentConversationResponseItemsAsync(
+            await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
                 agentName,
                 conversationId,
                 responseId,
                 cancellationToken: cancellationToken))
             {
-                using JsonDocument itemDocument = JsonDocument.Parse(itemData);
+                using JsonDocument itemDocument = JsonDocument.Parse(ModelReaderWriter.Write(conversationItem));
                 JsonElement item = itemDocument.RootElement;
                 string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
                 Console.WriteLine($"Response item: {itemType}");
@@ -378,12 +379,12 @@ public class Sample_VoiceAgent : SamplesBase
             }
         }
 
-        await foreach (BinaryData itemData in conversationsClient.GetAgentConversationItemsAsync(
+        await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationItemsAsync(
             agentName,
             conversationId,
             cancellationToken: cancellationToken))
         {
-            using JsonDocument itemDocument = JsonDocument.Parse(itemData);
+            using JsonDocument itemDocument = JsonDocument.Parse(ModelReaderWriter.Write(conversationItem));
             JsonElement item = itemDocument.RootElement;
             string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
             Console.WriteLine($"Conversation item: {itemType}");

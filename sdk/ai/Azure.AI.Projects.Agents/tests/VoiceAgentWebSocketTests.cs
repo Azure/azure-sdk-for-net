@@ -100,9 +100,9 @@ public class VoiceAgentWebSocketTests
             ModelReaderWriterOptions.Json);
         // "message" is no longer a modeled RealtimeConversationItem discriminator in this spec revision
         // (only function-call/MCP item types remain); it now round-trips via the base type.
-        RealtimeConversationItem assistantMessage = ModelReaderWriter.Read<RealtimeConversationItem>(
-            response.Output.Single());
-        using JsonDocument outputDocument = JsonDocument.Parse(response.Output.Single());
+        RealtimeConversationItem assistantMessage = response.Output.Single();
+        BinaryData outputData = ModelReaderWriter.Write(assistantMessage);
+        using JsonDocument outputDocument = JsonDocument.Parse(outputData);
 
         Assert.Multiple(() =>
         {

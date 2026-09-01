@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added a `digitalWorkerType` parameter to `ProjectsAgentsModelFactory.ProjectsAgentRecord` for mocking the (preview) `DigitalWorkerType` value.
+
 ### Breaking Changes
 
 ### Bugs Fixed
