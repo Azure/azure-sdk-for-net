@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningScheduleAction : ProvisionableConstruct
     {
+        private BicepValue<ScheduleActionType> _actionType;
+
         /// <summary> Creates a new MachineLearningScheduleAction. </summary>
         public MachineLearningScheduleAction()
         {
+        }
+
+        /// <summary> [Required] Specifies the action type of the schedule. </summary>
+        internal BicepValue<ScheduleActionType> ActionType
+        {
+            get
+            {
+                Initialize();
+                return _actionType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningScheduleAction. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _actionType = DefineProperty<ScheduleActionType>(nameof(ActionType), new string[] { "actionType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

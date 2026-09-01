@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model, options);
             }
+            if (Optional.IsDefined(ContextCacheContainerId))
+            {
+                writer.WritePropertyName("contextCacheContainerId"u8);
+                writer.WriteStringValue(ContextCacheContainerId);
+            }
             if (Optional.IsDefined(SpeculativeDecoding))
             {
                 writer.WritePropertyName("speculativeDecoding"u8);
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
             CognitiveServicesAccountDeploymentModel model = default;
+            string contextCacheContainerId = default;
             DeploymentSpeculativeDecoding speculativeDecoding = default;
             CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
             IReadOnlyDictionary<string, string> capabilities = default;
@@ -253,6 +259,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("contextCacheContainerId"u8))
+                {
+                    contextCacheContainerId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("speculativeDecoding"u8))
@@ -405,6 +416,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                contextCacheContainerId,
                 speculativeDecoding,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),

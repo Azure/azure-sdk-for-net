@@ -13,13 +13,13 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new M365Extensions. </summary>
         public M365Extensions()
         {
+            ChannelName.Assign("M365Extensions");
         }
 
         /// <summary> Define all the provisionable properties for M365Extensions. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "M365Extensions");
             DefineAdditionalProperties();
         }
 

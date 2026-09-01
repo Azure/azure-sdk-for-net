@@ -110,7 +110,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return ProvisioningInfo.ErrorDetail;
+                return ProvisioningInfo is null ? default : ProvisioningInfo.ErrorDetail;
             }
         }
 

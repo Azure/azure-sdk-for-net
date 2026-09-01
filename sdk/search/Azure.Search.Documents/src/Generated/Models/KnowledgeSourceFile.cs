@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFile"/>. </summary>
         internal KnowledgeSourceFile()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFile"/>. </summary>
@@ -28,8 +30,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="createdOn"> The timestamp when the file was created. </param>
         /// <param name="lastUpdatedOn"> The timestamp when the file was last updated. </param>
         /// <param name="errorMessage"> The error message if file processing failed, null otherwise. </param>
+        /// <param name="prefix"> The prefix (directory-like path) derived from the full file name. </param>
+        /// <param name="metadata"> Custom key/value metadata stored with the file. Returned but not searchable or filterable. </param>
+        /// <param name="parsingMode"> The parsing mode applied to the file (auto-detected from the file). </param>
+        /// <param name="extractionMode"> The extraction mode applied to the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceFile(string fileId, string fileName, long? fileSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceFile(string fileId, string fileName, long? fileSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string errorMessage, string prefix, IReadOnlyDictionary<string, string> metadata, BlobIndexerParsingMode? parsingMode, FileKnowledgeSourceExtractionMode? extractionMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             FileName = fileName;
@@ -37,6 +43,10 @@ namespace Azure.Search.Documents.Indexes.Models
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             ErrorMessage = errorMessage;
+            Prefix = prefix;
+            Metadata = metadata;
+            ParsingMode = parsingMode;
+            ExtractionMode = extractionMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +67,17 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The error message if file processing failed, null otherwise. </summary>
         public string ErrorMessage { get; }
+
+        /// <summary> The prefix (directory-like path) derived from the full file name. </summary>
+        public string Prefix { get; }
+
+        /// <summary> Custom key/value metadata stored with the file. Returned but not searchable or filterable. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
+
+        /// <summary> The parsing mode applied to the file (auto-detected from the file). </summary>
+        public BlobIndexerParsingMode? ParsingMode { get; }
+
+        /// <summary> The extraction mode applied to the file. </summary>
+        public FileKnowledgeSourceExtractionMode? ExtractionMode { get; }
     }
 }

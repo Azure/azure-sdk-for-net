@@ -51,13 +51,13 @@ public class BasicIotHubTests
 
             resource hub 'Microsoft.Devices/IotHubs@2026-03-01-preview' = {
               name: take('hub${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
               location: location
               sku: {
-                name: 'S1'
                 capacity: 1
+                name: 'S1'
+              }
+              tags: {
+                environment: 'test'
               }
             }
 

@@ -31,7 +31,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Set of export policy rules. </summary>
         internal VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </summary>
         public IList<string> ProtocolTypes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>

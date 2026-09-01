@@ -207,7 +207,7 @@ namespace Azure.Generator.Mgmt.Tests
                     new AutoPropertyBody(true),
                     lastContractView)
             ];
-            SetLastContractView(parentProvider, lastContractView);
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
@@ -260,7 +260,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertiesProvider, Is.Not.Null);
 
             var lastContractView = CreateStrategyStagesView(parentProvider!.Name);
-            SetLastContractView(parentProvider, lastContractView);
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
 
             var customCodeView = CreateStrategyStagesView(parentProvider.Name);
             ManagementMockHelpers.SetCustomCodeView(parentProvider, customCodeView);
@@ -698,7 +698,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var lastContractView = new TestTypeView(modelFactory.Name);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
 
             ProcessTypeForBackCompatibility(modelFactory);
 
@@ -887,14 +887,6 @@ namespace Azure.Generator.Mgmt.Tests
         {
             string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;
             Assert.That(actualName, Is.EqualTo(expectedName), $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
-        }
-
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
         }
 
         private static void ProcessTypeForBackCompatibility(TypeProvider typeProvider)

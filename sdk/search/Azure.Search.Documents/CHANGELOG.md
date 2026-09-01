@@ -1,6 +1,6 @@
 # Release History
 
-## 12.1.0-beta.2 (Unreleased)
+## 12.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,40 @@
 
 ### Bugs Fixed
 
-- Fixed `System.Text.Json.JsonException` / `InvalidOperationException: Cannot skip tokens on partial JSON` thrown when asynchronously deserializing a `SearchDocument` (for example `SearchAsync<SearchDocument>`) whose result elements are large and contain OData (`@search.*`) properties. The internal converter now uses `Utf8JsonReader.TrySkip()` instead of `Skip()` so these properties can be skipped even when the converter is invoked over a non-final JSON block. ([#40768](https://github.com/Azure/azure-sdk-for-net/issues/40768))
-
 ### Other Changes
+
+## 12.1.0-beta.2 (2026-08-27)
+
+### Features Added
+
+- Added support for the `2026-08-01-preview` service version (now the default/latest version).
+- Added typed server-sent event streaming for knowledge base retrieval through `KnowledgeBaseRetrievalClient.RetrieveStreamAsync`, including typed retrieval, activity, answer, reference, completion, error, and unknown event models.
+- Added `ListingSearchType` along with `search`, `pageSize`, and `searchType` parameters on the resource listing methods (`GetIndexes`, `GetAliases`, `GetKnowledgeBases`, `GetKnowledgeSources`, `GetSynonymMaps`, `GetIndexers`, `GetDataSourceConnections`, `GetSkillsets`, and `GetIndexStatsSummary`).
+- Added Microsoft Entra application authentication for Work IQ knowledge sources via `WorkIQKnowledgeSourceParameters` and `EntraAppAuthentication`.
+- Added `SearchIndexKnowledgeSource` query-hint and boost configuration types: `SearchIndexKnowledgeSourceQueryHints`, `SearchIndexKnowledgeSourceFilterHint`, `SearchIndexKnowledgeSourceFieldValueBoost`, and `SearchIndexKnowledgeSourceMultiWordExpressionBoost`.
+- Added `KnowledgeSourceResultsProcessing` for controlling results processing on knowledge sources, retrieval requests, and `McpServerTool`, and added `NeverQuerySource` for request-local source exclusion.
+- Added `KnowledgeBaseRetrieveDefaults`, `KnowledgeBaseQueryHintProcessing`, `KnowledgeRetrievalAutoReasoningEffort`, and `ServedImage` for knowledge base retrieval.
+- Added `KnowledgeBaseActivityRecordModel`, exposing the model name and deployment id for model activity records, along with activity start/completion timestamps and logical reasoning effort details.
+- Added citation URLs and served-image metadata to supported knowledge base references, and added `SearchSensitivityLabelInfo` to Work IQ references.
+- Added knowledge source file multipart upload and update operations, with `FileUploadMetadata`, `UploadKnowledgeSourceFileMultipartRequest`, and `UpdateKnowledgeSourceFileRequest`, plus file prefix, metadata, parsing mode, and extraction mode properties.
+- Added `KnowledgeSourceNetworkAccessMode` and `FileKnowledgeSourceExtractionMode`.
+- Added tags and retrieval defaults to `KnowledgeBase`, `MaxVectorIndexSizePerIndexInBytes` to `SearchServiceLimits`, and `Gpt56Sol`, `Gpt56Terra`, and `Gpt56Luna` to `AzureOpenAIModelName`.
+- Added `queryWorkIQSourceAuthorization` to knowledge base retrieval methods for Work IQ on-behalf-of authentication.
+
+### Breaking Changes
+
+> These changes are relative to the previous preview release, `12.1.0-beta.1`.
+
+- Removed `SearchClientOptions.ServiceVersion.V2026_05_01_Preview`; use `V2026_08_01_Preview` instead.
+- The resource listing methods (`GetIndexes`, `GetAliases`, `GetKnowledgeBases`, `GetKnowledgeSources`, `GetSynonymMaps`, `GetIndexers`, `GetDataSourceConnections`, `GetSkillsets`, and `GetIndexStatsSummary`) replaced the `top`, `skip`, and `count` parameters with `search`, `pageSize`, and `searchType`.
+- `WorkIQKnowledgeSource` now requires a `WorkIQKnowledgeSourceParameters` argument (Entra application authentication) in its constructor.
+- The model activity records (`KnowledgeBaseModelQueryPlanningActivityRecord`, `KnowledgeBaseModelAnswerSynthesisActivityRecord`, and `KnowledgeBaseModelWebSummarizationActivityRecord`) now expose model information through the `Model` property (`KnowledgeBaseActivityRecordModel`) instead of the `ModelName` string.
+- Removed `McpServerToolInclusionMode` and the `McpServerTool.InclusionMode` property; MCP tool behavior is now configured through `ResultsProcessing` and `OutputParsing`.
+- Removed `WorkIQAttribution` and the `KnowledgeBaseWorkIQReference.Attributions` property; use `SearchSensitivityLabelInfo` for the current Work IQ reference metadata.
+
+### Bugs Fixed
+
+- Fixed `System.Text.Json.JsonException` / `InvalidOperationException: Cannot skip tokens on partial JSON` thrown when asynchronously deserializing a `SearchDocument` (for example `SearchAsync<SearchDocument>`) whose result elements are large and contain OData (`@search.*`) properties. The internal converter now uses `Utf8JsonReader.TrySkip()` instead of `Skip()` so these properties can be skipped even when the converter is invoked over a non-final JSON block. ([#40768](https://github.com/Azure/azure-sdk-for-net/issues/40768))
 
 ## 12.1.0-beta.1 (2026-05-28)
 
