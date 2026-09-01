@@ -25,7 +25,7 @@ namespace Azure.Identity
         private const string WithAttestationSupportMethodName = "WithAttestationSupport";
         private static readonly string[] s_cp1Capabilities = ["CP1"];
 
-        private readonly ConcurrentDictionary<(bool EnableCae, bool IsTokenBinding), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
+        private readonly ConcurrentDictionary<(bool EnableCae, bool EnableMtlsPop), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private readonly bool _isForceRefreshEnabled;
         private readonly bool _disableMtlsProofOfPossession;
         private static readonly Lazy<Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>> s_withAttestationSupport =
@@ -113,12 +113,12 @@ namespace Azure.Identity
             }
         }
 
-        protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
+        protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, bool enableCae, bool enableMtlsPop, CancellationToken cancellationToken)
         {
-            return CreateClientCoreAsync(async, enableCae, isTokenBindingAvailable, cancellationToken);
+            return CreateClientCoreAsync(async, enableCae, enableMtlsPop, cancellationToken);
         }
 
-        protected virtual ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
+        protected virtual ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool enableMtlsPop, CancellationToken cancellationToken)
         {
             string[] clientCapabilities =
                 enableCae ? s_cp1Capabilities : Array.Empty<string>();
@@ -131,7 +131,7 @@ namespace Azure.Identity
             // client so it can perform the mTLS handshake with the platform's bound certificate.
             // The Azure.Core pipeline transport does not carry these mTLS credentials, so
             // WithHttpClientFactory is intentionally omitted in this path.
-            if (!isTokenBindingAvailable)
+            if (!enableMtlsPop)
             {
                 miAppBuilder.WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false);
             }
@@ -144,9 +144,9 @@ namespace Azure.Identity
             return new ValueTask<IManagedIdentityApplication>(miAppBuilder.Build());
         }
 
-        protected async ValueTask<IManagedIdentityApplication> GetClientAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
+        protected async ValueTask<IManagedIdentityApplication> GetClientAsync(bool async, bool enableCae, bool enableMtlsPop, CancellationToken cancellationToken)
         {
-            var key = (enableCae, isTokenBindingAvailable);
+            var key = (enableCae, enableMtlsPop);
             var lockInstance = _clientCache.GetOrAdd(key, _ => new AsyncLockWithValue<IManagedIdentityApplication>());
 
             using var asyncLock = await lockInstance.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
@@ -156,7 +156,7 @@ namespace Azure.Identity
                 return asyncLock.Value;
             }
 
-            var client = await CreateClientAsync(async, enableCae, isTokenBindingAvailable, cancellationToken).ConfigureAwait(false);
+            var client = await CreateClientAsync(async, enableCae, enableMtlsPop, cancellationToken).ConfigureAwait(false);
             asyncLock.SetValue(client);
             return client;
         }
@@ -169,7 +169,13 @@ namespace Azure.Identity
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
-            IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, isTokenBindingAvailable, cancellationToken).ConfigureAwait(false);
+            Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport =
+                ShouldAttemptMtlsPop(requestContext, isTokenBindingAvailable)
+                    ? GetAttestationSupport()
+                    : null;
+            bool enableMtlsPop = withAttestationSupport != null;
+
+            IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, enableMtlsPop, cancellationToken).ConfigureAwait(false);
             var builder = client.AcquireTokenForManagedIdentity(requestContext.Scopes.FirstOrDefault());
 
             if (!string.IsNullOrEmpty(requestContext.Claims))
@@ -177,9 +183,9 @@ namespace Azure.Identity
                 builder.WithClaims(requestContext.Claims);
             }
 
-            if (ShouldAttemptMtlsPop(requestContext, isTokenBindingAvailable))
+            if (enableMtlsPop)
             {
-                builder = ConfigureMtlsPop(builder, s_withAttestationSupport.Value);
+                builder = ConfigureMtlsPop(builder, withAttestationSupport);
             }
 
             if (_isForceRefreshEnabled)
@@ -234,5 +240,8 @@ namespace Azure.Identity
             !_disableMtlsProofOfPossession &&
             requestContext.IsProofOfPossessionEnabled &&
             isTokenBindingAvailable;
+
+        protected virtual Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> GetAttestationSupport() =>
+            s_withAttestationSupport.Value;
     }
 }

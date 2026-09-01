@@ -69,7 +69,8 @@ namespace Azure.Core.Tests.Identity
             bool isForceRefreshEnabled = true,
             bool isManagedIdentityPipeline = false,
             bool preserveTransport = true,
-            Action<MockMsalManagedIdentityClient> configureMockMsal = null)
+            Action<MockMsalManagedIdentityClient> configureMockMsal = null,
+            bool disableMtlsProofOfPossession = false)
         {
             var pipeline = CredentialPipeline.GetInstance(options, isManagedIdentityPipeline);
             var clientOptions = new ManagedIdentityClientOptions
@@ -78,7 +79,8 @@ namespace Azure.Core.Tests.Identity
                 ManagedIdentityId = managedIdentityId,
                 IsForceRefreshEnabled = isForceRefreshEnabled,
                 PreserveTransport = preserveTransport,
-                Options = options
+                Options = options,
+                DisableMtlsProofOfPossession = disableMtlsProofOfPossession
             };
             // Inject a mock MSAL client that:
             // 1. Uses the static GetManagedIdentitySource() for source detection (no network probe)
@@ -376,6 +378,50 @@ namespace Azure.Core.Tests.Identity
 
             Assert.AreEqual(ExpectedToken, token.Token);
             Assert.AreEqual(expectedTokenBindingAvailable, mockMsal.LastIsTokenBindingAvailable);
+        }
+
+        [TestCase(false, false, true)]
+        [TestCase(true, true, true)]
+        [TestCase(true, false, false)]
+        public async Task KeyGuardBearerRequestsUseConfiguredTransport(
+            bool isProofOfPossessionEnabled,
+            bool disableMtlsProofOfPossession,
+            bool attestationSupportAvailable)
+        {
+            using var environment = new TestEnvVar(new()
+            {
+                { "MSI_ENDPOINT", null },
+                { "MSI_SECRET", null },
+                { "IDENTITY_ENDPOINT", "https://identity.endpoint/" },
+                { "IDENTITY_HEADER", "mock-identity-header" },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+            });
+            var mockTransport = new MockTransport(CreateSuccessResponse(ExpectedToken));
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = mockTransport },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.AppService,
+                            MtlsBindingStrength.KeyGuard);
+                    mock.OverrideAttestationSupport = true;
+                    mock.AttestationSupport = attestationSupportAvailable ? builder => builder : null;
+                },
+                disableMtlsProofOfPossession: disableMtlsProofOfPossession);
+            var context = new TokenRequestContext(
+                MockScopes.Default,
+                isProofOfPossessionEnabled: isProofOfPossessionEnabled);
+
+            AccessToken token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.IsFalse(mockMsal.LastEnableMtlsPopForClientCreation);
+            Assert.IsTrue(mockTransport.Requests.Any(request =>
+                request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint)));
         }
 
         [Test]
