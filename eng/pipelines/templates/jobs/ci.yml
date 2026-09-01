@@ -42,9 +42,66 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
+  - name: UseRepositorySourceGraph
+    type: boolean
+    default: true
 
 jobs:
-  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+  # TEMPORARY VALIDATION BRANCH: retain the standard generator job identity, but terminate
+  # after exhaustive oracle parity and publish its evidence instead of generating fan-out jobs.
+  - ${{ if and(eq(parameters.ServiceDirectory, 'auto'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+    - job: generate_target_service_test_matrix
+      displayName: Validate complete repository graph parity
+      timeoutInMinutes: 180
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+      variables:
+        - template: /eng/pipelines/templates/variables/image.yml
+        - name: skipComponentGovernanceDetection
+          value: true
+      steps:
+        - checkout: self
+          fetchFilter: tree:0
+          fetchTags: false
+
+        - template: /eng/pipelines/templates/steps/install-dotnet.yml
+          parameters:
+            # The exhaustive restore fills the hosted agent disk; this one-shot validation has
+            # no downstream job that can reuse a cache, so do not archive it after parity succeeds.
+            EnableNuGetCache: false
+
+        - pwsh: |
+            $evidenceRoot = "$(Build.ArtifactStagingDirectory)/RepositoryProjectGraphParity"
+            New-Item -ItemType Directory -Path $evidenceRoot -Force | Out-Null
+
+            # common.ps1 loads Language-Settings.ps1, whose .NET hook owns this validation.
+            . "$(Build.SourcesDirectory)/eng/common/scripts/common.ps1"
+            try {
+              $provenance = Invoke-dotnet-RepositoryProjectGraphParityValidation `
+                -RepositoryRoot "$(Build.SourcesDirectory)" `
+                -OutputRoot $evidenceRoot
+
+              Write-Host "CI_REPOSITORY_PROJECT_GRAPH_PARITY_RESULT=$($provenance.result)"
+              Write-Host "CI_REPOSITORY_PROJECT_GRAPH_PARITY_EVIDENCE=$evidenceRoot/dependency-relation/provenance.json"
+            }
+            catch {
+              Write-Host 'CI_REPOSITORY_PROJECT_GRAPH_PARITY_RESULT=failed'
+              Write-Host "CI_REPOSITORY_PROJECT_GRAPH_PARITY_EVIDENCE=$evidenceRoot"
+              throw
+            }
+          displayName: Validate MSBuildProjectReferenceOracle parity
+
+        - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+          parameters:
+            ArtifactName: RepositoryProjectGraphParity
+            ArtifactPath: $(Build.ArtifactStagingDirectory)/RepositoryProjectGraphParity
+
+  - ${{ if and(eq(parameters.ServiceDirectory, 'auto'), ne(variables['Build.Reason'], 'PullRequest')) }}:
     # Build matrix - larger LOC batches (1.2M) for fewer jobs and lower per-job overhead.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
@@ -119,7 +176,7 @@ jobs:
               LocTarget: 300000
               PublishArtifact: true
 
-  - ${{ else }}:
+  - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
     - job: Build
       pool:
         name: $(WINDOWSPOOL)
@@ -168,7 +225,7 @@ jobs:
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
-  - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
+  - ${{ if and(or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')), not(and(eq(parameters.ServiceDirectory, 'auto'), eq(variables['Build.Reason'], 'PullRequest')))) }}:
     - job: Compliance
       pool:
         name: $(WINDOWSPOOL)
@@ -247,15 +304,19 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
+                EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
                 EnableTestRuntimeWeighting: true
+                UseRepositorySourceGraph: ${{ parameters.UseRepositorySourceGraph }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+            EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
 
-  - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+  - ${{ if and(ne(parameters.TestDependsOnDependency, 'not-specified'), not(and(eq(parameters.ServiceDirectory, 'auto'), eq(variables['Build.Reason'], 'PullRequest')))) }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_dependencies_test_matrix
