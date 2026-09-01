@@ -2044,7 +2044,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponse VoiceResponse(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, OpenAI.RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
+        public static VoiceResponse VoiceResponse(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
             output ??= new ChangeTrackingList<RealtimeItem>();
@@ -2122,7 +2122,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static VoiceResponseBase VoiceResponseBase(string id = default, VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, OpenAI.RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
+        public static VoiceResponseBase VoiceResponseBase(string id = default, VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
 
@@ -2136,25 +2136,6 @@ namespace Azure.AI.Projects.Agents
                 outputModalities.ToList(),
                 maxOutputTokens,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The RealtimeResponseStatusDetails. </summary>
-        /// <param name="type"></param>
-        /// <param name="reason"></param>
-        /// <param name="error"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeResponseStatusDetails"/> instance for mocking. </returns>
-        public static OpenAI.RealtimeResponseStatusDetails RealtimeResponseStatusDetails(RealtimeResponseStatusDetailsType? @type = default, RealtimeResponseStatusDetailsReason? reason = default, RealtimeResponseStatusDetailsError error = default)
-        {
-            return new OpenAI.RealtimeResponseStatusDetails(@type, reason, error, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The RealtimeResponseStatusDetailsError. </summary>
-        /// <param name="type"></param>
-        /// <param name="code"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeResponseStatusDetailsError"/> instance for mocking. </returns>
-        public static RealtimeResponseStatusDetailsError RealtimeResponseStatusDetailsError(string @type = default, string code = default)
-        {
-            return new RealtimeResponseStatusDetailsError(@type, code, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         [Experimental("AAIP002")]
-        internal VoiceResponseBase(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, OpenAI.RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceResponseBase(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -84,7 +84,8 @@ namespace Azure.AI.Projects.Agents
         public VoiceResponseBaseStatus? Status { get; }
 
         /// <summary> Additional details about the status. </summary>
-        public OpenAI.RealtimeResponseStatusDetails StatusDetails { get; }
+        [Experimental("AAIP002")]
+        public RealtimeResponseStatusDetails StatusDetails { get; }
 
         /// <summary>
         /// Usage statistics for the Response, this will correspond to billing. A

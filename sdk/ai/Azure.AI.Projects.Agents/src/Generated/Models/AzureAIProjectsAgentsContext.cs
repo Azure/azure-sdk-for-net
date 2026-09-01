@@ -238,6 +238,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeAudioFormat is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeAudioFormat))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeAudioFormat is experimental and may change in future versions.
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeError is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeError))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeFunctionToolParameters))]
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeItem))]
@@ -251,8 +254,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseOutputTokenUsageDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeResponseOutputTokenUsageDetails))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseOutputTokenUsageDetails is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(OpenAI.RealtimeResponseStatusDetails))]
-    [ModelReaderWriterBuildable(typeof(RealtimeResponseStatusDetailsError))]
+#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseStatusDetails is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RealtimeResponseStatusDetails))]
+#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseStatusDetails is experimental and may change in future versions.
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeResponseUsage))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.

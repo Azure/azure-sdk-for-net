@@ -177,7 +177,7 @@ namespace Azure.AI.Projects.Agents
             }
             VoiceResponseBaseObject? @object = default;
             VoiceResponseBaseStatus? status = default;
-            OpenAI.RealtimeResponseStatusDetails statusDetails = default;
+            RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
             IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
@@ -216,7 +216,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    statusDetails = OpenAI.RealtimeResponseStatusDetails.DeserializeRealtimeResponseStatusDetails(prop.Value, options);
+                    statusDetails = ModelReaderWriter.Read<RealtimeResponseStatusDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
