@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/edgeoperator/Azure.ResourceManager.EdgeOperator",
+  "Tag": "net/edgeoperator/Azure.ResourceManager.EdgeOperator_f81f1f2bb4"
+}
