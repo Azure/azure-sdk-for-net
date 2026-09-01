@@ -5,9 +5,9 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
-using Azure.AI.AgentServer.Core.Streaming;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;

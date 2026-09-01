@@ -40,6 +40,23 @@ public class HostedResilienceFailureTests
     }
 
     [Test]
+    [NonParallelizable]
+    public void HostedMode_ComposesWhenConsumerTaskIsRegisteredFirst()
+    {
+        ConfigureHostedEnvironment();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddResilientTask<string, string>(
+            "consumer-task",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+
+        Assert.DoesNotThrow(() =>
+            services.AddResponsesServerCore(
+                o => o.ResilientBackground = true,
+                CreateHostedStorage()));
+    }
+
+    [Test]
     public void HostedMode_ResilientBackground_EngagesTaskSubsystem()
     {
         using var provider = BuildHostedResilientProvider();
@@ -83,13 +100,7 @@ public class HostedResilienceFailureTests
 
     private static ServiceProvider BuildHostedResilientProvider()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
-        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com/project");
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "test-agent");
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
-        FoundryEnvironment.Reload();
-
-        Assert.That(FoundryEnvironment.IsHosted, Is.True, "Hosted flag must be set for this test.");
+        ConfigureHostedEnvironment();
 
         var services = new ServiceCollection();
         services.AddLogging();
@@ -100,18 +111,34 @@ public class HostedResilienceFailureTests
         // Hosted registration binds the Foundry credential + endpoint from settings in production;
         // this unit test drives the shared core directly with a fake credential and the hosted
         // storage endpoint so it can assert the hosted composition without a live backend.
-        var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
-            new Uri("https://example.com/project"),
-            isDevelopment: false);
-        var projectEndpoint = new Uri("https://example.com/project");
         services.AddResponsesServerCore(
             o => o.ResilientBackground = true,
-            new ResponsesHostedStorage(
-                new FakeTokenCredential(),
-                projectEndpoint,
-                storageBaseUri));
+            CreateHostedStorage());
 
         return services.BuildServiceProvider();
+    }
+
+    private static ResponsesHostedStorage CreateHostedStorage()
+    {
+        var projectEndpoint = new Uri("https://example.com/project");
+        var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
+            projectEndpoint,
+            isDevelopment: false);
+        return new ResponsesHostedStorage(
+            new FakeTokenCredential(),
+            projectEndpoint,
+            storageBaseUri);
+    }
+
+    private static void ConfigureHostedEnvironment()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com/project");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "test-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
+        FoundryEnvironment.Reload();
+
+        Assert.That(FoundryEnvironment.IsHosted, Is.True, "Hosted flag must be set for this test.");
     }
 
     private static void InvokeValidateResilientComposition(IServiceProvider provider)

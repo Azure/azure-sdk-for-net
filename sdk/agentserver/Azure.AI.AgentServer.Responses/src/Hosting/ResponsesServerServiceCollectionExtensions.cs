@@ -199,8 +199,8 @@ public static class ResponsesServerServiceCollectionExtensions
         if (hostedStorage is not null)
         {
             // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
-            // services on first use, but always with no credential — so when hosted storage
-            // needs one, it must be set explicitly before either flat call below.
+            // services on first use. Hosted composition attaches its credential and endpoint to
+            // that shared environment whether consumer tasks were registered before or after this call.
             services.AddResilientTasks(
                 hostedStorage.Credential,
                 hostedStorage.ProjectEndpoint);

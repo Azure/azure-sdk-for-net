@@ -65,13 +65,38 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
-    public void RepeatedAddResilientTasksWithCredentialThrows()
+    public void CredentialAndEndpointCanBeAttachedAfterFlatTaskRegistration()
     {
         var services = new ServiceCollection();
-        services.AddResilientTasks();
+        services.AddResilientTask<string, string>(
+            "consumer-task",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+        var credential = new Azure.Core.TestFramework.MockCredential();
+        var endpoint = new System.Uri("https://example.com/project");
 
+        Assert.DoesNotThrow(() => services.AddResilientTasks(credential, endpoint));
+
+        using var provider = services.BuildServiceProvider();
+        TaskHostEnvironment environment = provider.GetRequiredService<TaskHostEnvironment>();
+        Assert.That(environment.Credential, Is.SameAs(credential));
+        Assert.That(environment.Endpoint, Is.EqualTo(endpoint));
+    }
+
+    [Test]
+    public void DifferentConfigurationAfterInitialConfigurationThrows()
+    {
+        var services = new ServiceCollection();
+        var first = new Azure.Core.TestFramework.MockCredential();
+        var second = new Azure.Core.TestFramework.MockCredential();
+        var firstEndpoint = new System.Uri("https://example.com/first");
+        var secondEndpoint = new System.Uri("https://example.com/second");
+        services.AddResilientTasks(first, firstEndpoint);
+
+        Assert.DoesNotThrow(() => services.AddResilientTasks(first, firstEndpoint));
         Assert.Throws<System.InvalidOperationException>(() =>
-            services.AddResilientTasks(new Azure.Core.TestFramework.MockCredential()));
+            services.AddResilientTasks(second, firstEndpoint));
+        Assert.Throws<System.InvalidOperationException>(() =>
+            services.AddResilientTasks(first, secondEndpoint));
     }
 
     [Test]

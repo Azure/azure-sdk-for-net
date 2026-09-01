@@ -32,8 +32,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// Sets up the resilient-tasks services, optionally supplying the hosted-storage credential.
     /// Calling <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> directly also performs this
     /// setup on first use, so this method only needs to be called explicitly to supply a hosted
-    /// credential — do so before any task is registered, since a credential cannot be attached once
-    /// the services are already set up.
+    /// credential. The credential may be supplied before or after task registrations while composing
+    /// the service collection; the first non-null credential wins.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
@@ -398,20 +398,10 @@ public static class ResilientTaskServiceCollectionExtensions
         // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
         // would register a duplicate TaskDurabilityService, running the recovery scan twice. Guard
         // the whole method: on a repeat call, register nothing further and hand back a registrar over
-        // the already-registered registry. A repeat call that supplies a credential cannot be
-        // honored (the first registration wins), so surface that as an error rather than discarding
-        // it silently.
+        // the already-registered registry. A later host integration may still attach the first
+        // non-null credential to the shared environment holder, making registration order independent.
         if (IsAlreadyRegistered(services))
         {
-            if (credential is not null || endpoint is not null)
-            {
-                throw new InvalidOperationException(
-                    "Resilient-tasks services have already been set up (directly via AddResilientTasks, " +
-                    "or by an earlier AddResilientTask/AddResilientMultiTurnTask call); they are set up " +
-                    "once per process. Remove the duplicate call, or pass the credential only on the " +
-                    "first call — before any task is registered.");
-            }
-
             // The registry and accessor are registered together with the TaskEngine on the first
             // call, so if the engine is present they must be too. Fail fast rather than fabricating
             // new instances: a registrar over a fresh registry/accessor would silently orphan every
@@ -426,6 +416,13 @@ public static class ResilientTaskServiceCollectionExtensions
                     "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
                     "but its TaskEngineAccessor is not. Ensure the resilient-tasks services are not " +
                     "registered piecemeal.");
+            TaskHostEnvironment existingEnvironment = ResolveRegisteredEnvironment(services)
+                ?? throw new InvalidOperationException(
+                    "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
+                    "but its TaskHostEnvironment is not. Ensure the resilient-tasks services are not " +
+                    "registered piecemeal.");
+            existingEnvironment.AttachConfiguration(credential, endpoint);
+
             return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
         }
 
@@ -450,8 +447,8 @@ public static class ResilientTaskServiceCollectionExtensions
                 {
                     throw new InvalidOperationException(
                         "A TokenCredential is required for hosted task storage. Call " +
-                        "AddResilientTasks(credential) before registering any task when running in a " +
-                        "hosted environment.");
+                        "AddResilientTasks(credential) while composing services when running in a hosted " +
+                        "environment.");
                 }
 
                 Uri? configuredEndpoint = env.Endpoint;
@@ -597,6 +594,21 @@ public static class ResilientTaskServiceCollectionExtensions
             ServiceDescriptor descriptor = services[i];
             if (descriptor.ServiceType == typeof(TaskEngineAccessor) &&
                 descriptor.ImplementationInstance is TaskEngineAccessor existing)
+            {
+                return existing;
+            }
+        }
+
+        return null;
+    }
+
+    private static TaskHostEnvironment? ResolveRegisteredEnvironment(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            ServiceDescriptor descriptor = services[i];
+            if (descriptor.ServiceType == typeof(TaskHostEnvironment) &&
+                descriptor.ImplementationInstance is TaskHostEnvironment existing)
             {
                 return existing;
             }
