@@ -905,7 +905,7 @@ namespace Azure.AI.Projects
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
         /// <param name="samplingRate"> Percentage (0-100] chance that a matching event triggers an evaluation. When omitted, the service-default is to evaluate every event, which is equivalent to setting a sampling rate of 100. </param>
         /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
-        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default, double? samplingRate = default)
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId, int? maxHourlyRuns, double? samplingRate)
         {
             return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns, samplingRate);
         }
@@ -1094,7 +1094,7 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string generationJobId = default, IEnumerable<GenerationWarningType> warnings = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string generationJobId, IEnumerable<GenerationWarningType> warnings, string createdBy, string createdAt, string modifiedAt, string id, string name, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
@@ -1149,7 +1149,7 @@ namespace Azure.AI.Projects
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, float? threshold = default, bool? isPrimary = default)
+        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, float? threshold, bool? isPrimary)
         {
             return new EvaluatorMetric(
                 @type,
@@ -1171,7 +1171,7 @@ namespace Azure.AI.Projects
         /// <param name="blobUri"> The blob URI for the evaluator storage. </param>
         /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default, string entryPoint = default, string imageTag = default, Uri blobUri = default)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText, string entryPoint, string imageTag = default, Uri blobUri = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
@@ -1981,7 +1981,7 @@ namespace Azure.AI.Projects
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? isProceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, bool? isProceduralMemoryEnabled, TimeSpan? defaultTtlSeconds = default)
         {
             return new MemoryStoreDefaultOptions(
                 isUserProfileEnabled,
@@ -2032,7 +2032,7 @@ namespace Azure.AI.Projects
         /// <param name="text"> The text input to the model. </param>
         /// <param name="promptCacheBreakpoint"></param>
         /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default, PromptCacheBreakpointParam promptCacheBreakpoint = default)
+        public static InputTextContentParam InputTextContentParam(string text, PromptCacheBreakpointParam promptCacheBreakpoint)
         {
             return new InputTextContentParam("input_text", text, promptCacheBreakpoint, additionalBinaryDataProperties: null);
         }
@@ -2052,7 +2052,7 @@ namespace Azure.AI.Projects
         /// <param name="detail"> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </param>
         /// <param name="promptCacheBreakpoint"></param>
         /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default, FileInputDetail? detail = default, PromptCacheBreakpointParam promptCacheBreakpoint = default)
+        public static InputFileContentParam InputFileContentParam(string fileId, string filename, string fileData, Uri fileUri, FileInputDetail? detail, PromptCacheBreakpointParam promptCacheBreakpoint = default)
         {
             return new InputFileContentParam(
                 "input_file",
@@ -2188,7 +2188,7 @@ namespace Azure.AI.Projects
         /// <param name="cachedTokens"></param>
         /// <param name="cacheWriteTokens"></param>
         /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default, long cacheWriteTokens = default)
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens, long cacheWriteTokens)
         {
             return new ResponseUsageInputTokensDetails(cachedTokens, cacheWriteTokens, additionalBinaryDataProperties: null);
         }
@@ -2734,7 +2734,7 @@ namespace Azure.AI.Projects
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
         /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId, int? maxHourlyRuns)
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default)
         {
             return ContinuousEvaluationRuleAction(evalId: evalId, maxHourlyRuns: maxHourlyRuns, samplingRate: default);
         }
@@ -2756,7 +2756,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, generationJobId: default, warnings: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
@@ -2770,7 +2770,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary)
+        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, bool? isPrimary = default)
         {
             return EvaluatorMetric(@type: @type, desirableDirection: desirableDirection, minValue: minValue, maxValue: maxValue, threshold: default, isPrimary: isPrimary);
         }
@@ -2783,7 +2783,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
         {
             return CodeBasedEvaluatorDefinition(initParameters: initParameters, dataSchema: dataSchema, metrics: metrics, codeText: codeText, entryPoint: default, imageTag: default, blobUri: default);
         }
@@ -2795,7 +2795,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = false, string userProfileDetails = default, bool isChatSummaryEnabled = false)
         {
             return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, isProceduralMemoryEnabled: default, defaultTtlSeconds: default);
         }
@@ -2804,7 +2804,7 @@ namespace Azure.AI.Projects
         /// <param name="text"> The text input to the model. </param>
         /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InputTextContentParam InputTextContentParam(string text)
+        public static InputTextContentParam InputTextContentParam(string text = default)
         {
             return InputTextContentParam(text: text, promptCacheBreakpoint: default);
         }
@@ -2816,7 +2816,7 @@ namespace Azure.AI.Projects
         /// <param name="fileUri"></param>
         /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InputFileContentParam InputFileContentParam(string fileId, string filename, string fileData, Uri fileUri)
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default)
         {
             return InputFileContentParam(fileId: fileId, filename: filename, fileData: fileData, fileUri: fileUri, detail: default, promptCacheBreakpoint: default);
         }
@@ -2825,7 +2825,7 @@ namespace Azure.AI.Projects
         /// <param name="cachedTokens"></param>
         /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens)
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = 0L)
         {
             return ResponseUsageInputTokensDetails(cachedTokens: cachedTokens, cacheWriteTokens: default);
         }
