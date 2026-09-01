@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.ResourceManager.ProgrammableConnectivity client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.ProgrammableConnectivity</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.ResourceManager.ProgrammableConnectivity</PackageTags>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>Azure.ResourceManager.ProgrammableConnectivity</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider ProgrammableConnectivity.</Description>
+    <PackageTags>azure;management;arm;resource manager;programmableconnectivity</PackageTags>
   </PropertyGroup>
 </Project>
