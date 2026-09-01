@@ -368,6 +368,7 @@ public class BasicKustoTests
             }
 
             resource clusterCosmosDbDataAuthorization 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2024-08-15' = {
+              name: take('clustercosmosdbdataauthorization${uniqueString(resourceGroup().id)}', 24)
               parent: cosmosDbAccount
               properties: {
                 principalId: cluster.identity.principalId
