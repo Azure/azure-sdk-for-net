@@ -1223,6 +1223,8 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> InfrastructureResourceGroup { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ManagedEnvironmentIngressConfiguration IngressConfiguration { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PeerTrafficEncryptionIsEnabled instead.")]
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsZoneRedundant { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KedaVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
