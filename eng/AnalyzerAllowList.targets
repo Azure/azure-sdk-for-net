@@ -10,8 +10,9 @@
     _ProjectAllowedNoWarn property, which is consumed by the ValidateNoWarn
     target in NoWarnValidation.targets.
 
-    Future: The same files will also contain "CODE:SYMBOL" entries for inline
-    suppression approvals, consumed by a Roslyn analyzer via AdditionalFiles.
+    Scoped suppression approvals are consumed by AllowListDiagnosticSuppressor
+    via AdditionalFiles. CodeAnalysisSuppressionAnalyzer also consumes the central
+    migration backlog to skip AZC0041 for projects that have not yet migrated.
 
     See eng/analyzerallowlist/README.md for full documentation.
   -->
@@ -28,6 +29,13 @@
 
   <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true'">
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkAllowList" />
+    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkCodeAnalysisSuppressionSkipValidation" />
+    <CompilerVisibleProperty Include="IsShippingClientLibrary" />
+    <CompilerVisibleProperty Include="MSBuildProjectName" />
+    <AdditionalFiles Include="$(RepoEngPath)\CodeAnalysisSuppressionSkipValidation.txt"
+                     AzureSdkCodeAnalysisSuppressionSkipValidation="true"
+                     Condition="Exists('$(RepoEngPath)\CodeAnalysisSuppressionSkipValidation.txt')"
+                     Visible="false" />
   </ItemGroup>
 
   <!--

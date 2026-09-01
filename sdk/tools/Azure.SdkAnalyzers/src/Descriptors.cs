@@ -120,5 +120,17 @@ namespace Azure.SdkAnalyzers
             true,
             "Exposing types from the Apache.Arrow library on the public API surface couples consumers to a third-party dependency whose versioning is outside the SDK's control. Keep Apache.Arrow types internal and expose abstractions owned by the SDK instead.",
             "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0040.md");
+
+        public static readonly DiagnosticDescriptor AZC0041 = new(
+            nameof(AZC0041),
+            "Declare code analysis suppressions centrally",
+            "{0}",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Code analysis suppressions must be centrally governed through eng/analyzerallowlist instead of pragmas or suppression attributes in library source.",
+            // NotConfigurable blocks pragma/configuration suppression. Compiler is also required
+            // because Roslyn otherwise allows SuppressMessage attributes to suppress AZC0041.
+            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable, WellKnownDiagnosticTags.Compiler });
     }
 }
