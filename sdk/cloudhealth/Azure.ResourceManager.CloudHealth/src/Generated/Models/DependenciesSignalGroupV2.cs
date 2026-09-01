@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Initializes a new instance of <see cref="DependenciesSignalGroupV2"/>. </summary>
         /// <param name="aggregationType"> Aggregation type for child dependencies. </param>
-        public DependenciesSignalGroupV2(DependenciesAggregationType aggregationType)
+        public DependenciesSignalGroupV2(AggregationType aggregationType)
         {
             AggregationType = aggregationType;
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="unit"> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
         /// <param name="shouldIgnoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependenciesSignalGroupV2(DependenciesAggregationType aggregationType, double? degradedThreshold, double? unhealthyThreshold, DependenciesAggregationUnit? unit, bool? shouldIgnoreUnknown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DependenciesSignalGroupV2(AggregationType aggregationType, double? degradedThreshold, double? unhealthyThreshold, AggregationUnit? unit, bool? shouldIgnoreUnknown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AggregationType = aggregationType;
             DegradedThreshold = degradedThreshold;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Aggregation type for child dependencies. </summary>
-        public DependenciesAggregationType AggregationType { get; set; }
+        public AggregationType AggregationType { get; set; }
 
         /// <summary> Degraded threshold for aggregation. For MinHealthy: parent is degraded when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is degraded when not-healthy count/percentage reaches or exceeds this value. Optional — if not set, there is no degraded state (transitions directly from Healthy to Unhealthy). </summary>
         public double? DegradedThreshold { get; set; }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public double? UnhealthyThreshold { get; set; }
 
         /// <summary> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </summary>
-        public DependenciesAggregationUnit? Unit { get; set; }
+        public AggregationUnit? Unit { get; set; }
 
         /// <summary> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </summary>
         public bool? ShouldIgnoreUnknown { get; set; }

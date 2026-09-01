@@ -125,6 +125,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("signalGroups"u8);
                 writer.WriteObjectValue(SignalGroups, options);
             }
+            if (Optional.IsCollectionDefined(SignalAggregationGroups))
+            {
+                writer.WritePropertyName("signalAggregationGroups"u8);
+                writer.WriteStartArray();
+                foreach (SignalAggregationGroup item in SignalAggregationGroups)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(DiscoveredBy))
             {
                 writer.WritePropertyName("discoveredBy"u8);
@@ -190,6 +200,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             EntityImpact? impact = default;
             IDictionary<string, string> tags = default;
             EntitySignalGroups signalGroups = default;
+            IList<SignalAggregationGroup> signalAggregationGroups = default;
             string discoveredBy = default;
             EntityHealthState? healthState = default;
             EntityAlerts alerts = default;
@@ -276,6 +287,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     signalGroups = EntitySignalGroups.DeserializeEntitySignalGroups(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("signalAggregationGroups"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SignalAggregationGroup> array = new List<SignalAggregationGroup>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SignalAggregationGroup.DeserializeSignalAggregationGroup(item, options));
+                    }
+                    signalAggregationGroups = array;
+                    continue;
+                }
                 if (prop.NameEquals("discoveredBy"u8))
                 {
                     discoveredBy = prop.Value.GetString();
@@ -313,6 +338,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 impact,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 signalGroups,
+                signalAggregationGroups ?? new ChangeTrackingList<SignalAggregationGroup>(),
                 discoveredBy,
                 healthState,
                 alerts,
