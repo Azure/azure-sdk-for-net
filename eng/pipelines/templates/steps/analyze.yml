@@ -16,12 +16,9 @@ parameters:
     default: BuildPackagesArtifact
 
 steps:
-  - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-      parameters:
-          Paths:
-            - "/*"
-            - "!SessionRecords"
+  - checkout: self
+    fetchDepth: 1
+    fetchTags: false
 
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
