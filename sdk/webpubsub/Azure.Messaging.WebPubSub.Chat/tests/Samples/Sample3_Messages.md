@@ -22,9 +22,7 @@ Messages are returned from latest to earliest. You can constrain a query with pa
 ```C# Snippet:WebPubSubChatPageMessageHistory
 Pageable<WebPubSubChatMessage> messages = client.GetMessages(
     room.DefaultConversation,
-    latestMessageId: null,
-    earliestMessageId: null,
-    maxPageSize: 50);
+    new MessageQueryOptions { MaxPageSize = 50 });
 
 foreach (WebPubSubChatMessage message in messages)
 {

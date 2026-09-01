@@ -40,6 +40,13 @@ namespace Azure.Messaging.WebPubSub.Chat
         public System.TimeSpan ExpiresAfter { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
+    public partial class MessageQueryOptions
+    {
+        public MessageQueryOptions() { }
+        public string EarliestMessageId { get { throw null; } set { } }
+        public string LatestMessageId { get { throw null; } set { } }
+        public int? MaxPageSize { get { throw null; } set { } }
+    }
     public partial class WebPubSubChatConversation : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>
     {
         internal WebPubSubChatConversation() { }
@@ -211,10 +218,10 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation> GetConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConversationAsync(string conversationId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>> GetConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> GetMessages(string conversationId, Azure.Messaging.WebPubSub.Chat.MessageQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetMessages(string conversationId, string latestMessageId, string earliestMessageId, int? maxPageSize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> GetMessages(string conversationId, string latestMessageId = null, string earliestMessageId = null, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> GetMessagesAsync(string conversationId, Azure.Messaging.WebPubSub.Chat.MessageQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMessagesAsync(string conversationId, string latestMessageId, string earliestMessageId, int? maxPageSize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> GetMessagesAsync(string conversationId, string latestMessageId = null, string earliestMessageId = null, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetRole(string roleName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> GetRole(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAsync(string roleName, Azure.RequestContext context) { throw null; }
@@ -294,5 +301,14 @@ namespace Azure.Messaging.WebPubSub.Chat
         Azure.Messaging.WebPubSub.Chat.WebPubSubHumanChatUser System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubHumanChatUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubHumanChatUser>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubHumanChatUser>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+}
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class WebPubSubChatServiceClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClient, Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions> AddWebPubSubChatServiceClient<TBuilder>(this TBuilder builder, string connectionString, string hub) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClient, Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions> AddWebPubSubChatServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string hub) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClient, Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions> AddWebPubSubChatServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string hub, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
     }
 }

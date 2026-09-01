@@ -196,52 +196,6 @@ namespace Azure.Messaging.WebPubSub.Chat
                 "WebPubSubChatServiceClient.GetMessages");
         }
 
-        /// <summary> Query messages in a conversation from latest to earliest. </summary>
-        /// <param name="conversationId"> Conversation identifier. </param>
-        /// <param name="latestMessageId"> Latest message ID (exclusive) for pagination. </param>
-        /// <param name="earliestMessageId"> Earliest message ID (exclusive) for pagination. </param>
-        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WebPubSubChatMessage> GetMessages(string conversationId, string latestMessageId = default, string earliestMessageId = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-
-            return new WebPubSubChatServiceClientGetMessagesCollectionResultOfT(
-                this,
-                conversationId,
-                latestMessageId,
-                earliestMessageId,
-                maxPageSize,
-                cancellationToken.ToRequestContext(),
-                "WebPubSubChatServiceClient.GetMessages");
-        }
-
-        /// <summary> Query messages in a conversation from latest to earliest. </summary>
-        /// <param name="conversationId"> Conversation identifier. </param>
-        /// <param name="latestMessageId"> Latest message ID (exclusive) for pagination. </param>
-        /// <param name="earliestMessageId"> Earliest message ID (exclusive) for pagination. </param>
-        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WebPubSubChatMessage> GetMessagesAsync(string conversationId, string latestMessageId = default, string earliestMessageId = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-
-            return new WebPubSubChatServiceClientGetMessagesAsyncCollectionResultOfT(
-                this,
-                conversationId,
-                latestMessageId,
-                earliestMessageId,
-                maxPageSize,
-                cancellationToken.ToRequestContext(),
-                "WebPubSubChatServiceClient.GetMessages");
-        }
-
         /// <summary>
         /// [Protocol Method] Delete a message.
         /// <list type="bullet">

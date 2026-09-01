@@ -140,6 +140,31 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         }
 
         [Test]
+        public void GetMessages_MessageQueryOptions_AreAddedToRequest()
+        {
+            var response = new MockResponse(200);
+            response.SetContent("{\"value\":[]}");
+            var transport = new MockTransport(response);
+            var clientOptions = new WebPubSubChatServiceClientOptions { Transport = transport };
+            var client = new WebPubSubChatServiceClient(
+                new Uri("https://contoso.webpubsub.azure.com"),
+                "hub",
+                new StaticTokenCredential(),
+                clientOptions);
+
+            client.GetMessages("conversation", new MessageQueryOptions
+            {
+                LatestMessageId = "30",
+                EarliestMessageId = "10",
+                MaxPageSize = 20,
+            }).AsPages().Single();
+
+            Assert.That(
+                transport.SingleRequest.Uri.Query,
+                Is.EqualTo("?api-version=2026-02-01-preview&latestMessageId=30&earliestMessageId=10&maxpagesize=20"));
+        }
+
+        [Test]
         public void ReverseProxyEndpoint_UsesValueAtClientConstruction()
         {
             var transport = new MockTransport(new MockResponse(201));

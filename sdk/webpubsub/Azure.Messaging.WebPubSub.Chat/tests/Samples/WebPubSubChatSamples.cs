@@ -266,9 +266,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatPageMessageHistory
             Pageable<WebPubSubChatMessage> messages = client.GetMessages(
                 room.DefaultConversation,
-                latestMessageId: null,
-                earliestMessageId: null,
-                maxPageSize: 50);
+                new MessageQueryOptions { MaxPageSize = 50 });
 
             foreach (WebPubSubChatMessage message in messages)
             {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -11,12 +12,76 @@ namespace Azure.Messaging.WebPubSub.Chat
     [CodeGenSuppress("WebPubSubChatServiceClient", typeof(Uri), typeof(string), typeof(TokenCredential))]
     [CodeGenSuppress("WebPubSubChatServiceClient", typeof(Uri), typeof(string), typeof(TokenCredential), typeof(WebPubSubChatServiceClientOptions))]
     [CodeGenSuppress("WebPubSubChatServiceClient", typeof(HttpPipelinePolicy), typeof(Uri), typeof(string), typeof(WebPubSubChatServiceClientOptions))]
+    [CodeGenSuppress("GetMessages", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetMessagesAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class WebPubSubChatServiceClient
     {
+        internal virtual Pageable<WebPubSubChatMessage> GetMessages(string conversationId, string latestMessageId, string earliestMessageId, int? maxPageSize, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+            return new WebPubSubChatServiceClientGetMessagesCollectionResultOfT(
+                this,
+                conversationId,
+                latestMessageId,
+                earliestMessageId,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "WebPubSubChatServiceClient.GetMessages");
+        }
+
+        internal virtual AsyncPageable<WebPubSubChatMessage> GetMessagesAsync(string conversationId, string latestMessageId, string earliestMessageId, int? maxPageSize, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+            return new WebPubSubChatServiceClientGetMessagesAsyncCollectionResultOfT(
+                this,
+                conversationId,
+                latestMessageId,
+                earliestMessageId,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "WebPubSubChatServiceClient.GetMessages");
+        }
+
         /// <summary>
         /// The hub name this client is connected to.
         /// </summary>
         public virtual string Hub => _hub;
+
+        /// <summary> Query messages in a conversation from latest to earliest. </summary>
+        /// <param name="conversationId"> Conversation identifier. </param>
+        /// <param name="options"> Options for querying messages. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<WebPubSubChatMessage> GetMessages(string conversationId, MessageQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            return GetMessages(
+                conversationId,
+                options?.LatestMessageId,
+                options?.EarliestMessageId,
+                options?.MaxPageSize,
+                cancellationToken);
+        }
+
+        /// <summary> Query messages in a conversation from latest to earliest. </summary>
+        /// <param name="conversationId"> Conversation identifier. </param>
+        /// <param name="options"> Options for querying messages. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<WebPubSubChatMessage> GetMessagesAsync(string conversationId, MessageQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            return GetMessagesAsync(
+                conversationId,
+                options?.LatestMessageId,
+                options?.EarliestMessageId,
+                options?.MaxPageSize,
+                cancellationToken);
+        }
 
         internal WebPubSubChatServiceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string hub, WebPubSubChatServiceClientOptions options)
         {
