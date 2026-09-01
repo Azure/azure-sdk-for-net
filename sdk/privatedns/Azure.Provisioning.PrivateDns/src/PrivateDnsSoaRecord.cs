@@ -13,6 +13,13 @@ namespace Azure.Provisioning.PrivateDns;
 /// <summary>
 /// PrivateDnsSoaRecord.
 /// </summary>
+[CodeGenSuppress("PrivateDnsARecords")]
+[CodeGenSuppress("PrivateDnsAaaaRecords")]
+[CodeGenSuppress("PrivateDnsMXRecords")]
+[CodeGenSuppress("PrivateDnsPtrRecords")]
+[CodeGenSuppress("PrivateDnsSrvRecords")]
+[CodeGenSuppress("PrivateDnsTxtRecords")]
+[CodeGenSuppress("Cname")]
 public partial class PrivateDnsSoaRecord : ProvisionableResource
 {
     /// <summary>
