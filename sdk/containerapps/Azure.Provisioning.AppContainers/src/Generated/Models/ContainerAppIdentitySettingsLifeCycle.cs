@@ -11,11 +11,11 @@ namespace Azure.Provisioning.AppContainers
     public enum ContainerAppIdentitySettingsLifeCycle
     {
         /// <summary> Do not use managed identity during any lifecycle stage. </summary>
-        None = 0,
+        None = 2,
         /// <summary> Use managed identity during the main stage of the Container App lifecycle. </summary>
         Main = 1,
         /// <summary> Use managed identity during the init stage of the Container App lifecycle. </summary>
-        Init = 2,
+        Init = 0,
         /// <summary> Use managed identity during all lifecycle stages of the Container App. </summary>
         All = 3
     }

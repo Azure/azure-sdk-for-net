@@ -906,9 +906,9 @@ namespace Azure.Provisioning.AppContainers
     }
     public enum ContainerAppIdentitySettingsLifeCycle
     {
-        None = 0,
+        Init = 0,
         Main = 1,
-        Init = 2,
+        None = 2,
         All = 3,
     }
     public enum ContainerAppIngressClientCertificateMode
