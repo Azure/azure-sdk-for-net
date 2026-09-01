@@ -68,7 +68,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             base.DefineProvisionableProperties();
             _days = DefineProperty<int>(nameof(Days), new string[] { "days" });
-            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, isOutput: true);
+            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, isOutput: true, format: "O");
             _status = DefineProperty<ContainerRegistryPolicyStatus>(nameof(Status), new string[] { "status" });
             DefineAdditionalProperties();
         }

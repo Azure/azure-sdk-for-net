@@ -180,7 +180,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CredentialSetProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerRegistryService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -83,8 +83,8 @@ namespace Azure.Provisioning.ContainerRegistry
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" });
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiry" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, format: "O");
+            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiry" }, format: "O");
             _name = DefineProperty<ContainerRegistryTokenPasswordName>(nameof(Name), new string[] { "name" });
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" }, isOutput: true);
             DefineAdditionalProperties();

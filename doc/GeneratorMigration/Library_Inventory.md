@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 452
-- Management Plane (MPG): 264
+- Total libraries: 454
+- Management Plane (MPG): 265
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 225
+  - New Emitter (TypeSpec): 226
   - Old TypeSpec: 0
 - Data Plane (DPG): 124
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
-- Provisioning: 64
-  - Reflection-based generator: 18
-  - TypeSpec-based generator: 44
+- Provisioning: 65
+  - Reflection-based generator: 16
+  - TypeSpec-based generator: 47
   - No generator: 2
 - No generator: 41
 
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 225 / 225 (100%)
+**Migration Status**: 226 / 226 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -360,6 +360,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
+| verifiedid | Azure.ResourceManager.VerifiedId | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | websites | Azure.ResourceManager.AppService | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
@@ -419,13 +420,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 39
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 44 / 64 migrated to TypeSpec-based generator
+**Migration Status**: 47 / 65 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
 | apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
-| applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | Reflection |
+| applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | TypeSpec ✅ |
 | attestation | Azure.Provisioning.Attestation | Azure.ResourceManager.Attestation ✅ | TypeSpec ✅ |
 | batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | botservice | Azure.Provisioning.BotService | Azure.ResourceManager.BotService ✅ | TypeSpec ✅ |
@@ -460,6 +461,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | loadtestservice | Azure.Provisioning.LoadTesting | Azure.ResourceManager.LoadTesting ✅ | TypeSpec ✅ |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |
 | machinelearningservices | Azure.Provisioning.MachineLearning | Azure.ResourceManager.MachineLearning ✅ | TypeSpec ✅ |
+| maps | Azure.Provisioning.Maps | Azure.ResourceManager.Maps ✅ | TypeSpec ✅ |
 | monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor ✅ | Reflection |
 | mysql | Azure.Provisioning.MySql | Azure.ResourceManager.MySql ✅ | TypeSpec ✅ |
 | network | Azure.Provisioning.Network | Azure.ResourceManager.Network ✅ | Reflection |
@@ -483,7 +485,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | signalr | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | TypeSpec ✅ |
 | sqlmanagement | Azure.Provisioning.Sql | Azure.ResourceManager.Sql ✅ | Reflection |
 | standbypool | Azure.Provisioning.StandbyPool | Azure.ResourceManager.StandbyPool ✅ | TypeSpec ✅ |
-| storage | Azure.Provisioning.Storage | Azure.ResourceManager.Storage ✅ | Reflection |
+| storage | Azure.Provisioning.Storage | Azure.ResourceManager.Storage ✅ | TypeSpec ✅ |
 | trafficmanager | Azure.Provisioning.TrafficManager | Azure.ResourceManager.TrafficManager ✅ | TypeSpec ✅ |
 | webpubsub | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub ✅ | Reflection |
 | websites | Azure.Provisioning.AppService | Azure.ResourceManager.AppService ✅ | Reflection |

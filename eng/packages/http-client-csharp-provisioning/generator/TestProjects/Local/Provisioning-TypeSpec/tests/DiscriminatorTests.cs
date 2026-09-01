@@ -41,9 +41,44 @@ public class DiscriminatorTests
               location: location
               properties: {
                 backupPolicy: {
-                  intervalInHours: 24
                   kind: 'Periodic'
                   retentionDays: 7
+                  intervalInHours: 24
+                }
+              }
+            }
+            """);
+    }
+
+    [Test]
+    public async Task StringDiscriminator()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                ConfigurationStore store = new(nameof(store), ConfigurationStore.ResourceVersions.V2024_05_01)
+                {
+                    Properties = new ConfigurationStoreProperties
+                    {
+                        StringDiscriminatedBackupPolicy = new ManualBackupPolicy()
+                    }
+                };
+                infra.Add(store);
+                return infra;
+            });
+
+        test.Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource store 'ProvisioningTypeSpec/configurationStores@2024-05-01' = {
+              name: take('store-${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                stringDiscriminatedBackupPolicy: {
+                  strategy: 'manual'
                 }
               }
             }

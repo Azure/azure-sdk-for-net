@@ -22,6 +22,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<int> _softDeleteRetentionInDays;
         private BicepValue<bool> _disableLocalAuth;
         private BackupPolicy _backupPolicy;
+        private StringDiscriminatedBackupPolicy _stringDiscriminatedBackupPolicy;
         private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
         private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
@@ -131,6 +132,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 AssignOrReplace(ref _backupPolicy, value);
+            }
+        }
+
+        /// <summary> Gets or sets the StringDiscriminatedBackupPolicy. </summary>
+        public StringDiscriminatedBackupPolicy StringDiscriminatedBackupPolicy
+        {
+            get
+            {
+                Initialize();
+                return _stringDiscriminatedBackupPolicy;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _stringDiscriminatedBackupPolicy, value);
             }
         }
 
@@ -402,6 +418,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _softDeleteRetentionInDays = DefineProperty<int>(nameof(SoftDeleteRetentionInDays), new string[] { "softDeleteRetentionInDays" });
             _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
             _backupPolicy = DefineModelProperty<BackupPolicy>(nameof(BackupPolicy), new string[] { "backupPolicy" });
+            _stringDiscriminatedBackupPolicy = DefineModelProperty<StringDiscriminatedBackupPolicy>(nameof(StringDiscriminatedBackupPolicy), new string[] { "stringDiscriminatedBackupPolicy" });
             _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
