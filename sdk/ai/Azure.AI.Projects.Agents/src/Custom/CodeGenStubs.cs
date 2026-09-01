@@ -61,4 +61,3 @@ public partial class ProjectsAgentRecord
 [CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
 [CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
 [CodeGenType("ToolSearchExecutionType")] public partial struct ToolSearchExecutionKind { }
-[CodeGenType("VoiceResponseBase")][Experimental("AAIP002")] public partial class VoiceResponseBase { }

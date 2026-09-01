@@ -3,7 +3,6 @@
 ## 3.0.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added the `AgentEndpointConversations` client for retrieval of the conversations, responses, transcript items, per-turn metrics, and audio recorded by a voice agent.
 
 ### Breaking Changes
 

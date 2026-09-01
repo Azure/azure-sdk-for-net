@@ -15,7 +15,6 @@ namespace Azure.AI.Projects.Agents
         private const string HostedValue = "hosted";
         private const string WorkflowValue = "workflow";
         private const string ExternalValue = "external";
-        private const string VoiceValue = "voice";
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,9 +37,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the External. </summary>
         public static ProjectsAgentKind External { get; } = new ProjectsAgentKind(ExternalValue);
-
-        /// <summary> Gets the Voice. </summary>
-        public static ProjectsAgentKind Voice { get; } = new ProjectsAgentKind(VoiceValue);
 
         /// <summary> Determines if two <see cref="ProjectsAgentKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

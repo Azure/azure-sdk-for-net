@@ -67,8 +67,6 @@ public partial class AgentAdministrationClient
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
-    [Experimental("AAIP001")]
-    private AgentEndpointConversations _cachedAgentEndpointConversations;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -1124,15 +1122,5 @@ public partial class AgentAdministrationClient
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
-    }
-
-    /// <summary>
-    ///  Gets the lazily-initialized agent endpoint conversations sub-client.
-    /// </summary>
-    /// <returns>AgentEndpointConversations client.</returns>
-    [Experimental("AAIP001")]
-    public virtual AgentEndpointConversations GetAgentEndpointConversations()
-    {
-        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 }
