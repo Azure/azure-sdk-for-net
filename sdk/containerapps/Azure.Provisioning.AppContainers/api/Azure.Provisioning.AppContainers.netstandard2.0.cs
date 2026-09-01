@@ -365,6 +365,8 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppConnectedEnvironmentStorage : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerAppConnectedEnvironmentStorage(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Properties.AzureFile instead.")]
+        public Azure.Provisioning.AppContainers.ContainerAppAzureFileProperties ConnectedEnvironmentStorageAzureFile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironment Parent { get { throw null; } set { } }
