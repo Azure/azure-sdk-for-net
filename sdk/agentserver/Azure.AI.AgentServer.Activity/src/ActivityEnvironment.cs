@@ -115,7 +115,11 @@ public static class ActivityEnvironment
         return settings;
     }
 
-    private static string? GetNonEmpty(string name) => Trimmed(Environment.GetEnvironmentVariable(name));
+    // Recognizes both the colon-delimited key and its "__" env-var form (IConfiguration's
+    // environment-variables provider does this translation; a raw env-var lookup does not).
+    private static string? GetNonEmpty(string name) =>
+        Trimmed(Environment.GetEnvironmentVariable(name))
+        ?? Trimmed(Environment.GetEnvironmentVariable(name.Replace(":", "__")));
 
     private static string? Trimmed(string? value)
     {

@@ -9,6 +9,7 @@ using Azure.AI.AgentServer.Core;
 using Microsoft.Agents.Builder;
 using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Activity.Internal;
@@ -32,20 +33,21 @@ internal sealed class ActivityEndpointHandler
     private readonly string? _botAppId;
     private readonly ActivityProtocolActivitySource _tracing;
 
-    public ActivityEndpointHandler(IOptions<ActivityServerOptions> options, ActivityProtocolActivitySource tracing)
+    public ActivityEndpointHandler(IOptions<ActivityServerOptions> options, IConfiguration configuration, ActivityProtocolActivitySource tracing)
     {
         ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(configuration);
 
         var value = options.Value;
         _digitalWorker = value.DigitalWorker;
 
-        // Resolve the agent-instance client id once so the outbound reply presents claims whose
-        // appid/aud match the managed-identity connection. Digital-worker turns are anonymous
-        // (the FMI token exchange supplies the reply token).
-        if (!_digitalWorker &&
-            ActivityStack.GetConnectionConfiguration(value).TryGetValue(ConnectionEnvironment.ClientId, out var clientId))
+        // Read from the host's effective configuration (not just what ActivityServerOptions alone
+        // would derive) so a host-authored Connections:* override or custom IConnections still
+        // yields a matching outbound identity instead of an anonymous one. Digital-worker turns are
+        // anonymous (the FMI token exchange supplies the reply token).
+        if (!_digitalWorker)
         {
-            _botAppId = clientId;
+            _botAppId = configuration[ConnectionEnvironment.ClientId];
         }
 
         _tracing = tracing ?? throw new ArgumentNullException(nameof(tracing));
@@ -88,6 +90,24 @@ internal sealed class ActivityEndpointHandler
         // the SDK's ProcessAsync (via HttpHelper.GetClaimsIdentity) uses them to mint the outbound
         // reply token — replacing inbound channel auth with the Foundry trust model.
         context.User = new ClaimsPrincipal(BuildOutboundClaims());
+
+        // CloudAdapter.ProcessAsync absorbs protocol failures internally (invalid activities become
+        // 400, processing exceptions become 500) without throwing, so ActivityErrorSourceFilter never
+        // observes them. Classify the response here, registered before the adapter starts writing it,
+        // so x-platform-error-source is still set for adapter-produced failures.
+        context.Response.OnStarting(static state =>
+        {
+            var ctx = (HttpContext)state;
+            if (ctx.Response.StatusCode >= StatusCodes.Status400BadRequest
+                && !ctx.Response.Headers.ContainsKey(PlatformHeaders.ErrorSource))
+            {
+                ctx.Response.Headers[PlatformHeaders.ErrorSource] = ctx.Response.StatusCode >= StatusCodes.Status500InternalServerError
+                    ? PlatformHeaders.ErrorSourceUpstream
+                    : PlatformHeaders.ErrorSourceUser;
+            }
+
+            return Task.CompletedTask;
+        }, context);
 
         // Native Microsoft 365 Agents SDK entry point: reads the activity, runs (or queues) the
         // turn, delivers replies via the connector, and writes the status code / response body.

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -40,6 +41,15 @@ public class FoundryActivityHostingTests
             {
                 await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
             });
+        }
+    }
+
+    private sealed class ThrowingInvokeAgent : AgentApplication
+    {
+        public ThrowingInvokeAgent(AgentApplicationOptions options) : base(options)
+        {
+            OnActivity(ActivityTypes.Invoke, (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                throw new InvalidOperationException("developer handler failure"));
         }
     }
 
@@ -132,6 +142,58 @@ public class FoundryActivityHostingTests
         var response = await client.GetAsync("/readiness");
 
         Assert.That((int)response.StatusCode, Is.EqualTo(200));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public async Task MapFoundryActivity_MalformedBody_ClassifiesErrorSourceAsUser()
+    {
+        // CloudAdapter.ProcessAsync rejects an unparseable activity itself (400) without throwing,
+        // so this exercises the OnStarting classification in ActivityEndpointHandler, not the filter.
+        using var app = BuildApp();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.PostAsync(
+            "/activity/messages",
+            new StringContent("not valid json", System.Text.Encoding.UTF8, "application/json"));
+
+        Assert.That((int)response.StatusCode, Is.GreaterThanOrEqualTo(400));
+        Assert.That(response.Headers.Contains(Core.PlatformHeaders.ErrorSource), Is.True,
+            "Adapter-rejected malformed activities must still carry x-platform-error-source");
+        Assert.That(response.Headers.GetValues(Core.PlatformHeaders.ErrorSource).First(), Is.EqualTo(Core.PlatformHeaders.ErrorSourceUser));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public async Task MapFoundryActivity_InvokeHandlerThrows_ClassifiesErrorSourceAsUpstream()
+    {
+        // Invoke activities are synchronous request/response, so a throwing handler surfaces as a
+        // 500 written directly by CloudAdapter.ProcessAsync (not queued to the background service).
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.AddAgent(sp => new ThrowingInvokeAgent(sp.GetRequiredService<AgentApplicationOptions>()));
+        builder.Services.AddSingleton<IStorage, MemoryStorage>();
+        builder.AddFoundryActivity();
+
+        using var app = builder.Build();
+        app.MapFoundryActivity();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.PostAsync(
+            "/activity/messages",
+            new StringContent(
+                """{"type":"invoke","name":"test","from":{"id":"u1"},"recipient":{"id":"b1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:1/","id":"a3"}""",
+                System.Text.Encoding.UTF8,
+                "application/json"));
+
+        Assert.That((int)response.StatusCode, Is.GreaterThanOrEqualTo(500));
+        Assert.That(response.Headers.Contains(Core.PlatformHeaders.ErrorSource), Is.True,
+            "Adapter-surfaced processing failures must still carry x-platform-error-source");
+        Assert.That(response.Headers.GetValues(Core.PlatformHeaders.ErrorSource).First(), Is.EqualTo(Core.PlatformHeaders.ErrorSourceUpstream));
 
         await app.StopAsync();
     }

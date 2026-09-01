@@ -83,7 +83,7 @@ internal sealed class ActivityErrorSourceFilter : IEndpointFilter
                 : agg.Flatten();
         }
 
-        var detail = unwrapped.ToString();
+        var detail = SanitizeHeaderValue(unwrapped.ToString());
 
         if (detail.Length > MaxErrorDetailLength)
         {
@@ -91,6 +91,22 @@ internal sealed class ActivityErrorSourceFilter : IEndpointFilter
         }
 
         return detail;
+    }
+
+    // Exception.ToString() embeds CR/LF/other control chars from the stack trace; Kestrel rejects
+    // those in header values, so the intended error response would itself fail to write.
+    private static string SanitizeHeaderValue(string value)
+    {
+        var chars = value.ToCharArray();
+        for (var i = 0; i < chars.Length; i++)
+        {
+            if (chars[i] < ' ')
+            {
+                chars[i] = ' ';
+            }
+        }
+
+        return new string(chars);
     }
 
     private static void SetErrorSourceHeaders(HttpContext httpContext, string source, string? detail = null)

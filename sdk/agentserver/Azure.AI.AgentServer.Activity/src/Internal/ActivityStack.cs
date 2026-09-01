@@ -83,7 +83,9 @@ internal static class ActivityStack
         // (IConnections, IChannelServiceClientFactory, CloudAdapter/IAgentHttpAdapter, and the
         // background HostedActivityService that drains normal-delivery turns). These are no-ops if
         // the caller already ran `builder.AddAgent<TAgent>()`.
-        services.AddAgentApplicationOptions();
+        // replaceExisting: false — the SDK default is true, which would silently overwrite a
+        // caller's own AgentApplicationOptions registered above via ConfigureServices.
+        services.AddAgentApplicationOptions(replaceExisting: false);
         services.AddAgentCore<CloudAdapter>();
 
         // Only substitute the connection provider when the caller supplies their own. RemoveAll + add
@@ -120,7 +122,9 @@ internal static class ActivityStack
                 .Build());
         RegisterM365Services(services, options);
 
-        using var provider = services.BuildServiceProvider();
+        // Not disposed: AgentApplicationOptions (and the services it captures) must outlive this
+        // call for the returned application's full lifetime, not just until this method returns.
+        var provider = services.BuildServiceProvider();
         return new AgentApplication(provider.GetRequiredService<AgentApplicationOptions>());
     }
 }

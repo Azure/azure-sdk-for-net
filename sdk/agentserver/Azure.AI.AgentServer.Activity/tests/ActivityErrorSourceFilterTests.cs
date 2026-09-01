@@ -101,6 +101,44 @@ public class ActivityErrorSourceFilterTests
             "Successful responses should not include error source header");
     }
 
+    [Test]
+    public async Task PlatformError_MultiLineMessage_ProducesLegalKestrelHeader()
+    {
+        // Uses a real Kestrel listener (not TestServer) because Kestrel — unlike the in-memory
+        // TestServer pipeline — rejects CR/LF in response header values at the point of writing them.
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseKestrel().UseUrls("http://127.0.0.1:0");
+        await using var app = builder.Build();
+
+        // Without an exception handler, an unhandled exception makes Kestrel reset the connection
+        // before anything (including our headers, set via Response.OnStarting) is ever written.
+        app.UseExceptionHandler(error => error.Run(async context =>
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync("Internal Server Error");
+        }));
+
+        app.MapPost("/throw/platform-multiline", () =>
+        {
+            throw MakePlatformException("line one\r\nline two\nline three");
+        }).AddEndpointFilter<ActivityErrorSourceFilter>();
+
+        await app.StartAsync();
+        var address = app.Services.GetRequiredService<Microsoft.AspNetCore.Hosting.Server.IServer>()
+            .Features.Get<Microsoft.AspNetCore.Hosting.Server.Features.IServerAddressesFeature>()!
+            .Addresses.First();
+
+        using var client = new HttpClient();
+        var response = await client.PostAsync($"{address}/throw/platform-multiline", EmptyBody());
+
+        AssertErrorSource(response, PlatformHeaders.ErrorSourcePlatform);
+        var detail = response.Headers.GetValues(PlatformHeaders.ErrorDetail).First();
+        Assert.That(detail, Does.Not.Contain("\r"));
+        Assert.That(detail, Does.Not.Contain("\n"));
+
+        await app.StopAsync();
+    }
+
     // ── Helpers ─────────────────────────────────────────────
 
     private static StringContent EmptyBody() => new("{}");
