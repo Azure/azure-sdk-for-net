@@ -19,6 +19,9 @@ parameters:
   - name: SkipPrValidation
     type: boolean
     default: false
+  - name: UseRepositorySourceGraph
+    type: boolean
+    default: true
   # Switch to canary to test canary 1es branch. 1es template validation will set this parameter
   # to canary on run.
   - name: oneESTemplateTag
@@ -39,5 +42,10 @@ extends:
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
+    EnableTestCheckoutNarrowing: true
+    UseRepositorySourceGraph: ${{ parameters.UseRepositorySourceGraph }}
+    # Public Microsoft-hosted jobs allow at most six hours. Keep every existing matrix leg and
+    # batch alive for that full window while the sparse-worktree validation is experimental.
+    TestTimeoutInMinutes: 360
     ExcludePaths:
       - eng/packages/http-client-csharp/

@@ -33,6 +33,11 @@ For .NET, this value will be AdditionalTestArguments=/p:UseProjectReferenceToAzu
 ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
   -PackagePropertiesFolder "path/to/populated/PackageInfo" `
   -PrMatrixSetting "<Name of variable to set in the matrix>"
+
+.PARAMETER MaxJobs
+Maximum emitted matrix legs. Zero leaves the matrix unbounded. When the requested package batch
+size would exceed a positive limit, the script increases only the scheduling batch size and
+regenerates the matrix. Package membership and matrix configurations remain unchanged.
 #>
 
 [CmdletBinding()]
@@ -47,6 +52,7 @@ param (
   [Parameter(Mandatory = $false)][string] $PRMatrixKey = "ArtifactName",
   [Parameter(Mandatory = $false)][bool] $SparseIndirect = $true,
   [Parameter(Mandatory = $false)][int] $PackagesPerPRJob = 10,
+  [Parameter(Mandatory = $false)][int] $MaxJobs = 0,
   [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
@@ -249,21 +255,58 @@ $packageProperties | ForEach-Object {
 $directPackages = $packageProperties | Where-Object { $_.IncludedForValidation -eq $false }
 $indirectPackages = $packageProperties | Where-Object { $_.IncludedForValidation -eq $true }
 
-$OverallResult = @()
+if ($MaxJobs -lt 0) {
+  throw "MaxJobs must be zero (unbounded) or greater than zero."
+}
+
+function New-OverallMatrix {
+  $result = @()
+  if ($directPackages) {
+    $result += (GeneratePRMatrixForBatch -Packages $directPackages -MatrixKey $PRMatrixKey) ?? @()
+  }
+  if ($indirectPackages) {
+    $result += (GeneratePRMatrixForBatch -Packages $indirectPackages -MatrixKey $PRMatrixKey -FullSparseMatrix (-not $SparseIndirect)) ?? @()
+  }
+  return $result
+}
+
 if ($directPackages) {
   Write-Host "Discovered $($directPackages.Length) direct packages"
   foreach($artifact in $directPackages) {
     Write-Host "-> $($artifact.($PRMatrixKey))"
   }
-  $OverallResult += (GeneratePRMatrixForBatch -Packages $directPackages -MatrixKey $PRMatrixKey) ?? @()
 }
 if ($indirectPackages) {
   Write-Host "Discovered $($indirectPackages.Length) indirect packages"
   foreach($artifact in $indirectPackages) {
     Write-Host "-> $($artifact.($PRMatrixKey))"
   }
-  $OverallResult += (GeneratePRMatrixForBatch -Packages $indirectPackages -MatrixKey $PRMatrixKey -FullSparseMatrix (-not $SparseIndirect)) ?? @()
 }
+
+# Azure Pipelines rejects a matrix strategy that expands beyond its job limit. Increase only the
+# scheduling batch size; each generated job can still expand its package names into singleton work.
+while ($true) {
+  $OverallResult = @(New-OverallMatrix)
+  Write-Host "Generated $($OverallResult.Count) PR matrix jobs with $BATCHSIZE PackageInfo entries per scheduling batch."
+  if ($MaxJobs -eq 0 -or $OverallResult.Count -le $MaxJobs) {
+    break
+  }
+
+  $maximumBatchSize = $packageProperties.Count
+  if ($BATCHSIZE -ge $maximumBatchSize) {
+    throw "PR matrix contains $($OverallResult.Count) jobs, exceeding MaxJobs=$MaxJobs even with all PackageInfo entries in each compatible batch."
+  }
+
+  # The ratio usually reaches the limit in one retry; the increment guarantees progress for
+  # custom matrix groups and non-linear rounding at batch boundaries.
+  $nextBatchSize = [math]::Max(
+    $BATCHSIZE + 1,
+    [int][math]::Ceiling($BATCHSIZE * $OverallResult.Count / $MaxJobs)
+  )
+  $BATCHSIZE = [math]::Min($maximumBatchSize, $nextBatchSize)
+  Write-Warning "PR matrix exceeds MaxJobs=$MaxJobs. Retrying with $BATCHSIZE PackageInfo entries per scheduling batch."
+}
+
 $serialized = SerializePipelineMatrix $OverallResult
 
 Write-Output $serialized.pretty
