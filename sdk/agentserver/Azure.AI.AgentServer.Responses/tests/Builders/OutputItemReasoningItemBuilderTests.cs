@@ -80,7 +80,7 @@ public class OutputItemReasoningItemBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemReasoningItemStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ReasoningStatus.InProgress));
         Assert.That(item.SummaryParts, Is.Empty);
     }
 
@@ -146,7 +146,7 @@ public class OutputItemReasoningItemBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemReasoningItemStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ReasoningStatus.Completed));
     }
 
     [Test]

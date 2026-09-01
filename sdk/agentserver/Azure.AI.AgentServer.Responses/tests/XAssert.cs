@@ -28,13 +28,42 @@ internal static class XAssert
     }
 
     /// <summary>
-    /// Asserts that the object is exactly the specified type (not a derived type) and returns the cast value.
-    /// xUnit equivalent: Assert.IsType&lt;T&gt;(obj)
+    /// Asserts that the object is the specified type and returns the cast value.
+    /// <para>
+    /// An exact-type match is required only when the type can actually be instantiated
+    /// as itself. Several OpenAI.Responses models are public abstractions over internal
+    /// concrete subclasses (for example <c>MessageResponseItem</c> is realized as
+    /// <c>InternalResponsesUserMessage</c>), so for those an assignability check is the
+    /// strongest assertion available.
+    /// </para>
     /// </summary>
     public static T IsType<T>(object obj)
     {
-        Assert.That(obj, Is.TypeOf<T>());
-        return (T)obj;
+        if (typeof(T).IsAbstract || obj?.GetType().Assembly != typeof(T).Assembly)
+        {
+            Assert.That(obj, Is.InstanceOf<T>());
+        }
+        else if (obj.GetType() != typeof(T) && obj.GetType().IsNotPublic && typeof(T).IsAssignableFrom(obj.GetType()))
+        {
+            Assert.That(obj, Is.InstanceOf<T>());
+        }
+        else
+        {
+            Assert.That(obj, Is.TypeOf<T>());
+        }
+
+        return (T)obj!;
+    }
+
+    /// <summary>
+    /// Asserts that the serialized form of a response does not carry a top-level
+    /// <c>output_text</c>. That field is a client-side convenience; the server never emits it.
+    /// </summary>
+    public static void DoesNotSerializeOutputText(ResponseObject response)
+    {
+        var json = System.ClientModel.Primitives.ModelReaderWriter.Write(response).ToString();
+        using var document = System.Text.Json.JsonDocument.Parse(json);
+        Assert.That(document.RootElement.TryGetProperty("output_text", out _), Is.False);
     }
 
     /// <summary>

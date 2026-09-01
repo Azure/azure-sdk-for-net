@@ -119,7 +119,7 @@ public class BuilderAccumulationTests
         var completed = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(completed.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(completed.Response);
     }
 
     [Test]
@@ -143,6 +143,6 @@ public class BuilderAccumulationTests
         var completed = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(completed.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(completed.Response);
     }
 }

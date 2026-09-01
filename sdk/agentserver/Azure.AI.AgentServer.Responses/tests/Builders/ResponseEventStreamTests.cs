@@ -293,7 +293,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(evt.Response);
     }
 
     // ── T016: EmitFailed Tests ────────────────────────────────
@@ -340,7 +340,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "err");
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(evt.Response);
     }
 
     // ── T017: EmitIncomplete Tests ────────────────────────────
@@ -385,6 +385,6 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(evt.Response);
     }
 }

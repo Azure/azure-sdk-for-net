@@ -545,7 +545,7 @@ public class ConvenienceGeneratorTests
         XAssert.IsType<ResponseImageGenCallCompletedEvent>(events[3]);
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[4]);
         var item = XAssert.IsType<OutputItemImageGenToolCall>(done.Item);
-        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ImageGenerationCallStatus.Completed));
         Assert.That(item.ImageResultBytes, Is.EqualTo(resultBase64));
     }
 

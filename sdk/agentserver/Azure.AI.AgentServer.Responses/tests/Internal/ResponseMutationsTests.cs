@@ -70,7 +70,7 @@ public class ResponseMutationsTests
         response.SetCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(response);
     }
 
     // ── SetFailed ─────────────────────────────────────────────
@@ -187,7 +187,7 @@ public class ResponseMutationsTests
         response.SetFailed();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(response);
     }
 
     // ── SetIncomplete ─────────────────────────────────────────
@@ -260,7 +260,7 @@ public class ResponseMutationsTests
         response.SetIncomplete();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(response);
     }
 
     // ── CopyTerminalFields ──────────────────────────────────
@@ -281,7 +281,7 @@ public class ResponseMutationsTests
         Assert.That(target.IncompleteStatusDetails, Is.SameAs(source.IncompleteStatusDetails));
         Assert.That(target.Usage, Is.SameAs(source.Usage));
         // OutputText is NOT copied — it is a client SDK convenience property
-        Assert.That(target.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(target);
         // Output is NOT copied — accumulated via output item events
         Assert.That(target.OutputItems, Is.Empty);
     }

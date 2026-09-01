@@ -69,6 +69,11 @@ public class PublicConstructorEventTests
     [TestCaseSource(nameof(ConcreteEventTypes))]
     public void ConcreteEventType_HasAtLeastOnePublicConstructor(Type eventType)
     {
+        if (eventType.Assembly != typeof(CreateResponse).Assembly)
+        {
+            Assert.Ignore($"{eventType.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
+        }
+
         var publicCtors = eventType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
 
         Assert.That(publicCtors.Length > 0, Is.True,
@@ -78,6 +83,11 @@ public class PublicConstructorEventTests
     [TestCaseSource(nameof(ConcreteEventTypes))]
     public void ConcreteEventType_FullCtorRemainsNonPublic(Type eventType)
     {
+        if (eventType.Assembly != typeof(CreateResponse).Assembly)
+        {
+            Assert.Ignore($"{eventType.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
+        }
+
         // The full/serialization constructor includes IDictionary<string, BinaryData>.
         // Verify it exists and is non-public.
         var allCtors = eventType.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);

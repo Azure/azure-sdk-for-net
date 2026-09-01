@@ -51,7 +51,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
         var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString("{}")) { Id = _itemId };
-        item.Status = MCPToolCallStatus.InProgress.ToString();
+        item.Status = MCPToolCallStatus.InProgress;
         return EmitAdded(item);
     }
 
@@ -152,7 +152,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
         var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(_finalArguments ?? "{}")) { Id = _itemId };
-        item.Status = (_terminalStatus ?? MCPToolCallStatus.Completed).ToString();
+        item.Status = _terminalStatus ?? MCPToolCallStatus.Completed;
         return EmitDone(item);
     }
 }
