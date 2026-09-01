@@ -33,7 +33,7 @@
 
 ### Other Changes
 
-- Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion allocates less. Standard metrics no longer collect the tags they never read.
+- Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion rents fewer pooled buffers. Standard metrics no longer collect the tags they never read.
   ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
   - Fixed pooled tag buffers being leaked whenever converting an activity failed, and retaining tag keys and values after being returned to the pool.
   - Fixed the buffer rent size being process-wide mutable state written without synchronization.

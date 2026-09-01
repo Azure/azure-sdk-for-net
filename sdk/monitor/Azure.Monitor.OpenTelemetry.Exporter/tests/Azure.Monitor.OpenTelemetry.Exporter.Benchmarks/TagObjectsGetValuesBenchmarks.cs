@@ -65,18 +65,21 @@ string comparisons entirely. GetTagValues is gone, so its two allocations per ca
 with it.
 
 The x26 pair is the honest comparison - a single slot read is small enough that the JIT can
-fold it away. 253.9 ns -> 13.9 ns is an 18x reduction on the number of lookups an
+fold it away. 270.0 ns -> 13.5 ns is a 20x reduction on the number of lookups an
 old-semconv HTTP client conversion actually performs.
+
+The scan list holds unrecognized tags only and the slot list recognized attributes only,
+matching how the two are built in production.
 
 | Method                         | Mean        | Error      | StdDev    | Allocated |
 |------------------------------- |------------:|-----------:|----------:|----------:|
-| GetTagValueEmptyTagObjects     |   2.4995 ns |  0.3115 ns | 0.0171 ns |         - |
-| GetTagValueNonemptyTagObjects  |  10.0686 ns |  0.8998 ns | 0.0493 ns |         - |
-| GetTagValueEmptyAzMonList      |   1.2862 ns |  0.0631 ns | 0.0035 ns |         - |
-| GetTagValueNonemptyAzMonList   |  13.7055 ns |  0.5452 ns | 0.0299 ns |         - |
-| GetTagValueBySlotAzMonList     |   0.0279 ns |  0.3511 ns | 0.0192 ns |         - |
-| GetTagValueAzMonList_x26       | 253.8584 ns | 79.0539 ns | 4.3332 ns |         - |
-| GetTagValueBySlotAzMonList_x26 |  13.9456 ns |  1.9410 ns | 0.1064 ns |         - |
+| GetTagValueEmptyTagObjects     |   2.1544 ns |  0.0584 ns | 0.0032 ns |         - |
+| GetTagValueNonemptyTagObjects  |   9.2364 ns |  1.5102 ns | 0.0828 ns |         - |
+| GetTagValueEmptyAzMonList      |   1.1930 ns |  0.2083 ns | 0.0114 ns |         - |
+| GetTagValueNonemptyAzMonList   |  16.3385 ns |  0.8378 ns | 0.0459 ns |         - |
+| GetTagValueBySlotAzMonList     |   0.0087 ns |  0.1578 ns | 0.0086 ns |         - |
+| GetTagValueAzMonList_x26       | 269.9516 ns | 41.3607 ns | 2.2671 ns |         - |
+| GetTagValueBySlotAzMonList_x26 |  13.5489 ns |  0.4264 ns | 0.0234 ns |         - |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
@@ -86,6 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
     {
         private AzMonList _azMonList_No_Item;
         private AzMonList _azMonList_Items;
+        private AzMonList _azMonList_Mapped;
         private IEnumerable<KeyValuePair<string, object>> _tagObjects_No_Item;
         private IEnumerable<KeyValuePair<string, object>> _tagObjects_Items;
         private Activity _itemActivity;
@@ -110,16 +114,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             _azMonList_No_Item = AzMonList.Initialize();
             _tagObjects_No_Item = new Dictionary<string, object>();
 
+            // Unrecognized tags only, matching the UnMappedTags list in production. Nine entries
+            // keeps the scan depth equal to the recorded baseline.
             _azMonList_Items = AzMonList.Initialize();
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("intKey", 1));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("stringKey", "test"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "localhost"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("boolKey", true));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, "8888"));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("arrayKey", new int[] { 1, 2, 3 }));
-           AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("somekey", "value"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("intKey", 1));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("schemeKey", "https"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("stringKey", "test"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("hostKey", "localhost"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("boolKey", true));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("portKey", "8888"));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("arrayKey", new int[] { 1, 2, 3 }));
+            AzMonList.Add(ref _azMonList_Items, new KeyValuePair<string, object>("somekey", "value"));
+
+            // Recognized attributes only, matching the MappedTags list in production.
+            _azMonList_Mapped = AzMonList.InitializeForMappedTags();
+            AzMonList.Add(ref _azMonList_Mapped, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));
+            AzMonList.Add(ref _azMonList_Mapped, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "localhost"));
+            AzMonList.Add(ref _azMonList_Mapped, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, "8888"));
 
             _tagObjects_Items = new Dictionary<string, object>
             {
@@ -175,7 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [Benchmark]
         public void GetTagValueBySlotAzMonList()
         {
-            _ = _azMonList_Items[SemanticSlot.HttpHost];
+            _ = _azMonList_Mapped[SemanticSlot.HttpHost];
         }
 
         // The real conversion path performs 13-26 lookups; a single lookup understates it.
@@ -193,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         {
             for (int i = 0; i < 26; i++)
             {
-                _ = _azMonList_Items[SemanticSlot.HttpHost];
+                _ = _azMonList_Mapped[SemanticSlot.HttpHost];
             }
         }
     }

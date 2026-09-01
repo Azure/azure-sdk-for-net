@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             try
             {
                 // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-                for (int i = 0; i < UnMappedTags.Length; i++)
+                for (int i = 0; i < UnMappedTags.ListCount; i++)
                 {
                     var tag = UnMappedTags[i];
                     AddKvpToDictionary(destination, tag);
@@ -198,7 +198,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true)
         {
             var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags);
-            activityTagsProcessor.CategorizeTags(activity);
+
+            try
+            {
+                activityTagsProcessor.CategorizeTags(activity);
+            }
+            catch
+            {
+                // Categorization stringifies caller-supplied values, so it can throw before the
+                // caller ever receives the processor to return its buffers.
+                activityTagsProcessor.Return();
+                throw;
+            }
+
             return activityTagsProcessor;
         }
 

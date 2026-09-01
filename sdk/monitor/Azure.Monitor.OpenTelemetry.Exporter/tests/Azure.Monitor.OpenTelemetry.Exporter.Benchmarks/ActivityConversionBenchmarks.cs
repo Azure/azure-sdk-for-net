@@ -52,18 +52,18 @@ slot array alone so a mapped list rents one pooled buffer instead of two. Every 
 improves against the baseline; the read-heavy shapes improve most because a conversion
 performs 13-26 attribute reads.
 
-| Method                | Mean       | Error       | StdDev   | Ratio | Gen0   | Allocated |
-|---------------------- |-----------:|------------:|---------:|------:|-------:|----------:|
-| HttpServer_NewSemConv | 1,356.7 ns |   224.72 ns | 12.32 ns |  1.00 | 0.0858 |   2.13 KB |
-| HttpServer_OldSemConv | 1,296.7 ns |   210.99 ns | 11.57 ns |  0.96 | 0.0782 |   1.94 KB |
-| HttpClient_NewSemConv | 1,322.8 ns |   157.20 ns |  8.62 ns |  0.98 | 0.0668 |   1.65 KB |
-| HttpClient_OldSemConv | 1,515.7 ns | 1,164.84 ns | 63.85 ns |  1.12 | 0.0629 |   1.56 KB |
-| DbClient_NewSemConv   |   960.3 ns |   119.32 ns |  6.54 ns |  0.71 | 0.0553 |   1.37 KB |
-| DbClient_OldSemConv   | 1,001.9 ns |   335.84 ns | 18.41 ns |  0.74 | 0.0534 |   1.34 KB |
-| Messaging             |   933.8 ns |    76.35 ns |  4.18 ns |  0.69 | 0.0677 |   1.67 KB |
-| AzureSdk              |   838.7 ns |   186.51 ns | 10.22 ns |  0.62 | 0.0563 |    1.4 KB |
-| OverrideAttributes    | 1,333.0 ns |   304.17 ns | 16.67 ns |  0.98 | 0.0687 |   1.72 KB |
-| ArrayValuedTags       | 1,808.0 ns |   501.17 ns | 27.47 ns |  1.33 | 0.1011 |   2.49 KB |
+| Method                | Mean       | Error     | StdDev  | Ratio | Gen0   | Allocated |
+|---------------------- |-----------:|----------:|--------:|------:|-------:|----------:|
+| HttpServer_NewSemConv | 1,363.5 ns |  56.16 ns | 3.08 ns |  1.00 | 0.0858 |   2.13 KB |
+| HttpServer_OldSemConv | 1,237.0 ns |  88.55 ns | 4.85 ns |  0.91 | 0.0782 |   1.94 KB |
+| HttpClient_NewSemConv | 1,293.4 ns | 103.95 ns | 5.70 ns |  0.95 | 0.0668 |   1.65 KB |
+| HttpClient_OldSemConv | 1,372.2 ns |  83.27 ns | 4.56 ns |  1.01 | 0.0629 |   1.56 KB |
+| DbClient_NewSemConv   |   924.0 ns |  34.60 ns | 1.90 ns |  0.68 | 0.0553 |   1.37 KB |
+| DbClient_OldSemConv   |   952.2 ns |   8.46 ns | 0.46 ns |  0.70 | 0.0544 |   1.34 KB |
+| Messaging             |   942.6 ns | 153.39 ns | 8.41 ns |  0.69 | 0.0668 |   1.67 KB |
+| AzureSdk              |   824.1 ns | 143.90 ns | 7.89 ns |  0.60 | 0.0563 |    1.4 KB |
+| OverrideAttributes    | 1,259.3 ns | 140.93 ns | 7.72 ns |  0.92 | 0.0687 |   1.72 KB |
+| ArrayValuedTags       | 1,744.7 ns | 143.73 ns | 7.88 ns |  1.28 | 0.1011 |   2.49 KB |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks

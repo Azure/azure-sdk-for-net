@@ -97,20 +97,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var activityTagsProcessor = new ActivityTagsProcessor();
             IDictionary<string, string> properties = new Dictionary<string, string>();
 
-            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" };
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["beforeNullKey"] = "first" };
             using var activity = CreateTestActivity(tagObjects);
 
             // Activity does not reject a null key, and instrumentation can supply one.
             activity.AddTag(null!, "nullKeyValue");
+            activity.AddTag("afterNullKey", "second");
 
             activityTagsProcessor.CategorizeTags(activity);
             TraceHelper.AddPropertiesToTelemetry(properties, ref activityTagsProcessor.UnMappedTags);
 
             Assert.Equal(0, activityTagsProcessor.MappedTags.Length);
-            Assert.Equal(1, activityTagsProcessor.UnMappedTags.Length);
+            Assert.Equal(2, activityTagsProcessor.UnMappedTags.Length);
 
-            // The tag that follows the null-keyed one must still reach the telemetry item.
-            Assert.Equal("value", properties["somekey"]);
+            // The tag following the null-keyed one must still reach the telemetry item.
+            Assert.Equal("first", properties["beforeNullKey"]);
+            Assert.Equal("second", properties["afterNullKey"]);
         }
 
         [Fact]

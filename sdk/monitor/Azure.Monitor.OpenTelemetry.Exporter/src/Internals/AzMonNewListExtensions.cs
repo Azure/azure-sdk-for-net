@@ -19,7 +19,7 @@ internal static class AzMonNewListExtensions
             var scheme = tagObjects[SemanticSlot.UrlScheme]?.ToString() ?? string.Empty;
             var host = tagObjects[SemanticSlot.ServerAddress]?.ToString() ?? string.Empty;
             var port = tagObjects[SemanticSlot.ServerPort]?.ToString();
-            port = port != null ? port = $":{port}" : string.Empty;
+            port = port != null ? $":{port}" : string.Empty;
             var path = tagObjects[SemanticSlot.UrlPath]?.ToString() ?? string.Empty;
             var queryString = tagObjects[SemanticSlot.UrlQuery]?.ToString() ?? string.Empty;
 

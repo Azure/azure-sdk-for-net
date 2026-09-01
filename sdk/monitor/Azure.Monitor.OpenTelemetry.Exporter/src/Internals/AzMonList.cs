@@ -19,14 +19,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private readonly object?[]? slots;
 
-        private AzMonList(KeyValuePair<string, object?>[]? data, int length, object?[]? slots)
+        private readonly int listCount;
+
+        private AzMonList(KeyValuePair<string, object?>[]? data, int listCount, int length, object?[]? slots)
         {
             this.data = data;
+            this.listCount = listCount;
             this.Length = length;
             this.slots = slots;
         }
 
+        /// <summary>
+        /// Total tags held, across both the slot array and the list buffer.
+        /// </summary>
         public int Length { get; }
+
+        /// <summary>
+        /// Tags held in the list buffer. A recognized attribute occupies a slot rather than a
+        /// list entry, so this trails <see cref="Length"/> for an instance holding both kinds.
+        /// </summary>
+        public int ListCount => this.listCount;
 
         public ref KeyValuePair<string, object?> this[int index]
         {
@@ -44,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public static AzMonList Initialize()
         {
-            return new AzMonList(ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(DefaultCapacity), 0, null);
+            return new AzMonList(ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(DefaultCapacity), 0, 0, null);
         }
 
         /// <summary>
@@ -52,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         public static AzMonList InitializeForMappedTags()
         {
-            return new AzMonList(null, 0, RentSlots());
+            return new AzMonList(null, 0, 0, RentSlots());
         }
 
         private static object?[] RentSlots()
@@ -95,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 length++;
             }
 
-            list = new AzMonList(list.data, length, slots);
+            list = new AzMonList(list.data, list.listCount, length, slots);
         }
 
         /// <summary>
@@ -104,23 +116,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public static void AddUnmapped(ref AzMonList list, KeyValuePair<string, object?> keyValuePair)
         {
             var data = list.data ?? ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(DefaultCapacity);
+            var listCount = list.listCount;
 
-            if (list.Length >= data.Length)
+            if (listCount >= data.Length)
             {
                 var previousData = data;
 
                 data = ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(previousData.Length * 2);
 
-                previousData.AsSpan(0, list.Length).CopyTo(data);
+                previousData.AsSpan(0, listCount).CopyTo(data);
 
                 // Entries hold references to caller-owned tag keys and values, so the used
                 // region is cleared before the buffer goes back to the shared pool.
-                Array.Clear(previousData, 0, list.Length);
+                Array.Clear(previousData, 0, listCount);
                 ArrayPool<KeyValuePair<string, object?>>.Shared.Return(previousData);
             }
 
-            data[list.Length] = keyValuePair;
-            list = new AzMonList(data, list.Length + 1, list.slots);
+            data[listCount] = keyValuePair;
+            list = new AzMonList(data, listCount + 1, list.Length + 1, list.slots);
         }
 
         public static object? GetTagValue(ref AzMonList list, string tagName)
@@ -136,7 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return null;
             }
 
-            int length = list.Length;
+            int length = list.listCount;
 
             for (int i = 0; i < length; i++)
             {
@@ -155,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (data != null)
             {
                 // Every return path clears its own used region, so unused slots are already clean.
-                Array.Clear(data, 0, Math.Min(this.Length, data.Length));
+                Array.Clear(data, 0, this.listCount);
                 ArrayPool<KeyValuePair<string, object?>>.Shared.Return(data);
             }
 
