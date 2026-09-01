@@ -21,9 +21,6 @@ namespace Azure.Security.CodeTransparency
     [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
-    [CodeGenSuppress("GetPublicKeys", typeof(RequestContext))]
-    [CodeGenSuppress("GetPublicKeysAsync", typeof(RequestContext))]
     [CodeGenSuppress("GetScittKeys", typeof(RequestContext))]
     [CodeGenSuppress("GetScittKeysAsync", typeof(RequestContext))]
     [CodeGenSuppress("GetScittKey", typeof(string), typeof(RequestContext))]
@@ -680,57 +677,15 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
-        {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jwks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get the public keys used by the service to sign receipts. </summary>
+        /// <summary> Get the public keys used by the service to verify receipts. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The raw JWK Set JSON response returned from the service. </returns>
-        public virtual Response GetPublicKeys(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetPublicKeysRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response GetPublicKeys(RequestContext context) => GetPublicKeysV09(context);
 
-        /// <summary> Get the public keys used by the service to sign receipts. </summary>
+        /// <summary> Get the public keys used by the service to verify receipts. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The raw JWK Set JSON response returned from the service. </returns>
-        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetPublicKeysRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context) => await GetPublicKeysV09Async(context).ConfigureAwait(false);
 
         /// <summary> Get the public keys used by the service to verify receipts, normalized to a key set. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
