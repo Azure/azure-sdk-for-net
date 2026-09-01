@@ -283,6 +283,50 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
+        internal PipelineMessage CreateGetAgentConversationItemGeneratedAudioRequest(string agentName, string conversationId, string itemId, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/endpoint/protocols/voice/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/audio/generated", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetAgentConversationItemGeneratedAudioContentRequest(string agentName, string conversationId, string itemId, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/endpoint/protocols/voice/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/audio/generated/content", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "audio/wav");
+            message.Apply(options);
+            return message;
+        }
+
         internal PipelineMessage CreateGetAgentConversationAudioRequest(string agentName, string conversationId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();

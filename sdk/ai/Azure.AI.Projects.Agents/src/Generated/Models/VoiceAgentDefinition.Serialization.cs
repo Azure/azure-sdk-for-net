@@ -82,8 +82,16 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("model_type"u8);
             writer.WriteStringValue(ModelType.ToString());
-            writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model);
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
+            if (Optional.IsDefined(TargetAgent))
+            {
+                writer.WritePropertyName("target_agent"u8);
+                writer.WriteObjectValue(TargetAgent, options);
+            }
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
@@ -179,6 +187,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(SubagentConfig))
+            {
+                writer.WritePropertyName("subagent_config"u8);
+                writer.WriteObjectValue(SubagentConfig, options);
+            }
             if (Optional.IsDefined(Store))
             {
                 writer.WritePropertyName("store"u8);
@@ -216,6 +229,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VoiceModelType modelType = default;
             string model = default;
+            VoiceAgentTargetAgent targetAgent = default;
             string instructions = default;
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
@@ -228,6 +242,7 @@ namespace Azure.AI.Projects.Agents
             BinaryData toolChoice = default;
             bool? parallelToolCalls = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
+            VoiceAgentSubAgentConfig subagentConfig = default;
             bool? store = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -253,6 +268,15 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("target_agent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAgent = VoiceAgentTargetAgent.DeserializeVoiceAgentTargetAgent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -379,6 +403,15 @@ namespace Azure.AI.Projects.Agents
                     structuredInputs = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("subagent_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subagentConfig = VoiceAgentSubAgentConfig.DeserializeVoiceAgentSubAgentConfig(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("store"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -399,6 +432,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 modelType,
                 model,
+                targetAgent,
                 instructions,
                 greeting,
                 audio,
@@ -411,6 +445,7 @@ namespace Azure.AI.Projects.Agents
                 toolChoice,
                 parallelToolCalls,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
+                subagentConfig,
                 store);
         }
     }

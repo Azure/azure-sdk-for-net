@@ -20,6 +20,8 @@ namespace Azure.AI.Projects.Agents
         private const string ManagedValue = "managed";
         /// <summary> The service uses the customer's own Foundry deployment named by `model`. </summary>
         private const string SelfDeployedValue = "self_deployed";
+        /// <summary> The service fronts a hosted text agent referenced by `target_agent`; `model` is not applicable in this mode. </summary>
+        private const string HostedAgentValue = "hosted_agent";
 
         /// <summary> Initializes a new instance of <see cref="VoiceModelType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,6 +38,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The service uses the customer's own Foundry deployment named by `model`. </summary>
         public static VoiceModelType SelfDeployed { get; } = new VoiceModelType(SelfDeployedValue);
+
+        /// <summary> The service fronts a hosted text agent referenced by `target_agent`; `model` is not applicable in this mode. </summary>
+        public static VoiceModelType HostedAgent { get; } = new VoiceModelType(HostedAgentValue);
 
         /// <summary> Determines if two <see cref="VoiceModelType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

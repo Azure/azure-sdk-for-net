@@ -59,9 +59,14 @@ namespace OpenAI
         private const string ResponseMcpCallCompletedValue = "response.mcp_call.completed";
         private const string ResponseMcpCallFailedValue = "response.mcp_call.failed";
         private const string WarningValue = "warning";
+        private const string SessionSubagentStartedValue = "session.subagent.started";
+        private const string SessionSubagentCompletedValue = "session.subagent.completed";
+        private const string SessionSubagentAbortedValue = "session.subagent.aborted";
         private const string SessionAvatarConnectingValue = "session.avatar.connecting";
         private const string SessionAvatarSwitchToSpeakingValue = "session.avatar.switch_to_speaking";
         private const string SessionAvatarSwitchToIdleValue = "session.avatar.switch_to_idle";
+        private const string RtcCallSdpCreatedValue = "rtc.call.sdp.created";
+        private const string RtcCallErrorValue = "rtc.call.error";
         private const string ResponseAudioTimestampDeltaValue = "response.audio_timestamp.delta";
         private const string ResponseAudioTimestampDoneValue = "response.audio_timestamp.done";
         private const string ResponseAnimationBlendshapesDeltaValue = "response.animation_blendshapes.delta";
@@ -221,6 +226,15 @@ namespace OpenAI
         /// <summary> Gets the Warning. </summary>
         public static RealtimeServerEventType Warning { get; } = new RealtimeServerEventType(WarningValue);
 
+        /// <summary> Gets the SessionSubagentStarted. </summary>
+        public static RealtimeServerEventType SessionSubagentStarted { get; } = new RealtimeServerEventType(SessionSubagentStartedValue);
+
+        /// <summary> Gets the SessionSubagentCompleted. </summary>
+        public static RealtimeServerEventType SessionSubagentCompleted { get; } = new RealtimeServerEventType(SessionSubagentCompletedValue);
+
+        /// <summary> Gets the SessionSubagentAborted. </summary>
+        public static RealtimeServerEventType SessionSubagentAborted { get; } = new RealtimeServerEventType(SessionSubagentAbortedValue);
+
         /// <summary> Gets the SessionAvatarConnecting. </summary>
         public static RealtimeServerEventType SessionAvatarConnecting { get; } = new RealtimeServerEventType(SessionAvatarConnectingValue);
 
@@ -229,6 +243,12 @@ namespace OpenAI
 
         /// <summary> Gets the SessionAvatarSwitchToIdle. </summary>
         public static RealtimeServerEventType SessionAvatarSwitchToIdle { get; } = new RealtimeServerEventType(SessionAvatarSwitchToIdleValue);
+
+        /// <summary> Gets the RtcCallSdpCreated. </summary>
+        public static RealtimeServerEventType RtcCallSdpCreated { get; } = new RealtimeServerEventType(RtcCallSdpCreatedValue);
+
+        /// <summary> Gets the RtcCallError. </summary>
+        public static RealtimeServerEventType RtcCallError { get; } = new RealtimeServerEventType(RtcCallErrorValue);
 
         /// <summary> Gets the ResponseAudioTimestampDelta. </summary>
         public static RealtimeServerEventType ResponseAudioTimestampDelta { get; } = new RealtimeServerEventType(ResponseAudioTimestampDeltaValue);

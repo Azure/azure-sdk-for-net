@@ -1622,6 +1622,262 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// [Protocol Method] Returns metadata for a conversation item's generated audio. This subordinate artifact is separate from the
+        /// canonical heard-audio segment and exists only when playback was interrupted and the service rendered more audio
+        /// than the listener heard, including when the response ends as cancelled. Returns `404` when the conversation or
+        /// item was not persisted, or when no generated audio exists beyond the heard segment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio metadata is retrieved. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns metadata for a conversation item's generated audio. This subordinate artifact is separate from the
+        /// canonical heard-audio segment and exists only when playback was interrupted and the service rendered more audio
+        /// than the listener heard, including when the response ends as cancelled. Returns `404` when the conversation or
+        /// item was not persisted, or when no generated audio exists beyond the heard segment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio metadata is retrieved. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns metadata for a conversation item's generated audio. This subordinate artifact is separate from the
+        /// canonical heard-audio segment and exists only when playback was interrupted and the service rendered more audio
+        /// than the listener heard, including when the response ends as cancelled. Returns `404` when the conversation or
+        /// item was not persisted, or when no generated audio exists beyond the heard segment.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio metadata is retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<VoiceGeneratedItemAudioResponse> GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+            ClientResult result = GetAgentConversationItemGeneratedAudio(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((VoiceGeneratedItemAudioResponse)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Returns metadata for a conversation item's generated audio. This subordinate artifact is separate from the
+        /// canonical heard-audio segment and exists only when playback was interrupted and the service rendered more audio
+        /// than the listener heard, including when the response ends as cancelled. Returns `404` when the conversation or
+        /// item was not persisted, or when no generated audio exists beyond the heard segment.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio metadata is retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<VoiceGeneratedItemAudioResponse>> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+            ClientResult result = await GetAgentConversationItemGeneratedAudioAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((VoiceGeneratedItemAudioResponse)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Streams a conversation item's generated audio as a WAV (`audio/wav`) byte stream through the service. This
+        /// subordinate artifact exists only when playback was interrupted and the service rendered more audio than the
+        /// listener heard, including when the response ends as cancelled. This route serves Foundry-managed storage only.
+        /// For bring-your-own-storage (BYOS) recordings the bytes are not proxied, so this route returns `409 Conflict`.
+        /// Returns `404` when the conversation or item was not persisted, or when no generated audio exists beyond the
+        /// heard segment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio is streamed. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioContentRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Streams a conversation item's generated audio as a WAV (`audio/wav`) byte stream through the service. This
+        /// subordinate artifact exists only when playback was interrupted and the service rendered more audio than the
+        /// listener heard, including when the response ends as cancelled. This route serves Foundry-managed storage only.
+        /// For bring-your-own-storage (BYOS) recordings the bytes are not proxied, so this route returns `409 Conflict`.
+        /// Returns `404` when the conversation or item was not persisted, or when no generated audio exists beyond the
+        /// heard segment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio is streamed. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioContentRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Streams a conversation item's generated audio as a WAV (`audio/wav`) byte stream through the service. This
+        /// subordinate artifact exists only when playback was interrupted and the service rendered more audio than the
+        /// listener heard, including when the response ends as cancelled. This route serves Foundry-managed storage only.
+        /// For bring-your-own-storage (BYOS) recordings the bytes are not proxied, so this route returns `409 Conflict`.
+        /// Returns `404` when the conversation or item was not persisted, or when no generated audio exists beyond the
+        /// heard segment.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio is streamed. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<BinaryData> GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+            ClientResult result = GetAgentConversationItemGeneratedAudioContent(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Streams a conversation item's generated audio as a WAV (`audio/wav`) byte stream through the service. This
+        /// subordinate artifact exists only when playback was interrupted and the service rendered more audio than the
+        /// listener heard, including when the response ends as cancelled. This route serves Foundry-managed storage only.
+        /// For bring-your-own-storage (BYOS) recordings the bytes are not proxied, so this route returns `409 Conflict`.
+        /// Returns `404` when the conversation or item was not persisted, or when no generated audio exists beyond the
+        /// heard segment.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the item. </param>
+        /// <param name="itemId"> The id of the conversation item whose generated audio is streamed. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<BinaryData>> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+            ClientResult result = await GetAgentConversationItemGeneratedAudioContentAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// [Protocol Method] Returns metadata for the whole-call merged stereo recording (user audio on the left channel, agent audio
         /// on the right). The common metadata (format, sample rate, channels, channel layout, duration) is returned
         /// for both Foundry-managed and bring-your-own-storage (BYOS) recordings; for BYOS the response additionally

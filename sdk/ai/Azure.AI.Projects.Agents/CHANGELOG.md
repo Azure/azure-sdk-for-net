@@ -5,8 +5,12 @@
 ### Features Added
 
 - Added a `digitalWorkerType` parameter to `ProjectsAgentsModelFactory.ProjectsAgentRecord` for mocking the (preview) `DigitalWorkerType` value.
+- Added `VoiceModelType.HostedAgent` support for fronting a hosted text agent (referenced by the new `VoiceAgentDefinition.TargetAgent`) as a voice agent's conversational backend.
+- Added `VoiceAgentDefinition.SubagentConfig` for configuring sibling Foundry text agents that a voice agent may consult as background specialists.
 
 ### Breaking Changes
+
+- Removed the `model` parameter from the public `VoiceAgentDefinition(VoiceModelType, string)` constructor; use the new `VoiceAgentDefinition(VoiceModelType)` constructor and set the now-optional `Model` property instead (required for `Managed`/`SelfDeployed` model types; omit it when using the new `HostedAgent` model type with `TargetAgent`).
 
 ### Bugs Fixed
 

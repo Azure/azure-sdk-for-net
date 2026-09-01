@@ -27,6 +27,7 @@ namespace Azure.AI.Projects.Agents
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         [Experimental("AAIP001")]
         private AgentEndpointConversations _cachedAgentEndpointConversations;
+        private AgentTelephony _cachedAgentTelephony;
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
 
@@ -90,6 +91,12 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentEndpointConversations GetAgentEndpointConversationsClient()
         {
             return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        }
+
+        /// <summary> Initializes a new instance of AgentTelephony. </summary>
+        public virtual AgentTelephony GetAgentTelephonyClient()
+        {
+            return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
         }
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
