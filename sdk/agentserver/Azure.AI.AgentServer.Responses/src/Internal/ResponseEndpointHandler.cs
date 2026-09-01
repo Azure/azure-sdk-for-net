@@ -113,6 +113,7 @@ internal sealed class ResponseEndpointHandler
             var requestNode = JsonNode.Parse(bodyBytes)
                 ?? throw new BadRequestException("Request body is required.");
             InternalMetadataEgress.Strip(requestNode);
+            WireShorthandNormalizer.Normalize(requestNode);
             var sanitizedBodyBytes = JsonSerializer.SerializeToUtf8Bytes(requestNode, SharedJsonOptions.Instance);
 
             // Deserialize from the sanitized bytes
