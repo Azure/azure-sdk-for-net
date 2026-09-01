@@ -18,6 +18,16 @@ namespace Azure.Provisioning.AppContainers
             set => PeerTrafficEncryptionIsEnabled = value;
         }
 
+        /// <summary> Gets or sets whether mutual TLS authentication is enabled. </summary>
+        // The TypeSpec generator uses the improved PeerAuthenticationIsMtlsEnabled name after https://github.com/Azure/azure-sdk-for-net/issues/60921.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use PeerAuthenticationIsMtlsEnabled instead.")]
+        public BicepValue<bool> IsMtlsEnabled
+        {
+            get => PeerAuthenticationIsMtlsEnabled;
+            set => PeerAuthenticationIsMtlsEnabled = value;
+        }
+
         public static partial class ResourceVersions
         {
             // Preserve historical API versions that shipped from the reflection-based provisioning generator.

@@ -230,6 +230,8 @@ namespace Azure.Provisioning.AppContainers
         public ContainerAppCertificateProperties() { }
         public Azure.Provisioning.AppContainers.ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> IssueOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Issuer { get { throw null; } }
@@ -451,6 +453,8 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<System.BinaryData> CertificateValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomDomainVerificationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DnsSuffix { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SubjectName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
@@ -1225,6 +1229,8 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ManagedEnvironmentIngressConfiguration IngressConfiguration { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PeerTrafficEncryptionIsEnabled instead.")]
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PeerAuthenticationIsMtlsEnabled instead.")]
+        public Azure.Provisioning.BicepValue<bool> IsMtlsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsZoneRedundant { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KedaVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
