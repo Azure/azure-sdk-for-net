@@ -195,6 +195,21 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public void FileUriBuilder_FileIdEmptyForPathBasedUri()
+        {
+            // Arrange
+            var uriString = "https://account.file.core.windows.net/share/directory/file";
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(new Uri(uriString));
+
+            // Assert
+            Assert.IsNotNull(fileUriBuilder.FileId);
+            Assert.AreEqual("", fileUriBuilder.FileId);
+            Assert.AreEqual("directory/file", fileUriBuilder.DirectoryOrFilePath);
+        }
+
+        [RecordedTest]
         public void FileUriBuilder_FileIdAndSnapshotTest()
         {
             // Arrange

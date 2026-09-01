@@ -569,7 +569,7 @@ namespace Azure.Storage.Files.Shares
                 _shareName ??= builder.ShareName;
                 _accountName ??= builder.AccountName;
                 _path ??= builder.DirectoryOrFilePath;
-                _fileId ??= builder.FileId;
+                _fileId ??= builder.FileId; // this will be empty if the client is path-addressed
             }
         }
 
