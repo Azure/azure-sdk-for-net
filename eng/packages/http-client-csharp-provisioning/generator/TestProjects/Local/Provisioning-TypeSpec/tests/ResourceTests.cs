@@ -114,8 +114,8 @@ public class ResourceTests
               properties: {
                 description: 'specialized profile'
               }
-              parent: store
               kind: 'Specialized'
+              parent: store
             }
             """);
     }
