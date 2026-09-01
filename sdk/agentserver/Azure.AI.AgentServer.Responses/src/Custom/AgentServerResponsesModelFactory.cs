@@ -68,7 +68,7 @@ internal static partial class AgentServerResponsesModelFactory
         ResponseErrorCode code = default,
         string message = default!)
     {
-        return new ResponseErrorInfo(code, message, additionalBinaryDataProperties: null);
+        return Internal.OpenAIModelFactory.CreateError(code.ToString(), message);
     }
 
     /// <summary>Creates a <see cref="ResponseObject"/> instance for mocking.</summary>
@@ -89,50 +89,27 @@ internal static partial class AgentServerResponsesModelFactory
     {
         output ??= new List<OutputItem>();
 
-        return new ResponseObject(
-            metadata: null,
-            topLogprobs: null,
-            temperature: null,
-            topP: null,
-            user: null,
-            safetyIdentifier: null,
-            promptCacheKey: null,
-            serviceTier: null,
-            promptCacheRetention: null,
-            previousResponseId: null,
-            model: model,
-            reasoning: null,
-            background: null,
-            maxOutputTokens: null,
-            maxToolCalls: null,
-            text: null,
-            tools: new List<Tool>(),
-            toolChoice: null,
-            prompt: null,
-            truncation: null,
-            id: id,
-            @object: null,
-            status: status,
-            createdAt: createdAt,
-            completedAt: null,
-            error: error,
-            incompleteDetails: null,
-            output: output.ToList(),
-            instructions: null,
-            outputText: null,
-            usage: null,
-            parallelToolCalls: default,
-            conversation: null,
-            agent: null,
-            agentSessionId: null,
-            agentReference: null,
-            additionalBinaryDataProperties: null);
+        var response = new ResponseObject
+        {
+            Id = id,
+            Model = model,
+            Status = status,
+            CreatedAt = createdAt,
+            Error = error,
+        };
+
+        foreach (var item in output)
+        {
+            response.OutputItems.Add(item);
+        }
+
+        return response;
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseCreatedEvent"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseCreatedEvent"/> instance for mocking.</summary>
     /// <param name="sequenceNumber">The SSE sequence number.</param>
     /// <param name="response">The response object.</param>
-    /// <returns>A new <see cref="Models.ResponseCreatedEvent"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseCreatedEvent"/> instance.</returns>
     public static ResponseCreatedEvent ResponseCreatedEvent(
         ResponseObject response = default!,
         long sequenceNumber = default)
@@ -174,13 +151,13 @@ internal static partial class AgentServerResponsesModelFactory
             additionalBinaryDataProperties: null);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseUsage"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseUsage"/> instance for mocking.</summary>
     /// <param name="inputTokens">The number of input tokens.</param>
     /// <param name="inputTokensDetails">A detailed breakdown of the input tokens.</param>
     /// <param name="outputTokens">The number of output tokens.</param>
     /// <param name="outputTokensDetails">A detailed breakdown of the output tokens.</param>
     /// <param name="totalTokens">The total number of tokens used.</param>
-    /// <returns>A new <see cref="Models.ResponseUsage"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseUsage"/> instance.</returns>
     public static ResponseUsage ResponseUsage(
         long inputTokens = default,
         ResponseUsageInputTokensDetails inputTokensDetails = default!,
@@ -188,9 +165,16 @@ internal static partial class AgentServerResponsesModelFactory
         ResponseUsageOutputTokensDetails outputTokensDetails = default!,
         long totalTokens = default)
     {
-        inputTokensDetails ??= new ResponseUsageInputTokensDetails(cachedTokens: 0);
-        outputTokensDetails ??= new ResponseUsageOutputTokensDetails(reasoningTokens: 0);
+        inputTokensDetails ??= new ResponseUsageInputTokensDetails();
+        outputTokensDetails ??= new ResponseUsageOutputTokensDetails();
 
-        return new ResponseUsage(inputTokens, inputTokensDetails, outputTokens, outputTokensDetails, totalTokens);
+        return new ResponseUsage
+        {
+            InputTokenCount = (int)inputTokens,
+            InputTokenDetails = inputTokensDetails,
+            OutputTokenCount = (int)outputTokens,
+            OutputTokenDetails = outputTokensDetails,
+            TotalTokenCount = (int)totalTokens,
+        };
     }
 }

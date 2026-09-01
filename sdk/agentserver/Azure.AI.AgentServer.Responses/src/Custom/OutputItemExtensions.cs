@@ -85,21 +85,9 @@ public static class OutputItemExtensions
             case OutputItemReasoningItem m:
                 id = m.Id;
                 return true;
-            case OutputItemCompactionBody m:
-                id = m.Id;
-                return true;
-            case OutputItemLocalShellToolCall m:
-                id = m.Id;
-                return true;
-            case OutputItemLocalShellToolCallOutput m:
-                id = m.Id;
-                return true;
-            case OutputItemFunctionShellCall m:
-                id = m.Id;
-                return true;
-            case OutputItemFunctionShellCallOutput m:
-                id = m.Id;
-                return true;
+
+            // The shell and compaction items are request-side only (the ItemField union in the
+            // spec); they never appear as response output items.
             case OutputItemApplyPatchToolCall m:
                 id = m.Id;
                 return true;

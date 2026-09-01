@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 public static class CreateResponseExtensions
 {
     /// <summary>
-    /// Extracts the conversation ID from the <see cref="CreateResponse.Conversation"/> field,
+    /// Extracts the conversation ID from the <see cref="CreateResponse.ConversationOptions"/> field,
     /// which may be a plain string ID or a JSON object with an <c>id</c> property.
     /// Returns <c>null</c> if no conversation context is present.
     /// </summary>
@@ -54,7 +54,7 @@ public static class CreateResponseExtensions
     }
 
     /// <summary>
-    /// Expands the <see cref="CreateResponse.Input"/> BinaryData into a typed list of
+    /// Expands the <see cref="CreateResponse.InputItems"/> BinaryData into a typed list of
     /// <see cref="Item"/> objects. A plain string input is wrapped as a single
     /// <see cref="ItemMessage"/> with <see cref="MessageRole.User"/> role and text content.
     /// Array elements without a <c>"type"</c> discriminator default to
@@ -104,7 +104,7 @@ public static class CreateResponseExtensions
     }
 
     /// <summary>
-    /// Expands the <see cref="CreateResponse.Conversation"/> BinaryData into a typed
+    /// Expands the <see cref="CreateResponse.ConversationOptions"/> BinaryData into a typed
     /// <see cref="ConversationParam"/>. A plain string is treated as the conversation ID.
     /// </summary>
     /// <param name="request">The create-response request.</param>

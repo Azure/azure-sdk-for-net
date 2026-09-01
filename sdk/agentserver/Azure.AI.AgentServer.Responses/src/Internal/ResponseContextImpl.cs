@@ -119,7 +119,7 @@ internal sealed class ResponseContextImpl : ResponseContext
     {
         string? conversationId = _request.GetConversationId();
         string? previousResponseId = _request.PreviousResponseId;
-        AgentReference? agentReference = _request.AgentReference ?? _request.Agent;
+        AgentReference? agentReference = _request.AgentReference;
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = _request.AgentSessionId is { Length: > 0 } sid
             ? sid

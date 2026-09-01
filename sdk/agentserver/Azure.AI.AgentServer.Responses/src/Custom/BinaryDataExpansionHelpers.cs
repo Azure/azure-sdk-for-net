@@ -134,12 +134,7 @@ internal static class BinaryDataExpansionHelpers
     }
 
     private static ItemMessage CreateStringInstructionMessage(string text)
-    {
-        var message = new ItemMessage();
-        message.Patch.Set("$.role"u8, "developer");
-        message.Content.Add(ResponseContentPart.CreateInputTextPart(text));
-        return message;
-    }
+        => (ItemMessage)ResponseItem.CreateDeveloperMessageItem(text);
 
     private static BinaryData Serialize<T>(T model)
         where T : notnull
@@ -173,14 +168,9 @@ internal static class BinaryDataExpansionHelpers
                     $"Expected a JSON object in the item array, but got {element.ValueKind}.");
             }
 
-            if (element.TryGetProperty("type", out _))
-            {
-                items.Add(Item.DeserializeItem(element, ModelReaderWriterOptions.Json));
-            }
-            else
-            {
-                items.Add(ItemMessage.DeserializeItemMessage(element, ModelReaderWriterOptions.Json));
-            }
+            var json = BinaryData.FromString(element.GetRawText());
+            items.Add(ModelReaderWriter.Read<Item>(
+                json, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!);
         }
 
         return items;
@@ -196,5 +186,4 @@ internal static class BinaryDataExpansionHelpers
 
         return items;
     }
-
 }

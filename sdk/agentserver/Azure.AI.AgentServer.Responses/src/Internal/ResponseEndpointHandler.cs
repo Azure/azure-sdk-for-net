@@ -702,7 +702,7 @@ internal sealed class ResponseEndpointHandler
     private static string DeriveConversationChainId(
         CreateResponse request, string? conversationId, string responseId, bool steerable)
     {
-        AgentReference? agentReference = request.AgentReference ?? request.Agent;
+        AgentReference? agentReference = request.AgentReference;
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = request.AgentSessionId is { Length: > 0 } sid
             ? sid
@@ -845,8 +845,10 @@ internal sealed class ResponseEndpointHandler
             }
         }
 
-        return new ResponseObject(responseId, request.Model ?? string.Empty)
+        return new ResponseObject
         {
+            Id = responseId,
+            Model = request.Model ?? string.Empty,
             Status = ResponseStatus.Queued,
         };
     }

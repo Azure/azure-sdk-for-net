@@ -42,7 +42,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this message.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var message = ResponseItem.CreateAssistantMessageItem(Array.Empty<MessageContent>());
+        var message = ResponseItem.CreateAssistantMessageItem(Array.Empty<ResponseContentPart>());
         message.Id = _itemId;
         message.Status = MessageStatus.InProgress;
         return EmitAdded(message);
@@ -195,7 +195,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
             ]);
         }
 
-        var completedContents = new List<MessageContent>();
+        var completedContents = new List<ResponseContentPart>();
         for (int i = 0; i < _contentBuilders.Count; i++)
         {
             object builder = _contentBuilders[i];

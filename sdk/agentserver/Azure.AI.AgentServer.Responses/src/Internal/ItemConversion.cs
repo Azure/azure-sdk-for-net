@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Internal utility for preparing <see cref="Item"/> instances from
-/// <see cref="CreateResponse.Input"/> for storage and retrieval via the provider.
+/// <see cref="CreateResponse.InputItems"/> for storage and retrieval via the provider.
 /// Each item receives a correctly prefixed ID via <see cref="IdGenerator.NewItemId"/>.
 /// </summary>
 /// <remarks>

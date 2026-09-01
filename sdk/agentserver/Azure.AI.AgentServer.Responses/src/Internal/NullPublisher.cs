@@ -31,7 +31,7 @@ internal sealed class NullPublisher : IAsyncObserver<ResponseStreamEvent>
     /// </summary>
     public ValueTask OnNextAsync(ResponseStreamEvent value)
     {
-        value.SequenceNumber = _nextSequenceNumber++;
+        value.SequenceNumber = (int)_nextSequenceNumber++;
         return ValueTask.CompletedTask;
     }
 

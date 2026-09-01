@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Constructs OpenAI response models that expose no accessible constructor.
 /// </summary>
 /// <remarks>
-/// Several <c>OpenAI.Responses</c> models (notably <see cref="ResponseError"/> and
+/// Several <c>OpenAI.Responses</c> models (notably <see cref="OpenAI.Responses.ResponseError"/> and
 /// <see cref="ResponseIncompleteStatusDetails"/>) declare every constructor <c>internal</c>
 /// and every property get-only, because the OpenAI library only ever materializes them
 /// while reading a service response. This server implementation has to produce them, so
@@ -24,14 +24,14 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 [Experimental("AAIP002")]
 internal static class OpenAIModelFactory
 {
-    /// <summary>Creates a <see cref="ResponseError"/> with the supplied code and message.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.ResponseError"/> with the supplied code and message.</summary>
     /// <param name="code">The error code written to <c>code</c>.</param>
     /// <param name="message">The human readable error message.</param>
     /// <param name="param">The offending request parameter, when known.</param>
     /// <param name="kind">The error category written to <c>type</c>.</param>
-    /// <returns>A populated <see cref="ResponseError"/>.</returns>
-    public static ResponseError CreateError(string? code, string? message, string? param = null, string? kind = null)
-        => Read<ResponseError>(writer =>
+    /// <returns>A populated <see cref="OpenAI.Responses.ResponseError"/>.</returns>
+    public static OpenAI.Responses.ResponseError CreateError(string? code, string? message, string? param = null, string? kind = null)
+        => Read<OpenAI.Responses.ResponseError>(writer =>
         {
             writer.WriteStartObject();
             writer.WriteString("code"u8, code ?? ResponseErrorCode.ServerError.ToString());

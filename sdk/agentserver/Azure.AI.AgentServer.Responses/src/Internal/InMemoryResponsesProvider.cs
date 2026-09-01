@@ -396,7 +396,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <summary>
-    /// Extracts output items from <see cref="ResponseObject.Output"/>, stores new ones in the item store,
+    /// Extracts output items from <see cref="ResponseObject.OutputItems"/>, stores new ones in the item store,
     /// and updates the output item ID list for the response.
     /// </summary>
     private void StoreOutputItems(ResponseObject response)
@@ -429,7 +429,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// </summary>
     private void AddToConversation(ResponseObject response)
     {
-        var conversationId = response.ConversationOptions?.Id;
+        var conversationId = response.ConversationOptions?.ConversationId;
         if (conversationId is null)
         {
             return;
@@ -452,7 +452,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// </summary>
     private void AddOutputToConversation(ResponseObject response)
     {
-        var conversationId = response.ConversationOptions?.Id;
+        var conversationId = response.ConversationOptions?.ConversationId;
         if (conversationId is null)
         {
             return;

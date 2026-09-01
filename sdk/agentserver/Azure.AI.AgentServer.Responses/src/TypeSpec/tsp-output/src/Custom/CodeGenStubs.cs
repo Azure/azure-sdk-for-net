@@ -10,4 +10,3 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// </summary>
 [CodeGenType("ConversationParam2")]
 public partial class ConversationParam { }
-

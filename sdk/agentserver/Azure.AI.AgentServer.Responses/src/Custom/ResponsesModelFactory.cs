@@ -57,10 +57,10 @@ public static class ResponsesModelFactory
             message: message);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseCreatedEvent"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseCreatedEvent"/> instance for mocking.</summary>
     /// <param name="response">The response object.</param>
     /// <param name="sequenceNumber">The SSE sequence number.</param>
-    /// <returns>A new <see cref="Models.ResponseCreatedEvent"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseCreatedEvent"/> instance.</returns>
     public static ResponseCreatedEvent ResponseCreatedEvent(
         ResponseObject response = default!,
         long sequenceNumber = default)

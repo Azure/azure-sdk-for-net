@@ -976,7 +976,7 @@ internal sealed class ResponseOrchestrator
 
             if (exception is ResponsesApiException apiEx)
             {
-                var errorCode = apiEx.Error.Code ?? "server_error";
+                var errorCode = apiEx.Error.Code.ToString() ?? "server_error";
                 var errorMessage = apiEx.Error.Message;
                 currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode, errorCode);
                 currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage, errorMessage);

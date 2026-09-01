@@ -67,7 +67,7 @@ public class TextContentBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = ResponseContentPart.CreateOutputTextPart(string.Empty);
+        var part = ResponseContentPart.CreateOutputTextPart(string.Empty, Array.Empty<OpenAI.Responses.ResponseMessageAnnotation>());
         return new ResponseContentPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 

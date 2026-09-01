@@ -124,13 +124,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            Error error = default;
+            ApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("error"u8))
                 {
-                    error = ApiError.DeserializeApiError(prop.Value, options);
+                    error = ApiError.DeserializeError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

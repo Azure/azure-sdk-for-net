@@ -110,7 +110,7 @@ public class ResponseContext
 
     /// <summary>
     /// Resolves input items and extracts all text content as a single string.
-    /// Filters for <see cref="Models.ItemMessage"/> items, expands their content,
+    /// Filters for <see cref="ItemMessage"/> items, expands their content,
     /// and joins all text values with newline separators.
     /// </summary>
     /// <param name="resolveReferences">

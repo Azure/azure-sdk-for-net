@@ -44,9 +44,6 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCallOutput"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="createdBy"> The information about the creator of the item. </param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="id"> The unique ID of the custom tool call output in the OpenAI platform. </param>
         /// <param name="callId"> The call ID, used to map this custom tool call output to a custom tool call. </param>
         /// <param name="output">

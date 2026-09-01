@@ -40,7 +40,7 @@ public class ResponseEventStream
             AgentReference = request.AgentReference,
             BackgroundModeEnabled = request.BackgroundModeEnabled,
             ConversationOptions = conversationId != null
-                ? new ConversationReference { ConversationId = conversationId }
+                ? new ConversationReference(conversationId)
                 : null,
             PreviousResponseId = request.PreviousResponseId,
         };
@@ -701,8 +701,8 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemComputerCall(
         string callId,
         ComputerAction action,
-        IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks,
-        ItemComputerToolCallStatus status)
+        IEnumerable<ComputerCallSafetyCheck> pendingSafetyChecks,
+        ComputerCallStatus status)
     {
         var builder = AddOutputItemComputerCall();
         var item = new OutputItemComputerToolCall(callId, action, pendingSafetyChecks)
@@ -744,7 +744,7 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemApplyPatchCall(
         string callId,
         ApplyPatchCallStatus status,
-        ApplyPatchFileOperation operation)
+        ApplyPatchOperation operation)
     {
         var builder = AddOutputItemApplyPatchCall();
         var item = new OutputItemApplyPatchToolCall(callId, operation)
@@ -806,7 +806,7 @@ public class ResponseEventStream
         string arguments)
     {
         var builder = AddOutputItemMcpApprovalRequest();
-        var item = new OutputItemMcpApprovalRequest(serverLabel, name, BinaryData.FromString(arguments)) { Id = builder.ItemId };
+        var item = new OutputItemMcpApprovalRequest(builder.ItemId, serverLabel, name, BinaryData.FromString(arguments));
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }

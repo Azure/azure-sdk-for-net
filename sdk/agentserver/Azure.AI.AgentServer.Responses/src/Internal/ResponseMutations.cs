@@ -165,7 +165,7 @@ internal static class ResponseMutations
 
         if (reason is not null)
         {
-            response.IncompleteStatusDetails = new ResponseIncompleteDetails { Reason = reason };
+            response.IncompleteStatusDetails = OpenAIModelFactory.CreateIncompleteDetails(reason?.ToString());
         }
 
         if (usage is not null)

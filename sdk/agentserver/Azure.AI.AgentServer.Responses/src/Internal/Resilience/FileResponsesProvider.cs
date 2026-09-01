@@ -92,7 +92,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
         StoreOutputItems(record, response);
         AddToConversation(response);
-        record.ConversationId = response.ConversationOptions?.Id;
+        record.ConversationId = response.ConversationOptions?.ConversationId;
 
         WriteRecord(record);
         return Task.CompletedTask;
@@ -124,7 +124,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
         StoreOutputItems(record, response);
         AddToConversation(response);
-        record.ConversationId ??= response.ConversationOptions?.Id;
+        record.ConversationId ??= response.ConversationOptions?.ConversationId;
 
         WriteRecord(record);
         return Task.CompletedTask;
@@ -310,7 +310,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
     private void AddToConversation(ResponseObject response)
     {
-        var conversationId = response.ConversationOptions?.Id;
+        var conversationId = response.ConversationOptions?.ConversationId;
         if (conversationId is null)
         {
             return;

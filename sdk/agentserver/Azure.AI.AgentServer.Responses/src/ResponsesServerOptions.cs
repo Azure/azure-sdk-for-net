@@ -67,7 +67,7 @@ public class ResponsesServerOptions
     /// <see langword="null"/> (the default) a minimal envelope
     /// (<c>status="queued"</c>, empty output) is returned. If the hook throws, the framework falls
     /// back to the default envelope and logs a warning. The returned object's status is normalized
-    /// to <see cref="Models.ResponseStatus.Queued"/> when unset.
+    /// to <see cref="ResponseStatus.Queued"/> when unset.
     /// </summary>
     public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 }

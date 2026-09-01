@@ -67,7 +67,7 @@ internal static class ApiErrorFactory
     /// Creates an <see cref="IResult"/> wrapping a pre-built <see cref="ResponsesApiException"/>.
     /// </summary>
     internal static ApiErrorResult FromApiException(ResponsesApiException ex)
-        => new(ModelFactory.ApiErrorResponse(ex.Error), ex.StatusCode);
+        => new(ModelFactory.ApiErrorResponse(ToApiError(ex.Error)), ex.StatusCode);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a <see cref="PayloadValidationException"/>
@@ -75,7 +75,7 @@ internal static class ApiErrorFactory
     /// </summary>
     internal static ApiErrorResult PayloadValidation(PayloadValidationException ex)
     {
-        var detailsList = new List<Error>();
+        var detailsList = new List<ApiError>();
         foreach (var validationError in ex.Errors)
         {
             detailsList.Add(ModelFactory.ApiError(
@@ -100,7 +100,17 @@ internal static class ApiErrorFactory
     /// Used when constructing <see cref="ResponsesApiException"/> to throw.
     /// </summary>
     internal static Error NewServerError(string message)
-        => ModelFactory.ApiError(code: "server_error", message: message, type: "server_error");
+        => OpenAIModelFactory.CreateError("server_error", message, kind: "server_error");
+
+    /// <summary>
+    /// Projects an <see cref="Error"/> onto the Azure-extended <see cref="ApiError"/> body model.
+    /// </summary>
+    internal static ApiError ToApiError(Error error)
+        => ModelFactory.ApiError(
+            code: error?.Code.ToString(),
+            message: error?.Message ?? GenericServerErrorMessage,
+            param: error?.Param,
+            type: error?.Patch.GetString("$.type"u8) ?? "server_error");
 
     /// <summary>
     /// Creates a <see cref="ResponsesApiException"/> with HTTP 500 and the
@@ -159,7 +169,7 @@ internal static class ApiErrorFactory
     internal static ResponseErrorInfo ToResponseError(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new ResponseErrorInfo(ParseResponseErrorCode(code), message);
+        return OpenAIModelFactory.CreateError(ParseResponseErrorCode(code).ToString(), message);
     }
 
     // --- SSE standalone error event ---
