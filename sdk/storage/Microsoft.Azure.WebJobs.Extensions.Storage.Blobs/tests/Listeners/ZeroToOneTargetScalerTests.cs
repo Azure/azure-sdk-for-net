@@ -20,23 +20,89 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 {
     public class ZeroToOneTargetScalerTests
     {
+        // A single PutBlob entry for 'test-blobs/basic/test.txt'. 'Timestamp=' is replaced by each test case.
+        private const string PutBlobLogContent = "1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;";
+
         public ZeroToOneTargetScalerTests()
         {
         }
 
         [Test]
         [TestCase("Sample log content", 10, "sc-test-blobs/basic", 0, 0)]
-        [TestCase("1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;",
-            10, "test-blobs/basic", 1, 1)]
-        [TestCase("1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;",
-            180, "test-blobs/basic", 1, 0)]
-        [TestCase("1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;",
-            10, "test-blobs1/basic", 0, 0)]
-        public async Task GetScaleResultAsync_WorkAsExpected(string logBlobContent, int offsetInMinutes, string blobPath, int expectedTargetWorkerCount, int excpectedChachReads)
+        [TestCase(PutBlobLogContent, 10, "test-blobs/basic/test.txt", 1, 1)]
+        [TestCase(PutBlobLogContent, 180, "test-blobs/basic/test.txt", 1, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs1/basic", 0, 0)]
+        // Container-only pattern matches any write in the container.
+        [TestCase(PutBlobLogContent, 10, "test-blobs", 1, 1)]
+        // Binding parameters are matched against the whole path, and '{name}' spans '/'.
+        [TestCase(PutBlobLogContent, 10, "test-blobs/{name}.txt", 1, 1)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/basic/{name}", 1, 1)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/{name}.json", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/other/{name}", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/basic", 0, 0)]
+        // An unparsable path degrades to container-only matching.
+        [TestCase(PutBlobLogContent, 10, "test-blobs/", 1, 1)]
+        // A path with no usable container name never scales out.
+        [TestCase(PutBlobLogContent, 10, "", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, null, 0, 0)]
+        public async Task GetScaleResultAsync_WorkAsExpected(string logBlobContent, int offsetInMinutes, string blobPath, int expectedTargetWorkerCount, int expectedCacheReads)
         {
             string timeStamp = $"{DateTime.UtcNow.AddMinutes(-offsetInMinutes):o}";
             logBlobContent = logBlobContent.Replace("Timestamp=''", timeStamp);
 
+            var scaler = CreateScaler(logBlobContent, blobPath, out var loggerProvider);
+
+            var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
+
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+
+            result = await scaler.GetScaleResultAsync(new TargetScalerContext());
+
+            var cacheReads = loggerProvider.GetAllLogMessages().Where(x => x.FormattedMessage.Contains("Recent writes were detected from cache for ")).Count();
+            Assert.AreEqual(expectedCacheReads, cacheReads);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+        }
+
+        // Storage Analytics records RequestedObjectKey as a raw, unencoded path, verified against a live account:
+        // a blob named 'my folder/x.txt' is logged as '/account/container/my folder/x.txt'. Patterns containing
+        // such characters must still match, since the scaler has no container-scan fallback to catch a miss.
+        [Test]
+        [TestCase("/teststorage/test-blobs/basic/test.txt", "test-blobs/{name}.txt", 1)]
+        [TestCase("/teststorage/test-blobs/my folder/test.txt", "test-blobs/my folder/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/my folder/test.txt", "test-blobs/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/café/test.txt", "test-blobs/café/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/report$50.txt", "test-blobs/report$50.txt", 1)]
+        [TestCase("/teststorage/test-blobs/100%.txt", "test-blobs/100%.txt", 1)]
+        [TestCase("/teststorage/test-blobs/a+b/test.txt", "test-blobs/a+b/{name}", 1)]
+        [TestCase("https://teststorage.blob.core.windows.net:443/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/my folder/test.txt", "test-blobs/other folder/{name}", 0)]
+        [TestCase("/teststorage/test-blobs/café/test.txt", "test-blobs/cafe/{name}", 0)]
+        public async Task GetScaleResultAsync_MatchesBlobNamesWithSpecialCharacters(string requestedObjectKey, string blobPath, int expectedTargetWorkerCount)
+        {
+            var scaler = CreateScaler(BuildPutBlobLogContent(requestedObjectKey), blobPath, out _);
+
+            var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
+
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+        }
+
+        private static string BuildPutBlobLogContent(string requestedObjectKey)
+        {
+            string timeStamp = $"{DateTime.UtcNow.AddMinutes(-10):o}";
+
+            return $"1.0;{timeStamp};PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;" +
+                $"\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"{requestedObjectKey}\";" +
+                "612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;" +
+                "\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";" +
+                "\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"";
+        }
+
+        private ZeroToOneTargetScaler CreateScaler(string logBlobContent, string blobPath, out TestLoggerProvider loggerProvider)
+        {
             var mockBlobContainerClient = new Mock<BlobContainerClient>();
             var page = Page<BlobItem>.FromValues(
                 values: new BlobItem[] { CreateBlobItem() },
@@ -63,24 +129,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             mockBlobServiceClient.Setup(b => b.GetBlobContainerClient(It.IsAny<string>()))
                 .Returns(mockBlobContainerClient.Object);
 
-            var loggerProvider = new TestLoggerProvider();
+            loggerProvider = new TestLoggerProvider();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(loggerProvider);
 
-            var scaler = new ZeroToOneTargetScaler("TestFunction", mockBlobServiceClient.Object, blobPath, loggerFactory);
-
-            var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
-
-            Assert.NotNull(result);
-            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
-
-            result = await scaler.GetScaleResultAsync(new TargetScalerContext());
-
-            var cacheReads = loggerProvider.GetAllLogMessages().Where(x => x.FormattedMessage.Contains("Recent writes were detected from cache for ")).Count();
-            Assert.AreEqual(excpectedChachReads, cacheReads);
-
-            Assert.NotNull(result);
-            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+            return new ZeroToOneTargetScaler("TestFunction", mockBlobServiceClient.Object, blobPath, loggerFactory);
         }
 
         private BlobItem CreateBlobItem()
