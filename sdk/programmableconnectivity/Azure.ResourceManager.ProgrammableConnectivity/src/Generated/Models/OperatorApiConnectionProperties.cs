@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="purposeReason"> Explanation of the reason that justifies the purpose: specifically why is the API used for the application's use case. </param>
         /// <param name="dataProcessingList"> List of ways the data returned on this API is processed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperatorApiConnectionProperties(ResourceIdentifier operatorApiPlanId, ResourceIdentifier gatewayId, string operatorName, string camaraApiName, ProvisioningState? provisioningState, OperatorApiConnectionStatus status, bool isPlanTermsAndConditionsAccepted, IReadOnlyList<string> planTermsAndConditionsLinks, IList<OperatorApiConnectionPurpose> purposes, string purposeReason, IList<OperatorApiConnectionDataProcessing> dataProcessingList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperatorApiConnectionProperties(ResourceIdentifier operatorApiPlanId, ResourceIdentifier gatewayId, string operatorName, string camaraApiName, ProgrammableConnectivityProvisioningState? provisioningState, OperatorApiConnectionStatus status, bool isPlanTermsAndConditionsAccepted, IReadOnlyList<string> planTermsAndConditionsLinks, IList<OperatorApiConnectionPurpose> purposes, string purposeReason, IList<OperatorApiConnectionDataProcessing> dataProcessingList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatorApiPlanId = operatorApiPlanId;
             GatewayId = gatewayId;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public string CamaraApiName { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ProgrammableConnectivityProvisioningState? ProvisioningState { get; }
 
         /// <summary> The status of the OperatorApiConnection resource. </summary>
         public OperatorApiConnectionStatus Status { get; }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="configuredApplication"> Details about the Application that would use the Operator's Network APIs. </param>
         /// <param name="configuredApplicationOwner"> Details about the Organization owning the Application that would use the Operator's Network APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProgrammableConnectivityGatewayProperties(IReadOnlyList<ResourceIdentifier> operatorApiConnections, string gatewayBaseUri, ProvisioningState? provisioningState, GatewayApplicationProperties configuredApplication, GatewayApplicationOwnerProperties configuredApplicationOwner, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProgrammableConnectivityGatewayProperties(IReadOnlyList<ResourceIdentifier> operatorApiConnections, string gatewayBaseUri, ProgrammableConnectivityProvisioningState? provisioningState, GatewayApplicationProperties configuredApplication, GatewayApplicationOwnerProperties configuredApplicationOwner, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatorApiConnections = operatorApiConnections;
             GatewayBaseUri = gatewayBaseUri;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public string GatewayBaseUri { get; }
 
         /// <summary> The status of the last operation on the Gateway resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ProgrammableConnectivityProvisioningState? ProvisioningState { get; }
 
         /// <summary> Details about the Application that would use the Operator's Network APIs. </summary>
         public GatewayApplicationProperties ConfiguredApplication { get; set; }

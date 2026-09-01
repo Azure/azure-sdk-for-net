@@ -215,65 +215,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
 }
 namespace Azure.ResourceManager.ProgrammableConnectivity.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApplicationCategory : System.IEquatable<Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApplicationCategory(string value) { throw null; }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Agriculture { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory ArtAndDesign { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory AutoAndVehicle { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Beauty { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory BooksAndReference { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Business { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Construction { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Defense { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory DeveloperTools { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Education { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Engineering { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory EventsAndEntertainment { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Finance { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory FoodAndDrink { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Games { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory HealthAndFitness { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Healthcare { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Information { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Kids { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory LibrariesAndDemo { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Lifestyle { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Manufacturing { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory MapsAndNavigation { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Media { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Medical { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Mining { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory MusicAndAudio { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory NewsAndMagazines { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Organizations { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Other { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory PhotoAndVideo { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Productivity { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory PublicService { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory RealEstate { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Shopping { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory SocialNetworkingAndCommunications { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Sports { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Tourism { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Trading { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Transportation { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory TravelAndLocal { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Utilities { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Water { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Weather { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory left, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory left, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ApplicationContactPerson : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationContactPerson>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationContactPerson>
     {
         public ApplicationContactPerson(string familyName, string givenName, string emailAddress) { }
@@ -354,20 +295,20 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationGeographicAddress ApplicationGeographicAddress(string streetNumber = null, string streetName = null, string locality = null, string city = null, string stateOrProvince = null, string postalCode = null, string countryCode = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationLocalRepresentative ApplicationLocalRepresentative(string countryCode = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationContactPerson representative = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationOwnerProperties GatewayApplicationOwnerProperties(string name = null, string legalName = null, string tradingName = null, string organizationDescription = null, string taxNumber = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationOwnerOrganizationType organizationType = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationOwnerOrganizationType), string organizationIdentificationId = null, string organizationIdentificationIssuer = null, string organizationIdentificationType = null, string contactEmailAddress = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationContactPerson legalRepresentative = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationContactPerson privacyManager = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationContactPerson dataProtectionOfficer = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationGeographicAddress registeredGeographicAddress = null, System.Uri privacyPolicyUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationLocalRepresentative> localRepresentatives = null) { throw null; }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationProperties GatewayApplicationProperties(string name = null, string applicationDescription = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory category = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory), string commercialName = null, string privacyRightsRequestEmailAddress = null, System.Uri privacyPolicyUri = null) { throw null; }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationProperties GatewayApplicationProperties(string name = null, string applicationDescription = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory category = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory), string commercialName = null, string privacyRightsRequestEmailAddress = null, System.Uri privacyPolicyUri = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.OperatorApiConnectionData OperatorApiConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataProcessing OperatorApiConnectionDataProcessing(Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingOperation processingOperation = default(Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingOperation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingContext> contexts = null, Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingDuration duration = default(Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingDuration), Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingFrequency frequency = default(Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingFrequency), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataRegion> transitRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataRegion> storageRegions = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataRegion OperatorApiConnectionDataRegion(string countryCode = null, string commercialOrganization = null, bool isCommercialActivity = false, System.Uri dataPrivacyFrameworkUri = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionPatch OperatorApiConnectionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionProperties OperatorApiConnectionProperties(Azure.Core.ResourceIdentifier operatorApiPlanId = null, Azure.Core.ResourceIdentifier gatewayId = null, string operatorName = null, string camaraApiName = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState?), Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionStatus status = null, bool isPlanTermsAndConditionsAccepted = false, System.Collections.Generic.IEnumerable<string> planTermsAndConditionsLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionPurpose> purposes = null, string purposeReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataProcessing> dataProcessingList = null) { throw null; }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionProperties OperatorApiConnectionProperties(Azure.Core.ResourceIdentifier operatorApiPlanId = null, Azure.Core.ResourceIdentifier gatewayId = null, string operatorName = null, string camaraApiName = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? provisioningState = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState?), Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionStatus status = null, bool isPlanTermsAndConditionsAccepted = false, System.Collections.Generic.IEnumerable<string> planTermsAndConditionsLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionPurpose> purposes = null, string purposeReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataProcessing> dataProcessingList = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionStatus OperatorApiConnectionStatus(string state = null, string reason = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionUpdateProperties OperatorApiConnectionUpdateProperties(Azure.Core.ResourceIdentifier operatorApiPlanId = null, bool? isPlanTermsAndConditionsAccepted = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionPurpose> purposes = null, string purposeReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionDataProcessing> dataProcessingList = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.OperatorApiPlanData OperatorApiPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanMarketplaceProperties OperatorApiPlanMarketplaceProperties(string offerId = null, string publisherId = null, string planId = null, System.Collections.Generic.IEnumerable<string> planTermsAndConditionsLinks = null) { throw null; }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties OperatorApiPlanProperties(string operatorName = null, string camaraApiName = null, System.Collections.Generic.IEnumerable<string> supportedLocations = null, System.Collections.Generic.IEnumerable<string> operatorRegions = null, System.Collections.Generic.IEnumerable<string> markets = null, string limits = null, Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanMarketplaceProperties marketplaceProperties = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties OperatorApiPlanProperties(string operatorName = null, string camaraApiName = null, System.Collections.Generic.IEnumerable<string> supportedLocations = null, System.Collections.Generic.IEnumerable<string> operatorRegions = null, System.Collections.Generic.IEnumerable<string> markets = null, string limits = null, Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanMarketplaceProperties marketplaceProperties = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? provisioningState = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.ProgrammableConnectivityGatewayData ProgrammableConnectivityGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayPatch ProgrammableConnectivityGatewayPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayProperties ProgrammableConnectivityGatewayProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> operatorApiConnections = null, string gatewayBaseUri = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState?), Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationProperties configuredApplication = null, Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationOwnerProperties configuredApplicationOwner = null) { throw null; }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayProperties ProgrammableConnectivityGatewayProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> operatorApiConnections = null, string gatewayBaseUri = null, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? provisioningState = default(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState?), Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationProperties configuredApplication = null, Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationOwnerProperties configuredApplicationOwner = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataProcessingContext : System.IEquatable<Azure.ResourceManager.ProgrammableConnectivity.Models.DataProcessingContext>
@@ -631,9 +572,9 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
     }
     public partial class GatewayApplicationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationProperties>
     {
-        public GatewayApplicationProperties(string name, string applicationDescription, Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory category, string commercialName, string privacyRightsRequestEmailAddress, System.Uri privacyPolicyUri) { }
+        public GatewayApplicationProperties(string name, string applicationDescription, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory category, string commercialName, string privacyRightsRequestEmailAddress, System.Uri privacyPolicyUri) { }
         public string ApplicationDescription { get { throw null; } set { } }
-        public Azure.ResourceManager.ProgrammableConnectivity.Models.ApplicationCategory Category { get { throw null; } set { } }
+        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Category { get { throw null; } set { } }
         public string CommercialName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Uri PrivacyPolicyUri { get { throw null; } set { } }
@@ -709,7 +650,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public Azure.Core.ResourceIdentifier OperatorApiPlanId { get { throw null; } set { } }
         public string OperatorName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PlanTermsAndConditionsLinks { get { throw null; } }
-        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? ProvisioningState { get { throw null; } }
         public string PurposeReason { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionPurpose> Purposes { get { throw null; } }
         public Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiConnectionStatus Status { get { throw null; } }
@@ -892,7 +833,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public System.Collections.Generic.IList<string> Markets { get { throw null; } }
         public string OperatorName { get { throw null; } }
         public System.Collections.Generic.IList<string> OperatorRegions { get { throw null; } }
-        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> SupportedLocations { get { throw null; } }
         protected virtual Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -903,6 +844,65 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.OperatorApiPlanProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProgrammableConnectivityApplicationCategory : System.IEquatable<Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProgrammableConnectivityApplicationCategory(string value) { throw null; }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Agriculture { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory ArtAndDesign { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory AutoAndVehicle { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Beauty { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory BooksAndReference { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Business { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Construction { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Defense { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory DeveloperTools { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Education { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Engineering { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory EventsAndEntertainment { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Finance { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory FoodAndDrink { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Games { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory HealthAndFitness { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Healthcare { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Information { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Kids { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory LibrariesAndDemo { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Lifestyle { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Manufacturing { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory MapsAndNavigation { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Media { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Medical { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Mining { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory MusicAndAudio { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory NewsAndMagazines { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Organizations { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Other { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory PhotoAndVideo { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Productivity { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory PublicService { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory RealEstate { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Shopping { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory SocialNetworkingAndCommunications { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Sports { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Tourism { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Trading { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Transportation { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory TravelAndLocal { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Utilities { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Water { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory Weather { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory left, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory left, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityApplicationCategory right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ProgrammableConnectivityGatewayPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayPatch>
     {
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public Azure.ResourceManager.ProgrammableConnectivity.Models.GatewayApplicationOwnerProperties ConfiguredApplicationOwner { get { throw null; } set { } }
         public string GatewayBaseUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> OperatorApiConnections { get { throw null; } }
-        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -937,25 +937,25 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityGatewayProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState>
+    public readonly partial struct ProgrammableConnectivityProvisioningState : System.IEquatable<Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState other) { throw null; }
+        public ProgrammableConnectivityProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState left, Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState left, Azure.ResourceManager.ProgrammableConnectivity.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState left, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState left, Azure.ResourceManager.ProgrammableConnectivity.Models.ProgrammableConnectivityProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

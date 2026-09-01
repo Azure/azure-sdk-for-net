@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             ResourceIdentifier gatewayId = default;
             string operatorName = default;
             string camaraApiName = default;
-            ProvisioningState? provisioningState = default;
+            ProgrammableConnectivityProvisioningState? provisioningState = default;
             OperatorApiConnectionStatus status = default;
             bool isPlanTermsAndConditionsAccepted = default;
             IReadOnlyList<string> planTermsAndConditionsLinks = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ProgrammableConnectivityProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

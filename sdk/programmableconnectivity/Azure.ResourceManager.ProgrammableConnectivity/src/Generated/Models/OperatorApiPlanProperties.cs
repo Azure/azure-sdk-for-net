@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="marketplaceProperties"> Azure marketplace properties for this plan. </param>
         /// <param name="provisioningState"> The status of the last operation on the Gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperatorApiPlanProperties(string operatorName, string camaraApiName, IList<string> supportedLocations, IList<string> operatorRegions, IList<string> markets, string limits, OperatorApiPlanMarketplaceProperties marketplaceProperties, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperatorApiPlanProperties(string operatorName, string camaraApiName, IList<string> supportedLocations, IList<string> operatorRegions, IList<string> markets, string limits, OperatorApiPlanMarketplaceProperties marketplaceProperties, ProgrammableConnectivityProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatorName = operatorName;
             CamaraApiName = camaraApiName;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public OperatorApiPlanMarketplaceProperties MarketplaceProperties { get; }
 
         /// <summary> The status of the last operation on the Gateway resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ProgrammableConnectivityProvisioningState? ProvisioningState { get; }
     }
 }

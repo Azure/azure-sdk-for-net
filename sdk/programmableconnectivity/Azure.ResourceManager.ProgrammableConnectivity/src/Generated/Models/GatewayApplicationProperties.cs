@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="privacyRightsRequestEmailAddress"> Privacy rights request email address. </param>
         /// <param name="privacyPolicyUri"> URL for the organization's privacy policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="applicationDescription"/>, <paramref name="commercialName"/>, <paramref name="privacyRightsRequestEmailAddress"/> or <paramref name="privacyPolicyUri"/> is null. </exception>
-        public GatewayApplicationProperties(string name, string applicationDescription, ApplicationCategory category, string commercialName, string privacyRightsRequestEmailAddress, Uri privacyPolicyUri)
+        public GatewayApplicationProperties(string name, string applicationDescription, ProgrammableConnectivityApplicationCategory category, string commercialName, string privacyRightsRequestEmailAddress, Uri privacyPolicyUri)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(applicationDescription, nameof(applicationDescription));
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="privacyRightsRequestEmailAddress"> Privacy rights request email address. </param>
         /// <param name="privacyPolicyUri"> URL for the organization's privacy policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayApplicationProperties(string name, string applicationDescription, ApplicationCategory category, string commercialName, string privacyRightsRequestEmailAddress, Uri privacyPolicyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayApplicationProperties(string name, string applicationDescription, ProgrammableConnectivityApplicationCategory category, string commercialName, string privacyRightsRequestEmailAddress, Uri privacyPolicyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ApplicationDescription = applicationDescription;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         public string ApplicationDescription { get; set; }
 
         /// <summary> The category of the application. </summary>
-        public ApplicationCategory Category { get; set; }
+        public ProgrammableConnectivityApplicationCategory Category { get; set; }
 
         /// <summary> Commercial name of the application. </summary>
         public string CommercialName { get; set; }

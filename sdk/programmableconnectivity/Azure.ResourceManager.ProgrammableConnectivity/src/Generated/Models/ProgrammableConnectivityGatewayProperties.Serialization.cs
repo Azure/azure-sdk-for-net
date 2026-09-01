@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             }
             IReadOnlyList<ResourceIdentifier> operatorApiConnections = default;
             string gatewayBaseUri = default;
-            ProvisioningState? provisioningState = default;
+            ProgrammableConnectivityProvisioningState? provisioningState = default;
             GatewayApplicationProperties configuredApplication = default;
             GatewayApplicationOwnerProperties configuredApplicationOwner = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ProgrammableConnectivityProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("configuredApplication"u8))

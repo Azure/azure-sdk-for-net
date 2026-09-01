@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="configuredApplication"> Details about the Application that would use the Operator's Network APIs. </param>
         /// <param name="configuredApplicationOwner"> Details about the Organization owning the Application that would use the Operator's Network APIs. </param>
         /// <returns> A new <see cref="Models.ProgrammableConnectivityGatewayProperties"/> instance for mocking. </returns>
-        public static ProgrammableConnectivityGatewayProperties ProgrammableConnectivityGatewayProperties(IEnumerable<ResourceIdentifier> operatorApiConnections = default, string gatewayBaseUri = default, ProvisioningState? provisioningState = default, GatewayApplicationProperties configuredApplication = default, GatewayApplicationOwnerProperties configuredApplicationOwner = default)
+        public static ProgrammableConnectivityGatewayProperties ProgrammableConnectivityGatewayProperties(IEnumerable<ResourceIdentifier> operatorApiConnections = default, string gatewayBaseUri = default, ProgrammableConnectivityProvisioningState? provisioningState = default, GatewayApplicationProperties configuredApplication = default, GatewayApplicationOwnerProperties configuredApplicationOwner = default)
         {
             operatorApiConnections ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="privacyRightsRequestEmailAddress"> Privacy rights request email address. </param>
         /// <param name="privacyPolicyUri"> URL for the organization's privacy policy. </param>
         /// <returns> A new <see cref="Models.GatewayApplicationProperties"/> instance for mocking. </returns>
-        public static GatewayApplicationProperties GatewayApplicationProperties(string name = default, string applicationDescription = default, ApplicationCategory category = default, string commercialName = default, string privacyRightsRequestEmailAddress = default, Uri privacyPolicyUri = default)
+        public static GatewayApplicationProperties GatewayApplicationProperties(string name = default, string applicationDescription = default, ProgrammableConnectivityApplicationCategory category = default, string commercialName = default, string privacyRightsRequestEmailAddress = default, Uri privacyPolicyUri = default)
         {
             return new GatewayApplicationProperties(
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="purposeReason"> Explanation of the reason that justifies the purpose: specifically why is the API used for the application's use case. </param>
         /// <param name="dataProcessingList"> List of ways the data returned on this API is processed. </param>
         /// <returns> A new <see cref="Models.OperatorApiConnectionProperties"/> instance for mocking. </returns>
-        public static OperatorApiConnectionProperties OperatorApiConnectionProperties(ResourceIdentifier operatorApiPlanId = default, ResourceIdentifier gatewayId = default, string operatorName = default, string camaraApiName = default, ProvisioningState? provisioningState = default, OperatorApiConnectionStatus status = default, bool isPlanTermsAndConditionsAccepted = default, IEnumerable<string> planTermsAndConditionsLinks = default, IEnumerable<OperatorApiConnectionPurpose> purposes = default, string purposeReason = default, IEnumerable<OperatorApiConnectionDataProcessing> dataProcessingList = default)
+        public static OperatorApiConnectionProperties OperatorApiConnectionProperties(ResourceIdentifier operatorApiPlanId = default, ResourceIdentifier gatewayId = default, string operatorName = default, string camaraApiName = default, ProgrammableConnectivityProvisioningState? provisioningState = default, OperatorApiConnectionStatus status = default, bool isPlanTermsAndConditionsAccepted = default, IEnumerable<string> planTermsAndConditionsLinks = default, IEnumerable<OperatorApiConnectionPurpose> purposes = default, string purposeReason = default, IEnumerable<OperatorApiConnectionDataProcessing> dataProcessingList = default)
         {
             planTermsAndConditionsLinks ??= new ChangeTrackingList<string>();
             purposes ??= new ChangeTrackingList<OperatorApiConnectionPurpose>();
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="marketplaceProperties"> Azure marketplace properties for this plan. </param>
         /// <param name="provisioningState"> The status of the last operation on the Gateway resource. </param>
         /// <returns> A new <see cref="Models.OperatorApiPlanProperties"/> instance for mocking. </returns>
-        public static OperatorApiPlanProperties OperatorApiPlanProperties(string operatorName = default, string camaraApiName = default, IEnumerable<string> supportedLocations = default, IEnumerable<string> operatorRegions = default, IEnumerable<string> markets = default, string limits = default, OperatorApiPlanMarketplaceProperties marketplaceProperties = default, ProvisioningState? provisioningState = default)
+        public static OperatorApiPlanProperties OperatorApiPlanProperties(string operatorName = default, string camaraApiName = default, IEnumerable<string> supportedLocations = default, IEnumerable<string> operatorRegions = default, IEnumerable<string> markets = default, string limits = default, OperatorApiPlanMarketplaceProperties marketplaceProperties = default, ProgrammableConnectivityProvisioningState? provisioningState = default)
         {
             supportedLocations ??= new ChangeTrackingList<string>();
             operatorRegions ??= new ChangeTrackingList<string>();

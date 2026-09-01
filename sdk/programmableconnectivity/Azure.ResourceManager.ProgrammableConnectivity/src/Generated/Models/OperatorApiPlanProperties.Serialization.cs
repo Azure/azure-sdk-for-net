@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             IList<string> markets = default;
             string limits = default;
             OperatorApiPlanMarketplaceProperties marketplaceProperties = default;
-            ProvisioningState? provisioningState = default;
+            ProgrammableConnectivityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ProgrammableConnectivityProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

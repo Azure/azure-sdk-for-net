@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             }
             string name = default;
             string applicationDescription = default;
-            ApplicationCategory category = default;
+            ProgrammableConnectivityApplicationCategory category = default;
             string commercialName = default;
             string privacyRightsRequestEmailAddress = default;
             Uri privacyPolicyUri = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 }
                 if (prop.NameEquals("category"u8))
                 {
-                    category = new ApplicationCategory(prop.Value.GetString());
+                    category = new ProgrammableConnectivityApplicationCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("commercialName"u8))
