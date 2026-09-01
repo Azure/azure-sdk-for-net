@@ -32,3 +32,8 @@ nowarn:AAIP002
 # which we cannot annotate and which is regenerated on every build. The public surface
 # remains gated behind the package's own AAIP002 experimental marker.
 nowarn:OPENAI001
+
+# OPENAICUA001 marks the OpenAI computer-use surface (ComputerCallAction and friends).
+# The spec models the computer-use tool, so these types appear in generated serialization
+# code for the same source-generated reasons described for OPENAI001 above.
+nowarn:OPENAICUA001

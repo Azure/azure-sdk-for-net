@@ -49,11 +49,11 @@ internal static class StorageErrorMapper
             case 409:
                 throw new BadRequestException(errorInfo.Message, errorInfo.Code, errorInfo.Param);
             default:
-                var error = new Error(errorInfo.Code ?? "storage_error", errorInfo.Message)
-                {
-                    Param = errorInfo.Param,
-                    Kind = errorInfo.Type ?? "server_error",
-                };
+                var error = OpenAIModelFactory.CreateError(
+                    errorInfo.Code ?? "storage_error",
+                    errorInfo.Message,
+                    errorInfo.Param,
+                    errorInfo.Type ?? "server_error");
                 var ex = new ResponsesApiException(error, 500);
                 ex.Data[PlatformErrorDataKey] = true;
                 throw ex;

@@ -168,3 +168,13 @@ global using ComputerAction = OpenAI.Responses.ComputerCallAction;
 global using ResponseUsage = OpenAI.Responses.ResponseTokenUsage;
 global using ResponseUsageInputTokensDetails = OpenAI.Responses.ResponseInputTokenUsageDetails;
 global using ResponseUsageOutputTokensDetails = OpenAI.Responses.ResponseOutputTokenUsageDetails;
+
+// Types the spec now maps onto their OpenAI counterparts via @@alternateType.
+global using ConversationReference = OpenAI.Responses.ResponseConversationOptions;
+global using ResponseStreamEventType = OpenAI.Responses.StreamingResponseUpdateKind;
+global using OutputContentOutputTextContent = OpenAI.Responses.ResponseContentPart;
+global using OutputContentRefusalContent = OpenAI.Responses.ResponseContentPart;
+global using ResponseLogProb = OpenAI.Responses.ResponseTokenLogProbabilityDetails;
+global using ResponseReasoningSummaryPartAddedEventPart = OpenAI.Responses.ReasoningSummaryPart;
+global using ResponseReasoningSummaryPartDoneEventPart = OpenAI.Responses.ReasoningSummaryPart;
+global using ResponseErrorCode = OpenAI.Responses.ResponseErrorCode;

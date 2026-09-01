@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -27,35 +28,8 @@ public static class CreateResponseExtensions
     {
         Argument.AssertNotNull(request, nameof(request));
 
-        if (request.ConversationOptions is not null)
-        {
-            try
-            {
-                using var doc = JsonDocument.Parse(request.ConversationOptions.ToMemory());
-                var root = doc.RootElement;
-
-                if (root.ValueKind == JsonValueKind.String)
-                {
-                    var conversationId = root.GetString();
-                    if (!string.IsNullOrEmpty(conversationId))
-                        return conversationId;
-                }
-                else if (root.ValueKind == JsonValueKind.Object &&
-                         root.TryGetProperty("id", out var idProp) &&
-                         idProp.ValueKind == JsonValueKind.String)
-                {
-                    var conversationId = idProp.GetString();
-                    if (!string.IsNullOrEmpty(conversationId))
-                        return conversationId;
-                }
-            }
-            catch (JsonException)
-            {
-                // Swallow JSON parse errors — no conversation ID available
-            }
-        }
-
-        return null;
+        var conversationId = request.ConversationOptions?.ConversationId;
+        return string.IsNullOrEmpty(conversationId) ? null : conversationId;
     }
 
     /// <summary>
@@ -120,12 +94,11 @@ public static class CreateResponseExtensions
     {
         Argument.AssertNotNull(request, nameof(request));
 
-        var items = request.GetInputExpanded();
-        var texts = items
+        var texts = request.GetInputExpanded()
             .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputTextContent>()
-            .Select(tc => tc.Text);
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputText)
+            .Select(part => part.Text);
 
         return string.Join("\n", texts);
     }
@@ -163,8 +136,8 @@ public static class CreateResponseExtensions
     public static BinaryData? GetInstructionsBinaryData(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
-        return request.Instructions != null
-            ? BinaryData.FromObjectAsJson(request.Instructions)
-            : null;
+        return request.Instructions is null
+            ? null
+            : BinaryData.FromObjectAsJson(request.Instructions);
     }
 }

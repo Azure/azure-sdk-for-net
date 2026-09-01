@@ -93,17 +93,13 @@ internal static class ResponseMutations
 
     private static ResponseErrorInfo CreateError(ResponseErrorCode code, string message, string? shutdownReason)
     {
-        if (string.IsNullOrEmpty(shutdownReason))
+        var error = OpenAIModelFactory.CreateError(code.ToString(), message);
+        if (!string.IsNullOrEmpty(shutdownReason))
         {
-            return new ResponseErrorInfo(code, message);
+            error.Patch.Set("$.shutdown_reason"u8, BinaryData.FromObjectAsJson(shutdownReason).ToArray());
         }
 
-        var additionalProperties = new ChangeTrackingDictionary<string, BinaryData>
-        {
-            ["shutdown_reason"] = BinaryData.FromObjectAsJson(shutdownReason),
-        };
-
-        return new ResponseErrorInfo(code, message, additionalProperties);
+        return error;
     }
 
     /// <summary>
@@ -118,7 +114,7 @@ internal static class ResponseMutations
         ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Failed;
-        response.Error = new ResponseErrorInfo(code, message);
+        response.Error = OpenAIModelFactory.CreateError(code.ToString(), message);
 
         if (usage is not null)
         {

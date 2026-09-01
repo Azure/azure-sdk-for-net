@@ -129,7 +129,7 @@ internal static class ApiErrorFactory
     {
         if (exception is ResponsesApiException apiEx)
         {
-            return (apiEx.Error.Code ?? "server_error", apiEx.Error.Message);
+            return (apiEx.Error.Code.ToString(), apiEx.Error.Message);
         }
 
         if (exception is PayloadValidationException payloadEx)
@@ -170,7 +170,11 @@ internal static class ApiErrorFactory
     /// The message is sanitized — internal details are never exposed.
     /// </summary>
     internal static ResponseErrorEvent SseErrorEvent(string? safeMessage = null)
-        => new(0, "server_error", safeMessage ?? GenericServerErrorMessage, null!);
+        => new()
+        {
+            Code = "server_error",
+            Message = safeMessage ?? GenericServerErrorMessage,
+        };
 
     /// <summary>
     /// Maps any handler exception to a <see cref="ResponseErrorEvent"/> with the correct
@@ -196,6 +200,6 @@ internal static class ApiErrorFactory
             return ResponseErrorCode.ServerError;
         }
 
-        return new ResponseErrorCode(code);
+        return new ResponseErrorCode(code!);
     }
 }

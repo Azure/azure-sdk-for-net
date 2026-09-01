@@ -764,12 +764,11 @@ internal sealed class ResponseEndpointHandler
             // fork (Core precondition failure) — reject rather than branch the chain. Body shape
             // (type/code/param/message) matches Python `_endpoint_handler` for wire parity.
             throw new ResponsesApiException(
-                new Error("conversation_fork_not_supported",
-                    "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.")
-                {
-                    Kind = "conflict",
-                    Param = "previous_response_id",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_fork_not_supported",
+                    "This agent does not support conversation forking. previous_response_id must reference the most recent response in the conversation.",
+                    param: "previous_response_id",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.Conflict)
@@ -778,11 +777,10 @@ internal sealed class ResponseEndpointHandler
             // matches Python `_endpoint_handler` exactly: `Conversation is locked — task is {status}`
             // with the lower-case snake-case wire status and no trailing period.
             throw new ResponsesApiException(
-                new Error("conversation_locked",
-                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}")
-                {
-                    Kind = "conflict",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_locked",
+                    $"Conversation is locked — task is {ToWireStatus(ex.CurrentStatus ?? Core.Tasks.TaskRunStatus.InProgress)}",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (ResilientTaskException ex) when (ex.ErrorCode == ResilientTaskErrorCode.QueueFull)
@@ -791,11 +789,10 @@ internal sealed class ResponseEndpointHandler
             // distinct queue-full code; surfaced as conversation_locked (409 conflict) — recorded as a
             // Python-side verification action item in the parity report.
             throw new ResponsesApiException(
-                new Error("conversation_locked",
-                    "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.")
-                {
-                    Kind = "conflict",
-                },
+                OpenAIModelFactory.CreateError(
+                    "conversation_locked",
+                    "Conversation is locked — the steering queue is full. Retry once the active turn has made progress.",
+                    kind: "conflict"),
                 StatusCodes.Status409Conflict);
         }
         catch (Exception ex)
