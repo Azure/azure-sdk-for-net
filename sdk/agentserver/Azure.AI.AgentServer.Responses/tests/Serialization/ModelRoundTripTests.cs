@@ -67,8 +67,8 @@ public class ModelRoundTripTests
         Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
         Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
         Assert.That(request.StreamingEnabled, Is.True);
-        Assert.That(request.Temperature, Is.EqualTo(0.7));
-        Assert.That(request.TopP, Is.EqualTo(0.9));
+        Assert.That(request.Temperature, Is.EqualTo(0.7f));
+        Assert.That(request.TopP, Is.EqualTo(0.9f));
         Assert.That(request.MaxOutputTokenCount, Is.EqualTo(1024));
         Assert.That(request.StoredOutputEnabled, Is.True);
         Assert.That(request.Metadata, Is.Not.Null);

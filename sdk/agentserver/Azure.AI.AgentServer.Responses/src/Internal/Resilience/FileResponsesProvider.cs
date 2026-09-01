@@ -348,7 +348,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
     private void WriteItem(string itemId, OutputItem item)
     {
-        var json = ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        var json = ModelJson.Write(item, ModelReaderWriterOptions.Json);
         var node = JsonNode.Parse(json.ToString());
         if (node is not null)
         {
@@ -435,10 +435,9 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         try
         {
             var text = File.ReadAllText(path, Encoding.UTF8);
-            return ModelReaderWriter.Read<OutputItem>(
+            return ModelJson.Read<OutputItem>(
                 BinaryData.FromString(text),
-                ModelReaderWriterOptions.Json,
-                AzureAIAgentServerResponsesContext.Default);
+                ModelReaderWriterOptions.Json);
         }
         catch (JsonException)
         {
@@ -529,7 +528,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
             if (_envelope is not null)
             {
-                var envJson = ModelReaderWriter.Write(_envelope, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+                var envJson = ModelJson.Write(_envelope, ModelReaderWriterOptions.Json);
                 obj["envelope"] = JsonNode.Parse(envJson.ToString());
             }
 
@@ -562,10 +561,9 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
             if (obj["envelope"] is JsonObject env)
             {
-                record._envelope = ModelReaderWriter.Read<ResponseObject>(
+                record._envelope = ModelJson.Read<ResponseObject>(
                     BinaryData.FromString(env.ToJsonString()),
-                    ModelReaderWriterOptions.Json,
-                    AzureAIAgentServerResponsesContext.Default);
+                    ModelReaderWriterOptions.Json);
             }
 
             ReadInto(record.InputItemIds, obj["input_item_ids"]);

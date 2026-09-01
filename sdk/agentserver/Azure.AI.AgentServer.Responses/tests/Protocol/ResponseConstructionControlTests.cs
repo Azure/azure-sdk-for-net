@@ -75,8 +75,10 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(createdEvent.Data);
         var responseObj = doc.RootElement.GetProperty("response");
 
-        var instructions = responseObj.GetProperty("instructions").GetString();
-        Assert.That(instructions, Is.EqualTo("Custom handler instructions"));
+        // ResponseObject.Instructions is an item list, so it serializes as an array.
+        var instructions = responseObj.GetProperty("instructions");
+        Assert.That(instructions.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(instructions.GetRawText(), Does.Contain("Custom handler instructions"));
     }
 
     [Test]
@@ -90,8 +92,9 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
 
-        var instructions = doc.RootElement.GetProperty("instructions").GetString();
-        Assert.That(instructions, Is.EqualTo("Custom handler instructions"));
+        var instructions = doc.RootElement.GetProperty("instructions");
+        Assert.That(instructions.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(instructions.GetRawText(), Does.Contain("Custom handler instructions"));
     }
 
     // ── T024: Raw ResponseCreatedEvent with custom fields ─────

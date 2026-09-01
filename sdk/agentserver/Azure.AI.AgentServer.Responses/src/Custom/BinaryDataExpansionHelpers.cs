@@ -126,8 +126,8 @@ internal static class BinaryDataExpansionHelpers
             JsonValueKind.Array => DeserializeContentArray(root),
             JsonValueKind.Object => new List<MessageContent>
             {
-                ModelReaderWriter.Read<MessageContent>(
-                    BinaryData.FromString(root.GetRawText()), ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!,
+                Internal.ModelJson.Read<MessageContent>(
+                    BinaryData.FromString(root.GetRawText()), ModelReaderWriterOptions.Json)!,
             },
             _ => throw new FormatException("Expected JSON array, object, or string for item content"),
         };
@@ -138,7 +138,7 @@ internal static class BinaryDataExpansionHelpers
 
     private static BinaryData Serialize<T>(T model)
         where T : notnull
-        => ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        => Internal.ModelJson.Write(model, ModelReaderWriterOptions.Json);
 
     private static BinaryData SerializeParts(IList<ResponseContentPart> parts)
     {
@@ -169,8 +169,8 @@ internal static class BinaryDataExpansionHelpers
             }
 
             var json = BinaryData.FromString(element.GetRawText());
-            items.Add(ModelReaderWriter.Read<Item>(
-                json, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!);
+            items.Add(Internal.ModelJson.Read<Item>(
+                json, ModelReaderWriterOptions.Json)!);
         }
 
         return items;

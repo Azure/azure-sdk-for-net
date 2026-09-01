@@ -132,7 +132,7 @@ public class OutputItemImageGenCallBuilderTests
         var generating = builder.EmitGenerating();    // 2
         var partial = builder.EmitPartialImage("ZA==");  // 3
         var completed = builder.EmitCompleted();      // 4
-        var done = builder.EmitDone("r");             // 5
+        var done = builder.EmitDone("cg==");             // 5
         Assert.That(added.SequenceNumber, Is.EqualTo(0));
         Assert.That(inProg.SequenceNumber, Is.EqualTo(1));
         Assert.That(generating.SequenceNumber, Is.EqualTo(2));

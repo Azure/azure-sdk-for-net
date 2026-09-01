@@ -72,8 +72,7 @@ internal static class ResponseWireStreamCodec
     /// <param name="item">The wire item whose <see cref="SseItem{T}.Data"/> holds the serialized event.</param>
     /// <returns>The deserialized event, with <see cref="ResponseStreamEvent.SequenceNumber"/> restored.</returns>
     public static ResponseStreamEvent FromWireItem(SseItem<string> item)
-        => ModelReaderWriter.Read<ResponseStreamEvent>(
+        => ModelJson.Read<ResponseStreamEvent>(
             BinaryData.FromString(item.Data),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+            ModelReaderWriterOptions.Json)!;
 }

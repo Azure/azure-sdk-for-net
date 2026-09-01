@@ -95,7 +95,7 @@ internal static partial class AgentServerResponsesModelFactory
             Object = "response",
             Model = model,
             Status = status,
-            CreatedAt = createdAt,
+            CreatedAt = createdAt == default ? DateTimeOffset.UtcNow : createdAt,
             Error = error,
         };
 

@@ -85,7 +85,7 @@ internal static class ItemConversion
     {
         try
         {
-            var json = ModelReaderWriter.Write(outputItem, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+            var json = ModelJson.Write(outputItem, ModelReaderWriterOptions.Json);
             var node = JsonNode.Parse(json.ToString());
             if (node is null)
             {
@@ -94,7 +94,7 @@ internal static class ItemConversion
 
             InternalMetadataEgress.Strip(node);
             var stripped = BinaryData.FromString(node.ToJsonString());
-            return ModelReaderWriter.Read<OutputItem>(stripped, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+            return ModelJson.Read<OutputItem>(stripped, ModelReaderWriterOptions.Json);
         }
         catch (JsonException)
         {
@@ -114,8 +114,13 @@ internal static class ItemConversion
     {
         try
         {
-            var json = ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
-            return ModelReaderWriter.Read<OutputItem>(json, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+            // The source-generated context has no builders for the OpenAI and Extensions item
+            // subtypes, so it would round-trip them down to their base shape and silently drop
+            // every derived property. The reflection-based overloads dispatch on the runtime type.
+#pragma warning disable AZC0150
+            var json = ModelJson.Write(item, ModelReaderWriterOptions.Json);
+            return ModelJson.Read<OutputItem>(json, ModelReaderWriterOptions.Json);
+#pragma warning restore AZC0150
         }
         catch (JsonException)
         {

@@ -51,7 +51,7 @@ public static class ResponseExtensions
         Argument.AssertNotNull(response, nameof(response));
         Argument.AssertNotNull(toolChoice, nameof(toolChoice));
         response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
-            ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
+            Internal.ModelJson.Write(toolChoice, ModelReaderWriterOptions.Json));
     }
 
     /// <summary>

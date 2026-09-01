@@ -21,17 +21,15 @@ public static class ResponseSnapshotExtensions
     /// Mutations to the original do not affect the snapshot and vice versa.
     /// </returns>
     /// <remarks>
-    /// Uses <see cref="ModelReaderWriter.Write(object, ModelReaderWriterOptions, ModelReaderWriterContext)"/> and
-    /// <see cref="ModelReaderWriter.Read{T}(BinaryData, ModelReaderWriterOptions, ModelReaderWriterContext)"/>
-    /// which leverage the TypeSpec-generated <see cref="IPersistableModel{T}"/> implementation.
+    /// Round-trips through <see cref="IPersistableModel{T}"/> with runtime type dispatch.
     /// This guarantees all properties — including polymorphic <see cref="OutputItem"/> subtypes,
     /// <see cref="BinaryData"/> union fields, and additional binary data properties — are
     /// fully serialized and deserialized into an independent object graph.
     /// </remarks>
     public static ResponseObject Snapshot(this ResponseObject response)
     {
-        BinaryData data = ModelReaderWriter.Write(response, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
-        return ModelReaderWriter.Read<ResponseObject>(data, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)
+        BinaryData data = Internal.ModelJson.Write(response, ModelReaderWriterOptions.Json);
+        return Internal.ModelJson.Read<ResponseObject>(data, ModelReaderWriterOptions.Json)
             ?? throw new InvalidOperationException($"Failed to deserialize snapshot of {nameof(ResponseObject)}.");
     }
 

@@ -213,3 +213,7 @@ global using ResponseItemKind = OpenAI.Responses.ResponseItemKind;
 global using ResponseContentPartKind = OpenAI.Responses.ResponseContentPartKind;
 global using ResponseMessageAnnotation = OpenAI.Responses.ResponseMessageAnnotation;
 global using UriCitationMessageAnnotation = OpenAI.Responses.UriCitationMessageAnnotation;
+
+// The structured-outputs item is owned by Azure.AI.Extensions.OpenAI, which carries its
+// serialization. This package only re-exports it under its spec name.
+global using StructuredOutputsOutputItem = Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem;

@@ -123,7 +123,7 @@ internal static class ApiErrorFactory
             return null;
         }
 
-        return error.Patch.Contains("$.type"u8) ? error.Patch.GetString("$.type"u8) : null;
+        return error.Patch.TryGetValue("$.type"u8, out string? kind) ? kind : null;
     }
 
     /// <summary>

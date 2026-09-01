@@ -376,7 +376,7 @@ public class ConvenienceGeneratorTests
     public void OutputItemFunctionCallOutput_EmitsAddedAndDone()
     {
         var stream = CreateStream();
-        var output = BinaryData.FromString("\"72 degrees\"");
+        var output = BinaryData.FromString("72 degrees");
 
         var events = stream.OutputItemFunctionCallOutput("call_1", output).ToList();
 
@@ -389,7 +389,7 @@ public class ConvenienceGeneratorTests
     public void OutputItemFunctionCallOutput_DoneContainsCallIdAndOutput()
     {
         var stream = CreateStream();
-        var output = BinaryData.FromString("\"72 degrees\"");
+        var output = BinaryData.FromString("72 degrees");
 
         var events = stream.OutputItemFunctionCallOutput("call_1", output).ToList();
 

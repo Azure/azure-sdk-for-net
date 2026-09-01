@@ -211,8 +211,7 @@ public class LiveOutputTrackingTests : IDisposable
     [Test]
     public async Task DoneWithNullItem_IsIgnored()
     {
-        // The null! item causes the event constructor to throw ArgumentNullException
-        // before response.created is yielded → pre-created error → 500
+        // A null item carries nothing to track, so the SDK skips it and the response completes.
         _handler.EventFactory = (_, ctx, ct) =>
         {
             var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
@@ -227,14 +226,13 @@ public class LiveOutputTrackingTests : IDisposable
         var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var httpResponse = await _client.PostAsync("/responses", content);
-        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
     public async Task AddedWithNullItem_IsIgnored()
     {
-        // The null! item causes the event constructor to throw ArgumentNullException
-        // before response.created is yielded → pre-created error → 500
+        // A null item carries nothing to track, so the SDK skips it and the response completes.
         _handler.EventFactory = (_, ctx, ct) =>
         {
             var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
@@ -249,7 +247,7 @@ public class LiveOutputTrackingTests : IDisposable
         var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var httpResponse = await _client.PostAsync("/responses", content);
-        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]

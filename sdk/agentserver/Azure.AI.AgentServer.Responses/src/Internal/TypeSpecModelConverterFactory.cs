@@ -89,7 +89,7 @@ internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
         // OpenAI.Responses types this package consumes — are materialized through
         // ModelReaderWriter, which knows how to build them.
         var raw = BinaryData.FromString(jsonDoc.RootElement.GetRawText());
-        if (ModelReaderWriter.Read(raw, typeToConvert, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default) is T model2)
+        if (ModelJson.Read(raw, typeToConvert, ModelReaderWriterOptions.Json) is T model2)
         {
             return model2;
         }

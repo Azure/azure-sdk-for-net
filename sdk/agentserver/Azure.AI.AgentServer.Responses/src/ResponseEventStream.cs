@@ -685,7 +685,7 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemStructuredOutputs(BinaryData output)
     {
         var builder = AddOutputItemStructuredOutputs();
-        var item = new StructuredOutputsOutputItem(output, builder.ItemId);
+        var item = new StructuredOutputsOutputItem(output) { Id = builder.ItemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }

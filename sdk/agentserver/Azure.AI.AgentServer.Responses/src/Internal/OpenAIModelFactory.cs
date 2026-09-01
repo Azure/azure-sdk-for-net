@@ -35,7 +35,7 @@ internal static class OpenAIModelFactory
         // reflection-based overload is the only one that can materialize it. The package is
         // not trim/AOT-annotated, so the analyzer's AOT concern does not apply here.
 #pragma warning disable AZC0150
-        return ModelReaderWriter.Read<OpenAI.Responses.ResponseToolChoice>(json);
+        return ModelJson.Read<OpenAI.Responses.ResponseToolChoice>(json);
 #pragma warning restore AZC0150
     }
 
@@ -116,9 +116,8 @@ internal static class OpenAIModelFactory
             write(writer);
         }
 
-        return ModelReaderWriter.Read<T>(
+        return ModelJson.Read<T>(
             BinaryData.FromBytes(stream.ToArray()),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+            ModelReaderWriterOptions.Json)!;
     }
 }

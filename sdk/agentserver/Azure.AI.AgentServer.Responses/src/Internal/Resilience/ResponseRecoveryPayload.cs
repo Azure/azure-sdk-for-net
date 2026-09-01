@@ -249,8 +249,8 @@ internal sealed class ResponseRecoveryPayload
         {
             // A non-empty object is a real agent reference; an empty object `{}` (the Python-parity
             // serialization for "none") reads back as null, matching the round-trip contract.
-            agentReference = ModelReaderWriter.Read<AgentReference>(
-                BinaryData.FromString(arElement.GetRawText()), JsonOptions, AzureAIAgentServerResponsesContext.Default);
+            agentReference = ModelJson.Read<AgentReference>(
+                BinaryData.FromString(arElement.GetRawText()), JsonOptions);
         }
 
         return new ResponseRecoveryPayload(
@@ -289,8 +289,8 @@ internal sealed class ResponseRecoveryPayload
 
         try
         {
-            CreateResponse? request = ModelReaderWriter.Read<CreateResponse>(
-                BinaryData.FromString(element.GetRawText()), JsonOptions, AzureAIAgentServerResponsesContext.Default);
+            CreateResponse? request = ModelJson.Read<CreateResponse>(
+                BinaryData.FromString(element.GetRawText()), JsonOptions);
             if (request is null)
             {
                 throw new RecoveryPayloadFormatException(

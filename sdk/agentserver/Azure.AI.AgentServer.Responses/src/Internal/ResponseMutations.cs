@@ -25,9 +25,8 @@ internal static class ResponseMutations
         snapshot.EnsureEnvelopeDefaults();
         try
         {
-            return ModelReaderWriter.Write(
-                snapshot, ModelReaderWriterOptions.Json,
-                AzureAIAgentServerResponsesContext.Default).ToArray();
+            return ModelJson.Write(
+                snapshot, ModelReaderWriterOptions.Json).ToArray();
         }
         catch (Exception)
         {
