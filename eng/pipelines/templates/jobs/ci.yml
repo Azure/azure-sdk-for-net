@@ -42,6 +42,9 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: EnableTestRuntimeTrimming
+    type: boolean
+    default: false
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -254,6 +257,8 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+            EnableTestRuntimeTrimming: ${{ parameters.EnableTestRuntimeTrimming }}
 
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
