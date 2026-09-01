@@ -77,7 +77,7 @@ namespace Azure.Provisioning.LoadTesting
         {
             get
             {
-                return Properties.Limit;
+                return Properties is null ? default : Properties.Limit;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.LoadTesting
         {
             get
             {
-                return Properties.Usage;
+                return Properties is null ? default : Properties.Usage;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Provisioning.LoadTesting
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 

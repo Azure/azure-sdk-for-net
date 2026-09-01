@@ -174,7 +174,7 @@ namespace Azure.Provisioning.MachineLearning
     public partial class BatchPipelineComponentDeploymentConfiguration : Azure.Provisioning.MachineLearning.BatchDeploymentConfiguration
     {
         public BatchPipelineComponentDeploymentConfiguration() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AssetId { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningIdAssetReference ComponentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> Settings { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
@@ -1000,6 +1000,11 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> KeyVaultArmId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class LakeHouseArtifact : Azure.Provisioning.MachineLearning.OneLakeArtifact
+    {
+        public LakeHouseArtifact() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum LearningRateScheduler
     {
         None = 0,
@@ -1009,7 +1014,13 @@ namespace Azure.Provisioning.MachineLearning
     public partial class MachineLearningAccountKeyDatastoreCredentials : Azure.Provisioning.MachineLearning.MachineLearningDatastoreCredentials
     {
         public MachineLearningAccountKeyDatastoreCredentials() { }
-        public Azure.Provisioning.BicepValue<string> SecretsKey { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningAccountKeyDatastoreSecrets Secrets { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningAccountKeyDatastoreSecrets : Azure.Provisioning.MachineLearning.MachineLearningDatastoreSecrets
+    {
+        public MachineLearningAccountKeyDatastoreSecrets() { }
+        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningAksCompute : Azure.Provisioning.MachineLearning.MachineLearningComputeProperties
@@ -1241,9 +1252,15 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<System.Uri> AuthorityUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ResourceUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SecretsCertificate { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningCertificateDatastoreSecrets Secrets { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningCertificateDatastoreSecrets : Azure.Provisioning.MachineLearning.MachineLearningDatastoreSecrets
+    {
+        public MachineLearningCertificateDatastoreSecrets() { }
+        public Azure.Provisioning.BicepValue<string> Certificate { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningClusterPurpose
@@ -1316,7 +1333,7 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> EnvironmentVariables { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.MachineLearning.MachineLearningJobInput> Inputs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> LimitsTimeout { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningCommandJobLimits Limits { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.MachineLearning.MachineLearningJobOutput> Outputs { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Parameters { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.JobTier> QueueJobTier { get { throw null; } set { } }
@@ -1845,6 +1862,11 @@ namespace Azure.Provisioning.MachineLearning
         public MachineLearningDatastoreProperties() { }
         public Azure.Provisioning.MachineLearning.MachineLearningDatastoreCredentials Credentials { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDefault { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningDatastoreSecrets : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MachineLearningDatastoreSecrets() { }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MachineLearningDataType
@@ -3102,7 +3124,13 @@ namespace Azure.Provisioning.MachineLearning
     public partial class MachineLearningSasDatastoreCredentials : Azure.Provisioning.MachineLearning.MachineLearningDatastoreCredentials
     {
         public MachineLearningSasDatastoreCredentials() { }
-        public Azure.Provisioning.BicepValue<string> SecretsSasToken { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningSasDatastoreSecrets Secrets { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningSasDatastoreSecrets : Azure.Provisioning.MachineLearning.MachineLearningDatastoreSecrets
+    {
+        public MachineLearningSasDatastoreSecrets() { }
+        public Azure.Provisioning.BicepValue<string> SasToken { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningSchedule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3214,9 +3242,15 @@ namespace Azure.Provisioning.MachineLearning
         public MachineLearningServicePrincipalDatastoreCredentials() { }
         public Azure.Provisioning.BicepValue<System.Uri> AuthorityUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ResourceUri { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningServicePrincipalDatastoreSecrets Secrets { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearningServicePrincipalDatastoreSecrets : Azure.Provisioning.MachineLearning.MachineLearningDatastoreSecrets
+    {
+        public MachineLearningServicePrincipalDatastoreSecrets() { }
+        public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningSharedPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3893,10 +3927,16 @@ namespace Azure.Provisioning.MachineLearning
     {
         MeanAveragePrecision = 0,
     }
+    public partial class OneLakeArtifact : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public OneLakeArtifact() { }
+        public Azure.Provisioning.BicepValue<string> ArtifactName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class OneLakeDatastore : Azure.Provisioning.MachineLearning.MachineLearningDatastoreProperties
     {
         public OneLakeDatastore() { }
-        public Azure.Provisioning.BicepValue<string> ArtifactName { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.OneLakeArtifact Artifact { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Endpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OneLakeWorkspaceName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningServiceDataAccessAuthIdentity> ServiceDataAccessAuthIdentity { get { throw null; } set { } }

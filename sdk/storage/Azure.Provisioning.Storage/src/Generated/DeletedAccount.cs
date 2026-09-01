@@ -79,7 +79,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.StorageAccountResourceId;
+                return Properties is null ? default : Properties.StorageAccountResourceId;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.Location;
+                return Properties is null ? default : Properties.Location;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.RestoreReference;
+                return Properties is null ? default : Properties.RestoreReference;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 

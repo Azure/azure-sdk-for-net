@@ -95,42 +95,71 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             return new SkuMixPlacementVMSize(name, rank, default);
         }
 
+        /// <param name="id">
+        /// Unique identifier for this placement response, including responses that contain no placement choices.
+        /// Replaces the per-choice id that was present on placementChoices in earlier API versions.
+        /// </param>
         /// <param name="placementChoices"> List of placement choice recommendations. </param>
         /// <param name="validUntilOn"> Date/time until which the recommendations are valid. Callers should request fresh recommendations after this time. </param>
         /// <param name="partialFulfillmentReason"> Indicates whether the response is a complete or partial fulfillment. </param>
+        /// <param name="capacityLimits">
+        /// Capacity availability for each requested (VM size, zone) combination, independent of the recommended
+        /// placement. An entry is present for every requested combination, including those excluded by capacity
+        /// or quota. Only returned for requests that describe instances by VM sizes.
+        /// </param>
         /// <returns> A new <see cref="Models.ComputeSkuMixPlacementGenerateResult"/> instance for mocking. </returns>
-        public static ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default, DateTimeOffset? validUntilOn = default, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default)
+        public static ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(string id = default, IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default, DateTimeOffset? validUntilOn = default, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default, IEnumerable<ComputeSkuMixPlacementCapacityLimit> capacityLimits = default)
         {
             placementChoices ??= new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>();
+            capacityLimits ??= new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>();
 
-            return new ComputeSkuMixPlacementGenerateResult((placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>()).ToList(), validUntilOn, partialFulfillmentReason, default);
+            return new ComputeSkuMixPlacementGenerateResult(
+                id,
+                (placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>()).ToList(),
+                validUntilOn,
+                partialFulfillmentReason,
+                (capacityLimits ?? new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>()).ToList(),
+                default);
         }
 
-        /// <param name="id"> Unique identifier for this deployment choice. </param>
         /// <param name="score"> Placement score from 0 to 9 (inclusive). Higher is better. </param>
         /// <param name="skuSplit"> The list of VM size / zone allocations that make up this deployment choice. </param>
         /// <returns> A new <see cref="Models.ComputeSkuMixPlacementDeploymentChoice"/> instance for mocking. </returns>
-        public static ComputeSkuMixPlacementDeploymentChoice ComputeSkuMixPlacementDeploymentChoice(string id = default, int score = default, IEnumerable<ComputeSkuMixPlacementItem> skuSplit = default)
+        public static ComputeSkuMixPlacementDeploymentChoice ComputeSkuMixPlacementDeploymentChoice(int score = default, IEnumerable<ComputeSkuMixPlacementItem> skuSplit = default)
         {
             skuSplit ??= new ChangeTrackingList<ComputeSkuMixPlacementItem>();
 
-            return new ComputeSkuMixPlacementDeploymentChoice(id, score, (skuSplit ?? new ChangeTrackingList<ComputeSkuMixPlacementItem>()).ToList(), default);
+            return new ComputeSkuMixPlacementDeploymentChoice(score, (skuSplit ?? new ChangeTrackingList<ComputeSkuMixPlacementItem>()).ToList(), default);
         }
 
         /// <param name="name"> VM size name (e.g. Standard_D2s_v3). </param>
         /// <param name="priority"> Priority of this allocation (Regular or Spot). </param>
         /// <param name="capacity"> Lower range of recommended allocation capacity. </param>
-        /// <param name="capacityMax"> Upper range of recommended allocation capacity. </param>
         /// <param name="zone"> Logical zone (e.g. "1", "2", "3"). Omitted or empty for regional deployments. </param>
         /// <returns> A new <see cref="Models.ComputeSkuMixPlacementItem"/> instance for mocking. </returns>
-        public static ComputeSkuMixPlacementItem ComputeSkuMixPlacementItem(string name = default, SkuMixPlacementPriority priority = default, int capacity = default, int? capacityMax = default, string zone = default)
+        public static ComputeSkuMixPlacementItem ComputeSkuMixPlacementItem(string name = default, SkuMixPlacementPriority priority = default, int capacity = default, string zone = default)
         {
-            return new ComputeSkuMixPlacementItem(
+            return new ComputeSkuMixPlacementItem(name, priority, capacity, zone, default);
+        }
+
+        /// <param name="name"> VM size name (e.g. Standard_D2s_v3). </param>
+        /// <param name="priority"> Priority of this entry (Regular or Spot). </param>
+        /// <param name="zone"> Logical zone (e.g. "1", "2", "3"). Omitted or empty for regional requests. </param>
+        /// <param name="limit">
+        /// Upper bound, in VMs, on how much capacity can be allocated for this (VM size, zone): the smallest of
+        /// the requested capacity, the available capacity, and the available quota, but never below the capacity
+        /// already recommended for the slot. 0 when nothing is available.
+        /// </param>
+        /// <param name="reason"> Why the limit is below the requested capacity, or None when the request is fully available. </param>
+        /// <returns> A new <see cref="Models.ComputeSkuMixPlacementCapacityLimit"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementCapacityLimit ComputeSkuMixPlacementCapacityLimit(string name = default, SkuMixPlacementPriority priority = default, string zone = default, int limit = default, SkuMixPlacementCapacityLimitReason reason = default)
+        {
+            return new ComputeSkuMixPlacementCapacityLimit(
                 name,
                 priority,
-                capacity,
-                capacityMax,
                 zone,
+                limit,
+                reason,
                 default);
         }
 
