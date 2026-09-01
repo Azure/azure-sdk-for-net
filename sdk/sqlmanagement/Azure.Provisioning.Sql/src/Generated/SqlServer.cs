@@ -8,8 +8,11 @@
 using System;
 using Azure.Core;
 using Azure.Provisioning;
+using Azure.Provisioning.Authorization;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Azure.Provisioning.Roles;
 
 namespace Azure.Provisioning.Sql
 {
@@ -450,6 +453,41 @@ namespace Azure.Provisioning.Sql
 
         /// <summary> Define additional provisionable properties for SqlServer that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Creates a role assignment for a user-assigned identity that grants access to this SqlServer. </summary>
+        /// <param name="role"> The role to grant. </param>
+        /// <param name="identity"> The <see cref="UserAssignedIdentity"/>. </param>
+        /// <returns> The <see cref="RoleAssignment"/>. </returns>
+        public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, UserAssignedIdentity identity)
+        {
+            string roleName = SqlBuiltInRole.GetBuiltInRoleName(role);
+            RoleAssignment result = new RoleAssignment($"{BicepIdentifier}_{identity.BicepIdentifier}_{roleName}");
+            result.Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
+            result.Scope = new IdentifierExpression(BicepIdentifier);
+            result.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
+            result.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
+            result.PrincipalId = identity.PrincipalId;
+            return result;
+        }
+
+        /// <summary> Creates a role assignment for a principal that grants access to this SqlServer. </summary>
+        /// <param name="role"> The role to grant. </param>
+        /// <param name="principalType"> The type of the principal to assign to. </param>
+        /// <param name="principalId"> The principal to assign to. </param>
+        /// <param name="bicepIdentifierSuffix"> Optional role assignment identifier name suffix. </param>
+        /// <returns> The <see cref="RoleAssignment"/>. </returns>
+        public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string bicepIdentifierSuffix = null)
+        {
+            string roleName = SqlBuiltInRole.GetBuiltInRoleName(role);
+            string suffixSep = bicepIdentifierSuffix is null ? "" : "_";
+            RoleAssignment result = new RoleAssignment($"{BicepIdentifier}_{roleName}{suffixSep}{bicepIdentifierSuffix}");
+            result.Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
+            result.Scope = new IdentifierExpression(BicepIdentifier);
+            result.PrincipalType = principalType;
+            result.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
+            result.PrincipalId = principalId;
+            return result;
+        }
 
         /// <summary></summary>
         public static partial class ResourceVersions

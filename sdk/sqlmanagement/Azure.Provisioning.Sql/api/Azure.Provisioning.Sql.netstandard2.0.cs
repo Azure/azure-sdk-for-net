@@ -2329,6 +2329,26 @@ namespace Azure.Provisioning.Sql
         Zone = 2,
         GeoZone = 3,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlBuiltInRole : System.IEquatable<Azure.Provisioning.Sql.SqlBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.Sql.SqlBuiltInRole AzureConnectedSqlServerOnboarding { get { throw null; } }
+        public static Azure.Provisioning.Sql.SqlBuiltInRole SqlDBContributor { get { throw null; } }
+        public static Azure.Provisioning.Sql.SqlBuiltInRole SqlManagedInstanceContributor { get { throw null; } }
+        public static Azure.Provisioning.Sql.SqlBuiltInRole SqlSecurityManager { get { throw null; } }
+        public static Azure.Provisioning.Sql.SqlBuiltInRole SqlServerContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.Sql.SqlBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.Sql.SqlBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.Sql.SqlBuiltInRole left, Azure.Provisioning.Sql.SqlBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.Sql.SqlBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.Sql.SqlBuiltInRole left, Azure.Provisioning.Sql.SqlBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum SqlColumnDataType
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="image")]
@@ -3171,6 +3191,8 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerWorkspaceFeature> WorkspaceFeature { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.SqlServer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
