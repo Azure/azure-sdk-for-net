@@ -1,10 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.Provisioning.Sql;
 
 public partial class SqlServerDatabaseRestorePoint
 {
+    // Restore points are read-only, but this constructor preserves the API shipped in the
+    // previous stable version.
+    /// <summary> Creates a new SqlServerDatabaseRestorePoint. </summary>
+    /// <param name="bicepIdentifier"> The bicep identifier name. </param>
+    /// <param name="resourceVersion"> The resource API version. </param>
+    public SqlServerDatabaseRestorePoint(string bicepIdentifier, string resourceVersion = null)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2025-01-01")
+    {
+    }
+
     // Preserve API versions shipped by the reflection-based generator that are not emitted
     // by the TypeSpec-based generator when targeting only the current stable API version.
     public static partial class ResourceVersions

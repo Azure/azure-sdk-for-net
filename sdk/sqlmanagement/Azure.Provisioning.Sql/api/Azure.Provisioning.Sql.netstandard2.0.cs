@@ -1139,7 +1139,7 @@ namespace Azure.Provisioning.Sql
     }
     public partial class ManagedDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal ManagedDatabaseSensitivityLabel() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabaseSensitivityLabel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ClientClassificationSource> ClientClassificationSource { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ColumnName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2646,7 +2646,7 @@ namespace Azure.Provisioning.Sql
     }
     public partial class SqlDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal SqlDatabaseSensitivityLabel() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseSensitivityLabel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ClientClassificationSource> ClientClassificationSource { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ColumnName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -3386,7 +3386,7 @@ namespace Azure.Provisioning.Sql
     }
     public partial class SqlServerDatabaseRestorePoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal SqlServerDatabaseRestorePoint() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerDatabaseRestorePoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EarliestRestoreOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }

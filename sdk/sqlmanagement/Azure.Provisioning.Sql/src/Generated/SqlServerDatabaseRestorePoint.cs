@@ -23,13 +23,6 @@ namespace Azure.Provisioning.Sql
         private BicepValue<AzureLocation> _location;
         private ResourceReference<SqlDatabase> _parent;
 
-        /// <summary> Creates a new SqlServerDatabaseRestorePoint. </summary>
-        /// <param name="bicepIdentifier"> The bicep identifier name. </param>
-        /// <param name="resourceVersion"> The resource API version. </param>
-        internal SqlServerDatabaseRestorePoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2025-01-01")
-        {
-        }
-
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
