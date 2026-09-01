@@ -308,7 +308,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Assert.AreEqual(200, response.Status);
             }
 
-            // First, authenticate against host A. This populates the instance's sticky challenge and the base
+            // First, authenticate against host A. This populates the shared challenge cache and the base
             // policy's token cache for tenant A.
             await SendAsync(hostA);
 
@@ -323,6 +323,85 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 authHeadersSentToHostB,
                 $"Bearer {tokenB}",
                 "The second endpoint was never authenticated with its own token.");
+        }
+
+        // Regression test for the concurrent variant: interleaved requests to two endpoints on a single policy
+        // instance must each be authorized with their own endpoint's token. Because no challenge is memoized on
+        // the policy instance, a request bound for one endpoint can never observe the other endpoint's challenge.
+        [TestCase(10, 0, 0)]
+        [TestCase(10, 20, 200)]
+        public async Task DoesNotReuseTokenAcrossAuthoritiesConcurrently(int requestsPerHost, int minDelay, int maxDelay)
+        {
+            const string hostA = "a.vault.azure.net";
+            const string hostB = "b.vault.azure.net";
+            const string tenantA = "11111111-1111-1111-1111-111111111111";
+            const string tenantB = "22222222-2222-2222-2222-222222222222";
+            string tokenA = Base64(tenantA);
+            string tokenB = Base64(tenantB);
+
+            Random rand = new();
+
+            MockResponse Challenge(string tenant)
+            {
+                MockResponse response = new(401, "Unauthorized");
+                response.AddHeader(new HttpHeader("WWW-Authenticate", @$"Bearer authorization=""https://login.windows.net/{tenant}"", resource=""https://vault.azure.net"""));
+                return response;
+            }
+
+            // Assert on every authenticated request as it is processed: a request to one host must never carry
+            // the other host's token.
+            MockTransport transport = new(request =>
+            {
+                int delay;
+                lock (rand)
+                {
+                    delay = rand.Next(minDelay, maxDelay);
+                }
+
+                if (delay > 0)
+                {
+                    Thread.Sleep(delay);
+                }
+
+                string auth = request.Headers.TryGetValue("Authorization", out string value) ? value : null;
+                switch (request.Uri.Host)
+                {
+                    case hostA:
+                        Assert.AreNotEqual($"Bearer {tokenB}", auth, "Host B's token was attached to a host A request.");
+                        return auth == $"Bearer {tokenA}" ? new MockResponse(200, "OK") : Challenge(tenantA);
+
+                    case hostB:
+                        Assert.AreNotEqual($"Bearer {tokenA}", auth, "Host A's token was attached to a host B request.");
+                        return auth == $"Bearer {tokenB}" ? new MockResponse(200, "OK") : Challenge(tenantB);
+
+                    default:
+                        throw new AssertionException($"Unexpected request: {request}");
+                }
+            });
+
+            CallbackTokenCredential credential = new((requestContext, _) =>
+                new AccessToken(Base64(requestContext.TenantId), DateTimeOffset.UtcNow.AddHours(1)));
+
+            ChallengeBasedAuthenticationPolicy policy = new(credential, disableChallengeResourceVerification: false);
+            HttpPipeline pipeline = new(transport, new HttpPipelinePolicy[] { policy });
+
+            async Task SendAsync(string host)
+            {
+                Request request = pipeline.CreateRequest();
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri($"https://{host}/secrets/test?api-version=7.4"));
+                Response response = await pipeline.SendRequestAsync(request, default);
+                Assert.AreEqual(200, response.Status);
+            }
+
+            Task[] tasks = new Task[requestsPerHost * 2];
+            for (int i = 0; i < requestsPerHost; i++)
+            {
+                tasks[2 * i] = Task.Run(() => SendAsync(hostA));
+                tasks[2 * i + 1] = Task.Run(() => SendAsync(hostB));
+            }
+
+            await Task.WhenAll(tasks);
         }
 
         [Test]
