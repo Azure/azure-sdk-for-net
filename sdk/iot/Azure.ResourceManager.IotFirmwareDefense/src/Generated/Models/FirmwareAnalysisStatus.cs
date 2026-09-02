@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public readonly partial struct FirmwareAnalysisStatus : IEquatable<FirmwareAnalysisStatus>
     {
         private readonly string _value;
+        /// <summary> The analysis job is queued. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The firmware is currently being extracted. </summary>
+        private const string ExtractingValue = "Extracting";
+        /// <summary> Analysis is being run on the firmware. </summary>
+        private const string AnalyzingValue = "Analyzing";
+        /// <summary> Analysis job results are ready. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> An error occurred while running firmware analysis. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirmwareAnalysisStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ExtractingValue = "Extracting";
-        private const string AnalyzingValue = "Analyzing";
-        private const string ReadyValue = "Ready";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> The analysis job is queued. </summary>
         public static FirmwareAnalysisStatus Pending { get; } = new FirmwareAnalysisStatus(PendingValue);
+
         /// <summary> The firmware is currently being extracted. </summary>
         public static FirmwareAnalysisStatus Extracting { get; } = new FirmwareAnalysisStatus(ExtractingValue);
+
         /// <summary> Analysis is being run on the firmware. </summary>
         public static FirmwareAnalysisStatus Analyzing { get; } = new FirmwareAnalysisStatus(AnalyzingValue);
+
         /// <summary> Analysis job results are ready. </summary>
         public static FirmwareAnalysisStatus Ready { get; } = new FirmwareAnalysisStatus(ReadyValue);
+
         /// <summary> An error occurred while running firmware analysis. </summary>
         public static FirmwareAnalysisStatus Error { get; } = new FirmwareAnalysisStatus(ErrorValue);
+
         /// <summary> Determines if two <see cref="FirmwareAnalysisStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirmwareAnalysisStatus left, FirmwareAnalysisStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirmwareAnalysisStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirmwareAnalysisStatus left, FirmwareAnalysisStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirmwareAnalysisStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirmwareAnalysisStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirmwareAnalysisStatus(string value) => new FirmwareAnalysisStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirmwareAnalysisStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirmwareAnalysisStatus?(string value) => value == null ? null : new FirmwareAnalysisStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirmwareAnalysisStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirmwareAnalysisStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Updated Microsoft.IoTFirmwareDefense API version to `2026-06-01-preview`.
+- Added support for listing unsafe function call analysis results.
+
 ### Breaking Changes
 
 ### Bugs Fixed

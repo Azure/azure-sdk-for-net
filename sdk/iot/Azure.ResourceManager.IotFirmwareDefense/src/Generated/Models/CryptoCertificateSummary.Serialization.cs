@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CryptoCertificateSummary : IUtf8JsonSerializable, IJsonModel<CryptoCertificateSummary>
+    /// <summary> Properties for cryptographic certificate summary. </summary>
+    public partial class CryptoCertificateSummary : FirmwareAnalysisSummaryProperties, IJsonModel<CryptoCertificateSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FirmwareAnalysisSummaryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCryptoCertificateSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CryptoCertificateSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CryptoCertificateSummary IPersistableModel<CryptoCertificateSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (CryptoCertificateSummary)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CryptoCertificateSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CryptoCertificateSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TotalCertificateCount))
             {
@@ -72,26 +112,34 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
         }
 
-        CryptoCertificateSummary IJsonModel<CryptoCertificateSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CryptoCertificateSummary IJsonModel<CryptoCertificateSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CryptoCertificateSummary)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCryptoCertificateSummary(document.RootElement, options);
         }
 
-        internal static CryptoCertificateSummary DeserializeCryptoCertificateSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CryptoCertificateSummary DeserializeCryptoCertificateSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            FirmwareAnalysisSummaryType summaryType = default;
+            FirmwareProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? totalCertificateCount = default;
             long? pairedKeyCount = default;
             long? expiredCertificateCount = default;
@@ -99,99 +147,94 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             long? weakSignatureCount = default;
             long? selfSignedCertificateCount = default;
             long? shortKeySizeCount = default;
-            FirmwareAnalysisSummaryType summaryType = default;
-            FirmwareProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("totalCertificateCount"u8))
+                if (prop.NameEquals("summaryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    summaryType = new FirmwareAnalysisSummaryType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalCertificateCount = property.Value.GetInt64();
+                    provisioningState = new FirmwareProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("pairedKeyCount"u8))
+                if (prop.NameEquals("totalCertificateCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pairedKeyCount = property.Value.GetInt64();
+                    totalCertificateCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("expiredCertificateCount"u8))
+                if (prop.NameEquals("pairedKeyCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiredCertificateCount = property.Value.GetInt64();
+                    pairedKeyCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("expiringSoonCertificateCount"u8))
+                if (prop.NameEquals("expiredCertificateCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiringSoonCertificateCount = property.Value.GetInt64();
+                    expiredCertificateCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("weakSignatureCount"u8))
+                if (prop.NameEquals("expiringSoonCertificateCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    weakSignatureCount = property.Value.GetInt64();
+                    expiringSoonCertificateCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("selfSignedCertificateCount"u8))
+                if (prop.NameEquals("weakSignatureCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selfSignedCertificateCount = property.Value.GetInt64();
+                    weakSignatureCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("shortKeySizeCount"u8))
+                if (prop.NameEquals("selfSignedCertificateCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shortKeySizeCount = property.Value.GetInt64();
+                    selfSignedCertificateCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("summaryType"u8))
+                if (prop.NameEquals("shortKeySizeCount"u8))
                 {
-                    summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
+                    shortKeySizeCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CryptoCertificateSummary(
                 summaryType,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 totalCertificateCount,
                 pairedKeyCount,
                 expiredCertificateCount,
@@ -200,36 +243,5 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 selfSignedCertificateCount,
                 shortKeySizeCount);
         }
-
-        BinaryData IPersistableModel<CryptoCertificateSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CryptoCertificateSummary IPersistableModel<CryptoCertificateSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCryptoCertificateSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CryptoCertificateSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

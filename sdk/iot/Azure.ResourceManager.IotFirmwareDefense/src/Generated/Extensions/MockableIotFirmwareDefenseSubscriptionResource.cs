@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.IotFirmwareDefense;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableIotFirmwareDefenseSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _firmwareAnalysisWorkspaceWorkspacesRestClient;
+        private ClientDiagnostics _workspacesClientDiagnostics;
+        private Workspaces _workspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotFirmwareDefenseSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableIotFirmwareDefenseSubscriptionResource for mocking. </summary>
         protected MockableIotFirmwareDefenseSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotFirmwareDefenseSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableIotFirmwareDefenseSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableIotFirmwareDefenseSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics FirmwareAnalysisWorkspaceWorkspacesClientDiagnostics => _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareAnalysisWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations FirmwareAnalysisWorkspaceWorkspacesRestClient => _firmwareAnalysisWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FirmwareAnalysisWorkspaceResource.ResourceType));
+        private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01-preview");
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareAnalysisWorkspaceResource(Client, FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(e)), FirmwareAnalysisWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirmwareAnalysisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareAnalysisWorkspaceResource(Client, FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(e)), FirmwareAnalysisWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
     }
 }
