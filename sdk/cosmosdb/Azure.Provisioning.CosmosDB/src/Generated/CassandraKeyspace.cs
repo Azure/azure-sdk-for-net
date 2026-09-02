@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CosmosDB
 {
@@ -156,24 +155,6 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CassandraKeyspaceProperties();
                 }
                 Properties.Resource = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Options. </summary>
-        [CodeGenMember("Options")]
-        public CosmosDBCreateUpdateConfig Options
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Options;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CassandraKeyspaceProperties();
-                }
-                Properties.Options = value;
             }
         }
 

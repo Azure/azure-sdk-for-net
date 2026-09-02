@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CosmosDB
 {
@@ -134,24 +133,6 @@ namespace Azure.Provisioning.CosmosDB
             {
                 Initialize();
                 _parent.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        [CodeGenMember("Resource")]
-        public ThroughputSettingsResourceInfo Resource
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Resource;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ThroughputSettingsProperties();
-                }
-                Properties.Resource = value;
             }
         }
 
