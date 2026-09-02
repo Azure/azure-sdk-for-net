@@ -37,7 +37,7 @@ steps:
             -IsReleaseBuild $$(SetAsReleaseBuild) `
             -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
         workingDirectory: $(Pipeline.Workspace)
-      displayName: Validate packages and update work items
+      displayName: Update-Package-WorkItems
       continueOnError: true
       condition: >-
         and(
