@@ -111,6 +111,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("baseFilter"u8);
                 writer.WriteStringValue(BaseFilter);
             }
+            if (Optional.IsDefined(QueryHints))
+            {
+                writer.WritePropertyName("queryHints"u8);
+                writer.WriteObjectValue(QueryHints, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<SearchIndexFieldReference> searchFields = default;
             string semanticConfigurationName = default;
             string baseFilter = default;
+            SearchIndexKnowledgeSourceQueryHints queryHints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,6 +210,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     baseFilter = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("queryHints"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryHints = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -215,6 +230,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 searchFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
                 semanticConfigurationName,
                 baseFilter,
+                queryHints,
                 additionalBinaryDataProperties);
         }
     }

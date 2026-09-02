@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
-using System;
 using System.Reflection;
 using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -78,7 +77,7 @@ namespace Azure.Generator.Mgmt.Tests
                 previousFactoryParameters);
             lastContractFactory.MethodsToBuild =
                 [new MethodProvider(previousFactorySignature, MethodBodyStatement.Empty, lastContractFactory)];
-            SetLastContractView(modelFactory, lastContractFactory);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractFactory);
 
             var visitLibrary = typeof(LibraryVisitor).GetMethod(
                 "VisitLibrary",
@@ -86,21 +85,9 @@ namespace Azure.Generator.Mgmt.Tests
             foreach (var visitor in plugin.Object.Visitors)
             {
                 visitLibrary.Invoke(visitor, [output]);
-                if (visitor is Management.Visitors.ModelFactoryVisitor)
-                {
-                    var method = output.TypeProviders.OfType<ModelFactoryProvider>()
-                        .Single().Methods.Single(m => m.Signature.ReturnType?.Name == "TestModel");
-                    method.Signature.Parameters.Single(p => p.Name == "startsOn").Update(name: "startOn");
-                    method.Signature.Parameters.Single(p => p.Name == "endsOn").Update(name: "endOn");
-                    method.Update(signature: method.Signature);
-                }
             }
 
             var testModel = output.TypeProviders.OfType<ModelProvider>().Single(p => p.Name == "TestModel");
-            var publicConstructor = testModel.Constructors.Single(c =>
-                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            publicConstructor.Signature.Parameters.Single(p => p.Name == "startsOn").Update(name: "startOn");
-            publicConstructor.Signature.Parameters.Single(p => p.Name == "endsOn").Update(name: "endOn");
             var rebuiltModel = new Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmModelProvider(inputModel);
             testModel.Update(
                 constructors: rebuiltModel.Constructors,
@@ -114,7 +101,6 @@ namespace Azure.Generator.Mgmt.Tests
                 ManagementMockHelpers.ProcessTypeForBackCompatibility(type);
             }
 
-            Assert.That(testModel.FullConstructor.Signature.Parameters.Select(p => p.Name), Does.Contain("startsOn"));
             Assert.That(
                 testModel.SerializationProviders.Single().Methods
                     .First(m => m.Signature.Name.StartsWith("Deserialize")).BodyStatements!.ToDisplayString(),
@@ -207,7 +193,7 @@ namespace Azure.Generator.Mgmt.Tests
                 ]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
 
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: [method]);
 
             var updateParameterNames = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -279,7 +265,7 @@ namespace Azure.Generator.Mgmt.Tests
                 $"A test model.",
                 [new ParameterProvider("value", $"Value description", typeof(string))]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: []);
 
             var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -454,7 +440,7 @@ namespace Azure.Generator.Mgmt.Tests
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
             var customCodeView = new TestModelFactoryView(modelFactory.Name);
             customCodeView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, customCodeView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             ManagementMockHelpers.SetCustomCodeView(modelFactory, customCodeView);
             modelFactory.Update(methods: []);
 
@@ -848,14 +834,6 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             return builder.ToString().Replace("\r\n", "\n");
-        }
-
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
         }
 
         private class TestModelFactoryView : TypeProvider

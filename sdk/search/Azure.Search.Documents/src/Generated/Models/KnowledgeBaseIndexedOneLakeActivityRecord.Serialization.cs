@@ -105,6 +105,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("indexedOneLakeArguments"u8);
                 writer.WriteObjectValue(IndexedOneLakeArguments, options);
             }
+            if (Optional.IsDefined(QueryHintProcessing))
+            {
+                writer.WritePropertyName("queryHintProcessing"u8);
+                writer.WriteObjectValue(QueryHintProcessing, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -134,6 +139,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
@@ -143,6 +150,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? count = default;
             ImageServingStatistics imageServing = default;
             KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default;
+            KnowledgeBaseQueryHintProcessing queryHintProcessing = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -153,6 +161,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("startedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -219,6 +245,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     indexedOneLakeArguments = KnowledgeBaseIndexedOneLakeActivityArguments.DeserializeKnowledgeBaseIndexedOneLakeActivityArguments(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("queryHintProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryHintProcessing = KnowledgeBaseQueryHintProcessing.DeserializeKnowledgeBaseQueryHintProcessing(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -227,6 +262,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             return new KnowledgeBaseIndexedOneLakeActivityRecord(
                 id,
                 @type,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
@@ -235,7 +272,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 queryOn,
                 count,
                 imageServing,
-                indexedOneLakeArguments);
+                indexedOneLakeArguments,
+                queryHintProcessing);
         }
     }
 }
