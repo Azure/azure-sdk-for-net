@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct RemoteAddressOperator : IEquatable<RemoteAddressOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RemoteAddressOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RemoteAddressOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string IPMatchValue = "IPMatch";
         private const string GeoMatchValue = "GeoMatch";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteAddressOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RemoteAddressOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static RemoteAddressOperator Any { get; } = new RemoteAddressOperator(AnyValue);
-        /// <summary> IPMatch. </summary>
+
+        /// <summary> Gets the IPMatch. </summary>
         public static RemoteAddressOperator IPMatch { get; } = new RemoteAddressOperator(IPMatchValue);
-        /// <summary> GeoMatch. </summary>
+
+        /// <summary> Gets the GeoMatch. </summary>
         public static RemoteAddressOperator GeoMatch { get; } = new RemoteAddressOperator(GeoMatchValue);
+
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RemoteAddressOperator left, RemoteAddressOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RemoteAddressOperator left, RemoteAddressOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteAddressOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RemoteAddressOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RemoteAddressOperator(string value) => new RemoteAddressOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RemoteAddressOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RemoteAddressOperator?(string value) => value == null ? null : new RemoteAddressOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RemoteAddressOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RemoteAddressOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

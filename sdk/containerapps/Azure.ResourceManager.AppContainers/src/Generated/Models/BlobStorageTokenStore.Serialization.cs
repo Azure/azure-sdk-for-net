@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class BlobStorageTokenStore : IUtf8JsonSerializable, IJsonModel<BlobStorageTokenStore>
+    /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
+    internal partial class BlobStorageTokenStore : IJsonModel<BlobStorageTokenStore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobStorageTokenStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobStorageTokenStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBlobStorageTokenStore(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlobStorageTokenStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobStorageTokenStore IPersistableModel<BlobStorageTokenStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobStorageTokenStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BlobStorageTokenStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,23 +69,40 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("sasUrlSettingName"u8);
-            writer.WriteStringValue(SasUrlSettingName);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(AzureBlobStorageSasUrlSettingName))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("sasUrlSettingName"u8);
+                writer.WriteStringValue(AzureBlobStorageSasUrlSettingName);
+            }
+            if (Optional.IsDefined(BlobContainerUri))
+            {
+                writer.WritePropertyName("blobContainerUri"u8);
+                writer.WriteStringValue(BlobContainerUri);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ManagedIdentityResourceId))
+            {
+                writer.WritePropertyName("managedIdentityResourceId"u8);
+                writer.WriteStringValue(ManagedIdentityResourceId);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -54,114 +111,64 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        BlobStorageTokenStore IJsonModel<BlobStorageTokenStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobStorageTokenStore IJsonModel<BlobStorageTokenStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobStorageTokenStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBlobStorageTokenStore(document.RootElement, options);
         }
 
-        internal static BlobStorageTokenStore DeserializeBlobStorageTokenStore(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BlobStorageTokenStore DeserializeBlobStorageTokenStore(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string sasUrlSettingName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string azureBlobStorageSasUrlSettingName = default;
+            string blobContainerUri = default;
+            string clientId = default;
+            string managedIdentityResourceId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUrlSettingName"u8))
+                if (prop.NameEquals("sasUrlSettingName"u8))
                 {
-                    sasUrlSettingName = property.Value.GetString();
+                    azureBlobStorageSasUrlSettingName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("blobContainerUri"u8))
+                {
+                    blobContainerUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("clientId"u8))
+                {
+                    clientId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("managedIdentityResourceId"u8))
+                {
+                    managedIdentityResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BlobStorageTokenStore(sasUrlSettingName, serializedAdditionalRawData);
+            return new BlobStorageTokenStore(azureBlobStorageSasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasUrlSettingName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sasUrlSettingName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SasUrlSettingName))
-                {
-                    builder.Append("  sasUrlSettingName: ");
-                    if (SasUrlSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SasUrlSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SasUrlSettingName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BlobStorageTokenStore>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BlobStorageTokenStore IPersistableModel<BlobStorageTokenStore>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBlobStorageTokenStore(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BlobStorageTokenStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

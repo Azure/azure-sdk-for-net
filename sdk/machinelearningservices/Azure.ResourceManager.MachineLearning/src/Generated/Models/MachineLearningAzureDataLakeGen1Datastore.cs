@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,63 +15,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAzureDataLakeGen1Datastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen1Datastore"/>. </summary>
-        /// <param name="credentials">
-        /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
-        /// </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
-        public MachineLearningAzureDataLakeGen1Datastore(MachineLearningDatastoreCredentials credentials, string storeName) : base(credentials)
+        public MachineLearningAzureDataLakeGen1Datastore(MachineLearningDatastoreCredentials credentials, string storeName) : base(credentials, DatastoreType.AzureDataLakeGen1)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
             Argument.AssertNotNull(storeName, nameof(storeName));
 
             StoreName = storeName;
-            DatastoreType = DatastoreType.AzureDataLakeGen1;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen1Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="datastoreType"> Enum to determine the datastore contents type. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="credentials">
-        /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
-        /// </param>
-        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, DatastoreType datastoreType, bool? isDefault, MachineLearningDatastoreCredentials credentials, string storeName, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string subscriptionId, string resourceGroup) : base(description, tags, properties, serializedAdditionalRawData, datastoreType, isDefault, credentials)
+        /// <param name="subscriptionId"> Azure Subscription Id. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
+        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
+        internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string resourceGroup, string subscriptionId, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, additionalBinaryDataProperties, credentials, datastoreType, isDefault)
         {
-            StoreName = storeName;
-            ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
-            SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
-            DatastoreType = datastoreType;
+            SubscriptionId = subscriptionId;
+            ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
+            StoreName = storeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen1Datastore"/> for deserialization. </summary>
-        internal MachineLearningAzureDataLakeGen1Datastore()
-        {
-        }
+        /// <summary> Azure Resource Group name. </summary>
+        [WirePath("resourceGroup")]
+        public string ResourceGroup { get; set; }
+
+        /// <summary> Azure Subscription Id. </summary>
+        [WirePath("subscriptionId")]
+        public string SubscriptionId { get; set; }
+
+        /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
+        [WirePath("serviceDataAccessAuthIdentity")]
+        public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
 
         /// <summary> [Required] Azure Data Lake store name. </summary>
         [WirePath("storeName")]
         public string StoreName { get; set; }
-        /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
-        [WirePath("serviceDataAccessAuthIdentity")]
-        public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
-        /// <summary> Azure Subscription Id. </summary>
-        [WirePath("subscriptionId")]
-        public string SubscriptionId { get; set; }
-        /// <summary> Azure Resource Group name. </summary>
-        [WirePath("resourceGroup")]
-        public string ResourceGroup { get; set; }
     }
 }

@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticVolumeResource : IJsonModel<NetAppElasticVolumeData>
+    /// <summary></summary>
+    public partial class NetAppElasticVolumeResource : ArmResource, IJsonModel<NetAppElasticVolumeData>
     {
-        private static NetAppElasticVolumeData s_dataDeserializationInstance;
-        private static NetAppElasticVolumeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticVolumeData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticVolumeData>)Data).Write(writer, options);
-
-        NetAppElasticVolumeData IJsonModel<NetAppElasticVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticVolumeData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticVolumeData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticVolumeData IPersistableModel<NetAppElasticVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticVolumeData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticVolumeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticVolumeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticVolumeData();
     }
 }

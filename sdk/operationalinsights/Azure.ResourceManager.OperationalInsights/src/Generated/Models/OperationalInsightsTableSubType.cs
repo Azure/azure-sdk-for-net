@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsTableSubType : IEquatable<OperationalInsightsTableSubType>
     {
         private readonly string _value;
+        /// <summary> The default subtype with which built-in tables are created. </summary>
+        private const string AnyValue = "Any";
+        /// <summary> Indicates a table created through the Data Collector API or with the custom logs feature of the MMA agent, or any table against which Custom Fields were created. </summary>
+        private const string ClassicValue = "Classic";
+        /// <summary> A table eligible to have data sent into it via any of the means supported by Data Collection Rules: the Data Collection Endpoint API, ingestion-time transformations, or any other mechanism provided by Data Collection Rules. </summary>
+        private const string DataCollectionRuleBasedValue = "DataCollectionRuleBased";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableSubType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsTableSubType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnyValue = "Any";
-        private const string ClassicValue = "Classic";
-        private const string DataCollectionRuleBasedValue = "DataCollectionRuleBased";
+            _value = value;
+        }
 
         /// <summary> The default subtype with which built-in tables are created. </summary>
         public static OperationalInsightsTableSubType Any { get; } = new OperationalInsightsTableSubType(AnyValue);
+
         /// <summary> Indicates a table created through the Data Collector API or with the custom logs feature of the MMA agent, or any table against which Custom Fields were created. </summary>
         public static OperationalInsightsTableSubType Classic { get; } = new OperationalInsightsTableSubType(ClassicValue);
+
         /// <summary> A table eligible to have data sent into it via any of the means supported by Data Collection Rules: the Data Collection Endpoint API, ingestion-time transformations, or any other mechanism provided by Data Collection Rules. </summary>
         public static OperationalInsightsTableSubType DataCollectionRuleBased { get; } = new OperationalInsightsTableSubType(DataCollectionRuleBasedValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableSubType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsTableSubType left, OperationalInsightsTableSubType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableSubType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsTableSubType left, OperationalInsightsTableSubType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsTableSubType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTableSubType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsTableSubType(string value) => new OperationalInsightsTableSubType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTableSubType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsTableSubType?(string value) => value == null ? null : new OperationalInsightsTableSubType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsTableSubType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsTableSubType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,8 +8,6 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <!-- TODO: Revert to PackageReference after Azure.Core 1.52 ships with Identity types -->
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <PackageReference Include="Moq" />
   </ItemGroup>
 
@@ -21,6 +19,13 @@
   <ItemGroup>
     <Folder Include="SessionRecords" />
     <Folder Include="SessionRecords\ConfidentialLedgerClientLiveTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Local scratch/repro scripts under tests/scripts are not part of the unit-test assembly. -->
+    <Compile Remove="scripts\**" />
+    <None Remove="scripts\**" />
+    <None Include="scripts\**" />
   </ItemGroup>
 
   <ItemGroup>

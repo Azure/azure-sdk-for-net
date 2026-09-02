@@ -57,7 +57,8 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                     StringBuilder sb = new();
                     foreach (var kvp in compiled)
                     {
-                        if (sb.Length > 0) sb.AppendLine();
+                        if (sb.Length > 0)
+                            sb.AppendLine();
                         sb.Append(kvp.Value);
                     }
                     return new BinaryData(sb.ToString());
@@ -81,12 +82,20 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
 
     string IPersistableModel<Infrastructure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is Infrastructure other && Equals(other);
 
+    /// <summary>
+    /// Determines whether this infrastructure is equal to another infrastructure.
+    /// </summary>
+    /// <param name="other">The infrastructure to compare.</param>
+    /// <returns><see langword="true"/> when the infrastructure values are equal; otherwise, <see langword="false"/>.</returns>
     public bool Equals(Infrastructure? other)
     {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
+        if (other is null)
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
 
         // Use empty resolvers for comparison to avoid side effects
         var options = new ProvisioningBuildOptions();
@@ -97,21 +106,26 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         options2.InfrastructureResolvers.Clear();
         var modules2 = other.CompileModules(options2);
 
-        if (modules1.Count != modules2.Count) return false;
+        if (modules1.Count != modules2.Count)
+            return false;
         foreach (var kvp in modules1)
         {
-            if (!modules2.TryGetValue(kvp.Key, out var otherStatements)) return false;
+            if (!modules2.TryGetValue(kvp.Key, out var otherStatements))
+                return false;
             var list1 = kvp.Value.ToList();
             var list2 = otherStatements.ToList();
-            if (list1.Count != list2.Count) return false;
+            if (list1.Count != list2.Count)
+                return false;
             for (int i = 0; i < list1.Count; i++)
             {
-                if (!list1[i].Equals(list2[i])) return false;
+                if (!list1[i].Equals(list2[i]))
+                    return false;
             }
         }
         return true;
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode() => BicepName.GetHashCode();
 
     internal void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions? options = null)
@@ -328,7 +342,8 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
     /// </summary>
     internal static void HydrateResource(ProvisionableResource? resource, DeserializedResource wrapper)
     {
-        if (resource == null) return;
+        if (resource == null)
+            return;
 
         BicepExpression? body = wrapper.Body;
         if (body != null)
@@ -394,13 +409,16 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         foreach (KeyValuePair<string, IBicepValue> kvp in properties)
         {
             IBicepValue property = kvp.Value;
-            if (property.IsOutput) continue;
+            if (property.IsOutput)
+                continue;
 
             var path = property.Self?.BicepPath;
-            if (path == null || path.Count == 0) continue;
+            if (path == null || path.Count == 0)
+                continue;
 
             BicepExpression? value = FindExpressionAtPath(body, path);
-            if (value == null) continue;
+            if (value == null)
+                continue;
 
             // Fix #1: If the property is a ProvisionableConstruct (model type like StorageSku),
             // recurse into its sub-properties instead of setting Expression (which triggers ReadOnly).

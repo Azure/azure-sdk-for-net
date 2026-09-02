@@ -141,7 +141,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string encryptedContent = default;
             IList<SummaryTextContent> summary = default;
             IList<ReasoningTextContent> content = default;
-            OutputItemReasoningItemStatus? status = default;
+            ItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -194,7 +194,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemReasoningItemStatus();
+                    status = prop.Value.GetString().ToItemReasoningItemStatus();
                     continue;
                 }
                 if (options.Format != "W")

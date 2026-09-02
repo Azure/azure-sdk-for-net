@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Describes the elastic profile of the NGroup. </summary>
     public partial class ContainerGroupElasticProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupElasticProfile"/>. </summary>
         public ContainerGroupElasticProfile()
@@ -54,29 +25,37 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="desiredCount"></param>
         /// <param name="maintainDesiredCount"> Flag that indicates whether desiredCount should be maintained when customer deletes SPECIFIC container groups (CGs) from the NGroups. In this case, new CGs will be created by NGroup to compensate for the specific deleted ones. </param>
         /// <param name="containerGroupNamingPolicy"> Container Groups are named on a generic guid based naming scheme/policy. Customer can modify naming policy to add prefix to CG names during scale out operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupElasticProfile(int? desiredCount, bool? maintainDesiredCount, ElasticProfileContainerGroupNamingPolicy containerGroupNamingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupElasticProfile(int? desiredCount, bool? maintainDesiredCount, ElasticProfileContainerGroupNamingPolicy containerGroupNamingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredCount = desiredCount;
             MaintainDesiredCount = maintainDesiredCount;
             ContainerGroupNamingPolicy = containerGroupNamingPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the desired count. </summary>
+        /// <summary> Gets or sets the DesiredCount. </summary>
         public int? DesiredCount { get; set; }
+
         /// <summary> Flag that indicates whether desiredCount should be maintained when customer deletes SPECIFIC container groups (CGs) from the NGroups. In this case, new CGs will be created by NGroup to compensate for the specific deleted ones. </summary>
         public bool? MaintainDesiredCount { get; set; }
+
         /// <summary> Container Groups are named on a generic guid based naming scheme/policy. Customer can modify naming policy to add prefix to CG names during scale out operation. </summary>
         internal ElasticProfileContainerGroupNamingPolicy ContainerGroupNamingPolicy { get; set; }
+
         /// <summary> The prefix can be used when there are tooling limitations (e.g. on the Azure portal where CGs from multiple NGroups exist in the same RG). The prefix with the suffixed resource name must still follow Azure resource naming guidelines. </summary>
         public string GuidNamingPrefix
         {
-            get => ContainerGroupNamingPolicy is null ? default : ContainerGroupNamingPolicy.GuidNamingPrefix;
+            get
+            {
+                return ContainerGroupNamingPolicy is null ? default : ContainerGroupNamingPolicy.GuidNamingPrefix;
+            }
             set
             {
                 if (ContainerGroupNamingPolicy is null)
+                {
                     ContainerGroupNamingPolicy = new ElasticProfileContainerGroupNamingPolicy();
+                }
                 ContainerGroupNamingPolicy.GuidNamingPrefix = value;
             }
         }

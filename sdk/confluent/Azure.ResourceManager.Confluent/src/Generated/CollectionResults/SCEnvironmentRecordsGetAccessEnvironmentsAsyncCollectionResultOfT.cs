@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Confluent
                     yield break;
                 }
                 GetEnvironmentsResponse result = GetEnvironmentsResponse.FromResponse(response);
-                yield return Page<SCEnvironmentRecordData>.FromValues((IReadOnlyList<SCEnvironmentRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SCEnvironmentRecordData>.FromValues((IReadOnlyList<SCEnvironmentRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

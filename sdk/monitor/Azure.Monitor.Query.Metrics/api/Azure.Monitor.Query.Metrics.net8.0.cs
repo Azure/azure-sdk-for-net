@@ -35,6 +35,14 @@ namespace Azure.Monitor.Query.Metrics
         public static bool operator !=(Azure.Monitor.Query.Metrics.MetricsClientAudience left, Azure.Monitor.Query.Metrics.MetricsClientAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class MetricsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Query.Metrics.MetricsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Query.Metrics.MetricsClientSettings> configureSettings) { throw null; }
+    }
     public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
         public MetricsClientOptions(Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion version = Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion.V2024_02_01) { }

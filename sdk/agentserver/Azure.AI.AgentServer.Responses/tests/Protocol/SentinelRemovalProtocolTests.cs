@@ -95,8 +95,8 @@ public class SentinelRemovalProtocolTests : ProtocolTestBase
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello");
-        yield return text.EmitDone("Hello");
-        yield return message.EmitContentDone(text);
+        yield return text.EmitTextDone("Hello");
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         yield return stream.EmitCompleted();

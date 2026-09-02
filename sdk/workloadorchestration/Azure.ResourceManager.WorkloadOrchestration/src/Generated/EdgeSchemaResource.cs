@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(ResourceType, out string edgeSchemaApiVersion);
             _schemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Endpoint, edgeSchemaApiVersion ?? "2025-06-01");
+            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemasRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSchemaVersionWithUpdateType.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(
-                    new EdgeSchemaVersionOperationSource(Client),
+                    new EdgeSchemaVersionResourceOperationSource(Client),
                     _schemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemasRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSchemaVersionWithUpdateType.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(
-                    new EdgeSchemaVersionOperationSource(Client),
+                    new EdgeSchemaVersionResourceOperationSource(Client),
                     _schemasClientDiagnostics,
                     Pipeline,
                     message.Request,

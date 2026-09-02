@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Client.Naming.Property
+namespace Client.Naming._Property
 {
     public partial class ClientNameAndJsonEncodedNameModel
     {

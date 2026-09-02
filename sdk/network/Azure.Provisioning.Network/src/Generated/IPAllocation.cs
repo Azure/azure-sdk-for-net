@@ -127,24 +127,6 @@ public partial class IPAllocation : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> SubnetId 
-    {
-        get { Initialize(); return _subnetId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _subnetId;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualNetworkId 
-    {
-        get { Initialize(); return _virtualNetworkId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _virtualNetworkId;
-
-    /// <summary>
     /// Creates a new IPAllocation.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -176,8 +158,6 @@ public partial class IPAllocation : ProvisionableResource
         _prefixType = DefineProperty<NetworkIPVersion>("PrefixType", ["properties", "prefixType"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["properties", "subnet", "id"], isOutput: true);
-        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"], isOutput: true);
     }
 
     /// <summary>

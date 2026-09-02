@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsernameDownloadSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheUsernameDownloadSettings>
+    /// <summary> Settings for Extended Groups username and group download. </summary>
+    public partial class StorageCacheUsernameDownloadSettings : IJsonModel<StorageCacheUsernameDownloadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheUsernameDownloadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageCacheUsernameDownloadSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageCacheUsernameDownloadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageCacheUsernameDownloadSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageCacheUsernameDownloadSettings IPersistableModel<StorageCacheUsernameDownloadSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageCacheUsernameDownloadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageCacheUsernameDownloadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(EnableExtendedGroups))
             {
                 writer.WritePropertyName("extendedGroups"u8);
@@ -94,15 +134,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +151,32 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
         }
 
-        StorageCacheUsernameDownloadSettings IJsonModel<StorageCacheUsernameDownloadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageCacheUsernameDownloadSettings IJsonModel<StorageCacheUsernameDownloadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageCacheUsernameDownloadSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageCacheUsernameDownloadSettings(document.RootElement, options);
         }
 
-        internal static StorageCacheUsernameDownloadSettings DeserializeStorageCacheUsernameDownloadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageCacheUsernameDownloadSettings DeserializeStorageCacheUsernameDownloadSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? extendedGroups = default;
+            bool? enableExtendedGroups = default;
             StorageCacheUsernameSourceType? usernameSource = default;
             Uri groupFileUri = default;
             Uri userFileUri = default;
@@ -143,118 +188,116 @@ namespace Azure.ResourceManager.StorageCache.Models
             Uri caCertificateUri = default;
             StorageCacheUsernameDownloadedType? usernameDownloaded = default;
             StorageCacheUsernameDownloadCredential credentials = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedGroups"u8))
+                if (prop.NameEquals("extendedGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedGroups = property.Value.GetBoolean();
+                    enableExtendedGroups = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("usernameSource"u8))
+                if (prop.NameEquals("usernameSource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usernameSource = new StorageCacheUsernameSourceType(property.Value.GetString());
+                    usernameSource = new StorageCacheUsernameSourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupFileURI"u8))
+                if (prop.NameEquals("groupFileURI"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupFileUri = new Uri(property.Value.GetString());
+                    groupFileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("userFileURI"u8))
+                if (prop.NameEquals("userFileURI"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userFileUri = new Uri(property.Value.GetString());
+                    userFileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("ldapServer"u8))
+                if (prop.NameEquals("ldapServer"u8))
                 {
-                    ldapServer = property.Value.GetString();
+                    ldapServer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ldapBaseDN"u8))
+                if (prop.NameEquals("ldapBaseDN"u8))
                 {
-                    ldapBaseDN = property.Value.GetString();
+                    ldapBaseDN = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptLdapConnection"u8))
+                if (prop.NameEquals("encryptLdapConnection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptLdapConnection = property.Value.GetBoolean();
+                    encryptLdapConnection = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requireValidCertificate"u8))
+                if (prop.NameEquals("requireValidCertificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requireValidCertificate = property.Value.GetBoolean();
+                    requireValidCertificate = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoDownloadCertificate"u8))
+                if (prop.NameEquals("autoDownloadCertificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoDownloadCertificate = property.Value.GetBoolean();
+                    autoDownloadCertificate = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("caCertificateURI"u8))
+                if (prop.NameEquals("caCertificateURI"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    caCertificateUri = new Uri(property.Value.GetString());
+                    caCertificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("usernameDownloaded"u8))
+                if (prop.NameEquals("usernameDownloaded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usernameDownloaded = new StorageCacheUsernameDownloadedType(property.Value.GetString());
+                    usernameDownloaded = new StorageCacheUsernameDownloadedType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentials"u8))
+                if (prop.NameEquals("credentials"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value, options);
+                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheUsernameDownloadSettings(
-                extendedGroups,
+                enableExtendedGroups,
                 usernameSource,
                 groupFileUri,
                 userFileUri,
@@ -266,38 +309,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 caCertificateUri,
                 usernameDownloaded,
                 credentials,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<StorageCacheUsernameDownloadSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StorageCacheUsernameDownloadSettings IPersistableModel<StorageCacheUsernameDownloadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageCacheUsernameDownloadSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StorageCacheUsernameDownloadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -46,7 +46,9 @@ public partial class IdentifierExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is IdentifierExpression id && Name == id.Name;
+    /// <inheritdoc/>
     public override int GetHashCode() => (typeof(IdentifierExpression).GetHashCode() * 31 + (Name?.GetHashCode() ?? 0));
 
     internal static IdentifierExpression DeserializeIdentifierExpression(JsonElement element)

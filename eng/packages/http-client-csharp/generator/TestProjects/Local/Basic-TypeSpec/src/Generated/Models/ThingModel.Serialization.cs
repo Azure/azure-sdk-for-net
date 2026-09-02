@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -32,7 +33,7 @@ namespace BasicTypeSpec
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeThingModel(document.RootElement, options);
+                        return DeserializeThingModel(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ThingModel)} does not support reading '{options.Format}' format.");
@@ -75,14 +76,23 @@ namespace BasicTypeSpec
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
         public static explicit operator ThingModel(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BinaryData data = response.Content;
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeThingModel(document.RootElement, data, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -97,86 +107,122 @@ namespace BasicTypeSpec
             {
                 throw new FormatException($"The model {nameof(ThingModel)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("requiredUnion"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(RequiredUnion);
-#else
-            using (JsonDocument document = JsonDocument.Parse(RequiredUnion))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.name"u8))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
+            if (!Patch.Contains("$.requiredUnion"u8))
+            {
+                writer.WritePropertyName("requiredUnion"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(RequiredUnion);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RequiredUnion))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
-            writer.WritePropertyName("requiredLiteralString"u8);
-            writer.WriteStringValue(RequiredLiteralString);
-            writer.WritePropertyName("requiredLiteralInt"u8);
-            writer.WriteNumberValue(RequiredLiteralInt);
-            writer.WritePropertyName("requiredLiteralFloat"u8);
-            writer.WriteNumberValue(RequiredLiteralFloat);
-            writer.WritePropertyName("requiredLiteralBool"u8);
-            writer.WriteBooleanValue(RequiredLiteralBool);
-            if (Optional.IsDefined(OptionalLiteralString))
+            }
+            if (!Patch.Contains("$.requiredLiteralString"u8))
+            {
+                writer.WritePropertyName("requiredLiteralString"u8);
+                writer.WriteStringValue(RequiredLiteralString);
+            }
+            if (!Patch.Contains("$.requiredLiteralInt"u8))
+            {
+                writer.WritePropertyName("requiredLiteralInt"u8);
+                writer.WriteNumberValue(RequiredLiteralInt);
+            }
+            if (!Patch.Contains("$.requiredLiteralFloat"u8))
+            {
+                writer.WritePropertyName("requiredLiteralFloat"u8);
+                writer.WriteNumberValue(RequiredLiteralFloat);
+            }
+            if (!Patch.Contains("$.requiredLiteralBool"u8))
+            {
+                writer.WritePropertyName("requiredLiteralBool"u8);
+                writer.WriteBooleanValue(RequiredLiteralBool);
+            }
+            if (Optional.IsDefined(OptionalLiteralString) && !Patch.Contains("$.optionalLiteralString"u8))
             {
                 writer.WritePropertyName("optionalLiteralString"u8);
                 writer.WriteStringValue(OptionalLiteralString.Value.ToString());
             }
-            if (Optional.IsDefined(OptionalLiteralInt))
+            if (Optional.IsDefined(OptionalLiteralInt) && !Patch.Contains("$.optionalLiteralInt"u8))
             {
                 writer.WritePropertyName("optionalLiteralInt"u8);
                 writer.WriteNumberValue(OptionalLiteralInt.Value.ToSerialInt32());
             }
-            if (Optional.IsDefined(OptionalLiteralFloat))
+            if (Optional.IsDefined(OptionalLiteralFloat) && !Patch.Contains("$.optionalLiteralFloat"u8))
             {
                 writer.WritePropertyName("optionalLiteralFloat"u8);
                 writer.WriteNumberValue(OptionalLiteralFloat.Value.ToSerialSingle());
             }
-            if (Optional.IsDefined(OptionalLiteralBool))
+            if (Optional.IsDefined(OptionalLiteralBool) && !Patch.Contains("$.optionalLiteralBool"u8))
             {
                 writer.WritePropertyName("optionalLiteralBool"u8);
                 writer.WriteBooleanValue(OptionalLiteralBool.Value);
             }
-            writer.WritePropertyName("requiredBadDescription"u8);
-            writer.WriteStringValue(RequiredBadDescription);
-            if (Optional.IsCollectionDefined(OptionalNullableList))
+            if (!Patch.Contains("$.requiredBadDescription"u8))
+            {
+                writer.WritePropertyName("requiredBadDescription"u8);
+                writer.WriteStringValue(RequiredBadDescription);
+            }
+            if (Patch.Contains("$.optionalNullableList"u8))
+            {
+                if (!Patch.IsRemoved("$.optionalNullableList"u8))
+                {
+                    writer.WritePropertyName("optionalNullableList"u8);
+                    Patch.WriteTo(writer, "$.optionalNullableList"u8);
+                }
+            }
+            else if (Optional.IsCollectionDefined(OptionalNullableList))
             {
                 writer.WritePropertyName("optionalNullableList"u8);
                 writer.WriteStartArray();
-                foreach (int item in OptionalNullableList)
+                for (int i = 0; i < OptionalNullableList.Count; i++)
                 {
-                    writer.WriteNumberValue(item);
+                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.optionalNullableList[{i}]")))
+                    {
+                        continue;
+                    }
+                    writer.WriteNumberValue(OptionalNullableList[i]);
                 }
+                Patch.WriteTo(writer, "$.optionalNullableList"u8);
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredNullableList))
+            if (Patch.Contains("$.requiredNullableList"u8))
+            {
+                if (!Patch.IsRemoved("$.requiredNullableList"u8))
+                {
+                    writer.WritePropertyName("requiredNullableList"u8);
+                    Patch.WriteTo(writer, "$.requiredNullableList"u8);
+                }
+            }
+            else if (Optional.IsCollectionDefined(RequiredNullableList))
             {
                 writer.WritePropertyName("requiredNullableList"u8);
                 writer.WriteStartArray();
-                foreach (int item in RequiredNullableList)
+                for (int i = 0; i < RequiredNullableList.Count; i++)
                 {
-                    writer.WriteNumberValue(item);
+                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredNullableList[{i}]")))
+                    {
+                        continue;
+                    }
+                    writer.WriteNumberValue(RequiredNullableList[i]);
                 }
+                Patch.WriteTo(writer, "$.requiredNullableList"u8);
                 writer.WriteEndArray();
             }
             else
             {
                 writer.WriteNull("requiredNullableList"u8);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -193,12 +239,13 @@ namespace BasicTypeSpec
                 throw new FormatException($"The model {nameof(ThingModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThingModel(document.RootElement, options);
+            return DeserializeThingModel(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ThingModel DeserializeThingModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static ThingModel DeserializeThingModel(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +264,9 @@ namespace BasicTypeSpec
             string requiredBadDescription = default;
             IList<int> optionalNullableList = default;
             IList<int> requiredNullableList = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -320,10 +369,7 @@ namespace BasicTypeSpec
                     requiredNullableList = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new ThingModel(
                 name,
@@ -339,7 +385,7 @@ namespace BasicTypeSpec
                 requiredBadDescription,
                 optionalNullableList ?? new ChangeTrackingList<int>(),
                 requiredNullableList,
-                additionalBinaryDataProperties);
+                patch);
         }
     }
 }

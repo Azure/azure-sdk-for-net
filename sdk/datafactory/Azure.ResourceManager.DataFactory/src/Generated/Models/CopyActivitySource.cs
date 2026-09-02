@@ -8,20 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// A copy activity source.
-    /// Please note <see cref="CopyActivitySource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AmazonMwsSource"/>, <see cref="AmazonRdsForOracleSource"/>, <see cref="AmazonRdsForSqlServerSource"/>, <see cref="AmazonRedshiftSource"/>, <see cref="AvroSource"/>, <see cref="AzureBlobFSSource"/>, <see cref="AzureDatabricksDeltaLakeSource"/>, <see cref="AzureDataExplorerSource"/>, <see cref="AzureDataLakeStoreSource"/>, <see cref="AzureMariaDBSource"/>, <see cref="AzureMySqlSource"/>, <see cref="AzurePostgreSqlSource"/>, <see cref="AzureSqlSource"/>, <see cref="AzureTableSource"/>, <see cref="BinarySource"/>, <see cref="DataFactoryBlobSource"/>, <see cref="CassandraSource"/>, <see cref="CommonDataServiceForAppsSource"/>, <see cref="ConcurSource"/>, <see cref="CosmosDBMongoDBApiSource"/>, <see cref="CosmosDBSqlApiSource"/>, <see cref="CouchbaseSource"/>, <see cref="Db2Source"/>, <see cref="DelimitedTextSource"/>, <see cref="DocumentDBCollectionSource"/>, <see cref="DrillSource"/>, <see cref="DynamicsAXSource"/>, <see cref="DynamicsCrmSource"/>, <see cref="DynamicsSource"/>, <see cref="EloquaSource"/>, <see cref="ExcelSource"/>, <see cref="FileSystemSource"/>, <see cref="GoogleAdWordsSource"/>, <see cref="GoogleBigQuerySource"/>, <see cref="GoogleBigQueryV2Source"/>, <see cref="GreenplumSource"/>, <see cref="HBaseSource"/>, <see cref="HdfsSource"/>, <see cref="HiveSource"/>, <see cref="DataFactoryHttpFileSource"/>, <see cref="HubspotSource"/>, <see cref="ImpalaSource"/>, <see cref="InformixSource"/>, <see cref="JiraSource"/>, <see cref="JsonSource"/>, <see cref="LakeHouseTableSource"/>, <see cref="MagentoSource"/>, <see cref="MariaDBSource"/>, <see cref="MarketoSource"/>, <see cref="MicrosoftAccessSource"/>, <see cref="MongoDBAtlasSource"/>, <see cref="MongoDBSource"/>, <see cref="MongoDBV2Source"/>, <see cref="MySqlSource"/>, <see cref="NetezzaSource"/>, <see cref="ODataSource"/>, <see cref="OdbcSource"/>, <see cref="Office365Source"/>, <see cref="OracleServiceCloudSource"/>, <see cref="OracleSource"/>, <see cref="OrcSource"/>, <see cref="ParquetSource"/>, <see cref="PaypalSource"/>, <see cref="PhoenixSource"/>, <see cref="PostgreSqlSource"/>, <see cref="PostgreSqlV2Source"/>, <see cref="PrestoSource"/>, <see cref="QuickBooksSource"/>, <see cref="RelationalSource"/>, <see cref="ResponsysSource"/>, <see cref="RestSource"/>, <see cref="SalesforceMarketingCloudSource"/>, <see cref="SalesforceServiceCloudSource"/>, <see cref="SalesforceServiceCloudV2Source"/>, <see cref="SalesforceSource"/>, <see cref="SalesforceV2Source"/>, <see cref="SapBWSource"/>, <see cref="SapCloudForCustomerSource"/>, <see cref="SapEccSource"/>, <see cref="SapHanaSource"/>, <see cref="SapOdpSource"/>, <see cref="SapOpenHubSource"/>, <see cref="SapTableSource"/>, <see cref="ServiceNowSource"/>, <see cref="ServiceNowV2Source"/>, <see cref="SharePointOnlineListSource"/>, <see cref="ShopifySource"/>, <see cref="SnowflakeSource"/>, <see cref="SnowflakeV2Source"/>, <see cref="SparkSource"/>, <see cref="SqlDWSource"/>, <see cref="SqlMISource"/>, <see cref="SqlServerSource"/>, <see cref="SqlSource"/>, <see cref="SquareSource"/>, <see cref="SybaseSource"/>, <see cref="TabularSource"/>, <see cref="TeradataSource"/>, <see cref="VerticaSource"/>, <see cref="WarehouseSource"/>, <see cref="WebSource"/>, <see cref="XeroSource"/>, <see cref="XmlSource"/> and <see cref="ZohoSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvroSource"/>, <see cref="ExcelSource"/>, <see cref="ParquetSource"/>, <see cref="DelimitedTextSource"/>, <see cref="JsonSource"/>, <see cref="XmlSource"/>, <see cref="OrcSource"/>, <see cref="BinarySource"/>, <see cref="TabularSource"/>, <see cref="AzureTableSource"/>, <see cref="DataFactoryBlobSource"/>, <see cref="DocumentDBCollectionSource"/>, <see cref="CosmosDBSqlApiSource"/>, <see cref="DynamicsSource"/>, <see cref="DynamicsCrmSource"/>, <see cref="CommonDataServiceForAppsSource"/>, <see cref="RelationalSource"/>, <see cref="InformixSource"/>, <see cref="MicrosoftAccessSource"/>, <see cref="Db2Source"/>, <see cref="OdbcSource"/>, <see cref="MySqlSource"/>, <see cref="PostgreSqlSource"/>, <see cref="PostgreSqlV2Source"/>, <see cref="SybaseSource"/>, <see cref="SapBWSource"/>, <see cref="ODataSource"/>, <see cref="SalesforceSource"/>, <see cref="SalesforceServiceCloudSource"/>, <see cref="SapCloudForCustomerSource"/>, <see cref="SapEccSource"/>, <see cref="SapHanaSource"/>, <see cref="SapOpenHubSource"/>, <see cref="SapOdpSource"/>, <see cref="SapTableSource"/>, <see cref="RestSource"/>, <see cref="SqlSource"/>, <see cref="SqlServerSource"/>, <see cref="AmazonRdsForSqlServerSource"/>, <see cref="AzureSqlSource"/>, <see cref="SqlMISource"/>, <see cref="SqlDWSource"/>, <see cref="FileSystemSource"/>, <see cref="HdfsSource"/>, <see cref="AzureMySqlSource"/>, <see cref="AzureDataExplorerSource"/>, <see cref="OracleSource"/>, <see cref="AmazonRdsForOracleSource"/>, <see cref="TeradataSource"/>, <see cref="WebSource"/>, <see cref="CassandraSource"/>, <see cref="MongoDBSource"/>, <see cref="MongoDBAtlasSource"/>, <see cref="MongoDBV2Source"/>, <see cref="CosmosDBMongoDBApiSource"/>, <see cref="Office365Source"/>, <see cref="AzureDataLakeStoreSource"/>, <see cref="AzureBlobFSSource"/>, <see cref="DataFactoryHttpFileSource"/>, <see cref="AmazonMwsSource"/>, <see cref="AzurePostgreSqlSource"/>, <see cref="ConcurSource"/>, <see cref="CouchbaseSource"/>, <see cref="DrillSource"/>, <see cref="EloquaSource"/>, <see cref="GoogleBigQuerySource"/>, <see cref="GoogleBigQueryV2Source"/>, <see cref="GreenplumSource"/>, <see cref="HBaseSource"/>, <see cref="HiveSource"/>, <see cref="HubspotSource"/>, <see cref="ImpalaSource"/>, <see cref="JiraSource"/>, <see cref="MagentoSource"/>, <see cref="MariaDBSource"/>, <see cref="AzureMariaDBSource"/>, <see cref="MarketoSource"/>, <see cref="PaypalSource"/>, <see cref="PhoenixSource"/>, <see cref="PrestoSource"/>, <see cref="QuickBooksSource"/>, <see cref="ServiceNowSource"/>, <see cref="ShopifySource"/>, <see cref="SparkSource"/>, <see cref="SquareSource"/>, <see cref="XeroSource"/>, <see cref="ZohoSource"/>, <see cref="NetezzaSource"/>, <see cref="VerticaSource"/>, <see cref="SalesforceMarketingCloudSource"/>, <see cref="ResponsysSource"/>, <see cref="DynamicsAXSource"/>, <see cref="OracleServiceCloudSource"/>, <see cref="GoogleAdWordsSource"/>, <see cref="AmazonRedshiftSource"/>, <see cref="LakeHouseTableSource"/>, <see cref="SnowflakeSource"/>, <see cref="SnowflakeV2Source"/>, <see cref="AzureDatabricksDeltaLakeSource"/>, <see cref="WarehouseSource"/>, <see cref="SharePointOnlineListSource"/>, <see cref="SalesforceV2Source"/>, <see cref="SalesforceServiceCloudV2Source"/>, and <see cref="ServiceNowV2Source"/>.
     /// </summary>
     public abstract partial class CopyActivitySource
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/>. </summary>
-        protected CopyActivitySource()
+        /// <param name="copySourceType"> Copy source type. </param>
+        private protected CopyActivitySource(string copySourceType)
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CopySourceType = copySourceType;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/>. </summary>
@@ -30,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal CopyActivitySource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
             CopySourceType = copySourceType;
@@ -38,49 +43,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             SourceRetryWait = sourceRetryWait;
             MaxConcurrentConnections = maxConcurrentConnections;
             DisableMetricsCollection = disableMetricsCollection;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Copy source type. </summary>
         internal string CopySourceType { get; set; }
+
         /// <summary> Source retry count. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> SourceRetryCount { get; set; }
+
         /// <summary> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> SourceRetryWait { get; set; }
+
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
+
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

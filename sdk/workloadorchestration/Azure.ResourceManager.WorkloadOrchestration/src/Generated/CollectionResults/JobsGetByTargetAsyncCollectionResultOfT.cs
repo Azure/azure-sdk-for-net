@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 JobListResult result = JobListResult.FromResponse(response);
-                yield return Page<EdgeJobData>.FromValues((IReadOnlyList<EdgeJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeJobData>.FromValues((IReadOnlyList<EdgeJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

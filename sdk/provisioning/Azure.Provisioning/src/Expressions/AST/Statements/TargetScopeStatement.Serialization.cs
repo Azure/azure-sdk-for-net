@@ -43,6 +43,8 @@ public partial class TargetScopeStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) => other is TargetScopeStatement t && Scope.Equals(t.Scope);
+    /// <inheritdoc/>
     public override int GetHashCode() => (typeof(TargetScopeStatement).GetHashCode() * 31 + (Scope?.GetHashCode() ?? 0));
 }

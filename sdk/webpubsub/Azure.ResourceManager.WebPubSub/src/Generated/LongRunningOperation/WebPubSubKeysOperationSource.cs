@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.WebPubSub
         WebPubSubKeys IOperationSource<WebPubSubKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WebPubSubKeys result = WebPubSubKeys.DeserializeWebPubSubKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return WebPubSubKeys.DeserializeWebPubSubKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.WebPubSub
         async ValueTask<WebPubSubKeys> IOperationSource<WebPubSubKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WebPubSubKeys result = WebPubSubKeys.DeserializeWebPubSubKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return WebPubSubKeys.DeserializeWebPubSubKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

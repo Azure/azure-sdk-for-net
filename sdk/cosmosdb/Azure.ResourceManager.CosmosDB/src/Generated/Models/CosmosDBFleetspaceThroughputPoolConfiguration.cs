@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Configuration for throughput pool in the fleetspace. </summary>
     public partial class CosmosDBFleetspaceThroughputPoolConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceThroughputPoolConfiguration"/>. </summary>
         public CosmosDBFleetspaceThroughputPoolConfiguration()
@@ -53,19 +25,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceThroughputPoolConfiguration"/>. </summary>
         /// <param name="minThroughput"> Minimum throughput for the pool. </param>
         /// <param name="maxThroughput"> Maximum throughput for the pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFleetspaceThroughputPoolConfiguration(int? minThroughput, int? maxThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="dedicatedRUs"> Total dedicated throughput (RU/s) for fleetspace. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers across all accounts in the fleetspace for 1 region. </param>
+        /// <param name="maxConsumableRUs"> Maximum consumable throughput (RU/s) for fleetspace. Represents the maximum throughput that resources in the fleetspace can consume from the fleetspace's pool in 1 region. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBFleetspaceThroughputPoolConfiguration(int? minThroughput, int? maxThroughput, long? dedicatedRUs, long? maxConsumableRUs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinThroughput = minThroughput;
             MaxThroughput = maxThroughput;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            DedicatedRUs = dedicatedRUs;
+            MaxConsumableRUs = maxConsumableRUs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Minimum throughput for the pool. </summary>
         [WirePath("minThroughput")]
         public int? MinThroughput { get; set; }
+
         /// <summary> Maximum throughput for the pool. </summary>
         [WirePath("maxThroughput")]
         public int? MaxThroughput { get; set; }
+
+        /// <summary> Total dedicated throughput (RU/s) for fleetspace. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers across all accounts in the fleetspace for 1 region. </summary>
+        [WirePath("dedicatedRUs")]
+        public long? DedicatedRUs { get; set; }
+
+        /// <summary> Maximum consumable throughput (RU/s) for fleetspace. Represents the maximum throughput that resources in the fleetspace can consume from the fleetspace's pool in 1 region. </summary>
+        [WirePath("maxConsumableRUs")]
+        public long? MaxConsumableRUs { get; set; }
     }
 }

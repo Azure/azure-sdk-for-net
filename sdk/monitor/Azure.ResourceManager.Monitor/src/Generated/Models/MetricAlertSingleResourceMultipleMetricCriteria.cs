@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,20 +15,18 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class MetricAlertSingleResourceMultipleMetricCriteria : MetricAlertCriteria
     {
         /// <summary> Initializes a new instance of <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>. </summary>
-        public MetricAlertSingleResourceMultipleMetricCriteria()
+        public MetricAlertSingleResourceMultipleMetricCriteria() : base(Odatatype.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria)
         {
             AllOf = new ChangeTrackingList<MetricCriteria>();
-            OdataType = MonitorOdataType.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria;
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>. </summary>
         /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="allOf"> The list of metric criteria for this 'all of' operation. </param>
-        internal MetricAlertSingleResourceMultipleMetricCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, IList<MetricCriteria> allOf) : base(odataType, additionalProperties)
+        internal MetricAlertSingleResourceMultipleMetricCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties, IList<MetricCriteria> allOf) : base(odataType, additionalProperties)
         {
             AllOf = allOf;
-            OdataType = odataType;
         }
 
         /// <summary> The list of metric criteria for this 'all of' operation. </summary>

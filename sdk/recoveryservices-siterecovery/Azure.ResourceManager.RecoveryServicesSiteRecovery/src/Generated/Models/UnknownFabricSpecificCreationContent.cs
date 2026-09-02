@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of FabricSpecificCreationInput. </summary>
     internal partial class UnknownFabricSpecificCreationContent : FabricSpecificCreationContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFabricSpecificCreationContent"/>. </summary>
         /// <param name="instanceType"> Gets the class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFabricSpecificCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownFabricSpecificCreationContent"/> for deserialization. </summary>
-        internal UnknownFabricSpecificCreationContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFabricSpecificCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

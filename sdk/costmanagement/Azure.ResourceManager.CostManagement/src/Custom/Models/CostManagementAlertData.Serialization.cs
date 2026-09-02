@@ -1,17 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    [CodeGenSerialization(nameof(Id), DeserializationValueHook = nameof(ReadId))]
-    public partial class CostManagementAlertData : IUtf8JsonSerializable, IJsonModel<CostManagementAlertData>
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Id), DeserializationValueHook = nameof(ReadId))]
+    public partial class CostManagementAlertData
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void ReadId(JsonProperty property, ref ResourceIdentifier id)

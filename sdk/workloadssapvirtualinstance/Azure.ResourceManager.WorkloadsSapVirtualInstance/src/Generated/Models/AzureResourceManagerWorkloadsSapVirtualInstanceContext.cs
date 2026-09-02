@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(MountFileShareConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceResourceNames))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OSSapConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceData))]

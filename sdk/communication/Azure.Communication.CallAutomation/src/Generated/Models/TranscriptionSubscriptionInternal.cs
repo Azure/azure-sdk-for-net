@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionSubscriptionInternal"/>. </summary>
         /// <param name="id"> Subscription Id. </param>
-        /// <param name="state"> Transcription subscription state. </param>
+        /// <param name="state"> Current state of transcription session. </param>
         /// <param name="subscribedResultTypes"> Subscribed transcription result types. </param>
         /// <param name="locale"> Specifies the locale used for transcription, e.g., en-CA or en-AU. </param>
         internal TranscriptionSubscriptionInternal(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultState> subscribedResultTypes, string locale)
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Subscription Id. </summary>
         public string Id { get; }
-        /// <summary> Transcription subscription state. </summary>
+        /// <summary> Current state of transcription session. </summary>
         public TranscriptionSubscriptionState? State { get; }
         /// <summary> Subscribed transcription result types. </summary>
         public IReadOnlyList<TranscriptionResultState> SubscribedResultTypes { get; }

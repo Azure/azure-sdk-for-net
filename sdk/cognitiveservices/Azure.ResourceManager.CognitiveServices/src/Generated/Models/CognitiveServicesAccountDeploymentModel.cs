@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account deployment model. </summary>
     public partial class CognitiveServicesAccountDeploymentModel
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentModel"/>. </summary>
         public CognitiveServicesAccountDeploymentModel()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
         /// <param name="sourceAccount"> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountDeploymentModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Format = format;
@@ -69,27 +41,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Source = source;
             SourceAccount = sourceAccount;
             CallRateLimit = callRateLimit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deployment model publisher. </summary>
         [WirePath("publisher")]
         public string Publisher { get; set; }
+
         /// <summary> Deployment model format. </summary>
         [WirePath("format")]
         public string Format { get; set; }
+
         /// <summary> Deployment model name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </summary>
         [WirePath("version")]
         public string Version { get; set; }
+
         /// <summary> Optional. Deployment model source ARM resource ID. </summary>
         [WirePath("source")]
         public string Source { get; set; }
+
         /// <summary> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </summary>
         [WirePath("sourceAccount")]
         public ResourceIdentifier SourceAccount { get; set; }
+
         /// <summary> The call rate limit Cognitive Services account. </summary>
         [WirePath("callRateLimit")]
         public ServiceAccountCallRateLimit CallRateLimit { get; }

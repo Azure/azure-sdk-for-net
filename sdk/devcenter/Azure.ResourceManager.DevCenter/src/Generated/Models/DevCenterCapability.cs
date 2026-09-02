@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCapability"/>. </summary>
-        public DevCenterCapability()
+        internal DevCenterCapability()
         {
         }
 

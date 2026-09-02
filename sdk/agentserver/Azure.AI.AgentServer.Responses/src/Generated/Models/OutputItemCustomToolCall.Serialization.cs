@@ -12,7 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Custom tool call. </summary>
+    /// <summary> ResponseCustomToolCallItem. </summary>
     public partial class OutputItemCustomToolCall : OutputItem, IJsonModel<OutputItemCustomToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCall"/> for deserialization. </summary>
@@ -86,10 +86,22 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("input"u8);
             writer.WriteStringValue(Input);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("created_by"u8);
+                writer.WriteRawValue(CreatedBy);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,28 +130,21 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             OutputItemType @type = default;
-            BinaryData createdBy = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            string @namespace = default;
             string name = default;
             string input = default;
+            FunctionCallStatus status = default;
+            BinaryData createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new OutputItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("created_by"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -166,6 +171,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("namespace"u8))
+                {
+                    @namespace = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -176,6 +186,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                     input = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = prop.Value.GetString().ToFunctionCallStatus();
+                    continue;
+                }
+                if (prop.NameEquals("created_by"u8))
+                {
+                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -183,14 +203,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new OutputItemCustomToolCall(
                 @type,
-                createdBy,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                @namespace,
                 name,
-                input);
+                input,
+                status,
+                createdBy);
         }
     }
 }

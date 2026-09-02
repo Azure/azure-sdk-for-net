@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeDeviceKind : IEquatable<DataBoxEdgeDeviceKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeDeviceKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AzureDataBoxGatewayValue = "AzureDataBoxGateway";
         private const string AzureStackEdgeValue = "AzureStackEdge";
         private const string AzureStackHubValue = "AzureStackHub";
         private const string AzureModularDataCentreValue = "AzureModularDataCentre";
 
-        /// <summary> AzureDataBoxGateway. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeDeviceKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureDataBoxGateway. </summary>
         public static DataBoxEdgeDeviceKind AzureDataBoxGateway { get; } = new DataBoxEdgeDeviceKind(AzureDataBoxGatewayValue);
-        /// <summary> AzureStackEdge. </summary>
+
+        /// <summary> Gets the AzureStackEdge. </summary>
         public static DataBoxEdgeDeviceKind AzureStackEdge { get; } = new DataBoxEdgeDeviceKind(AzureStackEdgeValue);
-        /// <summary> AzureStackHub. </summary>
+
+        /// <summary> Gets the AzureStackHub. </summary>
         public static DataBoxEdgeDeviceKind AzureStackHub { get; } = new DataBoxEdgeDeviceKind(AzureStackHubValue);
-        /// <summary> AzureModularDataCentre. </summary>
+
+        /// <summary> Gets the AzureModularDataCentre. </summary>
         public static DataBoxEdgeDeviceKind AzureModularDataCentre { get; } = new DataBoxEdgeDeviceKind(AzureModularDataCentreValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeDeviceKind left, DataBoxEdgeDeviceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeDeviceKind left, DataBoxEdgeDeviceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDeviceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeDeviceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeDeviceKind(string value) => new DataBoxEdgeDeviceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeDeviceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeDeviceKind?(string value) => value == null ? null : new DataBoxEdgeDeviceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeDeviceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeDeviceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

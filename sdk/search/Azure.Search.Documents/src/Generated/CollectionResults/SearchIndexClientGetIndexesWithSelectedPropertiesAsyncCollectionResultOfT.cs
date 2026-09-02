@@ -20,18 +20,27 @@ namespace Azure.Search.Documents.Indexes
     {
         private readonly SearchIndexClient _client;
         private readonly IEnumerable<string> _select;
+        private readonly string _search;
+        private readonly int? _pageSize;
+        private readonly string _searchType;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SearchIndexClient client used to send requests. </param>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(SearchIndexClient client, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(SearchIndexClient client, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _select = @select;
+            _search = search;
+            _pageSize = pageSize;
+            _searchType = searchType;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -42,17 +51,31 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The pages of SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SearchIndexResponse>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            ListIndexesSelectedResult result = (ListIndexesSelectedResult)response;
-            yield return Page<SearchIndexResponse>.FromValues(result.Value, null, response);
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            while (true)
+            {
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if (response is null)
+                {
+                    yield break;
+                }
+                ListIndexesSelectedResult result = (ListIndexesSelectedResult)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<SearchIndexResponse>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
+                {
+                    yield break;
+                }
+            }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetIndexesWithSelectedPropertiesRequest(_select, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexesWithSelectedPropertiesRequest(nextLink, _select, _search, _pageSize, _searchType, _context) : _client.CreateGetIndexesWithSelectedPropertiesRequest(_select, _search, _pageSize, _searchType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

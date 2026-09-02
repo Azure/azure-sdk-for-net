@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum AgentPoolType
     {
         /// <summary> Create an Agent Pool backed by a Virtual Machine Scale Set. </summary>
-        VirtualMachineScaleSets,
+        VirtualMachineScaleSets = 0,
         /// <summary> Use of this is strongly discouraged. </summary>
-        AvailabilitySet,
+        AvailabilitySet = 1,
         /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
-        VirtualMachines
+        VirtualMachines = 2
     }
 }

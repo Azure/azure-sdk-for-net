@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkGatewayType : IEquatable<VirtualNetworkGatewayType>
     {
         private readonly string _value;
+        /// <summary> Vpn. </summary>
+        private const string VpnValue = "Vpn";
+        /// <summary> ExpressRoute. </summary>
+        private const string ExpressRouteValue = "ExpressRoute";
+        /// <summary> LocalGateway. </summary>
+        private const string LocalGatewayValue = "LocalGateway";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkGatewayType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VpnValue = "Vpn";
-        private const string ExpressRouteValue = "ExpressRoute";
-        private const string LocalGatewayValue = "LocalGateway";
+            _value = value;
+        }
 
         /// <summary> Vpn. </summary>
         public static VirtualNetworkGatewayType Vpn { get; } = new VirtualNetworkGatewayType(VpnValue);
+
         /// <summary> ExpressRoute. </summary>
         public static VirtualNetworkGatewayType ExpressRoute { get; } = new VirtualNetworkGatewayType(ExpressRouteValue);
+
         /// <summary> LocalGateway. </summary>
         public static VirtualNetworkGatewayType LocalGateway { get; } = new VirtualNetworkGatewayType(LocalGatewayValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkGatewayType left, VirtualNetworkGatewayType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkGatewayType left, VirtualNetworkGatewayType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkGatewayType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkGatewayType(string value) => new VirtualNetworkGatewayType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkGatewayType?(string value) => value == null ? null : new VirtualNetworkGatewayType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkGatewayType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkGatewayType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnOriginPatch : IUtf8JsonSerializable, IJsonModel<CdnOriginPatch>
+    /// <summary> Origin properties needed for origin update. </summary>
+    public partial class CdnOriginPatch : IJsonModel<CdnOriginPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnOriginPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CdnOriginPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCdnOriginPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CdnOriginPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnOriginPatch IPersistableModel<CdnOriginPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CdnOriginPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cdnOriginPatch"> The <see cref="CdnOriginPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnOriginPatch cdnOriginPatch)
+        {
+            if (cdnOriginPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(cdnOriginPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CdnOriginPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,114 +80,25 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                if (HttpPort != null)
-                {
-                    writer.WritePropertyName("httpPort"u8);
-                    writer.WriteNumberValue(HttpPort.Value);
-                }
-                else
-                {
-                    writer.WriteNull("httpPort");
-                }
-            }
-            if (Optional.IsDefined(HttpsPort))
-            {
-                if (HttpsPort != null)
-                {
-                    writer.WritePropertyName("httpsPort"u8);
-                    writer.WriteNumberValue(HttpsPort.Value);
-                }
-                else
-                {
-                    writer.WriteNull("httpsPort");
-                }
-            }
-            if (Optional.IsDefined(OriginHostHeader))
-            {
-                writer.WritePropertyName("originHostHeader"u8);
-                writer.WriteStringValue(OriginHostHeader);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                if (Priority != null)
-                {
-                    writer.WritePropertyName("priority"u8);
-                    writer.WriteNumberValue(Priority.Value);
-                }
-                else
-                {
-                    writer.WriteNull("priority");
-                }
-            }
-            if (Optional.IsDefined(Weight))
-            {
-                if (Weight != null)
-                {
-                    writer.WritePropertyName("weight"u8);
-                    writer.WriteNumberValue(Weight.Value);
-                }
-                else
-                {
-                    writer.WriteNull("weight");
-                }
-            }
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(PrivateLinkAlias))
-            {
-                writer.WritePropertyName("privateLinkAlias"u8);
-                writer.WriteStringValue(PrivateLinkAlias);
-            }
-            if (Optional.IsDefined(PrivateLinkResourceId))
-            {
-                if (PrivateLinkResourceId != null)
-                {
-                    writer.WritePropertyName("privateLinkResourceId"u8);
-                    writer.WriteStringValue(PrivateLinkResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("privateLinkResourceId");
-                }
-            }
-            if (Optional.IsDefined(PrivateLinkLocation))
-            {
-                writer.WritePropertyName("privateLinkLocation"u8);
-                writer.WriteStringValue(PrivateLinkLocation);
-            }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
-            {
-                writer.WritePropertyName("privateLinkApprovalMessage"u8);
-                writer.WriteStringValue(PrivateLinkApprovalMessage);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -144,187 +107,50 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        CdnOriginPatch IJsonModel<CdnOriginPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CdnOriginPatch IJsonModel<CdnOriginPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CdnOriginPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCdnOriginPatch(document.RootElement, options);
         }
 
-        internal static CdnOriginPatch DeserializeCdnOriginPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CdnOriginPatch DeserializeCdnOriginPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string hostName = default;
-            int? httpPort = default;
-            int? httpsPort = default;
-            string originHostHeader = default;
-            int? priority = default;
-            int? weight = default;
-            bool? enabled = default;
-            string privateLinkAlias = default;
-            ResourceIdentifier privateLinkResourceId = default;
-            string privateLinkLocation = default;
-            string privateLinkApprovalMessage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            OriginUpdatePropertiesParameters properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                httpPort = null;
-                                continue;
-                            }
-                            httpPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpsPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                httpsPort = null;
-                                continue;
-                            }
-                            httpsPort = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("originHostHeader"u8))
-                        {
-                            originHostHeader = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                priority = null;
-                                continue;
-                            }
-                            priority = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("weight"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                weight = null;
-                                continue;
-                            }
-                            weight = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkAlias"u8))
-                        {
-                            privateLinkAlias = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                privateLinkResourceId = null;
-                                continue;
-                            }
-                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkLocation"u8))
-                        {
-                            privateLinkLocation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkApprovalMessage"u8))
-                        {
-                            privateLinkApprovalMessage = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = OriginUpdatePropertiesParameters.DeserializeOriginUpdatePropertiesParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CdnOriginPatch(
-                hostName,
-                httpPort,
-                httpsPort,
-                originHostHeader,
-                priority,
-                weight,
-                enabled,
-                privateLinkAlias,
-                privateLinkResourceId,
-                privateLinkLocation,
-                privateLinkApprovalMessage,
-                serializedAdditionalRawData);
+            return new CdnOriginPatch(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CdnOriginPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CdnOriginPatch IPersistableModel<CdnOriginPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CdnOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCdnOriginPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CdnOriginPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

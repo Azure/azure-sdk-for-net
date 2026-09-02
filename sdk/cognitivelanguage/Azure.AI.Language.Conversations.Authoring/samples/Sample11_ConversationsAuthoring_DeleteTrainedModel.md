@@ -21,9 +21,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To delete a trained model, call DeleteTrainedModel on the `ConversationAuthoringTrainedModel` client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-Response response = client.DeleteTrainedModel(projectName, trainedModelLabel);
+Response response = trainedModelClient.DeleteTrainedModel(projectName, trainedModelLabel);
 
 Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
 ```
@@ -33,9 +35,11 @@ Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
 To delete a trained model asynchronously, call DeleteTrainedModelAsync on the `ConversationAuthoringTrainedModel` client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-Response response = await client.DeleteTrainedModelAsync(projectName, trainedModelLabel);
+Response response = await trainedModelClient.DeleteTrainedModelAsync(projectName, trainedModelLabel);
 
 Console.WriteLine($"Delete Trained Model Async Response Status: {response.Status}");
 ```

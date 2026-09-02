@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct RulesEngineOperator : IEquatable<RulesEngineOperator>
     {
         private readonly string _value;
+        /// <summary> Any. </summary>
+        private const string AnyValue = "Any";
+        /// <summary> IPMatch. </summary>
+        private const string IPMatchValue = "IPMatch";
+        /// <summary> GeoMatch. </summary>
+        private const string GeoMatchValue = "GeoMatch";
+        /// <summary> Equal. </summary>
+        private const string EqualValue = "Equal";
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> LessThan. </summary>
+        private const string LessThanValue = "LessThan";
+        /// <summary> GreaterThan. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> LessThanOrEqual. </summary>
+        private const string LessThanOrEqualValue = "LessThanOrEqual";
+        /// <summary> GreaterThanOrEqual. </summary>
+        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
+        /// <summary> BeginsWith. </summary>
+        private const string BeginsWithValue = "BeginsWith";
+        /// <summary> EndsWith. </summary>
+        private const string EndsWithValue = "EndsWith";
 
         /// <summary> Initializes a new instance of <see cref="RulesEngineOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RulesEngineOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnyValue = "Any";
-        private const string IPMatchValue = "IPMatch";
-        private const string GeoMatchValue = "GeoMatch";
-        private const string EqualValue = "Equal";
-        private const string ContainsValue = "Contains";
-        private const string LessThanValue = "LessThan";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string LessThanOrEqualValue = "LessThanOrEqual";
-        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
-        private const string BeginsWithValue = "BeginsWith";
-        private const string EndsWithValue = "EndsWith";
+            _value = value;
+        }
 
         /// <summary> Any. </summary>
         public static RulesEngineOperator Any { get; } = new RulesEngineOperator(AnyValue);
+
         /// <summary> IPMatch. </summary>
         public static RulesEngineOperator IPMatch { get; } = new RulesEngineOperator(IPMatchValue);
+
         /// <summary> GeoMatch. </summary>
         public static RulesEngineOperator GeoMatch { get; } = new RulesEngineOperator(GeoMatchValue);
+
         /// <summary> Equal. </summary>
         public static RulesEngineOperator Equal { get; } = new RulesEngineOperator(EqualValue);
+
         /// <summary> Contains. </summary>
         public static RulesEngineOperator Contains { get; } = new RulesEngineOperator(ContainsValue);
+
         /// <summary> LessThan. </summary>
         public static RulesEngineOperator LessThan { get; } = new RulesEngineOperator(LessThanValue);
+
         /// <summary> GreaterThan. </summary>
         public static RulesEngineOperator GreaterThan { get; } = new RulesEngineOperator(GreaterThanValue);
+
         /// <summary> LessThanOrEqual. </summary>
         public static RulesEngineOperator LessThanOrEqual { get; } = new RulesEngineOperator(LessThanOrEqualValue);
+
         /// <summary> GreaterThanOrEqual. </summary>
         public static RulesEngineOperator GreaterThanOrEqual { get; } = new RulesEngineOperator(GreaterThanOrEqualValue);
+
         /// <summary> BeginsWith. </summary>
         public static RulesEngineOperator BeginsWith { get; } = new RulesEngineOperator(BeginsWithValue);
+
         /// <summary> EndsWith. </summary>
         public static RulesEngineOperator EndsWith { get; } = new RulesEngineOperator(EndsWithValue);
+
         /// <summary> Determines if two <see cref="RulesEngineOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RulesEngineOperator left, RulesEngineOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RulesEngineOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RulesEngineOperator left, RulesEngineOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RulesEngineOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RulesEngineOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RulesEngineOperator(string value) => new RulesEngineOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RulesEngineOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RulesEngineOperator?(string value) => value == null ? null : new RulesEngineOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RulesEngineOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RulesEngineOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

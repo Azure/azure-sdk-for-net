@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _day = DefineProperty<ContainerServiceWeekDay>(nameof(Day), new string[] { "day" });
             _hourSlots = DefineListProperty<int>(nameof(HourSlots), new string[] { "hourSlots" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceTimeInWeek that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct AutoImportJobState : IEquatable<AutoImportJobState>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="AutoImportJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoImportJobState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static AutoImportJobState InProgress { get; } = new AutoImportJobState(InProgressValue);
+
         /// <summary> Failed. </summary>
         public static AutoImportJobState Failed { get; } = new AutoImportJobState(FailedValue);
+
         /// <summary> Disabling. </summary>
         public static AutoImportJobState Disabling { get; } = new AutoImportJobState(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static AutoImportJobState Disabled { get; } = new AutoImportJobState(DisabledValue);
+
         /// <summary> Determines if two <see cref="AutoImportJobState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoImportJobState left, AutoImportJobState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoImportJobState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoImportJobState left, AutoImportJobState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoImportJobState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoImportJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoImportJobState(string value) => new AutoImportJobState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoImportJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoImportJobState?(string value) => value == null ? null : new AutoImportJobState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoImportJobState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoImportJobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

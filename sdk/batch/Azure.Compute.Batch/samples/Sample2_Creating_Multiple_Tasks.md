@@ -1,4 +1,4 @@
-# Creating large amounts of tasks 
+# Creating large amounts of tasks
 
 This sample demonstrates how to use the utility method `CreateTasks` to create a large batch of tasks in one call.  This sample will cover creating a pool, job, and multip tasks for a Batch account.
 
@@ -58,7 +58,7 @@ BatchAccountPoolResource pool = armOperation.Value;
 
 ## Authenticating the Azure.Compute.Batch `BatchClient`
 
-Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` library.  A `BatchClient` instance is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint  
+Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.Batch` library.  A `BatchClient` instance is needed to preform Batch operations and can be created using [Microsoft Entra ID authtentication](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and the Batch account endpoint
 
 ```C# Snippet:Batch_Sample02_CreateBatchClient
 var credential = new DefaultAzureCredential();
@@ -68,7 +68,7 @@ new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 
 ### Job creation
 
-Before we can create Batch Tasks, we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are an id for job itself and the name of the pool that this job will run against. 
+Before we can create Batch Tasks, we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are an id for job itself and the name of the pool that this job will run against.
 
 ```C# Snippet:Batch_Sample02_CreateBatchJob
 await batchClient.CreateJobAsync(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
@@ -101,7 +101,7 @@ foreach (BatchTaskAddResult item in batchTaskAddCollectionResult.Value)
 
 Lastly you can call `CreateTasks()` which is a utility method that will package up the list of `BatchTaskCreateContent` tasks passed in and repeatly call the `CreateTaskCollection()` with groups of tasks bundled into `BatchTaskGroup` objects.  This utility method allowed the user to select the number of parallel calls to `CreateTaskCollection()` and to preform custom actions post task creation.
 
-In the following code example a list of 1000 tasks are created of type `BatchTaskCreateContent` and passed into the `CreateTasksAsync` method which will return a `CreateTasksResult` object.  The `CreateTasksResult` will contain a count of Pass and Fail results.  
+In the following code example a list of 1000 tasks are created of type `BatchTaskCreateContent` and passed into the `CreateTasksAsync` method which will return a `CreateTasksResult` object.  The `CreateTasksResult` will contain a count of Pass and Fail results.
 
 > Note: The source code for this sample can be found under the `\samples` directory.
 
@@ -143,7 +143,7 @@ foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
 }
 ```
 
-Alternatively you can call `CreateTasks()` with an instance of `CreateTasksOptions` which allows you set the number of parallel processes to split up the workload.  
+Alternatively you can call `CreateTasks()` with an instance of `CreateTasksOptions` which allows you set the number of parallel processes to split up the workload.
 
 ```C# Snippet:Batch_Sample02_CreateTasks_ParallelOptions
 int tasksCount = 1000;
@@ -229,7 +229,7 @@ try
         jobId: "jobId",
         tasksToAdd: tasks,
         createTasksOptions: createTaskOptions,
-        timeOutInSeconds: TimeSpan.FromMinutes(10),
+        timeout: TimeSpan.FromMinutes(10),
         cancellationToken: cts.Token
         );
 
@@ -265,29 +265,29 @@ private class CustomTaskCollectionResultHandler : TaskResultHandler
     /// <param name="cancellationToken">The cancellation token associated with the AddTaskCollection operation.</param>
     /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="addTaskResult"/>
     /// is classified as a success or as requiring a retry.</returns>
-    public override CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
+    public override CreateTaskResultStatus HandleTaskResult(CreateTaskResult taskResult, CancellationToken cancellationToken)
     {
-        if (addTaskResult == null)
+        if (taskResult == null)
         {
-            throw new ArgumentNullException("addTaskResult");
+            throw new ArgumentNullException("taskResult");
         }
 
         CreateTaskResultStatus status = CreateTaskResultStatus.Success;
-        if (addTaskResult.BatchTaskResult.Error != null)
+        if (taskResult.BatchTaskResult.Error != null)
         {
             //Check status code
-            if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ServerError)
+            if (taskResult.BatchTaskResult.Status == BatchTaskAddStatus.ServerError)
             {
                 status = CreateTaskResultStatus.Retry;
             }
-            else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
+            else if (taskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && taskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
             {
                 status = CreateTaskResultStatus.Failure; //TaskExists mark as failure
             }
             else
             {
                 //Anything else is a failure -- abort the work flow
-                throw new AddTaskCollectionTerminatedException(addTaskResult);
+                throw new AddTaskCollectionTerminatedException(taskResult);
             }
         }
         return status;

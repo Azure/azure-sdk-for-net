@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRouteGatewayResiliencyModel : IEquatable<ExpressRouteGatewayResiliencyModel>
     {
         private readonly string _value;
+        /// <summary> SingleHomed. </summary>
+        private const string SingleHomedValue = "SingleHomed";
+        /// <summary> MultiHomed. </summary>
+        private const string MultiHomedValue = "MultiHomed";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayResiliencyModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteGatewayResiliencyModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleHomedValue = "SingleHomed";
-        private const string MultiHomedValue = "MultiHomed";
+            _value = value;
+        }
 
         /// <summary> SingleHomed. </summary>
         public static ExpressRouteGatewayResiliencyModel SingleHomed { get; } = new ExpressRouteGatewayResiliencyModel(SingleHomedValue);
+
         /// <summary> MultiHomed. </summary>
         public static ExpressRouteGatewayResiliencyModel MultiHomed { get; } = new ExpressRouteGatewayResiliencyModel(MultiHomedValue);
+
         /// <summary> Determines if two <see cref="ExpressRouteGatewayResiliencyModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRouteGatewayResiliencyModel left, ExpressRouteGatewayResiliencyModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRouteGatewayResiliencyModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRouteGatewayResiliencyModel left, ExpressRouteGatewayResiliencyModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteGatewayResiliencyModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRouteGatewayResiliencyModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRouteGatewayResiliencyModel(string value) => new ExpressRouteGatewayResiliencyModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRouteGatewayResiliencyModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRouteGatewayResiliencyModel?(string value) => value == null ? null : new ExpressRouteGatewayResiliencyModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRouteGatewayResiliencyModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRouteGatewayResiliencyModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

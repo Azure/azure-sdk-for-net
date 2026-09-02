@@ -50,9 +50,11 @@ public partial class ModuleStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) =>
         other is ModuleStatement m && Name == m.Name && Type.Equals(m.Type) && Body.Equals(m.Body) &&
         Decorators.SequenceEqual(m.Decorators);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(ModuleStatement).GetHashCode() ^ (Name?.GetHashCode() ?? 0) ^ (Type?.GetHashCode() ?? 0) ^ (Body?.GetHashCode() ?? 0);
 
     internal static ModuleStatement DeserializeModuleStatement(JsonElement element)

@@ -35,6 +35,15 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             return new ComputeLimitGuestSubscriptionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TrustedHostSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TrustedHostSubscriptionResource"/> object. </returns>
+        public virtual TrustedHostSubscriptionResource GetTrustedHostSubscriptionResource(ResourceIdentifier id)
+        {
+            TrustedHostSubscriptionResource.ValidateResourceId(id);
+            return new TrustedHostSubscriptionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ComputeLimitSharedLimitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ComputeLimitSharedLimitResource"/> object. </returns>
@@ -42,6 +51,42 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         {
             ComputeLimitSharedLimitResource.ValidateResourceId(id);
             return new ComputeLimitSharedLimitResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComputeLimitFeatureResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComputeLimitFeatureResource"/> object. </returns>
+        public virtual ComputeLimitFeatureResource GetComputeLimitFeatureResource(ResourceIdentifier id)
+        {
+            ComputeLimitFeatureResource.ValidateResourceId(id);
+            return new ComputeLimitFeatureResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComputeLimitVmFamilyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComputeLimitVmFamilyResource"/> object. </returns>
+        public virtual ComputeLimitVmFamilyResource GetComputeLimitVmFamilyResource(ResourceIdentifier id)
+        {
+            ComputeLimitVmFamilyResource.ValidateResourceId(id);
+            return new ComputeLimitVmFamilyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SharedLimitCapResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SharedLimitCapResource"/> object. </returns>
+        public virtual SharedLimitCapResource GetSharedLimitCapResource(ResourceIdentifier id)
+        {
+            SharedLimitCapResource.ValidateResourceId(id);
+            return new SharedLimitCapResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MemberCapOverrideResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MemberCapOverrideResource"/> object. </returns>
+        public virtual MemberCapOverrideResource GetMemberCapOverrideResource(ResourceIdentifier id)
+        {
+            MemberCapOverrideResource.ValidateResourceId(id);
+            return new MemberCapOverrideResource(Client, id);
         }
     }
 }

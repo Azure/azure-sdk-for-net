@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -697,6 +699,59 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new PremiumPageBlobAccessTier(accessTier.ToString());
             }
             return default;
+        }
+
+        internal static T ValidateAndApplySnapshotAndVersionId<T>(
+            this T client,
+            Uri clientUri,
+            BlobStorageResourceOptions options,
+            Func<T, string, T> withSnapshot,
+            Func<T, string, T> withVersion)
+        {
+            if (options == null)
+            {
+                return client;
+            }
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(clientUri);
+
+            if (!string.IsNullOrEmpty(options.Snapshot))
+            {
+                if (!string.IsNullOrEmpty(uriBuilder.Snapshot) &&
+                    options.Snapshot != uriBuilder.Snapshot)
+                {
+                    throw Errors.SnapshotMismatch(uriBuilder.Snapshot, options.Snapshot);
+                }
+                if (string.IsNullOrEmpty(uriBuilder.Snapshot))
+                {
+                    client = withSnapshot(client, options.Snapshot);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(options.VersionId))
+            {
+                if (!string.IsNullOrEmpty(uriBuilder.VersionId) &&
+                    options.VersionId != uriBuilder.VersionId)
+                {
+                    throw Errors.VersionIdMismatch(uriBuilder.VersionId, options.VersionId);
+                }
+                if (string.IsNullOrEmpty(uriBuilder.VersionId))
+                {
+                    client = withVersion(client, options.VersionId);
+                }
+            }
+            return client;
+        }
+
+        internal static Uri BuildSanitizedUri(this Uri uri)
+        {
+            // Strip SAS from URI for security - snapshot and version are preserved automatically
+            // SAS should not be exposed in events/logs
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(uri)
+            {
+                Sas = null
+            };
+            return uriBuilder.ToUri();
         }
     }
 }

@@ -336,7 +336,9 @@ namespace Azure.Identity
             options.ClientId = Options.WorkloadIdentityClientId;
             options.TenantId = Options.TenantId;
             options.Pipeline = Pipeline;
+#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
             options.IsAzureProxyEnabled = Options.IsAzureProxyEnabled;
+#pragma warning restore AZID0002
 
             if (!string.IsNullOrEmpty(Options.WorkloadTokenFilePath))
             {

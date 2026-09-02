@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -18,7 +19,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActiveDirectoryInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationList))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(AppAttachPackageData))]
@@ -156,6 +156,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(SessionHostResource))]
     [ModelReaderWriterBuildable(typeof(StartMenuItemList))]
     [ModelReaderWriterBuildable(typeof(StartMenuItemProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserSessionData))]

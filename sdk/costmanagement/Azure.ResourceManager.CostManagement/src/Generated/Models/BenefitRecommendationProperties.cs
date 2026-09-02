@@ -12,46 +12,18 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary>
     /// The properties of the benefit recommendations.
-    /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SingleScopeBenefitRecommendationProperties"/> and <see cref="SharedScopeBenefitRecommendationProperties"/>.
     /// </summary>
     public abstract partial class BenefitRecommendationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
-        protected BenefitRecommendationProperties()
+        /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
+        private protected BenefitRecommendationProperties(BenefitRecommendationScope scope)
         {
+            Scope = scope;
         }
 
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstConsumptionOn = firstConsumptionOn;
             LastConsumptionOn = lastConsumptionOn;
@@ -84,33 +56,45 @@ namespace Azure.ResourceManager.CostManagement.Models
             RecommendationDetails = recommendationDetails;
             AllRecommendationDetails = allRecommendationDetails;
             Scope = scope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The first usage date used for looking back for computing the recommendations. </summary>
         public DateTimeOffset? FirstConsumptionOn { get; }
+
         /// <summary> The last usage date used for looking back for computing the recommendations. </summary>
         public DateTimeOffset? LastConsumptionOn { get; }
+
         /// <summary> The number of days of usage evaluated for computing the recommendations. </summary>
         public LookBackPeriod? LookBackPeriod { get; set; }
+
         /// <summary> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </summary>
         public int? TotalHours { get; }
+
         /// <summary> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </summary>
         public RecommendationUsageDetails Usage { get; set; }
+
         /// <summary> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </summary>
         public string ArmSkuName { get; }
+
         /// <summary> Term period of the benefit. For example, P1Y or P3Y. </summary>
         public BenefitRecommendationPeriodTerm? Term { get; set; }
+
         /// <summary> Grain of the proposed commitment amount. Supported values: 'Hourly'. </summary>
         public BenefitRecommendationUsageGrain? CommitmentGranularity { get; set; }
+
         /// <summary> An ISO 4217 currency code identifier for the costs and savings amounts. </summary>
         public string CurrencyCode { get; }
+
         /// <summary> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </summary>
         public decimal? CostWithoutBenefit { get; }
+
         /// <summary> The details of the proposed recommendation. </summary>
         public AllSavingsBenefitDetails RecommendationDetails { get; set; }
+
         /// <summary> The list of all benefit recommendations with the recommendation details. </summary>
         public AllSavingsList AllRecommendationDetails { get; }
+
         /// <summary> Benefit scope. For example, Single or Shared. </summary>
         internal BenefitRecommendationScope Scope { get; set; }
     }

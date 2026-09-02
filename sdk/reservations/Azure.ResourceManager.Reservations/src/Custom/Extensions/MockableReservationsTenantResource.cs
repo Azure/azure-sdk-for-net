@@ -3,79 +3,116 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Azure.ResourceManager.Reservations.Models;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
-    public partial class MockableReservationsTenantResource : ArmResource
+    // Justification: GA exposed direct GetReservationOrder and options-bag GetReservationDetails
+    // overloads on the mockable tenant extension resource. The TypeSpec generator emits collection
+    // or long-parameter methods, so these forwarders preserve the GA convenience surface.
+    public partial class MockableReservationsTenantResource
     {
         /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="options"> The options to apply to the reservation details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(Models.TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
-            options.Filter = filter;
-            options.Orderby = orderby;
-            options.RefreshSummary = refreshSummary;
-            options.Skiptoken = skiptoken;
-            options.SelectedState = selectedState;
-            options.Take = take;
-
-            return GetReservationDetailsAsync(options, cancellationToken);
+            options ??= new Models.TenantResourceGetReservationDetailsOptions();
+            return GetReservationDetailsAsync(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take, cancellationToken);
         }
 
         /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="options"> The options to apply to the reservation details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetailResource> GetReservationDetails(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationDetailResource> GetReservationDetails(Models.TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
-            options.Filter = filter;
-            options.Orderby = orderby;
-            options.RefreshSummary = refreshSummary;
-            options.Skiptoken = skiptoken;
-            options.SelectedState = selectedState;
-            options.Take = take;
-
-            return GetReservationDetails(options, cancellationToken);
+            options ??= new Models.TenantResourceGetReservationDetailsOptions();
+            return GetReservationDetails(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take, cancellationToken);
         }
+
+        /// <summary>
+        /// Get the details of a `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrder_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Task<Response<ReservationOrderResource>> GetReservationOrderAsync(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+            => GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken);
+
+        /// <summary>
+        /// Get the details of a `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrder_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ReservationOrderResource> GetReservationOrder(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+            => GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
     }
 }

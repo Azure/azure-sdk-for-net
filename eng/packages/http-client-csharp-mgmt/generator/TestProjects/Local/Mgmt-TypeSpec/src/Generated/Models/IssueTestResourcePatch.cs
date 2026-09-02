@@ -105,7 +105,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 {
                     Properties = new IssueTestUpdateProperties();
                 }
-                Properties.InnerFlag = value.Value;
+                Properties.InnerFlag = value;
             }
         }
 

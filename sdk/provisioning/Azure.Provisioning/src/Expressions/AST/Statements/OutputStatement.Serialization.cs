@@ -49,9 +49,11 @@ public partial class OutputStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) =>
         other is OutputStatement o && Name == o.Name && Type.Equals(o.Type) && Value.Equals(o.Value) &&
         Decorators.SequenceEqual(o.Decorators);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(OutputStatement).GetHashCode() ^ (Name?.GetHashCode() ?? 0) ^ (Type?.GetHashCode() ?? 0) ^ (Value?.GetHashCode() ?? 0);
 
     internal static OutputStatement DeserializeOutputStatement(JsonElement element)

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> AML file system squash settings. </summary>
     public partial class AmlFileSystemRootSquashSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemRootSquashSettings"/>. </summary>
         public AmlFileSystemRootSquashSettings()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="squashUID"> User ID to squash to. </param>
         /// <param name="squashGID"> Group ID to squash to. </param>
         /// <param name="status"> AML file system squash status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemRootSquashSettings(AmlFileSystemSquashMode? mode, string noSquashNidLists, long? squashUID, long? squashGID, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemRootSquashSettings(AmlFileSystemSquashMode? mode, string noSquashNidLists, long? squashUID, long? squashGID, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             NoSquashNidLists = noSquashNidLists;
             SquashUID = squashUID;
             SquashGID = squashGID;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems. </summary>
         public AmlFileSystemSquashMode? Mode { get; set; }
+
         /// <summary> Semicolon separated NID IP Address list(s) to be added to the TrustedSystems. </summary>
         public string NoSquashNidLists { get; set; }
+
         /// <summary> User ID to squash to. </summary>
         public long? SquashUID { get; set; }
+
         /// <summary> Group ID to squash to. </summary>
         public long? SquashGID { get; set; }
+
         /// <summary> AML file system squash status. </summary>
         public string Status { get; }
     }

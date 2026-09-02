@@ -113,8 +113,8 @@ namespace Azure.Storage.DataMovement
                 isContainer,
                 false, /* enumerationComplete */
                 new TransferStatus(),
-                source.Uri.ToSanitizedString(),
-                destination.Uri.ToSanitizedString(),
+                source.Uri.AbsoluteUri,
+                destination.Uri.AbsoluteUri,
                 source.GetSourceCheckpointDetails(),
                 destination.GetDestinationCheckpointDetails());
 

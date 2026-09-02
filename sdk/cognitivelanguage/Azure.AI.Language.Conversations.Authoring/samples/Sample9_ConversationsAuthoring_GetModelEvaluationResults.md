@@ -23,10 +23,12 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve model evaluation results, call GetModelEvaluationResults on the `ConversationAuthoringTrainedModel` client, which provides evaluation metrics for intents and entities for each utterance in the dataset.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResults(projectName, trainedModelLabel, stringIndexType);
+Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(projectName, trainedModelLabel, stringIndexType);
 
 foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
 {
@@ -59,11 +61,13 @@ foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results
 To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the `ConversationAuthoringTrainedModel` client. This returns an AsyncPageable<UtteranceEvaluationResult> that allows you to iterate through and analyze the results.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
-AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResultsAsync(projectName, trainedModelLabel, stringIndexType);
+AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(projectName, trainedModelLabel, stringIndexType);
 
 await foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
 {

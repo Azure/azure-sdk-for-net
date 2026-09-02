@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _count = DefineProperty<int>(nameof(Count), new string[] { "count" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterManagedOutboundIPProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown version of Credential. </summary>
     internal partial class UnknownCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCredential"/>. </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(credentialType, description, annotations, additionalProperties)
-        {
-            CredentialType = credentialType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCredential"/> for deserialization. </summary>
-        internal UnknownCredential()
+        /// <param name="additionalProperties"></param>
+        internal UnknownCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(credentialType ?? "unknown", description, annotations, additionalProperties)
         {
         }
     }

@@ -1,16 +1,69 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
+## 3.0.0-beta.1 (2026-08-24)
 
 ### Features Added
+- Enabled the Model weights subclient.
+- Added the convenience methods `UploadModelAsync` and `UploadModel` to upload model weights.
+- Added distributed tracing support.
 
 ### Breaking Changes
+- The `GetConnectionAsync` and `GetConnection` methods of `AIProjectConnectionsOperations` are now returning `Task<ClientResult<AIProjectConnection>>` and `ClientResult<AIProjectConnection>` respectively.
+- The Routines and routine runs listing has been changed: the parameter `before` was removed from both `GetRoutineRuns` and `GetRoutines` methods. In the `GetRoutineRuns` the parameter `name` was replaced by `routineName`. The same changes were done for asynchronous methods.
 
 ### Bugs Fixed
+- Fix the Foundry-Features header, resulting in 400 error during Agent optimization jobs submission.
+
+### Sample Updates
+- Added sample for Model weights.
+- Added sample for `GitHubIssueRoutineTrigger`.
+- Updated sample for routine with manual dispatching so that it also demonstrates triggering based on message in Teams.
+
+## 2.1.0-beta.4 (2026-06-30)
+
+### Bugs Fixed
+- Fixed the `EvaluatorGenerationJob` serialization.
+
+### Sample Updates
+- Added sample for evaluator generator job.
+- Added sample for dispatching manual routine runs.
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Features Added
+- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
+- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
+
+## 2.1.0-beta.2 (2026-05-14)
+
+### Features Added
+- Added `DataGenerationJobs` client for synthetic data generation, accessible via `AIProjectClient`.
+- Added data generation job types: `DataGenerationJob`, `DataGenerationJobInputs`, `DataGenerationJobResult`, `DataGenerationModelOptions`, `DataGenerationTokenUsage`.
+- Added data generation job options: `SimpleQnADataGenerationJobOptions`, `TaskDataGenerationJobOptions`, `ToolUseFineTuningDataGenerationJobOptions`, `TracesDataGenerationJobOptions`.
+- Added data generation source types: `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
+- Added data generation output types: `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
+
+### Bugs Fixed
+- Fixed missing header required by `ProjectInsights`.
+
+### Sample Updates
+- Added evaluation cluster insight sample and documentation.
+- Added evaluation comparison insight sample and documentation.
+- Added AI-assisted evaluators sample demonstrating Similarity, ROUGE, METEOR, GLEU, F1, and BLEU score evaluations.
+- Added built-in evaluators with inline data sample demonstrating violence, F1 score, and coherence evaluations.
+- Added built-in evaluators with inline data using OpenAI client sample and documentation.
+- Added sample for grading images.
+- Added sample for Toolbox search.
+
+## 2.0.1 (2026-04-22)
 
 ### Other Changes
 
-### Sample Updates
+- Adopted `Azure.Core` 1.53.0, which type-forwards the `Azure.Identity` namespace. The explicit `Azure.Identity` package dependency has been removed; the `Azure.Identity` types remain available transitively through `Azure.Core`.
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
 - Added Toolboxes sample.
 
 ## 2.0.0 (2026-04-01)

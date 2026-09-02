@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> The LatencyScorecardAggregationInterval. </summary>
+    /// <summary></summary>
     public readonly partial struct LatencyScorecardAggregationInterval : IEquatable<LatencyScorecardAggregationInterval>
     {
         private readonly string _value;
+        /// <summary> Daily. </summary>
+        private const string DailyValue = "Daily";
+        /// <summary> Weekly. </summary>
+        private const string WeeklyValue = "Weekly";
+        /// <summary> Monthly. </summary>
+        private const string MonthlyValue = "Monthly";
 
         /// <summary> Initializes a new instance of <see cref="LatencyScorecardAggregationInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LatencyScorecardAggregationInterval(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DailyValue = "Daily";
-        private const string WeeklyValue = "Weekly";
-        private const string MonthlyValue = "Monthly";
+            _value = value;
+        }
 
         /// <summary> Daily. </summary>
         public static LatencyScorecardAggregationInterval Daily { get; } = new LatencyScorecardAggregationInterval(DailyValue);
+
         /// <summary> Weekly. </summary>
         public static LatencyScorecardAggregationInterval Weekly { get; } = new LatencyScorecardAggregationInterval(WeeklyValue);
+
         /// <summary> Monthly. </summary>
         public static LatencyScorecardAggregationInterval Monthly { get; } = new LatencyScorecardAggregationInterval(MonthlyValue);
+
         /// <summary> Determines if two <see cref="LatencyScorecardAggregationInterval"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LatencyScorecardAggregationInterval left, LatencyScorecardAggregationInterval right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LatencyScorecardAggregationInterval"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LatencyScorecardAggregationInterval left, LatencyScorecardAggregationInterval right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LatencyScorecardAggregationInterval"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LatencyScorecardAggregationInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LatencyScorecardAggregationInterval(string value) => new LatencyScorecardAggregationInterval(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LatencyScorecardAggregationInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LatencyScorecardAggregationInterval?(string value) => value == null ? null : new LatencyScorecardAggregationInterval(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LatencyScorecardAggregationInterval other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LatencyScorecardAggregationInterval other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

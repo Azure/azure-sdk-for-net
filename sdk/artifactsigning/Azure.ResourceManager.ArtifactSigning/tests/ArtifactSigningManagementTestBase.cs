@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Tests
             // invoke the operation
             ArtifactSigningCertificateProfileData data = new ArtifactSigningCertificateProfileData()
             {
-                ProfileType = CertificateProfileType.PublicTrust,
+                CertificateProfileType = CertificateProfileType.PublicTrust,
                 IncludeStreetAddress = false,
                 IncludePostalCode = true,
                 IdentityValidationId = "00000000-1234-5678-3333-444444444444",

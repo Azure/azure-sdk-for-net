@@ -13,18 +13,15 @@ namespace Azure.AI.AgentServer.Core.Internal;
 /// </summary>
 internal sealed class RequestIdBaggagePropagator : IMiddleware
 {
-    private const string RequestIdHeader = "x-request-id";
-    private const string BaggageKey = "x-request-id";
-
     /// <inheritdoc />
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        if (context.Request.Headers.TryGetValue(RequestIdHeader, out var requestIdValues))
+        if (context.Request.Headers.TryGetValue(PlatformHeaders.RequestId, out var requestIdValues))
         {
             var requestId = requestIdValues.ToString();
             if (!string.IsNullOrEmpty(requestId))
             {
-                Activity.Current?.SetBaggage(BaggageKey, requestId);
+                Activity.Current?.SetBaggage(PlatformHeaders.RequestId, requestId);
             }
         }
 

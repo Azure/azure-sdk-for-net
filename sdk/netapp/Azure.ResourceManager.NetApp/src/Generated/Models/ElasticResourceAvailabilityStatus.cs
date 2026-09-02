@@ -6,46 +6,15 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Availability status. </summary>
+    /// <summary> Current availability status of the resource. </summary>
     public readonly partial struct ElasticResourceAvailabilityStatus : IEquatable<ElasticResourceAvailabilityStatus>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticResourceAvailabilityStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticResourceAvailabilityStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> Value indicating the name is valid and available. </summary>
-        public static ElasticResourceAvailabilityStatus True { get; } = new ElasticResourceAvailabilityStatus(TrueValue);
-        /// <summary> Value indicating the the name is invalid, unavailable, or both. </summary>
-        public static ElasticResourceAvailabilityStatus False { get; } = new ElasticResourceAvailabilityStatus(FalseValue);
-        /// <summary> Determines if two <see cref="ElasticResourceAvailabilityStatus"/> values are the same. </summary>
-        public static bool operator ==(ElasticResourceAvailabilityStatus left, ElasticResourceAvailabilityStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ElasticResourceAvailabilityStatus"/> values are not the same. </summary>
-        public static bool operator !=(ElasticResourceAvailabilityStatus left, ElasticResourceAvailabilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticResourceAvailabilityStatus"/>. </summary>
-        public static implicit operator ElasticResourceAvailabilityStatus(string value) => new ElasticResourceAvailabilityStatus(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ElasticResourceAvailabilityStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ElasticResourceAvailabilityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> The resource is currently Online and accessible. </summary>
+        private const string OnlineValue = "Online";
+        /// <summary> The resource is currently Offline and not accessible. </summary>
+        private const string OfflineValue = "Offline";
     }
 }

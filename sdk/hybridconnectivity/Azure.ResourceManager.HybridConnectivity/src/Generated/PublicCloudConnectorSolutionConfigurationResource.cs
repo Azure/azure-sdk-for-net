@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(ResourceType, out string publicCloudConnectorSolutionConfigurationApiVersion);
             _solutionConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            _solutionConfigurationsRestClient = new SolutionConfigurations(_solutionConfigurationsClientDiagnostics, Pipeline, Endpoint, publicCloudConnectorSolutionConfigurationApiVersion ?? "2024-12-01");
+            _solutionConfigurationsRestClient = new SolutionConfigurations(_solutionConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorSolutionConfigurationApiVersion ?? "2024-12-01");
             ValidateResourceId(id);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

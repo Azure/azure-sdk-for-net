@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerDevOpsAuditingSettingResource : IJsonModel<SqlServerDevOpsAuditingSettingData>
     {
-        private static SqlServerDevOpsAuditingSettingData s_dataDeserializationInstance;
-        private static SqlServerDevOpsAuditingSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerDevOpsAuditingSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerDevOpsAuditingSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerDevOpsAuditingSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerDevOpsAuditingSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDevOpsAuditingSettingData>)Data).Write(writer, options);
 
-        SqlServerDevOpsAuditingSettingData IJsonModel<SqlServerDevOpsAuditingSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDevOpsAuditingSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerDevOpsAuditingSettingData IJsonModel<SqlServerDevOpsAuditingSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDevOpsAuditingSettingData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerDevOpsAuditingSettingData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerDevOpsAuditingSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDevOpsAuditingSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerDevOpsAuditingSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

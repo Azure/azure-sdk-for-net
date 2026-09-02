@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.DevHub.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+</Project>

@@ -17,6 +17,14 @@ public static class FoundryEnvironment
     public static string? AgentName { get; private set; }
 
     /// <summary>
+    /// The agent's stable identifier (GUID). Sourced from the <c>FOUNDRY_AGENT_ID</c>
+    /// environment variable. Available for container-side logic such as per-agent
+    /// routing, telemetry tagging, or custom storage partitioning. Stable across
+    /// all requests to the same agent.
+    /// </summary>
+    public static string? AgentId { get; private set; }
+
+    /// <summary>
     /// The agent version. Sourced from the <c>FOUNDRY_AGENT_VERSION</c> environment variable.
     /// </summary>
     public static string? AgentVersion { get; private set; }
@@ -53,6 +61,17 @@ public static class FoundryEnvironment
     public static string? AppInsightsConnectionString { get; private set; }
 
     /// <summary>
+    /// Indicates whether Microsoft Entra (AAD) authentication is requested for
+    /// Azure Monitor export. Returns <c>true</c> when the
+    /// <c>APPLICATIONINSIGHTS_AUTH_MODE</c> environment variable is set to
+    /// <c>"Entra"</c> (case-insensitive). When enabled, the Azure Monitor
+    /// exporter is configured with a system-assigned
+    /// <see cref="Azure.Identity.ManagedIdentityCredential"/> instead of relying
+    /// on the connection string's instrumentation key alone.
+    /// </summary>
+    public static bool IsAppInsightsEntraAuth { get; private set; }
+
+    /// <summary>
     /// The SSE keep-alive comment frame interval. Sourced from the <c>SSE_KEEPALIVE_INTERVAL</c>
     /// environment variable (value in integer seconds). When absent, zero, or unparseable,
     /// returns <see cref="Timeout.InfiniteTimeSpan"/> (disabled).
@@ -60,17 +79,60 @@ public static class FoundryEnvironment
     public static TimeSpan SseKeepAliveInterval { get; private set; }
 
     /// <summary>
-    /// Indicates whether the process is running in a Foundry hosted environment.
-    /// Returns <c>true</c> when <see cref="ProjectEndpoint"/>,
-    /// <see cref="AgentName"/>, and <see cref="AgentVersion"/> are all set
-    /// <b>and</b> the .NET hosting environment is not <c>Development</c>.
+    /// The WebSocket Ping/Pong keep-alive interval used by the
+    /// <c>invocations_ws</c> protocol. Sourced from the <c>WS_KEEPALIVE_INTERVAL</c>
+    /// environment variable (value in integer seconds). When absent, zero, or
+    /// unparseable, returns <see cref="Timeout.InfiniteTimeSpan"/> (disabled —
+    /// Kestrel default of 30s does <em>not</em> apply because Core sets the
+    /// option explicitly to honour the spec's "disabled by default" contract).
     /// </summary>
     /// <remarks>
-    /// The hosting environment is determined from the <c>ASPNETCORE_ENVIRONMENT</c>
-    /// or <c>DOTNET_ENVIRONMENT</c> environment variable (checked in that order).
-    /// When neither is set the environment is assumed to be non-development (i.e. hosted).
+    /// Wired into ASP.NET Core's <c>WebSocketOptions.KeepAliveInterval</c> so a
+    /// positive value emits RFC 6455 protocol-level Ping frames (opcode
+    /// <c>0x9</c>) at the configured cadence. The Foundry hosting platform
+    /// auto-injects this env var; configure it locally to test long-lived WS
+    /// connections through upstream proxy / load-balancer idle timeouts.
+    /// </remarks>
+    public static TimeSpan WebSocketKeepAliveInterval { get; private set; }
+
+    /// <summary>
+    /// Indicates whether the process is running in a Foundry hosted environment.
+    /// Returns <c>true</c> when the <c>FOUNDRY_HOSTING_ENVIRONMENT</c> environment variable
+    /// is set to a non-empty value.
+    /// </summary>
+    /// <remarks>
+    /// This variable is injected by the Azure AI Foundry hosting infrastructure as a
+    /// non-empty value when the container is running in a Foundry context.
     /// </remarks>
     public static bool IsHosted { get; private set; }
+
+    /// <summary>
+    /// The managed identity client ID of the agent instance.
+    /// Sourced from the <c>FOUNDRY_AGENT_INSTANCE_CLIENT_ID</c> environment variable.
+    /// When present, this is used as the primary agent identifier for telemetry.
+    /// </summary>
+    public static string? AgentInstanceClientId { get; private set; }
+
+    /// <summary>
+    /// The managed identity client ID of the agent blueprint.
+    /// Sourced from the <c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c> environment variable.
+    /// Stamped as <c>microsoft.a365.agent.blueprint.id</c> on telemetry spans.
+    /// </summary>
+    public static string? AgentBlueprintClientId { get; private set; }
+
+    /// <summary>
+    /// The Microsoft Entra tenant ID of the agent.
+    /// Sourced from the <c>FOUNDRY_AGENT_TENANT_ID</c> environment variable.
+    /// Stamped as <c>microsoft.tenant.id</c> on telemetry spans.
+    /// </summary>
+    public static string? AgentTenantId { get; private set; }
+
+    /// <summary>
+    /// Indicates whether Agent365 tracing export is enabled.
+    /// Returns <c>true</c> when both <see cref="IsHosted"/> is <c>true</c> and the
+    /// <c>FOUNDRY_AGENT365_TRACING_ENABLED</c> environment variable is set to <c>"true"</c> (case-insensitive).
+    /// </summary>
+    public static bool IsAgent365TracingEnabled { get; private set; }
 
     static FoundryEnvironment() => Reload();
 
@@ -81,12 +143,19 @@ public static class FoundryEnvironment
     internal static void Reload()
     {
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
+        AgentId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");
         ProjectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         ProjectArmId = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID");
         SessionId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
         OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
         AppInsightsConnectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+        // Entra (AAD) auth for Azure Monitor export when APPLICATIONINSIGHTS_AUTH_MODE=Entra.
+        IsAppInsightsEntraAuth = string.Equals(
+            Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE"),
+            "Entra",
+            StringComparison.OrdinalIgnoreCase);
 
         // Port: default 8088, validate range 1-65535.
         var portEnv = Environment.GetEnvironmentVariable("PORT");
@@ -112,16 +181,26 @@ public static class FoundryEnvironment
                 ? TimeSpan.FromSeconds(seconds)
                 : Timeout.InfiniteTimeSpan;
 
-        // IsHosted: true when all three Foundry platform env vars (ProjectEndpoint,
-        // AgentName, AgentVersion) are configured AND the .NET hosting environment
-        // is not "Development". This mirrors the logic used by
-        // Microsoft.Extensions.Hosting.HostEnvironmentEnvExtensions.IsDevelopment().
-        var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-            ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-        var isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
-        var hasFoundryVars = !string.IsNullOrWhiteSpace(ProjectEndpoint)
-            && !string.IsNullOrWhiteSpace(AgentName)
-            && !string.IsNullOrWhiteSpace(AgentVersion);
-        IsHosted = hasFoundryVars && !isDevelopment;
+        // WebSocket keep-alive: disabled (InfiniteTimeSpan) unless a positive integer seconds value is set.
+        // Read from `WS_KEEPALIVE_INTERVAL`; wired to Kestrel's `WebSocketOptions.KeepAliveInterval`.
+        var wsEnv = Environment.GetEnvironmentVariable("WS_KEEPALIVE_INTERVAL");
+        WebSocketKeepAliveInterval = !string.IsNullOrEmpty(wsEnv)
+            && int.TryParse(wsEnv, out var wsSeconds)
+            && wsSeconds > 0
+                ? TimeSpan.FromSeconds(wsSeconds)
+                : Timeout.InfiniteTimeSpan;
+
+        // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
+        // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
+        IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
+
+        // Agent identity env vars for A365 tracing.
+        AgentInstanceClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID");
+        AgentBlueprintClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID");
+        AgentTenantId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID");
+
+        // A365 tracing enabled when both hosted and explicitly opted in.
+        IsAgent365TracingEnabled = IsHosted
+            && string.Equals(Environment.GetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
     }
 }

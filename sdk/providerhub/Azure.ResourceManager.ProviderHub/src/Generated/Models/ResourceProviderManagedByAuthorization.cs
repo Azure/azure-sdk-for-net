@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> Managed by authorization. </summary>
     public partial class ResourceProviderManagedByAuthorization
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManagedByAuthorization"/>. </summary>
         public ResourceProviderManagedByAuthorization()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="additionalAuthorizations"></param>
         /// <param name="managedByResourceRoleDefinitionId"> The managed by resource role definition ID for the application. </param>
         /// <param name="doesAllowManagedByInheritance"> Indicates whether the managed by resource role definition ID should be inherited. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManagedByAuthorization(IList<ProviderAdditionalAuthorization> additionalAuthorizations, string managedByResourceRoleDefinitionId, bool? doesAllowManagedByInheritance, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderManagedByAuthorization(IList<ProviderAdditionalAuthorization> additionalAuthorizations, string managedByResourceRoleDefinitionId, bool? doesAllowManagedByInheritance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalAuthorizations = additionalAuthorizations;
             ManagedByResourceRoleDefinitionId = managedByResourceRoleDefinitionId;
             DoesAllowManagedByInheritance = doesAllowManagedByInheritance;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the additional authorizations. </summary>
+        /// <summary> Gets the AdditionalAuthorizations. </summary>
         public IList<ProviderAdditionalAuthorization> AdditionalAuthorizations { get; }
+
         /// <summary> The managed by resource role definition ID for the application. </summary>
         public string ManagedByResourceRoleDefinitionId { get; set; }
+
         /// <summary> Indicates whether the managed by resource role definition ID should be inherited. </summary>
         public bool? DoesAllowManagedByInheritance { get; set; }
     }

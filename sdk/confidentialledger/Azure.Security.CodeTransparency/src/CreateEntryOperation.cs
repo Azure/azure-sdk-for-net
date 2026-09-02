@@ -18,6 +18,7 @@ namespace Azure.Security.CodeTransparency
     {
         private readonly CodeTransparencyClient _client;
         private readonly OperationInternal _operationInternal;
+        private readonly BinaryData _value;
 
         /// <summary>
         /// A constructor for mocking.
@@ -35,6 +36,20 @@ namespace Azure.Security.CodeTransparency
             _client = client;
             Id = operationId;
             _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(CreateEntryOperation));
+        }
+
+        /// <summary>
+        /// Initializes a completed operation for an entry that has already been committed by the service
+        /// (for example, when the entry was created with waitForCommit set to true).
+        /// </summary>
+        /// <param name="entryId"> The id of the committed entry. </param>
+        /// <param name="rawResponse"> The final response returned by the create entry call. </param>
+        /// <param name="value"> The value exposed by the completed operation. </param>
+        public CreateEntryOperation(string entryId, Response rawResponse, BinaryData value)
+        {
+            Id = entryId;
+            _value = value;
+            _operationInternal = OperationInternal.Succeeded(rawResponse);
         }
 
         /// <summary>
@@ -60,17 +75,17 @@ namespace Azure.Security.CodeTransparency
         public override bool HasValue => _operationInternal.HasCompleted && _operationInternal.RawResponse != null;
 
         /// <inheritdoc />
-        public override BinaryData Value => _operationInternal.RawResponse.Content;
+        public override BinaryData Value => _value ?? _operationInternal.RawResponse.Content;
 
         // Part of IOperation which is used in _operationInternal
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _client.GetOperationAsync(
+                ? await _client.GetOperationV09Async(
                         Id,
                         new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
                     .ConfigureAwait(false)
-                : _client.GetOperation(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+                : _client.GetOperationV09(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
             if (response.Status != (int)HttpStatusCode.OK &&
                 response.Status != (int)HttpStatusCode.Created &&

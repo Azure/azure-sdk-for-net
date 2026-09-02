@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStorageAvsVmApiVersion);
             _avsVmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _avsVmsRestClient = new AvsVms(_avsVmsClientDiagnostics, Pipeline, Endpoint, pureStorageAvsVmApiVersion ?? "2024-11-01");
+            _avsVmsRestClient = new AvsVms(_avsVmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsVmApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageAvsVmResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmResource>(
-                    new PureStorageAvsVmOperationSource(Client),
+                    new PureStorageAvsVmResourceOperationSource(Client),
                     _avsVmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageAvsVmResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmResource>(
-                    new PureStorageAvsVmOperationSource(Client),
+                    new PureStorageAvsVmResourceOperationSource(Client),
                     _avsVmsClientDiagnostics,
                     Pipeline,
                     message.Request,

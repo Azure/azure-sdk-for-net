@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct ServerPortOperator : IEquatable<ServerPortOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServerPortOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServerPortOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerPortOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServerPortOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static ServerPortOperator Any { get; } = new ServerPortOperator(AnyValue);
-        /// <summary> Equal. </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static ServerPortOperator Equal { get; } = new ServerPortOperator(EqualValue);
-        /// <summary> Contains. </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static ServerPortOperator Contains { get; } = new ServerPortOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static ServerPortOperator BeginsWith { get; } = new ServerPortOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static ServerPortOperator EndsWith { get; } = new ServerPortOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static ServerPortOperator LessThan { get; } = new ServerPortOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static ServerPortOperator LessThanOrEqual { get; } = new ServerPortOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static ServerPortOperator GreaterThan { get; } = new ServerPortOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static ServerPortOperator GreaterThanOrEqual { get; } = new ServerPortOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static ServerPortOperator RegEx { get; } = new ServerPortOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="ServerPortOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerPortOperator left, ServerPortOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerPortOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerPortOperator left, ServerPortOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerPortOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerPortOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerPortOperator(string value) => new ServerPortOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerPortOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerPortOperator?(string value) => value == null ? null : new ServerPortOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerPortOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerPortOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

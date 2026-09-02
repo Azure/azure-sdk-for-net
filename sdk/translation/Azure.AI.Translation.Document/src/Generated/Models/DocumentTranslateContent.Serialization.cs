@@ -15,6 +15,11 @@ namespace Azure.AI.Translation.Document
     /// <summary> Document Translate Request Content. </summary>
     public partial class DocumentTranslateContent : IJsonModel<DocumentTranslateContent>
     {
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/> for deserialization. </summary>
+        internal DocumentTranslateContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTranslateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

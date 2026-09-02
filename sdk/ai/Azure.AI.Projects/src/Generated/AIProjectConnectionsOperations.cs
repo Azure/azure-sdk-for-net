@@ -22,11 +22,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectConnectionsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectConnectionsOperations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,8 +37,11 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Get a connection by name, without populating connection credentials
+        /// [Protocol Method] Retrieves the specified connection and its configuration details without including credential values.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -49,12 +54,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetConnection(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnection");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Get a connection by name, without populating connection credentials
+        /// [Protocol Method] Retrieves the specified connection and its configuration details without including credential values.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -67,11 +82,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetConnectionAsync(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnection");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get a connection by name, without populating connection credentials. </summary>
+        /// <summary> Retrieves the specified connection and its configuration details without including credential values. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -81,7 +106,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a connection by name, without populating connection credentials. </summary>
+        /// <summary> Retrieves the specified connection and its configuration details without including credential values. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -92,7 +117,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get a connection by name, with its connection credentials
+        /// [Protocol Method] Retrieves the specified connection together with its credential values.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -105,12 +130,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetConnectionWithCredentials(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnectionWithCredentials");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Get a connection by name, with its connection credentials
+        /// [Protocol Method] Retrieves the specified connection together with its credential values.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -123,11 +158,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetConnectionWithCredentialsAsync(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnectionWithCredentials");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get a connection by name, with its connection credentials. </summary>
+        /// <summary> Retrieves the specified connection together with its credential values. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -137,7 +182,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a connection by name, with its connection credentials. </summary>
+        /// <summary> Retrieves the specified connection together with its credential values. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -148,44 +193,64 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] List all connections in the project, without populating connection credentials
+        /// [Protocol Method] Returns the connections available in the current project, optionally filtered by type or default status.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="connectionType"> Lists connections of this specific type. </param>
+        /// <param name="defaultConnection"> Lists connections that are default connections. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetConnections(string connectionType, bool? defaultConnection, RequestOptions options)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsCollectionResult(this, connectionType, defaultConnection, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnections");
+            scope.Start();
+            try
+            {
+                return new AIProjectConnectionsOperationsGetConnectionsCollectionResult(this, connectionType, defaultConnection, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] List all connections in the project, without populating connection credentials
+        /// [Protocol Method] Returns the connections available in the current project, optionally filtered by type or default status.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="connectionType"> Lists connections of this specific type. </param>
+        /// <param name="defaultConnection"> Lists connections that are default connections. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, RequestOptions options)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(this, connectionType, defaultConnection, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnections");
+            scope.Start();
+            try
+            {
+                return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(this, connectionType, defaultConnection, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> List all connections in the project, without populating connection credentials. </summary>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <summary> Returns the connections available in the current project, optionally filtered by type or default status. </summary>
+        /// <param name="connectionType"> Lists connections of this specific type. </param>
+        /// <param name="defaultConnection"> Lists connections that are default connections. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<AIProjectConnection> GetConnections(ConnectionType? connectionType = default, bool? defaultConnection = default, CancellationToken cancellationToken = default)
@@ -193,9 +258,9 @@ namespace Azure.AI.Projects
             return new AIProjectConnectionsOperationsGetConnectionsCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all connections in the project, without populating connection credentials. </summary>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <summary> Returns the connections available in the current project, optionally filtered by type or default status. </summary>
+        /// <param name="connectionType"> Lists connections of this specific type. </param>
+        /// <param name="defaultConnection"> Lists connections that are default connections. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<AIProjectConnection> GetConnectionsAsync(ConnectionType? connectionType = default, bool? defaultConnection = default, CancellationToken cancellationToken = default)

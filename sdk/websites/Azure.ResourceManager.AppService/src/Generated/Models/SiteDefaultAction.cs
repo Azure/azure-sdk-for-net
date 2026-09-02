@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct SiteDefaultAction : IEquatable<SiteDefaultAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SiteDefaultAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SiteDefaultAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SiteDefaultAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static SiteDefaultAction Allow { get; } = new SiteDefaultAction(AllowValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> Gets the Deny. </summary>
         public static SiteDefaultAction Deny { get; } = new SiteDefaultAction(DenyValue);
+
         /// <summary> Determines if two <see cref="SiteDefaultAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteDefaultAction left, SiteDefaultAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteDefaultAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteDefaultAction left, SiteDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteDefaultAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteDefaultAction(string value) => new SiteDefaultAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteDefaultAction?(string value) => value == null ? null : new SiteDefaultAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteDefaultAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteDefaultAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

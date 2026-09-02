@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the service gateway update services request. </summary>
     public partial class ServiceGatewayUpdateServicesContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayUpdateServicesContent"/>. </summary>
         public ServiceGatewayUpdateServicesContent()
@@ -54,27 +26,24 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayUpdateServicesContent"/>. </summary>
         /// <param name="action">
         /// Specifies the type of update operation to perform on services within the service gateway.
-        ///
-        /// - FullUpdate: Replaces all existing services with the new list provided in the request. Any previously defined services not included will be removed.
-        /// - PartialUpdate: Updates only the specified services.
+        /// <list type="bullet"><item><description>FullUpdate: Replaces all existing services with the new list provided in the request. Any previously defined services not included will be removed.</description></item><item><description>PartialUpdate: Updates only the specified services.</description></item></list>
         /// </param>
         /// <param name="serviceRequests"> Collection of service updates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayUpdateServicesContent(ServiceUpdateAction? action, IList<ServiceGatewayServiceRequest> serviceRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceGatewayUpdateServicesContent(ServiceUpdateAction? action, IList<ServiceGatewayServiceRequest> serviceRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             ServiceRequests = serviceRequests;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// Specifies the type of update operation to perform on services within the service gateway.
-        ///
-        /// - FullUpdate: Replaces all existing services with the new list provided in the request. Any previously defined services not included will be removed.
-        /// - PartialUpdate: Updates only the specified services.
+        /// <list type="bullet"><item><description>FullUpdate: Replaces all existing services with the new list provided in the request. Any previously defined services not included will be removed.</description></item><item><description>PartialUpdate: Updates only the specified services.</description></item></list>
         /// </summary>
         [WirePath("action")]
         public ServiceUpdateAction? Action { get; set; }
+
         /// <summary> Collection of service updates. </summary>
         [WirePath("serviceRequests")]
         public IList<ServiceGatewayServiceRequest> ServiceRequests { get; }

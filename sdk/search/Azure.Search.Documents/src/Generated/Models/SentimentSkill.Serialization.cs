@@ -80,10 +80,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(SentimentSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(LanguageCode))
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(LanguageCode);
+                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
             if (Optional.IsDefined(IncludeOpinionMining))
             {
@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string languageCode = default;
+            SentimentSkillLanguage? defaultLanguageCode = default;
             bool? includeOpinionMining = default;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
@@ -178,10 +178,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        languageCode = null;
+                        defaultLanguageCode = null;
                         continue;
                     }
-                    languageCode = prop.Value.GetString();
+                    defaultLanguageCode = new SentimentSkillLanguage(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("includeOpinionMining"u8))
@@ -216,7 +216,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 inputs,
                 outputs,
                 additionalBinaryDataProperties,
-                languageCode,
+                defaultLanguageCode,
                 includeOpinionMining,
                 modelVersion);
         }

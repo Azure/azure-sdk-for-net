@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 HostListResult result = HostListResult.FromResponse(response);
-                yield return Page<AvsHostData>.FromValues((IReadOnlyList<AvsHostData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvsHostData>.FromValues((IReadOnlyList<AvsHostData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

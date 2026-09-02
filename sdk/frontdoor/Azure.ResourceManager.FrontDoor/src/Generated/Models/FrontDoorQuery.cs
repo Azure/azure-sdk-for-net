@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorQuery : IEquatable<FrontDoorQuery>
     {
         private readonly string _value;
+        /// <summary> StripNone. </summary>
+        private const string StripNoneValue = "StripNone";
+        /// <summary> StripAll. </summary>
+        private const string StripAllValue = "StripAll";
+        /// <summary> StripOnly. </summary>
+        private const string StripOnlyValue = "StripOnly";
+        /// <summary> StripAllExcept. </summary>
+        private const string StripAllExceptValue = "StripAllExcept";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorQuery"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorQuery(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StripNoneValue = "StripNone";
-        private const string StripAllValue = "StripAll";
-        private const string StripOnlyValue = "StripOnly";
-        private const string StripAllExceptValue = "StripAllExcept";
+            _value = value;
+        }
 
         /// <summary> StripNone. </summary>
         public static FrontDoorQuery StripNone { get; } = new FrontDoorQuery(StripNoneValue);
+
         /// <summary> StripAll. </summary>
         public static FrontDoorQuery StripAll { get; } = new FrontDoorQuery(StripAllValue);
+
         /// <summary> StripOnly. </summary>
         public static FrontDoorQuery StripOnly { get; } = new FrontDoorQuery(StripOnlyValue);
+
         /// <summary> StripAllExcept. </summary>
         public static FrontDoorQuery StripAllExcept { get; } = new FrontDoorQuery(StripAllExceptValue);
+
         /// <summary> Determines if two <see cref="FrontDoorQuery"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorQuery left, FrontDoorQuery right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorQuery"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorQuery left, FrontDoorQuery right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorQuery"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorQuery"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorQuery(string value) => new FrontDoorQuery(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorQuery"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorQuery?(string value) => value == null ? null : new FrontDoorQuery(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorQuery other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorQuery other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

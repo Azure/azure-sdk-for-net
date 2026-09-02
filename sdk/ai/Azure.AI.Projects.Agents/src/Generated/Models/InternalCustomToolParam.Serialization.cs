@@ -88,6 +88,11 @@ namespace OpenAI
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -120,6 +125,7 @@ namespace OpenAI
             string name = default;
             string description = default;
             CustomToolParamFormat format = default;
+            bool? deferLoading = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -146,12 +152,27 @@ namespace OpenAI
                     format = CustomToolParamFormat.DeserializeCustomToolParamFormat(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalCustomToolParam(@type, additionalBinaryDataProperties, name, description, format);
+            return new InternalCustomToolParam(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
+                format,
+                deferLoading);
         }
     }
 }

@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.ClientModel;
+using System.ComponentModel;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,27 +26,52 @@ namespace Azure.Search.Documents.KnowledgeBases
         private const string AuthorizationHeader = "api-key";
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
+        private readonly string _knowledgeBaseName;
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new SearchClientOptions())
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient for mocking. </summary>
+        protected KnowledgeBaseRetrievalClient()
         {
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SearchClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
-        [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential, SearchClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, knowledgeBaseName, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
         {
         }
 
@@ -62,24 +89,22 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Retrieve(string knowledgeBaseName, RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
+        public virtual Response Retrieve(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(knowledgeBaseName, content, querySourceAuthorization, context);
+                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -97,24 +122,22 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetrieveAsync(string knowledgeBaseName, RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
+        public virtual async Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(knowledgeBaseName, content, querySourceAuthorization, context);
+                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -125,37 +148,98 @@ namespace Azure.Search.Documents.KnowledgeBases
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(string knowledgeBaseName, KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = Retrieve(knowledgeBaseName, retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
+            Response result = Retrieve(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken.ToRequestContext());
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(string knowledgeBaseName, KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = await RetrieveAsync(knowledgeBaseName, retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves relevant data from backing stores and streams progress and results as server-sent
+        /// events.
+        /// Process the response incrementally using server-sent event framing. Each event contains an
+        /// event name and a JSON-encoded data payload. The stream ends with either a `response.completed`
+        /// event or an `error` event. OpenAPI 2.0 represents the response body as a string, so generated
+        /// clients may expose the raw response without typed event parsing. Do not deserialize the
+        /// complete response body as a single JSON document.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRetrieveStreamRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
+                message.BufferResponse = false;
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
+        {
+            return Retrieve(retrievalRequest: retrievalRequest, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
+        /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
+        {
+            return RetrieveAsync(retrievalRequest: retrievalRequest, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

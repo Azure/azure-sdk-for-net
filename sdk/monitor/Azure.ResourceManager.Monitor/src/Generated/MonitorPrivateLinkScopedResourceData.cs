@@ -9,46 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the MonitorPrivateLinkScopedResource data model.
-    /// A private link scoped resource
-    /// </summary>
+    /// <summary> A private link scoped resource. </summary>
     public partial class MonitorPrivateLinkScopedResourceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceData"/>. </summary>
         public MonitorPrivateLinkScopedResourceData()
@@ -56,23 +25,79 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
-        /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScopedResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            LinkedResourceId = linkedResourceId;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Resource properties. </summary>
+        internal ScopedResourceProperties Properties { get; set; }
+
+        /// <summary> The kind of scoped Azure monitor resource. </summary>
+        public MonitorScopedResourceKind? Kind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Kind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScopedResourceProperties();
+                }
+                Properties.Kind = value;
+            }
         }
 
         /// <summary> The resource id of the scoped Azure monitor resource. </summary>
-        public ResourceIdentifier LinkedResourceId { get; set; }
-        /// <summary> State of the private endpoint connection. </summary>
-        public string ProvisioningState { get; }
+        public ResourceIdentifier LinkedResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScopedResourceProperties();
+                }
+                Properties.LinkedResourceId = value;
+            }
+        }
+
+        /// <summary> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </summary>
+        public AzureLocation? SubscriptionLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScopedResourceProperties();
+                }
+                Properties.SubscriptionLocation = value;
+            }
+        }
+
+        /// <summary> State of the Azure monitor resource. </summary>
+        public MonitorScopedResourceProvisioningState? ScopedResourceProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScopedResourceProvisioningState;
+            }
+        }
     }
 }

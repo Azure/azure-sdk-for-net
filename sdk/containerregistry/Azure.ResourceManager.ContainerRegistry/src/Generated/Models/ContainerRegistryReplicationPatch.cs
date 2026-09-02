@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new ReplicationUpdateParametersProperties();
                 }
-                Properties.IsRegionEndpointEnabled = value.Value;
+                Properties.IsRegionEndpointEnabled = value;
             }
         }
     }

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Kubernetes support plans available for this version. </summary>
         [WirePath("supportPlan")]
-        public IList<KubernetesSupportPlan> SupportPlan { get; }
+        public IList<KubernetesSupportPlan> SupportPlan { get; } = new ChangeTrackingList<KubernetesSupportPlan>();
     }
 }

@@ -52,11 +52,13 @@ internal static class SchemaOracle
         try
         {
             string sourceFile = Path.Combine(SchemaSpecDir, "SOURCE.md");
-            if (!File.Exists(sourceFile)) return null;
+            if (!File.Exists(sourceFile))
+                return null;
 
             string sourceContent = File.ReadAllText(sourceFile);
             var shaMatch = Regex.Match(sourceContent, @"\*\*SHA\*\*:\s*([0-9a-f]{40})");
-            if (!shaMatch.Success) return null;
+            if (!shaMatch.Success)
+                return null;
             string localSha = shaMatch.Groups[1].Value;
 
             var psi = new ProcessStartInfo("gh", $"api repos/{SchemaRepo}/commits?path={SchemaPath}&per_page=1 --jq .[0].sha")
@@ -67,7 +69,8 @@ internal static class SchemaOracle
                 CreateNoWindow = true,
             };
             using var proc = Process.Start(psi);
-            if (proc == null) return null;
+            if (proc == null)
+                return null;
             if (!proc.WaitForExit(10_000))
             {
                 proc.Kill();
@@ -75,7 +78,8 @@ internal static class SchemaOracle
             }
             string remoteSha = proc.StandardOutput.ReadToEnd().Trim();
             proc.StandardError.ReadToEnd(); // drain to avoid blocking
-            if (proc.ExitCode != 0 || string.IsNullOrEmpty(remoteSha)) return null;
+            if (proc.ExitCode != 0 || string.IsNullOrEmpty(remoteSha))
+                return null;
 
             if (!remoteSha.StartsWith(localSha) && !localSha.StartsWith(remoteSha))
             {
@@ -105,7 +109,8 @@ internal static class SchemaOracle
 
         var kinds = new HashSet<string>();
         var unionMatch = Regex.Match(content, @$"union\s+{unionName}\s*\{{([^}}]+)\}}");
-        if (!unionMatch.Success) return kinds;
+        if (!unionMatch.Success)
+            return kinds;
 
         string body = unionMatch.Groups[1].Value;
         foreach (Match member in Regex.Matches(body, @"""?([\w-]+)""?\s*:\s*(""[^""]+""|\w+)"))

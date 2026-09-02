@@ -58,6 +58,10 @@ namespace Azure.Provisioning.MySql
             base.DefineProvisionableProperties();
             _startIPAddress = DefineProperty<IPAddress>(nameof(StartIPAddress), new string[] { "startIpAddress" }, isRequired: true);
             _endIPAddress = DefineProperty<IPAddress>(nameof(EndIPAddress), new string[] { "endIpAddress" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FirewallRuleProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

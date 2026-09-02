@@ -56,6 +56,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _accountAccess = DefineModelProperty<BatchEndpointAccessProfile>(nameof(AccountAccess), new string[] { "accountAccess" });
             _nodeManagementAccess = DefineModelProperty<BatchEndpointAccessProfile>(nameof(NodeManagementAccess), new string[] { "nodeManagementAccess" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchNetworkProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

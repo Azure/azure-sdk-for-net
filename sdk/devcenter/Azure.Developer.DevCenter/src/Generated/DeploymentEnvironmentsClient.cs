@@ -386,7 +386,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(projectName, userId, environmentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironmentAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
                 using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironmentAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

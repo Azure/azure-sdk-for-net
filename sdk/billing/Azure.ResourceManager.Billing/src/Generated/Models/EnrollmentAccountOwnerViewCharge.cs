@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct EnrollmentAccountOwnerViewCharge : IEquatable<EnrollmentAccountOwnerViewCharge>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Allowed. </summary>
+        private const string AllowedValue = "Allowed";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentAccountOwnerViewCharge"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnrollmentAccountOwnerViewCharge(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AllowedValue = "Allowed";
-        private const string DisabledValue = "Disabled";
-        private const string NotAllowedValue = "NotAllowed";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static EnrollmentAccountOwnerViewCharge Other { get; } = new EnrollmentAccountOwnerViewCharge(OtherValue);
+
         /// <summary> Allowed. </summary>
         public static EnrollmentAccountOwnerViewCharge Allowed { get; } = new EnrollmentAccountOwnerViewCharge(AllowedValue);
+
         /// <summary> Disabled. </summary>
         public static EnrollmentAccountOwnerViewCharge Disabled { get; } = new EnrollmentAccountOwnerViewCharge(DisabledValue);
+
         /// <summary> NotAllowed. </summary>
         public static EnrollmentAccountOwnerViewCharge NotAllowed { get; } = new EnrollmentAccountOwnerViewCharge(NotAllowedValue);
+
         /// <summary> Determines if two <see cref="EnrollmentAccountOwnerViewCharge"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnrollmentAccountOwnerViewCharge left, EnrollmentAccountOwnerViewCharge right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnrollmentAccountOwnerViewCharge"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnrollmentAccountOwnerViewCharge left, EnrollmentAccountOwnerViewCharge right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrollmentAccountOwnerViewCharge"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnrollmentAccountOwnerViewCharge"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnrollmentAccountOwnerViewCharge(string value) => new EnrollmentAccountOwnerViewCharge(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnrollmentAccountOwnerViewCharge"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnrollmentAccountOwnerViewCharge?(string value) => value == null ? null : new EnrollmentAccountOwnerViewCharge(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnrollmentAccountOwnerViewCharge other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnrollmentAccountOwnerViewCharge other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,19 +15,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningComputeInstanceState : IEquatable<MachineLearningComputeInstanceState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningComputeInstanceState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string CreateFailedValue = "CreateFailed";
         private const string DeletingValue = "Deleting";
         private const string RunningValue = "Running";
         private const string RestartingValue = "Restarting";
+        private const string ResizingValue = "Resizing";
         private const string JobRunningValue = "JobRunning";
         private const string SettingUpValue = "SettingUp";
         private const string SetupFailedValue = "SetupFailed";
@@ -38,53 +32,94 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UnknownValue = "Unknown";
         private const string UnusableValue = "Unusable";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningComputeInstanceState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static MachineLearningComputeInstanceState Creating { get; } = new MachineLearningComputeInstanceState(CreatingValue);
-        /// <summary> CreateFailed. </summary>
+
+        /// <summary> Gets the CreateFailed. </summary>
         public static MachineLearningComputeInstanceState CreateFailed { get; } = new MachineLearningComputeInstanceState(CreateFailedValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static MachineLearningComputeInstanceState Deleting { get; } = new MachineLearningComputeInstanceState(DeletingValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static MachineLearningComputeInstanceState Running { get; } = new MachineLearningComputeInstanceState(RunningValue);
-        /// <summary> Restarting. </summary>
+
+        /// <summary> Gets the Restarting. </summary>
         public static MachineLearningComputeInstanceState Restarting { get; } = new MachineLearningComputeInstanceState(RestartingValue);
-        /// <summary> JobRunning. </summary>
+
+        /// <summary> Gets the Resizing. </summary>
+        public static MachineLearningComputeInstanceState Resizing { get; } = new MachineLearningComputeInstanceState(ResizingValue);
+
+        /// <summary> Gets the JobRunning. </summary>
         public static MachineLearningComputeInstanceState JobRunning { get; } = new MachineLearningComputeInstanceState(JobRunningValue);
-        /// <summary> SettingUp. </summary>
+
+        /// <summary> Gets the SettingUp. </summary>
         public static MachineLearningComputeInstanceState SettingUp { get; } = new MachineLearningComputeInstanceState(SettingUpValue);
-        /// <summary> SetupFailed. </summary>
+
+        /// <summary> Gets the SetupFailed. </summary>
         public static MachineLearningComputeInstanceState SetupFailed { get; } = new MachineLearningComputeInstanceState(SetupFailedValue);
-        /// <summary> Starting. </summary>
+
+        /// <summary> Gets the Starting. </summary>
         public static MachineLearningComputeInstanceState Starting { get; } = new MachineLearningComputeInstanceState(StartingValue);
-        /// <summary> Stopped. </summary>
+
+        /// <summary> Gets the Stopped. </summary>
         public static MachineLearningComputeInstanceState Stopped { get; } = new MachineLearningComputeInstanceState(StoppedValue);
-        /// <summary> Stopping. </summary>
+
+        /// <summary> Gets the Stopping. </summary>
         public static MachineLearningComputeInstanceState Stopping { get; } = new MachineLearningComputeInstanceState(StoppingValue);
-        /// <summary> UserSettingUp. </summary>
+
+        /// <summary> Gets the UserSettingUp. </summary>
         public static MachineLearningComputeInstanceState UserSettingUp { get; } = new MachineLearningComputeInstanceState(UserSettingUpValue);
-        /// <summary> UserSetupFailed. </summary>
+
+        /// <summary> Gets the UserSetupFailed. </summary>
         public static MachineLearningComputeInstanceState UserSetupFailed { get; } = new MachineLearningComputeInstanceState(UserSetupFailedValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static MachineLearningComputeInstanceState Unknown { get; } = new MachineLearningComputeInstanceState(UnknownValue);
-        /// <summary> Unusable. </summary>
+
+        /// <summary> Gets the Unusable. </summary>
         public static MachineLearningComputeInstanceState Unusable { get; } = new MachineLearningComputeInstanceState(UnusableValue);
+
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningComputeInstanceState left, MachineLearningComputeInstanceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningComputeInstanceState left, MachineLearningComputeInstanceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningComputeInstanceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningComputeInstanceState(string value) => new MachineLearningComputeInstanceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningComputeInstanceState?(string value) => value == null ? null : new MachineLearningComputeInstanceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningComputeInstanceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningComputeInstanceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

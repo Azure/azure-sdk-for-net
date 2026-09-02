@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         MySqlFlexibleServerBackupAndExportResult IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MySqlFlexibleServerBackupAndExportResult result = MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         async ValueTask<MySqlFlexibleServerBackupAndExportResult> IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MySqlFlexibleServerBackupAndExportResult result = MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

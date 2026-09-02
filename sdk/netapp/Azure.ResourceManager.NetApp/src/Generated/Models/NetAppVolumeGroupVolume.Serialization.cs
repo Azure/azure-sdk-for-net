@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable, IJsonModel<NetAppVolumeGroupVolume>
+    /// <summary> Volume resource. </summary>
+    public partial class NetAppVolumeGroupVolume : IJsonModel<NetAppVolumeGroupVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/> for deserialization. </summary>
+        internal NetAppVolumeGroupVolume()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppVolumeGroupVolume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppVolumeGroupVolume>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeGroupVolume IPersistableModel<NetAppVolumeGroupVolume>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppVolumeGroupVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppVolumeGroupVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -56,6 +102,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -64,272 +115,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsRestoring))
-            {
-                writer.WritePropertyName("isRestoring"u8);
-                writer.WriteBooleanValue(IsRestoring.Value);
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FileSystemId))
-            {
-                writer.WritePropertyName("fileSystemId"u8);
-                writer.WriteStringValue(FileSystemId.Value);
-            }
-            writer.WritePropertyName("creationToken"u8);
-            writer.WriteStringValue(CreationToken);
-            if (Optional.IsDefined(ServiceLevel))
-            {
-                writer.WritePropertyName("serviceLevel"u8);
-                writer.WriteStringValue(ServiceLevel.Value.ToString());
-            }
-            writer.WritePropertyName("usageThreshold"u8);
-            writer.WriteNumberValue(UsageThreshold);
-            if (Optional.IsDefined(ExportPolicy))
-            {
-                writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy, options);
-            }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
-            {
-                writer.WritePropertyName("protocolTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProtocolTypes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (Optional.IsDefined(SnapshotId))
-            {
-                if (SnapshotId != null)
-                {
-                    writer.WritePropertyName("snapshotId"u8);
-                    writer.WriteStringValue(SnapshotId);
-                }
-                else
-                {
-                    writer.WriteNull("snapshotId");
-                }
-            }
-            if (Optional.IsDefined(DeleteBaseSnapshot))
-            {
-                writer.WritePropertyName("deleteBaseSnapshot"u8);
-                writer.WriteBooleanValue(DeleteBaseSnapshot.Value);
-            }
-            if (Optional.IsDefined(BackupId))
-            {
-                if (BackupId != null)
-                {
-                    writer.WritePropertyName("backupId"u8);
-                    writer.WriteStringValue(BackupId);
-                }
-                else
-                {
-                    writer.WriteNull("backupId");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(BaremetalTenantId))
-            {
-                writer.WritePropertyName("baremetalTenantId"u8);
-                writer.WriteStringValue(BaremetalTenantId);
-            }
-            writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
-            if (Optional.IsDefined(NetworkFeatures))
-            {
-                writer.WritePropertyName("networkFeatures"u8);
-                writer.WriteStringValue(NetworkFeatures.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(EffectiveNetworkFeatures))
-            {
-                writer.WritePropertyName("effectiveNetworkFeatures"u8);
-                writer.WriteStringValue(EffectiveNetworkFeatures.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(NetworkSiblingSetId))
-            {
-                writer.WritePropertyName("networkSiblingSetId"u8);
-                writer.WriteStringValue(NetworkSiblingSetId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StorageToNetworkProximity))
-            {
-                writer.WritePropertyName("storageToNetworkProximity"u8);
-                writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MountTargets))
-            {
-                writer.WritePropertyName("mountTargets"u8);
-                writer.WriteStartArray();
-                foreach (var item in MountTargets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VolumeType))
-            {
-                writer.WritePropertyName("volumeType"u8);
-                writer.WriteStringValue(VolumeType);
-            }
-            if (Optional.IsDefined(DataProtection))
-            {
-                writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection, options);
-            }
-            if (Optional.IsDefined(AcceptGrowCapacityPoolForShortTermCloneSplit))
-            {
-                writer.WritePropertyName("acceptGrowCapacityPoolForShortTermCloneSplit"u8);
-                writer.WriteStringValue(AcceptGrowCapacityPoolForShortTermCloneSplit.Value.ToString());
-            }
-            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
-            {
-                writer.WritePropertyName("snapshotDirectoryVisible"u8);
-                writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
-            }
-            if (Optional.IsDefined(IsKerberosEnabled))
-            {
-                writer.WritePropertyName("kerberosEnabled"u8);
-                writer.WriteBooleanValue(IsKerberosEnabled.Value);
-            }
-            if (Optional.IsDefined(SecurityStyle))
-            {
-                writer.WritePropertyName("securityStyle"u8);
-                writer.WriteStringValue(SecurityStyle.Value.ToString());
-            }
-            if (Optional.IsDefined(IsSmbEncryptionEnabled))
-            {
-                writer.WritePropertyName("smbEncryption"u8);
-                writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
-            }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
-            {
-                if (SmbAccessBasedEnumeration != null)
-                {
-                    writer.WritePropertyName("smbAccessBasedEnumeration"u8);
-                    writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("smbAccessBasedEnumeration");
-                }
-            }
-            if (Optional.IsDefined(SmbNonBrowsable))
-            {
-                writer.WritePropertyName("smbNonBrowsable"u8);
-                writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
-            }
-            if (Optional.IsDefined(IsSmbContinuouslyAvailable))
-            {
-                writer.WritePropertyName("smbContinuouslyAvailable"u8);
-                writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
-            }
-            if (Optional.IsDefined(ThroughputMibps))
-            {
-                if (ThroughputMibps != null)
-                {
-                    writer.WritePropertyName("throughputMibps"u8);
-                    writer.WriteNumberValue(ThroughputMibps.Value);
-                }
-                else
-                {
-                    writer.WriteNull("throughputMibps");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ActualThroughputMibps))
-            {
-                writer.WritePropertyName("actualThroughputMibps"u8);
-                writer.WriteNumberValue(ActualThroughputMibps.Value);
-            }
-            if (Optional.IsDefined(EncryptionKeySource))
-            {
-                writer.WritePropertyName("encryptionKeySource"u8);
-                writer.WriteStringValue(EncryptionKeySource.Value.ToString());
-            }
-            if (Optional.IsDefined(KeyVaultPrivateEndpointResourceId))
-            {
-                writer.WritePropertyName("keyVaultPrivateEndpointResourceId"u8);
-                writer.WriteStringValue(KeyVaultPrivateEndpointResourceId);
-            }
-            if (Optional.IsDefined(IsLdapEnabled))
-            {
-                writer.WritePropertyName("ldapEnabled"u8);
-                writer.WriteBooleanValue(IsLdapEnabled.Value);
-            }
-            if (Optional.IsDefined(LdapServerType))
-            {
-                writer.WritePropertyName("ldapServerType"u8);
-                writer.WriteStringValue(LdapServerType.Value.ToString());
-            }
-            if (Optional.IsDefined(IsCoolAccessEnabled))
-            {
-                writer.WritePropertyName("coolAccess"u8);
-                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
-            }
-            if (Optional.IsDefined(CoolnessPeriod))
-            {
-                writer.WritePropertyName("coolnessPeriod"u8);
-                writer.WriteNumberValue(CoolnessPeriod.Value);
-            }
-            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
-            {
-                writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
-                writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(CoolAccessTieringPolicy))
-            {
-                writer.WritePropertyName("coolAccessTieringPolicy"u8);
-                writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(UnixPermissions))
-            {
-                if (UnixPermissions != null)
-                {
-                    writer.WritePropertyName("unixPermissions"u8);
-                    writer.WriteStringValue(UnixPermissions);
-                }
-                else
-                {
-                    writer.WriteNull("unixPermissions");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(CloneProgress))
-            {
-                if (CloneProgress != null)
-                {
-                    writer.WritePropertyName("cloneProgress"u8);
-                    writer.WriteNumberValue(CloneProgress.Value);
-                }
-                else
-                {
-                    writer.WriteNull("cloneProgress");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(FileAccessLogs))
-            {
-                writer.WritePropertyName("fileAccessLogs"u8);
-                writer.WriteStringValue(FileAccessLogs.Value.ToString());
-            }
-            if (Optional.IsDefined(AvsDataStore))
-            {
-                writer.WritePropertyName("avsDataStore"u8);
-                writer.WriteStringValue(AvsDataStore.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataStoreResourceId))
-            {
-                writer.WritePropertyName("dataStoreResourceId"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataStoreResourceId)
+                foreach (string item in Zones)
                 {
                     if (item == null)
                     {
@@ -340,137 +126,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDefaultQuotaEnabled))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("isDefaultQuotaEnabled"u8);
-                writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
-            }
-            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
-            {
-                writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
-                writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
-            }
-            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
-            {
-                writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
-                writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfFiles))
-            {
-                writer.WritePropertyName("maximumNumberOfFiles"u8);
-                writer.WriteNumberValue(MaximumNumberOfFiles.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VolumeGroupName))
-            {
-                writer.WritePropertyName("volumeGroupName"u8);
-                writer.WriteStringValue(VolumeGroupName);
-            }
-            if (Optional.IsDefined(CapacityPoolResourceId))
-            {
-                writer.WritePropertyName("capacityPoolResourceId"u8);
-                writer.WriteStringValue(CapacityPoolResourceId);
-            }
-            if (Optional.IsDefined(ProximityPlacementGroupId))
-            {
-                writer.WritePropertyName("proximityPlacementGroup"u8);
-                writer.WriteStringValue(ProximityPlacementGroupId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(T2Network))
-            {
-                writer.WritePropertyName("t2Network"u8);
-                writer.WriteStringValue(T2Network);
-            }
-            if (Optional.IsDefined(VolumeSpecName))
-            {
-                writer.WritePropertyName("volumeSpecName"u8);
-                writer.WriteStringValue(VolumeSpecName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsEncrypted))
-            {
-                writer.WritePropertyName("encrypted"u8);
-                writer.WriteBooleanValue(IsEncrypted.Value);
-            }
-            if (Optional.IsCollectionDefined(PlacementRules))
-            {
-                writer.WritePropertyName("placementRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in PlacementRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EnableSubvolumes))
-            {
-                writer.WritePropertyName("enableSubvolumes"u8);
-                writer.WriteStringValue(EnableSubvolumes.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone))
-            {
-                if (ProvisionedAvailabilityZone != null)
-                {
-                    writer.WritePropertyName("provisionedAvailabilityZone"u8);
-                    writer.WriteStringValue(ProvisionedAvailabilityZone);
-                }
-                else
-                {
-                    writer.WriteNull("provisionedAvailabilityZone");
-                }
-            }
-            if (Optional.IsDefined(IsLargeVolume))
-            {
-                writer.WritePropertyName("isLargeVolume"u8);
-                writer.WriteBooleanValue(IsLargeVolume.Value);
-            }
-            if (Optional.IsDefined(LargeVolumeType))
-            {
-                writer.WritePropertyName("largeVolumeType"u8);
-                writer.WriteStringValue(LargeVolumeType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(OriginatingResourceId))
-            {
-                if (OriginatingResourceId != null)
-                {
-                    writer.WritePropertyName("originatingResourceId"u8);
-                    writer.WriteStringValue(OriginatingResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("originatingResourceId");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
-            {
-                if (InheritedSizeInBytes != null)
-                {
-                    writer.WritePropertyName("inheritedSizeInBytes"u8);
-                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("inheritedSizeInBytes");
-                }
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language.Value.ToString());
-            }
-            if (Optional.IsDefined(BreakthroughMode))
-            {
-                writer.WritePropertyName("breakthroughMode"u8);
-                writer.WriteStringValue(BreakthroughMode.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -479,824 +145,123 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        NetAppVolumeGroupVolume IJsonModel<NetAppVolumeGroupVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeGroupVolume IJsonModel<NetAppVolumeGroupVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppVolumeGroupVolume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
         }
 
-        internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
-            bool? isRestoring = default;
-            Guid? fileSystemId = default;
-            string creationToken = default;
-            NetAppFileServiceLevel? serviceLevel = default;
-            long usageThreshold = default;
-            VolumePropertiesExportPolicy exportPolicy = default;
-            IList<string> protocolTypes = default;
-            string provisioningState = default;
-            string snapshotId = default;
-            bool? deleteBaseSnapshot = default;
-            string backupId = default;
-            string baremetalTenantId = default;
-            ResourceIdentifier subnetId = default;
-            NetAppNetworkFeature? networkFeatures = default;
-            NetAppNetworkFeature? effectiveNetworkFeatures = default;
-            Guid? networkSiblingSetId = default;
-            NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default;
-            IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
-            string volumeType = default;
-            NetAppVolumeDataProtection dataProtection = default;
-            AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default;
-            bool? snapshotDirectoryVisible = default;
-            bool? kerberosEnabled = default;
-            NetAppVolumeSecurityStyle? securityStyle = default;
-            bool? smbEncryption = default;
-            SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
-            SmbNonBrowsable? smbNonBrowsable = default;
-            bool? smbContinuouslyAvailable = default;
-            float? throughputMibps = default;
-            float? actualThroughputMibps = default;
-            NetAppEncryptionKeySource? encryptionKeySource = default;
-            ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
-            bool? ldapEnabled = default;
-            NetAppLdapServerType? ldapServerType = default;
-            bool? coolAccess = default;
-            int? coolnessPeriod = default;
-            CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
-            CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
-            string unixPermissions = default;
-            int? cloneProgress = default;
-            NetAppFileAccessLog? fileAccessLogs = default;
-            NetAppAvsDataStore? avsDataStore = default;
-            IReadOnlyList<ResourceIdentifier> dataStoreResourceId = default;
-            bool? isDefaultQuotaEnabled = default;
-            long? defaultUserQuotaInKiBs = default;
-            long? defaultGroupQuotaInKiBs = default;
-            long? maximumNumberOfFiles = default;
-            string volumeGroupName = default;
-            ResourceIdentifier capacityPoolResourceId = default;
-            ResourceIdentifier proximityPlacementGroup = default;
-            string t2Network = default;
-            string volumeSpecName = default;
-            bool? encrypted = default;
-            IList<NetAppVolumePlacementRule> placementRules = default;
-            EnableNetAppSubvolume? enableSubvolumes = default;
-            string provisionedAvailabilityZone = default;
-            bool? isLargeVolume = default;
-            NetAppLargeVolumeType? largeVolumeType = default;
-            ResourceIdentifier originatingResourceId = default;
-            long? inheritedSizeInBytes = default;
-            NetAppVolumeLanguage? language = default;
-            NetAppBreakthroughMode? breakthroughMode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            VolumeProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("zones"u8))
+                if (prop.NameEquals("zones"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("isRestoring"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isRestoring = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("fileSystemId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            fileSystemId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("creationToken"u8))
-                        {
-                            creationToken = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceLevel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceLevel = new NetAppFileServiceLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("usageThreshold"u8))
-                        {
-                            usageThreshold = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("exportPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("protocolTypes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            protocolTypes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("snapshotId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                snapshotId = null;
-                                continue;
-                            }
-                            snapshotId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deleteBaseSnapshot"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deleteBaseSnapshot = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("backupId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                backupId = null;
-                                continue;
-                            }
-                            backupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("baremetalTenantId"u8))
-                        {
-                            baremetalTenantId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetId"u8))
-                        {
-                            subnetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("networkFeatures"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("effectiveNetworkFeatures"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            effectiveNetworkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("networkSiblingSetId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkSiblingSetId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageToNetworkProximity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageToNetworkProximity = new NetAppVolumeStorageToNetworkProximity(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("mountTargets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetAppVolumeMountTarget> array = new List<NetAppVolumeMountTarget>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item, options));
-                            }
-                            mountTargets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("volumeType"u8))
-                        {
-                            volumeType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataProtection"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("acceptGrowCapacityPoolForShortTermCloneSplit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            acceptGrowCapacityPoolForShortTermCloneSplit = new AcceptGrowCapacityPoolForShortTermCloneSplit(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("snapshotDirectoryVisible"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            snapshotDirectoryVisible = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("kerberosEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            kerberosEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("securityStyle"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            securityStyle = new NetAppVolumeSecurityStyle(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("smbEncryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            smbEncryption = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("smbAccessBasedEnumeration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                smbAccessBasedEnumeration = null;
-                                continue;
-                            }
-                            smbAccessBasedEnumeration = new SmbAccessBasedEnumeration(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("smbNonBrowsable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            smbNonBrowsable = new SmbNonBrowsable(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("smbContinuouslyAvailable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            smbContinuouslyAvailable = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("throughputMibps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                throughputMibps = null;
-                                continue;
-                            }
-                            throughputMibps = property0.Value.GetSingle();
-                            continue;
-                        }
-                        if (property0.NameEquals("actualThroughputMibps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            actualThroughputMibps = property0.Value.GetSingle();
-                            continue;
-                        }
-                        if (property0.NameEquals("encryptionKeySource"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptionKeySource = new NetAppEncryptionKeySource(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaultPrivateEndpointResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyVaultPrivateEndpointResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ldapEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ldapEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("ldapServerType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ldapServerType = new NetAppLdapServerType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("coolAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            coolAccess = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("coolnessPeriod"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            coolnessPeriod = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("coolAccessRetrievalPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            coolAccessRetrievalPolicy = new CoolAccessRetrievalPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("coolAccessTieringPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            coolAccessTieringPolicy = new CoolAccessTieringPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("unixPermissions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                unixPermissions = null;
-                                continue;
-                            }
-                            unixPermissions = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cloneProgress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cloneProgress = null;
-                                continue;
-                            }
-                            cloneProgress = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("fileAccessLogs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            fileAccessLogs = new NetAppFileAccessLog(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("avsDataStore"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            avsDataStore = new NetAppAvsDataStore(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataStoreResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            dataStoreResourceId = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("isDefaultQuotaEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isDefaultQuotaEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultUserQuotaInKiBs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultUserQuotaInKiBs = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultGroupQuotaInKiBs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultGroupQuotaInKiBs = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("maximumNumberOfFiles"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maximumNumberOfFiles = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("volumeGroupName"u8))
-                        {
-                            volumeGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("capacityPoolResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            capacityPoolResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("proximityPlacementGroup"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            proximityPlacementGroup = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("t2Network"u8))
-                        {
-                            t2Network = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("volumeSpecName"u8))
-                        {
-                            volumeSpecName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("encrypted"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encrypted = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("placementRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
-                            }
-                            placementRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableSubvolumes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableSubvolumes = new EnableNetAppSubvolume(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisionedAvailabilityZone"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                provisionedAvailabilityZone = null;
-                                continue;
-                            }
-                            provisionedAvailabilityZone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isLargeVolume"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isLargeVolume = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("largeVolumeType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            largeVolumeType = new NetAppLargeVolumeType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("originatingResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                originatingResourceId = null;
-                                continue;
-                            }
-                            originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("inheritedSizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                inheritedSizeInBytes = null;
-                                continue;
-                            }
-                            inheritedSizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("language"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            language = new NetAppVolumeLanguage(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("breakthroughMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            breakthroughMode = new NetAppBreakthroughMode(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = VolumeProperties.DeserializeVolumeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppVolumeGroupVolume(
                 id,
                 name,
-                type,
+                resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 zones ?? new ChangeTrackingList<string>(),
-                fileSystemId,
-                creationToken,
-                serviceLevel,
-                usageThreshold,
-                exportPolicy,
-                protocolTypes ?? new ChangeTrackingList<string>(),
-                provisioningState,
-                snapshotId,
-                deleteBaseSnapshot,
-                backupId,
-                baremetalTenantId,
-                subnetId,
-                networkFeatures,
-                effectiveNetworkFeatures,
-                networkSiblingSetId,
-                storageToNetworkProximity,
-                mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
-                volumeType,
-                dataProtection,
-                acceptGrowCapacityPoolForShortTermCloneSplit,
-                isRestoring,
-                snapshotDirectoryVisible,
-                kerberosEnabled,
-                securityStyle,
-                smbEncryption,
-                smbAccessBasedEnumeration,
-                smbNonBrowsable,
-                smbContinuouslyAvailable,
-                throughputMibps,
-                actualThroughputMibps,
-                encryptionKeySource,
-                keyVaultPrivateEndpointResourceId,
-                ldapEnabled,
-                ldapServerType,
-                coolAccess,
-                coolnessPeriod,
-                coolAccessRetrievalPolicy,
-                coolAccessTieringPolicy,
-                unixPermissions,
-                cloneProgress,
-                fileAccessLogs,
-                avsDataStore,
-                dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
-                isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs,
-                maximumNumberOfFiles,
-                volumeGroupName,
-                capacityPoolResourceId,
-                proximityPlacementGroup,
-                t2Network,
-                volumeSpecName,
-                encrypted,
-                placementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
-                enableSubvolumes,
-                provisionedAvailabilityZone,
-                isLargeVolume,
-                largeVolumeType,
-                originatingResourceId,
-                inheritedSizeInBytes,
-                language,
-                breakthroughMode,
-                serializedAdditionalRawData);
+                properties,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetAppVolumeGroupVolume>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetAppVolumeGroupVolume IPersistableModel<NetAppVolumeGroupVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetAppVolumeGroupVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

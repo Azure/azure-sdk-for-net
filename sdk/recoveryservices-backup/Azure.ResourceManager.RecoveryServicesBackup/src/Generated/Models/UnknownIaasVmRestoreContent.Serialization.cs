@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVmRestoreContent IPersistableModel<IaasVmRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownIaasVmRestoreContent)PersistableModelCreateCore(data, options);
+        IaasVmRestoreContent IPersistableModel<IaasVmRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (IaasVmRestoreContent)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IaasVmRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVmRestoreContent IJsonModel<IaasVmRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownIaasVmRestoreContent)JsonModelCreateCore(ref reader, options);
+        IaasVmRestoreContent IJsonModel<IaasVmRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (IaasVmRestoreContent)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupIdentityInfo identityInfo = default;
             IdentityBasedRestoreDetails identityBasedRestoreDetails = default;
             ExtendedLocation extendedLocation = default;
-            SecuredVMDetails securedVMDetails = default;
+            SecuredVmDetails securedVmDetails = default;
             BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -363,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    securedVMDetails = SecuredVMDetails.DeserializeSecuredVMDetails(prop.Value, options);
+                    securedVmDetails = SecuredVmDetails.DeserializeSecuredVmDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("targetDiskNetworkAccessSettings"u8))
@@ -405,7 +411,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 identityInfo,
                 identityBasedRestoreDetails,
                 extendedLocation,
-                securedVMDetails,
+                securedVmDetails,
                 targetDiskNetworkAccessSettings);
         }
     }

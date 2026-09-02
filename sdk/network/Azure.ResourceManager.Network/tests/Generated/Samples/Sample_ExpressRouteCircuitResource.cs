@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCircuitResource expressRouteCircuit = client.GetExpressRouteCircuitResource(expressRouteCircuitResourceId);
 
             // invoke the operation
-            await expressRouteCircuit.DeleteAsync(WaitUntil.Completed);
+            await expressRouteCircuit.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

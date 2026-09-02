@@ -12,7 +12,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol conformance tests for session ID resolution (B39).
-/// Priority: request payload <c>agent_session_id</c> → <c>FOUNDRY_AGENT_SESSION_ID</c> env var → generated UUID.
+/// Priority: request payload <c>agent_session_id</c> → <c>FOUNDRY_AGENT_SESSION_ID</c> env var → deterministic derivation.
 /// The resolved session ID MUST be auto-stamped on the <c>ResponseObject.AgentSessionId</c>.
 /// </summary>
 public class SessionIdResolutionTests : ProtocolTestBase
@@ -123,7 +123,7 @@ public class SessionIdResolutionTests : ProtocolTestBase
         }
     }
 
-    // ── Tier 3: Fallback to generated UUID ──
+    // ── Tier 3: Fallback to deterministic derivation / random hex ──
 
     [Test]
     public async Task POST_Default_NoPayloadOrEnv_GeneratesSessionId()
@@ -141,9 +141,10 @@ public class SessionIdResolutionTests : ProtocolTestBase
             var sessionId = doc.RootElement.GetProperty("agent_session_id").GetString();
             Assert.That(sessionId, Is.Not.Null.And.Not.Empty);
 
-            // Verify it's a valid GUID
-            Assert.That(Guid.TryParse(sessionId, out _), Is.True,
-                $"Expected a GUID-format session ID, got: {sessionId}");
+            // Session ID should be 63-char lowercase hex (SHA-256 derived or random)
+            Assert.That(sessionId, Has.Length.EqualTo(63));
+            Assert.That(sessionId, Does.Match("^[0-9a-f]+$"),
+                $"Expected 63-char lowercase hex session ID, got: {sessionId}");
         }
         finally
         {
@@ -198,7 +199,8 @@ public class SessionIdResolutionTests : ProtocolTestBase
             var sessionId = doc.RootElement.GetProperty("response").GetProperty("agent_session_id").GetString();
 
             Assert.That(sessionId, Is.Not.Null.And.Not.Empty);
-            Assert.That(Guid.TryParse(sessionId, out _), Is.True);
+            Assert.That(sessionId, Has.Length.EqualTo(63));
+            Assert.That(sessionId, Does.Match("^[0-9a-f]+$"));
         }
         finally
         {

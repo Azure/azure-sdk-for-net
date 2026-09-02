@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CodelessConnectorPollingResponseProperties : IUtf8JsonSerializable, IJsonModel<CodelessConnectorPollingResponseProperties>
+    /// <summary> Describes the response from the external server. </summary>
+    public partial class CodelessConnectorPollingResponseProperties : IJsonModel<CodelessConnectorPollingResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodelessConnectorPollingResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingResponseProperties"/> for deserialization. </summary>
+        internal CodelessConnectorPollingResponseProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingResponseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCodelessConnectorPollingResponseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CodelessConnectorPollingResponseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingResponseProperties IPersistableModel<CodelessConnectorPollingResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CodelessConnectorPollingResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CodelessConnectorPollingResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +74,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("eventsJsonPaths"u8);
             writer.WriteStartArray();
-            foreach (var item in EventsJsonPaths)
+            foreach (string item in EventsJsonPaths)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -58,15 +106,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("isGzipCompressed"u8);
                 writer.WriteBooleanValue(IsGzipCompressed.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -75,22 +123,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        CodelessConnectorPollingResponseProperties IJsonModel<CodelessConnectorPollingResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingResponseProperties IJsonModel<CodelessConnectorPollingResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingResponseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCodelessConnectorPollingResponseProperties(document.RootElement, options);
         }
 
-        internal static CodelessConnectorPollingResponseProperties DeserializeCodelessConnectorPollingResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CodelessConnectorPollingResponseProperties DeserializeCodelessConnectorPollingResponseProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,192 +152,51 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string successStatusJsonPath = default;
             string successStatusValue = default;
             bool? isGzipCompressed = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("eventsJsonPaths"u8))
+                if (prop.NameEquals("eventsJsonPaths"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     eventsJsonPaths = array;
                     continue;
                 }
-                if (property.NameEquals("successStatusJsonPath"u8))
+                if (prop.NameEquals("successStatusJsonPath"u8))
                 {
-                    successStatusJsonPath = property.Value.GetString();
+                    successStatusJsonPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("successStatusValue"u8))
+                if (prop.NameEquals("successStatusValue"u8))
                 {
-                    successStatusValue = property.Value.GetString();
+                    successStatusValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isGzipCompressed"u8))
+                if (prop.NameEquals("isGzipCompressed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isGzipCompressed = property.Value.GetBoolean();
+                    isGzipCompressed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CodelessConnectorPollingResponseProperties(eventsJsonPaths, successStatusJsonPath, successStatusValue, isGzipCompressed, serializedAdditionalRawData);
+            return new CodelessConnectorPollingResponseProperties(eventsJsonPaths, successStatusJsonPath, successStatusValue, isGzipCompressed, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventsJsonPaths), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eventsJsonPaths: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EventsJsonPaths))
-                {
-                    if (EventsJsonPaths.Any())
-                    {
-                        builder.Append("  eventsJsonPaths: ");
-                        builder.AppendLine("[");
-                        foreach (var item in EventsJsonPaths)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusJsonPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  successStatusJsonPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SuccessStatusJsonPath))
-                {
-                    builder.Append("  successStatusJsonPath: ");
-                    if (SuccessStatusJsonPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SuccessStatusJsonPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SuccessStatusJsonPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusValue), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  successStatusValue: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SuccessStatusValue))
-                {
-                    builder.Append("  successStatusValue: ");
-                    if (SuccessStatusValue.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SuccessStatusValue}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SuccessStatusValue}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGzipCompressed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isGzipCompressed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsGzipCompressed))
-                {
-                    builder.Append("  isGzipCompressed: ");
-                    var boolValue = IsGzipCompressed.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CodelessConnectorPollingResponseProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CodelessConnectorPollingResponseProperties IPersistableModel<CodelessConnectorPollingResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCodelessConnectorPollingResponseProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingResponseProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CodelessConnectorPollingResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -54,7 +54,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://mock-backend"),
                         Transport = new HttpClientPipelineTransport(mockBackend),
@@ -107,7 +107,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://mock-backend"),
                         Transport = new HttpClientPipelineTransport(mockBackend),
@@ -156,7 +156,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://mock-backend"),
                         Transport = new HttpClientPipelineTransport(mockBackend),
@@ -245,8 +245,8 @@ public class OpenAIProxyEndToEndTests
             }
 
             var resultText = fullText.ToString();
-            yield return text.EmitDone(resultText);
-            yield return message.EmitContentDone(text);
+            yield return text.EmitTextDone(resultText);
+            yield return text.EmitDone();
             yield return message.EmitDone();
             yield return stream.EmitCompleted();
         }
@@ -292,8 +292,8 @@ public class OpenAIProxyEndToEndTests
 
             var text = message.AddTextContent();
             yield return text.EmitAdded();
-            yield return text.EmitDone(outputText ?? string.Empty);
-            yield return message.EmitContentDone(text);
+            yield return text.EmitTextDone(outputText ?? string.Empty);
+            yield return text.EmitDone();
             yield return message.EmitDone();
 
             yield return stream.EmitCompleted();
@@ -670,7 +670,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://server-b"),
                         Transport = new HttpClientPipelineTransport(serverBClient),
@@ -685,7 +685,7 @@ public class OpenAIProxyEndToEndTests
         var httpClient = factory.CreateClient();
         return new ResponsesClient(
             new ApiKeyCredential("test-key"),
-            new OpenAIClientOptions
+            new ResponsesClientOptions
             {
                 Endpoint = new Uri("http://localhost"),
                 Transport = new HttpClientPipelineTransport(httpClient),
@@ -805,7 +805,6 @@ public class OpenAIProxyEndToEndTests
         yield return sp.EmitTextDelta(" the answer...");
         yield return sp.EmitTextDone("Thinking about the answer...");
         yield return sp.EmitDone();
-        reasoning.EmitSummaryPartDone(sp);
         yield return reasoning.EmitDone();
 
         // 2. Function call
@@ -823,8 +822,8 @@ public class OpenAIProxyEndToEndTests
         yield return tc.EmitAdded();
         yield return tc.EmitDelta("The answer");
         yield return tc.EmitDelta(" is 42.");
-        yield return tc.EmitDone("The answer is 42.");
-        yield return msg.EmitContentDone(tc);
+        yield return tc.EmitTextDone("The answer is 42.");
+        yield return tc.EmitDone();
         yield return msg.EmitDone();
 
         yield return stream.EmitCompleted();
@@ -856,8 +855,8 @@ public class OpenAIProxyEndToEndTests
         yield return msg.EmitAdded();
         var tc = msg.AddTextContent();
         yield return tc.EmitAdded();
-        yield return tc.EmitDone(text);
-        yield return msg.EmitContentDone(tc);
+        yield return tc.EmitTextDone(text);
+        yield return tc.EmitDone();
         yield return msg.EmitDone();
         yield return stream.EmitCompleted();
         await Task.CompletedTask;

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -18,10 +18,68 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkGatewayData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayData>
+    /// <summary> A common class for general resource information. </summary>
+    public partial class VirtualNetworkGatewayData : NetworkTrackedResourceData, IJsonModel<VirtualNetworkGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkGatewayData IPersistableModel<VirtualNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualNetworkGatewayData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="virtualNetworkGatewayData"> The <see cref="VirtualNetworkGatewayData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualNetworkGatewayData virtualNetworkGatewayData)
+        {
+            if (virtualNetworkGatewayData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(virtualNetworkGatewayData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualNetworkGatewayData"/> from. </param>
+        internal static VirtualNetworkGatewayData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVirtualNetworkGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -33,13 +91,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
@@ -53,1277 +112,144 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AutoScaleConfiguration))
-            {
-                writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(IPConfigurations))
-            {
-                writer.WritePropertyName("ipConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(GatewayType))
-            {
-                writer.WritePropertyName("gatewayType"u8);
-                writer.WriteStringValue(GatewayType.Value.ToString());
-            }
-            if (Optional.IsDefined(VpnType))
-            {
-                writer.WritePropertyName("vpnType"u8);
-                writer.WriteStringValue(VpnType.Value.ToString());
-            }
-            if (Optional.IsDefined(VpnGatewayGeneration))
-            {
-                writer.WritePropertyName("vpnGatewayGeneration"u8);
-                writer.WriteStringValue(VpnGatewayGeneration.Value.ToString());
-            }
-            if (Optional.IsDefined(EnableBgp))
-            {
-                writer.WritePropertyName("enableBgp"u8);
-                writer.WriteBooleanValue(EnableBgp.Value);
-            }
-            if (Optional.IsDefined(EnablePrivateIPAddress))
-            {
-                writer.WritePropertyName("enablePrivateIpAddress"u8);
-                writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
-            }
-            if (Optional.IsDefined(VirtualNetworkGatewayMigrationStatus))
-            {
-                writer.WritePropertyName("virtualNetworkGatewayMigrationStatus"u8);
-                writer.WriteObjectValue(VirtualNetworkGatewayMigrationStatus, options);
-            }
-            if (Optional.IsDefined(Active))
-            {
-                writer.WritePropertyName("activeActive"u8);
-                writer.WriteBooleanValue(Active.Value);
-            }
-            if (Optional.IsDefined(EnableHighBandwidthVpnGateway))
-            {
-                writer.WritePropertyName("enableHighBandwidthVpnGateway"u8);
-                writer.WriteBooleanValue(EnableHighBandwidthVpnGateway.Value);
-            }
-            if (Optional.IsDefined(DisableIPSecReplayProtection))
-            {
-                writer.WritePropertyName("disableIPSecReplayProtection"u8);
-                writer.WriteBooleanValue(DisableIPSecReplayProtection.Value);
-            }
-            if (Optional.IsDefined(GatewayDefaultSite))
-            {
-                writer.WritePropertyName("gatewayDefaultSite"u8);
-                ((IJsonModel<WritableSubResource>)GatewayDefaultSite).Write(writer, options);
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
-            if (Optional.IsDefined(VpnClientConfiguration))
-            {
-                writer.WritePropertyName("vpnClientConfiguration"u8);
-                writer.WriteObjectValue(VpnClientConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
-            {
-                writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in VirtualNetworkGatewayPolicyGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(BgpSettings))
-            {
-                writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings, options);
-            }
-            if (Optional.IsDefined(CustomRoutes))
-            {
-                writer.WritePropertyName("customRoutes"u8);
-                writer.WriteObjectValue(CustomRoutes, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(EnableDnsForwarding))
-            {
-                writer.WritePropertyName("enableDnsForwarding"u8);
-                writer.WriteBooleanValue(EnableDnsForwarding.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InboundDnsForwardingEndpoint))
-            {
-                writer.WritePropertyName("inboundDnsForwardingEndpoint"u8);
-                writer.WriteStringValue(InboundDnsForwardingEndpoint);
-            }
-            if (Optional.IsDefined(VNetExtendedLocationResourceId))
-            {
-                writer.WritePropertyName("vNetExtendedLocationResourceId"u8);
-                writer.WriteStringValue(VNetExtendedLocationResourceId);
-            }
-            if (Optional.IsCollectionDefined(NatRules))
-            {
-                writer.WritePropertyName("natRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in NatRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
-            {
-                writer.WritePropertyName("enableBgpRouteTranslationForNat"u8);
-                writer.WriteBooleanValue(EnableBgpRouteTranslationForNat.Value);
-            }
-            if (Optional.IsDefined(AllowVirtualWanTraffic))
-            {
-                writer.WritePropertyName("allowVirtualWanTraffic"u8);
-                writer.WriteBooleanValue(AllowVirtualWanTraffic.Value);
-            }
-            if (Optional.IsDefined(AllowRemoteVnetTraffic))
-            {
-                writer.WritePropertyName("allowRemoteVnetTraffic"u8);
-                writer.WriteBooleanValue(AllowRemoteVnetTraffic.Value);
-            }
-            if (Optional.IsDefined(AdminState))
-            {
-                writer.WritePropertyName("adminState"u8);
-                writer.WriteStringValue(AdminState.Value.ToString());
-            }
-            if (Optional.IsDefined(ResiliencyModel))
-            {
-                writer.WritePropertyName("resiliencyModel"u8);
-                writer.WriteStringValue(ResiliencyModel.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        VirtualNetworkGatewayData IJsonModel<VirtualNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkGatewayData IJsonModel<VirtualNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualNetworkGatewayData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
         }
 
-        internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ExtendedLocation extendedLocation = default;
-            ETag? etag = default;
-            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string @type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration = default;
-            IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default;
-            VirtualNetworkGatewayType? gatewayType = default;
-            VpnType? vpnType = default;
-            VpnGatewayGeneration? vpnGatewayGeneration = default;
-            bool? enableBgp = default;
-            bool? enablePrivateIPAddress = default;
-            VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus = default;
-            bool? activeActive = default;
-            bool? enableHighBandwidthVpnGateway = default;
-            bool? disableIPSecReplayProtection = default;
-            WritableSubResource gatewayDefaultSite = default;
-            VirtualNetworkGatewaySku sku = default;
-            VpnClientConfiguration vpnClientConfiguration = default;
-            IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = default;
-            BgpSettings bgpSettings = default;
-            VirtualNetworkAddressSpace customRoutes = default;
-            Guid? resourceGuid = default;
-            NetworkProvisioningState? provisioningState = default;
-            bool? enableDnsForwarding = default;
-            string inboundDnsForwardingEndpoint = default;
-            ResourceIdentifier vNetExtendedLocationResourceId = default;
-            IList<VirtualNetworkGatewayNatRuleData> natRules = default;
-            bool? enableBgpRouteTranslationForNat = default;
-            bool? allowVirtualWanTraffic = default;
-            bool? allowRemoteVnetTraffic = default;
-            ExpressRouteGatewayAdminState? adminState = default;
-            ExpressRouteGatewayResiliencyModel? resiliencyModel = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VirtualNetworkGatewayPropertiesFormat properties = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? eTag = default;
+            ManagedServiceIdentity identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    properties = VirtualNetworkGatewayPropertiesFormat.DeserializeVirtualNetworkGatewayPropertiesFormat(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("autoScaleConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoScaleConfiguration = VirtualNetworkGatewayAutoScaleConfiguration.DeserializeVirtualNetworkGatewayAutoScaleConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("ipConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VirtualNetworkGatewayIPConfiguration> array = new List<VirtualNetworkGatewayIPConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item, options));
-                            }
-                            ipConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("gatewayType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            gatewayType = new VirtualNetworkGatewayType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vpnType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vpnType = new VpnType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vpnGatewayGeneration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vpnGatewayGeneration = new VpnGatewayGeneration(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enableBgp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBgp = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePrivateIpAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePrivateIPAddress = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetworkGatewayMigrationStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualNetworkGatewayMigrationStatus = VirtualNetworkGatewayMigrationStatus.DeserializeVirtualNetworkGatewayMigrationStatus(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("activeActive"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            activeActive = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableHighBandwidthVpnGateway"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableHighBandwidthVpnGateway = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("disableIPSecReplayProtection"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            disableIPSecReplayProtection = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("gatewayDefaultSite"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            gatewayDefaultSite = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("sku"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("vpnClientConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VirtualNetworkGatewayPolicyGroup> array = new List<VirtualNetworkGatewayPolicyGroup>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item, options));
-                            }
-                            virtualNetworkGatewayPolicyGroups = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("bgpSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("customRoutes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customRoutes = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enableDnsForwarding"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableDnsForwarding = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("inboundDnsForwardingEndpoint"u8))
-                        {
-                            inboundDnsForwardingEndpoint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vNetExtendedLocationResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vNetExtendedLocationResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("natRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VirtualNetworkGatewayNatRuleData> array = new List<VirtualNetworkGatewayNatRuleData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(item, options));
-                            }
-                            natRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableBgpRouteTranslationForNat"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBgpRouteTranslationForNat = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("allowVirtualWanTraffic"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowVirtualWanTraffic = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("allowRemoteVnetTraffic"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowRemoteVnetTraffic = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("adminState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            adminState = new ExpressRouteGatewayAdminState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("resiliencyModel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resiliencyModel = new ExpressRouteGatewayResiliencyModel(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkGatewayData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
+                properties,
                 extendedLocation,
-                etag,
-                identity,
-                autoScaleConfiguration,
-                ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(),
-                gatewayType,
-                vpnType,
-                vpnGatewayGeneration,
-                enableBgp,
-                enablePrivateIPAddress,
-                virtualNetworkGatewayMigrationStatus,
-                activeActive,
-                enableHighBandwidthVpnGateway,
-                disableIPSecReplayProtection,
-                gatewayDefaultSite,
-                sku,
-                vpnClientConfiguration,
-                virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>(),
-                bgpSettings,
-                customRoutes,
-                resourceGuid,
-                provisioningState,
-                enableDnsForwarding,
-                inboundDnsForwardingEndpoint,
-                vNetExtendedLocationResourceId,
-                natRules ?? new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>(),
-                enableBgpRouteTranslationForNat,
-                allowVirtualWanTraffic,
-                allowRemoteVnetTraffic,
-                adminState,
-                resiliencyModel);
+                eTag,
+                identity);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extendedLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtendedLocation))
-                {
-                    builder.Append("  extendedLocation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AutoScaleBounds", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    autoScaleConfiguration: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      autoScaleConfiguration: {");
-                builder.Append("        bounds: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoScaleConfiguration))
-                {
-                    builder.Append("    autoScaleConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AutoScaleConfiguration, options, 4, false, "    autoScaleConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPConfigurations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipConfigurations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IPConfigurations))
-                {
-                    if (IPConfigurations.Any())
-                    {
-                        builder.Append("    ipConfigurations: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IPConfigurations)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipConfigurations: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    gatewayType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GatewayType))
-                {
-                    builder.Append("    gatewayType: ");
-                    builder.AppendLine($"'{GatewayType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vpnType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VpnType))
-                {
-                    builder.Append("    vpnType: ");
-                    builder.AppendLine($"'{VpnType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnGatewayGeneration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vpnGatewayGeneration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VpnGatewayGeneration))
-                {
-                    builder.Append("    vpnGatewayGeneration: ");
-                    builder.AppendLine($"'{VpnGatewayGeneration.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBgp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableBgp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableBgp))
-                {
-                    builder.Append("    enableBgp: ");
-                    var boolValue = EnableBgp.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePrivateIPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enablePrivateIpAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnablePrivateIPAddress))
-                {
-                    builder.Append("    enablePrivateIpAddress: ");
-                    var boolValue = EnablePrivateIPAddress.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkGatewayMigrationStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualNetworkGatewayMigrationStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualNetworkGatewayMigrationStatus))
-                {
-                    builder.Append("    virtualNetworkGatewayMigrationStatus: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualNetworkGatewayMigrationStatus, options, 4, false, "    virtualNetworkGatewayMigrationStatus: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Active), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    activeActive: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Active))
-                {
-                    builder.Append("    activeActive: ");
-                    var boolValue = Active.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableHighBandwidthVpnGateway), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableHighBandwidthVpnGateway: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableHighBandwidthVpnGateway))
-                {
-                    builder.Append("    enableHighBandwidthVpnGateway: ");
-                    var boolValue = EnableHighBandwidthVpnGateway.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableIPSecReplayProtection), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    disableIPSecReplayProtection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisableIPSecReplayProtection))
-                {
-                    builder.Append("    disableIPSecReplayProtection: ");
-                    var boolValue = DisableIPSecReplayProtection.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("GatewayDefaultSiteId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    gatewayDefaultSite: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      gatewayDefaultSite: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(GatewayDefaultSite))
-                {
-                    builder.Append("    gatewayDefaultSite: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, GatewayDefaultSite, options, 4, false, "    gatewayDefaultSite: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sku: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sku))
-                {
-                    builder.Append("    sku: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 4, false, "    sku: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnClientConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vpnClientConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VpnClientConfiguration))
-                {
-                    builder.Append("    vpnClientConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VpnClientConfiguration, options, 4, false, "    vpnClientConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkGatewayPolicyGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualNetworkGatewayPolicyGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
-                {
-                    if (VirtualNetworkGatewayPolicyGroups.Any())
-                    {
-                        builder.Append("    virtualNetworkGatewayPolicyGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VirtualNetworkGatewayPolicyGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    virtualNetworkGatewayPolicyGroups: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BgpSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    bgpSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BgpSettings))
-                {
-                    builder.Append("    bgpSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BgpSettings, options, 4, false, "    bgpSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomRoutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customRoutes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomRoutes))
-                {
-                    builder.Append("    customRoutes: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomRoutes, options, 4, false, "    customRoutes: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceGuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGuid))
-                {
-                    builder.Append("    resourceGuid: ");
-                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableDnsForwarding), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableDnsForwarding: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableDnsForwarding))
-                {
-                    builder.Append("    enableDnsForwarding: ");
-                    var boolValue = EnableDnsForwarding.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InboundDnsForwardingEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    inboundDnsForwardingEndpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InboundDnsForwardingEndpoint))
-                {
-                    builder.Append("    inboundDnsForwardingEndpoint: ");
-                    if (InboundDnsForwardingEndpoint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InboundDnsForwardingEndpoint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InboundDnsForwardingEndpoint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VNetExtendedLocationResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vNetExtendedLocationResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VNetExtendedLocationResourceId))
-                {
-                    builder.Append("    vNetExtendedLocationResourceId: ");
-                    builder.AppendLine($"'{VNetExtendedLocationResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NatRules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    natRules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NatRules))
-                {
-                    if (NatRules.Any())
-                    {
-                        builder.Append("    natRules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NatRules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    natRules: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBgpRouteTranslationForNat), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableBgpRouteTranslationForNat: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
-                {
-                    builder.Append("    enableBgpRouteTranslationForNat: ");
-                    var boolValue = EnableBgpRouteTranslationForNat.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowVirtualWanTraffic), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    allowVirtualWanTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AllowVirtualWanTraffic))
-                {
-                    builder.Append("    allowVirtualWanTraffic: ");
-                    var boolValue = AllowVirtualWanTraffic.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowRemoteVnetTraffic), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    allowRemoteVnetTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AllowRemoteVnetTraffic))
-                {
-                    builder.Append("    allowRemoteVnetTraffic: ");
-                    var boolValue = AllowRemoteVnetTraffic.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    adminState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdminState))
-                {
-                    builder.Append("    adminState: ");
-                    builder.AppendLine($"'{AdminState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResiliencyModel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resiliencyModel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResiliencyModel))
-                {
-                    builder.Append("    resiliencyModel: ");
-                    builder.AppendLine($"'{ResiliencyModel.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualNetworkGatewayData IPersistableModel<VirtualNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

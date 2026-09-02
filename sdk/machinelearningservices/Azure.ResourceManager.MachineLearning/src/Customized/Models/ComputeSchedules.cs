@@ -6,11 +6,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("ComputeSchedules")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The list of schedules to be applied on the computes. </summary>
+    // Customized: keep ComputeSchedules as an internal helper used by compute compatibility members.
+    // The TypeSpec generator would surface this schema model directly, so the custom model preserves
+    // the previous SDK shape while still serializing the wire payload.
     internal partial class ComputeSchedules
     {
         /// <summary>

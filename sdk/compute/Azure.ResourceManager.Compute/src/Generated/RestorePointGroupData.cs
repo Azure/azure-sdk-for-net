@@ -13,88 +13,99 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary>
-    /// A class representing the RestorePointGroup data model.
-    /// Create or update Restore Point collection parameters.
-    /// </summary>
+    /// <summary> Create or update Restore Point collection parameters. </summary>
     public partial class RestorePointGroupData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public RestorePointGroupData(AzureLocation location) : base(location)
         {
-            RestorePoints = new ChangeTrackingList<RestorePointData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
-        /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
-        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
-        /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The restore point collection properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointCollectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Source = source;
-            ProvisioningState = provisioningState;
-            RestorePointGroupId = restorePointGroupId;
-            RestorePoints = restorePoints;
-            InstantAccess = instantAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/> for deserialization. </summary>
-        internal RestorePointGroupData()
-        {
-        }
+        /// <summary> The restore point collection properties. </summary>
+        internal RestorePointCollectionProperties Properties { get; set; }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-        public RestorePointGroupSource Source { get; set; }
+        public RestorePointGroupSource Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointCollectionProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> The provisioning state of the restore point collection. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The unique id of the restore point collection. </summary>
-        public string RestorePointGroupId { get; }
+        public string RestorePointGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointGroupId;
+            }
+        }
+
         /// <summary> A list containing all restore points created under this restore point collection. </summary>
-        public IReadOnlyList<RestorePointData> RestorePoints { get; }
+        public IReadOnlyList<RestorePointData> RestorePoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointCollectionProperties();
+                }
+                return Properties.RestorePoints;
+            }
+        }
+
         /// <summary> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </summary>
-        public bool? InstantAccess { get; set; }
+        public bool? InstantAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstantAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointCollectionProperties();
+                }
+                Properties.InstantAccess = value;
+            }
+        }
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryInVmAccessControlRules : IUtf8JsonSerializable, IJsonModel<GalleryInVmAccessControlRules>
+    /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
+    public partial class GalleryInVmAccessControlRules : IJsonModel<GalleryInVmAccessControlRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryInVmAccessControlRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GalleryInVmAccessControlRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGalleryInVmAccessControlRules(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryInVmAccessControlRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryInVmAccessControlRules IPersistableModel<GalleryInVmAccessControlRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryInVmAccessControlRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GalleryInVmAccessControlRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Privileges))
             {
                 writer.WritePropertyName("privileges"u8);
                 writer.WriteStartArray();
-                foreach (var item in Privileges)
+                foreach (GalleryInVmAccessControlRulesPrivilege item in Privileges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
-                foreach (var item in Roles)
+                foreach (GalleryInVmAccessControlRulesRole item in Roles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Identities)
+                foreach (GalleryInVmAccessControlRulesIdentity item in Identities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,21 +108,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("roleAssignments"u8);
                 writer.WriteStartArray();
-                foreach (var item in RoleAssignments)
+                foreach (GalleryInVmAccessControlRulesRoleAssignment item in RoleAssignments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +131,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        GalleryInVmAccessControlRules IJsonModel<GalleryInVmAccessControlRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryInVmAccessControlRules IJsonModel<GalleryInVmAccessControlRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GalleryInVmAccessControlRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGalleryInVmAccessControlRules(document.RootElement, options);
         }
 
-        internal static GalleryInVmAccessControlRules DeserializeGalleryInVmAccessControlRules(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GalleryInVmAccessControlRules DeserializeGalleryInVmAccessControlRules(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,60 +160,59 @@ namespace Azure.ResourceManager.Compute.Models
             IList<GalleryInVmAccessControlRulesRole> roles = default;
             IList<GalleryInVmAccessControlRulesIdentity> identities = default;
             IList<GalleryInVmAccessControlRulesRoleAssignment> roleAssignments = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("privileges"u8))
+                if (prop.NameEquals("privileges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GalleryInVmAccessControlRulesPrivilege> array = new List<GalleryInVmAccessControlRulesPrivilege>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GalleryInVmAccessControlRulesPrivilege.DeserializeGalleryInVmAccessControlRulesPrivilege(item, options));
                     }
                     privileges = array;
                     continue;
                 }
-                if (property.NameEquals("roles"u8))
+                if (prop.NameEquals("roles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GalleryInVmAccessControlRulesRole> array = new List<GalleryInVmAccessControlRulesRole>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GalleryInVmAccessControlRulesRole.DeserializeGalleryInVmAccessControlRulesRole(item, options));
                     }
                     roles = array;
                     continue;
                 }
-                if (property.NameEquals("identities"u8))
+                if (prop.NameEquals("identities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GalleryInVmAccessControlRulesIdentity> array = new List<GalleryInVmAccessControlRulesIdentity>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GalleryInVmAccessControlRulesIdentity.DeserializeGalleryInVmAccessControlRulesIdentity(item, options));
                     }
                     identities = array;
                     continue;
                 }
-                if (property.NameEquals("roleAssignments"u8))
+                if (prop.NameEquals("roleAssignments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GalleryInVmAccessControlRulesRoleAssignment> array = new List<GalleryInVmAccessControlRulesRoleAssignment>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GalleryInVmAccessControlRulesRoleAssignment.DeserializeGalleryInVmAccessControlRulesRoleAssignment(item, options));
                     }
@@ -177,42 +221,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GalleryInVmAccessControlRules(privileges ?? new ChangeTrackingList<GalleryInVmAccessControlRulesPrivilege>(), roles ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRole>(), identities ?? new ChangeTrackingList<GalleryInVmAccessControlRulesIdentity>(), roleAssignments ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRoleAssignment>(), serializedAdditionalRawData);
+            return new GalleryInVmAccessControlRules(privileges ?? new ChangeTrackingList<GalleryInVmAccessControlRulesPrivilege>(), roles ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRole>(), identities ?? new ChangeTrackingList<GalleryInVmAccessControlRulesIdentity>(), roleAssignments ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRoleAssignment>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GalleryInVmAccessControlRules>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GalleryInVmAccessControlRules IPersistableModel<GalleryInVmAccessControlRules>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGalleryInVmAccessControlRules(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GalleryInVmAccessControlRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

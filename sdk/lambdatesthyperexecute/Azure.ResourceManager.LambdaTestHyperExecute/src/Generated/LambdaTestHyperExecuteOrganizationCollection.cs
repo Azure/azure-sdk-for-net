@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         {
             TryGetApiVersion(LambdaTestHyperExecuteOrganizationResource.ResourceType, out string lambdaTestHyperExecuteOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", LambdaTestHyperExecuteOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, lambdaTestHyperExecuteOrganizationApiVersion ?? "2024-02-01");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, lambdaTestHyperExecuteOrganizationApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, LambdaTestHyperExecuteOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource> operation = new LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource>(
-                    new LambdaTestHyperExecuteOrganizationOperationSource(Client),
+                    new LambdaTestHyperExecuteOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, LambdaTestHyperExecuteOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource> operation = new LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource>(
-                    new LambdaTestHyperExecuteOrganizationOperationSource(Client),
+                    new LambdaTestHyperExecuteOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,

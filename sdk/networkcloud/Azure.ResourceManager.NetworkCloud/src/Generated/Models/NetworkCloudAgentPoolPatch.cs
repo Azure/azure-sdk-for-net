@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new AgentPoolPatchProperties();
                 }
-                Properties.Count = value.Value;
+                Properties.Count = value;
             }
         }
 

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaccModelProperties"/>. </summary>
-        /// <param name="entityType"> Represents type of the object being operated on. Possible values are primary or contributor. </param>
-        public MaccModelProperties(MaccEntityType entityType)
+        /// <param name="maccEntityType"> Represents type of the object being operated on. Possible values are primary or contributor. </param>
+        public MaccModelProperties(MaccEntityType maccEntityType)
         {
-            EntityType = entityType;
+            MaccEntityType = maccEntityType;
             Milestones = new ChangeTrackingList<MaccMilestone>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaccModelProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of MACC as assigned by RPaaS. This indicates the last operation's status. For all practical purposes, this can be ignored. For current status of MACC resource, refer to MaccStatus. </param>
         /// <param name="status"> Represents the current status of the MACC. </param>
-        /// <param name="entityType"> Represents type of the object being operated on. Possible values are primary or contributor. </param>
+        /// <param name="maccEntityType"> Represents type of the object being operated on. Possible values are primary or contributor. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="productCode"> Represents catalog UPN. </param>
         /// <param name="billingAccountResourceId"> Fully-qualified identifier of the billing account where the MACC is applied. Present only for Enterprise Agreement customers. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="primaryResourceId"> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </param>
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary MACC. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaccModelProperties(string provisioningState, MaccStatus? status, MaccEntityType entityType, string displayName, string productCode, ResourceIdentifier billingAccountResourceId, BillingBenefitsCommitment commitment, DateTimeOffset? startOn, DateTimeOffset? endOn, string systemId, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, Shortfall shortfall, IList<MaccMilestone> milestones, ResourceIdentifier resourceId, bool? isAllowContributors, ResourceIdentifier primaryResourceId, ResourceIdentifier primaryBillingAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaccModelProperties(string provisioningState, MaccStatus? status, MaccEntityType maccEntityType, string displayName, string productCode, ResourceIdentifier billingAccountResourceId, BillingBenefitsCommitment commitment, DateTimeOffset? startOn, DateTimeOffset? endOn, string systemId, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, Shortfall shortfall, IList<MaccMilestone> milestones, ResourceIdentifier resourceId, bool? isAllowContributors, ResourceIdentifier primaryResourceId, ResourceIdentifier primaryBillingAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
-            EntityType = entityType;
+            MaccEntityType = maccEntityType;
             DisplayName = displayName;
             ProductCode = productCode;
             BillingAccountResourceId = billingAccountResourceId;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public MaccStatus? Status { get; set; }
 
         /// <summary> Represents type of the object being operated on. Possible values are primary or contributor. </summary>
-        public MaccEntityType EntityType { get; set; }
+        public MaccEntityType MaccEntityType { get; set; }
 
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }

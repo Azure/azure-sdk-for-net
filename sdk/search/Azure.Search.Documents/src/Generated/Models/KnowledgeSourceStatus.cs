@@ -25,14 +25,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/>. </summary>
+        /// <param name="kind"> Identifies the Knowledge Source kind directly from the Status response. </param>
         /// <param name="synchronizationStatus"> The current synchronization status. </param>
         /// <param name="synchronizationInterval"> The synchronization interval (e.g., '1d' for daily). Null if no schedule is configured. </param>
         /// <param name="currentSynchronizationState"> Current synchronization state that spans multiple indexer runs. </param>
         /// <param name="lastSynchronizationState"> Details of the last completed synchronization. Null on first sync. </param>
         /// <param name="statistics"> Statistical information about the knowledge source synchronization history. Null on first sync. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceStatus(KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Kind = kind;
             SynchronizationStatus = synchronizationStatus;
             SynchronizationInterval = synchronizationInterval;
             CurrentSynchronizationState = currentSynchronizationState;
@@ -40,6 +42,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             Statistics = statistics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Identifies the Knowledge Source kind directly from the Status response. </summary>
+        public KnowledgeSourceKind? Kind { get; set; }
 
         /// <summary> The current synchronization status. </summary>
         public KnowledgeSourceSynchronizationStatus SynchronizationStatus { get; set; }

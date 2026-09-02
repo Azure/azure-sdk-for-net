@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             TryGetApiVersion(ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", ResourceType.Namespace, Diagnostics);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateActionsAsyncCollectionResultOfT(
+            return new CertificateOrderActionsAsyncCollectionResultOfT(
                 _appServiceCertificateOrdersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT(
+            return new CertificateOrderActionsCollectionResultOfT(
                 _appServiceCertificateOrdersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT(
+            return new CertificateOrderEmailHistoryAsyncCollectionResultOfT(
                 _appServiceCertificateOrdersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT(
+            return new CertificateOrderEmailHistoryCollectionResultOfT(
                 _appServiceCertificateOrdersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

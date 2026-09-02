@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The KustoDatabaseCallerRole. </summary>
+    /// <summary></summary>
     public readonly partial struct KustoDatabaseCallerRole : IEquatable<KustoDatabaseCallerRole>
     {
         private readonly string _value;
+        /// <summary> Admin. </summary>
+        private const string AdminValue = "Admin";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabaseCallerRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoDatabaseCallerRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdminValue = "Admin";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Admin. </summary>
         public static KustoDatabaseCallerRole Admin { get; } = new KustoDatabaseCallerRole(AdminValue);
+
         /// <summary> None. </summary>
         public static KustoDatabaseCallerRole None { get; } = new KustoDatabaseCallerRole(NoneValue);
+
         /// <summary> Determines if two <see cref="KustoDatabaseCallerRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoDatabaseCallerRole left, KustoDatabaseCallerRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoDatabaseCallerRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoDatabaseCallerRole left, KustoDatabaseCallerRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoDatabaseCallerRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoDatabaseCallerRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoDatabaseCallerRole(string value) => new KustoDatabaseCallerRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoDatabaseCallerRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoDatabaseCallerRole?(string value) => value == null ? null : new KustoDatabaseCallerRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoDatabaseCallerRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoDatabaseCallerRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

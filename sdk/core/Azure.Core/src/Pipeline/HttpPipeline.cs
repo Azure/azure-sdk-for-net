@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
@@ -63,6 +64,7 @@ namespace Azure.Core.Pipeline
                 // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
                 if (policies[i] is ISupportsTransportUpdate transportUpdated)
                 {
+                    AzureCoreEventSource.Singleton.TokenBinding("HttpPipeline subscribed to transport option updates.");
                     transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
                     break;
                 }
@@ -154,13 +156,30 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
+            SseHttpPipelineResponseHandler? sseHandler =
+                SseHttpPipelineResponseHandler.TryCreate(this, message);
 
-            if (message.Policies == null || message.Policies.Count == 0)
+            ValueTask sendTask;
+            try
             {
-                return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
+                if (message.Policies == null || message.Policies.Count == 0)
+                {
+                    sendTask = _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
+                }
+                else
+                {
+                    sendTask = SendAsync(message);
+                }
+            }
+            catch
+            {
+                sseHandler?.Dispose();
+                throw;
             }
 
-            return SendAsync(message);
+            return sseHandler == null
+                ? sendTask
+                : CompleteSseSendAsync(sendTask, message, sseHandler);
         }
 
         private async ValueTask SendAsync(HttpMessage message)
@@ -178,6 +197,24 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        private static async ValueTask CompleteSseSendAsync(
+            ValueTask sendTask,
+            HttpMessage message,
+            SseHttpPipelineResponseHandler handler)
+        {
+            try
+            {
+                await sendTask.ConfigureAwait(false);
+                message.Response = await handler.WrapInitialResponseAsync(
+                    message.Response).ConfigureAwait(false);
+            }
+            catch
+            {
+                handler.Dispose();
+                throw;
+            }
+        }
+
         /// <summary>
         /// Invokes the pipeline synchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
         /// </summary>
@@ -188,24 +225,40 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
+            SseHttpPipelineResponseHandler? sseHandler =
+                SseHttpPipelineResponseHandler.TryCreate(this, message);
 
-            if (message.Policies == null || message.Policies.Count == 0)
+            try
             {
-                _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+                if (message.Policies == null || message.Policies.Count == 0)
+                {
+                    _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+                }
+                else
+                {
+                    int length = _pipeline.Length + message.Policies.Count;
+                    HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+                    try
+                    {
+                        ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
+                        pipeline.Span[0].Process(message, pipeline.Slice(1));
+                    }
+                    finally
+                    {
+                        ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                    }
+                }
+
+                if (sseHandler != null)
+                {
+                    message.Response =
+                        sseHandler.WrapInitialResponse(message.Response);
+                }
             }
-            else
+            catch
             {
-                int length = _pipeline.Length + message.Policies.Count;
-                HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                try
-                {
-                    ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
-                    pipeline.Span[0].Process(message, pipeline.Slice(1));
-                }
-                finally
-                {
-                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
-                }
+                sseHandler?.Dispose();
+                throw;
             }
         }
 

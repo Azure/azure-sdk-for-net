@@ -31,8 +31,8 @@ namespace Azure.Template
     }
     public partial class FakedSharedModel : System.ClientModel.Primitives.IJsonModel<Azure.Template.FakedSharedModel>, System.ClientModel.Primitives.IPersistableModel<Azure.Template.FakedSharedModel>
     {
-        public FakedSharedModel(string tag, System.DateTimeOffset createdAt) { }
-        public System.DateTimeOffset CreatedAt { get { throw null; } set { } }
+        public FakedSharedModel(string tag, System.DateTimeOffset createdOn) { }
+        public System.DateTimeOffset CreatedOn { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
         protected virtual Azure.Template.FakedSharedModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -84,7 +84,7 @@ namespace Azure.Template
     }
     public static partial class TemplateModelFactory
     {
-        public static Azure.Template.FakedSharedModel FakedSharedModel(string tag = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Template.FakedSharedModel FakedSharedModel(string tag = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError ResourceOperationStatusWidgetSuiteWidgetSuiteError(string id = null, Azure.Template.OperationState status = default(Azure.Template.OperationState), Azure.ResponseError error = null, Azure.Template.WidgetSuite result = null) { throw null; }
         public static Azure.Template.WidgetSuite WidgetSuite(string name = null, string manufacturerId = null, Azure.Template.FakedSharedModel sharedModel = null) { throw null; }
     }
@@ -96,6 +96,13 @@ namespace Azure.Template
         public WidgetAnalyticsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.WidgetAnalyticsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Template.AzureWidgets GetAzureWidgetsClient() { throw null; }
+    }
+    public static partial class WidgetAnalyticsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Template.WidgetAnalyticsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Template.WidgetAnalyticsClientSettings> configureSettings) { throw null; }
     }
     public partial class WidgetAnalyticsClientOptions : Azure.Core.ClientOptions
     {
@@ -128,13 +135,5 @@ namespace Azure.Template
         Azure.Template.WidgetSuite System.ClientModel.Primitives.IPersistableModel<Azure.Template.WidgetSuite>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Template.WidgetSuite>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Template.WidgetSuite>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class TemplateClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Template.WidgetAnalyticsClient, Azure.Template.WidgetAnalyticsClientOptions> AddWidgetAnalyticsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Template.WidgetAnalyticsClient, Azure.Template.WidgetAnalyticsClientOptions> AddWidgetAnalyticsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" }, isRequired: true);
             _kubeStateMetrics = DefineModelProperty<ManagedClusterMonitorProfileKubeStateMetrics>(nameof(KubeStateMetrics), new string[] { "kubeStateMetrics" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterMonitorProfileMetrics that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

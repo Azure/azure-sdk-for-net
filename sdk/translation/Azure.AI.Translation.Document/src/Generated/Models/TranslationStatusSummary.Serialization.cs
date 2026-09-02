@@ -102,6 +102,11 @@ namespace Azure.AI.Translation.Document
                 writer.WritePropertyName("totalImageScansFailed"u8);
                 writer.WriteNumberValue(TotalImageScansFailed.Value);
             }
+            if (Optional.IsDefined(TotalImageCharged))
+            {
+                writer.WritePropertyName("totalImageCharged"u8);
+                writer.WriteNumberValue(TotalImageCharged.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,6 +158,7 @@ namespace Azure.AI.Translation.Document
             long totalCharacterCharged = default;
             int? totalImageScansSucceeded = default;
             int? totalImageScansFailed = default;
+            long? totalImageCharged = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,6 +215,15 @@ namespace Azure.AI.Translation.Document
                     totalImageScansFailed = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("totalImageCharged"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalImageCharged = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -224,6 +239,7 @@ namespace Azure.AI.Translation.Document
                 totalCharacterCharged,
                 totalImageScansSucceeded,
                 totalImageScansFailed,
+                totalImageCharged,
                 additionalBinaryDataProperties);
         }
     }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             TryGetApiVersion(AvailabilityGroupListenerResource.ResourceType, out string availabilityGroupListenerApiVersion);
             _availabilityGroupListenersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", AvailabilityGroupListenerResource.ResourceType.Namespace, Diagnostics);
-            _availabilityGroupListenersRestClient = new AvailabilityGroupListeners(_availabilityGroupListenersClientDiagnostics, Pipeline, Endpoint, availabilityGroupListenerApiVersion ?? "2023-10-01");
+            _availabilityGroupListenersRestClient = new AvailabilityGroupListeners(_availabilityGroupListenersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, availabilityGroupListenerApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
-                    new AvailabilityGroupListenerOperationSource(Client),
+                    new AvailabilityGroupListenerResourceOperationSource(Client),
                     _availabilityGroupListenersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
-                    new AvailabilityGroupListenerOperationSource(Client),
+                    new AvailabilityGroupListenerResourceOperationSource(Client),
                     _availabilityGroupListenersClientDiagnostics,
                     Pipeline,
                     message.Request,

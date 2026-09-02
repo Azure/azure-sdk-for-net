@@ -10,40 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Parameter group. </summary>
+    /// <summary> Parameter group for OData query options. </summary>
     public partial class PolicyQuerySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyQuerySettings"/>. </summary>
         public PolicyQuerySettings()
@@ -52,46 +23,54 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="PolicyQuerySettings"/>. </summary>
         /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
         /// <param name="filter"> OData filter expression. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
         /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element. </param>
         /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyQuerySettings(int? top, string filter, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string apply, string skipToken, string expand, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyQuerySettings(int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, string skipToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Top = top;
-            Filter = filter;
             OrderBy = orderBy;
-            Select = select;
+            Select = @select;
             From = @from;
             To = to;
+            Filter = filter;
             Apply = apply;
-            SkipToken = skipToken;
             Expand = expand;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SkipToken = skipToken;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Maximum number of records to return. </summary>
         public int? Top { get; set; }
+
+        /// <summary> Ordering expression using OData notation. </summary>
+        public string OrderBy { get; set; }
+
+        /// <summary> Select expression using OData notation. </summary>
+        public string Select { get; set; }
+
+        /// <summary> ISO 8601 formatted timestamp specifying the start time of the interval to query. </summary>
+        public DateTimeOffset? From { get; set; }
+
+        /// <summary> ISO 8601 formatted timestamp specifying the end time of the interval to query. </summary>
+        public DateTimeOffset? To { get; set; }
+
         /// <summary> OData filter expression. </summary>
         public string Filter { get; set; }
-        /// <summary> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </summary>
-        public string OrderBy { get; set; }
-        /// <summary> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </summary>
-        public string Select { get; set; }
-        /// <summary> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </summary>
-        public DateTimeOffset? From { get; set; }
-        /// <summary> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </summary>
-        public DateTimeOffset? To { get; set; }
+
         /// <summary> OData apply expression for aggregations. </summary>
         public string Apply { get; set; }
-        /// <summary> Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element. </summary>
-        public string SkipToken { get; set; }
+
         /// <summary> The $expand query parameter. For example, to expand components use $expand=components. </summary>
         public string Expand { get; set; }
+
+        /// <summary> Skiptoken provided if a previous response returned a partial result. </summary>
+        public string SkipToken { get; set; }
     }
 }

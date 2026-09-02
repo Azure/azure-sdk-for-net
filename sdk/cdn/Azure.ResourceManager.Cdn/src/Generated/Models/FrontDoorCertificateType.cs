@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct FrontDoorCertificateType : IEquatable<FrontDoorCertificateType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCertificateType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FrontDoorCertificateType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CustomerCertificateValue = "CustomerCertificate";
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
-        /// <summary> CustomerCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FrontDoorCertificateType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CustomerCertificate. </summary>
         public static FrontDoorCertificateType CustomerCertificate { get; } = new FrontDoorCertificateType(CustomerCertificateValue);
-        /// <summary> ManagedCertificate. </summary>
+
+        /// <summary> Gets the ManagedCertificate. </summary>
         public static FrontDoorCertificateType ManagedCertificate { get; } = new FrontDoorCertificateType(ManagedCertificateValue);
-        /// <summary> AzureFirstPartyManagedCertificate. </summary>
+
+        /// <summary> Gets the AzureFirstPartyManagedCertificate. </summary>
         public static FrontDoorCertificateType AzureFirstPartyManagedCertificate { get; } = new FrontDoorCertificateType(AzureFirstPartyManagedCertificateValue);
+
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorCertificateType left, FrontDoorCertificateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorCertificateType left, FrontDoorCertificateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorCertificateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorCertificateType(string value) => new FrontDoorCertificateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorCertificateType?(string value) => value == null ? null : new FrontDoorCertificateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorCertificateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorCertificateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

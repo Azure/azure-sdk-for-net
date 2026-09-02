@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Disk update resource. </summary>
     public partial class ManagedDiskPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
         public ManagedDiskPatch()
@@ -53,119 +25,373 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
+        /// <param name="properties"> Disk resource update properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
-        /// <param name="osType"> the Operating System type. </param>
-        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
-        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
-        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
-        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
-        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
-        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
-        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
-        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
-        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
-        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
-        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
-        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
-        /// <param name="purchasePlan"> Purchase plan information to be added on the OS disk. </param>
-        /// <param name="supportedCapabilities"> List of supported capabilities to be added on the OS disk. </param>
-        /// <param name="propertyUpdatesInProgress"> Properties of the disk for which update is pending. </param>
-        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
-        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
-        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
-        /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDiskPatch(IDictionary<string, string> tags, DiskSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDiskPatch(DiskUpdateProperties properties, IDictionary<string, string> tags, DiskSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
             Sku = sku;
-            OSType = osType;
-            DiskSizeGB = diskSizeGB;
-            EncryptionSettingsGroup = encryptionSettingsGroup;
-            DiskIopsReadWrite = diskIopsReadWrite;
-            DiskMBpsReadWrite = diskMBpsReadWrite;
-            DiskIopsReadOnly = diskIopsReadOnly;
-            DiskMBpsReadOnly = diskMBpsReadOnly;
-            MaxShares = maxShares;
-            Encryption = encryption;
-            NetworkAccessPolicy = networkAccessPolicy;
-            DiskAccessId = diskAccessId;
-            Tier = tier;
-            BurstingEnabled = burstingEnabled;
-            PurchasePlan = purchasePlan;
-            SupportedCapabilities = supportedCapabilities;
-            PropertyUpdatesInProgress = propertyUpdatesInProgress;
-            SupportsHibernation = supportsHibernation;
-            PublicNetworkAccess = publicNetworkAccess;
-            DataAccessAuthMode = dataAccessAuthMode;
-            IsOptimizedForFrequentAttach = isOptimizedForFrequentAttach;
-            AvailabilityPolicy = availabilityPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Disk resource update properties. </summary>
+        internal DiskUpdateProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
         public DiskSku Sku { get; set; }
+
         /// <summary> the Operating System type. </summary>
-        public SupportedOperatingSystemType? OSType { get; set; }
-        /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
-        public int? DiskSizeGB { get; set; }
-        /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsGroup EncryptionSettingsGroup { get; set; }
-        /// <summary> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </summary>
-        public long? DiskIopsReadWrite { get; set; }
-        /// <summary> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </summary>
-        public long? DiskMBpsReadWrite { get; set; }
-        /// <summary> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </summary>
-        public long? DiskIopsReadOnly { get; set; }
-        /// <summary> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </summary>
-        public long? DiskMBpsReadOnly { get; set; }
-        /// <summary> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </summary>
-        public int? MaxShares { get; set; }
-        /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public DiskEncryption Encryption { get; set; }
-        /// <summary> Policy for accessing the disk via network. </summary>
-        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
-        /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public ResourceIdentifier DiskAccessId { get; set; }
-        /// <summary> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </summary>
-        public string Tier { get; set; }
-        /// <summary> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </summary>
-        public bool? BurstingEnabled { get; set; }
-        /// <summary> Purchase plan information to be added on the OS disk. </summary>
-        public DiskPurchasePlan PurchasePlan { get; set; }
-        /// <summary> List of supported capabilities to be added on the OS disk. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
-        /// <summary> Properties of the disk for which update is pending. </summary>
-        internal PropertyUpdatesInProgress PropertyUpdatesInProgress { get; }
-        /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
-        public string PropertyUpdatesInProgressTargetTier
+        public SupportedOperatingSystemType? OSType
         {
-            get => PropertyUpdatesInProgress?.TargetTier;
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.OSType = value;
+            }
+        }
+
+        /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
+        public int? DiskSizeGB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskSizeGB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DiskSizeGB = value;
+            }
+        }
+
+        /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
+        public EncryptionSettingsGroup EncryptionSettingsGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionSettingsGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.EncryptionSettingsGroup = value;
+            }
+        }
+
+        /// <summary> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </summary>
+        public long? DiskIopsReadWrite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskIopsReadWrite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DiskIopsReadWrite = value;
+            }
+        }
+
+        /// <summary> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </summary>
+        public long? DiskMBpsReadWrite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskMBpsReadWrite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DiskMBpsReadWrite = value;
+            }
+        }
+
+        /// <summary> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </summary>
+        public long? DiskIopsReadOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskIopsReadOnly;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DiskIopsReadOnly = value;
+            }
+        }
+
+        /// <summary> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </summary>
+        public long? DiskMBpsReadOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskMBpsReadOnly;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DiskMBpsReadOnly = value;
+            }
+        }
+
+        /// <summary> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </summary>
+        public int? MaxShares
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxShares;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.MaxShares = value;
+            }
+        }
+
+        /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
+        public DiskEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
+        /// <summary> Policy for accessing the disk via network. </summary>
+        public NetworkAccessPolicy? NetworkAccessPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAccessPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.NetworkAccessPolicy = value;
+            }
+        }
+
+        /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
+        public ResourceIdentifier DiskAccessId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskAccessId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DiskAccessId = value;
+            }
+        }
+
+        /// <summary> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </summary>
+        public string Tier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Tier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.Tier = value;
+            }
+        }
+
+        /// <summary> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </summary>
+        public bool? BurstingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BurstingEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.BurstingEnabled = value;
+            }
+        }
+
+        /// <summary> Purchase plan information to be added on the OS disk. </summary>
+        public DiskPurchasePlan PurchasePlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PurchasePlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.PurchasePlan = value;
+            }
+        }
+
+        /// <summary> List of supported capabilities to be added on the OS disk. </summary>
+        public SupportedCapabilities SupportedCapabilities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedCapabilities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.SupportedCapabilities = value;
+            }
         }
 
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
-        public bool? SupportsHibernation { get; set; }
+        public bool? SupportsHibernation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportsHibernation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.SupportsHibernation = value;
+            }
+        }
+
         /// <summary> Policy for controlling export on the disk. </summary>
-        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
-        public DataAccessAuthMode? DataAccessAuthMode { get; set; }
+        public DataAccessAuthMode? DataAccessAuthMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataAccessAuthMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.DataAccessAuthMode = value;
+            }
+        }
+
         /// <summary> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </summary>
-        public bool? IsOptimizedForFrequentAttach { get; set; }
-        /// <summary> Determines how platform treats disk failures. </summary>
-        internal AvailabilityPolicy AvailabilityPolicy { get; set; }
+        public bool? IsOptimizedForFrequentAttach
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsOptimizedForFrequentAttach;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.IsOptimizedForFrequentAttach = value;
+            }
+        }
+
+        /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
+        public string PropertyUpdatesInProgressTargetTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PropertyUpdatesInProgressTargetTier;
+            }
+        }
+
         /// <summary> Determines on how to handle disks with slow I/O. </summary>
         public AvailabilityPolicyDiskDelay? AvailabilityActionOnDiskDelay
         {
-            get => AvailabilityPolicy is null ? default : AvailabilityPolicy.ActionOnDiskDelay;
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityActionOnDiskDelay;
+            }
             set
             {
-                if (AvailabilityPolicy is null)
-                    AvailabilityPolicy = new AvailabilityPolicy();
-                AvailabilityPolicy.ActionOnDiskDelay = value;
+                if (Properties is null)
+                {
+                    Properties = new DiskUpdateProperties();
+                }
+                Properties.AvailabilityActionOnDiskDelay = value;
             }
         }
     }

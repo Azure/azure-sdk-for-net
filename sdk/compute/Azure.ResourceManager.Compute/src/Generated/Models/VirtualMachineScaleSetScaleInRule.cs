@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The VirtualMachineScaleSetScaleInRule. </summary>
+    /// <summary></summary>
     public readonly partial struct VirtualMachineScaleSetScaleInRule : IEquatable<VirtualMachineScaleSetScaleInRule>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualMachineScaleSetScaleInRule(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string OldestVmValue = "OldestVM";
         private const string NewestVmValue = "NewestVM";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualMachineScaleSetScaleInRule(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static VirtualMachineScaleSetScaleInRule Default { get; } = new VirtualMachineScaleSetScaleInRule(DefaultValue);
-        /// <summary> OldestVM. </summary>
+
+        /// <summary> Gets the OldestVm. </summary>
         public static VirtualMachineScaleSetScaleInRule OldestVm { get; } = new VirtualMachineScaleSetScaleInRule(OldestVmValue);
-        /// <summary> NewestVM. </summary>
+
+        /// <summary> Gets the NewestVm. </summary>
         public static VirtualMachineScaleSetScaleInRule NewestVm { get; } = new VirtualMachineScaleSetScaleInRule(NewestVmValue);
+
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRule"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineScaleSetScaleInRule left, VirtualMachineScaleSetScaleInRule right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRule"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineScaleSetScaleInRule left, VirtualMachineScaleSetScaleInRule right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineScaleSetScaleInRule(string value) => new VirtualMachineScaleSetScaleInRule(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetScaleInRule"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineScaleSetScaleInRule?(string value) => value == null ? null : new VirtualMachineScaleSetScaleInRule(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineScaleSetScaleInRule other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineScaleSetScaleInRule other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

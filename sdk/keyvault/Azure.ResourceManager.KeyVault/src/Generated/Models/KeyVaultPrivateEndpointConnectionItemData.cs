@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             get
             {
-                return Properties.ConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
     }

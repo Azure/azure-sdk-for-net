@@ -14,31 +14,31 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateToolboxRequest"/>. </summary>
-        /// <param name="toolboxName"> The name of the toolbox to update. </param>
+        /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="defaultVersion"/> is null. </exception>
-        public UpdateToolboxRequest(string toolboxName, string defaultVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
+        public UpdateToolboxRequest(string name, string defaultVersion)
         {
-            Argument.AssertNotNull(toolboxName, nameof(toolboxName));
+            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
 
-            ToolboxName = toolboxName;
+            Name = name;
             DefaultVersion = defaultVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateToolboxRequest"/>. </summary>
-        /// <param name="toolboxName"> The name of the toolbox to update. </param>
+        /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateToolboxRequest(string toolboxName, string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateToolboxRequest(string name, string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ToolboxName = toolboxName;
+            Name = name;
             DefaultVersion = defaultVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the toolbox to update. </summary>
-        public string ToolboxName { get; }
+        public string Name { get; }
 
         /// <summary> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </summary>
         public string DefaultVersion { get; }

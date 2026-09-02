@@ -64,7 +64,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="safetyIdentifier">
         /// A stable identifier used to help detect users of your application that may be violating OpenAI's usage policies.
-        ///   The IDs should be a string that uniquely identifies each user. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
+        ///   The IDs should be a string that uniquely identifies each user, with a maximum length of 64 characters. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
         /// </param>
         /// <param name="promptCacheKey"> Used by OpenAI to cache responses for similar requests to optimize your cache hit rates. Replaces the `user` field. [Learn more](/docs/guides/prompt-caching). </param>
         /// <param name="serviceTier"></param>
@@ -178,7 +178,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary>
         /// A stable identifier used to help detect users of your application that may be violating OpenAI's usage policies.
-        ///   The IDs should be a string that uniquely identifies each user. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
+        ///   The IDs should be a string that uniquely identifies each user, with a maximum length of 64 characters. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
         /// </summary>
         public string SafetyIdentifier { get; set; }
 

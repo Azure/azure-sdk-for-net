@@ -54,7 +54,9 @@ public partial class UnaryExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is UnaryExpression u && Operator == u.Operator && Value.Equals(u.Value);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(UnaryExpression).GetHashCode() ^ Operator.GetHashCode() ^ (Value?.GetHashCode() ?? 0);
 
     internal static UnaryExpression DeserializeUnaryExpression(JsonElement element)

@@ -5,9 +5,20 @@ using System;
 
 namespace Azure.Provisioning.Expressions;
 
+/// <summary>
+/// Represents a Bicep unary expression composed of an operator and a single operand.
+/// </summary>
+/// <param name="op">The unary operator.</param>
+/// <param name="value">The operand expression.</param>
 public partial class UnaryExpression(UnaryBicepOperator op, BicepExpression value) : BicepExpression
 {
+    /// <summary>
+    /// Gets the unary operator.
+    /// </summary>
     public UnaryBicepOperator Operator { get; } = op;
+    /// <summary>
+    /// Gets the operand expression.
+    /// </summary>
     public BicepExpression Value { get; } = value;
     internal override BicepWriter Write(BicepWriter writer) => Operator switch
     {

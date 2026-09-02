@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
     public partial class CredentialsKeyVaultDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CredentialsKeyVaultDetails"/>. </summary>
         public CredentialsKeyVaultDetails()
@@ -54,30 +26,34 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="credentialsKeyVaultUri"> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </param>
         /// <param name="secretName">
         /// The name of the secret stored in Azure Key Vault. The associated key pair has the following structure:
-        ///
         /// {
         /// "access_key_id": "&lt;REDACTED&gt;",
         /// "secret_access_key": "&lt;REDACTED&gt;"
         /// }
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, ResourceIdentifier userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialsKeyVaultUri = credentialsKeyVaultUri;
             SecretName = secretName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            UserAssignedIdentity = userAssignedIdentity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </summary>
         public Uri CredentialsKeyVaultUri { get; set; }
+
         /// <summary>
         /// The name of the secret stored in Azure Key Vault. The associated key pair has the following structure:
-        ///
         /// {
         /// "access_key_id": "&lt;REDACTED&gt;",
         /// "secret_access_key": "&lt;REDACTED&gt;"
         /// }
         /// </summary>
         public string SecretName { get; set; }
+
+        /// <summary> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </summary>
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

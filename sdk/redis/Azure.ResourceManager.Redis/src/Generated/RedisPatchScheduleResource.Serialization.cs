@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Redis
 {
+    /// <summary></summary>
     public partial class RedisPatchScheduleResource : IJsonModel<RedisPatchScheduleData>
     {
-        private static RedisPatchScheduleData s_dataDeserializationInstance;
-        private static RedisPatchScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisPatchScheduleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisPatchScheduleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisPatchScheduleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisPatchScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisPatchScheduleData>)Data).Write(writer, options);
 
-        RedisPatchScheduleData IJsonModel<RedisPatchScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisPatchScheduleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisPatchScheduleData IJsonModel<RedisPatchScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisPatchScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisPatchScheduleData>(Data, options, AzureResourceManagerRedisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisPatchScheduleData IPersistableModel<RedisPatchScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisPatchScheduleData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisPatchScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisPatchScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisPatchScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

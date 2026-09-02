@@ -13,8 +13,4 @@
     <ProjectReference Include="..\..\src\Azure.AI.VoiceLive.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity"/>
-  </ItemGroup>
-
 </Project>

@@ -2,6 +2,7 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <ImportRepoCommonSettings>false</ImportRepoCommonSettings>
   </PropertyGroup>
   <Import Project="..\Directory.Build.props" />
   <!-- Standalone samples opt out of central package management -->

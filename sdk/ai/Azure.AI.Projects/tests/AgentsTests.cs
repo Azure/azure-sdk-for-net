@@ -21,6 +21,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Containers;
+using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
@@ -28,6 +29,7 @@ using OpenAI.VectorStores;
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 
 public class AgentsTests : AgentsTestBase
 {
@@ -108,7 +110,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ids[idNum], Is.EqualTo(agent.Id), $"The ID #{idNum} is incorrect.");
             idNum++;
         }
-        Assert.That(idNum, Is.EqualTo(2));
+        Assert.That(idNum, Is.EqualTo(4));
         // Test calling after.
         agents = projectClient.AgentAdministrationClient.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
         await foreach (ProjectsAgentRecord agent in agents)
@@ -162,14 +164,14 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        ProjectConversation firstConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
-        ProjectConversation secondConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
-            new ProjectConversationCreationOptions()
+        ConversationResource firstConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource secondConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
+            new ConversationCreationOptions()
             {
                 Items =
                 {
                     ResponseItem.CreateUserMessageItem("Hello, world!"),
-                    //AgentResponseItem.CreateStructuredOutputsItem(
+                    //ResponseItem.CreateStructuredOutputsItem(
                     //    new Dictionary<string, BinaryData>()
                     //    {
                     //        ["foo"] = BinaryData.FromString(@"{""value"": ""bar""}"),
@@ -215,9 +217,9 @@ public class AgentsTests : AgentsTestBase
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        ProjectConversation updatedConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversationAsync(
+        ConversationResource updatedConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversationAsync(
             firstConversation.Id,
-            new ProjectConversationUpdateOptions()
+            new ConversationUpdateOptions()
             {
                 Metadata =
                 {
@@ -226,7 +228,7 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(updatedConversation.Metadata, Has.Count.EqualTo(1));
 
-        ProjectConversation retrievedConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(firstConversation.Id);
+        ConversationResource retrievedConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(firstConversation.Id);
         Assert.That(retrievedConversation?.Id, Is.EqualTo(firstConversation.Id));
         Assert.That(retrievedConversation.Metadata, Has.Count.EqualTo(1));
     }
@@ -237,7 +239,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
 
         // Create a conversation
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         Assert.That(conversation?.Id, Does.StartWith("conv_"));
 
         // Create 40 messages for the conversation
@@ -270,8 +272,8 @@ public class AgentsTests : AgentsTestBase
         Assert.That(createdItems, Has.Count.EqualTo(20));
 
         // Test ascending order traversal
-        List<AgentResponseItem> ascendingItems = [];
-        await foreach (AgentResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(
+        List<ResponseItem> ascendingItems = [];
+        await foreach (ResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "asc"))
@@ -281,8 +283,8 @@ public class AgentsTests : AgentsTestBase
         Assert.That(ascendingItems, Has.Count.EqualTo(40));
 
         // Test descending order traversal
-        List<AgentResponseItem> descendingItems = [];
-        await foreach (AgentResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(
+        List<ResponseItem> descendingItems = [];
+        await foreach (ResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "desc"))
@@ -301,8 +303,8 @@ public class AgentsTests : AgentsTestBase
         }
 
         // Verify that we can collect all items consistently
-        List<AgentResponseItem> allItems = [];
-        await foreach (AgentResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
+        List<ResponseItem> allItems = [];
+        await foreach (ResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
         {
             allItems.Add(item);
         }
@@ -322,13 +324,13 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
-            new ProjectConversationCreationOptions()
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
+            new ConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
 
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), conversation);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
 
@@ -369,8 +371,8 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
-            new ProjectConversationCreationOptions()
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
+            new ConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.") },
             });
@@ -431,8 +433,8 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
-            new ProjectConversationCreationOptions()
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
+            new ConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") },
             });
@@ -508,9 +510,9 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["freely_deleteable"] = "true" },
             });
 
-        ProjectConversation newConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource newConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, agent!");
 
@@ -518,8 +520,8 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 
         Assert.That(response.OutputItems.Count, Is.GreaterThan(0));
-        AgentResponseItem agentResponseItem = response.OutputItems[0].AsAgentResponseItem();
-        Assert.That(agentResponseItem, Is.InstanceOf<AgentWorkflowPreviewActionResponseItem>());
+        ResponseItem ResponseItem = response.OutputItems[0] as AgentWorkflowPreviewActionResponseItem;
+        Assert.That(ResponseItem, Is.InstanceOf<AgentWorkflowPreviewActionResponseItem>());
 
         // This line will fix the failure:
         // System.InvalidOperationException : Cannot write a JSON property within an array or as the first JSON token. Current token type is 'EndObject'.
@@ -542,9 +544,9 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["freely_deleteable"] = "true" },
             });
 
-        ProjectConversation newConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource newConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation.Id);
 
         AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
@@ -552,7 +554,7 @@ public class AgentsTests : AgentsTestBase
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
-                if (itemDoneUpdate.Item.AsAgentResponseItem() is AgentWorkflowPreviewActionResponseItem workflowActionItem)
+                if (itemDoneUpdate.Item is AgentWorkflowPreviewActionResponseItem workflowActionItem)
                 {
                     streamedWorkflowActionItem = workflowActionItem;
                 }
@@ -569,13 +571,9 @@ public class AgentsTests : AgentsTestBase
     public async Task TestMemoryStoreCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        try
-        {
-            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
-        }
-        catch { }
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
         // Create
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(MEMORY_STORE_NAME, new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         // Read
         MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(store.Id, Is.EqualTo(result.Id));
@@ -610,23 +608,138 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestMemoryStorePagination()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        // Create items
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await projectClient.MemoryStores.CreateMemoryStoreAsync(
+                name: $"{MEMORY_STORE_NAME}-{i}",
+                definition: new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
+            );
+        }
+        List<MemoryStore> records = await projectClient.MemoryStores.GetMemoryStoresAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<MemoryStore> forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
+        //// Two limits:
+        forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        // Go backwards.
+        List<MemoryStore> backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
+        Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
+        // Two limits.
+        backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestMemoryStoreItemCRUD()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(MEMORY_STORE_NAME, new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        // Create
+        MemoryItem customerData = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, content: "The orange lover.", kind: MemoryItemKind.UserProfile);
+        MemoryItem orangeSKU = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+        MemoryItem other = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: "Out_of_scope", content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+        Assert.That(customerData.Content, Is.EqualTo("The orange lover."));
+        // Read
+        MemoryItem item = await projectClient.MemoryStores.GetMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(item.MemoryId, Is.EqualTo(customerData.MemoryId));
+        Assert.That(item.Content, Is.EqualTo(customerData.Content));
+        Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
+        // List
+        HashSet<string> itemIds = [.. await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).Select(x => x.MemoryId).ToListAsync()];
+        Assert.That(itemIds, Has.Count.EqualTo(2));
+        Assert.That(itemIds, Does.Contain(customerData.MemoryId));
+        Assert.That(itemIds, Does.Contain(orangeSKU.MemoryId));
+        // Update
+        string newContent = "Some other description.";
+        item = await projectClient.MemoryStores.UpdateMemoryAsync(name: store.Name, memoryId: customerData.MemoryId, content: newContent);
+        Assert.That(item.Content, Is.EqualTo(newContent));
+        item = await projectClient.MemoryStores.GetMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(item.MemoryId, Is.EqualTo(customerData.MemoryId));
+        Assert.That(item.Content, Is.EqualTo(newContent));
+        Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
+        // Delete
+        MemoryDeletionResult delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(delResult.Deleted, Is.True);
+        Assert.That(
+            (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())
+                .Select(x => x.MemoryId)
+                .Any(x => x == customerData.MemoryId),
+            Is.False,
+            $"The {customerData.MemoryId} was unexpectedly found in the list of memory stores after being deleted."
+        );
+    }
+
+    [RecordedTest]
+    public async Task TestMemoryStoreItemPagination()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(MEMORY_STORE_NAME, new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        // Create items
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await projectClient.MemoryStores.CreateMemoryAsync(
+                name: store.Name,
+                content: $"Memory Item #{PAGE_SIZE - i}",
+                scope: MEMORY_STORE_SCOPE,
+                kind: MemoryItemKind.ChatSummary
+            );
+        }
+        List<MemoryItem> records = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<MemoryItem> forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "asc", after: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].MemoryId, Is.EqualTo(records[1].MemoryId));
+        Assert.That(forward[forward.Count - 1].MemoryId, Is.EqualTo(records[records.Count - 1].MemoryId));
+        //// Two limits:
+        forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "asc", after: records[0].MemoryId, before: records[3].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].MemoryId, Is.EqualTo(records[1].MemoryId));
+        Assert.That(forward[1].MemoryId, Is.EqualTo(records[2].MemoryId));
+        // Go backwards.
+        List<MemoryItem> backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "desc", before: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].MemoryId, Is.EqualTo(records[records.Count - 1].MemoryId));
+        Assert.That(backwards[backwards.Count - 1].MemoryId, Is.EqualTo(records[1].MemoryId));
+        // Two limits.
+        backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "desc", after: records[records.Count - 1].MemoryId, before: records[records.Count - 4].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].MemoryId, Is.EqualTo(records[records.Count - 2].MemoryId));
+        Assert.That(backwards[1].MemoryId, Is.EqualTo(records[records.Count - 3].MemoryId));
+    }
+
+    [RecordedTest]
     public async Task TestMemorySearch()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        try
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
         {
-            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
-        }
-        catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
-        memoryDefinitions.Options = new(true, true);
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
+            Options = new(true, true)
+        };
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
         string scope = MEMORY_STORE_SCOPE;
-        MemorySearchOptions opts = new(scope)
+        global::Azure.AI.Projects.Memory.MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
-            ResultOptions = new MemorySearchResultOptions()
+            ResultOptions = new global::Azure.AI.Projects.Memory.MemorySearchResultOptions()
             {
                 MaxMemories = 1,
             }
@@ -701,9 +814,11 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
+    [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
+    [TestCase(ToolType.WorkIQTool)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -801,9 +916,11 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
+    [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
+    [TestCase(ToolType.WorkIQTool)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -941,7 +1058,9 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
-    public async Task TestInterativeTools(ToolType toolType)
+    [TestCase(ToolType.MCPToolbox)]
+    [TestCase(ToolType.MCPToolboxWithPreview)]
+    public async Task TestInteractiveTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -984,9 +1103,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1005,7 +1124,9 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
-    public async Task TestInterativeToolsStreaming(ToolType toolType)
+    [TestCase(ToolType.MCPToolbox)]
+    [TestCase(ToolType.MCPToolboxWithPreview)]
+    public async Task TestInteractiveToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1074,9 +1195,9 @@ public class AgentsTests : AgentsTestBase
                             functionCalled = true;
                             functionWasCalled = true;
                         }
-                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                         {
-                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                             nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                             functionCalled = true;
                             functionWasCalled = true;
@@ -1222,7 +1343,7 @@ public class AgentsTests : AgentsTestBase
     //    conversationOptions.Items.Add(
     //        ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
     //    );
-    //    ProjectConversation conversation = await conversationClient.CreateProjectConversationAsync(conversationOptions);
+    //    ConversationResource conversation = await conversationClient.CreateProjectConversationAsync(conversationOptions);
     //    CreateResponseOptions responseOptions = new()
     //    {
     //        Agent = containerProjectsAgentVersion,
@@ -1344,8 +1465,8 @@ public class AgentsTests : AgentsTestBase
         // Using a conversation: here, a new conversation is created for this interaction.
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
-            ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options: null, cts.Token);
-            responseOptions.AgentConversationId = conversation;
+            ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options: null, cts.Token);
+            responseOptions.AgentConversationId = conversation.Id;
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
         {
@@ -1434,7 +1555,7 @@ public class AgentsTests : AgentsTestBase
             memory: "2Gi"
         )
         {
-            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME },
@@ -1443,12 +1564,177 @@ public class AgentsTests : AgentsTestBase
                 { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion projectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(ProjectsAgentDefinition));
-        Assert.That(ProjectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version));
+        Assert.That(projectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version));
+    }
+
+    [RecordedTest]
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    [TestCase(false, false)]
+    public async Task TestHostedAgentEndpoint(bool useNewClient, bool useGetMethod)
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        ProjectResponsesClient responseClient;
+        if (useNewClient)
+        {
+            ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+            if (useGetMethod)
+            {
+                // We have to create options one more time as once the pipeline is created, it
+                // becomes frozen.
+                responsesOptions = CreateTestProjectOpenAIClientOptions(
+                    apiVersion: "v1"
+                );
+                responsesOptions.AgentName = agentVersion.Name;
+                responseClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+            }
+            else
+            {
+                responseClient = openAIClient.GetProjectResponsesClient();
+            }
+        }
+        else
+        {
+            responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        }
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        Assert.That(response.GetOutputText(), Is.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestDisableHostedAgent()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        // Create a session.
+        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            Endpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
+            ApiVersion = "v1",
+            AgentName = agentVersion.Name
+        };
+        responsesOptions = GetConfiguredOptions(
+            responsesOptions,
+            true);
+        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            SessionId = session.AgentSessionId,
+        };
+        ClientResult<ResponseResult> response = await responseClient.CreateResponseAsync(responseOptions);
+        Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
+        Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
+        // Disable the Agent
+        await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Name);
+        try
+        {
+            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            Assert.Fail("Stopped Agent was unexpectedly able to create session.");
+        }
+        catch (ClientResultException ex)
+        {
+            Assert.That(ex.Status, Is.EqualTo(403));
+        }
+        // Enable Agent Again
+        await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
+        session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            SessionId = session.AgentSessionId,
+        };
+        response = await responseClient.CreateResponseAsync(responseOptions);
+        Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
+        Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
     }
 
     [RecordedTest]
@@ -1613,6 +1899,10 @@ public class AgentsTests : AgentsTestBase
         return !fileData.IsEmpty;
     }
 
+    // The recorded test sessions capture this YAML with CRLF line endings. Raw string literals preserve the
+    // exact line endings present in the source file (normalized to LF by .gitattributes for *.cs files), so
+    // without this explicit normalization, playback would fail to match the recorded request body depending
+    // on how the repository was checked out.
     private static readonly string s_HelloWorkflowYaml = """
         kind: workflow
         trigger:
@@ -1624,5 +1914,14 @@ public class AgentsTests : AgentsTestBase
               activity: hello world
             - kind: EndConversation
               id: end_conversation
-        """;
+        """.Replace("\r", "");
+
+    private static async Task DeleteMemoryStoreMayBe(AIProjectClient projectClient, string name)
+    {
+        try
+        {
+            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: name);
+        }
+        catch { }
+    }
 }

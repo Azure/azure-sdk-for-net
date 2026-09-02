@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubSharedAccessRightExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubSharedAccessRight value) => value switch
         {
             IotHubSharedAccessRight.RegistryRead => "RegistryRead",
@@ -31,23 +32,69 @@ namespace Azure.ResourceManager.IotHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSharedAccessRight value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubSharedAccessRight ToIotHubSharedAccessRight(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead")) return IotHubSharedAccessRight.RegistryRead;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite")) return IotHubSharedAccessRight.RegistryWrite;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceConnect")) return IotHubSharedAccessRight.ServiceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeviceConnect")) return IotHubSharedAccessRight.DeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite")) return IotHubSharedAccessRight.RegistryReadRegistryWrite;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, ServiceConnect")) return IotHubSharedAccessRight.RegistryReadServiceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, DeviceConnect")) return IotHubSharedAccessRight.RegistryReadDeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite, ServiceConnect")) return IotHubSharedAccessRight.RegistryWriteServiceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite, DeviceConnect")) return IotHubSharedAccessRight.RegistryWriteDeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceConnect, DeviceConnect")) return IotHubSharedAccessRight.ServiceConnectDeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite, ServiceConnect")) return IotHubSharedAccessRight.RegistryReadRegistryWriteServiceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite, DeviceConnect")) return IotHubSharedAccessRight.RegistryReadRegistryWriteDeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, ServiceConnect, DeviceConnect")) return IotHubSharedAccessRight.RegistryReadServiceConnectDeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite, ServiceConnect, DeviceConnect")) return IotHubSharedAccessRight.RegistryWriteServiceConnectDeviceConnect;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite, ServiceConnect, DeviceConnect")) return IotHubSharedAccessRight.RegistryReadRegistryWriteServiceConnectDeviceConnect;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead"))
+            {
+                return IotHubSharedAccessRight.RegistryRead;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite"))
+            {
+                return IotHubSharedAccessRight.RegistryWrite;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceConnect"))
+            {
+                return IotHubSharedAccessRight.ServiceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.DeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite"))
+            {
+                return IotHubSharedAccessRight.RegistryReadRegistryWrite;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, ServiceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryReadServiceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryReadDeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite, ServiceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryWriteServiceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryWriteDeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceConnect, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.ServiceConnectDeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite, ServiceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryReadRegistryWriteServiceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryReadRegistryWriteDeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, ServiceConnect, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryReadServiceConnectDeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryWrite, ServiceConnect, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryWriteServiceConnectDeviceConnect;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegistryRead, RegistryWrite, ServiceConnect, DeviceConnect"))
+            {
+                return IotHubSharedAccessRight.RegistryReadRegistryWriteServiceConnectDeviceConnect;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSharedAccessRight value.");
         }
     }

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Status of certificate order. </summary>
+    /// <summary> Provisioning state of the App Service Plan. </summary>
     public enum ProvisioningState
     {
         /// <summary> Succeeded. </summary>

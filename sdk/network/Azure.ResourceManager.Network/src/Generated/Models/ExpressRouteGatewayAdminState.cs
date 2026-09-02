@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRouteGatewayAdminState : IEquatable<ExpressRouteGatewayAdminState>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayAdminState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteGatewayAdminState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static ExpressRouteGatewayAdminState Enabled { get; } = new ExpressRouteGatewayAdminState(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static ExpressRouteGatewayAdminState Disabled { get; } = new ExpressRouteGatewayAdminState(DisabledValue);
+
         /// <summary> Determines if two <see cref="ExpressRouteGatewayAdminState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRouteGatewayAdminState left, ExpressRouteGatewayAdminState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRouteGatewayAdminState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRouteGatewayAdminState left, ExpressRouteGatewayAdminState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteGatewayAdminState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRouteGatewayAdminState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRouteGatewayAdminState(string value) => new ExpressRouteGatewayAdminState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRouteGatewayAdminState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRouteGatewayAdminState?(string value) => value == null ? null : new ExpressRouteGatewayAdminState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRouteGatewayAdminState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRouteGatewayAdminState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

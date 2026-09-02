@@ -10,32 +10,30 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Default in-memory implementation of <see cref="ResponsesProvider"/>,
-/// with cancellation and streaming capabilities exposed via
-/// <see cref="InMemoryCancellationSignalProvider"/> and <see cref="InMemoryStreamProvider"/> adapters.
-/// Stores responses, event streams, and cancellation tokens in concurrent dictionaries.
+/// with cancellation capabilities exposed via the
+/// <see cref="InMemoryCancellationSignalProvider"/> adapter.
+/// Stores responses and cancellation tokens in concurrent dictionaries.
 /// </summary>
 /// <remarks>
 /// <para>
-/// This implementation is suitable for single-instance deployments.
-/// For multi-instance or distributed deployments, consumers should extend
-/// the provider abstract classes with a distributed backend (e.g., Redis, SQL).
+/// This implementation is retained as a non-default fallback. The SDK selects a durable
+/// file-backed provider by default for local operation; this provider is only used when a
+/// consumer explicitly wires it up. SSE streaming is handled by the Core event-stream
+/// primitive, not by this provider.
 /// </para>
 /// <para>
 /// Response data (envelopes, items, history, conversation membership) is retained
-/// indefinitely. Event stream replay uses per-event TTL — each event expires individually
-/// from its emission time via the underlying <see cref="SeekableReplaySubject"/>.
-/// The subject container and cancellation token source are disposed after the TTL
+/// indefinitely. Per-response cancellation-token sources are disposed after the TTL
 /// window fully elapses since the last event was emitted.
-/// </para>
-/// <para>
-/// Event streaming uses <see cref="SeekableReplaySubject"/> which provides
-/// replay buffering with time-based eviction and cursor-based seeking.
 /// </para>
 /// </remarks>
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     // --- Response envelopes ---
     private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+
+    // --- User ID keys (response ID → creation-time user ID key) ---
+    private readonly ConcurrentDictionary<string, string> _userIdKeys = new();
 
     // --- Item store (all items by ID) ---
     private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
@@ -51,15 +49,12 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     // --- Deletion tracking ---
     private readonly HashSet<string> _deletedResponseIds = new();
 
-    // --- Streaming & cancellation ---
-    private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
+    // --- Cancellation ---
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
 
     /// <summary>
     /// Tracks when each response's last event was approximately emitted (terminal status time).
-    /// Used to GC the subject container after the per-event TTL window has fully elapsed.
-    /// The <see cref="SeekableReplaySubject"/> handles per-event expiry internally;
-    /// this timestamp determines when to dispose the empty subject shell.
+    /// Used to GC the per-response cancellation-token container after the TTL window has elapsed.
     /// </summary>
     private readonly ConcurrentDictionary<string, DateTimeOffset> _lastEventEmittedAt = new();
 
@@ -85,7 +80,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
         CreateResponseRequest request,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var response = request.Response;
@@ -95,6 +90,12 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         if (!_responses.TryAdd(response.Id, response))
         {
             throw new InvalidOperationException($"Response '{response.Id}' already exists.");
+        }
+
+        // Record the creation-time user ID key for enforcement on subsequent operations
+        if (context.UserIdKey is not null)
+        {
+            _userIdKeys[response.Id] = context.UserIdKey;
         }
 
         // Store input items in the item store and track their ordered IDs
@@ -130,9 +131,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400 (distinguish from never-existed → 404)
+        // Deleted response → 404 (spec: post-deletion, response not found)
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -141,7 +142,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         if (!_responses.TryGetValue(responseId, out var response))
@@ -149,11 +150,13 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
+        EnforceUserIsolation(responseId, context);
+
         return Task.FromResult(response);
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -172,8 +175,16 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+    public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
+        // Check existence first (before user isolation) to maintain consistent 404 for unknown IDs
+        if (!_responses.ContainsKey(responseId))
+        {
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+        }
+
+        EnforceUserIsolation(responseId, context);
+
         if (!_responses.TryRemove(responseId, out _))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -186,7 +197,25 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             _deletedResponseIds.Add(responseId);
         }
 
+        // Clean up user ID key tracking
+        _userIdKeys.TryRemove(responseId, out _);
+
         return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Enforces the user ID key for persisted responses.
+    /// If the response was created with a user ID key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-user information leakage.
+    /// </summary>
+    private void EnforceUserIsolation(string responseId, PlatformContext context)
+    {
+        if (_userIdKeys.TryGetValue(responseId, out var expectedKey)
+            && !string.Equals(expectedKey, context.UserIdKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+        }
     }
 
     private static bool IsTerminal(ResponseStatus status) =>
@@ -196,14 +225,14 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
-        IsolationContext isolation,
+        PlatformContext context,
         int limit = 20,
         bool ascending = false,
         string? after = null,
         string? before = null,
         CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400
+        // Deleted response → 404
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -212,7 +241,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         // Never existed → 404
@@ -220,6 +249,8 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
+
+        EnforceUserIsolation(responseId, context);
 
         // Combine history + current input items by resolving IDs from the item store
         var allItems = new List<OutputItem>();
@@ -249,8 +280,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         }
 
         // Apply ordering (ascending = history first, then current; descending = reversed)
-        var ordered = ascending ? allItems : Enumerable.Reverse(allItems).ToList();
-        var list = ordered.ToList();
+        var list = ascending ? allItems.ToList() : Enumerable.Reverse(allItems).ToList();
 
         // Apply cursor-based pagination
         if (after is not null)
@@ -288,7 +318,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null);
@@ -300,7 +330,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? previousResponseId,
         string? conversationId,
         int limit,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         // previousResponseId path: return history + input + output of the previous response
@@ -431,51 +461,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         AddToConversation(response);
     }
 
-    // --- Streaming ---
-
-    /// <summary>
-    /// Creates an event publisher backed by a <see cref="SeekableReplaySubject"/>.
-    /// </summary>
-    public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
-        string responseId, CancellationToken cancellationToken = default)
-    {
-        var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_eventStreamTtl));
-        return Task.FromResult(subject.GetPublisher());
-    }
-
-    /// <summary>
-    /// Subscribes to events by seeking into the <see cref="SeekableReplaySubject"/>.
-    /// </summary>
-    public async Task<IAsyncDisposable> SubscribeToEventsAsync(
-        string responseId,
-        IAsyncObserver<ResponseStreamEvent> observer,
-        long? cursor = null,
-        CancellationToken cancellationToken = default)
-    {
-        if (!_subjects.TryGetValue(responseId, out var subject))
-        {
-            throw new InvalidOperationException($"No event stream found for response '{responseId}'.");
-        }
-
-        // Wrap the caller's observer in an adapter that unwraps the (SeqNo, Event) tuple
-        var adapter = new UnwrappingObserver(observer);
-        return await subject.SubscribeAsync(adapter, cursor).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// Removes the event stream for the specified response, freeing buffer memory.
-    /// After deletion, <see cref="SubscribeToEventsAsync"/> will throw for this response ID.
-    /// </summary>
-    public Task DeleteEventStreamAsync(string responseId)
-    {
-        if (_subjects.TryRemove(responseId, out var subject))
-        {
-            subject.Dispose();
-        }
-
-        return Task.CompletedTask;
-    }
-
     // --- Cancellation ---
 
     /// <summary>
@@ -512,12 +497,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     // --- Eviction ---
 
     /// <summary>
-    /// GC pass for event stream infrastructure.
-    /// The <see cref="SeekableReplaySubject"/> handles per-event TTL internally
-    /// (each event expires individually from its emission time). This method
-    /// disposes the subject container and CTS once the TTL window has fully
-    /// elapsed since the last event was emitted (i.e. the response reached
-    /// terminal status), meaning all buffered events have individually expired.
+    /// GC pass for per-response cancellation-token infrastructure. Once the TTL window has fully
+    /// elapsed since the last event was emitted (i.e. the response reached terminal status), the
+    /// per-response cancellation-token source is disposed.
     /// </summary>
     private void EvictExpired()
     {
@@ -529,11 +511,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
             if (elapsed > _eventStreamTtl)
             {
-                if (_subjects.TryRemove(id, out var subject))
-                {
-                    subject.Dispose();
-                }
-
                 if (_cancellationTokenSources.TryRemove(id, out var cts))
                 {
                     cts.Dispose();
@@ -548,12 +525,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     public void Dispose()
     {
         _evictionTimer.Dispose();
-
-        foreach (var subject in _subjects.Values)
-        {
-            subject.Dispose();
-        }
-        _subjects.Clear();
 
         foreach (var cts in _cancellationTokenSources.Values)
         {
@@ -573,29 +544,5 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         {
             _deletedResponseIds.Clear();
         }
-    }
-
-    /// <summary>
-    /// Adapter observer that unwraps <c>(long SeqNo, ResponseStreamEvent Event)</c> tuples
-    /// from the <see cref="SeekableReplaySubject"/> into bare <see cref="ResponseStreamEvent"/>
-    /// values for the external subscriber.
-    /// </summary>
-    private sealed class UnwrappingObserver : IAsyncObserver<(long SeqNo, ResponseStreamEvent Event)>
-    {
-        private readonly IAsyncObserver<ResponseStreamEvent> _inner;
-
-        public UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)
-        {
-            _inner = inner;
-        }
-
-        public async ValueTask OnNextAsync((long SeqNo, ResponseStreamEvent Event) value)
-        {
-            await _inner.OnNextAsync(value.Event).ConfigureAwait(false);
-        }
-
-        public ValueTask OnErrorAsync(Exception error) => _inner.OnErrorAsync(error);
-
-        public ValueTask OnCompletedAsync() => _inner.OnCompletedAsync();
     }
 }

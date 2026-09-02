@@ -22,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="code"></param>
         /// <param name="outputs"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="containerId"/> is null. </exception>
-        public OutputItemCodeInterpreterToolCall(string id, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(OutputItemType.CodeInterpreterCall)
+        public OutputItemCodeInterpreterToolCall(string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(OutputItemType.CodeInterpreterCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(containerId, nameof(containerId));
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal OutputItemCodeInterpreterToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemCodeInterpreterToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -58,7 +58,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; set; }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public OutputItemCodeInterpreterToolCallStatus Status { get; set; }
+        public ItemCodeInterpreterToolCallStatus Status { get; set; }
 
         /// <summary> The ID of the container used to run the code. </summary>
         public string ContainerId { get; set; }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     internal static partial class RedisRegenerateKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RedisRegenerateKeyType value) => value switch
         {
             RedisRegenerateKeyType.Primary => "Primary",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Redis.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisRegenerateKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RedisRegenerateKeyType ToRedisRegenerateKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return RedisRegenerateKeyType.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return RedisRegenerateKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
+            {
+                return RedisRegenerateKeyType.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
+            {
+                return RedisRegenerateKeyType.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisRegenerateKeyType value.");
         }
     }

@@ -45,6 +45,8 @@ public partial class ExpressionStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) => other is ExpressionStatement e && Expression.Equals(e.Expression);
+    /// <inheritdoc/>
     public override int GetHashCode() => (typeof(ExpressionStatement).GetHashCode() * 31 + (Expression?.GetHashCode() ?? 0));
 }

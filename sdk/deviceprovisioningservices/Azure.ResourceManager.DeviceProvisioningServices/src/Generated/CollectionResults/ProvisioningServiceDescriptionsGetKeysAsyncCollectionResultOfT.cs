@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     yield break;
                 }
                 SharedAccessSignatureAuthorizationRuleListResult result = SharedAccessSignatureAuthorizationRuleListResult.FromResponse(response);
-                yield return Page<DeviceProvisioningServicesSharedAccessKey>.FromValues((IReadOnlyList<DeviceProvisioningServicesSharedAccessKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DeviceProvisioningServicesSharedAccessKey>.FromValues((IReadOnlyList<DeviceProvisioningServicesSharedAccessKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

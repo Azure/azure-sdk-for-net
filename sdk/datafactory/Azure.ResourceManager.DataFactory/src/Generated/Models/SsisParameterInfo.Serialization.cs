@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisParameterInfo : IUtf8JsonSerializable, IJsonModel<SsisParameterInfo>
+    /// <summary> Ssis parameter. </summary>
+    public partial class SsisParameterInfo : IJsonModel<SsisParameterInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisParameterInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SsisParameterInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSsisParameterInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SsisParameterInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SsisParameterInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SsisParameterInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SsisParameterInfo IPersistableModel<SsisParameterInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SsisParameterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SsisParameterInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SsisParameterInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -94,15 +134,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,22 +151,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        SsisParameterInfo IJsonModel<SsisParameterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SsisParameterInfo IJsonModel<SsisParameterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SsisParameterInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SsisParameterInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSsisParameterInfo(document.RootElement, options);
         }
 
-        internal static SsisParameterInfo DeserializeSsisParameterInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SsisParameterInfo DeserializeSsisParameterInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,145 +180,112 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string description = default;
             string dataType = default;
-            bool? required = default;
-            bool? sensitive = default;
+            bool? isRequired = default;
+            bool? isSensitive = default;
             string designDefaultValue = default;
             string defaultValue = default;
             string sensitiveDefaultValue = default;
             string valueType = default;
-            bool? valueSet = default;
+            bool? hasValueSet = default;
             string variable = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = property.Value.GetInt64();
+                    id = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"u8))
+                if (prop.NameEquals("dataType"u8))
                 {
-                    dataType = property.Value.GetString();
+                    dataType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("required"u8))
+                if (prop.NameEquals("required"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    required = property.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sensitive"u8))
+                if (prop.NameEquals("sensitive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sensitive = property.Value.GetBoolean();
+                    isSensitive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("designDefaultValue"u8))
+                if (prop.NameEquals("designDefaultValue"u8))
                 {
-                    designDefaultValue = property.Value.GetString();
+                    designDefaultValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultValue"u8))
+                if (prop.NameEquals("defaultValue"u8))
                 {
-                    defaultValue = property.Value.GetString();
+                    defaultValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sensitiveDefaultValue"u8))
+                if (prop.NameEquals("sensitiveDefaultValue"u8))
                 {
-                    sensitiveDefaultValue = property.Value.GetString();
+                    sensitiveDefaultValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueType"u8))
+                if (prop.NameEquals("valueType"u8))
                 {
-                    valueType = property.Value.GetString();
+                    valueType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueSet"u8))
+                if (prop.NameEquals("valueSet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueSet = property.Value.GetBoolean();
+                    hasValueSet = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("variable"u8))
+                if (prop.NameEquals("variable"u8))
                 {
-                    variable = property.Value.GetString();
+                    variable = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SsisParameterInfo(
                 id,
                 name,
                 description,
                 dataType,
-                required,
-                sensitive,
+                isRequired,
+                isSensitive,
                 designDefaultValue,
                 defaultValue,
                 sensitiveDefaultValue,
                 valueType,
-                valueSet,
+                hasValueSet,
                 variable,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SsisParameterInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SsisParameterInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SsisParameterInfo IPersistableModel<SsisParameterInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SsisParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSsisParameterInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SsisParameterInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SsisParameterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

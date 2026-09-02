@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The GetVirtualMachineExpandType. </summary>
+    /// <summary></summary>
     public readonly partial struct GetVirtualMachineExpandType : IEquatable<GetVirtualMachineExpandType>
     {
         private readonly string _value;
+        private const string InstanceViewValue = "instanceView";
 
         /// <summary> Initializes a new instance of <see cref="GetVirtualMachineExpandType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GetVirtualMachineExpandType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InstanceViewValue = "instanceView";
-
-        /// <summary> instanceView. </summary>
+        /// <summary> Gets the InstanceView. </summary>
         public static GetVirtualMachineExpandType InstanceView { get; } = new GetVirtualMachineExpandType(InstanceViewValue);
+
         /// <summary> Determines if two <see cref="GetVirtualMachineExpandType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GetVirtualMachineExpandType left, GetVirtualMachineExpandType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GetVirtualMachineExpandType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GetVirtualMachineExpandType left, GetVirtualMachineExpandType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GetVirtualMachineExpandType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GetVirtualMachineExpandType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GetVirtualMachineExpandType(string value) => new GetVirtualMachineExpandType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GetVirtualMachineExpandType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GetVirtualMachineExpandType?(string value) => value == null ? null : new GetVirtualMachineExpandType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GetVirtualMachineExpandType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GetVirtualMachineExpandType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

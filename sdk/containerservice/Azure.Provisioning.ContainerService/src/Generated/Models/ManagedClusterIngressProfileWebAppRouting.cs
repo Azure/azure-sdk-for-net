@@ -104,6 +104,10 @@ namespace Azure.Provisioning.ContainerService
             _dnsZoneResourceIds = DefineListProperty<ResourceIdentifier>(nameof(DnsZoneResourceIds), new string[] { "dnsZoneResourceIds" });
             _nginx = DefineModelProperty<ManagedClusterIngressProfileNginx>(nameof(Nginx), new string[] { "nginx" });
             _identity = DefineModelProperty<ContainerServiceUserAssignedIdentity>(nameof(Identity), new string[] { "identity" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterIngressProfileWebAppRouting that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,41 +18,64 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class MstiDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="MstiDataConnector"/>. </summary>
-        public MstiDataConnector()
+        public MstiDataConnector() : base(DataConnectorKind.MicrosoftThreatIntelligence)
         {
-            Kind = DataConnectorKind.MicrosoftThreatIntelligence;
         }
 
         /// <summary> Initializes a new instance of <see cref="MstiDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="microsoftEmergingThreatFeed"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
-        internal MstiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, DataConnectorDataTypeCommon microsoftEmergingThreatFeed) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Microsoft Threat Intelligence data connector properties. </param>
+        internal MstiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, MstiDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            MicrosoftEmergingThreatFeed = microsoftEmergingThreatFeed;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> Microsoft Threat Intelligence data connector properties. </summary>
+        [WirePath("properties")]
+        internal MstiDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
-        /// <summary> Data type for Microsoft Threat Intelligence Platforms data connector. </summary>
-        internal DataConnectorDataTypeCommon MicrosoftEmergingThreatFeed { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("properties.microsoftEmergingThreatFeed.state")]
-        public SecurityInsightsDataTypeConnectionState? MicrosoftEmergingThreatFeedState
+        public Guid? TenantId
         {
-            get => MicrosoftEmergingThreatFeed is null ? default(SecurityInsightsDataTypeConnectionState?) : MicrosoftEmergingThreatFeed.State;
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
             set
             {
-                MicrosoftEmergingThreatFeed = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new MstiDataConnectorProperties();
+                    }
+                    Properties.TenantId = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Data type for Microsoft Threat Intelligence Platforms data connector. </summary>
+        [WirePath("properties.dataTypes.microsoftEmergingThreatFeed")]
+        public MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed DataTypesMicrosoftEmergingThreatFeed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTypesMicrosoftEmergingThreatFeed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MstiDataConnectorProperties();
+                }
+                Properties.DataTypesMicrosoftEmergingThreatFeed = value;
             }
         }
     }

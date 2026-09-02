@@ -57,7 +57,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Assert
-            Assert.IsNotNull(managedIdentities, "Managed identities list should not be null");
+            Assert.That(managedIdentities, Is.Not.Null, "Managed identities list should not be null");
             TestContext.WriteLine($"\n=== Total Identities Found: {managedIdentities.Count} ===");
 
             // Verify each identity has required properties
@@ -69,8 +69,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 TestContext.WriteLine($"    - Resource ID: {identity.ResourceId}");
 
                 // Verify properties
-                Assert.AreNotEqual(Guid.Empty, identity.ObjectId, "Object ID should not be empty");
-                Assert.IsNotNull(identity.ResourceId, "Resource ID should not be null");
+                Assert.That(identity.ObjectId, Is.Not.EqualTo(Guid.Empty), "Object ID should not be empty");
+                Assert.That(identity.ResourceId, Is.Not.Null, "Resource ID should not be null");
             }
 
             TestContext.WriteLine($"Successfully listed {managedIdentities.Count} managed identities");
@@ -101,13 +101,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Assert
-            Assert.IsNotNull(sources, "Sources list should not be null");
+            Assert.That(sources, Is.Not.Null, "Sources list should not be null");
             TestContext.WriteLine($"Found {sources.Count} ingestion sources");
 
             // Verify each source has required properties
             foreach (IngestionSourceSummary source in sources)
             {
-                Assert.IsNotNull(source.Id, "Source should have ID");
+                Assert.That(source.Id, Is.Not.Null, "Source should have ID");
                 TestContext.WriteLine($"  Source ID: {source.Id}");
 
                 TestContext.WriteLine($"    Kind: {source.Kind}");
@@ -141,7 +141,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Assert
-            Assert.IsNotNull(sources, "Sources list should not be null");
+            Assert.That(sources, Is.Not.Null, "Sources list should not be null");
             TestContext.WriteLine($"Found {sources.Count} ingestion sources");
 
             // Verify each source has required properties
@@ -180,7 +180,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 firstIdentity = identity;
                 break;
             }
-            Assert.IsNotNull(firstIdentity, "No managed identities found");
+            Assert.That(firstIdentity, Is.Not.Null, "No managed identities found");
 
             Guid objectId = firstIdentity.ObjectId;
             TestContext.WriteLine($"Using Managed Identity Object ID: {objectId}");
@@ -210,8 +210,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionSource> createResponse = await ingestionClient.CreateSourceAsync(ingestionSource);
 
             // Assert
-            Assert.IsNotNull(createResponse, "Create response should not be null");
-            Assert.IsNotNull(createResponse.Value, "Created source should not be null");
+            Assert.That(createResponse, Is.Not.Null, "Create response should not be null");
+            Assert.That(createResponse.Value, Is.Not.Null, "Created source should not be null");
 
             TestContext.WriteLine($"Created ingestion source:");
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
@@ -262,8 +262,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionSource> createResponse = await ingestionClient.CreateSourceAsync(sasIngestionSource);
 
             // Assert
-            Assert.IsNotNull(createResponse, "Create response should not be null");
-            Assert.IsNotNull(createResponse.Value, "Created source should not be null");
+            Assert.That(createResponse, Is.Not.Null, "Create response should not be null");
+            Assert.That(createResponse.Value, Is.Not.Null, "Created source should not be null");
 
             TestContext.WriteLine($"Created SAS token ingestion source:");
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
@@ -313,15 +313,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
 
             TestContext.WriteLine("Ingestion definition created:");
-            TestContext.WriteLine($"  - Import Type: {ingestionDefinition.ImportType}");
+            TestContext.WriteLine($"  - Import Type: {ingestionDefinition.ImportKind}");
             TestContext.WriteLine($"  - Display Name: {ingestionDefinition.DisplayName}");
-            TestContext.WriteLine($"  - Source Catalog URL: {ingestionDefinition.SourceCatalogUrl}");
+            TestContext.WriteLine($"  - Source Catalog URL: {ingestionDefinition.SourceCatalogUri}");
             TestContext.WriteLine($"  - Keep Original Assets: {ingestionDefinition.KeepOriginalAssets}");
             TestContext.WriteLine($"  - Skip Existing Items: {ingestionDefinition.SkipExistingItems}");
 
@@ -329,9 +329,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionInformation> response = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
 
             // Assert
-            Assert.IsNotNull(response, "Ingestion response should not be null");
-            Assert.IsNotNull(response.Value, "Ingestion value should not be null");
-            Assert.IsNotNull(response.Value.Id, "Ingestion ID should not be null");
+            Assert.That(response, Is.Not.Null, "Ingestion response should not be null");
+            Assert.That(response.Value, Is.Not.Null, "Ingestion value should not be null");
+            Assert.That(response.Value.Id, Is.Not.Null, "Ingestion ID should not be null");
 
             TestContext.WriteLine($"Created ingestion: {response.Value.Id}");
         }
@@ -358,7 +358,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Sample Dataset Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -370,7 +370,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Update the ingestion with new display name
             var updateData = new
             {
-                ImportType = "StaticCatalog",
+                ImportKind = "StaticCatalog",
                 DisplayName = "Updated Ingestion Name"
             };
 
@@ -387,10 +387,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Updated ingestion:");
             TestContext.WriteLine($"  - ID: {updatedIngestion.Id}");
             TestContext.WriteLine($"  - Display Name: {updatedIngestion.DisplayName}");
-            TestContext.WriteLine($"  - Import Type: {updatedIngestion.ImportType}");
+            TestContext.WriteLine($"  - Import Type: {updatedIngestion.ImportKind}");
 
-            Assert.AreEqual(ingestionId, updatedIngestion.Id, "Ingestion ID should remain the same");
-            Assert.AreEqual("Updated Ingestion Name", updatedIngestion.DisplayName, "Display name should be updated");
+            Assert.That(updatedIngestion.Id, Is.EqualTo(ingestionId), "Ingestion ID should remain the same");
+            Assert.That(updatedIngestion.DisplayName, Is.EqualTo("Updated Ingestion Name"), "Display name should be updated");
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Run",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -428,10 +428,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionRun> runResponse = await ingestionClient.CreateRunAsync(collectionId, ingestionId);
 
             // Assert
-            Assert.IsNotNull(runResponse, "Run response should not be null");
-            Assert.IsNotNull(runResponse.Value, "Run value should not be null");
-            Assert.IsNotNull(runResponse.Value.Id, "Run ID should not be null");
-            Assert.IsNotNull(runResponse.Value.Operation, "Operation should not be null");
+            Assert.That(runResponse, Is.Not.Null, "Run response should not be null");
+            Assert.That(runResponse.Value, Is.Not.Null, "Run value should not be null");
+            Assert.That(runResponse.Value.Id, Is.Not.Null, "Run ID should not be null");
+            Assert.That(runResponse.Value.Operation, Is.Not.Null, "Operation should not be null");
 
             TestContext.WriteLine($"Created ingestion run:");
             TestContext.WriteLine($"  - Run ID: {runResponse.Value.Id}");
@@ -460,7 +460,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Status Check",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -477,8 +477,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionRun> getRunResponse = await ingestionClient.GetRunAsync(collectionId, ingestionId, runId);
 
             // Assert
-            Assert.IsNotNull(getRunResponse, "Get run response should not be null");
-            Assert.IsNotNull(getRunResponse.Value, "Run should not be null");
+            Assert.That(getRunResponse, Is.Not.Null, "Get run response should not be null");
+            Assert.That(getRunResponse.Value, Is.Not.Null, "Run should not be null");
             IngestionRun run = getRunResponse.Value;
 
             TestContext.WriteLine("Run status:");
@@ -489,15 +489,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Failed Items: {run.Operation.TotalFailedItems}");
             TestContext.WriteLine($"  - Pending Items: {run.Operation.TotalPendingItems}");
 
-            Assert.AreEqual(runId, run.Id, "Run ID should match");
-            Assert.IsNotNull(run.Operation, "Operation should not be null");
-            Assert.IsNotNull(run.Operation.Status, "Status should not be null");
+            Assert.That(run.Id, Is.EqualTo(runId), "Run ID should match");
+            Assert.That(run.Operation, Is.Not.Null, "Operation should not be null");
+            Assert.That(run.Operation.Status, Is.Not.Null, "Status should not be null");
         }
 
         /// <summary>
         /// Test getting a specific operation by ID.
         /// Python equivalent: test_08_get_operation_by_id
-        /// C# method: GetOperation(Guid operationId) - returns Response<LongRunningOperation>
+        /// C# method: GetOperation(Guid operationId) - returns Response<PlanetaryComputerOperation>
         /// </summary>
         [Test]
         [Category("Ingestion")]
@@ -516,7 +516,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Operation",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -530,20 +530,20 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Created operation with ID: {operationId}");
 
             // Act
-            Response<LongRunningOperation> operationResponse = await ingestionClient.GetOperationAsync(operationId);
+            Response<PlanetaryComputerOperation> operationResponse = await ingestionClient.GetOperationAsync(operationId);
 
             // Assert
-            Assert.IsNotNull(operationResponse, "Operation response should not be null");
-            Assert.IsNotNull(operationResponse.Value, "Operation should not be null");
-            LongRunningOperation operation = operationResponse.Value;
+            Assert.That(operationResponse, Is.Not.Null, "Operation response should not be null");
+            Assert.That(operationResponse.Value, Is.Not.Null, "Operation should not be null");
+            PlanetaryComputerOperation operation = operationResponse.Value;
 
             TestContext.WriteLine("Retrieved operation:");
             TestContext.WriteLine($"  - ID: {operation.Id}");
             TestContext.WriteLine($"  - Status: {operation.Status}");
-            TestContext.WriteLine($"  - Type: {operation.Type}");
+            TestContext.WriteLine($"  - Type: {operation.Kind}");
 
-            Assert.AreEqual(operationId, operation.Id, "Operation ID should match");
-            Assert.IsNotNull(operation.Status, "Status should not be null");
+            Assert.That(operation.Id, Is.EqualTo(operationId), "Operation ID should match");
+            Assert.That(operation.Status, Is.Not.Null, "Status should not be null");
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Cancel Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -751,8 +751,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionSource> getResponse = await ingestionClient.GetSourceAsync(createdSourceId);
 
             // Assert
-            Assert.IsNotNull(getResponse, "Get source response should not be null");
-            Assert.IsNotNull(getResponse.Value, "Retrieved source should not be null");
+            Assert.That(getResponse, Is.Not.Null, "Get source response should not be null");
+            Assert.That(getResponse.Value, Is.Not.Null, "Retrieved source should not be null");
 
             TestContext.WriteLine("Retrieved source:");
             TestContext.WriteLine($"  - ID: {getResponse.Value.Id}");
@@ -849,7 +849,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Lists Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -871,7 +871,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 TestContext.WriteLine($"  Ingestion {i + 1}:");
                 TestContext.WriteLine($"    - ID: {ingestions[i].Id}");
                 TestContext.WriteLine($"    - Display Name: {ingestions[i].DisplayName}");
-                TestContext.WriteLine($"    - Import Type: {ingestions[i].ImportType}");
+                TestContext.WriteLine($"    - Import Type: {ingestions[i].ImportKind}");
             }
 
             Assert.That(ingestions.Count, Is.GreaterThan(0), "Should have at least one ingestion");
@@ -899,7 +899,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Get Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -912,17 +912,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionInformation> getResponse = await ingestionClient.GetAsync(collectionId, ingestionId);
 
             // Assert
-            Assert.IsNotNull(getResponse, "Get response should not be null");
-            Assert.IsNotNull(getResponse.Value, "Retrieved ingestion should not be null");
+            Assert.That(getResponse, Is.Not.Null, "Get response should not be null");
+            Assert.That(getResponse.Value, Is.Not.Null, "Retrieved ingestion should not be null");
             IngestionInformation retrievedIngestion = getResponse.Value;
 
             TestContext.WriteLine("Retrieved ingestion:");
             TestContext.WriteLine($"  - ID: {retrievedIngestion.Id}");
             TestContext.WriteLine($"  - Display Name: {retrievedIngestion.DisplayName}");
-            TestContext.WriteLine($"  - Import Type: {retrievedIngestion.ImportType}");
-            TestContext.WriteLine($"  - Source Catalog URL: {retrievedIngestion.SourceCatalogUrl}");
+            TestContext.WriteLine($"  - Import Type: {retrievedIngestion.ImportKind}");
+            TestContext.WriteLine($"  - Source Catalog URL: {retrievedIngestion.SourceCatalogUri}");
 
-            Assert.AreEqual(ingestionId, retrievedIngestion.Id, "Ingestion ID should match");
+            Assert.That(retrievedIngestion.Id, Is.EqualTo(ingestionId), "Ingestion ID should match");
         }
 
         /// <summary>
@@ -947,7 +947,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for List Runs Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };

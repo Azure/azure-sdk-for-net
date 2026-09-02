@@ -49,6 +49,8 @@ public partial class SafeMemberExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is SafeMemberExpression m && Value.Equals(m.Value) && Member == m.Member;
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(SafeMemberExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Member?.GetHashCode() ?? 0);
 }

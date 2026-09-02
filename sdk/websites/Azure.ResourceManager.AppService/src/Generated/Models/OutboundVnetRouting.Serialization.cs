@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OutboundVnetRouting : IUtf8JsonSerializable, IJsonModel<OutboundVnetRouting>
+    /// <summary> Outbound traffic options over virtual network. </summary>
+    public partial class OutboundVnetRouting : IJsonModel<OutboundVnetRouting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundVnetRouting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OutboundVnetRouting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOutboundVnetRouting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OutboundVnetRouting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OutboundVnetRouting IPersistableModel<OutboundVnetRouting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OutboundVnetRouting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OutboundVnetRouting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsAllTrafficEnabled))
             {
                 writer.WritePropertyName("allTraffic"u8);
@@ -60,15 +99,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("backupRestoreTraffic"u8);
                 writer.WriteBooleanValue(IsBackupRestoreTrafficEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(IsManagedIdentityTrafficEnabled))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("managedIdentityTraffic"u8);
+                writer.WriteBooleanValue(IsManagedIdentityTrafficEnabled.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,221 +121,107 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        OutboundVnetRouting IJsonModel<OutboundVnetRouting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OutboundVnetRouting IJsonModel<OutboundVnetRouting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OutboundVnetRouting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOutboundVnetRouting(document.RootElement, options);
         }
 
-        internal static OutboundVnetRouting DeserializeOutboundVnetRouting(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OutboundVnetRouting DeserializeOutboundVnetRouting(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? allTraffic = default;
-            bool? applicationTraffic = default;
-            bool? contentShareTraffic = default;
-            bool? imagePullTraffic = default;
-            bool? backupRestoreTraffic = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isAllTrafficEnabled = default;
+            bool? isApplicationTrafficEnabled = default;
+            bool? isContentShareTrafficEnabled = default;
+            bool? isImagePullTrafficEnabled = default;
+            bool? isBackupRestoreTrafficEnabled = default;
+            bool? isManagedIdentityTrafficEnabled = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("allTraffic"u8))
+                if (prop.NameEquals("allTraffic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allTraffic = property.Value.GetBoolean();
+                    isAllTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("applicationTraffic"u8))
+                if (prop.NameEquals("applicationTraffic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationTraffic = property.Value.GetBoolean();
+                    isApplicationTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("contentShareTraffic"u8))
+                if (prop.NameEquals("contentShareTraffic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    contentShareTraffic = property.Value.GetBoolean();
+                    isContentShareTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("imagePullTraffic"u8))
+                if (prop.NameEquals("imagePullTraffic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imagePullTraffic = property.Value.GetBoolean();
+                    isImagePullTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupRestoreTraffic"u8))
+                if (prop.NameEquals("backupRestoreTraffic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupRestoreTraffic = property.Value.GetBoolean();
+                    isBackupRestoreTrafficEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("managedIdentityTraffic"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isManagedIdentityTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OutboundVnetRouting(
-                allTraffic,
-                applicationTraffic,
-                contentShareTraffic,
-                imagePullTraffic,
-                backupRestoreTraffic,
-                serializedAdditionalRawData);
+                isAllTrafficEnabled,
+                isApplicationTrafficEnabled,
+                isContentShareTrafficEnabled,
+                isImagePullTrafficEnabled,
+                isBackupRestoreTrafficEnabled,
+                isManagedIdentityTrafficEnabled,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAllTrafficEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  allTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsAllTrafficEnabled))
-                {
-                    builder.Append("  allTraffic: ");
-                    var boolValue = IsAllTrafficEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApplicationTrafficEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  applicationTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsApplicationTrafficEnabled))
-                {
-                    builder.Append("  applicationTraffic: ");
-                    var boolValue = IsApplicationTrafficEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsContentShareTrafficEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentShareTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsContentShareTrafficEnabled))
-                {
-                    builder.Append("  contentShareTraffic: ");
-                    var boolValue = IsContentShareTrafficEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsImagePullTrafficEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  imagePullTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsImagePullTrafficEnabled))
-                {
-                    builder.Append("  imagePullTraffic: ");
-                    var boolValue = IsImagePullTrafficEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBackupRestoreTrafficEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backupRestoreTraffic: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsBackupRestoreTrafficEnabled))
-                {
-                    builder.Append("  backupRestoreTraffic: ");
-                    var boolValue = IsBackupRestoreTrafficEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<OutboundVnetRouting>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OutboundVnetRouting IPersistableModel<OutboundVnetRouting>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OutboundVnetRouting>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOutboundVnetRouting(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OutboundVnetRouting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,13 +12,65 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstancePatch : IUtf8JsonSerializable, IJsonModel<ManagedInstancePatch>
+    /// <summary> An update request for an Azure SQL Database managed instance. </summary>
+    public partial class ManagedInstancePatch : IJsonModel<ManagedInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstancePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedInstancePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedInstancePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedInstancePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstancePatch IPersistableModel<ManagedInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="managedInstancePatch"> The <see cref="ManagedInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedInstancePatch managedInstancePatch)
+        {
+            if (managedInstancePatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(managedInstancePatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +82,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -44,7 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,237 +109,24 @@ namespace Azure.ResourceManager.Sql.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ManagedInstanceCreateMode))
-            {
-                writer.WritePropertyName("managedInstanceCreateMode"u8);
-                writer.WriteStringValue(ManagedInstanceCreateMode.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
-            {
-                writer.WritePropertyName("fullyQualifiedDomainName"u8);
-                writer.WriteStringValue(FullyQualifiedDomainName);
-            }
-            if (Optional.IsDefined(IsGeneralPurposeV2))
-            {
-                writer.WritePropertyName("isGeneralPurposeV2"u8);
-                writer.WriteBooleanValue(IsGeneralPurposeV2.Value);
-            }
-            if (Optional.IsDefined(AdministratorLogin))
-            {
-                writer.WritePropertyName("administratorLogin"u8);
-                writer.WriteStringValue(AdministratorLogin);
-            }
-            if (Optional.IsDefined(AdministratorLoginPassword))
-            {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
-            }
-            if (Optional.IsDefined(SubnetId))
-            {
-                writer.WritePropertyName("subnetId"u8);
-                writer.WriteStringValue(SubnetId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
-            }
-            if (Optional.IsDefined(LicenseType))
-            {
-                writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
-            }
-            if (Optional.IsDefined(HybridSecondaryUsage))
-            {
-                writer.WritePropertyName("hybridSecondaryUsage"u8);
-                writer.WriteStringValue(HybridSecondaryUsage.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(HybridSecondaryUsageDetected))
-            {
-                writer.WritePropertyName("hybridSecondaryUsageDetected"u8);
-                writer.WriteStringValue(HybridSecondaryUsageDetected.Value.ToString());
-            }
-            if (Optional.IsDefined(VCores))
-            {
-                writer.WritePropertyName("vCores"u8);
-                writer.WriteNumberValue(VCores.Value);
-            }
-            if (Optional.IsDefined(StorageSizeInGB))
-            {
-                writer.WritePropertyName("storageSizeInGB"u8);
-                writer.WriteNumberValue(StorageSizeInGB.Value);
-            }
-            if (Optional.IsDefined(StorageIOps))
-            {
-                writer.WritePropertyName("storageIOps"u8);
-                writer.WriteNumberValue(StorageIOps.Value);
-            }
-            if (Optional.IsDefined(StorageThroughputMBps))
-            {
-                writer.WritePropertyName("storageThroughputMBps"u8);
-                writer.WriteNumberValue(StorageThroughputMBps.Value);
-            }
-            if (Optional.IsDefined(MemorySizeInGB))
-            {
-                writer.WritePropertyName("memorySizeInGB"u8);
-                writer.WriteNumberValue(MemorySizeInGB.Value);
-            }
-            if (Optional.IsDefined(Collation))
-            {
-                writer.WritePropertyName("collation"u8);
-                writer.WriteStringValue(Collation);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DnsZone))
-            {
-                writer.WritePropertyName("dnsZone"u8);
-                writer.WriteStringValue(DnsZone);
-            }
-            if (Optional.IsDefined(ManagedDnsZonePartner))
-            {
-                writer.WritePropertyName("dnsZonePartner"u8);
-                writer.WriteStringValue(ManagedDnsZonePartner);
-            }
-            if (Optional.IsDefined(IsPublicDataEndpointEnabled))
-            {
-                writer.WritePropertyName("publicDataEndpointEnabled"u8);
-                writer.WriteBooleanValue(IsPublicDataEndpointEnabled.Value);
-            }
-            if (Optional.IsDefined(SourceManagedInstanceId))
-            {
-                writer.WritePropertyName("sourceManagedInstanceId"u8);
-                writer.WriteStringValue(SourceManagedInstanceId);
-            }
-            if (Optional.IsDefined(RestorePointInTime))
-            {
-                writer.WritePropertyName("restorePointInTime"u8);
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
-            }
-            if (Optional.IsDefined(ProxyOverride))
-            {
-                writer.WritePropertyName("proxyOverride"u8);
-                writer.WriteStringValue(ProxyOverride.Value.ToString());
-            }
-            if (Optional.IsDefined(TimezoneId))
-            {
-                writer.WritePropertyName("timezoneId"u8);
-                writer.WriteStringValue(TimezoneId);
-            }
-            if (Optional.IsDefined(InstancePoolId))
-            {
-                writer.WritePropertyName("instancePoolId"u8);
-                writer.WriteStringValue(InstancePoolId);
-            }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
-            {
-                writer.WritePropertyName("maintenanceConfigurationId"u8);
-                writer.WriteStringValue(MaintenanceConfigurationId);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MinimalTlsVersion))
-            {
-                writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBackupStorageRedundancy))
-            {
-                writer.WritePropertyName("currentBackupStorageRedundancy"u8);
-                writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
-            }
-            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
-            {
-                writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
-                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
-            }
-            if (Optional.IsDefined(IsZoneRedundant))
-            {
-                writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(IsZoneRedundant.Value);
-            }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
-            {
-                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
-                writer.WriteStringValue(PrimaryUserAssignedIdentityId);
-            }
-            if (Optional.IsDefined(KeyId))
-            {
-                writer.WritePropertyName("keyId"u8);
-                writer.WriteStringValue(KeyId.AbsoluteUri);
-            }
-            if (Optional.IsDefined(Administrators))
-            {
-                writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators, options);
-            }
-            if (Optional.IsDefined(ServicePrincipal))
-            {
-                writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VirtualClusterId))
-            {
-                writer.WritePropertyName("virtualClusterId"u8);
-                writer.WriteStringValue(VirtualClusterId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExternalGovernanceStatus))
-            {
-                writer.WritePropertyName("externalGovernanceStatus"u8);
-                writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(PricingModel))
-            {
-                writer.WritePropertyName("pricingModel"u8);
-                writer.WriteStringValue(PricingModel.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreateOn))
-            {
-                writer.WritePropertyName("createTime"u8);
-                writer.WriteStringValue(CreateOn.Value, "O");
-            }
-            if (Optional.IsDefined(AuthenticationMetadata))
-            {
-                writer.WritePropertyName("authenticationMetadata"u8);
-                writer.WriteStringValue(AuthenticationMetadata.Value.ToString());
-            }
-            if (Optional.IsDefined(DatabaseFormat))
-            {
-                writer.WritePropertyName("databaseFormat"u8);
-                writer.WriteStringValue(DatabaseFormat.Value.ToString());
-            }
-            if (Optional.IsDefined(RequestedLogicalAvailabilityZone))
-            {
-                writer.WritePropertyName("requestedLogicalAvailabilityZone"u8);
-                writer.WriteStringValue(RequestedLogicalAvailabilityZone.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -292,554 +135,92 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        ManagedInstancePatch IJsonModel<ManagedInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstancePatch IJsonModel<ManagedInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedInstancePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedInstancePatch(document.RootElement, options);
         }
 
-        internal static ManagedInstancePatch DeserializeManagedInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedInstancePatch DeserializeManagedInstancePatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SqlSku sku = default;
             ManagedServiceIdentity identity = default;
+            ManagedInstanceProperties properties = default;
             IDictionary<string, string> tags = default;
-            ManagedInstancePropertiesProvisioningState? provisioningState = default;
-            ManagedServerCreateMode? managedInstanceCreateMode = default;
-            string fullyQualifiedDomainName = default;
-            bool? isGeneralPurposeV2 = default;
-            string administratorLogin = default;
-            string administratorLoginPassword = default;
-            ResourceIdentifier subnetId = default;
-            string state = default;
-            ManagedInstanceLicenseType? licenseType = default;
-            HybridSecondaryUsage? hybridSecondaryUsage = default;
-            HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default;
-            int? vCores = default;
-            int? storageSizeInGB = default;
-            int? storageIOps = default;
-            int? storageThroughputMBps = default;
-            int? memorySizeInGB = default;
-            string collation = default;
-            string dnsZone = default;
-            ResourceIdentifier dnsZonePartner = default;
-            bool? publicDataEndpointEnabled = default;
-            ResourceIdentifier sourceManagedInstanceId = default;
-            DateTimeOffset? restorePointInTime = default;
-            ManagedInstanceProxyOverride? proxyOverride = default;
-            string timezoneId = default;
-            ResourceIdentifier instancePoolId = default;
-            ResourceIdentifier maintenanceConfigurationId = default;
-            IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections = default;
-            string minimalTlsVersion = default;
-            SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default;
-            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
-            bool? zoneRedundant = default;
-            ResourceIdentifier primaryUserAssignedIdentityId = default;
-            Uri keyId = default;
-            ManagedInstanceExternalAdministrator administrators = default;
-            SqlServicePrincipal servicePrincipal = default;
-            ResourceIdentifier virtualClusterId = default;
-            ExternalGovernanceStatus? externalGovernanceStatus = default;
-            SqlManagedInstancePricingModel? pricingModel = default;
-            DateTimeOffset? createTime = default;
-            AuthMetadataLookupMode? authenticationMetadata = default;
-            ManagedInstanceDatabaseFormat? databaseFormat = default;
-            SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = SqlSku.DeserializeSqlSku(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerSqlContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ManagedInstanceProperties.DeserializeManagedInstanceProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ManagedInstancePropertiesProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedInstanceCreateMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedInstanceCreateMode = new ManagedServerCreateMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("fullyQualifiedDomainName"u8))
-                        {
-                            fullyQualifiedDomainName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isGeneralPurposeV2"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isGeneralPurposeV2 = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLogin"u8))
-                        {
-                            administratorLogin = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLoginPassword"u8))
-                        {
-                            administratorLoginPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subnetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            state = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("licenseType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            licenseType = new ManagedInstanceLicenseType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hybridSecondaryUsage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hybridSecondaryUsage = new HybridSecondaryUsage(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hybridSecondaryUsageDetected"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hybridSecondaryUsageDetected = new HybridSecondaryUsageDetected(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vCores"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vCores = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageSizeInGB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageSizeInGB = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageIOps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageIOps = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageThroughputMBps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageThroughputMBps = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("memorySizeInGB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            memorySizeInGB = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("collation"u8))
-                        {
-                            collation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsZone"u8))
-                        {
-                            dnsZone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsZonePartner"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsZonePartner = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicDataEndpointEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicDataEndpointEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceManagedInstanceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceManagedInstanceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("restorePointInTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restorePointInTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("proxyOverride"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            proxyOverride = new ManagedInstanceProxyOverride(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("timezoneId"u8))
-                        {
-                            timezoneId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("instancePoolId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instancePoolId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceConfigurationId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item, options));
-                            }
-                            privateEndpointConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("minimalTlsVersion"u8))
-                        {
-                            minimalTlsVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentBackupStorageRedundancy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("requestedBackupStorageRedundancy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("zoneRedundant"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zoneRedundant = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryUserAssignedIdentityId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("keyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyId = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administrators"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePrincipal"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualClusterId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualClusterId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("externalGovernanceStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("pricingModel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            pricingModel = new SqlManagedInstancePricingModel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("createTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("authenticationMetadata"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authenticationMetadata = new AuthMetadataLookupMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("databaseFormat"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            databaseFormat = new ManagedInstanceDatabaseFormat(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("requestedLogicalAvailabilityZone"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requestedLogicalAvailabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedInstancePatch(
-                sku,
-                identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                provisioningState,
-                managedInstanceCreateMode,
-                fullyQualifiedDomainName,
-                isGeneralPurposeV2,
-                administratorLogin,
-                administratorLoginPassword,
-                subnetId,
-                state,
-                licenseType,
-                hybridSecondaryUsage,
-                hybridSecondaryUsageDetected,
-                vCores,
-                storageSizeInGB,
-                storageIOps,
-                storageThroughputMBps,
-                memorySizeInGB,
-                collation,
-                dnsZone,
-                dnsZonePartner,
-                publicDataEndpointEnabled,
-                sourceManagedInstanceId,
-                restorePointInTime,
-                proxyOverride,
-                timezoneId,
-                instancePoolId,
-                maintenanceConfigurationId,
-                privateEndpointConnections ?? new ChangeTrackingList<ManagedInstancePecProperty>(),
-                minimalTlsVersion,
-                currentBackupStorageRedundancy,
-                requestedBackupStorageRedundancy,
-                zoneRedundant,
-                primaryUserAssignedIdentityId,
-                keyId,
-                administrators,
-                servicePrincipal,
-                virtualClusterId,
-                externalGovernanceStatus,
-                pricingModel,
-                createTime,
-                authenticationMetadata,
-                databaseFormat,
-                requestedLogicalAvailabilityZone,
-                serializedAdditionalRawData);
+            return new ManagedInstancePatch(sku, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ManagedInstancePatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedInstancePatch IPersistableModel<ManagedInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedInstancePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

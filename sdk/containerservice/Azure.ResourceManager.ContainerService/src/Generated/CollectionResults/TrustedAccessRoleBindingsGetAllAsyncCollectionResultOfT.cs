@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 TrustedAccessRoleBindingListResult result = TrustedAccessRoleBindingListResult.FromResponse(response);
-                yield return Page<ContainerServiceTrustedAccessRoleBindingData>.FromValues((IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceTrustedAccessRoleBindingData>.FromValues((IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

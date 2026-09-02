@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Models;
@@ -27,25 +27,26 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string targetType = default, string description = default, string parametersSchema = default, string urn = default)
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string targetType = default, string description = default, string parametersSchema = default, string urn = default, ChaosProvisioningState? provisioningState = default)
         {
             return new ChaosCapabilityData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                publisher is null && targetType is null && description is null && parametersSchema is null && urn is null ? default : new CapabilityProperties(
+                publisher is null && targetType is null && description is null && parametersSchema is null && urn is null && provisioningState is null ? default : new CapabilityProperties(
                     publisher,
                     targetType,
                     description,
                     parametersSchema,
                     urn,
-                    null));
+                    provisioningState,
+                    default),
+                default);
         }
 
-        /// <summary> Model that represents a Target resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -62,9 +63,9 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                location);
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                location,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -90,7 +91,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 publisher is null && targetType is null && displayName is null && description is null && parametersSchema is null && urn is null && kind is null && azureRbacActions is null && azureRbacDataActions is null && requiredAzureRoleDefinitionIds is null && runtimeKind is null ? default : new CapabilityTypeProperties(
                     publisher,
                     targetType,
@@ -102,8 +102,9 @@ namespace Azure.ResourceManager.Chaos.Models
                     (azureRbacActions ?? new ChangeTrackingList<string>()).ToList(),
                     (azureRbacDataActions ?? new ChangeTrackingList<string>()).ToList(),
                     (requiredAzureRoleDefinitionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, null),
-                    null));
+                    new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, default),
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -116,8 +117,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors"> List of selectors. </param>
+        /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="steps"/> or <paramref name="selectors"/> is null. </exception>
         /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
-        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosExperimentStep> steps = default, IEnumerable<ChaosTargetSelector> selectors = default)
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosExperimentStep> steps = default, IEnumerable<ChaosTargetSelector> selectors = default, CustomerDataStorageProperties customerDataStorage = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -126,14 +129,13 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                provisioningState is null && steps is null && selectors is null ? default : new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), null));
+                default,
+                default);
         }
 
-        /// <summary> Model that represents a step in the Experiment resource. </summary>
         /// <param name="name"> String of the step name. </param>
         /// <param name="branches"> List of branches. </param>
         /// <returns> A new <see cref="Models.ChaosExperimentStep"/> instance for mocking. </returns>
@@ -141,10 +143,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             branches ??= new ChangeTrackingList<ChaosExperimentBranch>();
 
-            return new ChaosExperimentStep(name, branches.ToList(), additionalBinaryDataProperties: null);
+            return new ChaosExperimentStep(name, (branches ?? new ChangeTrackingList<ChaosExperimentBranch>()).ToList(), default);
         }
 
-        /// <summary> Model that represents a branch in the step. 9 total per experiment. </summary>
         /// <param name="name"> String of the branch name. </param>
         /// <param name="actions"> List of actions. </param>
         /// <returns> A new <see cref="Models.ChaosExperimentBranch"/> instance for mocking. </returns>
@@ -152,10 +153,17 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             actions ??= new ChangeTrackingList<ChaosExperimentAction>();
 
-            return new ChaosExperimentBranch(name, actions.ToList(), additionalBinaryDataProperties: null);
+            return new ChaosExperimentBranch(name, (actions ?? new ChangeTrackingList<ChaosExperimentAction>()).ToList(), default);
         }
 
-        /// <summary> Model that represents a continuous action. </summary>
+        /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="type"> Chaos experiment action discriminator type. </param>
+        /// <returns> A new <see cref="Models.ChaosExperimentAction"/> instance for mocking. </returns>
+        public static ChaosExperimentAction ChaosExperimentAction(string name = default, string @type = default)
+        {
+            return new UnknownChaosExperimentAction(name, default, default);
+        }
+
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
@@ -167,14 +175,29 @@ namespace Azure.ResourceManager.Chaos.Models
 
             return new ChaosContinuousAction(
                 name,
-                ExperimentActionType.Continuous,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 duration,
-                parameters.ToList(),
+                (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(),
                 selectorId);
         }
 
-        /// <summary> Model that represents a discrete action. </summary>
+        /// <param name="key"> The name of the setting for the action. </param>
+        /// <param name="value"> The value of the setting for the action. </param>
+        /// <returns> A new <see cref="Models.ChaosKeyValuePair"/> instance for mocking. </returns>
+        public static ChaosKeyValuePair ChaosKeyValuePair(string key = default, string value = default)
+        {
+            return new ChaosKeyValuePair(key, value, default);
+        }
+
+        /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
+        /// <returns> A new <see cref="Models.ChaosDelayAction"/> instance for mocking. </returns>
+        public static ChaosDelayAction ChaosDelayAction(string name = default, TimeSpan duration = default)
+        {
+            return new ChaosDelayAction(name, default, default, duration);
+        }
+
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
@@ -183,10 +206,32 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
 
-            return new ChaosDiscreteAction(name, ExperimentActionType.Discrete, additionalBinaryDataProperties: null, parameters.ToList(), selectorId);
+            return new ChaosDiscreteAction(name, default, default, (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(), selectorId);
         }
 
-        /// <summary> Model that represents a list selector. </summary>
+        /// <param name="id"> String of the selector ID. </param>
+        /// <param name="type"> Chaos target selector discriminator type. </param>
+        /// <param name="filter"> Model that represents available filter types that can be applied to a targets list. </param>
+        /// <returns> A new <see cref="Models.ChaosTargetSelector"/> instance for mocking. </returns>
+        public static ChaosTargetSelector ChaosTargetSelector(string id = default, string @type = default, ChaosTargetFilter filter = default)
+        {
+            return new UnknownChaosTargetSelector(id, default, filter, default);
+        }
+
+        /// <param name="type"> Chaos target filter discriminator type. </param>
+        /// <returns> A new <see cref="Models.ChaosTargetFilter"/> instance for mocking. </returns>
+        public static ChaosTargetFilter ChaosTargetFilter(string @type = default)
+        {
+            return new UnknownChaosTargetFilter(default, default);
+        }
+
+        /// <param name="parametersZones"> List of Azure availability zones to filter targets by. </param>
+        /// <returns> A new <see cref="Models.ChaosTargetSimpleFilter"/> instance for mocking. </returns>
+        public static ChaosTargetSimpleFilter ChaosTargetSimpleFilter(IEnumerable<string> parametersZones = default)
+        {
+            return new ChaosTargetSimpleFilter(default, default, parametersZones is null ? default : new ChaosTargetSimpleFilterParameters((parametersZones ?? new ChangeTrackingList<string>()).ToList(), default));
+        }
+
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter"> Model that represents available filter types that can be applied to a targets list. </param>
         /// <param name="targets"> List of Target references. </param>
@@ -195,10 +240,17 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             targets ??= new ChangeTrackingList<ChaosTargetReference>();
 
-            return new ChaosTargetListSelector(id, SelectorType.List, filter, additionalBinaryDataProperties: null, targets.ToList());
+            return new ChaosTargetListSelector(id, default, filter, default, (targets ?? new ChangeTrackingList<ChaosTargetReference>()).ToList());
         }
 
-        /// <summary> Model that represents a query selector. </summary>
+        /// <param name="referenceType"> Enum of the Target reference type. </param>
+        /// <param name="id"> String of the resource ID of a Target resource. </param>
+        /// <returns> A new <see cref="Models.ChaosTargetReference"/> instance for mocking. </returns>
+        public static ChaosTargetReference ChaosTargetReference(ChaosTargetReferenceType referenceType = default, ResourceIdentifier id = default)
+        {
+            return new ChaosTargetReference(referenceType, id, default);
+        }
+
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter"> Model that represents available filter types that can be applied to a targets list. </param>
         /// <param name="queryString"> Azure Resource Graph (ARG) Query Language query for target resources. </param>
@@ -210,14 +262,21 @@ namespace Azure.ResourceManager.Chaos.Models
 
             return new ChaosTargetQuerySelector(
                 id,
-                SelectorType.Query,
+                default,
                 filter,
-                additionalBinaryDataProperties: null,
+                default,
                 queryString,
-                subscriptionIds.ToList());
+                (subscriptionIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
-        /// <summary> Describes an experiment update. </summary>
+        /// <param name="storageAccountResourceId"> Azure Resource ID of the Storage account to use for Customer Data storage. </param>
+        /// <param name="blobContainerName"> Name of the Azure Blob Storage container to use or create. </param>
+        /// <returns> A new <see cref="Models.CustomerDataStorageProperties"/> instance for mocking. </returns>
+        public static CustomerDataStorageProperties CustomerDataStorageProperties(ResourceIdentifier storageAccountResourceId = default, string blobContainerName = default)
+        {
+            return new CustomerDataStorageProperties(storageAccountResourceId, blobContainerName, default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.ChaosExperimentPatch"/> instance for mocking. </returns>
@@ -225,7 +284,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ChaosExperimentPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new ChaosExperimentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -235,19 +294,50 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default)
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ChaosProvisioningState? provisioningState = default)
         {
             return new ChaosExperimentExecutionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                status is null && startedOn is null && stoppedOn is null ? default : new ExperimentExecutionProperties(status, startedOn, stoppedOn, null));
+                status is null && startedOn is null && stoppedOn is null && provisioningState is null ? default : new ExperimentExecutionProperties(status, startedOn, stoppedOn, provisioningState, default),
+                default);
         }
 
-        /// <summary> Model that represents the a list of branches and branch statuses. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
+        /// <param name="failureReason"> The reason why the execution failed. </param>
+        /// <param name="lastActionOn"> String that represents the last action date time. </param>
+        /// <param name="runInformationSteps"> The steps of the experiment run. </param>
+        /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ChaosProvisioningState? provisioningState = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
+        {
+            return new ExperimentExecutionDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status is null && startedOn is null && stoppedOn is null && provisioningState is null && failureReason is null && lastActionOn is null && runInformationSteps is null ? default : new ExperimentExecutionDetailsProperties(
+                    status,
+                    startedOn,
+                    stoppedOn,
+                    provisioningState,
+                    failureReason,
+                    lastActionOn,
+                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
+                    default),
+                default);
+        }
+
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="stepId"> The id of the step. </param>
         /// <param name="status"> The value of the status of the step. </param>
@@ -257,10 +347,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             branches ??= new ChangeTrackingList<ChaosExperimentRunBranchStatus>();
 
-            return new ChaosExperimentRunStepStatus(stepName, stepId, status, branches.ToList(), additionalBinaryDataProperties: null);
+            return new ChaosExperimentRunStepStatus(stepName, stepId, status, (branches ?? new ChangeTrackingList<ChaosExperimentRunBranchStatus>()).ToList(), default);
         }
 
-        /// <summary> Model that represents the a list of actions and action statuses. </summary>
         /// <param name="branchName"> The name of the branch status. </param>
         /// <param name="branchId"> The id of the branch status. </param>
         /// <param name="status"> The status of the branch. </param>
@@ -270,10 +359,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             actions ??= new ChangeTrackingList<ChaosExperimentRunActionStatus>();
 
-            return new ChaosExperimentRunBranchStatus(branchName, branchId, status, actions.ToList(), additionalBinaryDataProperties: null);
+            return new ChaosExperimentRunBranchStatus(branchName, branchId, status, (actions ?? new ChangeTrackingList<ChaosExperimentRunActionStatus>()).ToList(), default);
         }
 
-        /// <summary> Model that represents the an action and its status. </summary>
         /// <param name="actionName"> The name of the action status. </param>
         /// <param name="actionId"> The id of the action status. </param>
         /// <param name="status"> The status of the action. </param>
@@ -291,11 +379,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startOn,
                 endOn,
-                targets.ToList(),
-                additionalBinaryDataProperties: null);
+                (targets ?? new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>()).ToList(),
+                default);
         }
 
-        /// <summary> Model that represents the Experiment action target details properties model. </summary>
         /// <param name="status"> The status of the execution. </param>
         /// <param name="target"> The target for the action. </param>
         /// <param name="targetFailedOn"> String that represents the failed date time. </param>
@@ -310,16 +397,228 @@ namespace Azure.ResourceManager.Chaos.Models
                 targetFailedOn,
                 targetCompletedOn,
                 error,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Model that represents the Experiment action target details error model. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsError"/> instance for mocking. </returns>
         public static ExperimentExecutionActionTargetDetailsError ExperimentExecutionActionTargetDetailsError(string code = default, string message = default)
         {
-            return new ExperimentExecutionActionTargetDetailsError(code, message, additionalBinaryDataProperties: null);
+            return new ExperimentExecutionActionTargetDetailsError(code, message, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Chaos.ChaosPrivateAccessData"/> instance for mocking. </returns>
+        public static ChaosPrivateAccessData ChaosPrivateAccessData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ChaosPrivateAccessProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ChaosPrivateAccessData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> Most recent provisioning state for the given privateAccess resource. </param>
+        /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connection. Currently only one endpoint connection is supported. </param>
+        /// <param name="publicNetworkAccess"> Public Network Access Control for PrivateAccess resource. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateAccessProperties"/> instance for mocking. </returns>
+        public static ChaosPrivateAccessProperties ChaosPrivateAccessProperties(ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccessOption? publicNetworkAccess = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<ChaosPrivateEndpointConnectionData>();
+
+            return new ChaosPrivateAccessProperties(provisioningState, (privateEndpointConnections ?? new ChangeTrackingList<ChaosPrivateEndpointConnectionData>()).ToList(), publicNetworkAccess, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="Chaos.ChaosPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static ChaosPrivateEndpointConnectionData ChaosPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        {
+            return new ChaosPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The Azure identifier for private endpoint. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, string privateEndpointId = default, ChaosPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ChaosProvisioningState? provisioningState = default)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
+        }
+
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static ChaosPrivateLinkServiceConnectionState ChaosPrivateLinkServiceConnectionState(ChaosPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new ChaosPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateAccessPatch"/> instance for mocking. </returns>
+        public static ChaosPrivateAccessPatch ChaosPrivateAccessPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ChaosPrivateAccessPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateLinkResourceListResult"/> instance for mocking. </returns>
+        public static ChaosPrivateLinkResourceListResult ChaosPrivateLinkResourceListResult(IEnumerable<ChaosPrivateLinkResource> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ChaosPrivateLinkResource>();
+
+            return new ChaosPrivateLinkResourceListResult((value ?? new ChangeTrackingList<ChaosPrivateLinkResource>()).ToList(), nextLink, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateLinkResource"/> instance for mocking. </returns>
+        public static ChaosPrivateLinkResource ChaosPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ChaosPrivateLinkResourceProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ChaosPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use. </param>
+        /// <returns> A new <see cref="Models.ChaosPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static ChaosPrivateLinkResourceProperties ChaosPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ChaosProvisioningState? provisioningState = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new ChaosPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="canonicalId"> Canonical identifier of the action (e.g., "microsoft-compute-shutdown/1.0"). </param>
+        /// <param name="displayName"> Human-readable display name of the action. </param>
+        /// <param name="description"> Description of what this action does. </param>
+        /// <param name="actionName"> The short name of the action (e.g., "Shutdown"). </param>
+        /// <param name="version"> The version of the action (e.g., "1.0.0"). </param>
+        /// <param name="actionType"> The type of the action. </param>
+        /// <param name="supportedTargetTypes"> List of target types supported by this action. </param>
+        /// <param name="parametersSchema"> JSON Schema describing the parameters for this action. </param>
+        /// <param name="recommendedRoles"> Recommended Azure RBAC role definition GUIDs for this action. </param>
+        /// <returns> A new <see cref="Chaos.ChaosActionData"/> instance for mocking. </returns>
+        public static ChaosActionData ChaosActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string canonicalId = default, string displayName = default, string description = default, string actionName = default, string version = default, ChaosActionKind? actionType = default, IEnumerable<ChaosActionSupportedTargetType> supportedTargetTypes = default, ActionPropertiesParametersSchema parametersSchema = default, IEnumerable<Guid> recommendedRoles = default)
+        {
+            return new ChaosActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                actionName is null && actionType is null ? default : new ActionProperties(
+                    default,
+                    default,
+                    default,
+                    actionName,
+                    default,
+                    actionType,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <param name="targetType"> The Azure resource type (e.g., "Microsoft.Compute/virtualMachines"). </param>
+        /// <param name="requiredPermissions"> List of Azure permissions required for this target type. </param>
+        /// <returns> A new <see cref="Models.ChaosActionSupportedTargetType"/> instance for mocking. </returns>
+        public static ChaosActionSupportedTargetType ChaosActionSupportedTargetType(string targetType = default, IEnumerable<string> requiredPermissions = default)
+        {
+            requiredPermissions ??= new ChangeTrackingList<string>();
+
+            return new ChaosActionSupportedTargetType(targetType, (requiredPermissions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <returns> A new <see cref="Models.ActionPropertiesParametersSchema"/> instance for mocking. </returns>
+        public static ActionPropertiesParametersSchema ActionPropertiesParametersSchema()
+        {
+            return new ActionPropertiesParametersSchema(default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="canonicalId"> Canonical identifier of the action (e.g., "microsoft-compute-shutdown/1.0"). </param>
+        /// <param name="displayName"> Human-readable display name of the action. </param>
+        /// <param name="description"> Description of what this action does. </param>
+        /// <param name="actionName"> The short name of the action (e.g., "Shutdown"). </param>
+        /// <param name="version"> The version of the action (e.g., "1.0.0"). </param>
+        /// <param name="actionType"> The type of the action. </param>
+        /// <param name="supportedTargetTypes"> List of target types supported by this action. </param>
+        /// <param name="parametersSchema"> JSON Schema describing the parameters for this action. </param>
+        /// <param name="recommendedRoles"> Recommended Azure RBAC role definition GUIDs for this action. </param>
+        /// <returns> A new <see cref="Chaos.ChaosActionVersionData"/> instance for mocking. </returns>
+        public static ChaosActionVersionData ChaosActionVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string canonicalId = default, string displayName = default, string description = default, string actionName = default, string version = default, ChaosActionKind? actionType = default, IEnumerable<ChaosActionSupportedTargetType> supportedTargetTypes = default, ActionPropertiesParametersSchema parametersSchema = default, IEnumerable<Guid> recommendedRoles = default)
+        {
+            return new ChaosActionVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                actionName is null && actionType is null ? default : new ActionProperties(
+                    default,
+                    default,
+                    default,
+                    actionName,
+                    default,
+                    actionType,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -338,8 +637,869 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && description is null && propertiesSchema is null && resourceTypes is null ? default : new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
+                default,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="properties"> The properties of the Workspace resource. </param>
+        /// <returns> A new <see cref="Chaos.ChaosWorkspaceData"/> instance for mocking. </returns>
+        public static ChaosWorkspaceData ChaosWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, WorkspaceProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ChaosWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> Most recent provisioning state for the given Workspace resource. </param>
+        /// <param name="communicationEndpoint"> The communication endpoint used to connect and communicate with the workspace for fault-injection orchestration. </param>
+        /// <param name="scopes"> The intended workspace-level resource scope to be used by child scenarios. </param>
+        /// <returns> A new <see cref="Models.WorkspaceProperties"/> instance for mocking. </returns>
+        public static WorkspaceProperties WorkspaceProperties(ChaosProvisioningState? provisioningState = default, string communicationEndpoint = default, IEnumerable<ResourceIdentifier> scopes = default)
+        {
+            scopes ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new WorkspaceProperties(provisioningState, communicationEndpoint, (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.ChaosWorkspacePatch"/> instance for mocking. </returns>
+        public static ChaosWorkspacePatch ChaosWorkspacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ChaosWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.WorkspaceDiscovery"/> instance for mocking. </returns>
+        public static WorkspaceDiscovery WorkspaceDiscovery(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkspaceDiscoveryProperties properties = default)
+        {
+            return new WorkspaceDiscovery(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="status"> The discovery status. </param>
+        /// <param name="startOn"> The discovery UTC start time. </param>
+        /// <param name="endOn"> The discovery UTC end time. </param>
+        /// <param name="errors"> System or infrastructure errors encountered during discovery. </param>
+        /// <param name="workspaceId"> The workspace ID this discovery belongs to. </param>
+        /// <param name="resourceSnapshotId"> The resource snapshot ID produced by this discovery. </param>
+        /// <returns> A new <see cref="Models.WorkspaceDiscoveryProperties"/> instance for mocking. </returns>
+        public static WorkspaceDiscoveryProperties WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default)
+        {
+            errors ??= new ChangeTrackingList<ChaosOperationError>();
+
+            return new WorkspaceDiscoveryProperties(
+                status,
+                startOn,
+                endOn,
+                (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
+                workspaceId,
+                resourceSnapshotId,
+                default);
+        }
+
+        /// <param name="errorCode"> The error code identifying the type of system error. </param>
+        /// <param name="errorMessage"> A human-readable description of the system error. </param>
+        /// <returns> A new <see cref="Models.ChaosOperationError"/> instance for mocking. </returns>
+        public static ChaosOperationError ChaosOperationError(string errorCode = default, string errorMessage = default)
+        {
+            return new ChaosOperationError(errorCode, errorMessage, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ChaosWorkspaceEvaluationData"/> instance for mocking. </returns>
+        public static ChaosWorkspaceEvaluationData ChaosWorkspaceEvaluationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkspaceEvaluationProperties properties = default)
+        {
+            return new ChaosWorkspaceEvaluationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="status"> The evaluation status. </param>
+        /// <param name="startOn"> The evaluation UTC start time. </param>
+        /// <param name="endOn"> The evaluation UTC end time. </param>
+        /// <param name="errors"> System or infrastructure errors encountered during evaluation. </param>
+        /// <param name="workspaceId"> The workspace ID this evaluation belongs to. </param>
+        /// <param name="resourceSnapshotId"> The resource snapshot ID used for this evaluation. </param>
+        /// <param name="numTemplatesToEvaluate"> The number of templates to evaluate. </param>
+        /// <param name="numTemplatesEvaluatedSucceeded"> The number of templates that evaluated successfully. </param>
+        /// <param name="numTemplatesEvaluatedFailed"> The number of templates that failed evaluation. </param>
+        /// <param name="numTemplatesEvaluatedCancelled"> The number of templates that were cancelled during evaluation. </param>
+        /// <param name="evaluationResult"> The overall evaluation result. </param>
+        /// <param name="results"> Per-template evaluation results. </param>
+        /// <returns> A new <see cref="Models.WorkspaceEvaluationProperties"/> instance for mocking. </returns>
+        public static WorkspaceEvaluationProperties WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, string resourceSnapshotId = default, int? numTemplatesToEvaluate = default, int? numTemplatesEvaluatedSucceeded = default, int? numTemplatesEvaluatedFailed = default, int? numTemplatesEvaluatedCancelled = default, RecommendationStatus? evaluationResult = default, IEnumerable<TemplateEvaluationResultItem> results = default)
+        {
+            errors ??= new ChangeTrackingList<ChaosOperationError>();
+            results ??= new ChangeTrackingList<TemplateEvaluationResultItem>();
+
+            return new WorkspaceEvaluationProperties(
+                status,
+                startOn,
+                endOn,
+                (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
+                workspaceId,
+                resourceSnapshotId,
+                numTemplatesToEvaluate,
+                numTemplatesEvaluatedSucceeded,
+                numTemplatesEvaluatedFailed,
+                numTemplatesEvaluatedCancelled,
+                evaluationResult,
+                (results ?? new ChangeTrackingList<TemplateEvaluationResultItem>()).ToList(),
+                default);
+        }
+
+        /// <param name="templateId">
+        /// The template ID that was evaluated. Optional because the underlying BE field may
+        /// be null for legacy evaluations created before template-centric persistence landed;
+        /// the GW falls back to `scenarioName` in that case (`scenario.Id == templateId` by BE
+        /// convention), so ARM responses are typically populated in practice.
+        /// </param>
+        /// <param name="templateName"> The template name that was evaluated. Optional for the same reason as `templateId`. </param>
+        /// <param name="evaluationResult"> The evaluation result for this template. </param>
+        /// <returns> A new <see cref="Models.TemplateEvaluationResultItem"/> instance for mocking. </returns>
+        public static TemplateEvaluationResultItem TemplateEvaluationResultItem(string templateId = default, string templateName = default, RecommendationStatus evaluationResult = default)
+        {
+            return new TemplateEvaluationResultItem(templateId, templateName, evaluationResult, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the discovered resource. </param>
+        /// <returns> A new <see cref="Chaos.ChaosDiscoveredData"/> instance for mocking. </returns>
+        public static ChaosDiscoveredData ChaosDiscoveredData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DiscoveredResourceProperties properties = default)
+        {
+            return new ChaosDiscoveredData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="resourceNamespace"> The namespace of the discovered resource. </param>
+        /// <param name="resourceName"> The name of the discovered resource. </param>
+        /// <param name="resourceType"> The resource type of the discovered resource. </param>
+        /// <param name="fullyQualifiedIdentifier"> The fully qualified identifier of the discovered resource. </param>
+        /// <param name="discoveredOn"> The date and time when the resource was discovered. </param>
+        /// <param name="scope"> The scope of the discovered resource. </param>
+        /// <returns> A new <see cref="Models.DiscoveredResourceProperties"/> instance for mocking. </returns>
+        public static DiscoveredResourceProperties DiscoveredResourceProperties(string resourceNamespace = default, string resourceName = default, string resourceType = default, string fullyQualifiedIdentifier = default, DateTimeOffset discoveredOn = default, string scope = default)
+        {
+            return new DiscoveredResourceProperties(
+                resourceNamespace,
+                resourceName,
+                resourceType,
+                fullyQualifiedIdentifier,
+                discoveredOn,
+                scope,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of scenario. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioData"/> instance for mocking. </returns>
+        public static ChaosScenarioData ChaosScenarioData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioProperties properties = default)
+        {
+            return new ChaosScenarioData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
+        /// <param name="createdFrom"> Resource ID of the template version this scenario was created from (optional). </param>
+        /// <param name="version"> Version of the scenario. </param>
+        /// <param name="description"> Description of what this scenario does (optional). </param>
+        /// <param name="parameters"> Parameter definitions for the scenario. </param>
+        /// <param name="actions"> Array of actions that define the scenario's orchestration. </param>
+        /// <param name="recommendation"> The recommendation information for this scenario. </param>
+        /// <returns> A new <see cref="Models.ScenarioProperties"/> instance for mocking. </returns>
+        public static ScenarioProperties ScenarioProperties(ChaosProvisioningState? provisioningState = default, string createdFrom = default, string version = default, string description = default, IEnumerable<ChaosScenarioParameterInfo> parameters = default, IEnumerable<ScenarioAction> actions = default, ChaosScenarioRecommendation recommendation = default)
+        {
+            parameters ??= new ChangeTrackingList<ChaosScenarioParameterInfo>();
+            actions ??= new ChangeTrackingList<ScenarioAction>();
+
+            return new ScenarioProperties(
+                provisioningState,
+                createdFrom,
+                version,
+                description,
+                (parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>()).ToList(),
+                (actions ?? new ChangeTrackingList<ScenarioAction>()).ToList(),
+                recommendation,
+                default);
+        }
+
+        /// <param name="name"> The name of the parameter. </param>
+        /// <param name="type"> Parameter data type. </param>
+        /// <param name="default"> Default value for the parameter. </param>
+        /// <param name="isRequired"> Whether this parameter is required. </param>
+        /// <param name="description"> Description of the parameter. </param>
+        /// <returns> A new <see cref="Models.ChaosScenarioParameterInfo"/> instance for mocking. </returns>
+        public static ChaosScenarioParameterInfo ChaosScenarioParameterInfo(string name = default, ChaosScenarioParameterType @type = default, string @default = default, bool? isRequired = default, string description = default)
+        {
+            return new ChaosScenarioParameterInfo(
+                name,
+                @type,
+                @default,
+                isRequired,
+                description,
+                default);
+        }
+
+        /// <param name="name"> Unique name for the action. </param>
+        /// <param name="actionId"> Identifier of the action and version (e.g., "microsoft-compute-shutdown/1.0"). </param>
+        /// <param name="description"> Human-readable description of what this action does. </param>
+        /// <param name="duration"> ISO 8601 duration for how long the action runs (e.g., PT30M for 30 minutes). Supports template macro syntax (%%\{parameters.\&lt;name\&gt;\}%%). </param>
+        /// <param name="parameters"> Action-specific parameter values. </param>
+        /// <param name="runAfter"> Action dependencies that control when this action starts. </param>
+        /// <param name="waitBefore"> ISO 8601 duration to wait before action starts (e.g., PT30S for 30 seconds). Supports template macro syntax. </param>
+        /// <param name="timeout"> ISO 8601 duration for maximum action execution time. Supports template macro syntax. </param>
+        /// <param name="resourceId"> The resource ID of the external resource. </param>
+        /// <returns> A new <see cref="Models.ScenarioAction"/> instance for mocking. </returns>
+        public static ScenarioAction ScenarioAction(string name = default, string actionId = default, string description = default, string duration = default, IEnumerable<ChaosKeyValuePair> parameters = default, RunAfter runAfter = default, string waitBefore = default, string timeout = default, ResourceIdentifier resourceId = default)
+        {
+            parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
+
+            return new ScenarioAction(
+                name,
+                actionId,
+                description,
+                duration,
+                (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(),
+                runAfter,
+                waitBefore,
+                timeout,
+                resourceId is null ? default : new ExternalResource(resourceId, default),
+                default);
+        }
+
+        /// <param name="behavior"> Defines how multiple dependencies are evaluated. </param>
+        /// <param name="items"> Array of action dependencies. </param>
+        /// <returns> A new <see cref="Models.RunAfter"/> instance for mocking. </returns>
+        public static RunAfter RunAfter(RunAfterBehavior? behavior = default, IEnumerable<ActionDependency> items = default)
+        {
+            items ??= new ChangeTrackingList<ActionDependency>();
+
+            return new RunAfter(behavior, (items ?? new ChangeTrackingList<ActionDependency>()).ToList(), default);
+        }
+
+        /// <param name="type"> The type of dependency. </param>
+        /// <param name="name"> Name of the action this depends on. </param>
+        /// <param name="onActionLifecycle"> The lifecycle state of the dependency action that triggers this action to start. </param>
+        /// <returns> A new <see cref="Models.ActionDependency"/> instance for mocking. </returns>
+        public static ActionDependency ActionDependency(ActionDependencyType @type = default, string name = default, ActionLifecycle? onActionLifecycle = default)
+        {
+            return new ActionDependency(@type, name, onActionLifecycle, default);
+        }
+
+        /// <param name="recommendationStatus"> The recommendation status. </param>
+        /// <param name="evaluationRunOn"> The UTC time when the recommendation was evaluated. </param>
+        /// <returns> A new <see cref="Models.ChaosScenarioRecommendation"/> instance for mocking. </returns>
+        public static ChaosScenarioRecommendation ChaosScenarioRecommendation(RecommendationStatus recommendationStatus = default, DateTimeOffset? evaluationRunOn = default)
+        {
+            return new ChaosScenarioRecommendation(recommendationStatus, evaluationRunOn, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of scenario definition. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioConfigurationData"/> instance for mocking. </returns>
+        public static ChaosScenarioConfigurationData ChaosScenarioConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioConfigurationProperties properties = default)
+        {
+            return new ChaosScenarioConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="scenarioId"> Resource ID of the scenario this configuration applies to. </param>
+        /// <param name="parameters"> Runtime parameter values for the scenario. Keys must match parameter names defined in the scenario. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
+        /// <param name="resourceTargeting">
+        /// Unified resource targeting policy that controls which discovered resources participate
+        /// in fault injection. Replaces the separate `exclusions` and `filters` properties with
+        /// symmetric include/exclude criteria.
+        /// Include uses AND logic — a resource must match ALL active include dimensions.
+        /// Exclude uses OR logic — a resource is removed if it matches ANY exclude dimension.
+        /// When include and exclude conflict on the same resource, exclude wins.
+        /// Null or omitted means all discovered resources participate (no targeting constraints).
+        /// </param>
+        /// <returns> A new <see cref="Models.ScenarioConfigurationProperties"/> instance for mocking. </returns>
+        public static ScenarioConfigurationProperties ScenarioConfigurationProperties(ResourceIdentifier scenarioId = default, IEnumerable<ChaosKeyValuePair> parameters = default, ChaosProvisioningState? provisioningState = default, ResourceTargeting resourceTargeting = default)
+        {
+            parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
+
+            return new ScenarioConfigurationProperties(scenarioId, (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(), provisioningState, resourceTargeting, default);
+        }
+
+        /// <param name="include">
+        /// Inclusion criteria. Resources must match ALL active dimensions to be candidates.
+        /// Null or omitted means no inclusion filtering (all resources are candidates).
+        /// </param>
+        /// <param name="exclude">
+        /// Exclusion criteria. Resources matching ANY active dimension are removed.
+        /// Null or omitted means no exclusions applied.
+        /// </param>
+        /// <returns> A new <see cref="Models.ResourceTargeting"/> instance for mocking. </returns>
+        public static ResourceTargeting ResourceTargeting(ResourceTargetingCriteria include = default, ResourceTargetingCriteria exclude = default)
+        {
+            return new ResourceTargeting(include, exclude, default);
+        }
+
+        /// <param name="locations">
+        /// Array of Azure location strings (e.g., "eastus", "westeurope", "global").
+        /// Case-insensitive, normalized form only (e.g., "eastus" not "East US").
+        /// </param>
+        /// <param name="zones">
+        /// Array of logical availability zone identifiers (e.g., "1", "2", "3", "zone-redundant").
+        /// Mutually exclusive with `physicalZones` — set one or the other, not both.
+        /// When set, `locations` must also be set on the same side (zone IDs are only meaningful within a region).
+        /// </param>
+        /// <param name="physicalZones">
+        /// Array of physical datacenter zone identifiers in `{region}-az{N}` format
+        /// (e.g., "westus2-az1"). Resolved to logical zones per-subscription at execution time.
+        /// Mutually exclusive with `zones` — set one or the other, not both.
+        /// </param>
+        /// <param name="types">
+        /// Array of Azure resource type strings (e.g., "Microsoft.Compute/virtualMachines").
+        /// Case-insensitive equality. Supports trailing wildcard (e.g., "Microsoft.Compute/*").
+        /// </param>
+        /// <param name="tags">
+        /// Array of tag key-value pairs for filtering by Azure resource tags.
+        /// Key and value are matched case-insensitively. Use "*" as value to match any value for a key.
+        /// </param>
+        /// <param name="resources"> Array of fully qualified Azure resource IDs. Case-insensitive equality. </param>
+        /// <returns> A new <see cref="Models.ResourceTargetingCriteria"/> instance for mocking. </returns>
+        public static ResourceTargetingCriteria ResourceTargetingCriteria(IEnumerable<string> locations = default, IEnumerable<string> zones = default, IEnumerable<string> physicalZones = default, IEnumerable<string> types = default, IEnumerable<ChaosKeyValuePair> tags = default, IEnumerable<ResourceIdentifier> resources = default)
+        {
+            locations ??= new ChangeTrackingList<string>();
+            zones ??= new ChangeTrackingList<string>();
+            physicalZones ??= new ChangeTrackingList<string>();
+            types ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingList<ChaosKeyValuePair>();
+            resources ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ResourceTargetingCriteria(
+                (locations ?? new ChangeTrackingList<string>()).ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                (physicalZones ?? new ChangeTrackingList<string>()).ToList(),
+                (types ?? new ChangeTrackingList<string>()).ToList(),
+                (tags ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(),
+                (resources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of scenario run. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioRunData"/> instance for mocking. </returns>
+        public static ChaosScenarioRunData ChaosScenarioRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioRunProperties properties = default)
+        {
+            return new ChaosScenarioRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="workspaceName"> The workspace name. </param>
+        /// <param name="scenarioName"> The scenario name. </param>
+        /// <param name="scenarioConfigurationName"> The scenario configuration name. </param>
+        /// <param name="managedIdentityPrincipalId"> The principal id for the managed identity used for the run. </param>
+        /// <param name="resourceSnapshotId">
+        /// The resource snapshot ID this run is pinned to. Resolved from the scenario's
+        /// pinned evaluation snapshot (template scenarios) or the latest discovery
+        /// snapshot (custom scenarios) at run creation, ensuring the run executes against
+        /// the same set of discovered resources that produced the recommendation.
+        /// </param>
+        /// <param name="status"> The scenario run status. </param>
+        /// <param name="resources"> All resources discovered for the scenario run. </param>
+        /// <param name="excludedResources">
+        /// Resources that matched the scenario's target resource types but were excluded
+        /// from fault injection by the configuration's resource-targeting filters
+        /// (for example zone, location, or explicit exclusions). These resources will not be impacted by the run.
+        /// </param>
+        /// <param name="errors"> System or infrastructure errors encountered during the scenario run. </param>
+        /// <param name="executionErrors"> Business errors from fault injection — permission and resource state issues. </param>
+        /// <param name="scenarioRunJson"> The scenario run json. </param>
+        /// <param name="scenarioRunSummary"> The scenario run summary. </param>
+        /// <param name="startOn"> When the scenario run was started. </param>
+        /// <param name="endOn"> When the scenario run was completed. </param>
+        /// <param name="zoneResolution">
+        /// Zone resolution information. Present when the scenario configuration
+        /// used physical zone targeting (`physicalZones`). Contains the mode,
+        /// requested physical zones, and per-subscription logical zone mappings.
+        /// </param>
+        /// <returns> A new <see cref="Models.ScenarioRunProperties"/> instance for mocking. </returns>
+        public static ScenarioRunProperties ScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, string managedIdentityPrincipalId = default, string resourceSnapshotId = default, ScenarioRunState status = default, IEnumerable<ScenarioRunResource> resources = default, IEnumerable<ScenarioRunResource> excludedResources = default, IEnumerable<ChaosOperationError> errors = default, ScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ZoneResolutionInfo zoneResolution = default)
+        {
+            resources ??= new ChangeTrackingList<ScenarioRunResource>();
+            excludedResources ??= new ChangeTrackingList<ScenarioRunResource>();
+            errors ??= new ChangeTrackingList<ChaosOperationError>();
+            scenarioRunSummary ??= new ChangeTrackingList<ScenarioRunSummaryAction>();
+
+            return new ScenarioRunProperties(
+                workspaceName,
+                scenarioName,
+                scenarioConfigurationName,
+                managedIdentityPrincipalId,
+                resourceSnapshotId,
+                status,
+                (resources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
+                (excludedResources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
+                (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
+                executionErrors,
+                scenarioRunJson,
+                (scenarioRunSummary ?? new ChangeTrackingList<ScenarioRunSummaryAction>()).ToList(),
+                startOn,
+                endOn,
+                zoneResolution,
+                default);
+        }
+
+        /// <param name="id"> The resource id. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunResource"/> instance for mocking. </returns>
+        public static ScenarioRunResource ScenarioRunResource(string id = default)
+        {
+            return new ScenarioRunResource(id, default);
+        }
+
+        /// <param name="errorCode"> Error code for internal server errors. </param>
+        /// <param name="errorMessage"> Error message for internal server errors. </param>
+        /// <param name="permission"> Any permission errors associated with the scenario run. </param>
+        /// <param name="resource"> Any resource state errors associated with the scenario run. </param>
+        /// <returns> A new <see cref="Models.ScenarioErrors"/> instance for mocking. </returns>
+        public static ScenarioErrors ScenarioErrors(string errorCode = default, string errorMessage = default, IEnumerable<PermissionError> permission = default, IEnumerable<ResourceStateError> resource = default)
+        {
+            permission ??= new ChangeTrackingList<PermissionError>();
+            resource ??= new ChangeTrackingList<ResourceStateError>();
+
+            return new ScenarioErrors(errorCode, errorMessage, (permission ?? new ChangeTrackingList<PermissionError>()).ToList(), (resource ?? new ChangeTrackingList<ResourceStateError>()).ToList(), default);
+        }
+
+        /// <param name="resourceId"> The resource id for the affected resource. </param>
+        /// <param name="missingPermissions"> The missing permissions. </param>
+        /// <param name="requiredPermissions"> The required permissions. </param>
+        /// <param name="recommendedRoles"> The recommended roles. </param>
+        /// <param name="identity"> The identity. </param>
+        /// <param name="errorMessage">
+        /// The error message describing the permission validation failure, when the
+        /// failure carries a distinct message (for example, when the target could not
+        /// be read to evaluate access).
+        /// </param>
+        /// <returns> A new <see cref="Models.PermissionError"/> instance for mocking. </returns>
+        public static PermissionError PermissionError(ResourceIdentifier resourceId = default, IEnumerable<string> missingPermissions = default, IEnumerable<string> requiredPermissions = default, IEnumerable<string> recommendedRoles = default, EntraIdentity identity = default, string errorMessage = default)
+        {
+            missingPermissions ??= new ChangeTrackingList<string>();
+            requiredPermissions ??= new ChangeTrackingList<string>();
+            recommendedRoles ??= new ChangeTrackingList<string>();
+
+            return new PermissionError(
+                resourceId,
+                (missingPermissions ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredPermissions ?? new ChangeTrackingList<string>()).ToList(),
+                (recommendedRoles ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                errorMessage,
+                default);
+        }
+
+        /// <param name="objectId"> The identity object id. </param>
+        /// <param name="tenantId"> The identity tenant id. </param>
+        /// <returns> A new <see cref="Models.EntraIdentity"/> instance for mocking. </returns>
+        public static EntraIdentity EntraIdentity(string objectId = default, string tenantId = default)
+        {
+            return new EntraIdentity(objectId, tenantId, default);
+        }
+
+        /// <param name="resourceId"> The resource id for the affected resource. </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="remediationUri"> The remediation uri. </param>
+        /// <returns> A new <see cref="Models.ResourceStateError"/> instance for mocking. </returns>
+        public static ResourceStateError ResourceStateError(ResourceIdentifier resourceId = default, int errorCode = default, string errorMessage = default, string remediationUri = default)
+        {
+            return new ResourceStateError(resourceId, errorCode, errorMessage, remediationUri, default);
+        }
+
+        /// <param name="resources"> The resources associated with the specified action. </param>
+        /// <param name="actionUrn"> The urn for the given chaos action. </param>
+        /// <param name="state"> The state of the action. </param>
+        /// <param name="startedOn"> When the action was started. </param>
+        /// <param name="completedOn"> When the action was completed. </param>
+        /// <returns> A new <see cref="Models.ScenarioRunSummaryAction"/> instance for mocking. </returns>
+        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunResource> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
+        {
+            resources ??= new ChangeTrackingList<ScenarioRunResource>();
+
+            return new ScenarioRunSummaryAction(
+                (resources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
+                actionUrn,
+                state,
+                startedOn,
+                completedOn,
+                default);
+        }
+
+        /// <param name="mode">
+        /// The zone targeting mode used for this run.
+        /// `logical` — customer specified logical zone identifiers directly.
+        /// `physical` — customer specified physical zone identifiers; the system
+        /// resolved them to per-subscription logical zones at execution time.
+        /// </param>
+        /// <param name="requestedPhysicalZones">
+        /// The physical zone identifiers requested by the customer in the
+        /// scenario configuration (e.g., `["westus2-az1"]`).
+        /// Empty array when `mode` is `logical`.
+        /// </param>
+        /// <param name="subscriptionZoneMappings">
+        /// Per-subscription zone resolution results. Each entry maps a subscription
+        /// to the logical zone resolved from the requested physical zone.
+        /// Empty when `mode` is `logical`.
+        /// </param>
+        /// <returns> A new <see cref="Models.ZoneResolutionInfo"/> instance for mocking. </returns>
+        public static ZoneResolutionInfo ZoneResolutionInfo(ZoneResolutionMode mode = default, IEnumerable<string> requestedPhysicalZones = default, IEnumerable<ZoneResolutionMapping> subscriptionZoneMappings = default)
+        {
+            requestedPhysicalZones ??= new ChangeTrackingList<string>();
+            subscriptionZoneMappings ??= new ChangeTrackingList<ZoneResolutionMapping>();
+
+            return new ZoneResolutionInfo(mode, (requestedPhysicalZones ?? new ChangeTrackingList<string>()).ToList(), (subscriptionZoneMappings ?? new ChangeTrackingList<ZoneResolutionMapping>()).ToList(), default);
+        }
+
+        /// <param name="subscriptionId"> The subscription ID (e.g., `"6b052e15-03d3-4f17-b2e1-be7f07588291"`). </param>
+        /// <param name="zoneMappings"> The physical-to-logical zone mappings for this subscription. </param>
+        /// <returns> A new <see cref="Models.ZoneResolutionMapping"/> instance for mocking. </returns>
+        public static ZoneResolutionMapping ZoneResolutionMapping(string subscriptionId = default, IEnumerable<PhysicalToLogicalZoneMapping> zoneMappings = default)
+        {
+            zoneMappings ??= new ChangeTrackingList<PhysicalToLogicalZoneMapping>();
+
+            return new ZoneResolutionMapping(subscriptionId, (zoneMappings ?? new ChangeTrackingList<PhysicalToLogicalZoneMapping>()).ToList(), default);
+        }
+
+        /// <param name="physicalZone"> The physical availability zone (e.g., `"westus2-az1"`). </param>
+        /// <param name="logicalZone">
+        /// The logical availability zone resolved for this subscription
+        /// (e.g., `"1"`, `"2"`, `"3"`).
+        /// </param>
+        /// <returns> A new <see cref="Models.PhysicalToLogicalZoneMapping"/> instance for mocking. </returns>
+        public static PhysicalToLogicalZoneMapping PhysicalToLogicalZoneMapping(string physicalZone = default, string logicalZone = default)
+        {
+            return new PhysicalToLogicalZoneMapping(physicalZone, logicalZone, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ChaosScenarioValidationData"/> instance for mocking. </returns>
+        public static ChaosScenarioValidationData ChaosScenarioValidationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ValidationProperties properties = default)
+        {
+            return new ChaosScenarioValidationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="status"> The scenario validation status. </param>
+        /// <param name="startOn"> The scenario validation UTC start time. </param>
+        /// <param name="executionPlanJson"> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </param>
+        /// <param name="endOn"> The scenario validation UTC end time. </param>
+        /// <param name="resources">
+        /// Resources that matched the scenario's target resource types and will be impacted
+        /// by the run, resolved after applying the configuration's resource-targeting filters.
+        /// </param>
+        /// <param name="excludedResources">
+        /// Resources that matched the scenario's target resource types but were excluded
+        /// from fault injection by the configuration's resource-targeting filters
+        /// (for example zone, location, or explicit exclusions). These resources will not be impacted.
+        /// </param>
+        /// <param name="errors"> System or infrastructure errors encountered during validation. </param>
+        /// <param name="validationErrors"> Business errors from validation — permission and resource state issues. </param>
+        /// <returns> A new <see cref="Models.ValidationProperties"/> instance for mocking. </returns>
+        public static ValidationProperties ValidationProperties(ScenarioValidationState status = default, DateTimeOffset startOn = default, string executionPlanJson = default, DateTimeOffset? endOn = default, IEnumerable<ScenarioRunResource> resources = default, IEnumerable<ScenarioRunResource> excludedResources = default, IEnumerable<ChaosOperationError> errors = default, ScenarioErrors validationErrors = default)
+        {
+            resources ??= new ChangeTrackingList<ScenarioRunResource>();
+            excludedResources ??= new ChangeTrackingList<ScenarioRunResource>();
+            errors ??= new ChangeTrackingList<ChaosOperationError>();
+
+            return new ValidationProperties(
+                status,
+                startOn,
+                executionPlanJson,
+                endOn,
+                (resources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
+                (excludedResources ?? new ChangeTrackingList<ScenarioRunResource>()).ToList(),
+                (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
+                validationErrors,
+                default);
+        }
+
+        /// <param name="isWhatIf"> Optional value that indicates whether to run a "dry run" of fixing resource permissions. </param>
+        /// <returns> A new <see cref="Models.ChaosFixResourcePermissionsRequestContent"/> instance for mocking. </returns>
+        public static ChaosFixResourcePermissionsRequestContent ChaosFixResourcePermissionsRequestContent(bool? isWhatIf = default)
+        {
+            return new ChaosFixResourcePermissionsRequestContent(isWhatIf, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ChaosPermissionsFixData"/> instance for mocking. </returns>
+        public static ChaosPermissionsFixData ChaosPermissionsFixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PermissionsFixProperties properties = default)
+        {
+            return new ChaosPermissionsFixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="state"> The permission fix state. </param>
+        /// <param name="startedOn"> The permission fix UTC start time. </param>
+        /// <param name="completedOn"> The permission fix UTC end time. </param>
+        /// <param name="isWhatIfMode"> Whether this was a what-if (dry run) operation. </param>
+        /// <param name="roleAssignments"> The list of role assignment results. </param>
+        /// <param name="summary"> Summary of the permission fix operation. </param>
+        /// <returns> A new <see cref="Models.PermissionsFixProperties"/> instance for mocking. </returns>
+        public static PermissionsFixProperties PermissionsFixProperties(PermissionsFixState state = default, DateTimeOffset startedOn = default, DateTimeOffset? completedOn = default, bool isWhatIfMode = default, IEnumerable<RoleAssignmentResult> roleAssignments = default, PermissionsFixSummary summary = default)
+        {
+            roleAssignments ??= new ChangeTrackingList<RoleAssignmentResult>();
+
+            return new PermissionsFixProperties(
+                state,
+                startedOn,
+                completedOn,
+                isWhatIfMode,
+                (roleAssignments ?? new ChangeTrackingList<RoleAssignmentResult>()).ToList(),
+                summary,
+                default);
+        }
+
+        /// <param name="targetResourceId"> The target Azure resource ID. </param>
+        /// <param name="principalId"> The managed identity principal ID. </param>
+        /// <param name="roleDefinitionId"> The Azure RBAC role definition ID. </param>
+        /// <param name="roleDefinitionName"> Human-readable role name. </param>
+        /// <param name="scope"> The scope at which the role was/will be assigned. </param>
+        /// <param name="status"> The status of the role assignment operation. </param>
+        /// <param name="roleAssignmentId"> The created role assignment resource ID (null if failed or what-if mode). </param>
+        /// <param name="error"> Error details if the assignment failed. </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentResult"/> instance for mocking. </returns>
+        public static RoleAssignmentResult RoleAssignmentResult(ResourceIdentifier targetResourceId = default, string principalId = default, string roleDefinitionId = default, string roleDefinitionName = default, string scope = default, RoleAssignmentStatus status = default, ResourceIdentifier roleAssignmentId = default, RoleAssignmentError error = default)
+        {
+            return new RoleAssignmentResult(
+                targetResourceId,
+                principalId,
+                roleDefinitionId,
+                roleDefinitionName,
+                scope,
+                status,
+                roleAssignmentId,
+                error,
+                default);
+        }
+
+        /// <param name="code"> Azure error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentError"/> instance for mocking. </returns>
+        public static RoleAssignmentError RoleAssignmentError(string code = default, string message = default)
+        {
+            return new RoleAssignmentError(code, message, default);
+        }
+
+        /// <param name="totalRequired"> Total number of role assignments required. </param>
+        /// <param name="succeeded"> Number of successful role assignments. </param>
+        /// <param name="failed"> Number of failed role assignments. </param>
+        /// <param name="skipped"> Number of skipped role assignments (already existed). </param>
+        /// <returns> A new <see cref="Models.PermissionsFixSummary"/> instance for mocking. </returns>
+        public static PermissionsFixSummary PermissionsFixSummary(int totalRequired = default, int succeeded = default, int failed = default, int skipped = default)
+        {
+            return new PermissionsFixSummary(totalRequired, succeeded, failed, skipped, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the connection. </param>
+        /// <returns> A new <see cref="Chaos.ChaosConnectionData"/> instance for mocking. </returns>
+        public static ChaosConnectionData ChaosConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChaosConnectionProperties properties = default)
+        {
+            return new ChaosConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="kind"> The kind of connection, indicating the actor type authorized to reach the Chaos Studio data plane for the workspace and target. </param>
+        /// <param name="targetResourceId"> The fully qualified Azure resource ID of the target resource this connection is established with. </param>
+        /// <param name="principalId"> The Microsoft Entra principal (object) ID of the identity used by the connection. </param>
+        /// <param name="tenantId"> The Microsoft Entra tenant ID that the connection identity belongs to. </param>
+        /// <param name="certificateSubjectName"> The subject name of the certificate used to authenticate the connection. </param>
+        /// <param name="certificateIssuer"> The issuer of the certificate used to authenticate the connection. </param>
+        /// <param name="dstsPrincipal"> The dSTS principal name used to authenticate the connection. </param>
+        /// <param name="dataPlaneEndpoint">
+        /// The regional Chaos Studio data-plane endpoint assigned to this connection.
+        /// Clients and agents use this endpoint to reach the Chaos Studio data plane
+        /// for the connection.
+        /// </param>
+        /// <param name="status"> The current status of the connection. </param>
+        /// <param name="provisioningState"> The most recent provisioning state for the connection resource. </param>
+        /// <returns> A new <see cref="Models.ChaosConnectionProperties"/> instance for mocking. </returns>
+        public static ChaosConnectionProperties ChaosConnectionProperties(ChaosConnectionKind kind = default, ResourceIdentifier targetResourceId = default, Guid? principalId = default, Guid? tenantId = default, string certificateSubjectName = default, string certificateIssuer = default, string dstsPrincipal = default, Uri dataPlaneEndpoint = default, ChaosConnectionStatus? status = default, ChaosProvisioningState? provisioningState = default)
+        {
+            return new ChaosConnectionProperties(
+                kind,
+                targetResourceId,
+                principalId,
+                tenantId,
+                certificateSubjectName,
+                certificateIssuer,
+                dstsPrincipal,
+                dataPlaneEndpoint,
+                status,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string targetType = default, string description = default, string parametersSchema = default, string urn = default)
+        {
+            return new ChaosCapabilityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publisher is null && targetType is null && description is null && parametersSchema is null && urn is null ? default : new CapabilityProperties(
+                    publisher,
+                    targetType,
+                    description,
+                    parametersSchema,
+                    urn,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
+        /// <param name="steps"> List of steps. </param>
+        /// <param name="selectors"> List of selectors. </param>
+        /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosExperimentStep> steps = default, IEnumerable<ChaosTargetSelector> selectors = default)
+        {
+            return new ChaosExperimentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState is null && steps is null && selectors is null ? default : new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), default, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default)
+        {
+            return new ChaosExperimentExecutionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status is null && startedOn is null && stoppedOn is null ? default : new ExperimentExecutionProperties(status, startedOn, stoppedOn, default, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
@@ -354,16 +1514,23 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformationSteps"> The information of the experiment run. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
         {
-            runInformationSteps ??= new ChangeTrackingList<ChaosExperimentRunStepStatus>();
-
             return new ExperimentExecutionDetails(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
+                status is null && startedOn is null && stoppedOn is null && failureReason is null && lastActionOn is null && runInformationSteps is null ? default : new ExperimentExecutionDetailsProperties(
+                    status,
+                    startedOn,
+                    stoppedOn,
+                    default,
+                    failureReason,
+                    lastActionOn,
+                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
+                    default),
                 default);
         }
     }

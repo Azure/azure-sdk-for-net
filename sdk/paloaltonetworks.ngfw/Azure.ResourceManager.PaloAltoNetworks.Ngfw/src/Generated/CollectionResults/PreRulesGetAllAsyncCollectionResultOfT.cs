@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 PreRulesResourceListResult result = PreRulesResourceListResult.FromResponse(response);
-                yield return Page<PreRulestackRuleData>.FromValues((IReadOnlyList<PreRulestackRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PreRulestackRuleData>.FromValues((IReadOnlyList<PreRulestackRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

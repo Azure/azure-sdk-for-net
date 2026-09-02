@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
+using Assert = NUnit.Framework.Legacy.ClassicAssert;
 
 namespace Azure.Provisioning.Tests.Serialization;
 
@@ -329,13 +330,17 @@ public class ModelReaderWriterTests
         BicepExpression body = new ObjectExpression(
             new PropertyExpression("name", new StringLiteralExpression("myStorage")),
             new PropertyExpression("kind", new StringLiteralExpression("StorageV2")));
-        ResourceStatement stmt = new("storage", new StringLiteralExpression("Microsoft.Storage/storageAccounts@2024-01-01"), body);
+        ResourceStatement stmt = new("storage", new StringLiteralExpression("Microsoft.Storage/storageAccounts@2024-01-01"), body)
+        {
+            Condition = new IdentifierExpression("deployStorage")
+        };
 
         BinaryData json = ModelReaderWriter.Write<BicepStatement>(stmt, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default);
         string jsonStr = json.ToString();
         Assert.IsTrue(jsonStr.Contains("\"bicepIdentifier\""), $"Missing bicepIdentifier. Got: {jsonStr}");
         Assert.IsTrue(jsonStr.Contains("\"type\""), $"Missing type. Got: {jsonStr}");
         Assert.IsTrue(jsonStr.Contains("\"apiVersion\""), $"Missing apiVersion. Got: {jsonStr}");
+        Assert.IsTrue(jsonStr.Contains("\"kind\":\"if-condition\""), $"Missing resource condition. Got: {jsonStr}");
     }
 
     [Test]

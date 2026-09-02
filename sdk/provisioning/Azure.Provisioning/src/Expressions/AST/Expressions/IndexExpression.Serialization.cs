@@ -51,7 +51,9 @@ public partial class IndexExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is IndexExpression idx && Value.Equals(idx.Value) && Index.Equals(idx.Index) && FromEnd == idx.FromEnd;
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(IndexExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Index?.GetHashCode() ?? 0) ^ FromEnd.GetHashCode();
 }
 
@@ -98,6 +100,8 @@ public partial class SafeIndexExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is SafeIndexExpression idx && Value.Equals(idx.Value) && Index.Equals(idx.Index);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(SafeIndexExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Index?.GetHashCode() ?? 0);
 }

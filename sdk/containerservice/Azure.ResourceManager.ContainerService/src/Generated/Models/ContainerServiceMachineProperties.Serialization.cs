@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
@@ -86,87 +85,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Hardware))
-            {
-                writer.WritePropertyName("hardware"u8);
-                writer.WriteObjectValue(Hardware, options);
-            }
-            if (Optional.IsDefined(OperatingSystem))
-            {
-                writer.WritePropertyName("operatingSystem"u8);
-                writer.WriteObjectValue(OperatingSystem, options);
-            }
-            if (Optional.IsDefined(Kubernetes))
-            {
-                writer.WritePropertyName("kubernetes"u8);
-                writer.WriteObjectValue(Kubernetes, options);
-            }
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
-            if (Optional.IsDefined(Security))
-            {
-                writer.WritePropertyName("security"u8);
-                writer.WriteObjectValue(Security, options);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
-            }
-            if (Optional.IsDefined(EvictionPolicy))
-            {
-                writer.WritePropertyName("evictionPolicy"u8);
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(Billing))
-            {
-                writer.WritePropertyName("billing"u8);
-                writer.WriteObjectValue(Billing, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
-            {
-                writer.WritePropertyName("nodeImageVersion"u8);
-                writer.WriteStringValue(NodeImageVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
-            }
-            if (Optional.IsDefined(LocalDnsProfile))
-            {
-                writer.WritePropertyName("localDNSProfile"u8);
-                writer.WriteObjectValue(LocalDnsProfile, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -211,20 +129,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceMachineNetworkProperties network = default;
             ResourceIdentifier resourceId = default;
-            ContainerServiceMachineHardwareProfile hardware = default;
-            ContainerServiceMachineOSProfile operatingSystem = default;
-            ContainerServiceMachineKubernetesProfile kubernetes = default;
-            AgentPoolMode? mode = default;
-            ContainerServiceMachineSecurityProfile security = default;
-            ScaleSetPriority? priority = default;
-            ScaleSetEvictionPolicy? evictionPolicy = default;
-            MachineBillingProfile billing = default;
-            string nodeImageVersion = default;
-            string provisioningState = default;
-            IDictionary<string, string> tags = default;
-            ETag? eTag = default;
-            ContainerServiceMachineStatus status = default;
-            LocalDnsProfile localDnsProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -246,159 +150,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("hardware"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hardware = ContainerServiceMachineHardwareProfile.DeserializeContainerServiceMachineHardwareProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("operatingSystem"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    operatingSystem = ContainerServiceMachineOSProfile.DeserializeContainerServiceMachineOSProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("kubernetes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kubernetes = ContainerServiceMachineKubernetesProfile.DeserializeContainerServiceMachineKubernetesProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("mode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new AgentPoolMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("security"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    security = ContainerServiceMachineSecurityProfile.DeserializeContainerServiceMachineSecurityProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("priority"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    priority = new ScaleSetPriority(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("evictionPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    evictionPolicy = new ScaleSetEvictionPolicy(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("billing"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    billing = MachineBillingProfile.DeserializeMachineBillingProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("nodeImageVersion"u8))
-                {
-                    nodeImageVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    provisioningState = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("eTag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = ContainerServiceMachineStatus.DeserializeContainerServiceMachineStatus(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("localDNSProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceMachineProperties(
-                network,
-                resourceId,
-                hardware,
-                operatingSystem,
-                kubernetes,
-                mode,
-                security,
-                priority,
-                evictionPolicy,
-                billing,
-                nodeImageVersion,
-                provisioningState,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                eTag,
-                status,
-                localDnsProfile,
-                additionalBinaryDataProperties);
+            return new ContainerServiceMachineProperties(network, resourceId, additionalBinaryDataProperties);
         }
     }
 }

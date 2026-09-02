@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppActiveDirectoryConfigResource : IJsonModel<NetAppActiveDirectoryConfigData>
+    /// <summary></summary>
+    public partial class NetAppActiveDirectoryConfigResource : ArmResource, IJsonModel<NetAppActiveDirectoryConfigData>
     {
-        private static NetAppActiveDirectoryConfigData s_dataDeserializationInstance;
-        private static NetAppActiveDirectoryConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppActiveDirectoryConfigData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppActiveDirectoryConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppActiveDirectoryConfigData>)Data).Write(writer, options);
-
-        NetAppActiveDirectoryConfigData IJsonModel<NetAppActiveDirectoryConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppActiveDirectoryConfigData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppActiveDirectoryConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppActiveDirectoryConfigData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppActiveDirectoryConfigData IPersistableModel<NetAppActiveDirectoryConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppActiveDirectoryConfigData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppActiveDirectoryConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppActiveDirectoryConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppActiveDirectoryConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppActiveDirectoryConfigData();
     }
 }

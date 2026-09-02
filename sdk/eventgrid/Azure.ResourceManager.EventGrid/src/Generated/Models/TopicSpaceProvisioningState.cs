@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct TopicSpaceProvisioningState : IEquatable<TopicSpaceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="TopicSpaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TopicSpaceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static TopicSpaceProvisioningState Creating { get; } = new TopicSpaceProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static TopicSpaceProvisioningState Updating { get; } = new TopicSpaceProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static TopicSpaceProvisioningState Deleting { get; } = new TopicSpaceProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static TopicSpaceProvisioningState Succeeded { get; } = new TopicSpaceProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static TopicSpaceProvisioningState Canceled { get; } = new TopicSpaceProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static TopicSpaceProvisioningState Failed { get; } = new TopicSpaceProvisioningState(FailedValue);
+
         /// <summary> Deleted. </summary>
         public static TopicSpaceProvisioningState Deleted { get; } = new TopicSpaceProvisioningState(DeletedValue);
+
         /// <summary> Determines if two <see cref="TopicSpaceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TopicSpaceProvisioningState left, TopicSpaceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TopicSpaceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TopicSpaceProvisioningState left, TopicSpaceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TopicSpaceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TopicSpaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TopicSpaceProvisioningState(string value) => new TopicSpaceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TopicSpaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TopicSpaceProvisioningState?(string value) => value == null ? null : new TopicSpaceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TopicSpaceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TopicSpaceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

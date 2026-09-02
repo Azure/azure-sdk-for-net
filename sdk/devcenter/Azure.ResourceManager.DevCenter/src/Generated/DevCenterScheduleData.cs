@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of a Schedule resource. </param>
-        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a Schedule resource. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.Location = value.Value;
+                Properties.Location = value;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.ScheduledType = value.Value;
+                Properties.ScheduledType = value;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.Frequency = value.Value;
+                Properties.Frequency = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
 

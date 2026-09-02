@@ -35,12 +35,14 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="description"></param>
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
-        internal FunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict) : base(@type, additionalBinaryDataProperties)
+        /// <param name="deferLoading"> Whether this function is deferred and loaded via tool search. </param>
+        internal FunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
             Strict = strict;
+            DeferLoading = deferLoading;
         }
 
         /// <summary> The name of the function to call. </summary>
@@ -79,5 +81,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets or sets the Strict. </summary>
         public bool? Strict { get; set; }
+
+        /// <summary> Whether this function is deferred and loaded via tool search. </summary>
+        public bool? DeferLoading { get; set; }
     }
 }

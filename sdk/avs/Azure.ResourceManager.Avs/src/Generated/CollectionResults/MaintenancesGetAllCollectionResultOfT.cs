@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 MaintenanceListResult result = MaintenanceListResult.FromResponse(response);
-                yield return Page<AvsMaintenanceData>.FromValues((IReadOnlyList<AvsMaintenanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvsMaintenanceData>.FromValues((IReadOnlyList<AvsMaintenanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary>
-    /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
-    /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
-    /// </summary>
+    /// <summary> Controls how active revisions are handled for the Container app. </summary>
     public readonly partial struct ContainerAppActiveRevisionsMode : IEquatable<ContainerAppActiveRevisionsMode>
     {
         private readonly string _value;
+        /// <summary> Multiple. </summary>
+        private const string MultipleValue = "Multiple";
+        /// <summary> Single. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> Labels. </summary>
+        private const string LabelsValue = "Labels";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppActiveRevisionsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppActiveRevisionsMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MultipleValue = "Multiple";
-        private const string SingleValue = "Single";
+            _value = value;
+        }
 
         /// <summary> Multiple. </summary>
         public static ContainerAppActiveRevisionsMode Multiple { get; } = new ContainerAppActiveRevisionsMode(MultipleValue);
+
         /// <summary> Single. </summary>
         public static ContainerAppActiveRevisionsMode Single { get; } = new ContainerAppActiveRevisionsMode(SingleValue);
+
+        /// <summary> Labels. </summary>
+        public static ContainerAppActiveRevisionsMode Labels { get; } = new ContainerAppActiveRevisionsMode(LabelsValue);
+
         /// <summary> Determines if two <see cref="ContainerAppActiveRevisionsMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppActiveRevisionsMode left, ContainerAppActiveRevisionsMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppActiveRevisionsMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppActiveRevisionsMode left, ContainerAppActiveRevisionsMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppActiveRevisionsMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppActiveRevisionsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppActiveRevisionsMode(string value) => new ContainerAppActiveRevisionsMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppActiveRevisionsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppActiveRevisionsMode?(string value) => value == null ? null : new ContainerAppActiveRevisionsMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppActiveRevisionsMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppActiveRevisionsMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

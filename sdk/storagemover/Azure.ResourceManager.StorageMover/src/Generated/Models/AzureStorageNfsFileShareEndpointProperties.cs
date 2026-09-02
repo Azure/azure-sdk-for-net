@@ -31,11 +31,12 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="AzureStorageNfsFileShareEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage NFS file share. </param>
-        internal AzureStorageNfsFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, provisioningState, additionalBinaryDataProperties)
+        internal AzureStorageNfsFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;

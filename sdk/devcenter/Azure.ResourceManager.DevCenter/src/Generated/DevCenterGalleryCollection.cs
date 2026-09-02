@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterGalleryResource.ResourceType, out string devCenterGalleryApiVersion);
             _galleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterGalleryResource.ResourceType.Namespace, Diagnostics);
-            _galleriesRestClient = new Galleries(_galleriesClientDiagnostics, Pipeline, Endpoint, devCenterGalleryApiVersion ?? "2026-01-01-preview");
+            _galleriesRestClient = new Galleries(_galleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterGalleryApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, DevCenterGalleryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterGalleryResource> operation = new DevCenterArmOperation<DevCenterGalleryResource>(
-                    new DevCenterGalleryOperationSource(Client),
+                    new DevCenterGalleryResourceOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, DevCenterGalleryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterGalleryResource> operation = new DevCenterArmOperation<DevCenterGalleryResource>(
-                    new DevCenterGalleryOperationSource(Client),
+                    new DevCenterGalleryResourceOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
                     message.Request,

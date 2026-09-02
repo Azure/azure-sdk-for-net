@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the capability type resource. </param>
-        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapabilityTypeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CapabilityTypeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the capability type resource. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Publisher;
+                return Properties is null ? default : Properties.Publisher;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.TargetType;
+                return Properties is null ? default : Properties.TargetType;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.ParametersSchema;
+                return Properties is null ? default : Properties.ParametersSchema;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Urn;
+                return Properties is null ? default : Properties.Urn;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.Kind;
+                return Properties is null ? default : Properties.Kind;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.AzureRbacActions;
+                return Properties is null ? default : Properties.AzureRbacActions;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.AzureRbacDataActions;
+                return Properties is null ? default : Properties.AzureRbacDataActions;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.RequiredAzureRoleDefinitionIds;
+                return Properties is null ? default : Properties.RequiredAzureRoleDefinitionIds;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                return Properties.RuntimeKind;
+                return Properties is null ? default : Properties.RuntimeKind;
             }
         }
     }

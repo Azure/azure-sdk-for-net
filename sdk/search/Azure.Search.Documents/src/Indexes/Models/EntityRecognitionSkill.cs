@@ -19,27 +19,9 @@ namespace Azure.Search.Documents.Indexes.Models
             OdataType = skillVersion.ToString();
         }
 
-        /// <summary> Deprecated. A list of entity categories that should be extracted. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated. Use EntityCategories instead.", true)]
-        public IList<EntityCategory> Categories { get;  }
-
-        /// <summary> A list of entity categories that should be extracted. </summary>
-        [CodeGenMember("Categories")]
-        public IList<string> EntityCategories { get; }
-
         /// <summary> Deprecated. Determines whether or not to include entities which are well known but don't conform to a pre-defined type. </summary>
         [Obsolete("This property is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IncludeTypelessEntities { get; set; }
-
-        /// <summary> Deprecated. A value indicating which language code to use. Default is en. </summary>
-        [Obsolete("This property is deprecated. Use EntityLanguageCode instead.", true)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
-
-        /// <summary> A value indicating which language code to use. Default is `en`. </summary>
-        [CodeGenMember("DefaultLanguageCode")]
-        public string LanguageCode { get; set; }
     }
 }

@@ -22,6 +22,7 @@ public partial class UserSecurityContext
     [CodeGenMember("SourceIp")]
     public string SourceIP { get; set; }
 
+    /// <summary> Initializes a new instance of <see cref="UserSecurityContext"/>. </summary>
     public UserSecurityContext()
     { }
 }

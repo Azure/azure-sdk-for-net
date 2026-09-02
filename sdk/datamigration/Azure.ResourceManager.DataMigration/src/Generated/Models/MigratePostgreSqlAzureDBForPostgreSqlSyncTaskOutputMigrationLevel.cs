@@ -14,15 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel()
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel() : base("MigrationLevelOutput")
         {
-            ResultType = "MigrationLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="sourceServerVersion"> Source server version. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerType"> Target server type. </param>
         /// <param name="state"> Migration status. </param>
         /// <param name="databaseCount"> Number of databases to include. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, DataMigrationScenarioSource? sourceServerType, DataMigrationScenarioTarget? targetServerType, ReplicateMigrationState? state, float? databaseCount) : base(id, resultType, serializedAdditionalRawData)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, DataMigrationScenarioSource? sourceServerType, DataMigrationScenarioTarget? targetServerType, ReplicateMigrationState? state, float? databaseCount) : base(id, resultType, additionalBinaryDataProperties)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -45,27 +44,35 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetServerType = targetServerType;
             State = state;
             DatabaseCount = databaseCount;
-            ResultType = resultType ?? "MigrationLevelOutput";
         }
 
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Source server version. </summary>
         public string SourceServerVersion { get; }
+
         /// <summary> Source server name. </summary>
         public string SourceServer { get; }
+
         /// <summary> Target server version. </summary>
         public string TargetServerVersion { get; }
+
         /// <summary> Target server name. </summary>
         public string TargetServer { get; }
+
         /// <summary> Source server type. </summary>
         public DataMigrationScenarioSource? SourceServerType { get; }
+
         /// <summary> Target server type. </summary>
         public DataMigrationScenarioTarget? TargetServerType { get; }
+
         /// <summary> Migration status. </summary>
         public ReplicateMigrationState? State { get; }
+
         /// <summary> Number of databases to include. </summary>
         public float? DatabaseCount { get; }
     }

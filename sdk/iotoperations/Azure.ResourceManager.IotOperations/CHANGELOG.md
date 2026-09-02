@@ -1,10 +1,25 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 1.2.0 (2026-07-01)
+
+### Features Added
+
+Upgraded to api-version 2026-07-01:
+- Added `AkriServiceResource` and its collection/operations for managing Akri services under an instance.
+- Added `AkriConnectorTemplateReadinessProbe` support for connector template readiness probes.
+- Added high priority messages backpressure handling for broker configuration.
+- Added `ResourceHealthStatus` and status health state projections for resource health reporting.
+
+## 1.1.0 (2026-06-13)
 
 ### Features Added
 
 Upgraded to api-version 2025-10-01.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.1.0-beta.1 (2025-09-09)
 

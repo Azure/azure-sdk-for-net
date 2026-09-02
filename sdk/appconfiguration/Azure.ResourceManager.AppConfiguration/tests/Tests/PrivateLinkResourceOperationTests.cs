@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             AppConfigurationPrivateLinkResource linkResource = await LinkResource.GetAsync();
 
-            Assert.IsTrue(LinkResource.Data.Name.Equals(linkResource.Data.Name));
+            Assert.That(LinkResource.Data.Name.Equals(linkResource.Data.Name), Is.True);
         }
 
         [Ignore("Error resource id without '/' in the beginning")]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             IEnumerable<AzureLocation> locations = (await LinkResource.GetAvailableLocationsAsync()).Value;
 
-            Assert.IsTrue(locations.Count() >= 0);
+            Assert.That(locations.Count() >= 0, Is.True);
         }
     }
 }

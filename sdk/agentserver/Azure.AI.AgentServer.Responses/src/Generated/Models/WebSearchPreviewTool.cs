@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="WebSearchPreviewTool"/>. </summary>
         public WebSearchPreviewTool() : base(ToolType.WebSearchPreview)
         {
+            SearchContentTypes = new ChangeTrackingList<SearchContentType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSearchPreviewTool"/>. </summary>
@@ -22,10 +24,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        internal WebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApproximateLocation userLocation, SearchContextSize? searchContextSize) : base(@type, additionalBinaryDataProperties)
+        /// <param name="searchContentTypes"></param>
+        internal WebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes) : base(@type, additionalBinaryDataProperties)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
+            SearchContentTypes = searchContentTypes;
         }
 
         /// <summary> Gets or sets the UserLocation. </summary>
@@ -33,5 +37,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public SearchContextSize? SearchContextSize { get; set; }
+
+        /// <summary> Gets the SearchContentTypes. </summary>
+        public IList<SearchContentType> SearchContentTypes { get; }
     }
 }

@@ -62,7 +62,8 @@ internal class ProvisionableCollection : IEnumerable<Provisionable>
 
         if (targetArmType == null)
         {
-            foreach (var item in _items.OfType<T>()) yield return item;
+            foreach (var item in _items.OfType<T>())
+                yield return item;
             yield break;
         }
 

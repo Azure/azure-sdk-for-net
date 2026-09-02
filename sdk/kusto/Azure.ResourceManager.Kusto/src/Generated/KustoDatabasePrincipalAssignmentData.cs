@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary>
-    /// A class representing the KustoDatabasePrincipalAssignment data model.
-    /// Class representing a database principal assignment.
-    /// </summary>
+    /// <summary> Class representing a database principal assignment. </summary>
     public partial class KustoDatabasePrincipalAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentData"/>. </summary>
         public KustoDatabasePrincipalAssignmentData()
@@ -57,55 +25,138 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databasePrincipalId"> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </param>
-        /// <param name="role"> Database principal role. </param>
-        /// <param name="tenantId"> The tenant id of the principal. </param>
-        /// <param name="principalType"> Principal type. </param>
-        /// <param name="tenantName"> The tenant name of the principal. </param>
-        /// <param name="principalName"> The principal name. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoDatabasePrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databasePrincipalId, KustoDatabasePrincipalRole? role, Guid? tenantId, KustoPrincipalAssignmentType? principalType, string tenantName, string principalName, KustoProvisioningState? provisioningState, Guid? aadObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The database principal. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoDatabasePrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabasePrincipalProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DatabasePrincipalId = databasePrincipalId;
-            Role = role;
-            TenantId = tenantId;
-            PrincipalType = principalType;
-            TenantName = tenantName;
-            PrincipalName = principalName;
-            ProvisioningState = provisioningState;
-            AadObjectId = aadObjectId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The database principal. </summary>
+        [WirePath("properties")]
+        internal DatabasePrincipalProperties Properties { get; set; }
 
         /// <summary> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </summary>
         [WirePath("properties.principalId")]
-        public string DatabasePrincipalId { get; set; }
+        public string DatabasePrincipalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabasePrincipalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabasePrincipalProperties();
+                }
+                Properties.DatabasePrincipalId = value;
+            }
+        }
+
         /// <summary> Database principal role. </summary>
         [WirePath("properties.role")]
-        public KustoDatabasePrincipalRole? Role { get; set; }
+        public KustoDatabasePrincipalRole? Role
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Role;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DatabasePrincipalProperties();
+                    }
+                    Properties.Role = value.Value;
+                }
+            }
+        }
+
         /// <summary> The tenant id of the principal. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabasePrincipalProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
         /// <summary> Principal type. </summary>
         [WirePath("properties.principalType")]
-        public KustoPrincipalAssignmentType? PrincipalType { get; set; }
+        public KustoPrincipalAssignmentType? PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DatabasePrincipalProperties();
+                    }
+                    Properties.PrincipalType = value.Value;
+                }
+            }
+        }
+
         /// <summary> The tenant name of the principal. </summary>
         [WirePath("properties.tenantName")]
-        public string TenantName { get; }
+        public string TenantName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantName;
+            }
+        }
+
         /// <summary> The principal name. </summary>
         [WirePath("properties.principalName")]
-        public string PrincipalName { get; }
+        public string PrincipalName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalName;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The service principal object id in AAD (Azure active directory). </summary>
         [WirePath("properties.aadObjectId")]
-        public Guid? AadObjectId { get; }
+        public Guid? AadObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AadObjectId;
+            }
+        }
     }
 }

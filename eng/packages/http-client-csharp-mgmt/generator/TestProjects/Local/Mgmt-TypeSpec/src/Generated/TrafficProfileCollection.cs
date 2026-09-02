@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(TrafficProfileResource.ResourceType, out string trafficProfileApiVersion);
             _trafficProfilesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", TrafficProfileResource.ResourceType.Namespace, Diagnostics);
-            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
+            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -264,11 +264,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// List a TrafficProfile
+        /// List TrafficProfile resources by resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -292,11 +292,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// List a TrafficProfile
+        /// List TrafficProfile resources by resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

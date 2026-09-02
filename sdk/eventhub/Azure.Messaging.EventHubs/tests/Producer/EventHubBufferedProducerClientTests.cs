@@ -1562,6 +1562,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -2154,6 +2155,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -2231,6 +2233,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -2300,6 +2303,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -2373,6 +2377,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -2675,6 +2680,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -2938,6 +2944,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -3016,6 +3023,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -3086,6 +3094,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -3160,6 +3169,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -3469,6 +3479,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -4073,7 +4084,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(partitionState.BufferedEventCount, Is.EqualTo(1), "The buffered event count for the partition should have been decremented, but the extra event should remain.");
@@ -4129,7 +4140,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Start the publishing task; it should wait for a full batch before completing.
 
-            var publishingTask = mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            var publishingTask = mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             // Enqueue the events that are expected to be returned with a small delay between them.
 
@@ -4212,7 +4223,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Start the publishing task; it should wait for a full batch before completing.
 
-            var publishingTask = mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            var publishingTask = mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             // Wait for longer than the wait time before enqueuing the extra event.  The batch will accept it, but the
             // wait time will have elapsed before it was available and it should not be included in the batch.
@@ -4237,6 +4248,73 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 Assert.That(publishedEvents[index].IsEquivalentTo(expectedEvents[index]), Is.True, $"The event at index: [{index}] did not match the expected event.");
             }
+
+            mockProducer
+                .Verify(producer => producer.SendAsync(
+                    It.Is<EventDataBatch>(value => value.SendOptions.PartitionId == expectedPartition),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the background management task.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PublishBatchToPartitionStopsWaitingWhenBatchingWaitIsCanceled()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            using var batchingWaitCancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var publishedEventsCount = 0;
+            var expectedPartition = "4";
+            var expectedEvent = EventGenerator.CreateSmallEvents(1).Single();
+            var publishedEvents = new List<EventData>();
+            var sendCancellationToken = default(CancellationToken);
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit };
+            var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { expectedPartition, "6" });
+
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1_048_576, publishedEvents, options, _ => true)));
+
+            mockProducer
+                .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Callback<EventDataBatch, CancellationToken>((batch, token) =>
+                {
+                    publishedEventsCount = batch.Count;
+                    sendCancellationToken = token;
+                })
+                .Returns(Task.CompletedTask);
+
+            // Enqueue the event that is expected to be published.
+
+            await partitionState.PendingEventsWriter.WriteAsync(expectedEvent, cancellationSource.Token);
+            partitionState.BufferedEventCount += 1;
+
+            // Start the publishing task; it should wait for a full batch before completing.
+
+            var publishingTask = mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, batchingWaitCancellationSource.Token);
+
+            // Request that batching stop waiting for more events; the partial batch should be published.
+
+            batchingWaitCancellationSource.Cancel();
+
+            await publishingTask.AwaitWithCancellation(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            Assert.That(sendCancellationToken.IsCancellationRequested, Is.False, "The send operation should not be canceled when only the batching wait is canceled.");
+            Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "The buffered event count for the partition should have been decremented.");
+            Assert.That(publishedEventsCount, Is.EqualTo(1), "The partial batch should have been published when batching wait was canceled.");
+
+            Assert.That(publishedEvents.Single().IsEquivalentTo(expectedEvent), Is.True, "The published event should match the expected event.");
 
             mockProducer
                 .Verify(producer => producer.SendAsync(
@@ -4277,7 +4355,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "No events should be buffered.");
@@ -4336,7 +4414,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(partitionState.BufferedEventCount, Is.EqualTo(0), "No events should be buffered.");
@@ -4403,7 +4481,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4484,7 +4562,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4567,7 +4645,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token, publishCancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4653,7 +4731,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token, publishCancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4726,7 +4804,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, publishCancellationSource.Token, publishCancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4797,7 +4875,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4888,7 +4966,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -4953,7 +5031,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(publishedEventsCount, Is.EqualTo(expectedEvents.Count), "The number of events published should match.");
@@ -5023,7 +5101,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(publishedEventsCount, Is.EqualTo(0), "No events should have been published.");
@@ -5101,7 +5179,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5164,7 +5242,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5251,7 +5329,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Publish and verify.
 
-            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token, cancellationSource.Token);
             await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
@@ -5290,8 +5368,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(new[] { expectedPartition });
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>((state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>((state, releaseFlag, token, batchingWaitToken) =>
                 {
                     while (state.TryReadEvent(out _))
                     { }
@@ -5333,6 +5411,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.PublishBatchToPartition(
                     state,
                     true,
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
         }
@@ -5359,8 +5438,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(validPartitions);
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>((state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>((state, releaseFlag, token, batchingWaitToken) =>
                 {
                     while (state.TryReadEvent(out _))
                     { }
@@ -5418,6 +5497,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.PublishBatchToPartition(
                     It.Is<EventHubBufferedProducerClient.PartitionPublishingState>(value => validPartitions.Any(item => item == value.PartitionId)),
                     true,
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(validPartitions.Length));
         }
@@ -5446,8 +5526,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(validPartitions);
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>((state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>((state, releaseFlag, token, batchingWaitToken) =>
                 {
                     state.TryReadEvent(out _);
                     --state.BufferedEventCount;
@@ -5507,6 +5587,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.PublishBatchToPartition(
                     It.Is<EventHubBufferedProducerClient.PartitionPublishingState>(value => validPartitions.Any(item => item == value.PartitionId)),
                     true,
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(expectedPublishCount));
         }
@@ -5536,8 +5617,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(validPartitions);
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>((state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>((state, releaseFlag, token, batchingWaitToken) =>
                 {
                     state.TryReadEvent(out _);
                     --state.BufferedEventCount;
@@ -5597,6 +5678,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.PublishBatchToPartition(
                     It.Is<EventHubBufferedProducerClient.PartitionPublishingState>(value => validPartitions.Any(item => item == value.PartitionId)),
                     true,
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(expectedPublishCount));
         }
@@ -5627,8 +5709,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(validPartitions);
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>((state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>((state, releaseFlag, token, batchingWaitToken) =>
                 {
                     state.TryReadEvent(out _);
                     Interlocked.Decrement(ref state.BufferedEventCount);
@@ -5688,6 +5770,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.PublishBatchToPartition(
                     It.Is<EventHubBufferedProducerClient.PartitionPublishingState>(value => validPartitions.Any(item => item == value.PartitionId)),
                     true,
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(expectedPublishCount));
         }
@@ -5729,8 +5812,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(validPartitions);
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>((state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>((state, releaseFlag, token, batchingWaitToken) =>
                 {
                     state.TryReadEvent(out _);
                     Interlocked.Decrement(ref state.BufferedEventCount);
@@ -5799,6 +5882,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify(producer => producer.PublishBatchToPartition(
                     It.Is<EventHubBufferedProducerClient.PartitionPublishingState>(value => validPartitions.Any(item => item == value.PartitionId)),
                     true,
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(expectedPublishCount + 1));
 
@@ -5837,8 +5921,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(validPartitions);
 
             mockBufferedProducer
-                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken>(async (state, releaseFlag, token) =>
+                .Setup(producer => producer.PublishBatchToPartition(It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(), It.IsAny<bool>(), It.IsAny<CancellationToken>(), It.IsAny<CancellationToken>()))
+                .Callback<EventHubBufferedProducerClient.PartitionPublishingState, bool, CancellationToken, CancellationToken>(async (state, releaseFlag, token, batchingWaitToken) =>
                 {
                     if (Interlocked.Increment(ref startCount) >= validPartitions.Length)
                     {
@@ -5961,6 +6045,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Callback(() => completionSource.TrySetResult(true))
                 .Returns(Task.CompletedTask);
@@ -6029,6 +6114,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.PublishBatchToPartition(
                     It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
                     It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>(),
                     It.IsAny<CancellationToken>()))
                 .Callback(() => startCompletionSource.TrySetResult(true))
                 .Throws(expectedException);

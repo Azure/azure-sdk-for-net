@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return Progress.Percentage;
+                return Progress is null ? default : Progress.Percentage;
             }
         }
 
         /// <summary> The timestamp when the source update happened. </summary>
         [WirePath("trigger.sourceTrigger.timestamp")]
-        public DateTimeOffset? SourceTriggerTimestamp
+        public DateTimeOffset? SourceTriggerOn
         {
             get
             {
-                return Trigger.SourceTriggerTimestamp;
+                return Trigger is null ? default : Trigger.SourceTriggerOn;
             }
         }
     }

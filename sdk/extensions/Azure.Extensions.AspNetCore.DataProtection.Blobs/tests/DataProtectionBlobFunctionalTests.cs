@@ -32,7 +32,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var unprotectedText = anotherDataProtector.Unprotect(protectedText);
 
-            Assert.AreEqual("Hello world!", unprotectedText);
+            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var unprotectedText = anotherDataProtector.Unprotect(protectedText);
 
-            Assert.AreEqual("Hello world!", unprotectedText);
+            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
         }
 
         [Test]
@@ -63,14 +63,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             var repository = new AzureBlobXmlRepository(blobClient);
             repository.StoreElement(new XElement("XmlElement"), null);
-            Assert.AreEqual(1, repository.GetAllElements().Count);
+            Assert.That(repository.GetAllElements().Count, Is.EqualTo(1));
 
             var repository2 = new AzureBlobXmlRepository(blobClient);
             // Store another element
             repository2.StoreElement(new XElement("XmlElement"), null);
 
-            Assert.AreEqual(2, repository2.GetAllElements().Count);
-            Assert.AreEqual(2, repository.GetAllElements().Count);
+            Assert.That(repository2.GetAllElements().Count, Is.EqualTo(2));
+            Assert.That(repository.GetAllElements().Count, Is.EqualTo(2));
         }
 
         private async Task<BlobClient> GetBlobClient(string name)

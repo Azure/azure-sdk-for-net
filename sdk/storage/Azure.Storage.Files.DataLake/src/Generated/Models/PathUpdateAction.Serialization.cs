@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class PathUpdateActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PathUpdateAction value) => value switch
         {
             PathUpdateAction.Append => "append",
@@ -21,13 +22,29 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathUpdateAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PathUpdateAction ToPathUpdateAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "append")) return PathUpdateAction.Append;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "flush")) return PathUpdateAction.Flush;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setProperties")) return PathUpdateAction.SetProperties;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setAccessControl")) return PathUpdateAction.SetAccessControl;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setAccessControlRecursive")) return PathUpdateAction.SetAccessControlRecursive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "append"))
+            {
+                return PathUpdateAction.Append;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "flush"))
+            {
+                return PathUpdateAction.Flush;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setProperties"))
+            {
+                return PathUpdateAction.SetProperties;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setAccessControl"))
+            {
+                return PathUpdateAction.SetAccessControl;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "setAccessControlRecursive"))
+            {
+                return PathUpdateAction.SetAccessControlRecursive;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathUpdateAction value.");
         }
     }

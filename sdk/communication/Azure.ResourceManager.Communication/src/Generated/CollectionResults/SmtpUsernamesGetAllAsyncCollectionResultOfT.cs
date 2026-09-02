@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 SmtpUsernameResourceCollection result = SmtpUsernameResourceCollection.FromResponse(response);
-                yield return Page<CommunicationSmtpUsernameData>.FromValues((IReadOnlyList<CommunicationSmtpUsernameData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CommunicationSmtpUsernameData>.FromValues((IReadOnlyList<CommunicationSmtpUsernameData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Renamed `ServiceFabricManagedDataDiskType` values to match .NET naming guidelines and their wire values: `PremiumV2LRS` to `PremiumV2Lrs`, `PremiumZRS` to `PremiumZrs`, and the previous `PremiumZrs` value to `StandardSsdZrs`.
 
 ### Bugs Fixed
 

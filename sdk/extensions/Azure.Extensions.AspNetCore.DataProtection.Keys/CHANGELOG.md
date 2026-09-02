@@ -10,6 +10,25 @@
 
 ### Other Changes
 
+## 1.6.4 (2026-09-08)
+
+### Other Changes
+
+- Updated `Azure.Core` dependency from 1.55.0 to 1.61.0.
+- Updated `Microsoft.AspNetCore.DataProtection` to patched versions that resolve `System.Security.Cryptography.Xml` advisories GHSA-g8r8-53c2-pm3f, GHSA-8q5v-6pqq-x66h, GHSA-23rf-6693-g89p, GHSA-cvvh-rhrc-wg4q, and GHSA-mmjf-rqrv-855v: from 8.0.26 to 8.0.29 for `net8.0`, and from 10.0.7 to 10.0.10 for all other target frameworks.
+
+## 1.6.3 (2026-05-08)
+
+### Bugs Fixed
+
+- Fixed a misalignment between the explicit `net8.0` target of this package and its `Microsoft.AspNetCore.DataProtection` dependency, which does not offer a `net8.0` asset in the 10.x version. The dependency now resolves to version 8.0.26 when targeting `net8.0`, ensuring consumers receive a framework-compatible asset and eliminating the associated dependency warnings.
+
+## 1.6.2 (2026-04-28)
+
+### Other Changes
+
+- Updated `Microsoft.AspNetCore.DataProtection` dependency to 10.0.7 to mitigate [GHSA-37gx-xxp4-5rgx](https://github.com/advisories/GHSA-37gx-xxp4-5rgx) and [GHSA-w3x6-4m5h-cxqf](https://github.com/advisories/GHSA-w3x6-4m5h-cxqf).
+
 ## 1.6.1 (2025-06-23)
 
 ### Acknowledgments

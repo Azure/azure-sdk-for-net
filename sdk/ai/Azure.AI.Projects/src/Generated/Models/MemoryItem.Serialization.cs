@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Projects;
@@ -11,7 +12,7 @@ namespace Azure.AI.Projects.Memory
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/> and <see cref="ChatSummaryMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMemoryItem))]
     public abstract partial class MemoryItem : IJsonModel<MemoryItem>
@@ -60,6 +61,14 @@ namespace Azure.AI.Projects.Memory
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MemoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryItem"/> from. </param>
+        public static explicit operator MemoryItem(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMemoryItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -139,6 +148,8 @@ namespace Azure.AI.Projects.Memory
                         return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
                     case "chat_summary":
                         return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
+                    case "procedural":
+                        return ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, options);
                 }
             }
             return UnknownMemoryItem.DeserializeUnknownMemoryItem(element, options);

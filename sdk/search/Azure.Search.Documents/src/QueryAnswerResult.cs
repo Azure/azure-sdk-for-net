@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, object> AdditionalProperties =>
-            (IReadOnlyDictionary<string, object>) _additionalBinaryDataProperties;
+            (IReadOnlyDictionary<string, object>)_additionalBinaryDataProperties;
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

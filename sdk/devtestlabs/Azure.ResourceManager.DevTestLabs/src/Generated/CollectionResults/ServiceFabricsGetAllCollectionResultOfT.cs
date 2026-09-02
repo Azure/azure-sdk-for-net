@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 ServiceFabricList result = ServiceFabricList.FromResponse(response);
-                yield return Page<DevTestLabServiceFabricData>.FromValues((IReadOnlyList<DevTestLabServiceFabricData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabServiceFabricData>.FromValues((IReadOnlyList<DevTestLabServiceFabricData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

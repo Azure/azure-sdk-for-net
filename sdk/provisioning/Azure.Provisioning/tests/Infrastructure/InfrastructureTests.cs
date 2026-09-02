@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Tests
         public void ValidNames()
         {
             // Check null is invalid
-            Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(null));
+            Assert.That(Infrastructure.IsValidBicepIdentifier(null), Is.False);
             Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateBicepIdentifier(null));
             Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
 
@@ -22,11 +22,11 @@ namespace Azure.Provisioning.Tests
             List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage", "KforKelvin"];
             foreach (string name in invalid)
             {
-                Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(name));
+                Assert.That(Infrastructure.IsValidBicepIdentifier(name), Is.False);
                 Assert.Throws<ArgumentException>(() => Infrastructure.ValidateBicepIdentifier(name));
                 if (!string.IsNullOrEmpty(name))
                 {
-                    Assert.AreNotEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
+                    Assert.That(Infrastructure.NormalizeBicepIdentifier(name), Is.Not.EqualTo(name));
                 }
                 Assert.Throws<ArgumentException>(() => new StorageAccount(name));
             }
@@ -35,9 +35,9 @@ namespace Azure.Provisioning.Tests
             List<string> valid = ["foo", "FOO", "Foo", "f", "_foo", "_", "foo123", "ABCdef123_"];
             foreach (string name in valid)
             {
-                Assert.IsTrue(Infrastructure.IsValidBicepIdentifier(name));
+                Assert.That(Infrastructure.IsValidBicepIdentifier(name), Is.True);
                 Assert.DoesNotThrow(() => Infrastructure.ValidateBicepIdentifier(name));
-                Assert.AreEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
+                Assert.That(Infrastructure.NormalizeBicepIdentifier(name), Is.EqualTo(name));
                 Assert.DoesNotThrow(() => new StorageAccount(name));
             }
         }

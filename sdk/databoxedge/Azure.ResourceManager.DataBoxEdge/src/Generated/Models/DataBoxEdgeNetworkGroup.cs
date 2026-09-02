@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeNetworkGroup : IEquatable<DataBoxEdgeNetworkGroup>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkGroup"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeNetworkGroup(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string NonRdmaValue = "NonRDMA";
         private const string RdmaValue = "RDMA";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeNetworkGroup(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static DataBoxEdgeNetworkGroup None { get; } = new DataBoxEdgeNetworkGroup(NoneValue);
-        /// <summary> NonRDMA. </summary>
+
+        /// <summary> Gets the NonRdma. </summary>
         public static DataBoxEdgeNetworkGroup NonRdma { get; } = new DataBoxEdgeNetworkGroup(NonRdmaValue);
-        /// <summary> RDMA. </summary>
+
+        /// <summary> Gets the Rdma. </summary>
         public static DataBoxEdgeNetworkGroup Rdma { get; } = new DataBoxEdgeNetworkGroup(RdmaValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkGroup"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeNetworkGroup left, DataBoxEdgeNetworkGroup right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkGroup"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeNetworkGroup left, DataBoxEdgeNetworkGroup right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeNetworkGroup"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeNetworkGroup(string value) => new DataBoxEdgeNetworkGroup(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeNetworkGroup?(string value) => value == null ? null : new DataBoxEdgeNetworkGroup(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeNetworkGroup other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeNetworkGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

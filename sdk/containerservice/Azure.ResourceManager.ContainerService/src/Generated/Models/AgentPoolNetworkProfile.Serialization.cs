@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Dranet))
+            {
+                writer.WritePropertyName("dranet"u8);
+                writer.WriteObjectValue(Dranet, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<ContainerServiceIPTag> nodePublicIPTags = default;
             IList<AgentPoolNetworkPortRange> allowedHostPorts = default;
             IList<ResourceIdentifier> applicationSecurityGroups = default;
+            DRANETProfile dranet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,12 +213,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     applicationSecurityGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("dranet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dranet = DRANETProfile.DeserializeDRANETProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolNetworkProfile(nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(), applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new AgentPoolNetworkProfile(nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(), applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(), dranet, additionalBinaryDataProperties);
         }
     }
 }

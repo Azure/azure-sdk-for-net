@@ -29,8 +29,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Bars _barsRestClient;
         private readonly ClientDiagnostics _barClientDiagnostics;
         private readonly Bar _barRestClient;
-        private readonly ClientDiagnostics _employeesClientDiagnostics;
-        private readonly Employees _employeesRestClient;
 
         /// <summary> Initializes a new instance of BarCollection for mocking. </summary>
         protected BarCollection()
@@ -44,11 +42,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
-            _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -101,7 +97,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -160,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,

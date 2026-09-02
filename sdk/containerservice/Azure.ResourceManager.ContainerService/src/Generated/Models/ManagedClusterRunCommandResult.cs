@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.ExitCode;
+                return Properties is null ? default : Properties.ExitCode;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.StartedOn;
+                return Properties is null ? default : Properties.StartedOn;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.FinishedOn;
+                return Properties is null ? default : Properties.FinishedOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.Logs;
+                return Properties is null ? default : Properties.Logs;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.Reason;
+                return Properties is null ? default : Properties.Reason;
             }
         }
     }

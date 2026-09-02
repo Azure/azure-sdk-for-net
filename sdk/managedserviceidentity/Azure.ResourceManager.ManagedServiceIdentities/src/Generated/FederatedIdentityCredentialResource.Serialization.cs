@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
+    /// <summary></summary>
     public partial class FederatedIdentityCredentialResource : IJsonModel<FederatedIdentityCredentialData>
     {
-        private static FederatedIdentityCredentialData s_dataDeserializationInstance;
-        private static FederatedIdentityCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FederatedIdentityCredentialData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FederatedIdentityCredentialData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FederatedIdentityCredentialData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FederatedIdentityCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FederatedIdentityCredentialData>)Data).Write(writer, options);
 
-        FederatedIdentityCredentialData IJsonModel<FederatedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FederatedIdentityCredentialData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FederatedIdentityCredentialData IJsonModel<FederatedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FederatedIdentityCredentialData>(Data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FederatedIdentityCredentialData IPersistableModel<FederatedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FederatedIdentityCredentialData>(data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        string IPersistableModel<FederatedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FederatedIdentityCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FederatedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

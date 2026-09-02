@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.OnlineExperimentation.Tests
         {
             var experimentWorkspaceRead = await TestWorkspaceResource.GetAsync();
 
-            Assert.IsTrue(experimentWorkspaceRead.Value.HasData);
+            Assert.That(experimentWorkspaceRead.Value.HasData, Is.True);
 
             var workspaceResourceData = experimentWorkspaceRead.Value.Data;
 
-            Assert.IsNotNull(workspaceResourceData.Properties.Endpoint);
-            Assert.AreEqual(Uri.UriSchemeHttps, workspaceResourceData.Properties.Endpoint.Scheme);
+            Assert.That(workspaceResourceData.Properties.Endpoint, Is.Not.Null);
+            Assert.That(workspaceResourceData.Properties.Endpoint.Scheme, Is.EqualTo(Uri.UriSchemeHttps));
         }
 
         [TestCase]

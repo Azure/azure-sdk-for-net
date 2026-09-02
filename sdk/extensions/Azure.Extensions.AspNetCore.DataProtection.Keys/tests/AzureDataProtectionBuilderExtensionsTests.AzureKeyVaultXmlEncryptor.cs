@@ -28,7 +28,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
 
         [Test]
@@ -172,7 +172,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Assert
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
-            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+            Assert.That(options.Value.XmlEncryptor, Is.InstanceOf<AzureKeyVaultXmlEncryptor>());
         }
     }
 }

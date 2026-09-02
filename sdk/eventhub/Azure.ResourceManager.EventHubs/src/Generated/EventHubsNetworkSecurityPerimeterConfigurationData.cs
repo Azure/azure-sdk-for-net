@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Network Security Perimeter Configuration. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the Network Security Perimeter Configuration. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ProvisioningIssues;
+                return Properties is null ? default : Properties.ProvisioningIssues;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.NetworkSecurityPerimeter;
+                return Properties is null ? default : Properties.NetworkSecurityPerimeter;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ResourceAssociation;
+                return Properties is null ? default : Properties.ResourceAssociation;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.Profile;
+                return Properties is null ? default : Properties.Profile;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.IsBackingResource;
+                return Properties is null ? default : Properties.IsBackingResource;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ApplicableFeatures;
+                return Properties is null ? default : Properties.ApplicableFeatures;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ParentAssociationName;
+                return Properties is null ? default : Properties.ParentAssociationName;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.SourceResourceId;
+                return Properties is null ? default : Properties.SourceResourceId;
             }
         }
     }

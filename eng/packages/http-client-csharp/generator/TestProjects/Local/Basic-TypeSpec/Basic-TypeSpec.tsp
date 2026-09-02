@@ -1,8 +1,12 @@
 import "@typespec/rest";
 import "@typespec/http";
+import "@typespec/http/streams";
+import "@typespec/sse";
+import "@typespec/events";
 import "@typespec/xml";
 import "@azure-tools/typespec-client-generator-core";
 import "@azure-tools/typespec-azure-core";
+import "@typespec/http-client-csharp";
 
 @versioned(Versions)
 @service(#{
@@ -20,8 +24,11 @@ import "@azure-tools/typespec-azure-core";
 namespace BasicTypeSpec;
 
 using TypeSpec.Http;
+using TypeSpec.Http.Streams;
 using TypeSpec.Versioning;
 using TypeSpec.Xml;
+using TypeSpec.Events;
+using TypeSpec.SSE;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
 
@@ -171,6 +178,7 @@ model ModelWithClientName {
 
 @doc("this is a roundtrip model")
 @useSystemTextJsonConverter()
+@TypeSpec.HttpClient.CSharp.dynamicModel
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;
@@ -749,3 +757,68 @@ interface PlantOperations {
     @body body: Tree;
   };
 }
+
+
+model Cat {
+  id: HttpPart<string>;
+  boolPart: HttpPart<boolean>;
+  int32Part: HttpPart<int32>;
+  int64Part: HttpPart<int64>;
+  float32Part: HttpPart<float32>;
+  float64Part: HttpPart<float64>;
+  decimalPart: HttpPart<decimal128>;
+  int8Part: HttpPart<int8>;
+  uint8Part: HttpPart<uint8>;
+  dictionaryPart: HttpPart<Record<string>>;
+  dictionaryModelPart: HttpPart<Record<ThingModel>>;
+  listPart: HttpPart<string[]>;
+  listModelPart: HttpPart<ThingModel[]>;
+  multipleListPart: HttpPart<string>[];
+  profileImage: HttpPart<File>;
+  extensibleEnumPart: HttpPart<StringExtensibleEnum>;
+  fixedEnumPart: HttpPart<StringFixedEnum>;
+  intExtensibleEnumPart: HttpPart<IntExtensibleEnum>;
+  intFixedEnumPart: HttpPart<IntFixedEnum>;
+}
+
+@post
+@route("/cats")
+op uploadCat(
+  @header contentType: "multipart/form-data",
+  @multipartBody body: Cat,
+): NoContentResponse;
+
+model StreamingItem {
+  message: string;
+}
+
+@events
+union SampleEvents {
+  @Events.contentType("application/json")
+  item: StreamingItem,
+
+  @Events.contentType("text/plain")
+  @terminalEvent
+  "[DONE]",
+}
+
+@post
+@route("/streaming/jsonl/send")
+op sendJsonLines(stream: JsonlStream<StreamingItem>): NoContentResponse;
+
+@get
+@route("/streaming/jsonl/receive")
+op receiveJsonLines(): JsonlStream<StreamingItem>;
+
+@get
+@route("/streaming/sse/receive")
+op receiveSse(): SSEStream<SampleEvents>;
+
+@get
+@route("/optional-response")
+op getOptionalResponse(): {
+  @statusCode statusCode: 200;
+  @body body: ThingModel;
+} | {
+  @statusCode statusCode: 204;
+};

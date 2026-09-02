@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat shim: pre-migration SDK had string Issuer property.
+// IssuerUri was added in the TypeSpec migration; Issuer delegates to it.
+
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
@@ -17,14 +17,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Issuer
         {
-            get
-            {
-                return IssuerUri?.AbsoluteUri;
-            }
-            set
-            {
-                IssuerUri = new Uri(value);
-            }
+            get => IssuerUri?.AbsoluteUri;
+            set => IssuerUri = value != null ? new Uri(value) : null;
         }
     }
 }

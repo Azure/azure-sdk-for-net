@@ -15,10 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupSourceSideScanSummary : IEquatable<BackupSourceSideScanSummary>
     {
         private readonly string _value;
+        /// <summary> Scan summary is unknown. </summary>
         private const string UnknownValue = "Unknown";
+        /// <summary> Scan summary is not applicable. </summary>
         private const string NotApplicableValue = "NotApplicable";
+        /// <summary> Scan summary is suspicious. </summary>
         private const string SuspiciousValue = "Suspicious";
+        /// <summary> Scan summary indicates healthy state. </summary>
         private const string HealthyValue = "Healthy";
+        /// <summary> No threats reported. </summary>
+        private const string NoThreatsReportedValue = "NoThreatsReported";
 
         /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanSummary"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +36,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _value = value;
         }
 
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Scan summary is unknown. </summary>
         public static BackupSourceSideScanSummary Unknown { get; } = new BackupSourceSideScanSummary(UnknownValue);
 
-        /// <summary> Gets the NotApplicable. </summary>
+        /// <summary> Scan summary is not applicable. </summary>
         public static BackupSourceSideScanSummary NotApplicable { get; } = new BackupSourceSideScanSummary(NotApplicableValue);
 
-        /// <summary> Gets the Suspicious. </summary>
+        /// <summary> Scan summary is suspicious. </summary>
         public static BackupSourceSideScanSummary Suspicious { get; } = new BackupSourceSideScanSummary(SuspiciousValue);
 
-        /// <summary> Gets the Healthy. </summary>
+        /// <summary> Scan summary indicates healthy state. </summary>
         public static BackupSourceSideScanSummary Healthy { get; } = new BackupSourceSideScanSummary(HealthyValue);
+
+        /// <summary> No threats reported. </summary>
+        public static BackupSourceSideScanSummary NoThreatsReported { get; } = new BackupSourceSideScanSummary(NoThreatsReportedValue);
 
         /// <summary> Determines if two <see cref="BackupSourceSideScanSummary"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

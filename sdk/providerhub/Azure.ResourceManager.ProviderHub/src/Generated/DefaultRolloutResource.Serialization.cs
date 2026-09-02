@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ProviderHub
 {
+    /// <summary></summary>
     public partial class DefaultRolloutResource : IJsonModel<DefaultRolloutData>
     {
-        private static DefaultRolloutData s_dataDeserializationInstance;
-        private static DefaultRolloutData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DefaultRolloutData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DefaultRolloutData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DefaultRolloutData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DefaultRolloutData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DefaultRolloutData>)Data).Write(writer, options);
 
-        DefaultRolloutData IJsonModel<DefaultRolloutData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefaultRolloutData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefaultRolloutData IJsonModel<DefaultRolloutData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DefaultRolloutData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefaultRolloutData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DefaultRolloutData IPersistableModel<DefaultRolloutData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefaultRolloutData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<DefaultRolloutData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefaultRolloutData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DefaultRolloutData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,26 +16,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2AClusterTestFailoverContent : ClusterTestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2AClusterTestFailoverContent"/>. </summary>
-        public A2AClusterTestFailoverContent()
+        public A2AClusterTestFailoverContent() : base("A2A")
         {
             IndividualNodeRecoveryPoints = new ChangeTrackingList<string>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AClusterTestFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clusterRecoveryPointId"> The cluster recovery point id to be passed to failover to a particular recovery point. </param>
         /// <param name="individualNodeRecoveryPoints"> The list of individual node recovery points. </param>
-        internal A2AClusterTestFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier clusterRecoveryPointId, IList<string> individualNodeRecoveryPoints) : base(instanceType, serializedAdditionalRawData)
+        internal A2AClusterTestFailoverContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier clusterRecoveryPointId, IList<string> individualNodeRecoveryPoints) : base(instanceType, additionalBinaryDataProperties)
         {
             ClusterRecoveryPointId = clusterRecoveryPointId;
             IndividualNodeRecoveryPoints = individualNodeRecoveryPoints;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The cluster recovery point id to be passed to failover to a particular recovery point. </summary>
         public ResourceIdentifier ClusterRecoveryPointId { get; set; }
+
         /// <summary> The list of individual node recovery points. </summary>
         public IList<string> IndividualNodeRecoveryPoints { get; }
     }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new Shortfall();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new Shortfall();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new Shortfall();
                 }
-                Properties.BalanceVersion = value.Value;
+                Properties.BalanceVersion = value;
             }
         }
 

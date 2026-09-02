@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="blobServiceProperties"> The properties of a storage account’s Blob service. </param>
         /// <param name="sku"> Sku name and tier. </param>
-        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobServicePropertiesProperties blobServiceProperties, StorageSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BlobServicePropertiesProperties blobServiceProperties, StorageSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             BlobServiceProperties = blobServiceProperties;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of a storage account’s Blob service. </summary>
@@ -83,6 +83,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> The static website properties for blob storage. </summary>
+        [WirePath("properties.staticWebsite")]
+        public BlobServiceStaticWebsite StaticWebsite
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.StaticWebsite;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.StaticWebsite = value;
+            }
+        }
+
         /// <summary> Versioning is enabled if set to true. </summary>
         [WirePath("properties.isVersioningEnabled")]
         public bool? IsVersioningEnabled
@@ -97,7 +115,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsVersioningEnabled = value.Value;
+                BlobServiceProperties.IsVersioningEnabled = value;
             }
         }
 
@@ -115,7 +133,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value.Value;
+                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value;
             }
         }
 

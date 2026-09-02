@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Batch
         private BicepValue<int> _targetLowPriorityNodes;
         private BicepValue<TimeSpan> _resizeTimeout;
         private BicepValue<BatchNodeDeallocationOption> _nodeDeallocationOption;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepList<BatchResizeError> _errors;
 
         /// <summary> Creates a new BatchResizeOperationStatus. </summary>
@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the TargetDedicatedNodes. </summary>
+        /// <summary> Gets the TargetDedicatedNodes. </summary>
         public BicepValue<int> TargetDedicatedNodes
         {
             get
@@ -34,14 +34,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _targetDedicatedNodes;
             }
-            set
-            {
-                Initialize();
-                _targetDedicatedNodes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TargetLowPriorityNodes. </summary>
+        /// <summary> Gets the TargetLowPriorityNodes. </summary>
         public BicepValue<int> TargetLowPriorityNodes
         {
             get
@@ -49,14 +44,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _targetLowPriorityNodes;
             }
-            set
-            {
-                Initialize();
-                _targetLowPriorityNodes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ResizeTimeout. </summary>
+        /// <summary> Gets the ResizeTimeout. </summary>
         public BicepValue<TimeSpan> ResizeTimeout
         {
             get
@@ -64,14 +54,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _resizeTimeout;
             }
-            set
-            {
-                Initialize();
-                _resizeTimeout.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NodeDeallocationOption. </summary>
+        /// <summary> Gets the NodeDeallocationOption. </summary>
         public BicepValue<BatchNodeDeallocationOption> NodeDeallocationOption
         {
             get
@@ -79,40 +64,25 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _nodeDeallocationOption;
             }
-            set
-            {
-                Initialize();
-                _nodeDeallocationOption.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
-            }
-            set
-            {
-                Initialize();
-                _startOn.Assign(value);
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets or sets the Errors. </summary>
+        /// <summary> Gets the Errors. </summary>
         public BicepList<BatchResizeError> Errors
         {
             get
             {
                 Initialize();
                 return _errors;
-            }
-            set
-            {
-                Initialize();
-                _errors.Assign(value);
             }
         }
 
@@ -122,10 +92,14 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _targetDedicatedNodes = DefineProperty<int>(nameof(TargetDedicatedNodes), new string[] { "targetDedicatedNodes" });
             _targetLowPriorityNodes = DefineProperty<int>(nameof(TargetLowPriorityNodes), new string[] { "targetLowPriorityNodes" });
-            _resizeTimeout = DefineProperty<TimeSpan>(nameof(ResizeTimeout), new string[] { "resizeTimeout" });
+            _resizeTimeout = DefineProperty<TimeSpan>(nameof(ResizeTimeout), new string[] { "resizeTimeout" }, format: "P");
             _nodeDeallocationOption = DefineProperty<BatchNodeDeallocationOption>(nameof(NodeDeallocationOption), new string[] { "nodeDeallocationOption" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _errors = DefineListProperty<BatchResizeError>(nameof(Errors), new string[] { "errors" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResizeOperationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

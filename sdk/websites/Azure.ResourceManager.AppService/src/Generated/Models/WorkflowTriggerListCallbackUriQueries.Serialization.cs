@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WorkflowTriggerListCallbackUriQueries : IUtf8JsonSerializable, IJsonModel<WorkflowTriggerListCallbackUriQueries>
+    /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
+    public partial class WorkflowTriggerListCallbackUriQueries : IJsonModel<WorkflowTriggerListCallbackUriQueries>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkflowTriggerListCallbackUriQueries>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkflowTriggerListCallbackUriQueries PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkflowTriggerListCallbackUriQueries(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkflowTriggerListCallbackUriQueries)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkflowTriggerListCallbackUriQueries)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkflowTriggerListCallbackUriQueries>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkflowTriggerListCallbackUriQueries IPersistableModel<WorkflowTriggerListCallbackUriQueries>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkflowTriggerListCallbackUriQueries>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkflowTriggerListCallbackUriQueries>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkflowTriggerListCallbackUriQueries)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("api-version"u8);
@@ -60,15 +99,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("se"u8);
                 writer.WriteStringValue(SasTimestamp);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,236 +116,76 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        WorkflowTriggerListCallbackUriQueries IJsonModel<WorkflowTriggerListCallbackUriQueries>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkflowTriggerListCallbackUriQueries IJsonModel<WorkflowTriggerListCallbackUriQueries>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkflowTriggerListCallbackUriQueries JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkflowTriggerListCallbackUriQueries)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkflowTriggerListCallbackUriQueries(document.RootElement, options);
         }
 
-        internal static WorkflowTriggerListCallbackUriQueries DeserializeWorkflowTriggerListCallbackUriQueries(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WorkflowTriggerListCallbackUriQueries DeserializeWorkflowTriggerListCallbackUriQueries(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string apiVersion = default;
-            string sp = default;
-            string sv = default;
-            string sig = default;
-            string se = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string sasPermission = default;
+            string sasVersion = default;
+            string sasSignature = default;
+            string sasTimestamp = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("api-version"u8))
+                if (prop.NameEquals("api-version"u8))
                 {
-                    apiVersion = property.Value.GetString();
+                    apiVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sp"u8))
+                if (prop.NameEquals("sp"u8))
                 {
-                    sp = property.Value.GetString();
+                    sasPermission = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sv"u8))
+                if (prop.NameEquals("sv"u8))
                 {
-                    sv = property.Value.GetString();
+                    sasVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sig"u8))
+                if (prop.NameEquals("sig"u8))
                 {
-                    sig = property.Value.GetString();
+                    sasSignature = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("se"u8))
+                if (prop.NameEquals("se"u8))
                 {
-                    se = property.Value.GetString();
+                    sasTimestamp = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new WorkflowTriggerListCallbackUriQueries(
                 apiVersion,
-                sp,
-                sv,
-                sig,
-                se,
-                serializedAdditionalRawData);
+                sasPermission,
+                sasVersion,
+                sasSignature,
+                sasTimestamp,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  api-version: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiVersion))
-                {
-                    builder.Append("  api-version: ");
-                    if (ApiVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasPermission), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SasPermission))
-                {
-                    builder.Append("  sp: ");
-                    if (SasPermission.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SasPermission}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SasPermission}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sv: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SasVersion))
-                {
-                    builder.Append("  sv: ");
-                    if (SasVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SasVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SasVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasSignature), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SasSignature))
-                {
-                    builder.Append("  sig: ");
-                    if (SasSignature.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SasSignature}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SasSignature}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasTimestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  se: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SasTimestamp))
-                {
-                    builder.Append("  se: ");
-                    if (SasTimestamp.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SasTimestamp}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SasTimestamp}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<WorkflowTriggerListCallbackUriQueries>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(WorkflowTriggerListCallbackUriQueries)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WorkflowTriggerListCallbackUriQueries IPersistableModel<WorkflowTriggerListCallbackUriQueries>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowTriggerListCallbackUriQueries>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWorkflowTriggerListCallbackUriQueries(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkflowTriggerListCallbackUriQueries)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WorkflowTriggerListCallbackUriQueries>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

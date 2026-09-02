@@ -44,7 +44,14 @@ public abstract partial class BicepExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is BicepExpression other && Equals(other);
+    /// <summary>
+    /// Determines whether this expression is equal to another expression.
+    /// </summary>
+    /// <param name="other">The expression to compare.</param>
+    /// <returns><see langword="true"/> when the expressions are equal; otherwise, <see langword="false"/>.</returns>
     public virtual bool Equals(BicepExpression? other) => other is not null && GetType() == other.GetType();
+    /// <inheritdoc/>
     public override int GetHashCode() => GetType().GetHashCode();
 }

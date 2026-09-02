@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             get
             {
-                return Status.Phase;
+                return Status is null ? default : Status.Phase;
             }
         }
     }

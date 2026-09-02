@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return ProvisioningInfo.ErrorDetail;
+                return ProvisioningInfo is null ? default : ProvisioningInfo.ErrorDetail;
             }
         }
     }

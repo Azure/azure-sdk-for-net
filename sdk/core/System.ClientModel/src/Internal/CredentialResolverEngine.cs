@@ -1,0 +1,113 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
+
+namespace System.ClientModel.Primitives;
+
+/// <summary>
+/// Internal core resolution logic shared by the public
+/// <c>GetCredentialSettings</c> overloads, <c>GetClientSettings&lt;T&gt;</c>
+/// overloads, and the DI <c>AddClient</c> auto-resolve hook.
+/// </summary>
+[Experimental("SCME0002")]
+internal static class CredentialResolverEngine
+{
+    /// <summary>
+    /// Walks the supplied <see cref="CredentialResolver"/> chain (after
+    /// optionally applying <paramref name="configureOverrides"/> to a
+    /// writable overlay of <paramref name="credentialSection"/>) and returns
+    /// a cached <see cref="CredentialSettings"/> bound to the section the
+    /// chain saw, with <see cref="CredentialSettings.TokenProvider"/>
+    /// populated when a resolver matches. When no resolver matches, returns
+    /// the cached inline-only settings for that section. Returns
+    /// <see langword="null"/> only when the section does not exist. The
+    /// returned instance is shared across callers — treat it as read-only.
+    /// </summary>
+    public static CredentialSettings? Resolve(
+        IConfigurationSection credentialSection,
+        IEnumerable<CredentialResolver>? resolvers,
+        Action<IConfigurationSection>? configureOverrides)
+    {
+        if (credentialSection is null || !credentialSection.Exists())
+        {
+            return null;
+        }
+
+        IConfigurationSection workingSection = credentialSection;
+        if (configureOverrides is not null)
+        {
+            IConfigurationSection mutable = CredentialSectionOverlay.CreateOverlay(credentialSection);
+            workingSection = credentialSection is ReferenceConfigurationSection refSection
+                ? new ReferenceConfigurationSection(refSection.Configuration, mutable)
+                : mutable;
+            configureOverrides(workingSection);
+        }
+
+        // Materialize the resolver chain once at the top of every Resolve
+        // call. The recursive resolveChild callback below re-enters this
+        // method with the same enumerable, so a non-reentrant /
+        // single-use IEnumerable (e.g., a custom iterator that throws on
+        // second GetEnumerator) would blow up when the outer foreach has
+        // already started walking it. Pass the materialized list through
+        // the recursion so every layer sees the same snapshot.
+        IReadOnlyList<CredentialResolver> resolverList = resolvers switch
+        {
+            null => Array.Empty<CredentialResolver>(),
+            IReadOnlyList<CredentialResolver> list => list,
+            _ => resolvers.ToArray()
+        };
+
+        // Build the recursive callback once per Resolve invocation. Resolvers
+        // that override the chain-aware TryResolve overload (e.g., a chain-
+        // owning resolver that walks Sources[]) can invoke this to resolve a
+        // child IConfigurationSection through the same active resolver chain.
+        // The callback re-enters this engine method with the materialized
+        // resolver list and no overrides — overrides only apply to the
+        // top-level section the caller passed in.
+        //
+        // Note: the recursive Resolve call goes through the full pipeline
+        // (cache lookup, normalization, ordering), so the leaf entries that
+        // a chain owner composes pick up caching for free.
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild =
+            child => Resolve(child, resolverList, configureOverrides: null)?.TokenProvider;
+
+        // Per-resolver cache lookup keyed on (sectionHash, resolverInstance).
+        // The cache deliberately omits the chain identity: leaf resolvers
+        // (those that don't invoke resolveChild) are chain-independent and
+        // share a single entry across every chain composition; chain-owning
+        // resolvers (those that DO invoke resolveChild during TryResolve) are
+        // detected by the cache and skipped — they're rebuilt on every call
+        // so each caller gets a wrapper bound to its own active chain. The
+        // expensive work (token acquisition) lives on the leaves they
+        // compose, and those leaves hit this cache.
+        //
+        // Reference-identity (RuntimeHelpers.GetHashCode, used inside the
+        // cache) is used so distinct instances of the same type don't leak
+        // providers into each other, and any GetHashCode override on the
+        // resolver is bypassed.
+        foreach (CredentialResolver resolver in resolverList)
+        {
+            if (resolver is null)
+            {
+                continue;
+            }
+
+            CredentialSettings? matched = CredentialCache.GetOrTryResolve(workingSection, resolver, resolveChild);
+
+            if (matched is not null)
+            {
+                return matched;
+            }
+        }
+
+        // No resolver matched. Return the cached inline-only settings for
+        // this section content — covers the inline ApiKey path, where the
+        // credential lives directly on the section as Key/CredentialSource
+        // rather than through a token provider.
+        return CredentialCache.GetOrCreateInline(workingSection);
+    }
+}

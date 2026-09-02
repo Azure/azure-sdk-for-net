@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 using OpenAI.Responses;
@@ -14,6 +15,18 @@ namespace Azure.AI.Projects.Agents
     public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
+        /// <param name="model"> The model deployment to use for this agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        public DeclarativeAgentDefinition(string model) : base(ProjectsAgentKind.Prompt)
+        {
+            Argument.AssertNotNull(model, nameof(model));
+
+            Model = model;
+            Tools = new ChangeTrackingList<ResponseTool>();
+            StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -21,14 +34,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
         /// <param name="temperature">
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// We generally recommend altering this or `top_p` but not both.
+        /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
         /// </param>
         /// <param name="topP">
         /// An alternative to sampling with temperature, called nucleus sampling,
         /// where the model considers the results of the tokens with top_p probability
         /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
-        /// are considered.
-        /// We generally recommend altering this or `temperature` but not both.
+        /// are considered. We generally recommend altering this or `temperature` but not both.
+        /// Defaults to `1`.
         /// </param>
         /// <param name="reasoningOptions"></param>
         /// <param name="tools">
@@ -41,6 +54,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
+        [Experimental("AAIP002")]
         internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Model = model;
@@ -62,7 +76,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// We generally recommend altering this or `top_p` but not both.
+        /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
         /// </summary>
         public float? Temperature { get; set; }
 
@@ -70,8 +84,8 @@ namespace Azure.AI.Projects.Agents
         /// An alternative to sampling with temperature, called nucleus sampling,
         /// where the model considers the results of the tokens with top_p probability
         /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
-        /// are considered.
-        /// We generally recommend altering this or `temperature` but not both.
+        /// are considered. We generally recommend altering this or `temperature` but not both.
+        /// Defaults to `1`.
         /// </summary>
         public float? TopP { get; set; }
 
@@ -88,7 +102,7 @@ namespace Azure.AI.Projects.Agents
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalToolChoiceParam"/>. </description>
+        /// <description> <c>global::OpenAI.InternalToolChoiceParam</c>. </description>
         /// </item>
         /// </list>
         /// </remarks>

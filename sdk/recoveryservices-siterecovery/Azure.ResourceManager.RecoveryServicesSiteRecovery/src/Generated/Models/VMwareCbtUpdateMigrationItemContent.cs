@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,19 +16,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtUpdateMigrationItemContent : UpdateMigrationItemProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateMigrationItemContent"/>. </summary>
-        public VMwareCbtUpdateMigrationItemContent()
+        public VMwareCbtUpdateMigrationItemContent() : base("VMwareCbt")
         {
             VmNics = new ChangeTrackingList<VMwareCbtNicContent>();
             VmDisks = new ChangeTrackingList<VMwareCbtUpdateDiskContent>();
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
             TargetDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateMigrationItemContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetVmName"> The target VM name. </param>
         /// <param name="targetVmSize"> The target VM size. </param>
         /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetVmTags"> The target VM tags. </param>
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        internal VMwareCbtUpdateMigrationItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<VMwareCbtNicContent> vmNics, IList<VMwareCbtUpdateDiskContent> vmDisks, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string userSelectedOSName, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
+        internal VMwareCbtUpdateMigrationItemContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<VMwareCbtNicContent> vmNics, IList<VMwareCbtUpdateDiskContent> vmDisks, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string userSelectedOSName, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
         {
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
@@ -68,46 +69,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetVmTags = targetVmTags;
             TargetDiskTags = targetDiskTags;
             TargetNicTags = targetNicTags;
-            InstanceType = instanceType ?? "VMwareCbt";
+            TargetCapacityReservationGroupId = targetCapacityReservationGroupId;
         }
 
         /// <summary> The target VM name. </summary>
         public string TargetVmName { get; set; }
+
         /// <summary> The target VM size. </summary>
         public string TargetVmSize { get; set; }
+
         /// <summary> The target resource group ARM Id. </summary>
         public ResourceIdentifier TargetResourceGroupId { get; set; }
+
         /// <summary> The target availability set ARM Id. </summary>
         public ResourceIdentifier TargetAvailabilitySetId { get; set; }
+
         /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; set; }
+
         /// <summary> The target proximity placement group ARM Id. </summary>
         public ResourceIdentifier TargetProximityPlacementGroupId { get; set; }
+
         /// <summary> The target boot diagnostics storage account ARM Id. </summary>
         public ResourceIdentifier TargetBootDiagnosticsStorageAccountId { get; set; }
+
         /// <summary> The target network ARM Id. </summary>
         public ResourceIdentifier TargetNetworkId { get; set; }
+
         /// <summary> The test network ARM Id. </summary>
         public ResourceIdentifier TestNetworkId { get; set; }
+
         /// <summary> The list of NIC details. </summary>
         public IList<VMwareCbtNicContent> VmNics { get; }
+
         /// <summary> The list of disk update properties. </summary>
         public IList<VMwareCbtUpdateDiskContent> VmDisks { get; }
+
         /// <summary> The license type. </summary>
         public SiteRecoveryLicenseType? LicenseType { get; set; }
+
         /// <summary> The SQL Server license type. </summary>
         public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+
         /// <summary> The license type for Linux VM's. </summary>
         public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
+
         /// <summary> The OS name selected by user. </summary>
         public string UserSelectedOSName { get; set; }
+
         /// <summary> A value indicating whether auto resync is to be done. </summary>
         public string PerformAutoResync { get; set; }
+
         /// <summary> The target VM tags. </summary>
         public IDictionary<string, string> TargetVmTags { get; }
+
         /// <summary> The tags for the target disks. </summary>
         public IDictionary<string, string> TargetDiskTags { get; }
+
         /// <summary> The tags for the target NICs. </summary>
         public IDictionary<string, string> TargetNicTags { get; }
+
+        /// <summary> The target capacity reservation group ARM Id. </summary>
+        public string TargetCapacityReservationGroupId { get; set; }
     }
 }

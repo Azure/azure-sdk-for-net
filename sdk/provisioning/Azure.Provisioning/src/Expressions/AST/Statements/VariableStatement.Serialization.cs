@@ -56,8 +56,10 @@ public partial class VariableStatement : IJsonModel<BicepStatement>
         return stmt;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) =>
         other is VariableStatement v && Name == v.Name && Value.Equals(v.Value) &&
         Decorators.SequenceEqual(v.Decorators);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(VariableStatement).GetHashCode() ^ (Name?.GetHashCode() ?? 0) ^ (Value?.GetHashCode() ?? 0);
 }

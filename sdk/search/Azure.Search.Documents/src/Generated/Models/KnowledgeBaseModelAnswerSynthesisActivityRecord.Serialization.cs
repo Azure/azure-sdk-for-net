@@ -90,6 +90,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("outputTokens"u8);
                 writer.WriteNumberValue(OutputTokens.Value);
             }
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteObjectValue(Model, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,11 +124,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
+            string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? inputTokens = default;
             int? outputTokens = default;
+            KnowledgeBaseActivityRecordModel model = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -134,6 +143,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("startedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -154,6 +181,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("warning"u8))
+                {
+                    warning = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("inputTokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,6 +204,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     outputTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("model"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = KnowledgeBaseActivityRecordModel.DeserializeKnowledgeBaseActivityRecordModel(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,11 +221,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             return new KnowledgeBaseModelAnswerSynthesisActivityRecord(
                 id,
                 @type,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties,
                 inputTokens,
-                outputTokens);
+                outputTokens,
+                model);
         }
     }
 }

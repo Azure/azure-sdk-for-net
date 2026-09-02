@@ -8,6 +8,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file provides the complete definition of the HeaderActionType extensible enum type, which does not exist in the TypeSpec-generated code.
+    // Reason: The old SDK (AutoRest-generated) wrapped the polymorphic discriminator value
+    // "DeliveryRuleHeaderActionParameters" as a standalone extensible enum type referenced in user code.
+    // After the TypeSpec migration, discriminators are plain strings and this type is no longer generated.
+    // The full type definition is preserved here to maintain backward compatibility with the old public API.
+
     /// <summary> The HeaderActionType. </summary>
     public readonly partial struct HeaderActionType : IEquatable<HeaderActionType>
     {

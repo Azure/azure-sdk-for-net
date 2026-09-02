@@ -8,6 +8,7 @@ using Azure.Provisioning.KeyVault;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Storage;
 using NUnit.Framework;
+using Assert = NUnit.Framework.Legacy.ClassicAssert;
 
 namespace Azure.Provisioning.Tests.Serialization;
 
@@ -361,7 +362,8 @@ public class InfrastructureJsonRoundTripTests
         {
             string name = kvp.Key;
             var originalProp = kvp.Value;
-            if (originalProp.IsEmpty || originalProp.IsOutput) continue;
+            if (originalProp.IsEmpty || originalProp.IsOutput)
+                continue;
 
             Assert.IsTrue(roundTripped.ProvisionableProperties.ContainsKey(name),
                 $"Round-tripped resource missing property '{name}'");

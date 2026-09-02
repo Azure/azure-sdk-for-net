@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         public AlertsSuppressionRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
+            IgnoredHeaders.Add("Accept");
         }
 
         [TearDown]
@@ -50,12 +51,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 State = SecurityAlertsSuppressionRuleState.Enabled,
                 Reason = "FalsePositive",
                 Comment = "Test VM",
-                SuppressionAlertsScope = new SuppressionAlertsScope(allof),
+                SuppressionAlertsScopeAllOf = allof,
             };
             var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertsSuppressionRuleName, data);
             return alertSuppressionRule.Value;
         }
-
         [RecordedTest]
         public async Task CreateOrUpdateUpdate()
         {
@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var alertSuppressionRule = await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             ValidateAlertsSuppressionRule(alertSuppressionRule, alertsSuppressionRuleName);
         }
-
         [RecordedTest]
         public async Task Exist()
         {
@@ -72,7 +71,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
             Assert.IsTrue(flag);
         }
-
         [RecordedTest]
         public async Task Get()
         {
@@ -81,7 +79,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var alertSuppressionRule = await _alertsSuppressionRuleCollection.GetAsync(alertsSuppressionRuleName);
             ValidateAlertsSuppressionRule(alertSuppressionRule, alertsSuppressionRuleName);
         }
-
         [RecordedTest]
         public async Task GetAll()
         {

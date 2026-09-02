@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return RelayConfiguration.RelayNamespaceId;
+                return RelayConfiguration is null ? default : RelayConfiguration.RelayNamespaceId;
             }
         }
     }

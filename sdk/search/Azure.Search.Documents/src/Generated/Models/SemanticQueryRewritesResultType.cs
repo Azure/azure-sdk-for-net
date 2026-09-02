@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Type of query rewrite that was used for this request. </summary>
-    public readonly partial struct SemanticQueryRewritesResultType : IEquatable<SemanticQueryRewritesResultType>
+    internal readonly partial struct SemanticQueryRewritesResultType : IEquatable<SemanticQueryRewritesResultType>
     {
         private readonly string _value;
         /// <summary> Query rewrites were not successfully generated for this request. Only the original query was used to retrieve the results. </summary>

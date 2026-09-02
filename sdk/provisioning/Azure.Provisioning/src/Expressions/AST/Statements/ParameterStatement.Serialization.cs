@@ -55,10 +55,12 @@ public partial class ParameterStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) =>
         other is ParameterStatement p && Name == p.Name && Type.Equals(p.Type) &&
         ((DefaultValue == null && p.DefaultValue == null) || (DefaultValue != null && DefaultValue.Equals(p.DefaultValue))) &&
         Decorators.SequenceEqual(p.Decorators);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(ParameterStatement).GetHashCode() ^ (Name?.GetHashCode() ?? 0) ^ (Type?.GetHashCode() ?? 0) ^ (DefaultValue?.GetHashCode() ?? 0);
 
     internal static ParameterStatement DeserializeParameterStatement(JsonElement element)

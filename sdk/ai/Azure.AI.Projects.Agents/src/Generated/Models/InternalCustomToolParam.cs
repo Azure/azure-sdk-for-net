@@ -23,11 +23,13 @@ namespace OpenAI
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
-        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format) : base(@type, additionalBinaryDataProperties)
+        /// <param name="deferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
+        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Format = format;
+            DeferLoading = deferLoading;
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
@@ -38,5 +40,8 @@ namespace OpenAI
 
         /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
         public CustomToolParamFormat Format { get; set; }
+
+        /// <summary> Whether this tool should be deferred and discovered via tool search. </summary>
+        public bool? DeferLoading { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct WindowsServerSubscription : IEquatable<WindowsServerSubscription>
     {
         private readonly string _value;
+        /// <summary> Windows Server Subscription is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Windows Server Subscription is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="WindowsServerSubscription"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WindowsServerSubscription(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
-
-        /// <summary> Disabled. </summary>
+        /// <summary> Windows Server Subscription is disabled. </summary>
         public static WindowsServerSubscription Disabled { get; } = new WindowsServerSubscription(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Windows Server Subscription is enabled. </summary>
         public static WindowsServerSubscription Enabled { get; } = new WindowsServerSubscription(EnabledValue);
+
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WindowsServerSubscription left, WindowsServerSubscription right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WindowsServerSubscription left, WindowsServerSubscription right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsServerSubscription"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WindowsServerSubscription"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WindowsServerSubscription(string value) => new WindowsServerSubscription(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WindowsServerSubscription"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WindowsServerSubscription?(string value) => value == null ? null : new WindowsServerSubscription(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WindowsServerSubscription other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WindowsServerSubscription other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,19 +14,522 @@ namespace Azure.AI.Extensions.OpenAI
     public static partial class ExtensionsOpenAIModelFactory
     {
 
-        /// <summary> The ProjectConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
+        /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        /// <returns> A new <see cref="OpenAI.BingGroundingTool"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingGroundingSearchToolOptions bingGrounding = default)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
+            return new BingGroundingTool(
+                "bing_grounding",
+                name,
+                description,
+                toolConfigs,
+                bingGrounding,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The bing grounding search tool parameters. </summary>
+        /// <param name="searchConfigurations">
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.BingGroundingSearchToolOptions"/> instance for mocking. </returns>
+        public static BingGroundingSearchToolOptions BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchOptions> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchOptions>();
+
+            return new BingGroundingSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Search configuration for Bing Grounding. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="language"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
+        /// <returns> A new <see cref="OpenAI.BingGroundingSearchOptions"/> instance for mocking. </returns>
+        public static BingGroundingSearchOptions BingGroundingSearchOptions(string projectConnectionId = default, string market = default, string language = default, long? count = default, string freshness = default)
+        {
+            return new BingGroundingSearchOptions(
+                projectConnectionId,
+                market,
+                language,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
+        /// <returns> A new <see cref="OpenAI.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions = default)
+        {
+            return new MicrosoftFabricPreviewTool("fabric_dataagent_preview", toolOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The fabric data agent tool parameters. </summary>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricDataAgentToolOptions FabricDataAgentToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
+        {
+            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
+
+            return new FabricDataAgentToolOptions(projectConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A project connection resource. </summary>
+        /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
+        /// <returns> A new <see cref="OpenAI.ToolProjectConnection"/> instance for mocking. </returns>
+        public static ToolProjectConnection ToolProjectConnection(string projectConnectionId = default)
+        {
+            return new ToolProjectConnection(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
+        /// <returns> A new <see cref="OpenAI.SharePointPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SharePointPreviewTool SharePointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
+        {
+            return new SharePointPreviewTool("sharepoint_grounding_preview", toolOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The sharepoint grounding tool parameters. </summary>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.SharePointGroundingToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SharePointGroundingToolOptions SharePointGroundingToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
+        {
+            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
+
+            return new SharePointGroundingToolOptions(projectConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="azureAISearch"> The azure ai search index resource. </param>
+        /// <returns> A new <see cref="OpenAI.AzureAISearchTool"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolOptions azureAISearch = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureAISearchTool(
+                "azure_ai_search",
+                name,
+                description,
+                toolConfigs,
+                azureAISearch,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
+        /// <param name="indexes">
+        /// The indices attached to this agent. There can be a maximum of 1 index
+        /// resource attached to the agent.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolOptions"/> instance for mocking. </returns>
+        public static AzureAISearchToolOptions AzureAISearchToolOptions(IEnumerable<AzureAISearchToolIndex> indexes = default)
+        {
+            indexes ??= new ChangeTrackingList<AzureAISearchToolIndex>();
+
+            return new AzureAISearchToolOptions(indexes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A AI Search Index resource. </summary>
+        /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
+        /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
+        /// <param name="indexAssetId"> Index asset id for search resource. </param>
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolIndex"/> instance for mocking. </returns>
+        public static AzureAISearchToolIndex AzureAISearchToolIndex(string projectConnectionId = default, string indexName = default, AzureAISearchQueryKind? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        {
+            return new AzureAISearchToolIndex(
+                projectConnectionId,
+                indexName,
+                queryType,
+                topK,
+                filter,
+                indexAssetId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiTool"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static OpenApiTool OpenApiTool(IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new OpenApiTool("openapi", toolConfigs, functionDefinition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an openapi function. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
+        /// <param name="authentication"> Open API authentication details. </param>
+        /// <param name="defaultParameters"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
+        /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinition"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, BinaryData specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        {
+            defaultParameters ??= new ChangeTrackingList<string>();
+            functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
+
+            return new OpenApiFunctionDefinition(
+                name,
+                description,
+                specification,
+                authentication,
+                defaultParameters.ToList(),
+                functions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// authentication details for OpenApiFunctionDefinition
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>.
+        /// </summary>
+        /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string kind = default)
+        {
+            return new UnknownOpenApiAuthenticationDetails(new OpenApiAuthenticationKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi anonymous authentication. </summary>
+        /// <returns> A new <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiAnonymousAuthenticationDetails OpenApiAnonymousAuthenticationDetails()
+        {
+            return new OpenApiAnonymousAuthenticationDetails(default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi project connection authentication. </summary>
+        /// <param name="securityScheme"> Project connection auth security details. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
+        {
+            return new OpenApiProjectConnectionAuthenticationDetails(default, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = default)
+        {
+            return new OpenApiProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi managed_identity authentication. </summary>
+        /// <param name="securityScheme"> Connection auth security details. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiManagedAuthenticationDetails OpenApiManagedAuthenticationDetails(OpenApiManagedSecurityScheme securityScheme = default)
+        {
+            return new OpenApiManagedAuthenticationDetails(default, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = default)
+        {
+            return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinitionFunction"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinitionFunction OpenApiFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OpenApiFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview = default)
+        {
+            return new BingCustomSearchPreviewTool("bing_custom_search_preview", bingCustomSearchPreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The bing custom search tool parameters. </summary>
+        /// <param name="searchConfigurations">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchOptions> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchOptions>();
+
+            return new BingCustomSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A bing custom search configuration. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchOptions BingCustomSearchOptions(string projectConnectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingCustomSearchOptions(
+                projectConnectionId,
+                instanceName,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview = default)
+        {
+            return new BrowserAutomationPreviewTool("browser_automation_preview", browserAutomationPreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection = default)
+        {
+            return new BrowserAutomationToolOptions(connection, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolConnectionOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolConnectionOptions BrowserAutomationToolConnectionOptions(string projectConnectionId = default)
+        {
+            return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionTool"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureFunctionTool AzureFunctionTool(IDictionary<string, ToolConfig> toolConfigs = default, AzureFunctionDefinition azureFunction = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureFunctionTool("azure_function", toolConfigs, azureFunction, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The definition of Azure function. </summary>
+        /// <param name="function"> The definition of azure function and its parameters. </param>
+        /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
+        /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionDefinition"/> instance for mocking. </returns>
+        public static AzureFunctionDefinition AzureFunctionDefinition(AzureFunctionDefinitionFunction function = default, AzureFunctionBinding inputBinding = default, AzureFunctionBinding outputBinding = default)
+        {
+            return new AzureFunctionDefinition(function, inputBinding, outputBinding, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AzureFunctionDefinitionFunction. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
+        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
+        {
+            return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionStorageQueue storageQueue = default)
+        {
+            return new AzureFunctionBinding("storage_queue", storageQueue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionStorageQueue"/> instance for mocking. </returns>
+        public static AzureFunctionStorageQueue AzureFunctionStorageQueue(string queueServiceEndpoint = default, string queueName = default)
+        {
+            return new AzureFunctionStorageQueue(queueServiceEndpoint, queueName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool for capturing structured outputs. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        /// <returns> A new <see cref="OpenAI.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, StructuredOutputDefinition outputDefinition = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new CaptureStructuredOutputsTool(
+                "capture_structured_outputs",
+                name,
+                description,
+                toolConfigs,
+                outputDefinition,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A structured output that can be produced by the agent. </summary>
+        /// <param name="name"> The name of the structured output. </param>
+        /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
+        /// <param name="schema"> The JSON schema for the structured output. </param>
+        /// <param name="isStrict"> Whether to enforce strict validation. Default `true`. </param>
+        /// <returns> A new <see cref="OpenAI.StructuredOutputDefinition"/> instance for mocking. </returns>
+        public static StructuredOutputDefinition StructuredOutputDefinition(string name = default, string description = default, IDictionary<string, BinaryData> schema = default, bool? isStrict = default)
+        {
+            schema ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new StructuredOutputDefinition(name, description, schema, isStrict, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUri"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.A2APreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static A2APreviewTool A2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        {
+            return new A2APreviewTool(
+                "a2a_preview",
+                baseUri,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <returns> A new <see cref="OpenAI.WorkIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default)
+        {
+            return new WorkIQPreviewTool("work_iq_preview", projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A FabricIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
+        /// <returns> A new <see cref="OpenAI.FabricIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, FabricIQPreviewToolRequireApprovalChoice requireApproval = default)
+        {
+            return new FabricIQPreviewTool(
+                "fabric_iq_preview",
+                projectConnectionId,
+                serverLabel,
+                serverUri,
+                requireApproval,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="memoryStoreName"> The name of the memory store to use. </param>
+        /// <param name="scope">
+        /// The namespace used to group and isolate memories, such as a user ID.
+        /// Limits which memories can be retrieved or updated.
+        /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
+        /// </param>
+        /// <param name="searchOptions"> Options for searching the memory store. </param>
+        /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        /// <returns> A new <see cref="OpenAI.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchResultOptions searchOptions = default, int? updateDelayInSeconds = default)
+        {
+            return new MemorySearchPreviewTool(
+                "memory_search_preview",
+                memoryStoreName,
+                scope,
+                searchOptions,
+                updateDelayInSeconds,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory search options. </summary>
+        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
+        /// <returns> A new <see cref="OpenAI.MemorySearchResultOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
+        {
+            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A web search configuration for bing custom search. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <returns> A new <see cref="OpenAI.WebSearchConfiguration"/> instance for mocking. </returns>
+        public static WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
+        {
+            return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>
@@ -36,128 +541,538 @@ namespace Azure.AI.Extensions.OpenAI
             return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="output"> The structured output captured during the response. </param>
-        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
-        {
-            return new AgentStructuredOutputsResponseItem(
-                AgentResponseItemKind.StructuredOutputs,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                output);
-        }
-
-        /// <summary>
-        /// The AgentResponseItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, <see cref="OpenAI.MemorySearchToolCallResponseItem"/>, <see cref="OpenAI.BingGroundingToolCall"/>, <see cref="OpenAI.BingGroundingToolCallOutput"/>, <see cref="OpenAI.SharepointGroundingToolCall"/>, <see cref="OpenAI.SharepointGroundingToolCallOutput"/>, <see cref="OpenAI.AzureAISearchToolCall"/>, <see cref="OpenAI.AzureAISearchToolCallOutput"/>, <see cref="OpenAI.BingCustomSearchToolCall"/>, <see cref="OpenAI.BingCustomSearchToolCallOutput"/>, <see cref="OpenAI.OpenApiToolCall"/>, <see cref="OpenAI.OpenApiToolCallOutput"/>, <see cref="OpenAI.BrowserAutomationToolCall"/>, <see cref="OpenAI.BrowserAutomationToolCallOutput"/>, <see cref="OpenAI.FabricDataAgentToolCall"/>, <see cref="OpenAI.FabricDataAgentToolCallOutput"/>, <see cref="OpenAI.AzureFunctionToolCall"/>, <see cref="OpenAI.AzureFunctionToolCallOutput"/>, <see cref="OpenAI.A2AToolCall"/>, and <see cref="OpenAI.A2AToolCallOutput"/>.
-        /// </summary>
+        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <returns> A new <see cref="OpenAI.AgentResponseItem"/> instance for mocking. </returns>
-        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentReference agentReference = default, string responseId = default)
-        {
-            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), id, agentReference, responseId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
-        /// <param name="actionId"> Unique identifier for the action. </param>
-        /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
-        /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
-        /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="csdlActionKind"></param>
+        /// <param name="actionId"></param>
+        /// <param name="parentActionId"></param>
+        /// <param name="previousActionId"></param>
+        /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
+        [Experimental("AAIP002")]
+        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
         {
             return new AgentWorkflowPreviewActionResponseItem(
-                AgentResponseItemKind.WorkflowAction,
+                @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties: null,
-                kind,
+                csdlActionKind,
                 actionId,
                 parentActionId,
                 previousActionId,
-                status);
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="output"></param>
+        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
+        {
+            return new AgentStructuredOutputsResponseItem(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                output,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request from the service for the user to perform OAuth consent. </summary>
+        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
-        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="consentLink"></param>
+        /// <param name="serverLabel"></param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
+        [Experimental("AAIP002")]
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, Uri consentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestResponseItem(
-                AgentResponseItemKind.OauthConsentRequest,
+                @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties: null,
-                internalConsentLink,
-                serverLabel);
+                consentLink,
+                serverLabel,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MemorySearchToolCallResponseItem. </summary>
+        /// <summary> A Bing grounding tool call. </summary>
+        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="status">
-        /// The status of the memory search tool call. One of `in_progress`,
-        /// `searching`, `completed`, `incomplete` or `failed`,
-        /// </param>
-        /// <param name="results"> The results returned from the memory search. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchToolCallResponseItem"/> instance for mocking. </returns>
-        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemoryToolSearchItem> results = default)
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BingGroundingToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static BingGroundingToolCall BingGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
-            results ??= new ChangeTrackingList<MemoryToolSearchItem>();
-
-            return new MemorySearchToolCallResponseItem(
-                AgentResponseItemKind.MemorySearchCall,
+            return new BingGroundingToolCall(
+                @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties: null,
+                callId,
+                arguments,
                 status,
-                results.ToList());
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A retrieved memory item from memory search. </summary>
-        /// <param name="memoryItem"> Retrieved memory item. </param>
-        /// <returns> A new <see cref="OpenAI.MemoryToolSearchItem"/> instance for mocking. </returns>
-        public static MemoryToolSearchItem MemoryToolSearchItem(MemoryOutputItem memoryItem = default)
+        /// <summary> The output of a Bing grounding tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BingGroundingToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static BingGroundingToolCallOutput BingGroundingToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
-            return new MemoryToolSearchItem(memoryItem, additionalBinaryDataProperties: null);
+            return new BingGroundingToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A SharePoint grounding tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.SharePointGroundingToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SharePointGroundingToolCall SharePointGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new SharePointGroundingToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of a SharePoint grounding tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.SharePointGroundingToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SharePointGroundingToolCallOutput SharePointGroundingToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new SharePointGroundingToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An Azure AI Search tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureAISearchToolCall AzureAISearchToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new AzureAISearchToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of an Azure AI Search tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureAISearchToolCallOutput AzureAISearchToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new AzureAISearchToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Bing custom search tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchToolCall BingCustomSearchToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new BingCustomSearchToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of a Bing custom search tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchToolCallOutput BingCustomSearchToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new BingCustomSearchToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An OpenAPI tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="name"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.OpenApiToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static OpenApiToolCall OpenApiToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new OpenApiToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                name,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of an OpenAPI tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="name"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.OpenApiToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static OpenApiToolCallOutput OpenApiToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new OpenApiToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                name,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A browser automation tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolCall BrowserAutomationToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new BrowserAutomationToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of a browser automation tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new BrowserAutomationToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Fabric data agent tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricDataAgentToolCall FabricDataAgentToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new FabricDataAgentToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of a Fabric data agent tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricDataAgentToolCallOutput FabricDataAgentToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new FabricDataAgentToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An Azure Function tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="name"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureFunctionToolCall AzureFunctionToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new AzureFunctionToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                name,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of an Azure Function tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="name"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.AzureFunctionToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureFunctionToolCallOutput AzureFunctionToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new AzureFunctionToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                name,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="name"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.A2AToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static A2AToolCall A2AToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new A2AToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                name,
+                arguments,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="name"></param>
+        /// <param name="output"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.A2AToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static A2AToolCallOutput A2AToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
+        {
+            return new A2AToolCallOutput(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                name,
+                output,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory search tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="status"></param>
+        /// <param name="memories"></param>
+        /// <returns> A new <see cref="OpenAI.MemorySearchToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemorySearchToolCall MemorySearchToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, ToolCallStatus status = default, IEnumerable<MemoryOutputItem> memories = default)
+        {
+            memories ??= new ChangeTrackingList<MemoryOutputItem>();
+
+            return new MemorySearchToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                status,
+                memories.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.UserProfileMemoryItem"/> and <see cref="OpenAI.ChatSummaryMemoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.UserProfileMemoryItem"/>, <see cref="OpenAI.ChatSummaryMemoryItem"/>, and <see cref="OpenAI.ProceduralMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <returns> A new <see cref="OpenAI.MemoryOutputItem"/> instance for mocking. </returns>
-        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        [Experimental("AAIP001")]
+        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default, string kind = default)
         {
             return new UnknownMemoryOutputItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 new MemoryItemKind(kind),
@@ -166,15 +1081,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.UserProfileMemoryItem"/> instance for mocking. </returns>
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        [Experimental("AAIP001")]
+        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
         {
             return new UserProfileMemoryItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 MemoryItemKind.UserProfile,
@@ -183,409 +1099,82 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item containing a summary extracted from conversations. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.ChatSummaryMemoryItem"/> instance for mocking. </returns>
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        [Experimental("AAIP001")]
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
         {
             return new ChatSummaryMemoryItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 MemoryItemKind.ChatSummary,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A Bing grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingToolCall"/> instance for mocking. </returns>
-        public static BingGroundingToolCall BingGroundingToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        /// <summary> A memory item containing a procedure extracted from conversations. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="OpenAI.ProceduralMemoryItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
         {
-            return new BingGroundingToolCall(
-                AgentResponseItemKind.BingGroundingCall,
+            return new ProceduralMemoryItem(
+                memoryId,
+                updatedOn,
+                scope,
+                content,
+                MemoryItemKind.Procedural,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory command tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.MemoryCommandToolCall"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemoryCommandToolCall MemoryCommandToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new MemoryCommandToolCall(
+                @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties: null,
                 callId,
                 arguments,
-                status);
+                status,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The output of a Bing grounding tool call. </summary>
+        /// <summary> The output of a memory command tool call. </summary>
+        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Bing grounding tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingToolCallOutput"/> instance for mocking. </returns>
-        public static BingGroundingToolCallOutput BingGroundingToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.MemoryCommandToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemoryCommandToolCallOutput MemoryCommandToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, ToolCallStatus status = default)
         {
-            return new BingGroundingToolCallOutput(
-                AgentResponseItemKind.BingGroundingCallOutput,
+            return new MemoryCommandToolCallOutput(
+                @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties: null,
                 callId,
-                output,
-                status);
-        }
-
-        /// <summary> A SharePoint grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolCall"/> instance for mocking. </returns>
-        public static SharepointGroundingToolCall SharepointGroundingToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new SharepointGroundingToolCall(
-                AgentResponseItemKind.SharepointGroundingPreviewCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of a SharePoint grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the SharePoint grounding tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolCallOutput"/> instance for mocking. </returns>
-        public static SharepointGroundingToolCallOutput SharepointGroundingToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new SharepointGroundingToolCallOutput(
-                AgentResponseItemKind.SharepointGroundingPreviewCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                output,
-                status);
-        }
-
-        /// <summary> An Azure AI Search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchToolCall"/> instance for mocking. </returns>
-        public static AzureAISearchToolCall AzureAISearchToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new AzureAISearchToolCall(
-                AgentResponseItemKind.AzureAiSearchCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of an Azure AI Search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Azure AI Search tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchToolCallOutput"/> instance for mocking. </returns>
-        public static AzureAISearchToolCallOutput AzureAISearchToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new AzureAISearchToolCallOutput(
-                AgentResponseItemKind.AzureAiSearchCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                output,
-                status);
-        }
-
-        /// <summary> A Bing custom search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCall"/> instance for mocking. </returns>
-        public static BingCustomSearchToolCall BingCustomSearchToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new BingCustomSearchToolCall(
-                AgentResponseItemKind.BingCustomSearchPreviewCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of a Bing custom search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Bing custom search tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCallOutput"/> instance for mocking. </returns>
-        public static BingCustomSearchToolCallOutput BingCustomSearchToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new BingCustomSearchToolCallOutput(
-                AgentResponseItemKind.BingCustomSearchPreviewCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                output,
-                status);
-        }
-
-        /// <summary> An OpenAPI tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the OpenAPI operation being called. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiToolCall"/> instance for mocking. </returns>
-        public static OpenApiToolCall OpenApiToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new OpenApiToolCall(
-                AgentResponseItemKind.OpenapiCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                name,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of an OpenAPI tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the OpenAPI operation that was called. </param>
-        /// <param name="output"> The output from the OpenAPI tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiToolCallOutput"/> instance for mocking. </returns>
-        public static OpenApiToolCallOutput OpenApiToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new OpenApiToolCallOutput(
-                AgentResponseItemKind.OpenapiCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                name,
-                output,
-                status);
-        }
-
-        /// <summary> A browser automation tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCall"/> instance for mocking. </returns>
-        public static BrowserAutomationToolCall BrowserAutomationToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new BrowserAutomationToolCall(
-                AgentResponseItemKind.BrowserAutomationPreviewCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of a browser automation tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the browser automation tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCallOutput"/> instance for mocking. </returns>
-        public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new BrowserAutomationToolCallOutput(
-                AgentResponseItemKind.BrowserAutomationPreviewCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                output,
-                status);
-        }
-
-        /// <summary> A Fabric data agent tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCall"/> instance for mocking. </returns>
-        public static FabricDataAgentToolCall FabricDataAgentToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new FabricDataAgentToolCall(
-                AgentResponseItemKind.FabricDataagentPreviewCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of a Fabric data agent tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Fabric data agent tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCallOutput"/> instance for mocking. </returns>
-        public static FabricDataAgentToolCallOutput FabricDataAgentToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new FabricDataAgentToolCallOutput(
-                AgentResponseItemKind.FabricDataagentPreviewCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                output,
-                status);
-        }
-
-        /// <summary> An Azure Function tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the Azure Function being called. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureFunctionToolCall"/> instance for mocking. </returns>
-        public static AzureFunctionToolCall AzureFunctionToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new AzureFunctionToolCall(
-                AgentResponseItemKind.AzureFunctionCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                name,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of an Azure Function tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the Azure Function that was called. </param>
-        /// <param name="output"> The output from the Azure Function tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureFunctionToolCallOutput"/> instance for mocking. </returns>
-        public static AzureFunctionToolCallOutput AzureFunctionToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new AzureFunctionToolCallOutput(
-                AgentResponseItemKind.AzureFunctionCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                name,
-                output,
-                status);
-        }
-
-        /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the A2A agent card being called. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.A2AToolCall"/> instance for mocking. </returns>
-        public static A2AToolCall A2AToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
-        {
-            return new A2AToolCall(
-                AgentResponseItemKind.A2APreviewCall,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                name,
-                arguments,
-                status);
-        }
-
-        /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the A2A agent card that was called. </param>
-        /// <param name="output"> The output from the A2A tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.A2AToolCallOutput"/> instance for mocking. </returns>
-        public static A2AToolCallOutput A2AToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
-        {
-            return new A2AToolCallOutput(
-                AgentResponseItemKind.A2APreviewCallOutput,
-                id,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                callId,
-                name,
-                output,
-                status);
+                status,
+                additionalBinaryDataProperties: null);
         }
     }
 }

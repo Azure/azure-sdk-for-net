@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DpmContainer IPersistableModel<DpmContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownDpmContainer)PersistableModelCreateCore(data, options);
+        DpmContainer IPersistableModel<DpmContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (DpmContainer)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DpmContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DpmContainer IJsonModel<DpmContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownDpmContainer)JsonModelCreateCore(ref reader, options);
+        DpmContainer IJsonModel<DpmContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (DpmContainer)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -112,6 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            AzureLocation? sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? canReRegister = default;
             string containerId = default;
@@ -155,6 +163,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (prop.NameEquals("protectableObjectType"u8))
                 {
                     protectableObjectType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("canReRegister"u8))
@@ -241,6 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties,
                 canReRegister,
                 containerId,

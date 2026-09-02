@@ -146,7 +146,7 @@ Id = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c
                     SecurityProfile = new HciVmInstanceSecurityProfile
                     {
                         IsTpmEnabled = true,
-                        SecureBootEnabled = true,
+                        IsSecureBootEnabled = true,
                     },
                     StorageProfile = new HciVmInstanceStorageProfile
                     {
@@ -214,7 +214,7 @@ Id = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c
                     SecurityProfile = new HciVmInstanceSecurityProfile
                     {
                         IsTpmEnabled = true,
-                        SecureBootEnabled = true,
+                        IsSecureBootEnabled = true,
                     },
                     StorageProfile = new HciVmInstanceStorageProfile
                     {
@@ -278,7 +278,7 @@ Id = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c
                     SecurityProfile = new HciVmInstanceSecurityProfile
                     {
                         IsTpmEnabled = true,
-                        SecureBootEnabled = true,
+                        IsSecureBootEnabled = true,
                     },
                     StorageProfile = new HciVmInstanceStorageProfile
                     {
@@ -336,7 +336,7 @@ Id = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c
                     SecurityProfile = new HciVmInstanceSecurityProfile
                     {
                         IsTpmEnabled = true,
-                        SecureBootEnabled = true,
+                        IsSecureBootEnabled = true,
                     },
                     StorageProfile = new HciVmInstanceStorageProfile
                     {
@@ -401,13 +401,13 @@ Id = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c
                         ComputerName = "luamaster",
                         WindowsConfiguration = new HciVmInstanceOSProfileWindowsConfiguration
                         {
-                            ProvisionVmConfigAgent = true,
+                            ShouldProvisionVmConfigAgent = true,
                         },
                     },
                     SecurityProfile = new HciVmInstanceSecurityProfile
                     {
                         IsTpmEnabled = true,
-                        SecureBootEnabled = true,
+                        IsSecureBootEnabled = true,
                     },
                     StorageProfile = new HciVmInstanceStorageProfile
                     {

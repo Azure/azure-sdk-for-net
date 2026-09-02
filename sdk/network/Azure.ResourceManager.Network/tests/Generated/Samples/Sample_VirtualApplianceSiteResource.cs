@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualApplianceSiteResource virtualApplianceSite = client.GetVirtualApplianceSiteResource(virtualApplianceSiteResourceId);
 
             // invoke the operation
-            await virtualApplianceSite.DeleteAsync(WaitUntil.Completed);
+            await virtualApplianceSite.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Samples
                     Default = true,
                 },
             };
-            ArmOperation<VirtualApplianceSiteResource> lro = await virtualApplianceSite.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VirtualApplianceSiteResource> lro = await virtualApplianceSite.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualApplianceSiteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

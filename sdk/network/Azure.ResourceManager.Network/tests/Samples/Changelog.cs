@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
             vnet.Subnets.Add(new SubnetData
             {
-                Name = "mySubnet",
                 AddressPrefix = "10.0.0.0/24",
             });
 

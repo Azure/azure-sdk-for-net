@@ -92,6 +92,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Phase))
+            {
+                writer.WritePropertyName("phase"u8);
+                writer.WriteStringValue(Phase.Value.ToSerialString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,6 +130,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             MessageStatus status = default;
             MessageRole role = default;
             IList<MessageContent> content = default;
+            MessagePhase? phase = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -157,6 +163,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                     content = array;
                     continue;
                 }
+                if (prop.NameEquals("phase"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        phase = null;
+                        continue;
+                    }
+                    phase = prop.Value.GetString().ToMessagePhase();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -168,7 +184,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 status,
                 role,
-                content);
+                content,
+                phase);
         }
     }
 }

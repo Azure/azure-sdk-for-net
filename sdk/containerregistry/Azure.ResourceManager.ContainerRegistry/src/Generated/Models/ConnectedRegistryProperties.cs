@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return Activation.Status;
+                return Activation is null ? default : Activation.Status;
             }
         }
     }

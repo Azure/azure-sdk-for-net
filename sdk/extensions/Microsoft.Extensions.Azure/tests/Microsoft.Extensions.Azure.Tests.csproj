@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Microsoft.Extensions.Azure.csproj" />
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 
   <!-- Include ASPNET content for testing compatibility with the integration framework on net8+ only -->

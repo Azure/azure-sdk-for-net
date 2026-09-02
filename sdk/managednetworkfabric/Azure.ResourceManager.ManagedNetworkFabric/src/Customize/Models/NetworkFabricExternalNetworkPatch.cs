@@ -1,0 +1,64 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using System.Linq;
+using Azure.Core;
+
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
+{
+    public partial class NetworkFabricExternalNetworkPatch
+    {
+        // Backward compatibility that adds back a previously safe flattened property.
+        // This is no longer flattened because its type has more than one properties now.
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
+        public ResourceIdentifier ExportRoutePolicyId
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
+        }
+
+        // Backward compatibility that adds back a previously safe flattened property.
+        // This is no longer flattened because its type has more than one properties now.
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
+        public ResourceIdentifier ImportRoutePolicyId
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
+        }
+
+        /// <summary> option B properties object. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.")]
+        public L3OptionBProperties OptionBProperties
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.");
+        }
+
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.")]
+        public ImportRoutePolicy ImportRoutePolicy
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.");
+        }
+
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.")]
+        public ExportRoutePolicy ExportRoutePolicy
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
+        }
+    }
+}

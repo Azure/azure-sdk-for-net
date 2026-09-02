@@ -119,7 +119,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string output = default;
-            OutputItemLocalShellToolCallOutputStatus? status = default;
+            ItemLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         status = null;
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallOutputStatus();
+                    status = prop.Value.GetString().ToItemLocalShellToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

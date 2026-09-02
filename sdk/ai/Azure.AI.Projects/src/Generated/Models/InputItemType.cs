@@ -19,6 +19,8 @@ namespace Azure.AI.Projects
         private const string WebSearchCallValue = "web_search_call";
         private const string FunctionCallValue = "function_call";
         private const string FunctionCallOutputValue = "function_call_output";
+        private const string ToolSearchCallValue = "tool_search_call";
+        private const string ToolSearchOutputValue = "tool_search_output";
         private const string ReasoningValue = "reasoning";
         private const string CompactionValue = "compaction";
         private const string ImageGenerationCallValue = "image_generation_call";
@@ -70,6 +72,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the FunctionCallOutput. </summary>
         public static InputItemType FunctionCallOutput { get; } = new InputItemType(FunctionCallOutputValue);
+
+        /// <summary> Gets the ToolSearchCall. </summary>
+        public static InputItemType ToolSearchCall { get; } = new InputItemType(ToolSearchCallValue);
+
+        /// <summary> Gets the ToolSearchOutput. </summary>
+        public static InputItemType ToolSearchOutput { get; } = new InputItemType(ToolSearchOutputValue);
 
         /// <summary> Gets the Reasoning. </summary>
         public static InputItemType Reasoning { get; } = new InputItemType(ReasoningValue);

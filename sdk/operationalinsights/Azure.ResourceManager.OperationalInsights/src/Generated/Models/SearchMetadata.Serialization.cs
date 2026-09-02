@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    internal partial class SearchMetadata : IUtf8JsonSerializable, IJsonModel<SearchMetadata>
+    /// <summary> Metadata for search results. </summary>
+    internal partial class SearchMetadata : IJsonModel<SearchMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSearchMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchMetadata IPersistableModel<SearchMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SearchMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchMetadata)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SearchId))
             {
                 writer.WritePropertyName("requestId"u8);
@@ -65,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("coreSummaries"u8);
                 writer.WriteStartArray();
-                foreach (var item in CoreSummaries)
+                foreach (CoreSummary item in CoreSummaries)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,13 +127,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsCollectionDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteStartArray();
-                foreach (var item in Sort)
+                foreach (SearchSort item in Sort)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,15 +169,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -148,203 +186,202 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
         }
 
-        SearchMetadata IJsonModel<SearchMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchMetadata IJsonModel<SearchMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchMetadata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchMetadata(document.RootElement, options);
         }
 
-        internal static SearchMetadata DeserializeSearchMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchMetadata DeserializeSearchMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string requestId = default;
+            string searchId = default;
             string resultType = default;
             long? total = default;
             long? top = default;
             string id = default;
-            IReadOnlyList<OperationalInsightsSearchCoreSummary> coreSummaries = default;
+            IList<CoreSummary> coreSummaries = default;
             string status = default;
-            DateTimeOffset? startTime = default;
+            DateTimeOffset? startOn = default;
             DateTimeOffset? lastUpdated = default;
-            ETag? etag = default;
-            IReadOnlyList<SearchSort> sort = default;
+            string eTag = default;
+            IList<SearchSort> sort = default;
             long? requestTime = default;
             string aggregatedValueField = default;
             string aggregatedGroupingFields = default;
             long? sum = default;
             long? max = default;
             SearchMetadataSchema schema = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("requestId"u8))
+                if (prop.NameEquals("requestId"u8))
                 {
-                    requestId = property.Value.GetString();
+                    searchId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"u8))
+                if (prop.NameEquals("resultType"u8))
                 {
-                    resultType = property.Value.GetString();
+                    resultType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("total"u8))
+                if (prop.NameEquals("total"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    total = property.Value.GetInt64();
+                    total = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("top"u8))
+                if (prop.NameEquals("top"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    top = property.Value.GetInt64();
+                    top = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreSummaries"u8))
+                if (prop.NameEquals("coreSummaries"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<OperationalInsightsSearchCoreSummary> array = new List<OperationalInsightsSearchCoreSummary>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<CoreSummary> array = new List<CoreSummary>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSearchCoreSummary.DeserializeOperationalInsightsSearchCoreSummary(item, options));
+                        array.Add(CoreSummary.DeserializeCoreSummary(item, options));
                     }
                     coreSummaries = array;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"u8))
+                if (prop.NameEquals("lastUpdated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdated = property.Value.GetDateTimeOffset("O");
+                    lastUpdated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("eTag"u8))
+                if (prop.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sort"u8))
+                if (prop.NameEquals("sort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchSort> array = new List<SearchSort>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchSort.DeserializeSearchSort(item, options));
                     }
                     sort = array;
                     continue;
                 }
-                if (property.NameEquals("requestTime"u8))
+                if (prop.NameEquals("requestTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestTime = property.Value.GetInt64();
+                    requestTime = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("aggregatedValueField"u8))
+                if (prop.NameEquals("aggregatedValueField"u8))
                 {
-                    aggregatedValueField = property.Value.GetString();
+                    aggregatedValueField = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aggregatedGroupingFields"u8))
+                if (prop.NameEquals("aggregatedGroupingFields"u8))
                 {
-                    aggregatedGroupingFields = property.Value.GetString();
+                    aggregatedGroupingFields = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sum"u8))
+                if (prop.NameEquals("sum"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sum = property.Value.GetInt64();
+                    sum = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("max"u8))
+                if (prop.NameEquals("max"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    max = property.Value.GetInt64();
+                    max = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("schema"u8))
+                if (prop.NameEquals("schema"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value, options);
+                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchMetadata(
-                requestId,
+                searchId,
                 resultType,
                 total,
                 top,
                 id,
-                coreSummaries ?? new ChangeTrackingList<OperationalInsightsSearchCoreSummary>(),
+                coreSummaries ?? new ChangeTrackingList<CoreSummary>(),
                 status,
-                startTime,
+                startOn,
                 lastUpdated,
-                etag,
+                eTag,
                 sort ?? new ChangeTrackingList<SearchSort>(),
                 requestTime,
                 aggregatedValueField,
@@ -352,376 +389,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 sum,
                 max,
                 schema,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SearchId))
-                {
-                    builder.Append("  requestId: ");
-                    if (SearchId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SearchId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SearchId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResultType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resultType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResultType))
-                {
-                    builder.Append("  resultType: ");
-                    if (ResultType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResultType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResultType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  total: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Total))
-                {
-                    builder.Append("  total: ");
-                    builder.AppendLine($"'{Total.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Top), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  top: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Top))
-                {
-                    builder.Append("  top: ");
-                    builder.AppendLine($"'{Top.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CoreSummaries), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  coreSummaries: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CoreSummaries))
-                {
-                    if (CoreSummaries.Any())
-                    {
-                        builder.Append("  coreSummaries: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CoreSummaries)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  coreSummaries: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Status}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("  startTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdated), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastUpdated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastUpdated))
-                {
-                    builder.Append("  lastUpdated: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdated.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  eTag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Sort))
-                {
-                    if (Sort.Any())
-                    {
-                        builder.Append("  sort: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Sort)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sort: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestTime))
-                {
-                    builder.Append("  requestTime: ");
-                    builder.AppendLine($"'{RequestTime.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregatedValueField), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  aggregatedValueField: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AggregatedValueField))
-                {
-                    builder.Append("  aggregatedValueField: ");
-                    if (AggregatedValueField.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AggregatedValueField}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AggregatedValueField}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregatedGroupingFields), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  aggregatedGroupingFields: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AggregatedGroupingFields))
-                {
-                    builder.Append("  aggregatedGroupingFields: ");
-                    if (AggregatedGroupingFields.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AggregatedGroupingFields}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AggregatedGroupingFields}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sum), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sum: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sum))
-                {
-                    builder.Append("  sum: ");
-                    builder.AppendLine($"'{Sum.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Max), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  max: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Max))
-                {
-                    builder.Append("  max: ");
-                    builder.AppendLine($"'{Max.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schema), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  schema: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Schema))
-                {
-                    builder.Append("  schema: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Schema, options, 2, false, "  schema: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SearchMetadata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SearchMetadata IPersistableModel<SearchMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSearchMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SearchMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

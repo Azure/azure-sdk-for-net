@@ -98,8 +98,11 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             HciClusterDeploymentSettingData data = new HciClusterDeploymentSettingData
             {
-                ArcNodeResourceIds = { new ResourceIdentifier("/subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1"), new ResourceIdentifier("/subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-2") },
-                DeploymentMode = EceDeploymentMode.Deploy,
+                Properties = new DeploymentSettingsProperties
+                {
+                    ArcNodeResourceIds = { new ResourceIdentifier("/subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1"), new ResourceIdentifier("/subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-2") },
+                    DeploymentMode = EceDeploymentMode.Deploy,
+                },
                 OperationType = HciClusterOperationType.ClusterProvisioning,
                 DeploymentConfiguration = new HciClusterDeploymentConfiguration(new DeploymentSettingScaleUnits[]
             {
@@ -132,7 +135,6 @@ WitnessPath = "Cloud",
 CloudAccountName = "myasestoragacct",
 AzureServiceEndpoint = "core.windows.net",
 },
-StorageConfigurationMode = "Express",
 NamingPrefix = "ms169",
 DomainFqdn = "ASZ1PLab8.nttest.microsoft.com",
 InfrastructureNetwork = {new DeploymentSettingInfrastructureNetwork

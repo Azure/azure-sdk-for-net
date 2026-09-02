@@ -19,13 +19,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected MultipleParamsClient() => throw null;
 
-        public MultipleParamsClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new MultipleParamsClientOptions()) => throw null;
+        public MultipleParamsClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public MultipleParamsClient(string name, string region, MultipleParamsClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+        public MultipleParamsClient(string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
 
-        internal MultipleParamsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, MultipleParamsClientOptions options) => throw null;
+        internal MultipleParamsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public MultipleParamsClient(Uri endpoint, string name, string region, MultipleParamsClientOptions options) : this(null, endpoint, name, region, options) => throw null;
+        public MultipleParamsClient(Uri endpoint, string name, string region, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, name, region, options) => throw null;
 
         [Experimental("SCME0002")]
         public MultipleParamsClient(MultipleParamsClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;

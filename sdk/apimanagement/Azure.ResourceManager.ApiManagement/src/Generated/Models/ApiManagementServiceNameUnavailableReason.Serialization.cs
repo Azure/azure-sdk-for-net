@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class ApiManagementServiceNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApiManagementServiceNameUnavailableReason value) => value switch
         {
             ApiManagementServiceNameUnavailableReason.Valid => "Valid",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementServiceNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ApiManagementServiceNameUnavailableReason ToApiManagementServiceNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return ApiManagementServiceNameUnavailableReason.Valid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return ApiManagementServiceNameUnavailableReason.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return ApiManagementServiceNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid"))
+            {
+                return ApiManagementServiceNameUnavailableReason.Valid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return ApiManagementServiceNameUnavailableReason.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return ApiManagementServiceNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementServiceNameUnavailableReason value.");
         }
     }

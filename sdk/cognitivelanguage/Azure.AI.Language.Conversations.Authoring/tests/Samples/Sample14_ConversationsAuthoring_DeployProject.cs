@@ -23,11 +23,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProject
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
-            Operation operation = client.DeployProject(
+            Operation operation = deploymentClient.DeployProject(
                 WaitUntil.Completed,
                 projectName,
                 deploymentName,
@@ -50,6 +52,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectWithAssignedResources
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
 
@@ -76,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
             deploymentDetails.AssignedResources.Add(assignedResource);
             // Start deployment
-            Operation operation = client.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = deploymentClient.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
 
             // Output result
             Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
@@ -100,6 +104,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationAnalysisAuthoring client =
                 new ConversationAnalysisAuthoring(endpoint, credential, options);
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
 
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
@@ -108,7 +113,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
             // Start deployment
-            Operation operation = client.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = deploymentClient.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
             #endregion
 
             // Output result
@@ -128,11 +133,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsync
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
-            Operation operation = await client.DeployProjectAsync(
+            Operation operation = await deploymentClient.DeployProjectAsync(
                 WaitUntil.Completed,
                 projectName,
                 deploymentName,
@@ -155,6 +162,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsyncWithAssignedResources
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
 
@@ -181,7 +190,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
             deploymentDetails.AssignedResources.Add(assignedResource);
             // Start deployment
-            Operation operation = await client.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
 
             // Output result
             Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
@@ -203,6 +212,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationAnalysisAuthoring client =
                 new ConversationAnalysisAuthoring(endpoint, credential, options);
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
 
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
@@ -211,7 +221,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
             // Start deployment asynchronously
-            Operation operation = await client.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
             #endregion
             // Output result
             Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");

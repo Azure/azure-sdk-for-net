@@ -3,8 +3,15 @@
 
 namespace Azure.Provisioning.Expressions;
 
+/// <summary>
+/// Represents a Bicep comment statement.
+/// </summary>
+/// <param name="comment">The comment text.</param>
 public partial class CommentStatement(string comment) : BicepStatement
 {
+    /// <summary>
+    /// Gets the comment text.
+    /// </summary>
     public string Comment { get; } = comment;
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.Append("// ").Append(Comment).AppendLine();

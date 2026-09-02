@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Request to update data sensitivity settings for sensitive data discovery. </summary>
     public partial class SensitivitySettingCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SensitivitySettingCreateOrUpdateContent"/>. </summary>
         /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
@@ -60,25 +32,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
         /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
         /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivitySettingCreateOrUpdateContent(IList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, Guid? sensitivityThresholdLabelId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SensitivitySettingCreateOrUpdateContent(IList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, string sensitivityThresholdLabelId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SensitiveInfoTypesIds = sensitiveInfoTypesIds;
             SensitivityThresholdLabelOrder = sensitivityThresholdLabelOrder;
             SensitivityThresholdLabelId = sensitivityThresholdLabelId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SensitivitySettingCreateOrUpdateContent"/> for deserialization. </summary>
-        internal SensitivitySettingCreateOrUpdateContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of selected sensitive info types' IDs. </summary>
         public IList<Guid> SensitiveInfoTypesIds { get; }
+
         /// <summary> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </summary>
         public float? SensitivityThresholdLabelOrder { get; set; }
+
         /// <summary> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </summary>
-        public Guid? SensitivityThresholdLabelId { get; set; }
+        public string SensitivityThresholdLabelId { get; set; }
     }
 }

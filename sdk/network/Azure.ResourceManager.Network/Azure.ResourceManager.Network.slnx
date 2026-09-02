@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Network.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Network.Tests.csproj" />
+</Solution>

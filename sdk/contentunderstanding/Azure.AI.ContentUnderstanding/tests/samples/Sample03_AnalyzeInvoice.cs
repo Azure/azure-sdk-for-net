@@ -23,7 +23,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeInvoiceAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingAnalyzeInvoice
@@ -35,6 +35,37 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
             AnalysisResult result = operation.Value;
+            #endregion
+
+            #region Snippet:ContentUnderstandingGetUsage
+            // Document page meters are three tiers (minimal / basic / standard).
+            UsageDetails? usage = operation.GetUsageDetails();
+            if (usage != null)
+            {
+                Console.WriteLine($"Document pages (minimal): {usage.DocumentPagesMinimal}");
+                Console.WriteLine($"Document pages (basic): {usage.DocumentPagesBasic}");
+                Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
+                Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
+                if (usage.Tokens != null)
+                {
+                    foreach (var kvp in usage.Tokens)
+                    {
+                        Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+                    }
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingGetUsage
+            // Usage may not be present in old playback recordings captured before this feature.
+            // In live/record mode, usage should always be available.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsNotNull(usage, "Usage details should be available after a completed analysis");
+                Assert.IsNotNull(usage!.Tokens, "Tokens dictionary should not be null");
+                Assert.IsNotNull(usage.DocumentPagesStandard, "prebuilt-invoice LRO should bill DocumentPagesStandard");
+                Assert.IsNull(usage.DocumentPagesStandardInline, "Inline meters should not be set for LRO analyze");
+            }
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeInvoice
@@ -332,6 +363,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Assert.IsTrue(itemAmount >= 0, $"Line item {i + 1} amount should be >= 0, but was {itemAmount}");
                 }
             }
+            #endregion
+
+            #region Snippet:ContentUnderstandingInvoiceToLlmInput
+            // The fields above can also be packaged into a single LLM-ready text block.
+            // ToLlmInput renders all extracted fields as YAML front matter followed by
+            // the markdown body, so an LLM can consume both structured data and document text
+            // in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
+            string llmText = result.ToLlmInput();
+            Console.WriteLine(llmText);
+            #endregion
+
+            #region Assertion:ContentUnderstandingInvoiceToLlmInput
+            Assert.IsNotNull(llmText, "LLM input text should not be null");
+            Assert.That(llmText, Does.StartWith("---\n"));
+            Assert.That(llmText, Does.Contain("mimeType: application/pdf"));
+            Assert.That(llmText, Does.Contain("fields:"));
+            Console.WriteLine($"Invoice LLM input text generated ({llmText.Length} characters)");
             #endregion
         }
     }

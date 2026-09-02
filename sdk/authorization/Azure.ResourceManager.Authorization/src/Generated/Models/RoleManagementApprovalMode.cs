@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleManagementApprovalMode : IEquatable<RoleManagementApprovalMode>
     {
         private readonly string _value;
+        /// <summary> SingleStage. </summary>
+        private const string SingleStageValue = "SingleStage";
+        /// <summary> Serial. </summary>
+        private const string SerialValue = "Serial";
+        /// <summary> Parallel. </summary>
+        private const string ParallelValue = "Parallel";
+        /// <summary> NoApproval. </summary>
+        private const string NoApprovalValue = "NoApproval";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementApprovalMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleStageValue = "SingleStage";
-        private const string SerialValue = "Serial";
-        private const string ParallelValue = "Parallel";
-        private const string NoApprovalValue = "NoApproval";
+            _value = value;
+        }
 
         /// <summary> SingleStage. </summary>
         public static RoleManagementApprovalMode SingleStage { get; } = new RoleManagementApprovalMode(SingleStageValue);
+
         /// <summary> Serial. </summary>
         public static RoleManagementApprovalMode Serial { get; } = new RoleManagementApprovalMode(SerialValue);
+
         /// <summary> Parallel. </summary>
         public static RoleManagementApprovalMode Parallel { get; } = new RoleManagementApprovalMode(ParallelValue);
+
         /// <summary> NoApproval. </summary>
         public static RoleManagementApprovalMode NoApproval { get; } = new RoleManagementApprovalMode(NoApprovalValue);
+
         /// <summary> Determines if two <see cref="RoleManagementApprovalMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementApprovalMode left, RoleManagementApprovalMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementApprovalMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementApprovalMode left, RoleManagementApprovalMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementApprovalMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementApprovalMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementApprovalMode(string value) => new RoleManagementApprovalMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementApprovalMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementApprovalMode?(string value) => value == null ? null : new RoleManagementApprovalMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementApprovalMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementApprovalMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             Console.WriteLine("Transcription with custom phrase list:");
-            var channelPhrases = result.PhrasesByChannel.First();
+            var channelPhrases = result.CombinedPhrases.First();
             Console.WriteLine(channelPhrases.Text);
             #endregion Snippet:TranscribeWithPhraseListSample
         }

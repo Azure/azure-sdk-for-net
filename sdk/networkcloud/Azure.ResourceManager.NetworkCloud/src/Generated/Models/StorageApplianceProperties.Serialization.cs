@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(StorageApplianceProperties)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("administratorCredentials"u8);
+            writer.WriteObjectValue(AdministratorCredentials, options);
             writer.WritePropertyName("rackId"u8);
             writer.WriteStringValue(RackId);
-            writer.WritePropertyName("storageApplianceSkuId"u8);
-            writer.WriteStringValue(StorageApplianceSkuId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            writer.WritePropertyName("administratorCredentials"u8);
-            writer.WriteObjectValue(AdministratorCredentials, options);
+            writer.WritePropertyName("storageApplianceSkuId"u8);
+            writer.WriteStringValue(StorageApplianceSkuId);
             if (options.Format != "W" && Optional.IsDefined(CACertificate))
             {
                 writer.WritePropertyName("caCertificate"u8);
@@ -145,6 +145,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MonitoringConfigurationStatus))
+            {
+                writer.WritePropertyName("monitoringConfigurationStatus"u8);
+                writer.WriteObjectValue(MonitoringConfigurationStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementFeature))
             {
@@ -218,11 +223,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
+            AdministrativeCredentials administratorCredentials = default;
             ResourceIdentifier rackId = default;
-            string storageApplianceSkuId = default;
             long rackSlot = default;
             string serialNumber = default;
-            AdministrativeCredentials administratorCredentials = default;
+            string storageApplianceSkuId = default;
             NetworkCloudCertificateInfo caCertificate = default;
             long? capacity = default;
             long? capacityUsed = default;
@@ -233,6 +238,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IPAddress managementIPv4Address = default;
             string manufacturer = default;
             string model = default;
+            StorageApplianceMonitoringConfigurationStatus monitoringConfigurationStatus = default;
             RemoteVendorManagementFeature? remoteVendorManagementFeature = default;
             RemoteVendorManagementStatus? remoteVendorManagementStatus = default;
             IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
@@ -241,14 +247,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("administratorCredentials"u8))
+                {
+                    administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("rackId"u8))
                 {
                     rackId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("storageApplianceSkuId"u8))
-                {
-                    storageApplianceSkuId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("rackSlot"u8))
@@ -261,9 +267,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     serialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("administratorCredentials"u8))
+                if (prop.NameEquals("storageApplianceSkuId"u8))
                 {
-                    administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(prop.Value, options);
+                    storageApplianceSkuId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("caCertificate"u8))
@@ -349,6 +355,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     model = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("monitoringConfigurationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringConfigurationStatus = StorageApplianceMonitoringConfigurationStatus.DeserializeStorageApplianceMonitoringConfigurationStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("remoteVendorManagementFeature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -401,11 +416,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             return new StorageApplianceProperties(
+                administratorCredentials,
                 rackId,
-                storageApplianceSkuId,
                 rackSlot,
                 serialNumber,
-                administratorCredentials,
+                storageApplianceSkuId,
                 caCertificate,
                 capacity,
                 capacityUsed,
@@ -416,6 +431,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 managementIPv4Address,
                 manufacturer,
                 model,
+                monitoringConfigurationStatus,
                 remoteVendorManagementFeature,
                 remoteVendorManagementStatus,
                 secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),

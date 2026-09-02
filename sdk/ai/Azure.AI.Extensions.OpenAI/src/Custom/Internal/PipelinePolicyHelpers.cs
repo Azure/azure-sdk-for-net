@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -96,10 +96,13 @@ internal static partial class PipelinePolicyHelpers
                         {
                             foreach (JsonNode inputItemNode in inputArray)
                             {
-                                if (inputItemNode?.AsObject() is JsonObject inputItemObject)
+                                // We do not remove ID if the encrypted content is present, because it is used on server side to
+                                // decrypt the encrypted content of the reasoning item.
+                                if (inputItemNode?.AsObject() is JsonObject inputItemObject && !inputItemObject.ContainsKey("encrypted_content"))
                                 {
                                     inputItemObject.Remove("id");
                                     inputItemObject.Remove("status");
+                                    inputItemObject.Remove("response_id");
                                 }
                             }
 

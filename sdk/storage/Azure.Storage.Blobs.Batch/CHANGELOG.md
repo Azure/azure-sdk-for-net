@@ -1,14 +1,19 @@
 # Release History
 
-## 12.26.0-beta.2 (Unreleased)
+## 12.27.0-beta.1 (2026-07-22)
 
 ### Features Added
+- Added support for service version 2026-10-06.
 
-### Breaking Changes
+## 12.26.0 (2026-06-04)
 
-### Bugs Fixed
+### Features Added
+- Includes all features from 12.26.0-beta.1
 
-### Other Changes
+## 12.25.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.25.0-beta.1
 
 ## 12.26.0-beta.1 (2026-03-24)
 

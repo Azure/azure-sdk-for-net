@@ -47,7 +47,9 @@ public partial class DecoratorExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is DecoratorExpression d && Value.Equals(d.Value);
+    /// <inheritdoc/>
     public override int GetHashCode() => (typeof(DecoratorExpression).GetHashCode() * 31 + (Value?.GetHashCode() ?? 0));
 
     internal static DecoratorExpression DeserializeDecoratorExpression(JsonElement element)

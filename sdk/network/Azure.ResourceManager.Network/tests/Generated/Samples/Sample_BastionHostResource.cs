@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Samples
             BastionHostResource bastionHost = client.GetBastionHostResource(bastionHostResourceId);
 
             // invoke the operation
-            await bastionHost.DeleteAsync(WaitUntil.Completed);
+            await bastionHost.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Samples
             BastionHostResource bastionHost = client.GetBastionHostResource(bastionHostResourceId);
 
             // invoke the operation
-            await bastionHost.DeleteAsync(WaitUntil.Completed);
+            await bastionHost.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<BastionHostResource> lro = await bastionHost.UpdateAsync(WaitUntil.Completed, networkTagsObject);
+            ArmOperation<BastionHostResource> lro = await bastionHost.UpdateAsync(WaitUntil.Completed, networkTagsObject, cancellationToken: System.Threading.CancellationToken.None);
             BastionHostResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Tokens = { "abcd1234-efgh-hijk-5678-abcdefgh1234", "dcba4321-hgfe-kjih-8765-hgfedcba4321" },
             };
-            await bastionHost.DeleteBastionShareableLinkByTokenAsync(WaitUntil.Completed, content);
+            await bastionHost.DeleteBastionShareableLinkByTokenAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

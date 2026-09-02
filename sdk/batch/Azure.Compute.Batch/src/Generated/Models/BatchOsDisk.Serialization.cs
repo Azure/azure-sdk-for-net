@@ -93,10 +93,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk, options);
             }
-            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
-                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
+                writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.Compute.Batch
             CachingType? caching = default;
             int? diskSizeGB = default;
             ManagedDisk managedDisk = default;
-            bool? writeAcceleratorEnabled = default;
+            bool? isWriteAcceleratorEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,7 +190,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    writeAcceleratorEnabled = prop.Value.GetBoolean();
+                    isWriteAcceleratorEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,7 +203,7 @@ namespace Azure.Compute.Batch
                 caching,
                 diskSizeGB,
                 managedDisk,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 additionalBinaryDataProperties);
         }
     }

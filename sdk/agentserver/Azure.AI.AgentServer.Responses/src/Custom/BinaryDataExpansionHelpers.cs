@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Models;
@@ -63,7 +64,7 @@ internal static class BinaryDataExpansionHelpers
             using var doc = JsonDocument.Parse(input.ToMemory());
             var root = doc.RootElement;
 
-            return root.ValueKind switch
+            var items = root.ValueKind switch
             {
                 JsonValueKind.String => new List<Item>
                 {
@@ -73,6 +74,9 @@ internal static class BinaryDataExpansionHelpers
                 _ => throw new FormatException(
                     $"Expected a string or array for Input, but got {root.ValueKind}."),
             };
+
+            NormalizeMessageContent(items);
+            return items;
         }
         catch (FormatException)
         {
@@ -210,5 +214,43 @@ internal static class BinaryDataExpansionHelpers
         }
 
         return items;
+    }
+
+    /// <summary>
+    /// Normalizes <see cref="ItemMessage.Content"/> from JSON string shorthand to
+    /// the canonical array form so that downstream consumers always see an array
+    /// of <see cref="MessageContent"/> regardless of how the input was submitted.
+    /// </summary>
+    private static void NormalizeMessageContent(List<Item> items)
+    {
+        foreach (var item in items)
+        {
+            if (item is ItemMessage message && message.Content is not null)
+            {
+                using var doc = JsonDocument.Parse(message.Content.ToMemory());
+                if (doc.RootElement.ValueKind == JsonValueKind.String)
+                {
+                    var expanded = ExpandContent(message.Content);
+                    message.Content = SerializeContentArray(expanded);
+                }
+            }
+        }
+    }
+
+    private static BinaryData SerializeContentArray(List<MessageContent> content)
+    {
+        using var stream = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(stream))
+        {
+            writer.WriteStartArray();
+            foreach (var part in content)
+            {
+                ((IJsonModel<MessageContent>)part).Write(writer, ModelReaderWriterOptions.Json);
+            }
+
+            writer.WriteEndArray();
+        }
+
+        return BinaryData.FromBytes(stream.ToArray());
     }
 }

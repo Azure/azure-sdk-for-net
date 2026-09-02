@@ -7,66 +7,48 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Describes the Image Specifications. </summary>
+    /// <summary> The ImageSetting. </summary>
     public partial class ImageSetting
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
         public ImageSetting()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
-        /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </param>
-        /// <param name="reference"> Image reference. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ImageSetting(ImageType? imageType, string reference, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="type"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </param>
+        /// <param name="reference"> Image reference URL if type is docker. Environment name if type is azureml. </param>
+        /// <param name="version"> Version of image being used. If latest then skip this field. </param>
+        /// <param name="additionalProperties"></param>
+        internal ImageSetting(ImageType? @type, string reference, string version, IDictionary<string, BinaryData> additionalProperties)
         {
-            ImageType = imageType;
+            Type = @type;
             Reference = reference;
-            AdditionalProperties = additionalProperties;
+            Version = version;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
-        /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </summary>
+        /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </summary>
         [WirePath("type")]
-        public ImageType? ImageType { get; set; }
-        /// <summary> Image reference. </summary>
+        public ImageType? Type { get; set; }
+
+        /// <summary> Image reference URL if type is docker. Environment name if type is azureml. </summary>
         [WirePath("reference")]
         public string Reference { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("AdditionalProperties")]
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Version of image being used. If latest then skip this field. </summary>
+        [WirePath("version")]
+        public string Version { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

@@ -47,8 +47,8 @@ internal static partial class ComparisonFilterValidator
         {
             if (typeValProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.type", $"Expected string, got {typeValProp.ValueKind}"));
-            else if (typeValProp.GetString() is not ("eq" or "ne" or "gt" or "gte" or "lt" or "lte"))
-                errors.Add(new ValidationError("$.type", $"Value '{typeValProp.GetString()}' is not valid. Allowed: eq, ne, gt, gte, lt, lte"));
+            else if (typeValProp.GetString() is not ("eq" or "ne" or "gt" or "gte" or "lt" or "lte" or "in" or "nin"))
+                errors.Add(new ValidationError("$.type", $"Value '{typeValProp.GetString()}' is not valid. Allowed: eq, ne, gt, gte, lt, lte, in, nin"));
         }
 
         // Required: value

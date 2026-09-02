@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the AppServiceSourceControl data model.
-    /// The source control OAuth token.
-    /// </summary>
+    /// <summary> The source control OAuth token. </summary>
     public partial class AppServiceSourceControlData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlData"/>. </summary>
         public AppServiceSourceControlData()
@@ -56,40 +25,98 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="token"> OAuth access token. </param>
-        /// <param name="tokenSecret"> OAuth access token secret. </param>
-        /// <param name="refreshToken"> OAuth refresh token. </param>
-        /// <param name="expireOn"> OAuth token expiration. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SourceControl resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expireOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SourceControlProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Token = token;
-            TokenSecret = tokenSecret;
-            RefreshToken = refreshToken;
-            ExpireOn = expireOn;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> OAuth access token. </summary>
-        [WirePath("properties.token")]
-        public string Token { get; set; }
-        /// <summary> OAuth access token secret. </summary>
-        [WirePath("properties.tokenSecret")]
-        public string TokenSecret { get; set; }
-        /// <summary> OAuth refresh token. </summary>
-        [WirePath("properties.refreshToken")]
-        public string RefreshToken { get; set; }
-        /// <summary> OAuth token expiration. </summary>
-        [WirePath("properties.expirationTime")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        /// <summary> SourceControl resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SourceControlProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> OAuth access token. </summary>
+        [WirePath("properties.token")]
+        public string Token
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Token;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.Token = value;
+            }
+        }
+
+        /// <summary> OAuth access token secret. </summary>
+        [WirePath("properties.tokenSecret")]
+        public string TokenSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TokenSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.TokenSecret = value;
+            }
+        }
+
+        /// <summary> OAuth refresh token. </summary>
+        [WirePath("properties.refreshToken")]
+        public string RefreshToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RefreshToken;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.RefreshToken = value;
+            }
+        }
+
+        /// <summary> OAuth token expiration. </summary>
+        [WirePath("properties.expirationTime")]
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.ExpireOn = value;
+            }
+        }
     }
 }

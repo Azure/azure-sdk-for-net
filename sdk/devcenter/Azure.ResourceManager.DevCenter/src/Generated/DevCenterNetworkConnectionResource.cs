@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterNetworkConnectionApiVersion);
             _networkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Endpoint, devCenterNetworkConnectionApiVersion ?? "2026-01-01-preview");
+            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterNetworkConnectionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _networkConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterNetworkConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterNetworkConnectionResource> operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(
-                    new DevCenterNetworkConnectionOperationSource(Client),
+                    new DevCenterNetworkConnectionResourceOperationSource(Client),
                     _networkConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _networkConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterNetworkConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterNetworkConnectionResource> operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(
-                    new DevCenterNetworkConnectionOperationSource(Client),
+                    new DevCenterNetworkConnectionResourceOperationSource(Client),
                     _networkConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -18,13 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected ParamAliasClient() => throw null;
 
-        public ParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new ParamAliasClientOptions()) => throw null;
+        public ParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public ParamAliasClient(string blobName, ParamAliasClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public ParamAliasClient(string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal ParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, ParamAliasClientOptions options) => throw null;
+        internal ParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
 
-        public ParamAliasClient(Uri endpoint, string blobName, ParamAliasClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public ParamAliasClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
         [Experimental("SCME0002")]
         public ParamAliasClient(ParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;

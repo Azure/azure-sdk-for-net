@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new DevCenterEncryptionSetUpdateProperties();
                 }
-                Properties.DevboxDisksEncryptionEnableStatus = value.Value;
+                Properties.DevboxDisksEncryptionEnableStatus = value;
             }
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct AgreementAcceptanceMode : IEquatable<AgreementAcceptanceMode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> ClickToAccept. </summary>
+        private const string ClickToAcceptValue = "ClickToAccept";
+        /// <summary> ESignEmbedded. </summary>
+        private const string ESignEmbeddedValue = "ESignEmbedded";
+        /// <summary> ESignOffline. </summary>
+        private const string ESignOfflineValue = "ESignOffline";
+        /// <summary> Implicit. </summary>
+        private const string ImplicitValue = "Implicit";
+        /// <summary> Offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> PhysicalSign. </summary>
+        private const string PhysicalSignValue = "PhysicalSign";
 
         /// <summary> Initializes a new instance of <see cref="AgreementAcceptanceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgreementAcceptanceMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string ClickToAcceptValue = "ClickToAccept";
-        private const string ESignEmbeddedValue = "ESignEmbedded";
-        private const string ESignOfflineValue = "ESignOffline";
-        private const string ImplicitValue = "Implicit";
-        private const string OfflineValue = "Offline";
-        private const string PhysicalSignValue = "PhysicalSign";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static AgreementAcceptanceMode Other { get; } = new AgreementAcceptanceMode(OtherValue);
+
         /// <summary> ClickToAccept. </summary>
         public static AgreementAcceptanceMode ClickToAccept { get; } = new AgreementAcceptanceMode(ClickToAcceptValue);
+
         /// <summary> ESignEmbedded. </summary>
         public static AgreementAcceptanceMode ESignEmbedded { get; } = new AgreementAcceptanceMode(ESignEmbeddedValue);
+
         /// <summary> ESignOffline. </summary>
         public static AgreementAcceptanceMode ESignOffline { get; } = new AgreementAcceptanceMode(ESignOfflineValue);
+
         /// <summary> Implicit. </summary>
         public static AgreementAcceptanceMode Implicit { get; } = new AgreementAcceptanceMode(ImplicitValue);
+
         /// <summary> Offline. </summary>
         public static AgreementAcceptanceMode Offline { get; } = new AgreementAcceptanceMode(OfflineValue);
+
         /// <summary> PhysicalSign. </summary>
         public static AgreementAcceptanceMode PhysicalSign { get; } = new AgreementAcceptanceMode(PhysicalSignValue);
+
         /// <summary> Determines if two <see cref="AgreementAcceptanceMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgreementAcceptanceMode left, AgreementAcceptanceMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgreementAcceptanceMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgreementAcceptanceMode left, AgreementAcceptanceMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgreementAcceptanceMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgreementAcceptanceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgreementAcceptanceMode(string value) => new AgreementAcceptanceMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgreementAcceptanceMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgreementAcceptanceMode?(string value) => value == null ? null : new AgreementAcceptanceMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgreementAcceptanceMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgreementAcceptanceMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Unknown version of BackupPolicy. </summary>
     internal partial class UnknownBackupPolicy : CosmosDBAccountBackupPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupPolicy"/>. </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(backupPolicyType, migrationState, serializedAdditionalRawData)
-        {
-            BackupPolicyType = backupPolicyType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownBackupPolicy"/> for deserialization. </summary>
-        internal UnknownBackupPolicy()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(backupPolicyType != default ? backupPolicyType : "unknown", migrationState, additionalBinaryDataProperties)
         {
         }
     }

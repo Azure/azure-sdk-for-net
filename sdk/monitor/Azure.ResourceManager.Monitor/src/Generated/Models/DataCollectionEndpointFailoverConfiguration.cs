@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Failover configuration on this endpoint. This property is READ-ONLY. </summary>
+    /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
     public partial class DataCollectionEndpointFailoverConfiguration : DataCollectionRuleBcdrFailoverConfigurationSpec
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointFailoverConfiguration"/>. </summary>
@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointFailoverConfiguration"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(activeLocation, locations, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(activeLocation, locations, additionalBinaryDataProperties)
         {
         }
     }

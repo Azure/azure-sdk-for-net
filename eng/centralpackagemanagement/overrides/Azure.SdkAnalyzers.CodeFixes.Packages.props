@@ -1,0 +1,4 @@
+<Project>
+  <!-- Mirror the analyzer package override since CodeFixes shares the same constraints -->
+  <Import Project="$(MSBuildThisFileDirectory)Azure.SdkAnalyzers.Packages.props" />
+</Project>

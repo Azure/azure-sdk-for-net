@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppAccountActiveDirectoryStatus : IEquatable<NetAppAccountActiveDirectoryStatus>
     {
         private readonly string _value;
+        /// <summary> Active Directory created but not in use. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> Active Directory in use by SMB Volume. </summary>
+        private const string InUseValue = "InUse";
+        /// <summary> Active Directory Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Error with the Active Directory. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Active Directory Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppAccountActiveDirectoryStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedValue = "Created";
-        private const string InUseValue = "InUse";
-        private const string DeletedValue = "Deleted";
-        private const string ErrorValue = "Error";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Active Directory created but not in use. </summary>
         public static NetAppAccountActiveDirectoryStatus Created { get; } = new NetAppAccountActiveDirectoryStatus(CreatedValue);
+
         /// <summary> Active Directory in use by SMB Volume. </summary>
         public static NetAppAccountActiveDirectoryStatus InUse { get; } = new NetAppAccountActiveDirectoryStatus(InUseValue);
+
         /// <summary> Active Directory Deleted. </summary>
         public static NetAppAccountActiveDirectoryStatus Deleted { get; } = new NetAppAccountActiveDirectoryStatus(DeletedValue);
+
         /// <summary> Error with the Active Directory. </summary>
         public static NetAppAccountActiveDirectoryStatus Error { get; } = new NetAppAccountActiveDirectoryStatus(ErrorValue);
+
         /// <summary> Active Directory Updating. </summary>
         public static NetAppAccountActiveDirectoryStatus Updating { get; } = new NetAppAccountActiveDirectoryStatus(UpdatingValue);
+
         /// <summary> Determines if two <see cref="NetAppAccountActiveDirectoryStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppAccountActiveDirectoryStatus left, NetAppAccountActiveDirectoryStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppAccountActiveDirectoryStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppAccountActiveDirectoryStatus left, NetAppAccountActiveDirectoryStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppAccountActiveDirectoryStatus(string value) => new NetAppAccountActiveDirectoryStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppAccountActiveDirectoryStatus?(string value) => value == null ? null : new NetAppAccountActiveDirectoryStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppAccountActiveDirectoryStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppAccountActiveDirectoryStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

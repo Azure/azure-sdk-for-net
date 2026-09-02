@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Samples
                     AddressPrefix = "aa:bb::/125",
                 },
             };
-            ArmOperation<ExpressRouteCircuitConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            ArmOperation<ExpressRouteCircuitConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

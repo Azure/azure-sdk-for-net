@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubScaleTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubScaleType value) => value switch
         {
-            IotHubScaleType.None => "None",
             IotHubScaleType.Automatic => "Automatic",
             IotHubScaleType.Manual => "Manual",
+            IotHubScaleType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubScaleType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubScaleType ToIotHubScaleType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return IotHubScaleType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return IotHubScaleType.Automatic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return IotHubScaleType.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic"))
+            {
+                return IotHubScaleType.Automatic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual"))
+            {
+                return IotHubScaleType.Manual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return IotHubScaleType.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubScaleType value.");
         }
     }

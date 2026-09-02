@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct QueryStringBehavior : IEquatable<QueryStringBehavior>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="QueryStringBehavior"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public QueryStringBehavior(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncludeValue = "Include";
         private const string IncludeAllValue = "IncludeAll";
         private const string ExcludeValue = "Exclude";
         private const string ExcludeAllValue = "ExcludeAll";
 
-        /// <summary> Include. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStringBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public QueryStringBehavior(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Include. </summary>
         public static QueryStringBehavior Include { get; } = new QueryStringBehavior(IncludeValue);
-        /// <summary> IncludeAll. </summary>
+
+        /// <summary> Gets the IncludeAll. </summary>
         public static QueryStringBehavior IncludeAll { get; } = new QueryStringBehavior(IncludeAllValue);
-        /// <summary> Exclude. </summary>
+
+        /// <summary> Gets the Exclude. </summary>
         public static QueryStringBehavior Exclude { get; } = new QueryStringBehavior(ExcludeValue);
-        /// <summary> ExcludeAll. </summary>
+
+        /// <summary> Gets the ExcludeAll. </summary>
         public static QueryStringBehavior ExcludeAll { get; } = new QueryStringBehavior(ExcludeAllValue);
+
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryStringBehavior left, QueryStringBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryStringBehavior left, QueryStringBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryStringBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryStringBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryStringBehavior(string value) => new QueryStringBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryStringBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryStringBehavior?(string value) => value == null ? null : new QueryStringBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryStringBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryStringBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

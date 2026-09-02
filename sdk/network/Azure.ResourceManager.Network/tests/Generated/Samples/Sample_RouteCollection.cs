@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 AddressPrefix = "10.0.3.0/24",
                 NextHopType = RouteNextHopType.VirtualNetworkGateway,
             };
-            ArmOperation<RouteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeName, data);
+            ArmOperation<RouteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeName, data, cancellationToken: System.Threading.CancellationToken.None);
             RouteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

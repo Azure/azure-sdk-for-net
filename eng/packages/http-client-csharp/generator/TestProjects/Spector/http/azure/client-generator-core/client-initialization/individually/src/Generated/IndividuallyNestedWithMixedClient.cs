@@ -18,13 +18,13 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithMixedClient() => throw null;
 
-        public IndividuallyNestedWithMixedClient(string name) : this(new Uri("http://localhost:3000"), name, new IndividuallyNestedWithMixedClientOptions()) => throw null;
+        public IndividuallyNestedWithMixedClient(string name) : this(new Uri("http://localhost:3000"), name, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithMixedClient(string name, IndividuallyNestedWithMixedClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+        public IndividuallyNestedWithMixedClient(string name, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
-        internal IndividuallyNestedWithMixedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, IndividuallyNestedWithMixedClientOptions options) => throw null;
+        internal IndividuallyNestedWithMixedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithMixedClient(Uri endpoint, string name, IndividuallyNestedWithMixedClientOptions options) : this(null, endpoint, name, options) => throw null;
+        public IndividuallyNestedWithMixedClient(Uri endpoint, string name, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, name, options) => throw null;
 
         [Experimental("SCME0002")]
         public IndividuallyNestedWithMixedClient(IndividuallyNestedWithMixedClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;

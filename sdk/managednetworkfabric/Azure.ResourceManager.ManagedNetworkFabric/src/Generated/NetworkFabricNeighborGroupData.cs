@@ -13,89 +13,144 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricNeighborGroup data model.
-    /// Defines the Neighbor Group.
-    /// </summary>
+    /// <summary> Defines the Neighbor Group. </summary>
     public partial class NetworkFabricNeighborGroupData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NetworkFabricNeighborGroupData(AzureLocation location) : base(location)
-        {
-            NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
-            NetworkTapRuleIds = new ChangeTrackingList<ResourceIdentifier>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
-        /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NeighborGroupDestination destination, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> networkTapRuleIds, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
+        public NetworkFabricNeighborGroupData(AzureLocation location, NeighborGroupDestination destination) : base(location)
         {
-            Annotation = annotation;
-            Destination = destination;
-            NetworkTapIds = networkTapIds;
-            NetworkTapRuleIds = networkTapRuleIds;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Argument.AssertNotNull(destination, nameof(destination));
+
+            Properties = new NeighborGroupProperties(destination);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/> for deserialization. </summary>
-        internal NetworkFabricNeighborGroupData()
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The NeighborGroup Properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NeighborGroupProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
+            Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The NeighborGroup Properties. </summary>
+        internal NeighborGroupProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
-        public NeighborGroupDestination Destination { get; set; }
+        public NeighborGroupDestination Destination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Destination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupProperties();
+                }
+                Properties.Destination = value;
+            }
+        }
+
         /// <summary> List of NetworkTap IDs where neighbor group is associated. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; }
+        public IReadOnlyList<ResourceIdentifier> NetworkTapIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupProperties();
+                }
+                return Properties.NetworkTapIds;
+            }
+        }
+
         /// <summary> List of Network Tap Rule IDs where neighbor group is associated. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkTapRuleIds { get; }
+        public IReadOnlyList<ResourceIdentifier> NetworkTapRuleIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupProperties();
+                }
+                return Properties.NetworkTapRuleIds;
+            }
+        }
+
+        /// <summary> Associated Network Fabric Resource IDs. </summary>
+        public IReadOnlyList<ResourceIdentifier> NetworkFabricIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupProperties();
+                }
+                return Properties.NetworkFabricIds;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

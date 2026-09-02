@@ -279,36 +279,63 @@ namespace Azure.Identity
             return new AccessToken(accessToken, expiresOn);
         }
 
+        // Extracts a human-readable error from azd's stderr JSON output. Three formats are supported:
+        //   pre-v1.23.7        : {"type":"consoleMessage","data":{"message":"..."}}
+        //   v1.23.7 - v1.23.15 : empty consoleMessage line followed by {"error":"...","message":"...","suggestion":"..."}
+        //   v1.24.0+           : {"error":"...","message":"...","suggestion":"..."}
+        // Prefers the structured "error" field; falls back to the first non-empty consoleMessage data.message;
+        // returns the raw text if neither is found.
         private static string ProcessCliErrorForDisplay(string rawCliError)
         {
-            // Strategy: Try to parse azd JSON format {"type":"...","data":{"message":"..."}}, extract message, fallback to raw
-            // Guard: skip processing if null/empty or doesn't start with brace
-            string trimmedError = rawCliError?.TrimStart();
-            bool skipParsing = string.IsNullOrEmpty(trimmedError) || trimmedError[0] != '{';
-            if (skipParsing)
-                return rawCliError;
-
-            try
+            if (string.IsNullOrWhiteSpace(rawCliError))
             {
-                using JsonDocument jsonDoc = JsonDocument.Parse(rawCliError);
-                JsonElement root = jsonDoc.RootElement;
+                return rawCliError;
+            }
 
-                if (root.TryGetProperty("data", out JsonElement dataObj) &&
-                    dataObj.TryGetProperty("message", out JsonElement msgObj))
+            string parsedMessage = null;
+
+            foreach (string rawLine in rawCliError.Split('\n'))
+            {
+                string line = rawLine.Trim();
+                if (line.Length == 0 || line[0] != '{')
                 {
-                    string msgText = msgObj.GetString();
-                    if (!string.IsNullOrWhiteSpace(msgText))
+                    continue;
+                }
+
+                try
+                {
+                    using JsonDocument jsonDoc = JsonDocument.Parse(line);
+                    JsonElement root = jsonDoc.RootElement;
+
+                    if (root.TryGetProperty("error", out JsonElement errorObj) &&
+                        errorObj.ValueKind == JsonValueKind.String)
                     {
-                        return msgText.Trim();
+                        string errorText = errorObj.GetString();
+                        if (!string.IsNullOrWhiteSpace(errorText))
+                        {
+                            return errorText.Trim();
+                        }
+                    }
+
+                    if (parsedMessage == null &&
+                        root.TryGetProperty("data", out JsonElement dataObj) &&
+                        dataObj.TryGetProperty("message", out JsonElement msgObj) &&
+                        msgObj.ValueKind == JsonValueKind.String)
+                    {
+                        string msgText = msgObj.GetString();
+                        if (!string.IsNullOrWhiteSpace(msgText))
+                        {
+                            parsedMessage = msgText.Trim();
+                        }
                     }
                 }
-            }
-            catch (JsonException)
-            {
-                // Parsing failed, keep original output
+                catch (JsonException)
+                {
+                    // Not valid JSON on this line; continue.
+                }
             }
 
-            return rawCliError;
+            return parsedMessage ?? rawCliError;
         }
     }
 }

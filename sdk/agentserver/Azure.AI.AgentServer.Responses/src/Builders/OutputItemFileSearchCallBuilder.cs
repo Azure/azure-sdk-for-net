@@ -35,7 +35,7 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     {
         var item = new OutputItemFileSearchToolCall(
             id: _itemId,
-            status: OutputItemFileSearchToolCallStatus.InProgress,
+            status: ItemFileSearchToolCallStatus.InProgress,
             queries: Array.Empty<string>());
         return EmitAdded(item);
     }
@@ -78,7 +78,7 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     {
         var item = new OutputItemFileSearchToolCall(
             id: _itemId,
-            status: OutputItemFileSearchToolCallStatus.Completed,
+            status: ItemFileSearchToolCallStatus.Completed,
             queries: Array.Empty<string>());
         return EmitDone(item);
     }

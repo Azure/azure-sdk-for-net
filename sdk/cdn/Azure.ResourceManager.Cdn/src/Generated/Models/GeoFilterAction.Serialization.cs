@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class GeoFilterActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this GeoFilterAction value) => value switch
         {
             GeoFilterAction.Block => "Block",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Cdn.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoFilterAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static GeoFilterAction ToGeoFilterAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Block")) return GeoFilterAction.Block;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return GeoFilterAction.Allow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Block"))
+            {
+                return GeoFilterAction.Block;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow"))
+            {
+                return GeoFilterAction.Allow;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoFilterAction value.");
         }
     }

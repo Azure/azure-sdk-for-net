@@ -65,14 +65,17 @@ public partial class MemberExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is MemberExpression m && Value.Equals(m.Value) && Member == m.Member;
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(MemberExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Member?.GetHashCode() ?? 0);
 
     private static bool IsContextualFunction(string name)
     {
         foreach (string ctx in ContextualFunctions)
         {
-            if (ctx == name) return true;
+            if (ctx == name)
+                return true;
         }
         return false;
     }

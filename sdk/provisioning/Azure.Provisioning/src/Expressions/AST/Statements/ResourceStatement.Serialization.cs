@@ -35,7 +35,8 @@ public partial class ResourceStatement : IJsonModel<BicepStatement>
         writer.WriteString("apiVersion", apiVersion);
         writer.WriteBoolean("existing", Existing);
         writer.WritePropertyName("value");
-        ((IJsonModel<BicepExpression>)Body).Write(writer, ModelReaderWriterOptions.Json);
+        BicepExpression value = Condition is null ? Body : new IfConditionExpression(Condition, Body);
+        ((IJsonModel<BicepExpression>)value).Write(writer, ModelReaderWriterOptions.Json);
         DecoratorsNodeSerializer.WriteDecoratorsNode(writer, Decorators);
         writer.WriteEndObject();
     }
@@ -66,10 +67,12 @@ public partial class ResourceStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) =>
         other is ResourceStatement r && Name == r.Name && Type.Equals(r.Type) && Body.Equals(r.Body) && Existing == r.Existing &&
-        Decorators.SequenceEqual(r.Decorators);
-    public override int GetHashCode() => typeof(ResourceStatement).GetHashCode() ^ (Name?.GetHashCode() ?? 0) ^ (Type?.GetHashCode() ?? 0) ^ (Body?.GetHashCode() ?? 0) ^ Existing.GetHashCode();
+        Equals(Condition, r.Condition) && Decorators.SequenceEqual(r.Decorators);
+    /// <inheritdoc/>
+    public override int GetHashCode() => typeof(ResourceStatement).GetHashCode() ^ (Name?.GetHashCode() ?? 0) ^ (Type?.GetHashCode() ?? 0) ^ (Body?.GetHashCode() ?? 0) ^ Existing.GetHashCode() ^ (Condition?.GetHashCode() ?? 0);
 
     internal static ResourceStatement DeserializeResourceStatement(JsonElement element)
     {

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleAdWordsLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="GoogleAdWordsLinkedService"/>. </summary>
-        public GoogleAdWordsLinkedService()
+        public GoogleAdWordsLinkedService() : base("GoogleAdWords")
         {
-            LinkedServiceType = "GoogleAdWords";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="GoogleAdWordsLinkedService"/>. </summary>
@@ -27,104 +27,218 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> (Deprecated) Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="clientCustomerId"> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </param>
-        /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
-        /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
-        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </param>
-        /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
-        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
-        /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
-        /// <param name="keyFilePath"> (Deprecated) The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
-        /// <param name="trustedCertPath"> (Deprecated) The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
-        /// <param name="useSystemTrustStore"> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="privateKey"> The private key that is used to authenticate the service account email address and can only be used on self-hosted IR. </param>
-        /// <param name="loginCustomerId"> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </param>
-        /// <param name="googleAdsApiVersion"> The Google Ads API major version such as v14. The supported major versions could be found on https://developers.google.com/google-ads/api/docs/release-notes. Type: string (or Expression with resultType string). </param>
-        /// <param name="supportLegacyDataTypes"> Specifies whether to use the legacy data type mappings, which maps float, int32 and int64 from Google to string. Do not set this to true unless you want to keep backward compatibility with legacy driver's data type mappings. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleAdWordsLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> clientCustomerId, DataFactorySecret developerToken, GoogleAdWordsAuthenticationType? authenticationType, DataFactorySecret refreshToken, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactorySecret privateKey, DataFactoryElement<string> loginCustomerId, DataFactoryElement<string> googleAdsApiVersion, DataFactoryElement<bool> supportLegacyDataTypes, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Google AdWords service linked service properties. </param>
+        internal GoogleAdWordsLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, GoogleAdWordsLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionProperties = connectionProperties;
-            ClientCustomerId = clientCustomerId;
-            DeveloperToken = developerToken;
-            AuthenticationType = authenticationType;
-            RefreshToken = refreshToken;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            Email = email;
-            KeyFilePath = keyFilePath;
-            TrustedCertPath = trustedCertPath;
-            UseSystemTrustStore = useSystemTrustStore;
-            PrivateKey = privateKey;
-            LoginCustomerId = loginCustomerId;
-            GoogleAdsApiVersion = googleAdsApiVersion;
-            SupportLegacyDataTypes = supportLegacyDataTypes;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "GoogleAdWords";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary>
-        /// (Deprecated) Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ConnectionProperties { get; set; }
+        /// <summary> Google AdWords service linked service properties. </summary>
+        internal GoogleAdWordsLinkedServiceTypeProperties TypeProperties { get; set; }
+
+        /// <summary> (Deprecated) Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public BinaryData ConnectionProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionProperties = value;
+            }
+        }
+
         /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientCustomerId { get; set; }
-        /// <summary> The developer token associated with the manager account that you use to grant access to the AdWords API. </summary>
-        public DataFactorySecret DeveloperToken { get; set; }
+        public DataFactoryElement<string> ClientCustomerId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientCustomerId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientCustomerId = value;
+            }
+        }
+
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
-        public GoogleAdWordsAuthenticationType? AuthenticationType { get; set; }
-        /// <summary> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </summary>
-        public DataFactorySecret RefreshToken { get; set; }
+        public GoogleAdWordsAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Email { get; set; }
+        public DataFactoryElement<string> Email
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Email;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.Email = value;
+            }
+        }
+
         /// <summary> (Deprecated) The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> KeyFilePath { get; set; }
+        public DataFactoryElement<string> KeyFilePath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.KeyFilePath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.KeyFilePath = value;
+            }
+        }
+
         /// <summary> (Deprecated) The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TrustedCertPath { get; set; }
+        public DataFactoryElement<string> TrustedCertPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TrustedCertPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.TrustedCertPath = value;
+            }
+        }
+
         /// <summary> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
-        /// <summary> The private key that is used to authenticate the service account email address and can only be used on self-hosted IR. </summary>
-        public DataFactorySecret PrivateKey { get; set; }
+        public DataFactoryElement<bool> UseSystemTrustStore
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseSystemTrustStore;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseSystemTrustStore = value;
+            }
+        }
+
         /// <summary> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LoginCustomerId { get; set; }
+        public DataFactoryElement<string> LoginCustomerId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LoginCustomerId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.LoginCustomerId = value;
+            }
+        }
+
         /// <summary> The Google Ads API major version such as v14. The supported major versions could be found on https://developers.google.com/google-ads/api/docs/release-notes. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> GoogleAdsApiVersion { get; set; }
+        public DataFactoryElement<string> GoogleAdsApiVersion
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.GoogleAdsApiVersion;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.GoogleAdsApiVersion = value;
+            }
+        }
+
         /// <summary> Specifies whether to use the legacy data type mappings, which maps float, int32 and int64 from Google to string. Do not set this to true unless you want to keep backward compatibility with legacy driver's data type mappings. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> SupportLegacyDataTypes { get; set; }
+        public DataFactoryElement<bool> SupportLegacyDataTypes
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SupportLegacyDataTypes;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.SupportLegacyDataTypes = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

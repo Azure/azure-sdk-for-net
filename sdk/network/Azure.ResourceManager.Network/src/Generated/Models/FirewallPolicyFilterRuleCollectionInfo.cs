@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,51 +15,48 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FirewallPolicyFilterRuleCollectionInfo : FirewallPolicyRuleCollectionInfo
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyFilterRuleCollectionInfo"/>. </summary>
-        public FirewallPolicyFilterRuleCollectionInfo()
+        public FirewallPolicyFilterRuleCollectionInfo() : base(FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection)
         {
             Rules = new ChangeTrackingList<FirewallPolicyRule>();
-            RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyFilterRuleCollectionInfo"/>. </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="action"> The action type of a Filter rule collection. </param>
-        /// <param name="rules">
-        /// List of rules included in a rule collection.
-        /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
-        /// </param>
-        internal FirewallPolicyFilterRuleCollectionInfo(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData, FirewallPolicyFilterRuleCollectionAction action, IList<FirewallPolicyRule> rules) : base(ruleCollectionType, name, priority, serializedAdditionalRawData)
+        /// <param name="rules"> List of rules included in a rule collection. </param>
+        internal FirewallPolicyFilterRuleCollectionInfo(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, IDictionary<string, BinaryData> additionalBinaryDataProperties, FirewallPolicyFilterRuleCollectionAction action, IList<FirewallPolicyRule> rules) : base(ruleCollectionType, name, priority, additionalBinaryDataProperties)
         {
             Action = action;
             Rules = rules;
-            RuleCollectionType = ruleCollectionType;
         }
 
         /// <summary> The action type of a Filter rule collection. </summary>
+        [WirePath("action")]
         internal FirewallPolicyFilterRuleCollectionAction Action { get; set; }
+
+        /// <summary> List of rules included in a rule collection. </summary>
+        [WirePath("rules")]
+        public IList<FirewallPolicyRule> Rules { get; }
+
         /// <summary> The type of action. </summary>
         [WirePath("action.type")]
         public FirewallPolicyFilterRuleCollectionActionType? ActionType
         {
-            get => Action is null ? default : Action.ActionType;
+            get
+            {
+                return Action is null ? default : Action.Type;
+            }
             set
             {
                 if (Action is null)
+                {
                     Action = new FirewallPolicyFilterRuleCollectionAction();
-                Action.ActionType = value;
+                }
+                Action.Type = value;
             }
         }
-
-        /// <summary>
-        /// List of rules included in a rule collection.
-        /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
-        /// </summary>
-        [WirePath("rules")]
-        public IList<FirewallPolicyRule> Rules { get; }
     }
 }

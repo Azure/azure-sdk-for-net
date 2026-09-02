@@ -12,7 +12,7 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "@azure/functions": "^4.6.1"
+    "@azure/functions": "^4.16.1"
   },
   "devDependencies": {
     "@types/node": "^20.x",

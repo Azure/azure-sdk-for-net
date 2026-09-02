@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct ConsumptionPricingModelType : IEquatable<ConsumptionPricingModelType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConsumptionPricingModelType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConsumptionPricingModelType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OnDemandValue = "On Demand";
         private const string ReservationValue = "Reservation";
         private const string SpotValue = "Spot";
 
-        /// <summary> On Demand. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionPricingModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConsumptionPricingModelType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OnDemand. </summary>
         public static ConsumptionPricingModelType OnDemand { get; } = new ConsumptionPricingModelType(OnDemandValue);
-        /// <summary> Reservation. </summary>
+
+        /// <summary> Gets the Reservation. </summary>
         public static ConsumptionPricingModelType Reservation { get; } = new ConsumptionPricingModelType(ReservationValue);
-        /// <summary> Spot. </summary>
+
+        /// <summary> Gets the Spot. </summary>
         public static ConsumptionPricingModelType Spot { get; } = new ConsumptionPricingModelType(SpotValue);
+
         /// <summary> Determines if two <see cref="ConsumptionPricingModelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConsumptionPricingModelType left, ConsumptionPricingModelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConsumptionPricingModelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConsumptionPricingModelType left, ConsumptionPricingModelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsumptionPricingModelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConsumptionPricingModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConsumptionPricingModelType(string value) => new ConsumptionPricingModelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConsumptionPricingModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConsumptionPricingModelType?(string value) => value == null ? null : new ConsumptionPricingModelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConsumptionPricingModelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConsumptionPricingModelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -97,6 +97,7 @@ public class TextContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
+        text.EmitAdded();
 
         var evt = text.EmitDelta("Hello, ");
 
@@ -109,6 +110,7 @@ public class TextContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
+        text.EmitAdded();
 
         var evt = text.EmitDelta("chunk");
 
@@ -122,6 +124,7 @@ public class TextContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
+        text.EmitAdded();
 
         var d1 = text.EmitDelta("Hello, ");
         var d2 = text.EmitDelta("world!");
@@ -137,7 +140,7 @@ public class TextContentBuilderTests
         var text = msg.AddTextContent();
 
         text.EmitAdded();
-        var evt = text.EmitDone("Hello, world!");
+        var evt = text.EmitTextDone("Hello, world!");
 
         XAssert.IsType<ResponseTextDoneEvent>(evt);
         Assert.That(evt.Text, Is.EqualTo("Hello, world!"));
@@ -152,7 +155,7 @@ public class TextContentBuilderTests
         Assert.That(text.FinalText, Is.Null);
 
         text.EmitAdded();
-        text.EmitDone("Final value");
+        text.EmitTextDone("Final value");
 
         Assert.That(text.FinalText, Is.EqualTo("Final value"));
     }
@@ -164,7 +167,7 @@ public class TextContentBuilderTests
         var text = msg.AddTextContent();
 
         text.EmitAdded();
-        var evt = text.EmitDone("done text");
+        var evt = text.EmitTextDone("done text");
 
         Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
@@ -181,7 +184,7 @@ public class TextContentBuilderTests
 
         var added = text.EmitAdded();       // seq 0
         var delta = text.EmitDelta("Hi");   // seq 1
-        var done = text.EmitDone("Hi");     // seq 2
+        var done = text.EmitTextDone("Hi");     // seq 2
 
         Assert.That(added.SequenceNumber, Is.EqualTo(0));
         Assert.That(delta.SequenceNumber, Is.EqualTo(1));

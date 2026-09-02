@@ -46,7 +46,9 @@ public partial class NullLiteralExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is NullLiteralExpression;
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(NullLiteralExpression).GetHashCode();
 
     internal static NullLiteralExpression DeserializeNullLiteralExpression(JsonElement element)

@@ -54,12 +54,15 @@ public partial class ArrayExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) =>
         other is ArrayExpression a && Values.SequenceEqual(a.Values);
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         int hash = typeof(ArrayExpression).GetHashCode();
-        foreach (var v in Values) hash = hash * 31 + (v?.GetHashCode() ?? 0);
+        foreach (var v in Values)
+            hash = hash * 31 + (v?.GetHashCode() ?? 0);
         return hash;
     }
 

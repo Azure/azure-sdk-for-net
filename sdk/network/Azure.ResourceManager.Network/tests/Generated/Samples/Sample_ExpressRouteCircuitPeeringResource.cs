@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCircuitPeeringResource expressRouteCircuitPeering = client.GetExpressRouteCircuitPeeringResource(expressRouteCircuitPeeringResourceId);
 
             // invoke the operation
-            await expressRouteCircuitPeering.DeleteAsync(WaitUntil.Completed);
+            await expressRouteCircuitPeering.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Samples
                 SecondaryPeerAddressPrefix = "192.168.18.252/30",
                 VlanId = 200,
             };
-            ArmOperation<ExpressRouteCircuitPeeringResource> lro = await expressRouteCircuitPeering.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ExpressRouteCircuitPeeringResource> lro = await expressRouteCircuitPeering.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "devicePath";
-            ArmOperation<ExpressRouteCircuitsArpTableListResult> lro = await expressRouteCircuitPeering.GetArpTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsArpTableListResult> lro = await expressRouteCircuitPeering.GetArpTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsArpTableListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "devicePath";
-            ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCircuitPeering.GetRoutesTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCircuitPeering.GetRoutesTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsRoutesTableListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "devicePath";
-            ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> lro = await expressRouteCircuitPeering.GetRoutesTableSummaryExpressRouteCircuitAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> lro = await expressRouteCircuitPeering.GetRoutesTableSummaryExpressRouteCircuitAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsRoutesTableSummaryListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCircuitPeeringResource expressRouteCircuitPeering = client.GetExpressRouteCircuitPeeringResource(expressRouteCircuitPeeringResourceId);
 
             // invoke the operation
-            ExpressRouteCircuitStats result = await expressRouteCircuitPeering.GetPeeringStatsExpressRouteCircuitAsync();
+            ExpressRouteCircuitStats result = await expressRouteCircuitPeering.GetPeeringStatsExpressRouteCircuitAsync(System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }

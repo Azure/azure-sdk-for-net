@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.Search.Documents.Utilities;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -59,8 +58,14 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public SemanticSearchResults SemanticSearch { get; internal set; }
 
-        /// <summary> Debug information that applies to the search results as a whole. </summary>
-        public DebugInfo DebugInfo { get; internal set; }
+        /// <summary>
+        /// Debug information that applies to the search results as a whole, such as the
+        /// query rewrites the service generated when
+        /// <see cref="SemanticSearchOptions.QueryRewrites"/> and
+        /// <see cref="SearchOptions.Debug"/> are set.
+        /// Only populated when the request enabled debug diagnostics.
+        /// </summary>
+        public DebugInfo DebugInfo { get; internal set; } // search-preview:2026-05-01-preview
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -91,6 +96,18 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         private protected SearchClient _pagingClient;
 
+        /// <summary>
+        /// The query source authorization token to send on subsequent page
+        /// requests.  This is only used when paging with per-user security.
+        /// </summary>
+        private protected string _querySourceAuthorization;
+
+        /// <summary>
+        /// Whether to enable elevated read on subsequent page requests.
+        /// This is only used when paging with per-user security.
+        /// </summary>
+        private protected bool? _enableElevatedRead;
+
         internal SearchResults() { }
 
         /// <summary>
@@ -116,12 +133,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="rawResponse">
         /// The raw response that obtained these results.
         /// </param>
-        internal void ConfigurePaging(SearchClient client, Response rawResponse)
+        /// <param name="querySourceAuthorization">
+        /// Optional query source authorization token.
+        /// </param>
+        /// <param name="enableElevatedRead">
+        /// Optional flag to enable elevated read access.
+        /// </param>
+        internal void ConfigurePaging(
+            SearchClient client,
+            Response rawResponse,
+            string querySourceAuthorization = null,
+            bool? enableElevatedRead = null)
         {
             Debug.Assert(client != null);
             Debug.Assert(rawResponse != null);
             _pagingClient = client;
             RawResponse = rawResponse;
+            _querySourceAuthorization = querySourceAuthorization;
+            _enableElevatedRead = enableElevatedRead;
         }
 
         /// <summary>
@@ -245,91 +274,7 @@ namespace Azure.Search.Documents.Models
                         List<FacetResult> facets = new List<FacetResult>();
                         foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
                         {
-                            Dictionary<string, object> facetValues = new Dictionary<string, object>();
-                            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
-                            long? facetCount = null;
-                            double? facetSum = null;
-                            double? facetAvg = null;
-                            double? facetMin = null;
-                            double? facetMax = null;
-                            long? facetCardinality = null;
-                            foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
-                            {
-                                if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetCount = facetProperty.Value.GetInt64();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.SumKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetSum = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.AvgKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetAvg = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.MinKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetMin = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.MaxKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetMax = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.CardinalityKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetCardinality = facetProperty.Value.GetInt64();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
-                                    foreach (var property0 in facetProperty.Value.EnumerateObject())
-                                    {
-                                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                                        {
-                                            dictionary.Add(property0.Name, null);
-                                        }
-                                        else
-                                        {
-                                            List<FacetResult> array = new List<FacetResult>();
-                                            foreach (var item in property0.Value.EnumerateArray())
-                                            {
-                                                array.Add(FacetResult.DeserializeFacetResult(item, ModelReaderWriterOptions.Json));
-                                            }
-                                            dictionary.Add(property0.Name, array);
-                                        }
-                                    }
-                                    searchFacets = dictionary;
-                                    continue;
-                                }
-                                else
-                                {
-                                    object value = facetProperty.Value.GetSearchObject();
-                                    facetValues[facetProperty.Name] = value;
-                                }
-                            }
-                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues.ToBinaryDataDictionary()));
+                            facets.Add(FacetResult.DeserializeFacetResult(facetValue, ModelReaderWriterOptions.Json));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
@@ -363,16 +308,13 @@ namespace Azure.Search.Documents.Models
                     }
                     results.SemanticSearch.Answers = answerResults;
                 }
-                if (prop.NameEquals(Constants.SearchSemanticQueryRewritesResultTypeKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    results.SemanticSearch.SemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
-                }
-                if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
+                // search-preview:2026-05-01-preview {
+                else if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
                     results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, ModelReaderWriterOptions.Json);
                 }
+                // search-preview:2026-05-01-preview }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
@@ -404,9 +346,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Type of partial response that was returned for a semantic search request. </summary>
         public SemanticSearchResultsType? ResultsType { get; internal set; }
-
-        /// <summary> Type of query rewrite that was used to retrieve documents. </summary>
-        public SemanticQueryRewritesResultType? SemanticQueryRewritesResultType { get; internal set; }
     }
 
     /// <summary>
@@ -462,9 +401,10 @@ namespace Azure.Search.Documents.Models
         public SemanticSearchResults SemanticSearch => _results.SemanticSearch;
 
         /// <summary>
-        /// Debug information that applies to the search results as a whole.
+        /// Debug information that applies to the search results as a whole, when the request
+        /// enabled debug diagnostics. See <see cref="SearchResults{T}.DebugInfo"/>.
         /// </summary>
-        public DebugInfo DebugInfo => _results.DebugInfo;
+        public DebugInfo DebugInfo => _results.DebugInfo; // search-preview:2026-05-01-preview
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>
@@ -615,41 +555,6 @@ namespace Azure.Search.Documents.Models
             return results;
         }
 
-        /// <summary> Initializes a new instance of SearchResults. </summary>
-        /// <typeparam name="T">
-        /// The .NET type that maps to the index schema. Instances of this type can
-        /// be retrieved as documents from the index.
-        /// </typeparam>
-        /// <param name="values">The search result values.</param>
-        /// <param name="totalCount">The total count of results found by the search operation.</param>
-        /// <param name="facets">The facet query results for the search operation.</param>
-        /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
-        /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
-        /// <param name="semanticSearch">The semantic search result.</param>
-        /// <param name="debugInfo"> Debug information that applies to the search results as a whole. </param>
-        /// <returns>A new SearchResults instance for mocking.</returns>
-        public static SearchResults<T> SearchResults<T>(
-            IEnumerable<SearchResult<T>> values,
-            long? totalCount,
-            IDictionary<string, IList<FacetResult>> facets,
-            double? coverage,
-            Response rawResponse,
-            SemanticSearchResults semanticSearch,
-            DebugInfo debugInfo)
-        {
-            var results = new SearchResultsWithReflection<T>()
-            {
-                TotalCount = totalCount,
-                Coverage = coverage,
-                Facets = facets,
-                RawResponse = rawResponse,
-                SemanticSearch = semanticSearch,
-                DebugInfo = debugInfo
-            };
-            results.Values.AddRange(values);
-            return results;
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SemanticSearchResults"/>. </summary>
         /// <param name="answers"> The answers query results for the search operation. </param>
         /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
@@ -665,25 +570,6 @@ namespace Azure.Search.Documents.Models
                 Answers = answers,
                 ErrorReason = errorReason,
                 ResultsType = resultsType
-            };
-
-        /// <summary> Initializes a new instance of <see cref="Models.SemanticSearchResults"/>. </summary>
-        /// <param name="answers"> The answers query results for the search operation. </param>
-        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
-        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
-        /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
-        /// <returns> A new <see cref="Models.SemanticSearchResults"/> instance for mocking. </returns>
-        public static SemanticSearchResults SemanticSearchResults(
-            IReadOnlyList<QueryAnswerResult> answers,
-            SemanticErrorReason? errorReason,
-            SemanticSearchResultsType? resultsType,
-            SemanticQueryRewritesResultType? semanticQueryRewritesResultType) =>
-            new SemanticSearchResults()
-            {
-                Answers = answers,
-                ErrorReason = errorReason,
-                ResultsType = resultsType,
-                SemanticQueryRewritesResultType = semanticQueryRewritesResultType
             };
 
         /// <summary> Initializes a new instance of SearchResultsPage. </summary>

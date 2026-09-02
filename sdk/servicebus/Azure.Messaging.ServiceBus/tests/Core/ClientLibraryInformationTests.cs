@@ -93,12 +93,13 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             Dictionary<string, string> expectedNames = typeof(ClientLibraryInformation)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(static property => property.Name != nameof(ClientLibraryInformation.SerializedProperties))
                 .ToDictionary(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant(), property => property.Name);
+
+            Assert.That(ClientLibraryInformation.Current.SerializedProperties.Select(property => property.Key), Is.EquivalentTo(expectedNames.Keys));
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
-                Assert.That(expectedNames.ContainsKey(property.Key), Is.True, $"The property, {property.Key}, was not expected.");
-
                 PropertyInfo matchingProperty = typeof(ClientLibraryInformation)
                     .GetProperty(expectedNames[property.Key], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
@@ -115,17 +116,13 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void SerializedPropertiesUseDescriptionsWhenPresent()
         {
-            ClientLibraryInformation instance = ClientLibraryInformation.Current;
-
             HashSet<string> expectedNames = new HashSet<string>(
                 typeof(ClientLibraryInformation)
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                    .Where(static property => property.Name != nameof(ClientLibraryInformation.SerializedProperties))
                     .Select(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant()));
 
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
-            {
-                Assert.That(expectedNames.Contains(property.Key), Is.True, $"The property, {property.Key}, was not found.");
-            }
+            Assert.That(ClientLibraryInformation.Current.SerializedProperties.Select(property => property.Key), Is.EquivalentTo(expectedNames));
         }
 
         /// <summary>

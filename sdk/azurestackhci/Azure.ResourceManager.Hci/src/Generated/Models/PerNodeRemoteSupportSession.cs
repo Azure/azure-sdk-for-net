@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Remote Support Node Session Details on the Node. </summary>
     public partial class PerNodeRemoteSupportSession
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PerNodeRemoteSupportSession"/>. </summary>
         internal PerNodeRemoteSupportSession()
@@ -56,31 +28,41 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nodeName"> Name of the node. </param>
         /// <param name="duration"> Duration of Remote Support Enablement. </param>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionStartOn = sessionStartOn;
             SessionEndOn = sessionEndOn;
             NodeName = nodeName;
             Duration = duration;
             AccessLevel = accessLevel;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TranscriptLocation = transcriptLocation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Remote Support Session StartTime on the Node. </summary>
         [WirePath("sessionStartTime")]
         public DateTimeOffset? SessionStartOn { get; }
+
         /// <summary> Remote Support Session EndTime on the Node. </summary>
         [WirePath("sessionEndTime")]
         public DateTimeOffset? SessionEndOn { get; }
+
         /// <summary> Name of the node. </summary>
         [WirePath("nodeName")]
         public string NodeName { get; }
+
         /// <summary> Duration of Remote Support Enablement. </summary>
         [WirePath("duration")]
         public long? Duration { get; }
+
         /// <summary> Remote Support Access Level. </summary>
         [WirePath("accessLevel")]
         public HciClusterAccessLevel? AccessLevel { get; }
+
+        /// <summary> The location where the session transcript is stored. </summary>
+        [WirePath("transcriptLocation")]
+        public string TranscriptLocation { get; }
     }
 }

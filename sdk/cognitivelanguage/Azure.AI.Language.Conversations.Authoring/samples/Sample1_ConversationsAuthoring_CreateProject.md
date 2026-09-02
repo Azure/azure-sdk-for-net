@@ -23,6 +23,8 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To create a new project synchronously, call CreateProject on the `ConversationAuthoringProject` clientlet, which returns a Response object containing the status of the creation request.
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProject
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
@@ -35,7 +37,7 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
 };
 
 using RequestContent content = RequestContent.Create(projectData);
-Response response = client.CreateProject(projectName, content);
+Response response = projectClient.CreateProject(projectName, content);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```
@@ -45,6 +47,8 @@ Console.WriteLine($"Project created with status: {response.Status}");
 To create a new project, call `CreateProjectAsync` on the `ConversationAuthoringProject` client, which returns a `Response` object containing the status of the creation request.
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
@@ -57,7 +61,7 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
 };
 
 using RequestContent content = RequestContent.Create(projectData);
-Response response = await client.CreateProjectAsync(projectName, content);
+Response response = await projectClient.CreateProjectAsync(projectName, content);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```

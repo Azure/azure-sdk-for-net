@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppAvsDataStore : IEquatable<NetAppAvsDataStore>
     {
         private readonly string _value;
+        /// <summary> avsDataStore is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> avsDataStore is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NetAppAvsDataStore"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppAvsDataStore(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> avsDataStore is enabled. </summary>
         public static NetAppAvsDataStore Enabled { get; } = new NetAppAvsDataStore(EnabledValue);
+
         /// <summary> avsDataStore is disabled. </summary>
         public static NetAppAvsDataStore Disabled { get; } = new NetAppAvsDataStore(DisabledValue);
+
         /// <summary> Determines if two <see cref="NetAppAvsDataStore"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppAvsDataStore left, NetAppAvsDataStore right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppAvsDataStore"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppAvsDataStore left, NetAppAvsDataStore right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppAvsDataStore"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppAvsDataStore"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppAvsDataStore(string value) => new NetAppAvsDataStore(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppAvsDataStore"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppAvsDataStore?(string value) => value == null ? null : new NetAppAvsDataStore(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppAvsDataStore other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppAvsDataStore other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

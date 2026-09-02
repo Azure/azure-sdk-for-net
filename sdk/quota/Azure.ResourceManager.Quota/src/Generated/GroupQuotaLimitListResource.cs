@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string groupQuotaLimitListApiVersion);
             _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
+            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotaLimitListData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaLimitListResource> operation = new QuotaArmOperation<GroupQuotaLimitListResource>(
-                    new GroupQuotaLimitListOperationSource(Client),
+                    new GroupQuotaLimitListResourceOperationSource(Client),
                     _groupQuotaLimitListsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotaLimitListData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaLimitListResource> operation = new QuotaArmOperation<GroupQuotaLimitListResource>(
-                    new GroupQuotaLimitListOperationSource(Client),
+                    new GroupQuotaLimitListResourceOperationSource(Client),
                     _groupQuotaLimitListsClientDiagnostics,
                     Pipeline,
                     message.Request,

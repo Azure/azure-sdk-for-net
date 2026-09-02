@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(HcxEnterpriseSiteResource.ResourceType, out string hcxEnterpriseSiteApiVersion);
             _hcxEnterpriseSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", HcxEnterpriseSiteResource.ResourceType.Namespace, Diagnostics);
-            _hcxEnterpriseSitesRestClient = new HcxEnterpriseSites(_hcxEnterpriseSitesClientDiagnostics, Pipeline, Endpoint, hcxEnterpriseSiteApiVersion ?? "2025-09-01");
+            _hcxEnterpriseSitesRestClient = new HcxEnterpriseSites(_hcxEnterpriseSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcxEnterpriseSiteApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

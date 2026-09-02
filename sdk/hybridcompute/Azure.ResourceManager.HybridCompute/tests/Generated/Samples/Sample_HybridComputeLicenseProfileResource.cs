@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
@@ -132,7 +132,7 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, "default");
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation

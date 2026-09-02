@@ -21,9 +21,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To load a snapshot for a specific trained model, call LoadSnapshot on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
 
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-Operation operation = client.LoadSnapshot(WaitUntil.Completed, projectName, trainedModelLabel);
+Operation operation = trainedModelClient.LoadSnapshot(WaitUntil.Completed, projectName, trainedModelLabel);
 
 // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -37,9 +39,11 @@ Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResp
 To load a snapshot for a specific trained model, call LoadSnapshotAsync on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
 
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, projectName, trainedModelLabel);
+Operation operation = await trainedModelClient.LoadSnapshotAsync(WaitUntil.Completed, projectName, trainedModelLabel);
 
 // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;

@@ -186,30 +186,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("currentOrchestratorVersion"u8);
                 writer.WriteStringValue(CurrentOrchestratorVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
+            if (Optional.IsDefined(NodeImageVersion))
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
-            }
-            if (Optional.IsDefined(UpgradeStrategy))
-            {
-                writer.WritePropertyName("upgradeStrategy"u8);
-                writer.WriteStringValue(UpgradeStrategy.Value.ToString());
-            }
-            if (Optional.IsDefined(IsOSDiskFullCachingEnabled))
-            {
-                writer.WritePropertyName("enableOSDiskFullCaching"u8);
-                writer.WriteBooleanValue(IsOSDiskFullCachingEnabled.Value);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings, options);
-            }
-            if (Optional.IsDefined(UpgradeSettingsBlueGreen))
-            {
-                writer.WritePropertyName("upgradeSettingsBlueGreen"u8);
-                writer.WriteObjectValue(UpgradeSettingsBlueGreen, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -298,21 +283,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
                 foreach (string item in NodeTaints)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(NodeInitializationTaints))
-            {
-                writer.WritePropertyName("nodeInitializationTaints"u8);
-                writer.WriteStartArray();
-                foreach (string item in NodeInitializationTaints)
                 {
                     if (item == null)
                     {
@@ -428,11 +398,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("localDNSProfile"u8);
                 writer.WriteObjectValue(LocalDnsProfile, options);
             }
-            if (Optional.IsDefined(NodeCustomizationProfile))
-            {
-                writer.WritePropertyName("nodeCustomizationProfile"u8);
-                writer.WriteObjectValue(NodeCustomizationProfile, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -498,10 +463,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string orchestratorVersion = default;
             string currentOrchestratorVersion = default;
             string nodeImageVersion = default;
-            AgentPoolUpgradeStrategy? upgradeStrategy = default;
-            bool? isOSDiskFullCachingEnabled = default;
             AgentPoolUpgradeSettings upgradeSettings = default;
-            AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen = default;
             string provisioningState = default;
             ContainerServicePowerState powerState = default;
             IList<string> availabilityZones = default;
@@ -513,7 +475,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             IDictionary<string, string> tags = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
-            IList<string> nodeInitializationTaints = default;
             ResourceIdentifier proximityPlacementGroupId = default;
             KubeletConfig kubeletConfig = default;
             LinuxOSConfig linuxOSConfig = default;
@@ -534,7 +495,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default;
             AgentPoolStatus status = default;
             LocalDnsProfile localDnsProfile = default;
-            NodeCustomizationProfile nodeCustomizationProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -725,24 +685,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     nodeImageVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("upgradeStrategy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    upgradeStrategy = new AgentPoolUpgradeStrategy(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("enableOSDiskFullCaching"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isOSDiskFullCachingEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("upgradeSettings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -750,15 +692,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("upgradeSettingsBlueGreen"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    upgradeSettingsBlueGreen = AgentPoolBlueGreenUpgradeSettings.DeserializeAgentPoolBlueGreenUpgradeSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -902,27 +835,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         }
                     }
                     nodeTaints = array;
-                    continue;
-                }
-                if (prop.NameEquals("nodeInitializationTaints"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    nodeInitializationTaints = array;
                     continue;
                 }
                 if (prop.NameEquals("proximityPlacementGroupID"u8))
@@ -1110,15 +1022,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("nodeCustomizationProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeCustomizationProfile = NodeCustomizationProfile.DeserializeNodeCustomizationProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -1148,10 +1051,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 orchestratorVersion,
                 currentOrchestratorVersion,
                 nodeImageVersion,
-                upgradeStrategy,
-                isOSDiskFullCachingEnabled,
                 upgradeSettings,
-                upgradeSettingsBlueGreen,
                 provisioningState,
                 powerState,
                 availabilityZones ?? new ChangeTrackingList<string>(),
@@ -1163,7 +1063,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                 nodeTaints ?? new ChangeTrackingList<string>(),
-                nodeInitializationTaints ?? new ChangeTrackingList<string>(),
                 proximityPlacementGroupId,
                 kubeletConfig,
                 linuxOSConfig,
@@ -1184,7 +1083,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachineNodesStatus ?? new ChangeTrackingList<AgentPoolVirtualMachineNodes>(),
                 status,
                 localDnsProfile,
-                nodeCustomizationProfile,
                 additionalBinaryDataProperties);
         }
     }

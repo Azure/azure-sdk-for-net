@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     yield break;
                 }
                 MySqlFlexibleServerListResult result = MySqlFlexibleServerListResult.FromResponse(response);
-                yield return Page<MySqlFlexibleServerData>.FromValues((IReadOnlyList<MySqlFlexibleServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MySqlFlexibleServerData>.FromValues((IReadOnlyList<MySqlFlexibleServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

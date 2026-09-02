@@ -73,10 +73,10 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableCrossZoneUpgrade))
+            if (Optional.IsDefined(IsCrossZoneUpgradeEnabled))
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
-                writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
+                writer.WriteBooleanValue(IsCrossZoneUpgradeEnabled.Value);
             }
             if (Optional.IsDefined(MaxBatchInstancePercent))
             {
@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            bool? enableCrossZoneUpgrade = default;
+            bool? isCrossZoneUpgradeEnabled = default;
             int? maxBatchInstancePercent = default;
             int? maxUnhealthyInstancePercent = default;
             int? maxUnhealthyUpgradedInstancePercent = default;
@@ -166,7 +166,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    enableCrossZoneUpgrade = prop.Value.GetBoolean();
+                    isCrossZoneUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("maxBatchInstancePercent"u8))
@@ -229,7 +229,7 @@ namespace Azure.Compute.Batch
                 }
             }
             return new RollingUpgradePolicy(
-                enableCrossZoneUpgrade,
+                isCrossZoneUpgradeEnabled,
                 maxBatchInstancePercent,
                 maxUnhealthyInstancePercent,
                 maxUnhealthyUpgradedInstancePercent,

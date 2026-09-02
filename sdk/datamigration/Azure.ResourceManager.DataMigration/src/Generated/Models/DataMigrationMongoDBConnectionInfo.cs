@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -16,19 +17,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBConnectionInfo"/>. </summary>
         /// <param name="connectionString"> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public DataMigrationMongoDBConnectionInfo(string connectionString)
+        public DataMigrationMongoDBConnectionInfo(string connectionString) : base("MongoDbConnectionInfo")
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             ConnectionString = connectionString;
-            ConnectionInfoType = "MongoDbConnectionInfo";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBConnectionInfo"/>. </summary>
-        /// <param name="connectionInfoType"> Type of connection info. </param>
+        /// <param name="type"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionString"> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </param>
         /// <param name="dataSource"> Data source. </param>
         /// <param name="shouldEncryptConnection"> Whether to encrypt the connection. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="port"> port for server. </param>
         /// <param name="additionalSettings"> Additional connection settings. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
-        internal DataMigrationMongoDBConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionString, string dataSource, bool? shouldEncryptConnection, string serverBrandVersion, string serverVersion, string serverName, bool? shouldTrustServerCertificate, bool? doesEnforceSsl, int? port, string additionalSettings, DataMigrationAuthenticationType? authentication) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
+        internal DataMigrationMongoDBConnectionInfo(string @type, string userName, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionString, string dataSource, bool? shouldEncryptConnection, string serverBrandVersion, string serverVersion, string serverName, bool? shouldTrustServerCertificate, bool? doesEnforceSsl, int? port, string additionalSettings, DataMigrationAuthenticationType? authentication) : base(@type, userName, password, additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             DataSource = dataSource;
@@ -53,34 +53,38 @@ namespace Azure.ResourceManager.DataMigration.Models
             Port = port;
             AdditionalSettings = additionalSettings;
             Authentication = authentication;
-            ConnectionInfoType = connectionInfoType ?? "MongoDbConnectionInfo";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBConnectionInfo"/> for deserialization. </summary>
-        internal DataMigrationMongoDBConnectionInfo()
-        {
         }
 
         /// <summary> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </summary>
         public string ConnectionString { get; set; }
+
         /// <summary> Data source. </summary>
         public string DataSource { get; set; }
+
         /// <summary> Whether to encrypt the connection. </summary>
         public bool? ShouldEncryptConnection { get; set; }
+
         /// <summary> server brand version. </summary>
         public string ServerBrandVersion { get; set; }
+
         /// <summary> server version. </summary>
         public string ServerVersion { get; set; }
+
         /// <summary> name of the server. </summary>
         public string ServerName { get; set; }
+
         /// <summary> Whether to trust the server certificate. </summary>
         public bool? ShouldTrustServerCertificate { get; set; }
-        /// <summary> Gets or sets the does enforce ssl. </summary>
+
+        /// <summary> Gets or sets the DoesEnforceSsl. </summary>
         public bool? DoesEnforceSsl { get; set; }
+
         /// <summary> port for server. </summary>
         public int? Port { get; set; }
+
         /// <summary> Additional connection settings. </summary>
         public string AdditionalSettings { get; set; }
+
         /// <summary> Authentication type to use for connection. </summary>
         public DataMigrationAuthenticationType? Authentication { get; set; }
     }

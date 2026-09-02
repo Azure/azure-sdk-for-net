@@ -24,6 +24,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatus
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string sampleProjectName = "{projectName}";
             // Define assigned resource ID to be unassigned
             var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
@@ -35,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start the unassign operation
-            Operation sampleUnassignOperation = client.UnassignProjectResources(
+            Operation sampleUnassignOperation = projectClient.UnassignProjectResources(
                 WaitUntil.Started,
                 sampleProjectName,
                 sampleUnassignIds
@@ -52,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             // Call the API to get unassign job status
             Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse =
-                client.GetUnassignProjectResourcesStatus(sampleProjectName, sampleJobId);
+                projectClient.GetUnassignProjectResourcesStatus(sampleProjectName, sampleJobId);
 
             Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
 
@@ -76,6 +78,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatusAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string sampleProjectName = "{projectName}";
             // Define assigned resource ID to be unassigned
             var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
@@ -87,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start the unassign operation
-            Operation sampleUnassignOperation = await client.UnassignProjectResourcesAsync(
+            Operation sampleUnassignOperation = await projectClient.UnassignProjectResourcesAsync(
                 WaitUntil.Started,
                 sampleProjectName,
                 sampleUnassignIds
@@ -104,7 +108,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             // Call the API to get unassign job status
             Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse =
-                await client.GetUnassignProjectResourcesStatusAsync(sampleProjectName, sampleJobId);
+                await projectClient.GetUnassignProjectResourcesStatusAsync(sampleProjectName, sampleJobId);
 
             Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
 

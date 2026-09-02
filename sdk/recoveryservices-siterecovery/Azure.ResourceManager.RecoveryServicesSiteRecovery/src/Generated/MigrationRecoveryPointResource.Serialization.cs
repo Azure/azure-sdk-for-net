@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class MigrationRecoveryPointResource : IJsonModel<MigrationRecoveryPointData>
     {
-        private static MigrationRecoveryPointData s_dataDeserializationInstance;
-        private static MigrationRecoveryPointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MigrationRecoveryPointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MigrationRecoveryPointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MigrationRecoveryPointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrationRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationRecoveryPointData>)Data).Write(writer, options);
 
-        MigrationRecoveryPointData IJsonModel<MigrationRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationRecoveryPointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrationRecoveryPointData IJsonModel<MigrationRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MigrationRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationRecoveryPointData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MigrationRecoveryPointData IPersistableModel<MigrationRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationRecoveryPointData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<MigrationRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationRecoveryPointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrationRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable, IJsonModel<AnalysisDetectorEvidences>
+    /// <summary> Class Representing Detector Evidence used for analysis. </summary>
+    public partial class AnalysisDetectorEvidences : IJsonModel<AnalysisDetectorEvidences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDetectorEvidences>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AnalysisDetectorEvidences PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAnalysisDetectorEvidences(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalysisDetectorEvidences>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalysisDetectorEvidences IPersistableModel<AnalysisDetectorEvidences>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalysisDetectorEvidences>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalysisDetectorEvidences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
@@ -50,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
-                foreach (var item in Metrics)
+                foreach (DiagnosticMetricSet item in Metrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -60,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
-                foreach (var item in Data)
+                foreach (IList<AppServiceNameValuePair> item in Data)
                 {
                     if (item == null)
                     {
@@ -68,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item)
+                    foreach (AppServiceNameValuePair item0 in item)
                     {
                         writer.WriteObjectValue(item0, options);
                     }
@@ -81,15 +119,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("detectorMetaData"u8);
                 writer.WriteObjectValue(DetectorMetaData, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,22 +136,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        AnalysisDetectorEvidences IJsonModel<AnalysisDetectorEvidences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalysisDetectorEvidences IJsonModel<AnalysisDetectorEvidences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AnalysisDetectorEvidences JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAnalysisDetectorEvidences(document.RootElement, options);
         }
 
-        internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,46 +166,45 @@ namespace Azure.ResourceManager.AppService.Models
             IList<DiagnosticMetricSet> metrics = default;
             IList<IList<AppServiceNameValuePair>> data = default;
             DetectorMetadata detectorMetaData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    source = property.Value.GetString();
+                    source = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectorDefinition"u8))
+                if (prop.NameEquals("detectorDefinition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value, options);
+                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("metrics"u8))
+                if (prop.NameEquals("metrics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item, options));
                     }
                     metrics = array;
                     continue;
                 }
-                if (property.NameEquals("data"u8))
+                if (prop.NameEquals("data"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -181,188 +223,27 @@ namespace Azure.ResourceManager.AppService.Models
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("detectorMetaData"u8))
+                if (prop.NameEquals("detectorMetaData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value, options);
+                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AnalysisDetectorEvidences(
                 source,
                 detectorDefinition,
                 metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
                 data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
                 detectorMetaData,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("  source: ");
-                    if (Source.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Source}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Source}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorDefinition), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  detectorDefinition: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DetectorDefinition))
-                {
-                    builder.Append("  detectorDefinition: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DetectorDefinition, options, 2, false, "  detectorDefinition: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  metrics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Metrics))
-                {
-                    if (Metrics.Any())
-                    {
-                        builder.Append("  metrics: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Metrics)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metrics: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  data: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Data))
-                {
-                    if (Data.Any())
-                    {
-                        builder.Append("  data: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Data)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine("[");
-                            foreach (var item0 in item)
-                            {
-                                BicepSerializationHelpers.AppendChildObject(builder, item0, options, 4, true, "  data: ");
-                            }
-                            builder.AppendLine("  ]");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DataSource", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  detectorMetaData: ");
-                builder.AppendLine("{");
-                builder.Append("    dataSource: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(DetectorMetaData))
-                {
-                    builder.Append("  detectorMetaData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DetectorMetaData, options, 2, false, "  detectorMetaData: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AnalysisDetectorEvidences>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AnalysisDetectorEvidences IPersistableModel<AnalysisDetectorEvidences>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAnalysisDetectorEvidences(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AnalysisDetectorEvidences>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

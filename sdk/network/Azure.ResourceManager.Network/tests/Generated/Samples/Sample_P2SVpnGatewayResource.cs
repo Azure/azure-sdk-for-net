@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             P2SVpnGatewayResource p2sVpnGateway = client.GetP2SVpnGatewayResource(p2sVpnGatewayResourceId);
 
             // invoke the operation
-            await p2sVpnGateway.DeleteAsync(WaitUntil.Completed);
+            await p2sVpnGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.UpdateAsync(WaitUntil.Completed, p2sVpnGatewayParameters);
+            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.UpdateAsync(WaitUntil.Completed, p2sVpnGatewayParameters, cancellationToken: System.Threading.CancellationToken.None);
             P2SVpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
             P2SVpnGatewayResource p2sVpnGateway = client.GetP2SVpnGatewayResource(p2sVpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.ResetAsync(WaitUntil.Completed);
+            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.ResetAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             P2SVpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 AuthenticationMethod = NetworkAuthenticationMethod.Eaptls,
             };
-            ArmOperation<VpnProfileResponse> lro = await p2sVpnGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content);
+            ArmOperation<VpnProfileResponse> lro = await p2sVpnGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             VpnProfileResponse result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
             P2SVpnGatewayResource p2sVpnGateway = client.GetP2SVpnGatewayResource(p2sVpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.GetP2SVpnConnectionHealthAsync(WaitUntil.Completed);
+            ArmOperation<P2SVpnGatewayResource> lro = await p2sVpnGateway.GetP2SVpnConnectionHealthAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             P2SVpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network.Samples
                 VpnUserNamesFilter = { "vpnUser1", "vpnUser2" },
                 OutputBlobSasUri = new Uri("https://blobcortextesturl.blob.core.windows.net/folderforconfig/p2sconnectionhealths?sp=rw&se=2018-01-10T03%3A42%3A04Z&sv=2017-04-17&sig=WvXrT5bDmDFfgHs%2Brz%2BjAu123eRCNE9BO0eQYcPDT7pY%3D&sr=b"),
             };
-            ArmOperation<P2SVpnConnectionHealth> lro = await p2sVpnGateway.GetP2SVpnConnectionHealthDetailedAsync(WaitUntil.Completed, content);
+            ArmOperation<P2SVpnConnectionHealth> lro = await p2sVpnGateway.GetP2SVpnConnectionHealthDetailedAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             P2SVpnConnectionHealth result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
             };
-            await p2sVpnGateway.DisconnectP2SVpnConnectionsAsync(WaitUntil.Completed, request);
+            await p2sVpnGateway.DisconnectP2SVpnConnectionsAsync(WaitUntil.Completed, request, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

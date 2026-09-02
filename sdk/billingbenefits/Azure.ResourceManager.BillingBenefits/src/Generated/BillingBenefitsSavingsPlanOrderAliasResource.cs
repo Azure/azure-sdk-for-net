@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string billingBenefitsSavingsPlanOrderAliasApiVersion);
             _savingsPlanOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _savingsPlanOrderAliasRestClient = new SavingsPlanOrderAlias(_savingsPlanOrderAliasClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanOrderAliasApiVersion ?? "2025-12-01-preview");
+            _savingsPlanOrderAliasRestClient = new SavingsPlanOrderAlias(_savingsPlanOrderAliasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsSavingsPlanOrderAliasApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
-                    new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client),
+                    new BillingBenefitsSavingsPlanOrderAliasResourceOperationSource(Client),
                     _savingsPlanOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
-                    new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client),
+                    new BillingBenefitsSavingsPlanOrderAliasResourceOperationSource(Client),
                     _savingsPlanOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,

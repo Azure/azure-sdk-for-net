@@ -11,7 +11,10 @@ using Azure;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Standard Azure Resource Manager operation status response. </summary>
+    /// <summary>
+    /// Standard Azure Resource Manager operation status response, used as the response
+    /// body for `GetResourceOperationStatus`.
+    /// </summary>
     internal partial class ArmOperationStatusResourceProvisioningState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ArmOperationStatusResourceProvisioningState"/>. </summary>
         /// <param name="status"> The operation status. </param>
         /// <param name="id"> The unique identifier for the operationStatus resource. </param>
-        /// <param name="name"> The name of the  operationStatus resource. </param>
+        /// <param name="name"> The name of the operationStatus resource. </param>
         /// <param name="startOn"> Operation start time. </param>
         /// <param name="endOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> The unique identifier for the operationStatus resource. </summary>
         public string Id { get; }
 
-        /// <summary> The name of the  operationStatus resource. </summary>
+        /// <summary> The name of the operationStatus resource. </summary>
         public string Name { get; }
 
         /// <summary> Operation start time. </summary>

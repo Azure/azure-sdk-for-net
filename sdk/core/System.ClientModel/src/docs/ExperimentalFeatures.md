@@ -116,3 +116,114 @@ Or in your project file:
   <NoWarn>$(NoWarn);SCME0003</NoWarn>
 </PropertyGroup>
 ```
+
+## SCME0004 - FileBinaryContent and MultiPartFormContent Experimental APIs
+
+### Description
+
+The `FileBinaryContent` and `MultiPartFormContent` types are experimental features for representing a file part within an HTTP request payload and for assembling a `multipart/form-data` payload, respectively. These APIs are subject to change or removal in future updates as we gather feedback and refine the implementation.
+
+### Affected APIs
+
+- `System.ClientModel.FileBinaryContent`
+- `System.ClientModel.MultiPartFormContent`
+
+### Example Usage
+
+```csharp
+#pragma warning disable SCME0004
+FileBinaryContent fileContent = new FileBinaryContent("path/to/myDog.jpg");
+string caption = "My dog";
+
+using MultiPartFormContent content = new MultiPartFormContent();
+content.Add("photo", fileContent);
+content.Add("caption", caption);
+
+// Pass `content` to a service method that accepts a BinaryContent and
+// expects a `multipart/form-data` request.
+#pragma warning restore SCME0004
+```
+
+### Suppression
+
+If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
+
+```csharp
+#pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);SCME0004</NoWarn>
+</PropertyGroup>
+```
+
+## SCME0005 - AsyncStreamingClientResult Experimental APIs
+
+### Description
+
+The `AsyncStreamingClientResult` and `AsyncStreamingClientResult<T>` types are experimental features for reading asynchronous streaming service responses, including custom producers, server-sent events, and newline-delimited JSON. These APIs are subject to change or removal in future updates as we gather feedback and refine the implementation.
+
+### Affected APIs
+
+- `System.ClientModel.AsyncStreamingClientResult`
+- `System.ClientModel.AsyncStreamingClientResult<T>`
+
+### Example Usage
+
+```csharp
+#pragma warning disable SCME0005
+// `response` is an established PipelineResponse with a content stream.
+await using AsyncStreamingClientResult<BinaryData> result =
+    AsyncStreamingClientResult.CreateJsonLines(response);
+
+await foreach (BinaryData item in result)
+{
+    // Process each streamed value.
+}
+#pragma warning restore SCME0005
+```
+
+### Suppression
+
+If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
+
+```csharp
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);SCME0005</NoWarn>
+</PropertyGroup>
+```
+
+## SCME0006 - Long-Running Operation Methods
+
+### Description
+
+System.ClientModel long-running operation methods are experimental while the API shape for starting, polling, and rehydrating operations is finalized.
+
+### Affected APIs
+
+- Generated client methods that return `System.ClientModel.Primitives.OperationResult`
+
+### Suppression
+
+If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
+
+```csharp
+#pragma warning disable SCME0006 // API is for evaluation purposes only and is subject to change or removal in future updates.
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);SCME0006</NoWarn>
+</PropertyGroup>
+```

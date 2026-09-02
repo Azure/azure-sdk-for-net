@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct CostManagementAlertSource : IEquatable<CostManagementAlertSource>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CostManagementAlertSource"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CostManagementAlertSource(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PresetValue = "Preset";
         private const string UserValue = "User";
 
-        /// <summary> Preset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CostManagementAlertSource(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Preset. </summary>
         public static CostManagementAlertSource Preset { get; } = new CostManagementAlertSource(PresetValue);
-        /// <summary> User. </summary>
+
+        /// <summary> Gets the User. </summary>
         public static CostManagementAlertSource User { get; } = new CostManagementAlertSource(UserValue);
+
         /// <summary> Determines if two <see cref="CostManagementAlertSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CostManagementAlertSource left, CostManagementAlertSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CostManagementAlertSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CostManagementAlertSource left, CostManagementAlertSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CostManagementAlertSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CostManagementAlertSource(string value) => new CostManagementAlertSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CostManagementAlertSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CostManagementAlertSource?(string value) => value == null ? null : new CostManagementAlertSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CostManagementAlertSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CostManagementAlertSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

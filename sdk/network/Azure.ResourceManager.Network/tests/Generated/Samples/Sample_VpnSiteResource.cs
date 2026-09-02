@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnSiteResource vpnSite = client.GetVpnSiteResource(vpnSiteResourceId);
 
             // invoke the operation
-            await vpnSite.DeleteAsync(WaitUntil.Completed);
+            await vpnSite.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

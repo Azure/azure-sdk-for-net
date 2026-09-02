@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationProvisioningState : IEquatable<DataMigrationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Provisioning. </summary>
         public static DataMigrationProvisioningState Provisioning { get; } = new DataMigrationProvisioningState(ProvisioningValue);
+
         /// <summary> Updating. </summary>
         public static DataMigrationProvisioningState Updating { get; } = new DataMigrationProvisioningState(UpdatingValue);
+
         /// <summary> Succeeded. </summary>
         public static DataMigrationProvisioningState Succeeded { get; } = new DataMigrationProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DataMigrationProvisioningState Failed { get; } = new DataMigrationProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static DataMigrationProvisioningState Canceled { get; } = new DataMigrationProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="DataMigrationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationProvisioningState left, DataMigrationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationProvisioningState left, DataMigrationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationProvisioningState(string value) => new DataMigrationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationProvisioningState?(string value) => value == null ? null : new DataMigrationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

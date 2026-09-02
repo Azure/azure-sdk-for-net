@@ -57,9 +57,23 @@ steps:
             -BuildId '$(Build.BuildId)'
             -RepoName '$(Build.Repository.Name)'
             -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
-        displayName: Create API Review
+        displayName: Create and Validate API Review
         condition: >-
           and(
             succeededOrFailed(),
-            ne(variables['Skip.CreateApiReview'], 'true')
+            not(
+              and(
+                eq(variables['Skip.CreateApiReview'], 'true'),
+                in(
+                  lower(variables['Build.RequestedForEmail']),
+                  'bebroder@microsoft.com',
+                  'mharder@microsoft.com',
+                  'djurek@microsoft.com',
+                  'chononiw@microsoft.com',
+                  'raychen@microsoft.com',
+                  'trpresco@microsoft.com',
+                  'prmarott@microsoft.com'
+                )
+              )
+            )
           )

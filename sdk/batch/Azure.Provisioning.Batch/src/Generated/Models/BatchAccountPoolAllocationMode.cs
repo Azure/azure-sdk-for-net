@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchAccountPoolAllocationMode
     {
         /// <summary> Pools will be allocated in subscriptions owned by the Batch service. </summary>
-        BatchService,
+        BatchService = 0,
         /// <summary> Pools will be allocated in a subscription owned by the user. </summary>
-        UserSubscription
+        UserSubscription = 1
     }
 }

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 DeletedBackupVaultResourceListResult result = DeletedBackupVaultResourceListResult.FromResponse(response);
-                yield return Page<DataProtectionDeletedBackupVaultData>.FromValues((IReadOnlyList<DataProtectionDeletedBackupVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataProtectionDeletedBackupVaultData>.FromValues((IReadOnlyList<DataProtectionDeletedBackupVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

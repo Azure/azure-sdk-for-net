@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                     yield break;
                 }
                 FrontendListResult result = FrontendListResult.FromResponse(response);
-                yield return Page<TrafficControllerFrontendData>.FromValues((IReadOnlyList<TrafficControllerFrontendData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TrafficControllerFrontendData>.FromValues((IReadOnlyList<TrafficControllerFrontendData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
+            Assert.That(assemblyName, Does.EndWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             if (rpNamespace == TestFrameworkAssembly)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TestFramework
 
             var sdkAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == rpNamespace) ?? Assembly.Load(rpNamespace);
 
-            Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
+            Assert.That(sdkAssembly, Is.Not.Null, $"The SDK assembly {rpNamespace} not found");
 
             // Verify all class end with `Resource` & `Collection`
             HashSet<string> exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);
@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.TestFramework
 
             foreach (var type in sdkAssembly.GetTypes())
             {
-                if (type.IsClass && type.IsPublic && !exceptionList.Contains(type.Name))
+                var exceptionKey = GetExceptionKey(exceptionList, type);
+                if (type.IsClass && type.IsPublic && exceptionKey == null)
                 {
                     if (type.Name.EndsWith("Resource") && !typeof(ArmResource).IsAssignableFrom(type))
                     {
@@ -63,14 +64,24 @@ namespace Azure.ResourceManager.TestFramework
                 }
 
                 // Remove the elements to verify there is nothing left in this list
-                if (exceptionList.Contains(type.Name))
+                if (exceptionKey != null)
                 {
-                    exceptionList.Remove(type.Name);
+                    exceptionList.Remove(exceptionKey);
                 }
             }
 
-            Assert.IsEmpty(exceptionList, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
-            Assert.IsEmpty(errorList, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+            Assert.That(exceptionList, Is.Empty, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
+            Assert.That(errorList, Is.Empty, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+        }
+
+        private static string GetExceptionKey(HashSet<string> exceptionList, Type type)
+        {
+            if (exceptionList.Contains(type.FullName))
+            {
+                return type.FullName;
+            }
+
+            return exceptionList.Contains(type.Name) ? type.Name : null;
         }
     }
 }

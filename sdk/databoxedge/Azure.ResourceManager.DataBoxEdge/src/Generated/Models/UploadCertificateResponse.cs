@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The upload registration certificate response. </summary>
     public partial class UploadCertificateResponse
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UploadCertificateResponse"/>. </summary>
         internal UploadCertificateResponse()
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="servicePrincipalObjectId"> Azure Active Directory service principal object ID. </param>
         /// <param name="azureManagementEndpointAudience"> The azure management endpoint audience. </param>
         /// <param name="aadAudience"> Identifier of the target resource that is the recipient of the requested token. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadCertificateResponse(DataBoxEdgeAuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UploadCertificateResponse(DataBoxEdgeAuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthType = authType;
             ResourceId = resourceId;
@@ -70,23 +41,30 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ServicePrincipalObjectId = servicePrincipalObjectId;
             AzureManagementEndpointAudience = azureManagementEndpointAudience;
             AadAudience = aadAudience;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies authentication type. </summary>
         public DataBoxEdgeAuthenticationType? AuthType { get; }
+
         /// <summary> The resource ID of the Data Box Edge/Gateway device. </summary>
         public string ResourceId { get; }
+
         /// <summary> Azure Active Directory tenant authority. </summary>
         public string AadAuthority { get; }
+
         /// <summary> Azure Active Directory tenant ID. </summary>
         public Guid? AadTenantId { get; }
+
         /// <summary> Azure Active Directory service principal client ID. </summary>
         public Guid? ServicePrincipalClientId { get; }
+
         /// <summary> Azure Active Directory service principal object ID. </summary>
         public Guid? ServicePrincipalObjectId { get; }
+
         /// <summary> The azure management endpoint audience. </summary>
         public string AzureManagementEndpointAudience { get; }
+
         /// <summary> Identifier of the target resource that is the recipient of the requested token. </summary>
         public string AadAudience { get; }
     }

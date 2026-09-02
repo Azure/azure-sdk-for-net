@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingInvoiceFailedPaymentReason : IEquatable<BillingInvoiceFailedPaymentReason>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> BankDeclined. </summary>
+        private const string BankDeclinedValue = "BankDeclined";
+        /// <summary> CardExpired. </summary>
+        private const string CardExpiredValue = "CardExpired";
+        /// <summary> IncorrectCardDetails. </summary>
+        private const string IncorrectCardDetailsValue = "IncorrectCardDetails";
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceFailedPaymentReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingInvoiceFailedPaymentReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string BankDeclinedValue = "BankDeclined";
-        private const string CardExpiredValue = "CardExpired";
-        private const string IncorrectCardDetailsValue = "IncorrectCardDetails";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingInvoiceFailedPaymentReason Other { get; } = new BillingInvoiceFailedPaymentReason(OtherValue);
+
         /// <summary> BankDeclined. </summary>
         public static BillingInvoiceFailedPaymentReason BankDeclined { get; } = new BillingInvoiceFailedPaymentReason(BankDeclinedValue);
+
         /// <summary> CardExpired. </summary>
         public static BillingInvoiceFailedPaymentReason CardExpired { get; } = new BillingInvoiceFailedPaymentReason(CardExpiredValue);
+
         /// <summary> IncorrectCardDetails. </summary>
         public static BillingInvoiceFailedPaymentReason IncorrectCardDetails { get; } = new BillingInvoiceFailedPaymentReason(IncorrectCardDetailsValue);
+
         /// <summary> Determines if two <see cref="BillingInvoiceFailedPaymentReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingInvoiceFailedPaymentReason left, BillingInvoiceFailedPaymentReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingInvoiceFailedPaymentReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingInvoiceFailedPaymentReason left, BillingInvoiceFailedPaymentReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingInvoiceFailedPaymentReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingInvoiceFailedPaymentReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingInvoiceFailedPaymentReason(string value) => new BillingInvoiceFailedPaymentReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingInvoiceFailedPaymentReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingInvoiceFailedPaymentReason?(string value) => value == null ? null : new BillingInvoiceFailedPaymentReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingInvoiceFailedPaymentReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingInvoiceFailedPaymentReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

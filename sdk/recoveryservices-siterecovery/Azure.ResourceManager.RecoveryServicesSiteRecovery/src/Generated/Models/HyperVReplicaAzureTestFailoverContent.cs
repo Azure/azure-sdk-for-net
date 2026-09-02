@@ -15,33 +15,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaAzureTestFailoverContent : TestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureTestFailoverContent"/>. </summary>
-        public HyperVReplicaAzureTestFailoverContent()
+        public HyperVReplicaAzureTestFailoverContent() : base("HyperVReplicaAzure")
         {
-            InstanceType = "HyperVReplicaAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureTestFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryKekCertificatePfx"> Primary kek certificate pfx. </param>
         /// <param name="secondaryKekCertificatePfx"> Secondary kek certificate pfx. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
-        internal HyperVReplicaAzureTestFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaAzureTestFailoverContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType, additionalBinaryDataProperties)
         {
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
             SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
             RecoveryPointId = recoveryPointId;
             OSUpgradeVersion = osUpgradeVersion;
-            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> Primary kek certificate pfx. </summary>
         public string PrimaryKekCertificatePfx { get; set; }
+
         /// <summary> Secondary kek certificate pfx. </summary>
         public string SecondaryKekCertificatePfx { get; set; }
+
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
     }

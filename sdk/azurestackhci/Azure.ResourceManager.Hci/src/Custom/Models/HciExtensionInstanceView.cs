@@ -4,46 +4,18 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Describes the Extension Instance View. </summary>
     [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class HciExtensionInstanceView
+    public partial class HciExtensionInstanceView : IJsonModel<HciExtensionInstanceView>, IPersistableModel<HciExtensionInstanceView>
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
@@ -52,11 +24,6 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
-        /// <param name="name"> The extension name. </param>
-        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="status"> Instance view status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HciExtensionInstanceView(string name, string extensionInstanceViewType, string typeHandlerVersion, ExtensionInstanceViewStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
@@ -74,5 +41,27 @@ namespace Azure.ResourceManager.Hci.Models
         public string TypeHandlerVersion { get; }
         /// <summary> Instance view status. </summary>
         public ExtensionInstanceViewStatus Status { get; }
+
+        /// <param name="writer"> The writer. </param>
+        /// <param name="options"> The options. </param>
+        void IJsonModel<HciExtensionInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("This type is obsolete. Please use ArcExtensionInstanceView instead.");
+
+        /// <param name="reader"> The reader. </param>
+        /// <param name="options"> The options. </param>
+        HciExtensionInstanceView IJsonModel<HciExtensionInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("This type is obsolete. Please use ArcExtensionInstanceView instead.");
+
+        /// <param name="options"> The options. </param>
+        BinaryData IPersistableModel<HciExtensionInstanceView>.Write(ModelReaderWriterOptions options)
+            => throw new NotSupportedException("This type is obsolete. Please use ArcExtensionInstanceView instead.");
+
+        /// <param name="data"> The data. </param>
+        /// <param name="options"> The options. </param>
+        HciExtensionInstanceView IPersistableModel<HciExtensionInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("This type is obsolete. Please use ArcExtensionInstanceView instead.");
+
+        /// <param name="options"> The options. </param>
+        string IPersistableModel<HciExtensionInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

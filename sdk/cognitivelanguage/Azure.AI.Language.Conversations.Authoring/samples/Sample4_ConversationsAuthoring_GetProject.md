@@ -23,8 +23,10 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve metadata of a project, call GetProject on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProject
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-Response<ConversationAuthoringProjectMetadata> response = client.GetProject(projectName);
+Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject(projectName);
 ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
@@ -43,8 +45,10 @@ Console.WriteLine($"Language: {projectMetadata.Language}");
 To retrieve metadata of a project, call GetProjectAsync on the `ConversationAuthoringProject` client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-Response<ConversationAuthoringProjectMetadata> response = await client.GetProjectAsync(projectName);
+Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync(projectName);
 ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

@@ -1,16 +1,25 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Disabled client flatten on `ConnectedClusterData` since client flatten feature is now marked as deprecated.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2026-04-27)
+
+### Breaking Changes
+
+- Disabled client flatten on `ConnectedClusterData` since client flatten feature is now marked as deprecated.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.0.0-beta.5 (2025-03-11)
 

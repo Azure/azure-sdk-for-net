@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticBackupVaultResource : IJsonModel<NetAppElasticBackupVaultData>
+    /// <summary></summary>
+    public partial class NetAppElasticBackupVaultResource : ArmResource, IJsonModel<NetAppElasticBackupVaultData>
     {
-        private static NetAppElasticBackupVaultData s_dataDeserializationInstance;
-        private static NetAppElasticBackupVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticBackupVaultData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticBackupVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupVaultData>)Data).Write(writer, options);
-
-        NetAppElasticBackupVaultData IJsonModel<NetAppElasticBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupVaultData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticBackupVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticBackupVaultData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticBackupVaultData IPersistableModel<NetAppElasticBackupVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticBackupVaultData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticBackupVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticBackupVaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticBackupVaultData();
     }
 }

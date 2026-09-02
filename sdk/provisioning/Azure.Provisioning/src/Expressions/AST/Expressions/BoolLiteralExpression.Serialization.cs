@@ -46,7 +46,9 @@ public partial class BoolLiteralExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is BoolLiteralExpression b && Value == b.Value;
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(BoolLiteralExpression).GetHashCode() ^ Value.GetHashCode();
 
     internal static BoolLiteralExpression DeserializeBoolLiteralExpression(JsonElement element)

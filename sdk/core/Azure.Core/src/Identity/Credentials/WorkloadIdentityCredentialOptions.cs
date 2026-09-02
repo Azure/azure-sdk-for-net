@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -49,11 +50,8 @@ namespace Azure.Identity
         /// When enabled and proxy configuration environment variables are set, requests are sent to the AKS proxy instead of directly to Entra ID.
         /// This feature is not supported when using DefaultAzureCredential.
         /// </summary>
-#if PREVIEW_FEATURE_FLAG
+        [Experimental("AZID0002")]
         public bool IsAzureProxyEnabled { get; set; }
-#else
-        internal bool IsAzureProxyEnabled { get; set; }
-#endif
 
         /// <summary>
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.

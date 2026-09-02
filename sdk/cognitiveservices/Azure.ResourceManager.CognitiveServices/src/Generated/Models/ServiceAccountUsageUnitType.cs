@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct ServiceAccountUsageUnitType : IEquatable<ServiceAccountUsageUnitType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageUnitType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceAccountUsageUnitType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CountValue = "Count";
         private const string BytesValue = "Bytes";
         private const string SecondsValue = "Seconds";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string BytesPerSecondValue = "BytesPerSecond";
         private const string MillisecondsValue = "Milliseconds";
 
-        /// <summary> Count. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageUnitType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceAccountUsageUnitType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Count. </summary>
         public static ServiceAccountUsageUnitType Count { get; } = new ServiceAccountUsageUnitType(CountValue);
-        /// <summary> Bytes. </summary>
+
+        /// <summary> Gets the Bytes. </summary>
         public static ServiceAccountUsageUnitType Bytes { get; } = new ServiceAccountUsageUnitType(BytesValue);
-        /// <summary> Seconds. </summary>
+
+        /// <summary> Gets the Seconds. </summary>
         public static ServiceAccountUsageUnitType Seconds { get; } = new ServiceAccountUsageUnitType(SecondsValue);
-        /// <summary> Percent. </summary>
+
+        /// <summary> Gets the Percent. </summary>
         public static ServiceAccountUsageUnitType Percent { get; } = new ServiceAccountUsageUnitType(PercentValue);
-        /// <summary> CountPerSecond. </summary>
+
+        /// <summary> Gets the CountPerSecond. </summary>
         public static ServiceAccountUsageUnitType CountPerSecond { get; } = new ServiceAccountUsageUnitType(CountPerSecondValue);
-        /// <summary> BytesPerSecond. </summary>
+
+        /// <summary> Gets the BytesPerSecond. </summary>
         public static ServiceAccountUsageUnitType BytesPerSecond { get; } = new ServiceAccountUsageUnitType(BytesPerSecondValue);
-        /// <summary> Milliseconds. </summary>
+
+        /// <summary> Gets the Milliseconds. </summary>
         public static ServiceAccountUsageUnitType Milliseconds { get; } = new ServiceAccountUsageUnitType(MillisecondsValue);
+
         /// <summary> Determines if two <see cref="ServiceAccountUsageUnitType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAccountUsageUnitType left, ServiceAccountUsageUnitType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAccountUsageUnitType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAccountUsageUnitType left, ServiceAccountUsageUnitType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountUsageUnitType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAccountUsageUnitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAccountUsageUnitType(string value) => new ServiceAccountUsageUnitType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAccountUsageUnitType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAccountUsageUnitType?(string value) => value == null ? null : new ServiceAccountUsageUnitType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAccountUsageUnitType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAccountUsageUnitType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

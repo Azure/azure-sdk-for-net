@@ -28,12 +28,22 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="blobUrl"> The blob URL for the reference. </param>
-        internal KnowledgeBaseAzureBlobReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string blobUrl) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
+        internal KnowledgeBaseAzureBlobReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri blobUrl, PurviewSensitivityLabelInfo searchSensitivityLabelInfo, Uri citationUrl) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             BlobUrl = blobUrl;
+            SearchSensitivityLabelInfo = searchSensitivityLabelInfo;
+            CitationUrl = citationUrl;
         }
 
         /// <summary> The blob URL for the reference. </summary>
-        public string BlobUrl { get; }
+        public Uri BlobUrl { get; }
+
+        /// <summary> The sensitivity label information for the reference. </summary>
+        public PurviewSensitivityLabelInfo SearchSensitivityLabelInfo { get; }
+
+        /// <summary> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </summary>
+        public Uri CitationUrl { get; }
     }
 }

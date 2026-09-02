@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -19,17 +20,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly Type _userType;
         private readonly WebPubSubServiceAccessOptions _options;
         private readonly WebPubSubServiceAccessFactory _accessFactory;
+        private readonly ILogger _logger;
 
         public WebPubSubContextBinding(
             BindingProviderContext context,
             IConfiguration configuration,
             INameResolver nameResolver,
             WebPubSubServiceAccessOptions options,
-            WebPubSubServiceAccessFactory accessFactory) : base(context, configuration, nameResolver)
+            WebPubSubServiceAccessFactory accessFactory,
+            ILogger logger) : base(context, configuration, nameResolver)
         {
             _userType = context.Parameter.ParameterType;
             _options = options;
             _accessFactory = accessFactory;
+            _logger = logger;
         }
 
         protected async override Task<IValueProvider> BuildAsync(WebPubSubContextAttribute attrResolved, IReadOnlyDictionary<string, object> bindingData)
@@ -50,23 +54,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                WebPubSubServiceAccess[]? accesses = null;
-                if (attrResolved?.Connections != null)
-                {
-                    var resolved = new List<WebPubSubServiceAccess>(attrResolved.Connections.Length);
-                    foreach (var sectionName in attrResolved.Connections)
-                    {
-                        if (!_accessFactory.TryCreateFromSectionName(sectionName, out var access) || access == null)
-                        {
-                            throw new InvalidOperationException($"Unable to resolve Web PubSub connection from configuration section '{sectionName}'.");
-                        }
-                        resolved.Add(access);
-                    }
-                    accesses = [.. resolved];
-                }
-
-                accesses ??= _options.WebPubSubAccess != null ? [_options.WebPubSubAccess] : null;
-                var validator = new RequestValidator(accesses);
+                var accesses = _accessFactory.ResolveAccessesOrDefault(attrResolved?.Connections, _options.WebPubSubAccess);
+                var validator = new RequestValidator(accesses, _logger);
                 var serviceRequest = await request.ReadWebPubSubRequestAsync(validator).ConfigureAwait(false);
 
                 switch (serviceRequest)

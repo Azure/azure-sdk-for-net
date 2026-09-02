@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _scope = DefineProperty<BatchAutoUserScope>(nameof(Scope), new string[] { "scope" });
             _elevationLevel = DefineProperty<BatchUserAccountElevationLevel>(nameof(ElevationLevel), new string[] { "elevationLevel" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAutoUserSpecification that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -43,12 +43,14 @@ namespace Azure.Storage.Test.Shared
         private const string FileRenameSource = "x-ms-file-rename-source";
         private const string SasVersion = "sv";
         private const string SasSignedTenantId = "sktid";
+        private const string BlockId = "blockid";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             SanitizedQueryParameters.Add(SignatureQueryName);
             IgnoredQueryParameters.Add(SasVersion);
+            IgnoredQueryParameters.Add(BlockId);
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceName)
             {
                 Value = "sanitized-value",
@@ -66,6 +68,17 @@ namespace Azure.Storage.Test.Shared
                 Value = "sanitized-value",
                 Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
                 GroupForReplace = "date"
+            });
+            // strip and ignore quotes from ETag values
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("If-Match")
+            {
+                Regex = "\"(.+)\"",
+                Value = "$1",
+            });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("If-None-Match")
+            {
+                Regex = "\"(.+)\"",
+                Value = "$1",
             });
 
 #if NETFRAMEWORK
@@ -99,7 +112,25 @@ namespace Azure.Storage.Test.Shared
                 Value = SanitizeValue
             });
 
+            // Sanitize randomly generated block IDs (64-char Base64 strings) in XML request/response bodies
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"<Latest>(?<group>[A-Za-z0-9+/=]{64})</Latest>")
+            {
+                GroupForReplace = "group",
+                Value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"<Uncommitted>(?<group>[A-Za-z0-9+/=]{64})</Uncommitted>")
+            {
+                GroupForReplace = "group",
+                Value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"<Committed>(?<group>[A-Za-z0-9+/=]{64})</Committed>")
+            {
+                GroupForReplace = "group",
+                Value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            });
+
             Tenants = new TenantConfigurationBuilder(this);
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         public string SanitizeUri(string uri)

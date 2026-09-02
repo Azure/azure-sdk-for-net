@@ -31,6 +31,13 @@ internal static partial class CustomToolParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: defer_loading
+        if (element.TryGetProperty("defer_loading", out var deferLoadingProp))
+        {
+            if (deferLoadingProp.ValueKind != JsonValueKind.True && deferLoadingProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.defer_loading", $"Expected boolean, got {deferLoadingProp.ValueKind}"));
+        }
+
         // Optional: description
         if (element.TryGetProperty("description", out var descriptionProp))
         {

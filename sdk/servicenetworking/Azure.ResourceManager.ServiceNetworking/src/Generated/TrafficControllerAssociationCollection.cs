@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             TryGetApiVersion(TrafficControllerAssociationResource.ResourceType, out string trafficControllerAssociationApiVersion);
             _associationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", TrafficControllerAssociationResource.ResourceType.Namespace, Diagnostics);
-            _associationsInterfaceRestClient = new AssociationsInterface(_associationsInterfaceClientDiagnostics, Pipeline, Endpoint, trafficControllerAssociationApiVersion ?? "2025-03-01-preview");
+            _associationsInterfaceRestClient = new AssociationsInterface(_associationsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficControllerAssociationApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _associationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, TrafficControllerAssociationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerAssociationResource> operation = new ServiceNetworkingArmOperation<TrafficControllerAssociationResource>(
-                    new TrafficControllerAssociationOperationSource(Client),
+                    new TrafficControllerAssociationResourceOperationSource(Client),
                     _associationsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _associationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, TrafficControllerAssociationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerAssociationResource> operation = new ServiceNetworkingArmOperation<TrafficControllerAssociationResource>(
-                    new TrafficControllerAssociationOperationSource(Client),
+                    new TrafficControllerAssociationResourceOperationSource(Client),
                     _associationsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

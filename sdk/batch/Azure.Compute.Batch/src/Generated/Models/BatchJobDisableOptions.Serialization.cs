@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchJobDisableOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("disableTasks"u8);
-            writer.WriteStringValue(DisableTasks.ToString());
+            writer.WriteStringValue(JobOption.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,13 +133,13 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            DisableBatchJobOption disableTasks = default;
+            DisableBatchJobOption jobOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("disableTasks"u8))
                 {
-                    disableTasks = new DisableBatchJobOption(prop.Value.GetString());
+                    jobOption = new DisableBatchJobOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchJobDisableOptions(disableTasks, additionalBinaryDataProperties);
+            return new BatchJobDisableOptions(jobOption, additionalBinaryDataProperties);
         }
     }
 }

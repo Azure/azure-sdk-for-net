@@ -13,7 +13,7 @@ namespace Azure.Storage
         /// <para>
         /// Expect-continue will not be applied until specific errors are encountered from the
         /// service, at which point they will be applied until a period of time after the last
-        /// of those errors occured.
+        /// of those errors occurred.
         /// </para>
         /// <para>
         /// Response codes that trigger this behavior are 429, 500, and 503.

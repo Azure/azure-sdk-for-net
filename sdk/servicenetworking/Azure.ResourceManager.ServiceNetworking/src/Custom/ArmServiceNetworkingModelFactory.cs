@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                associationType is null && provisioningState is null && subnetId is null ? null : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null));
+                associationType is null && provisioningState is null && subnetId is null ? null : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null),
+                additionalBinaryDataProperties: null);
         }
     }
 #pragma warning restore 0618

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayOperationalState : IEquatable<ApplicationGatewayOperationalState>
     {
         private readonly string _value;
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayOperationalState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayOperationalState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StoppedValue = "Stopped";
-        private const string StartingValue = "Starting";
-        private const string RunningValue = "Running";
-        private const string StoppingValue = "Stopping";
+            _value = value;
+        }
 
         /// <summary> Stopped. </summary>
         public static ApplicationGatewayOperationalState Stopped { get; } = new ApplicationGatewayOperationalState(StoppedValue);
+
         /// <summary> Starting. </summary>
         public static ApplicationGatewayOperationalState Starting { get; } = new ApplicationGatewayOperationalState(StartingValue);
+
         /// <summary> Running. </summary>
         public static ApplicationGatewayOperationalState Running { get; } = new ApplicationGatewayOperationalState(RunningValue);
+
         /// <summary> Stopping. </summary>
         public static ApplicationGatewayOperationalState Stopping { get; } = new ApplicationGatewayOperationalState(StoppingValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayOperationalState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayOperationalState left, ApplicationGatewayOperationalState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayOperationalState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayOperationalState left, ApplicationGatewayOperationalState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayOperationalState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayOperationalState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayOperationalState(string value) => new ApplicationGatewayOperationalState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayOperationalState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayOperationalState?(string value) => value == null ? null : new ApplicationGatewayOperationalState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayOperationalState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayOperationalState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the cluster. </param>
         /// <param name="identity"> Describes the identity of the cluster. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, IdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, IdentityProperties identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the cluster. </summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.IsShardsOnCoordinatorEnabled = value.Value;
+                Properties.IsShardsOnCoordinatorEnabled = value;
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.IsHAEnabled = value.Value;
+                Properties.IsHAEnabled = value;
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.CoordinatorStorageQuotaInMb = value.Value;
+                Properties.CoordinatorStorageQuotaInMb = value;
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.CoordinatorVCores = value.Value;
+                Properties.CoordinatorVCores = value;
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.IsCoordinatorPublicIPAccessEnabled = value.Value;
+                Properties.IsCoordinatorPublicIPAccessEnabled = value;
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.NodeCount = value.Value;
+                Properties.NodeCount = value;
             }
         }
 
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.NodeStorageQuotaInMb = value.Value;
+                Properties.NodeStorageQuotaInMb = value;
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.NodeVCores = value.Value;
+                Properties.NodeVCores = value;
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.IsNodePublicIPAccessEnabled = value.Value;
+                Properties.IsNodePublicIPAccessEnabled = value;
             }
         }
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.SourceLocation = value.Value;
+                Properties.SourceLocation = value;
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.PointInTimeUTC = value.Value;
+                Properties.PointInTimeUTC = value;
             }
         }
 
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.EnableGeoBackup = value.Value;
+                Properties.EnableGeoBackup = value;
             }
         }
 

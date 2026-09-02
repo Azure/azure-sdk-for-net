@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewaySkuName : IEquatable<ApplicationGatewaySkuName>
     {
         private readonly string _value;
+        /// <summary> Standard_Small. </summary>
+        private const string StandardSmallValue = "Standard_Small";
+        /// <summary> Standard_Medium. </summary>
+        private const string StandardMediumValue = "Standard_Medium";
+        /// <summary> Standard_Large. </summary>
+        private const string StandardLargeValue = "Standard_Large";
+        /// <summary> WAF_Medium. </summary>
+        private const string WAFMediumValue = "WAF_Medium";
+        /// <summary> WAF_Large. </summary>
+        private const string WAFLargeValue = "WAF_Large";
+        /// <summary> Standard_v2. </summary>
+        private const string StandardV2Value = "Standard_v2";
+        /// <summary> WAF_v2. </summary>
+        private const string WAFV2Value = "WAF_v2";
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardSmallValue = "Standard_Small";
-        private const string StandardMediumValue = "Standard_Medium";
-        private const string StandardLargeValue = "Standard_Large";
-        private const string WAFMediumValue = "WAF_Medium";
-        private const string WAFLargeValue = "WAF_Large";
-        private const string StandardV2Value = "Standard_v2";
-        private const string WAFV2Value = "WAF_v2";
-        private const string BasicValue = "Basic";
+            _value = value;
+        }
 
         /// <summary> Standard_Small. </summary>
         public static ApplicationGatewaySkuName StandardSmall { get; } = new ApplicationGatewaySkuName(StandardSmallValue);
+
         /// <summary> Standard_Medium. </summary>
         public static ApplicationGatewaySkuName StandardMedium { get; } = new ApplicationGatewaySkuName(StandardMediumValue);
+
         /// <summary> Standard_Large. </summary>
         public static ApplicationGatewaySkuName StandardLarge { get; } = new ApplicationGatewaySkuName(StandardLargeValue);
+
         /// <summary> WAF_Medium. </summary>
         public static ApplicationGatewaySkuName WAFMedium { get; } = new ApplicationGatewaySkuName(WAFMediumValue);
+
         /// <summary> WAF_Large. </summary>
         public static ApplicationGatewaySkuName WAFLarge { get; } = new ApplicationGatewaySkuName(WAFLargeValue);
+
         /// <summary> Standard_v2. </summary>
         public static ApplicationGatewaySkuName StandardV2 { get; } = new ApplicationGatewaySkuName(StandardV2Value);
+
         /// <summary> WAF_v2. </summary>
         public static ApplicationGatewaySkuName WAFV2 { get; } = new ApplicationGatewaySkuName(WAFV2Value);
+
         /// <summary> Basic. </summary>
         public static ApplicationGatewaySkuName Basic { get; } = new ApplicationGatewaySkuName(BasicValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewaySkuName left, ApplicationGatewaySkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewaySkuName left, ApplicationGatewaySkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewaySkuName(string value) => new ApplicationGatewaySkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewaySkuName?(string value) => value == null ? null : new ApplicationGatewaySkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewaySkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewaySkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string cycleTestStoreApiVersion);
             _cycleTestStoresClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _cycleTestStoresRestClient = new CycleTestStores(_cycleTestStoresClientDiagnostics, Pipeline, Endpoint, cycleTestStoreApiVersion ?? "2024-05-01");
+            _cycleTestStoresRestClient = new CycleTestStores(_cycleTestStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cycleTestStoreApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _cycleTestStoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CycleTestStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<CycleTestStoreResource> operation = new TestsArmOperation<CycleTestStoreResource>(
-                    new CycleTestStoreOperationSource(Client),
+                    new CycleTestStoreResourceOperationSource(Client),
                     _cycleTestStoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _cycleTestStoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CycleTestStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<CycleTestStoreResource> operation = new TestsArmOperation<CycleTestStoreResource>(
-                    new CycleTestStoreOperationSource(Client),
+                    new CycleTestStoreResourceOperationSource(Client),
                     _cycleTestStoresClientDiagnostics,
                     Pipeline,
                     message.Request,

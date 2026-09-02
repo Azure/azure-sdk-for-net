@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticBackupPolicyResource : IJsonModel<NetAppElasticBackupPolicyData>
+    /// <summary></summary>
+    public partial class NetAppElasticBackupPolicyResource : ArmResource, IJsonModel<NetAppElasticBackupPolicyData>
     {
-        private static NetAppElasticBackupPolicyData s_dataDeserializationInstance;
-        private static NetAppElasticBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticBackupPolicyData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupPolicyData>)Data).Write(writer, options);
-
-        NetAppElasticBackupPolicyData IJsonModel<NetAppElasticBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticBackupPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticBackupPolicyData IPersistableModel<NetAppElasticBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticBackupPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticBackupPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticBackupPolicyData();
     }
 }

@@ -61,7 +61,7 @@ public class ErrorProtocolTests : ProtocolTestBase
     [Test]
     public async Task GET_UnknownId_Returns404_WithNotFoundCode()
     {
-        var response = await GetResponseAsync("caresp_does_not_exist");
+        var response = await GetResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 

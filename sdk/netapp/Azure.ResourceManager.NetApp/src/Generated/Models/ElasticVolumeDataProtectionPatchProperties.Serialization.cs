@@ -9,140 +9,50 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticVolumeDataProtectionPatchProperties : IUtf8JsonSerializable, IJsonModel<ElasticVolumeDataProtectionPatchProperties>
+    /// <summary> Data protection configuration option for updating the volume, including snapshot policies and backup. </summary>
+    public partial class ElasticVolumeDataProtectionPatchProperties : IJsonModel<ElasticVolumeDataProtectionPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticVolumeDataProtectionPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ElasticVolumeDataProtectionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ElasticVolumeDataProtectionPatchProperties DeserializeElasticVolumeDataProtectionPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeDataProtectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticVolumeDataProtectionPatchProperties)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(Snapshot))
-            {
-                writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot, options);
-            }
-            if (Optional.IsDefined(Backup))
-            {
-                writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        ElasticVolumeDataProtectionPatchProperties IJsonModel<ElasticVolumeDataProtectionPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeDataProtectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticVolumeDataProtectionPatchProperties)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticVolumeDataProtectionPatchProperties(document.RootElement, options);
-        }
-
-        internal static ElasticVolumeDataProtectionPatchProperties DeserializeElasticVolumeDataProtectionPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ElasticVolumeSnapshotProperties snapshot = default;
             ElasticVolumeBackupProperties backup = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("snapshot"u8))
+                if (prop.NameEquals("snapshot"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshot = ElasticVolumeSnapshotProperties.DeserializeElasticVolumeSnapshotProperties(property.Value, options);
+                    snapshot = ElasticVolumeSnapshotProperties.DeserializeElasticVolumeSnapshotProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backup"u8))
+                if (prop.NameEquals("backup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backup = ElasticVolumeBackupProperties.DeserializeElasticVolumeBackupProperties(property.Value, options);
+                    backup = ElasticVolumeBackupProperties.DeserializeElasticVolumeBackupProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticVolumeDataProtectionPatchProperties(snapshot, backup, serializedAdditionalRawData);
+            return new ElasticVolumeDataProtectionPatchProperties(snapshot, backup, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ElasticVolumeDataProtectionPatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeDataProtectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticVolumeDataProtectionPatchProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ElasticVolumeDataProtectionPatchProperties IPersistableModel<ElasticVolumeDataProtectionPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeDataProtectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeElasticVolumeDataProtectionPatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticVolumeDataProtectionPatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ElasticVolumeDataProtectionPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

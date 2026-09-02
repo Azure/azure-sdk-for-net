@@ -50,6 +50,40 @@ steps:
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
+  # Run CODEOWNERS verification before artifacts are produced and uploaded to
+  # prevent artifact collisions.
+  - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
+    parameters:
+      ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+      Artifacts: ${{ parameters.Artifacts }}
+      EnablePrValidation: true
+      AllowSkipEmails: >-
+        jsquire@microsoft.com,
+        josar@microsoft.com,
+        weilim@microsoft.com,
+        vigera@microsoft.com,
+        alzimmer@microsoft.com,
+        vicolina@microsoft.com,
+        jolov@microsoft.com,
+        micnash@microsoft.com,
+        joncarde@microsoft.com,
+        jorgerangel@microsoft.com,
+        jairmyree@microsoft.com,
+        mailinhphan@microsoft.com
+      AllowSkipAliases: >-
+        jsquire,
+        joseharriaga,
+        weikanglim,
+        g2vinay,
+        alzimmermsft,
+        vcolin7,
+        JoshLove-msft,
+        m-nash,
+        JonathanCrd,
+        jorgerangel-msft,
+        jairmyree,
+        MaiLinhP
+
   - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
   - template: /eng/pipelines/templates/steps/set-artifact-packages.yml

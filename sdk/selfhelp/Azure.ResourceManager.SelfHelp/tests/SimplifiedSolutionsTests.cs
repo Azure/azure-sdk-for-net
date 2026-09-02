@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
             SimplifiedSolutionsResourceProperties simplifiedSolutionsResourceProperties = new SimplifiedSolutionsResourceProperties(solutionId, parameters, null, null, null, null, null);
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SelfHelpSimplifiedSolutionData(scope, null, resourceType, null, null, simplifiedSolutionsResourceProperties);
+            var data = new SelfHelpSimplifiedSolutionData(scope, null, resourceType, null, simplifiedSolutionsResourceProperties, null);
 
             return data;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct LookBackPeriod : IEquatable<LookBackPeriod>
     {
         private readonly string _value;
+        /// <summary> 7 days used to look back. </summary>
+        private const string Last7DaysValue = "Last7Days";
+        /// <summary> 30 days used to look back. </summary>
+        private const string Last30DaysValue = "Last30Days";
+        /// <summary> 60 days used to look back. </summary>
+        private const string Last60DaysValue = "Last60Days";
 
         /// <summary> Initializes a new instance of <see cref="LookBackPeriod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LookBackPeriod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Last7DaysValue = "Last7Days";
-        private const string Last30DaysValue = "Last30Days";
-        private const string Last60DaysValue = "Last60Days";
+            _value = value;
+        }
 
         /// <summary> 7 days used to look back. </summary>
         public static LookBackPeriod Last7Days { get; } = new LookBackPeriod(Last7DaysValue);
+
         /// <summary> 30 days used to look back. </summary>
         public static LookBackPeriod Last30Days { get; } = new LookBackPeriod(Last30DaysValue);
+
         /// <summary> 60 days used to look back. </summary>
         public static LookBackPeriod Last60Days { get; } = new LookBackPeriod(Last60DaysValue);
+
         /// <summary> Determines if two <see cref="LookBackPeriod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LookBackPeriod left, LookBackPeriod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LookBackPeriod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LookBackPeriod left, LookBackPeriod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LookBackPeriod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LookBackPeriod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LookBackPeriod(string value) => new LookBackPeriod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LookBackPeriod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LookBackPeriod?(string value) => value == null ? null : new LookBackPeriod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LookBackPeriod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LookBackPeriod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,17 +18,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/>. </summary>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileExtension"/> is null. </exception>
-        public DelimitedTextWriteSettings(DataFactoryElement<string> fileExtension)
+        public DelimitedTextWriteSettings(DataFactoryElement<string> fileExtension) : base("DelimitedTextWriteSettings")
         {
             Argument.AssertNotNull(fileExtension, nameof(fileExtension));
 
             FileExtension = fileExtension;
-            FormatWriteSettingsType = "DelimitedTextWriteSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/>. </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="quoteAllText"> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
         /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
@@ -38,20 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             FileExtension = fileExtension;
             MaxRowsPerFile = maxRowsPerFile;
             FileNamePrefix = fileNamePrefix;
-            FormatWriteSettingsType = formatWriteSettingsType ?? "DelimitedTextWriteSettings";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/> for deserialization. </summary>
-        internal DelimitedTextWriteSettings()
-        {
         }
 
         /// <summary> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> QuoteAllText { get; set; }
+
         /// <summary> The file extension used to create the files. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FileExtension { get; set; }
+
         /// <summary> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> MaxRowsPerFile { get; set; }
+
         /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FileNamePrefix { get; set; }
     }

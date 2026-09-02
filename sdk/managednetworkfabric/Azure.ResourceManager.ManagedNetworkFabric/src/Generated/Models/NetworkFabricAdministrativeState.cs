@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,44 +15,77 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricAdministrativeState : IEquatable<NetworkFabricAdministrativeState>
     {
         private readonly string _value;
+        /// <summary> Enabled Administrative State. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled Administrative State. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> MAT(Manual Action Taken) Administrative State. </summary>
+        private const string MatValue = "MAT";
+        /// <summary> RMA(Return Material Authorization) Administrative State. </summary>
+        private const string RmaValue = "RMA";
+        /// <summary> UnderMaintenance Administrative State. </summary>
+        private const string UnderMaintenanceValue = "UnderMaintenance";
+        /// <summary> EnabledDegraded Administrative State. </summary>
+        private const string EnabledDegradedValue = "EnabledDegraded";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricAdministrativeState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string MatValue = "MAT";
-        private const string RmaValue = "RMA";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Enabled Administrative State. </summary>
         public static NetworkFabricAdministrativeState Enabled { get; } = new NetworkFabricAdministrativeState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Disabled Administrative State. </summary>
         public static NetworkFabricAdministrativeState Disabled { get; } = new NetworkFabricAdministrativeState(DisabledValue);
-        /// <summary> MAT. </summary>
+
+        /// <summary> MAT(Manual Action Taken) Administrative State. </summary>
         public static NetworkFabricAdministrativeState Mat { get; } = new NetworkFabricAdministrativeState(MatValue);
-        /// <summary> RMA. </summary>
+
+        /// <summary> RMA(Return Material Authorization) Administrative State. </summary>
         public static NetworkFabricAdministrativeState Rma { get; } = new NetworkFabricAdministrativeState(RmaValue);
+
+        /// <summary> UnderMaintenance Administrative State. </summary>
+        public static NetworkFabricAdministrativeState UnderMaintenance { get; } = new NetworkFabricAdministrativeState(UnderMaintenanceValue);
+
+        /// <summary> EnabledDegraded Administrative State. </summary>
+        public static NetworkFabricAdministrativeState EnabledDegraded { get; } = new NetworkFabricAdministrativeState(EnabledDegradedValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricAdministrativeState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricAdministrativeState left, NetworkFabricAdministrativeState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricAdministrativeState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricAdministrativeState left, NetworkFabricAdministrativeState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricAdministrativeState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricAdministrativeState(string value) => new NetworkFabricAdministrativeState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricAdministrativeState?(string value) => value == null ? null : new NetworkFabricAdministrativeState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricAdministrativeState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricAdministrativeState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

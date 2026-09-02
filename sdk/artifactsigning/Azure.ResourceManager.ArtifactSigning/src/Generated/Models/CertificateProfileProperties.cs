@@ -18,39 +18,41 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertificateProfileProperties"/>. </summary>
-        /// <param name="profileType"> Profile type of the certificate. </param>
+        /// <param name="certificateProfileType"> Profile type of the certificate. </param>
         /// <param name="identityValidationId"> Identity validation id used for the certificate subject name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identityValidationId"/> is null. </exception>
-        public CertificateProfileProperties(CertificateProfileType profileType, string identityValidationId)
+        public CertificateProfileProperties(CertificateProfileType certificateProfileType, string identityValidationId)
         {
             Argument.AssertNotNull(identityValidationId, nameof(identityValidationId));
 
-            ProfileType = profileType;
+            CertificateProfileType = certificateProfileType;
             IdentityValidationId = identityValidationId;
             Certificates = new ChangeTrackingList<ArtifactSigningCertificate>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateProfileProperties"/>. </summary>
-        /// <param name="profileType"> Profile type of the certificate. </param>
+        /// <param name="certificateProfileType"> Profile type of the certificate. </param>
         /// <param name="includeStreetAddress"> Whether to include STREET in the certificate subject name. </param>
         /// <param name="includeCity"> Whether to include L in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
         /// <param name="includeState"> Whether to include S in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
         /// <param name="includeCountry"> Whether to include C in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
         /// <param name="includePostalCode"> Whether to include PC in the certificate subject name. </param>
         /// <param name="identityValidationId"> Identity validation id used for the certificate subject name. </param>
+        /// <param name="programType"> Indicates whether the resource is intended for a specific usage scenario. </param>
         /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateProfileProperties(CertificateProfileType profileType, bool? includeStreetAddress, bool? includeCity, bool? includeState, bool? includeCountry, bool? includePostalCode, string identityValidationId, ArtifactSigningProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<ArtifactSigningCertificate> certificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateProfileProperties(CertificateProfileType certificateProfileType, bool? includeStreetAddress, bool? includeCity, bool? includeState, bool? includeCountry, bool? includePostalCode, string identityValidationId, string programType, ArtifactSigningProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<ArtifactSigningCertificate> certificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProfileType = profileType;
+            CertificateProfileType = certificateProfileType;
             IncludeStreetAddress = includeStreetAddress;
             IncludeCity = includeCity;
             IncludeState = includeState;
             IncludeCountry = includeCountry;
             IncludePostalCode = includePostalCode;
             IdentityValidationId = identityValidationId;
+            ProgramType = programType;
             ProvisioningState = provisioningState;
             Status = status;
             Certificates = certificates;
@@ -58,7 +60,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         }
 
         /// <summary> Profile type of the certificate. </summary>
-        public CertificateProfileType ProfileType { get; set; }
+        public CertificateProfileType CertificateProfileType { get; set; }
 
         /// <summary> Whether to include STREET in the certificate subject name. </summary>
         public bool? IncludeStreetAddress { get; set; }
@@ -77,6 +79,9 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <summary> Identity validation id used for the certificate subject name. </summary>
         public string IdentityValidationId { get; set; }
+
+        /// <summary> Indicates whether the resource is intended for a specific usage scenario. </summary>
+        public string ProgramType { get; set; }
 
         /// <summary> Status of the current operation on certificate profile. </summary>
         public ArtifactSigningProvisioningState? ProvisioningState { get; }

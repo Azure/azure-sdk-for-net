@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="UriRedirectAction"/>. </summary>
         /// <param name="properties"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public UriRedirectAction(UriRedirectActionProperties properties)
+        public UriRedirectAction(UriRedirectActionProperties properties) : base(DeliveryRuleActionName.UrlRedirect)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.UriRedirect;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRedirectAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the action. </param>
-        internal UriRedirectAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriRedirectActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal UriRedirectAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, UriRedirectActionProperties properties) : base(name, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UriRedirectAction"/> for deserialization. </summary>
-        internal UriRedirectAction()
-        {
         }
 
         /// <summary> Defines the parameters for the action. </summary>

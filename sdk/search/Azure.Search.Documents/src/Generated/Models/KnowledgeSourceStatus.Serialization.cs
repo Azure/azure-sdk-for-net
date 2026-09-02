@@ -88,6 +88,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeSourceStatus)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             writer.WritePropertyName("synchronizationStatus"u8);
             writer.WriteStringValue(SynchronizationStatus.ToString());
             if (Optional.IsDefined(SynchronizationInterval))
@@ -152,6 +157,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 return null;
             }
+            KnowledgeSourceKind? kind = default;
             KnowledgeSourceSynchronizationStatus synchronizationStatus = default;
             string synchronizationInterval = default;
             SynchronizationState currentSynchronizationState = default;
@@ -160,6 +166,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("kind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("synchronizationStatus"u8))
                 {
                     synchronizationStatus = new KnowledgeSourceSynchronizationStatus(prop.Value.GetString());
@@ -211,6 +226,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
             }
             return new KnowledgeSourceStatus(
+                kind,
                 synchronizationStatus,
                 synchronizationInterval,
                 currentSynchronizationState,

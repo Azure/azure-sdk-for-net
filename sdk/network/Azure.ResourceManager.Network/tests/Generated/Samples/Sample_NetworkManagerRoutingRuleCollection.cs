@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Destination = new RoutingRuleRouteDestination(RoutingRuleDestinationType.AddressPrefix, "10.0.0.0/16"),
                 NextHop = new RoutingRuleNextHop(RoutingRuleNextHopType.VirtualNetworkGateway),
             };
-            ArmOperation<NetworkManagerRoutingRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            ArmOperation<NetworkManagerRoutingRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Destination = new RoutingRuleRouteDestination(RoutingRuleDestinationType.AddressPrefix, "10.0.0.0/16"),
                 NextHop = new RoutingRuleNextHop(RoutingRuleNextHopType.VirtualNetworkGateway),
             };
-            ArmOperation<NetworkManagerRoutingRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            ArmOperation<NetworkManagerRoutingRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

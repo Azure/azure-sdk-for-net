@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct IntegrationRuntimeInternalChannelEncryptionMode : IEquatable<IntegrationRuntimeInternalChannelEncryptionMode>
     {
         private readonly string _value;
+        /// <summary> NotSet. </summary>
+        private const string NotSetValue = "NotSet";
+        /// <summary> SslEncrypted. </summary>
+        private const string SslEncryptedValue = "SslEncrypted";
+        /// <summary> NotEncrypted. </summary>
+        private const string NotEncryptedValue = "NotEncrypted";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeInternalChannelEncryptionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSetValue = "NotSet";
-        private const string SslEncryptedValue = "SslEncrypted";
-        private const string NotEncryptedValue = "NotEncrypted";
+            _value = value;
+        }
 
         /// <summary> NotSet. </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode NotSet { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(NotSetValue);
+
         /// <summary> SslEncrypted. </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(SslEncryptedValue);
+
         /// <summary> NotEncrypted. </summary>
         public static IntegrationRuntimeInternalChannelEncryptionMode NotEncrypted { get; } = new IntegrationRuntimeInternalChannelEncryptionMode(NotEncryptedValue);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeInternalChannelEncryptionMode left, IntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeInternalChannelEncryptionMode left, IntegrationRuntimeInternalChannelEncryptionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeInternalChannelEncryptionMode(string value) => new IntegrationRuntimeInternalChannelEncryptionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeInternalChannelEncryptionMode?(string value) => value == null ? null : new IntegrationRuntimeInternalChannelEncryptionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeInternalChannelEncryptionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeInternalChannelEncryptionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

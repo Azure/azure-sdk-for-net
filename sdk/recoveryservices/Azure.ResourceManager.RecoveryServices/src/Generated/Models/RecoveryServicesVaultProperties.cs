@@ -36,14 +36,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="backupStorageVersion"> Backup storage version. </param>
         /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="costManagementSettings"> Cost Management Settings of the vault. </param>
         /// <param name="restoreSettings"> Restore Settings of the vault. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
         /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
         /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <param name="regionOfChoiceSettings"> Region of choice settings for this vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, CostManagementSettings costManagementSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, RegionOfChoiceSettings regionOfChoiceSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -56,12 +58,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             BackupStorageVersion = backupStorageVersion;
             PublicNetworkAccess = publicNetworkAccess;
             MonitoringSettings = monitoringSettings;
+            CostManagementSettings = costManagementSettings;
             RestoreSettings = restoreSettings;
             RedundancySettings = redundancySettings;
             SecuritySettings = securitySettings;
             SecureScore = secureScore;
             BcdrSecurityLevel = bcdrSecurityLevel;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            RegionOfChoiceSettings = regionOfChoiceSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -98,6 +102,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Monitoring Settings of the vault. </summary>
         public VaultMonitoringSettings MonitoringSettings { get; set; }
 
+        /// <summary> Cost Management Settings of the vault. </summary>
+        internal CostManagementSettings CostManagementSettings { get; set; }
+
         /// <summary> Restore Settings of the vault. </summary>
         internal RestoreSettings RestoreSettings { get; set; }
 
@@ -116,6 +123,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
 
+        /// <summary> Region of choice settings for this vault. </summary>
+        internal RegionOfChoiceSettings RegionOfChoiceSettings { get; set; }
+
+        /// <summary> Settings for granularity level. </summary>
+        public GranularityLevel? CostManagementGranularityLevel
+        {
+            get
+            {
+                return CostManagementSettings is null ? default : CostManagementSettings.GranularityLevel;
+            }
+            set
+            {
+                if (CostManagementSettings is null)
+                {
+                    CostManagementSettings = new CostManagementSettings();
+                }
+                CostManagementSettings.GranularityLevel = value;
+            }
+        }
+
         /// <summary> Gets or sets the CrossSubscriptionRestoreState. </summary>
         public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
         {
@@ -130,6 +157,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     RestoreSettings = new RestoreSettings();
                 }
                 RestoreSettings.CrossSubscriptionRestoreState = value;
+            }
+        }
+
+        /// <summary> The status of region of choice settings - Enabled or Disabled. </summary>
+        public RecoveryServicesSourceScanState? RegionOfChoiceStatus
+        {
+            get
+            {
+                return RegionOfChoiceSettings is null ? default : RegionOfChoiceSettings.Status;
+            }
+            set
+            {
+                if (RegionOfChoiceSettings is null)
+                {
+                    RegionOfChoiceSettings = new RegionOfChoiceSettings();
+                }
+                RegionOfChoiceSettings.Status = value;
             }
         }
     }

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     Properties = new DestinationProperties();
                 }
-                Properties.DataLakeSubscriptionId = value.Value;
+                Properties.DataLakeSubscriptionId = value;
             }
         }
 

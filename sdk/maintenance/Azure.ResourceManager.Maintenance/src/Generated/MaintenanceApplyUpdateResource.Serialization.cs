@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Maintenance
 {
+    /// <summary></summary>
     public partial class MaintenanceApplyUpdateResource : IJsonModel<MaintenanceApplyUpdateData>
     {
-        private static MaintenanceApplyUpdateData s_dataDeserializationInstance;
-        private static MaintenanceApplyUpdateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MaintenanceApplyUpdateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MaintenanceApplyUpdateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceApplyUpdateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenanceApplyUpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceApplyUpdateData>)Data).Write(writer, options);
 
-        MaintenanceApplyUpdateData IJsonModel<MaintenanceApplyUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceApplyUpdateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenanceApplyUpdateData IJsonModel<MaintenanceApplyUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MaintenanceApplyUpdateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceApplyUpdateData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MaintenanceApplyUpdateData IPersistableModel<MaintenanceApplyUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceApplyUpdateData>(data, options, AzureResourceManagerMaintenanceContext.Default);
 
-        string IPersistableModel<MaintenanceApplyUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceApplyUpdateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MaintenanceApplyUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

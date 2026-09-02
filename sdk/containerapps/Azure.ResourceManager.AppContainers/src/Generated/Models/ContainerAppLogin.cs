@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppLogin
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppLogin"/>. </summary>
         public ContainerAppLogin()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppLogin(LoginRoutes routes, ContainerAppTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppLogin(LoginRoutes routes, ContainerAppTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Routes = routes;
             TokenStore = tokenStore;
@@ -71,30 +43,21 @@ namespace Azure.ResourceManager.AppContainers.Models
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             CookieExpiration = cookieExpiration;
             Nonce = nonce;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+        [WirePath("routes")]
         internal LoginRoutes Routes { get; set; }
-        /// <summary> The endpoint at which a logout request should be made. </summary>
-        [WirePath("routes.logoutEndpoint")]
-        public string RoutesLogoutEndpoint
-        {
-            get => Routes is null ? default : Routes.LogoutEndpoint;
-            set
-            {
-                if (Routes is null)
-                    Routes = new LoginRoutes();
-                Routes.LogoutEndpoint = value;
-            }
-        }
 
         /// <summary> The configuration settings of the token store. </summary>
         [WirePath("tokenStore")]
         public ContainerAppTokenStore TokenStore { get; set; }
+
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("preserveUrlFragmentsForLogins")]
         public bool? PreserveUrlFragmentsForLogins { get; set; }
+
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
@@ -102,11 +65,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         [WirePath("allowedExternalRedirectUrls")]
         public IList<string> AllowedExternalRedirectUrls { get; }
+
         /// <summary> The configuration settings of the session cookie's expiration. </summary>
         [WirePath("cookieExpiration")]
         public ContainerAppCookieExpiration CookieExpiration { get; set; }
+
         /// <summary> The configuration settings of the nonce used in the login flow. </summary>
         [WirePath("nonce")]
         public ContainerAppLoginNonce Nonce { get; set; }
+
+        /// <summary> The endpoint at which a logout request should be made. </summary>
+        [WirePath("routes.logoutEndpoint")]
+        public string RoutesLogoutEndpoint
+        {
+            get
+            {
+                return Routes is null ? default : Routes.LogoutEndpoint;
+            }
+            set
+            {
+                if (Routes is null)
+                {
+                    Routes = new LoginRoutes();
+                }
+                Routes.LogoutEndpoint = value;
+            }
+        }
     }
 }

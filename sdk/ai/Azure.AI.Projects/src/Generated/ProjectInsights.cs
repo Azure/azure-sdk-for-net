@@ -23,11 +23,13 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectInsights(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectInsights(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,8 +38,11 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Generate Insights
+        /// [Protocol Method] Generates an insights report from the provided evaluation configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -52,14 +57,24 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Generate(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Generate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Generate Insights
+        /// [Protocol Method] Generates an insights report from the provided evaluation configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -74,13 +89,23 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GenerateAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Generate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Generate Insights. </summary>
+        /// <summary> Generates an insights report from the provided evaluation configuration. </summary>
         /// <param name="insight"> Complete evaluation configuration including data source, evaluators, and result settings. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -94,7 +119,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
-        /// <summary> Generate Insights. </summary>
+        /// <summary> Generates an insights report from the provided evaluation configuration. </summary>
         /// <param name="insight"> Complete evaluation configuration including data source, evaluators, and result settings. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -109,7 +134,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get a specific insight by Id.
+        /// [Protocol Method] Retrieves the specified insight report and its results.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -126,14 +151,24 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Get a specific insight by Id.
+        /// [Protocol Method] Retrieves the specified insight report and its results.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -150,13 +185,23 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAsync(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get a specific insight by Id. </summary>
+        /// <summary> Retrieves the specified insight report and its results. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
@@ -172,7 +217,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a specific insight by Id. </summary>
+        /// <summary> Retrieves the specified insight report and its results. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
@@ -189,7 +234,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List all insights in reverse chronological order (newest first).
+        /// [Protocol Method] Returns insights in reverse chronological order, with the most recent entries first.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -207,19 +252,29 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            return new ProjectInsightsGetAllCollectionResult(
-                this,
-                foundryFeatures,
-                @type,
-                evalId,
-                runId,
-                agentName,
-                includeCoordinates,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.GetAll");
+            scope.Start();
+            try
+            {
+                return new ProjectInsightsGetAllCollectionResult(
+                    this,
+                    foundryFeatures,
+                    @type,
+                    evalId,
+                    runId,
+                    agentName,
+                    includeCoordinates,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] List all insights in reverse chronological order (newest first).
+        /// [Protocol Method] Returns insights in reverse chronological order, with the most recent entries first.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -237,18 +292,28 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            return new ProjectInsightsGetAllAsyncCollectionResult(
-                this,
-                foundryFeatures,
-                @type,
-                evalId,
-                runId,
-                agentName,
-                includeCoordinates,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.GetAll");
+            scope.Start();
+            try
+            {
+                return new ProjectInsightsGetAllAsyncCollectionResult(
+                    this,
+                    foundryFeatures,
+                    @type,
+                    evalId,
+                    runId,
+                    agentName,
+                    includeCoordinates,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> List all insights in reverse chronological order (newest first). </summary>
+        /// <summary> Returns insights in reverse chronological order, with the most recent entries first. </summary>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
@@ -270,7 +335,7 @@ namespace Azure.AI.Projects.Evaluation
                 cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all insights in reverse chronological order (newest first). </summary>
+        /// <summary> Returns insights in reverse chronological order, with the most recent entries first. </summary>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>

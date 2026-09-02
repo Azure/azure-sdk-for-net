@@ -48,7 +48,9 @@ public partial class NestedExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is NestedExpression n && Value.Equals(n.Value) && NestedMember == n.NestedMember;
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(NestedExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (NestedMember?.GetHashCode() ?? 0);
 
     internal static NestedExpression DeserializeNestedExpression(JsonElement element)

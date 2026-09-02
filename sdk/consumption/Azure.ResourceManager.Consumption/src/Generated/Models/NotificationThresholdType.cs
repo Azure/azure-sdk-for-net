@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Consumption.Models
     public readonly partial struct NotificationThresholdType : IEquatable<NotificationThresholdType>
     {
         private readonly string _value;
+        /// <summary> Actual costs budget alerts notify when the actual accrued cost exceeds the allocated budget . </summary>
+        private const string ActualValue = "Actual";
+        /// <summary> Forecasted costs budget alerts provide advanced notification that your spending trends are likely to exceed your allocated budget, as it relies on forecasted cost predictions. </summary>
+        private const string ForecastedValue = "Forecasted";
 
         /// <summary> Initializes a new instance of <see cref="NotificationThresholdType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationThresholdType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActualValue = "Actual";
-        private const string ForecastedValue = "Forecasted";
+            _value = value;
+        }
 
         /// <summary> Actual costs budget alerts notify when the actual accrued cost exceeds the allocated budget . </summary>
         public static NotificationThresholdType Actual { get; } = new NotificationThresholdType(ActualValue);
+
         /// <summary> Forecasted costs budget alerts provide advanced notification that your spending trends are likely to exceed your allocated budget, as it relies on forecasted cost predictions. </summary>
         public static NotificationThresholdType Forecasted { get; } = new NotificationThresholdType(ForecastedValue);
+
         /// <summary> Determines if two <see cref="NotificationThresholdType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationThresholdType left, NotificationThresholdType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationThresholdType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationThresholdType left, NotificationThresholdType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationThresholdType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationThresholdType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationThresholdType(string value) => new NotificationThresholdType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationThresholdType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationThresholdType?(string value) => value == null ? null : new NotificationThresholdType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationThresholdType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationThresholdType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

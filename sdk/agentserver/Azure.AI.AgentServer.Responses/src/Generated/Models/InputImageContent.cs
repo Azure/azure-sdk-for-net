@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InputImageContent"/>. </summary>
-        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
+        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         public InputImageContent(ImageDetail detail)
         {
             Detail = detail;
@@ -26,7 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"> The type of the input item. Always `input_image`. </param>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
-        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </param>
+        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InputImageContent(string @type, Uri imageUrl, string fileId, ImageDetail detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -46,7 +46,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }
 
-        /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, or `auto`. Defaults to `auto`. </summary>
+        /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
         public ImageDetail Detail { get; set; }
     }
 }

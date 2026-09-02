@@ -55,12 +55,15 @@ public partial class ObjectExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) =>
         other is ObjectExpression o && Properties.SequenceEqual(o.Properties);
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         int hash = typeof(ObjectExpression).GetHashCode();
-        foreach (var p in Properties) hash = hash * 31 + (p?.GetHashCode() ?? 0);
+        foreach (var p in Properties)
+            hash = hash * 31 + (p?.GetHashCode() ?? 0);
         return hash;
     }
 

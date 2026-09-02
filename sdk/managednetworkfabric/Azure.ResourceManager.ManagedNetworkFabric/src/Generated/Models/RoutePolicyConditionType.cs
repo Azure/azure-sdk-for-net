@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct RoutePolicyConditionType : IEquatable<RoutePolicyConditionType>
     {
         private readonly string _value;
+        /// <summary> RoutePolicyConditionType-Or. </summary>
+        private const string OrValue = "Or";
+        /// <summary> RoutePolicyConditionType-And. </summary>
+        private const string AndValue = "And";
 
         /// <summary> Initializes a new instance of <see cref="RoutePolicyConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutePolicyConditionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OrValue = "Or";
-        private const string AndValue = "And";
-
-        /// <summary> Or. </summary>
+        /// <summary> RoutePolicyConditionType-Or. </summary>
         public static RoutePolicyConditionType Or { get; } = new RoutePolicyConditionType(OrValue);
-        /// <summary> And. </summary>
+
+        /// <summary> RoutePolicyConditionType-And. </summary>
         public static RoutePolicyConditionType And { get; } = new RoutePolicyConditionType(AndValue);
+
         /// <summary> Determines if two <see cref="RoutePolicyConditionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutePolicyConditionType left, RoutePolicyConditionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutePolicyConditionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutePolicyConditionType left, RoutePolicyConditionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutePolicyConditionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutePolicyConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutePolicyConditionType(string value) => new RoutePolicyConditionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutePolicyConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutePolicyConditionType?(string value) => value == null ? null : new RoutePolicyConditionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutePolicyConditionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutePolicyConditionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

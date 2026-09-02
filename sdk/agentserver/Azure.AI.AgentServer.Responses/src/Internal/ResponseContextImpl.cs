@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
@@ -27,7 +28,14 @@ internal sealed class ResponseContextImpl : ResponseContext
     private readonly BinaryData? _rawBody;
     private readonly IReadOnlyDictionary<string, string> _clientHeaders;
     private readonly IReadOnlyDictionary<string, StringValues> _queryParameters;
-    private readonly IsolationContext _isolation;
+    private readonly PlatformContext _platformContext;
+    private readonly bool _steerable;
+    private readonly bool _resilientBackground;
+    private readonly bool _isRecovery;
+    private readonly bool _isSteeredTurn;
+    private readonly Func<int>? _pendingInputCountProvider;
+    private readonly ResponseObject? _persistedResponse;
+    private readonly Lazy<string> _conversationChainId;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseContextImpl"/>.
@@ -39,7 +47,11 @@ internal sealed class ResponseContextImpl : ResponseContext
     /// <param name="rawBody">The full raw JSON request body, or <see langword="null"/> if not available.</param>
     /// <param name="clientHeaders">Forwarded <c>x-client-*</c> headers, or <c>null</c> for empty.</param>
     /// <param name="queryParameters">Query parameters from the request, or <c>null</c> for empty.</param>
-    /// <param name="isolation">The platform isolation context, or <c>null</c> for <see cref="IsolationContext.Empty"/>.</param>
+    /// <param name="platformContext">The platform context, or <c>null</c> for <see cref="PlatformContext.Empty"/>.</param>
+    /// <param name="isRecovery">Whether this is a recovery re-invocation of a previously interrupted background response.</param>
+    /// <param name="persistedResponse">The last durable response snapshot from the prior lifetime, exposed via <see cref="ResponseContext.PersistedResponse"/> during recovery.</param>
+    /// <param name="isSteeredTurn">Whether this invocation is the drain re-entry following a steering input.</param>
+    /// <param name="pendingInputCountProvider">Live provider for the count of queued steering inputs behind this turn, or <c>null</c> when steering is not in effect.</param>
     public ResponseContextImpl(
         string responseId,
         ResponsesProvider provider,
@@ -48,16 +60,27 @@ internal sealed class ResponseContextImpl : ResponseContext
         BinaryData? rawBody = null,
         IReadOnlyDictionary<string, string>? clientHeaders = null,
         IReadOnlyDictionary<string, StringValues>? queryParameters = null,
-        IsolationContext? isolation = null)
+        PlatformContext? platformContext = null,
+        bool isRecovery = false,
+        ResponseObject? persistedResponse = null,
+        bool isSteeredTurn = false,
+        Func<int>? pendingInputCountProvider = null)
         : base(responseId)
     {
         _rawBody = rawBody;
         _clientHeaders = clientHeaders ?? new Dictionary<string, string>();
         _queryParameters = queryParameters ?? new Dictionary<string, StringValues>();
-        _isolation = isolation ?? IsolationContext.Empty;
+        _platformContext = platformContext ?? PlatformContext.Empty;
         _provider = provider;
         _request = request;
+        _isRecovery = isRecovery;
+        _persistedResponse = persistedResponse;
+        _isSteeredTurn = isSteeredTurn;
+        _pendingInputCountProvider = pendingInputCountProvider;
         _historyLimit = options?.Value.DefaultFetchHistoryCount ?? ResponsesServerOptions.DefaultFetchHistoryCountValue;
+        _steerable = options?.Value.SteerableConversations ?? false;
+        _resilientBackground = options?.Value.ResilientBackground ?? false;
+        _conversationChainId = new Lazy<string>(DeriveConversationChainId);
         _inputItemsResolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: true));
         _inputItemsUnresolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: false));
         _historyItemIds = new Lazy<Task<IReadOnlyList<string>>>(ResolveHistoryItemIdsAsync);
@@ -65,10 +88,22 @@ internal sealed class ResponseContextImpl : ResponseContext
     }
 
     /// <inheritdoc/>
+    public override bool IsRecovery => _isRecovery;
+
+    /// <inheritdoc/>
+    public override bool IsSteeredTurn => _isSteeredTurn;
+
+    /// <inheritdoc/>
+    public override int PendingInputCount => _pendingInputCountProvider?.Invoke() ?? 0;
+
+    /// <inheritdoc/>
+    public override ResponseObject? PersistedResponse => _persistedResponse;
+
+    /// <inheritdoc/>
     public override BinaryData? RawBody => _rawBody;
 
     /// <inheritdoc/>
-    public override IsolationContext Isolation => _isolation;
+    public override PlatformContext PlatformContext => _platformContext;
 
     /// <inheritdoc/>
     public override IReadOnlyDictionary<string, string> ClientHeaders => _clientHeaders;
@@ -77,8 +112,77 @@ internal sealed class ResponseContextImpl : ResponseContext
     public override IReadOnlyDictionary<string, StringValues> QueryParameters => _queryParameters;
 
     /// <inheritdoc/>
+    public override string ConversationChainId => _conversationChainId.Value;
+
+    private string DeriveConversationChainId()
+    {
+        string? conversationId = _request.GetConversationId();
+        string? previousResponseId = _request.PreviousResponseId;
+        AgentReference? agentReference = _request.AgentReference ?? _request.Agent;
+        string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
+        string sessionId = _request.AgentSessionId is { Length: > 0 } sid
+            ? sid
+            : SessionIdDerivation.Derive(conversationId, previousResponseId, ResponseId, agentReference);
+
+        return ConversationChainIdDerivation.Derive(
+            conversationId,
+            previousResponseId,
+            ResponseId,
+            agentName,
+            sessionId,
+            _steerable);
+    }
+
+    /// <inheritdoc/>
     public override Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
         => resolveReferences ? _inputItemsResolved.Value : _inputItemsUnresolved.Value;
+
+    /// <inheritdoc/>
+    public override Task ExitForRecoveryAsync(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        // A store=false response has no durable state to recover to, so deferral is impossible.
+        // Mirror Python's RuntimeError (spec req b): throw rather than silently no-op. This is a
+        // hard programming error the orchestrator surfaces as a failure.
+        if (_request.Store == false)
+        {
+            throw new InvalidOperationException(
+                "ExitForRecoveryAsync() cannot be called on a store=false response — there is no durable state to recover.");
+        }
+
+        // Deferral only applies to resilient background responses (ResilientBackground=true +
+        // background=true + store!=false). For any other configuration there is no next-lifetime
+        // recovery to defer to, so completing without deferring matches the base no-op contract.
+        var isResilientBackground = _resilientBackground
+            && _request.Background == true
+            && _request.Store != false;
+
+        if (!isResilientBackground)
+        {
+            return Task.CompletedTask;
+        }
+
+        // Record the deferral request BEFORE throwing so that even if a handler wraps this call in a
+        // broad catch (swallowing the ResponseExitForRecovery signal), the orchestrator can still
+        // observe the intent on a normal handler return and defer identically (FR-036). Mirrors the
+        // non-swallowable nature of Python's ResponseExitForRecovery(BaseException).
+        DeferralRequested = true;
+
+        // Raise the control signal; the orchestrator catches it, marks the execution deferred, and
+        // preserves the last checkpoint snapshot (FR-036). Never returns to the handler.
+        throw new ResponseExitForRecovery();
+    }
+
+    /// <summary>
+    /// Set to <see langword="true"/> by <see cref="ExitForRecoveryAsync"/> on a resilient background
+    /// response immediately before it raises <see cref="ResponseExitForRecovery"/>. The orchestrator
+    /// checks this on a normal handler return so a handler that swallows the deferral signal with a
+    /// broad <c>catch</c> still results in the same durable deferral outcome (in_progress, recovery
+    /// entry retained, no pre-terminal overwrite). Mirrors the non-swallowable semantics of Python's
+    /// <c>ResponseExitForRecovery(BaseException)</c>.
+    /// </summary>
+    internal bool DeferralRequested { get; private set; }
 
     /// <inheritdoc/>
     public override Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
@@ -145,7 +249,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         // Batch-resolve references if any
         if (referenceIds.Count > 0)
         {
-            var resolved = (await _provider.GetItemsAsync(referenceIds, _isolation)).ToList();
+            var resolved = (await _provider.GetItemsAsync(referenceIds, _platformContext)).ToList();
 
             for (int i = 0; i < referencePositions.Count; i++)
             {
@@ -177,7 +281,7 @@ internal sealed class ResponseContextImpl : ResponseContext
             return Array.Empty<string>();
         }
 
-        var ids = await _provider.GetHistoryItemIdsAsync(previousResponseId, conversationId, _historyLimit, _isolation);
+        var ids = await _provider.GetHistoryItemIdsAsync(previousResponseId, conversationId, _historyLimit, _platformContext);
         return ids.ToList();
     }
 
@@ -189,7 +293,7 @@ internal sealed class ResponseContextImpl : ResponseContext
             return Array.Empty<OutputItem>();
         }
 
-        var items = await _provider.GetItemsAsync(ids, _isolation);
+        var items = await _provider.GetItemsAsync(ids, _platformContext);
         return items
             .Where(item => item is not null)
             .Select(item => item!)

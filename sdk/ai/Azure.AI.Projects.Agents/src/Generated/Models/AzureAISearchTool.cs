@@ -12,12 +12,38 @@ namespace Azure.AI.Projects.Agents
     public partial class AzureAISearchTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="options"> The azure ai search index resource. </param>
-        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolOptions options) : base(@type, additionalBinaryDataProperties)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public AzureAISearchTool(AzureAISearchToolOptions options) : base(ToolType.AzureAiSearch)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             Options = options;
         }
+
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="options"> The azure ai search index resource. </param>
+        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions options) : base(@type, additionalBinaryDataProperties)
+        {
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
+            Options = options;
+        }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

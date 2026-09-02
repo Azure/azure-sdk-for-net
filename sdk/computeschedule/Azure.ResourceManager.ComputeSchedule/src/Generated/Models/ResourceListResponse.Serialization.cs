@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ScheduledActionResourceData item in Value)
+            foreach (ScheduledActionResourceDetails item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IList<ScheduledActionResourceData> value = default;
+            IList<ScheduledActionResourceDetails> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ScheduledActionResourceData> array = new List<ScheduledActionResourceData>();
+                    List<ScheduledActionResourceDetails> array = new List<ScheduledActionResourceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledActionResourceData.DeserializeScheduledActionResourceData(item, options));
+                        array.Add(ScheduledActionResourceDetails.DeserializeScheduledActionResourceDetails(item, options));
                     }
                     value = array;
                     continue;

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Compute
 {
+    /// <summary></summary>
     public partial class DiskImageResource : IJsonModel<DiskImageData>
     {
-        private static DiskImageData s_dataDeserializationInstance;
-        private static DiskImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiskImageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiskImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiskImageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskImageData>)Data).Write(writer, options);
 
-        DiskImageData IJsonModel<DiskImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskImageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskImageData IJsonModel<DiskImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DiskImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskImageData>(Data, options, AzureResourceManagerComputeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DiskImageData IPersistableModel<DiskImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskImageData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<DiskImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiskImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

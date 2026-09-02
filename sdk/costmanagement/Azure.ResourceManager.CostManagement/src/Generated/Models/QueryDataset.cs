@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The definition of data present in the query. </summary>
     public partial class QueryDataset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryDataset"/>. </summary>
         public QueryDataset()
@@ -58,37 +30,43 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="aggregation"> Dictionary of aggregation expression to use in the query. The key of each item in the dictionary is the alias for the aggregated column. Query can have up to 2 aggregation clauses. </param>
         /// <param name="grouping"> Array of group by expression to use in the query. Query can have up to 2 group by clauses. </param>
         /// <param name="filter"> The filter expression to use in the query. Please reference our Query API REST documentation for how to properly format the filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryDataset(GranularityType? granularity, QueryDatasetConfiguration configuration, IDictionary<string, QueryAggregation> aggregation, IList<QueryGrouping> grouping, QueryFilter filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueryDataset(GranularityType? granularity, QueryDatasetConfiguration configuration, IDictionary<string, QueryAggregation> aggregation, IList<QueryGrouping> grouping, QueryFilter filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Granularity = granularity;
             Configuration = configuration;
             Aggregation = aggregation;
             Grouping = grouping;
             Filter = filter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The granularity of rows in the query. </summary>
         public GranularityType? Granularity { get; set; }
+
         /// <summary> Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. </summary>
         internal QueryDatasetConfiguration Configuration { get; set; }
+
+        /// <summary> Dictionary of aggregation expression to use in the query. The key of each item in the dictionary is the alias for the aggregated column. Query can have up to 2 aggregation clauses. </summary>
+        public IDictionary<string, QueryAggregation> Aggregation { get; }
+
+        /// <summary> Array of group by expression to use in the query. Query can have up to 2 group by clauses. </summary>
+        public IList<QueryGrouping> Grouping { get; }
+
+        /// <summary> The filter expression to use in the query. Please reference our Query API REST documentation for how to properly format the filter. </summary>
+        public QueryFilter Filter { get; set; }
+
         /// <summary> Array of column names to be included in the query. Any valid query column name is allowed. If not provided, then query includes all columns. </summary>
         public IList<string> Columns
         {
             get
             {
                 if (Configuration is null)
+                {
                     Configuration = new QueryDatasetConfiguration();
+                }
                 return Configuration.Columns;
             }
         }
-
-        /// <summary> Dictionary of aggregation expression to use in the query. The key of each item in the dictionary is the alias for the aggregated column. Query can have up to 2 aggregation clauses. </summary>
-        public IDictionary<string, QueryAggregation> Aggregation { get; }
-        /// <summary> Array of group by expression to use in the query. Query can have up to 2 group by clauses. </summary>
-        public IList<QueryGrouping> Grouping { get; }
-        /// <summary> The filter expression to use in the query. Please reference our Query API REST documentation for how to properly format the filter. </summary>
-        public QueryFilter Filter { get; set; }
     }
 }

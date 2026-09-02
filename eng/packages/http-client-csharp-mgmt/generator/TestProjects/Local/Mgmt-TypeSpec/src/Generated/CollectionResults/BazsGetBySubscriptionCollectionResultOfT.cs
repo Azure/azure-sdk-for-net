@@ -19,6 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Bazs _client;
         private readonly Guid _subscriptionId;
         private readonly int? _top;
+        private readonly IEnumerable<string> _filters;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -26,13 +27,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="client"> The Bazs client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"></param>
+        /// <param name="filters"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BazsGetBySubscriptionCollectionResultOfT(Bazs client, Guid subscriptionId, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BazsGetBySubscriptionCollectionResultOfT(Bazs client, Guid subscriptionId, int? top, IEnumerable<string> filters, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _top = top;
+            _filters = filters;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -52,8 +55,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 BazListResult result = BazListResult.FromResponse(response);
-                yield return Page<BazData>.FromValues((IReadOnlyList<BazData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BazData>.FromValues((IReadOnlyList<BazData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -66,7 +69,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _top, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _top, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _top, _filters, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _top, _filters, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -1,6 +1,6 @@
 # Analyze an invoice using prebuilt analyzer
 
-This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer and extract structured fields from the result.
+This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer, extract structured fields, and convert field results to LLM-friendly text with `.ToLlmInput()`.
 
 ## About analyzing invoices
 
@@ -65,6 +65,39 @@ Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     inputs: new[] { new AnalysisInput { Uri = invoiceUrl } });
 
 AnalysisResult result = operation.Value;
+```
+
+## Get usage details
+
+After an analyze operation completes, you can retrieve usage details that describe the resources consumed — including document page counts, contextualization tokens, and per-model LLM/embedding token breakdown. Usage is returned as a sibling of `result` in the LRO response envelope.
+
+Use `GetUsageDetails()` to read generated `UsageDetails`.
+
+The usage object contains:
+- **`DocumentPagesMinimal`**, **`DocumentPagesBasic`**, **`DocumentPagesStandard`** — pages processed at each extraction tier. Standard = layout + OCR (scanned docs), Basic = OCR only, Minimal = digital formats (DOCX, XLSX, HTML, TXT) that need no OCR.
+- **`AudioHours`**, **`VideoHours`** — hours of audio/video processed
+- **`ContextualizationTokens`**, **`AdvancedContextualizationTokens`** — tokens charged by Content Understanding for preparing context, generating confidence scores, source grounding, and formatting output. Advanced contextualization is used when the service selects that path. Charged separately from LLM tokens.
+- **`Tokens`** — a dictionary of LLM and embedding token counts consumed by your Foundry model deployment, grouped by model and type (e.g., `"gpt-5.2-input"`, `"gpt-5.2-output"`). These are billed on your Foundry deployment, not on Content Understanding.
+
+For full pricing details, see the [Content Understanding pricing explainer][pricing-explainer].
+
+```C# Snippet:ContentUnderstandingGetUsage
+// Document page meters are three tiers (minimal / basic / standard).
+UsageDetails? usage = operation.GetUsageDetails();
+if (usage != null)
+{
+    Console.WriteLine($"Document pages (minimal): {usage.DocumentPagesMinimal}");
+    Console.WriteLine($"Document pages (basic): {usage.DocumentPagesBasic}");
+    Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
+    Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
+    if (usage.Tokens != null)
+    {
+        foreach (var kvp in usage.Tokens)
+        {
+            Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+        }
+    }
+}
 ```
 
 ## Extract invoice fields
@@ -251,6 +284,21 @@ The `DocumentContent.Unit` property indicates the measurement system used for po
 
 For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document elements documentation][document-elements-docs].
 
+## Convert invoice results to LLM-ready text
+
+The extracted fields can also be packaged into a single LLM-ready text block. `.ToLlmInput()` renders all extracted fields as YAML front matter followed by the markdown body, so an LLM can consume both structured data and document text in one shot.
+
+```C# Snippet:ContentUnderstandingInvoiceToLlmInput
+// The fields above can also be packaged into a single LLM-ready text block.
+// ToLlmInput renders all extracted fields as YAML front matter followed by
+// the markdown body, so an LLM can consume both structured data and document text
+// in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
+string llmText = result.ToLlmInput();
+Console.WriteLine(llmText);
+```
+
+For advanced usage (output options, content ranges, video/audio, metadata), see the [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+
 ## Next steps
 
 - [Sample 04: Create a custom analyzer][sample04] - Learn how to create custom analyzers
@@ -272,4 +320,6 @@ For more details about `DocumentContent` and all available document elements (pa
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [financial-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers#financial-documents
 [source-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements#source
+[pricing-explainer]: https://learn.microsoft.com/azure/ai-services/content-understanding/pricing-explainer
+[sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
 

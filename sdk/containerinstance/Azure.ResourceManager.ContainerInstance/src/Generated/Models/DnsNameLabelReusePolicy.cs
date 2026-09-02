@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct DnsNameLabelReusePolicy : IEquatable<DnsNameLabelReusePolicy>
     {
         private readonly string _value;
+        /// <summary> Unsecure. </summary>
+        private const string UnsecureValue = "Unsecure";
+        /// <summary> TenantReuse. </summary>
+        private const string TenantReuseValue = "TenantReuse";
+        /// <summary> SubscriptionReuse. </summary>
+        private const string SubscriptionReuseValue = "SubscriptionReuse";
+        /// <summary> ResourceGroupReuse. </summary>
+        private const string ResourceGroupReuseValue = "ResourceGroupReuse";
+        /// <summary> Noreuse. </summary>
+        private const string NoReuseValue = "Noreuse";
 
         /// <summary> Initializes a new instance of <see cref="DnsNameLabelReusePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DnsNameLabelReusePolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnsecureValue = "Unsecure";
-        private const string TenantReuseValue = "TenantReuse";
-        private const string SubscriptionReuseValue = "SubscriptionReuse";
-        private const string ResourceGroupReuseValue = "ResourceGroupReuse";
-        private const string NoReuseValue = "Noreuse";
+            _value = value;
+        }
 
         /// <summary> Unsecure. </summary>
         public static DnsNameLabelReusePolicy Unsecure { get; } = new DnsNameLabelReusePolicy(UnsecureValue);
+
         /// <summary> TenantReuse. </summary>
         public static DnsNameLabelReusePolicy TenantReuse { get; } = new DnsNameLabelReusePolicy(TenantReuseValue);
+
         /// <summary> SubscriptionReuse. </summary>
         public static DnsNameLabelReusePolicy SubscriptionReuse { get; } = new DnsNameLabelReusePolicy(SubscriptionReuseValue);
+
         /// <summary> ResourceGroupReuse. </summary>
         public static DnsNameLabelReusePolicy ResourceGroupReuse { get; } = new DnsNameLabelReusePolicy(ResourceGroupReuseValue);
+
         /// <summary> Noreuse. </summary>
         public static DnsNameLabelReusePolicy NoReuse { get; } = new DnsNameLabelReusePolicy(NoReuseValue);
+
         /// <summary> Determines if two <see cref="DnsNameLabelReusePolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsNameLabelReusePolicy left, DnsNameLabelReusePolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsNameLabelReusePolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsNameLabelReusePolicy left, DnsNameLabelReusePolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsNameLabelReusePolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsNameLabelReusePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsNameLabelReusePolicy(string value) => new DnsNameLabelReusePolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsNameLabelReusePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsNameLabelReusePolicy?(string value) => value == null ? null : new DnsNameLabelReusePolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsNameLabelReusePolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsNameLabelReusePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

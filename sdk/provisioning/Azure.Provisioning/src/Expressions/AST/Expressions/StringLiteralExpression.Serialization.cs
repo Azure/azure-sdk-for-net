@@ -46,7 +46,9 @@ public partial class StringLiteralExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is StringLiteralExpression s && Value == s.Value;
+    /// <inheritdoc/>
     public override int GetHashCode() => (typeof(StringLiteralExpression).GetHashCode() * 31 + (Value?.GetHashCode() ?? 0));
 
     internal static StringLiteralExpression DeserializeStringLiteralExpression(JsonElement element)

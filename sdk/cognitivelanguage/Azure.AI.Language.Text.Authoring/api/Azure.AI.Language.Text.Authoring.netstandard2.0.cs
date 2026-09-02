@@ -778,6 +778,13 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual Azure.AsyncPageable<System.BinaryData> GetTrainingJobsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState> GetTrainingJobsAsync(string projectName, int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class TextAnalysisAuthoringClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientSettings> configureSettings) { throw null; }
+    }
     public partial class TextAnalysisAuthoringClientOptions : Azure.Core.ClientOptions
     {
         public TextAnalysisAuthoringClientOptions(Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions.ServiceVersion version = Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview) { }
@@ -847,7 +854,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata TextAuthoringAssignedProjectDeploymentsMetadata(string projectName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell TextAuthoringConfusionMatrixCell(float normalizedValue = 0f, float rawValue = 0f) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow TextAuthoringConfusionMatrixRow(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails TextAuthoringCopyProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind = default(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind), string targetProjectName = null, string accessToken = null, System.DateTimeOffset expiresAt = default(System.DateTimeOffset), string targetResourceId = null, string targetResourceRegion = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails TextAuthoringCopyProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind = default(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind), string targetProjectName = null, string accessToken = null, System.DateTimeOffset expiresOn = default(System.DateTimeOffset), string targetResourceId = null, string targetResourceRegion = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState TextAuthoringCopyProjectState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, System.Collections.Generic.IEnumerable<string> assignedResourceIds = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails TextAuthoringCreateProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind = default(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind), string storageInputContainerName = null, Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = default(bool?), string description = null, string language = null) { throw null; }
@@ -891,7 +898,7 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState TextAuthoringSwapDeploymentsState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion TextAuthoringTrainingConfigVersion(string trainingConfigVersion = null, System.DateTimeOffset modelExpiredOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails TextAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions = null, Azure.AI.Language.Text.Authoring.DataGenerationSetting dataGenerationSettings = null) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult TextAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState trainingStatus = null, Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState evaluationStatus = null, System.DateTimeOffset? estimatedEndOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult TextAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState trainingStatus = null, Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState evaluationStatus = null, System.DateTimeOffset? estimatedEndsOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState TextAuthoringTrainingState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult result = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails TextAuthoringUnassignDeploymentResourcesDetails(System.Collections.Generic.IEnumerable<string> assignedResourceIds = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary TextSentimentEvalSummary(Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary spanSentimentsEvaluation = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
@@ -1006,9 +1013,9 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class TextAuthoringCopyProjectDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails>
     {
-        public TextAuthoringCopyProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind, string targetProjectName, string accessToken, System.DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion) { }
+        public TextAuthoringCopyProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind, string targetProjectName, string accessToken, System.DateTimeOffset expiresOn, string targetResourceId, string targetResourceRegion) { }
         public string AccessToken { get { throw null; } set { } }
-        public System.DateTimeOffset ExpiresAt { get { throw null; } set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind ProjectKind { get { throw null; } set { } }
         public string TargetProjectName { get { throw null; } set { } }
         public string TargetResourceId { get { throw null; } set { } }
@@ -2052,7 +2059,7 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringTrainingJobResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>
     {
         internal TextAuthoringTrainingJobResult() { }
-        public System.DateTimeOffset? EstimatedEndOn { get { throw null; } }
+        public System.DateTimeOffset? EstimatedEndsOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState EvaluationStatus { get { throw null; } }
         public string ModelLabel { get { throw null; } }
         public string TrainingConfigVersion { get { throw null; } }
@@ -2129,8 +2136,5 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class TextAuthoringClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

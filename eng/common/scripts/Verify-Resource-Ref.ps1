@@ -1,5 +1,6 @@
 . (Join-Path $PSScriptRoot common.ps1)
-Install-Module -Name powershell-yaml -RequiredVersion 0.4.7 -Force -Scope CurrentUser
+. (Join-Path $PSScriptRoot Helpers PSModule-Helpers.ps1)
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 $ymlfiles = Get-ChildItem $RepoRoot -recurse | Where-Object {$_ -like '*.yml'}
 $affectedRepos = [System.Collections.ArrayList]::new()
 

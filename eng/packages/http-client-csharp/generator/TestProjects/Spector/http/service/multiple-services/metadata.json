@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "Service.MultipleServices.ServiceA": "av2",
+    "Service.MultipleServices.ServiceB": "bv2"
+  }
+}

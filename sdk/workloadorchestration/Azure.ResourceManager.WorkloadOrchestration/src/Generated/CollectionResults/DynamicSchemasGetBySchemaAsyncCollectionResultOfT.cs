@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 DynamicSchemaListResult result = DynamicSchemaListResult.FromResponse(response);
-                yield return Page<EdgeDynamicSchemaData>.FromValues((IReadOnlyList<EdgeDynamicSchemaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeDynamicSchemaData>.FromValues((IReadOnlyList<EdgeDynamicSchemaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

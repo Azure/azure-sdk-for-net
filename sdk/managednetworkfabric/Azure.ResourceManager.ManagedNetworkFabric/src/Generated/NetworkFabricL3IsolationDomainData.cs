@@ -13,108 +13,259 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricL3IsolationDomain data model.
-    /// The L3 Isolation Domain resource definition.
-    /// </summary>
+    /// <summary> The L3 Isolation Domain resource definition. </summary>
     public partial class NetworkFabricL3IsolationDomainData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         public NetworkFabricL3IsolationDomainData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
         {
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
-            NetworkFabricId = networkFabricId;
+            Properties = new L3IsolationDomainProperties(networkFabricId);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
-        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
-        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The L3 Isolation Domain Properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, L3IsolationDomainProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            RedistributeConnectedSubnets = redistributeConnectedSubnets;
-            RedistributeStaticRoutes = redistributeStaticRoutes;
-            AggregateRouteConfiguration = aggregateRouteConfiguration;
-            ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
-            NetworkFabricId = networkFabricId;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainData"/> for deserialization. </summary>
-        internal NetworkFabricL3IsolationDomainData()
-        {
-        }
+        /// <summary> The L3 Isolation Domain Properties. </summary>
+        internal L3IsolationDomainProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
-        public RedistributeConnectedSubnet? RedistributeConnectedSubnets { get; set; }
+        public RedistributeConnectedSubnet? RedistributeConnectedSubnets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedistributeConnectedSubnets;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.RedistributeConnectedSubnets = value;
+            }
+        }
+
         /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
-        public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
+        public RedistributeStaticRoute? RedistributeStaticRoutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedistributeStaticRoutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.RedistributeStaticRoutes = value;
+            }
+        }
+
         /// <summary> Aggregate route configurations. </summary>
-        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
+        public AggregateRouteConfiguration AggregateRouteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AggregateRouteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.AggregateRouteConfiguration = value;
+            }
+        }
+
         /// <summary> Connected Subnet RoutePolicy. </summary>
-        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectedSubnetRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.ConnectedSubnetRoutePolicy = value;
+            }
+        }
+
         /// <summary> ARM Resource ID of the Network Fabric. </summary>
-        public ResourceIdentifier NetworkFabricId { get; set; }
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.NetworkFabricId = value;
+            }
+        }
+
+        /// <summary> IPv4 VRF Limit configuration. </summary>
+        public RoutePrefixLimitProperties V4RoutePrefixLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.V4RoutePrefixLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.V4RoutePrefixLimit = value;
+            }
+        }
+
+        /// <summary> IPv6 VRF Limit configuration. </summary>
+        public RoutePrefixLimitProperties V6RoutePrefixLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.V6RoutePrefixLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.V6RoutePrefixLimit = value;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicy StaticRouteExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.StaticRouteExportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> List of Unique Route Distinguisher addresses. </summary>
+        public IReadOnlyList<string> UniqueRds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                return Properties.UniqueRds;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
+
+        /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
+        public IList<BmpExportPolicy> ExportPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                return Properties.ExportPolicies;
+            }
+        }
     }
 }

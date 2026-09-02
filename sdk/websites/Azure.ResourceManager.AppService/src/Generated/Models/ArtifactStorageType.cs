@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ArtifactStorageType. </summary>
+    /// <summary></summary>
     public enum ArtifactStorageType
     {
         /// <summary> LocalNode. </summary>

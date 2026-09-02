@@ -144,6 +144,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the NullableValue. </summary>
+        public BicepValue<string> NullableValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NullableValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ItemProperties();
+                }
+                Properties.NullableValue = value;
+            }
+        }
+
         /// <summary> Gets or sets the Attributes. </summary>
         public ItemAttributes Attributes
         {
@@ -170,7 +187,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

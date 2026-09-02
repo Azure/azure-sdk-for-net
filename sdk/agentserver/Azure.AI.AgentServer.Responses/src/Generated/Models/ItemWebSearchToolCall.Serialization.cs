@@ -122,7 +122,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemWebSearchToolCallStatus status = default;
+            ItemWebSearchToolCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemWebSearchToolCallStatus();
+                    status = prop.Value.GetString().ToItemWebSearchToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("action"u8))

@@ -1,0 +1,78 @@
+name: azsdk-common-sdk-release-eval
+description: Evaluation suite for the azsdk-common-sdk-release skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-sdk-release
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: release-basic-001
+    prompt: "Use the SDK release tools to release my Azure Event Hubs Python SDK package."
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_release_sdk
+
+  - name: release-trigger-001
+    prompt: "The readiness check passed. Use the SDK release tools to trigger the release pipeline for @azure/event-hubs JavaScript SDK."
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_release_sdk
+
+  - name: release-readiness-001
+    prompt: "Use the SDK release tools to check if azure-messaging-eventhubs is ready for release in Java."
+    graders:
+      - type: output-contains
+        config:
+          substring: "ready"
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_release_sdk
+
+  - name: release-negative-001
+    prompt: "I need to validate my CODEOWNERS file for the Python SDK repo."
+    graders:
+      - type: output-contains
+        config:
+          substring: "CODEOWNERS"
+
+  - name: basic-trigger
+    prompt: "I need to release a new version of my Azure SDK package. Walk me through the process."
+    graders:
+      - type: output-contains
+        config:
+          substring: "release"
+    constraints:
+      expect_skills: ["azsdk-common-sdk-release"]
+
+  - name: anti-trigger
+    prompt: "How do I write unit tests for my Azure SDK client?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "release process"
+      - type: output-not-contains
+        config:
+          substring: "publish package"

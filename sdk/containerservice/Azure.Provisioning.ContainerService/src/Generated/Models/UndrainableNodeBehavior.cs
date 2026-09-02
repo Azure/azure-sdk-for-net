@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum UndrainableNodeBehavior
     {
         /// <summary> AKS will cordon the blocked nodes and replace them with surge nodes during upgrade. The blocked nodes will be cordoned and replaced by surge nodes. The blocked nodes will have label 'kubernetes.azure.com/upgrade-status:Quarantined'. A surge node will be retained for each blocked node. A best-effort attempt will be made to delete all other surge nodes. If there are enough surge nodes to replace blocked nodes, then the upgrade operation and the managed cluster will be in failed state. Otherwise, the upgrade operation and the managed cluster will be in canceled state. </summary>
-        Cordon,
+        Cordon = 0,
         /// <summary> AKS will mark the blocked nodes schedulable, but the blocked nodes are not upgraded. A best-effort attempt will be made to delete all surge nodes. The upgrade operation and the managed cluster will be in failed state if there are any blocked nodes. </summary>
-        Schedule
+        Schedule = 1
     }
 }

@@ -15,25 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageTestFailoverContent : TestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="InMageTestFailoverContent"/>. </summary>
-        public InMageTestFailoverContent()
+        public InMageTestFailoverContent() : base("InMage")
         {
-            InstanceType = "InMage";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageTestFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointType"> The recovery point type. Values from LatestTime, LatestTag or Custom. In the case of custom, the recovery point provided by RecoveryPointId will be used. In the other two cases, recovery point id will be ignored. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
-        internal InMageTestFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, SiteRecoveryPointType? recoveryPointType, ResourceIdentifier recoveryPointId) : base(instanceType, serializedAdditionalRawData)
+        internal InMageTestFailoverContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SiteRecoveryPointType? recoveryPointType, ResourceIdentifier recoveryPointId) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointId = recoveryPointId;
-            InstanceType = instanceType ?? "InMage";
         }
 
         /// <summary> The recovery point type. Values from LatestTime, LatestTag or Custom. In the case of custom, the recovery point provided by RecoveryPointId will be used. In the other two cases, recovery point id will be ignored. </summary>
         public SiteRecoveryPointType? RecoveryPointType { get; set; }
+
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
     }

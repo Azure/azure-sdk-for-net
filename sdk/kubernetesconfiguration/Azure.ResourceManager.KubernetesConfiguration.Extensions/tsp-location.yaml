@@ -1,5 +1,6 @@
 directory: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/extensions
-commit: ddc70c3108163864b3f42793379ca9f49e27f602
+commit: 41aa2e9f20cb7d28653078638d143bb0272658a3
 repo: Azure/azure-rest-api-specs
-cleanup: true
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

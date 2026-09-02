@@ -165,5 +165,100 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 It.Is<string>(permission => sourcePermission.Equals(permission)),
                 It.IsAny<CancellationToken>()));
         }
+
+        [Test]
+        public async Task PathScannerPreservesSnapshotInChildUris()
+        {
+            string baseDirName = "somedir";
+            const string shareName = "myshare";
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            List<(string Path, bool IsDirectory)> paths = new()
+            {
+                (Path: "foo/file1-1", IsDirectory: false),
+                (Path: "bar/file2-1", IsDirectory: false),
+                (Path: "bar/buzz/emptydir", IsDirectory: true),
+            };
+
+            Uri dirUri = new UriBuilder()
+            {
+                Scheme = "https",
+                Host = "myaccount.file.core.windows.net",
+                Path = (shareName + "/" + baseDirName).Trim('/'),
+                Query = "sharesnapshot=" + snapshot
+            }.Uri;
+            Mock<ShareDirectoryClient> sourceDirectory = new Mock<ShareDirectoryClient>()
+                .WithUri(dirUri)
+                .WithDirectoryStructure(paths.AsTree());
+
+            List<ShareFileStorageResource> files = new();
+            List<ShareDirectoryStorageResourceContainer> directories = new();
+            await foreach (StorageResource storageResource
+                in new SharesPathScanner().ScanAsync(
+                    sourceDirectory: sourceDirectory.Object,
+                    destinationShare: default,
+                    sourceOptions: default,
+                    traits: default,
+                    cancellationToken: default))
+            {
+                if (storageResource is ShareFileStorageResource)
+                    files.Add((ShareFileStorageResource)storageResource);
+                else if (storageResource is ShareDirectoryStorageResourceContainer)
+                    directories.Add((ShareDirectoryStorageResourceContainer)storageResource);
+            }
+
+            // Assert all file URIs preserve the snapshot query parameter
+            Assert.That(files, Has.Count.EqualTo(2));
+            foreach (ShareFileStorageResource file in files)
+            {
+                ShareUriBuilder fileUri = new(file.ShareFileClient.Uri);
+                Assert.That(fileUri.Snapshot, Is.EqualTo(snapshot),
+                    $"Snapshot missing from file URI: {file.ShareFileClient.Uri}");
+            }
+
+            // Assert all directory URIs preserve the snapshot query parameter
+            Assert.That(directories, Has.Count.EqualTo(4));
+            foreach (ShareDirectoryStorageResourceContainer dir in directories)
+            {
+                ShareUriBuilder dirUri2 = new(dir.ShareDirectoryClient.Uri);
+                Assert.That(dirUri2.Snapshot, Is.EqualTo(snapshot),
+                    $"Snapshot missing from directory URI: {dir.ShareDirectoryClient.Uri}");
+            }
+
+            // Verify listing was called on the root (which has the snapshot URI)
+            sourceDirectory.Verify(d => d.GetFilesAndDirectoriesAsync(
+                It.IsAny<ShareDirectoryGetFilesAndDirectoriesOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+        }
+
+        [Test]
+        public async Task PathScannerPreservesSnapshot_ViaContainerOptions()
+        {
+            const string shareName = "myshare";
+            string baseDirName = "somedir";
+            string snapshot = "2024-06-15T12:00:00.0000000Z";
+            List<(string Path, bool IsDirectory)> paths = new()
+            {
+                (Path: "file1.txt", IsDirectory: false),
+                (Path: "subdir/file2.txt", IsDirectory: false),
+            };
+
+            // Create a directory client WITHOUT snapshot in the URI
+            Uri dirUri = new UriBuilder()
+            {
+                Scheme = "https",
+                Host = "myaccount.file.core.windows.net",
+                Path = (shareName + "/" + baseDirName).Trim('/')
+            }.Uri;
+
+            // Create the container with snapshot in options
+            ShareDirectoryClient client = new(dirUri, new ShareClientOptions());
+            ShareFileStorageResourceOptions options = new() { Snapshot = snapshot };
+            ShareDirectoryStorageResourceContainer container = new(client, options);
+
+            // Verify the container's client now has the snapshot
+            ShareUriBuilder containerUri = new(container.ShareDirectoryClient.Uri);
+            Assert.That(containerUri.Snapshot, Is.EqualTo(snapshot));
+        }
     }
 }

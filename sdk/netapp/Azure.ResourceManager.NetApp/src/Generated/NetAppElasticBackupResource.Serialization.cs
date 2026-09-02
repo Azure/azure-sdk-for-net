@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticBackupResource : IJsonModel<NetAppElasticBackupData>
+    /// <summary></summary>
+    public partial class NetAppElasticBackupResource : ArmResource, IJsonModel<NetAppElasticBackupData>
     {
-        private static NetAppElasticBackupData s_dataDeserializationInstance;
-        private static NetAppElasticBackupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticBackupData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupData>)Data).Write(writer, options);
-
-        NetAppElasticBackupData IJsonModel<NetAppElasticBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticBackupData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticBackupData IPersistableModel<NetAppElasticBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticBackupData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticBackupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticBackupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticBackupData();
     }
 }

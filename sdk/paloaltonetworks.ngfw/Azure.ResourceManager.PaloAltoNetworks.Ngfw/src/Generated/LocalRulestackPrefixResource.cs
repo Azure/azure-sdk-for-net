@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string localRulestackPrefixApiVersion);
             _prefixListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _prefixListLocalRulestackRestClient = new PrefixListLocalRulestack(_prefixListLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackPrefixApiVersion ?? "2025-10-08");
+            _prefixListLocalRulestackRestClient = new PrefixListLocalRulestack(_prefixListLocalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackPrefixApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackPrefixResource> operation = new NgfwArmOperation<LocalRulestackPrefixResource>(
-                    new LocalRulestackPrefixOperationSource(Client),
+                    new LocalRulestackPrefixResourceOperationSource(Client),
                     _prefixListLocalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackPrefixResource> operation = new NgfwArmOperation<LocalRulestackPrefixResource>(
-                    new LocalRulestackPrefixOperationSource(Client),
+                    new LocalRulestackPrefixResourceOperationSource(Client),
                     _prefixListLocalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -20,30 +20,30 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceDelayContent"/>. </summary>
-        /// <param name="delay"> The exact time to delay the operations to. </param>
+        /// <param name="delayOn"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
-        public OccurrenceDelayContent(DateTimeOffset delay, IEnumerable<ResourceIdentifier> resourceIds)
+        public OccurrenceDelayContent(DateTimeOffset delayOn, IEnumerable<ResourceIdentifier> resourceIds)
         {
             Argument.AssertNotNull(resourceIds, nameof(resourceIds));
 
-            Delay = delay;
+            DelayOn = delayOn;
             ResourceIds = resourceIds.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceDelayContent"/>. </summary>
-        /// <param name="delay"> The exact time to delay the operations to. </param>
+        /// <param name="delayOn"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceDelayContent(DateTimeOffset delay, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OccurrenceDelayContent(DateTimeOffset delayOn, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Delay = delay;
+            DelayOn = delayOn;
             ResourceIds = resourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The exact time to delay the operations to. </summary>
-        public DateTimeOffset Delay { get; }
+        public DateTimeOffset DelayOn { get; }
 
         /// <summary> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </summary>
         public IList<ResourceIdentifier> ResourceIds { get; }

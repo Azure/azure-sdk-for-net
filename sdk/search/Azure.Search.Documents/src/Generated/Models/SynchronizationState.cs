@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -27,6 +28,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             ItemsUpdatesProcessed = itemsUpdatesProcessed;
             ItemsUpdatesFailed = itemsUpdatesFailed;
             ItemsSkipped = itemsSkipped;
+            Errors = new ChangeTrackingList<KnowledgeSourceSynchronizationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SynchronizationState"/>. </summary>
@@ -34,13 +36,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the current synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the current synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
+        /// <param name="errors"> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SynchronizationState(DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SynchronizationState(DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IList<KnowledgeSourceSynchronizationError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             ItemsUpdatesProcessed = itemsUpdatesProcessed;
             ItemsUpdatesFailed = itemsUpdatesFailed;
             ItemsSkipped = itemsSkipped;
+            Errors = errors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,5 +59,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The number of items skipped in the current synchronization. </summary>
         public int ItemsSkipped { get; set; }
+
+        /// <summary> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </summary>
+        public IList<KnowledgeSourceSynchronizationError> Errors { get; }
     }
 }

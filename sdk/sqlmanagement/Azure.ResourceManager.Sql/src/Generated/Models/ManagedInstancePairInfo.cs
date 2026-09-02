@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Pairs of Managed Instances in the failover group. </summary>
     public partial class ManagedInstancePairInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePairInfo"/>. </summary>
         public ManagedInstancePairInfo()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePairInfo"/>. </summary>
         /// <param name="primaryManagedInstanceId"> Id of Primary Managed Instance in pair. </param>
         /// <param name="partnerManagedInstanceId"> Id of Partner Managed Instance in pair. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId, ResourceIdentifier partnerManagedInstanceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId, ResourceIdentifier partnerManagedInstanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryManagedInstanceId = primaryManagedInstanceId;
             PartnerManagedInstanceId = partnerManagedInstanceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of Primary Managed Instance in pair. </summary>
         [WirePath("primaryManagedInstanceId")]
         public ResourceIdentifier PrimaryManagedInstanceId { get; set; }
+
         /// <summary> Id of Partner Managed Instance in pair. </summary>
         [WirePath("partnerManagedInstanceId")]
         public ResourceIdentifier PartnerManagedInstanceId { get; set; }

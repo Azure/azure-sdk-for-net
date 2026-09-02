@@ -228,7 +228,7 @@ namespace BasicTypeSpec
             }
             writer.WriteEndElement();
             writer.WriteStartElement("createdAt");
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("duration");
             writer.WriteStringValue(Duration, "P");
@@ -392,7 +392,7 @@ namespace BasicTypeSpec
             XmlNestedModel nestedModel = default;
             XmlNestedModel optionalNestedModel = default;
             IDictionary<string, string> metadata = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             TimeSpan duration = default;
             BinaryData data = default;
             IDictionary<string, BinaryData> optionalRecordUnknown = default;
@@ -411,7 +411,6 @@ namespace BasicTypeSpec
             IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default;
             IDictionary<string, IList<XmlItem>> dictionaryListFoo = default;
             IList<IDictionary<string, XmlItem>> listOfDictionaryFoo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -547,7 +546,7 @@ namespace BasicTypeSpec
                 }
                 if (localName == "createdAt")
                 {
-                    createdAt = child.GetDateTimeOffset("O");
+                    createdOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "duration")
@@ -720,7 +719,7 @@ namespace BasicTypeSpec
                 nestedModel,
                 optionalNestedModel,
                 metadata,
-                createdAt,
+                createdOn,
                 duration,
                 data,
                 optionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -738,8 +737,7 @@ namespace BasicTypeSpec
                 dictionaryFoo,
                 dictionaryOfDictionaryFoo,
                 dictionaryListFoo,
-                listOfDictionaryFoo,
-                additionalBinaryDataProperties);
+                listOfDictionaryFoo);
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -57,11 +57,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
             _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -521,7 +521,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BarData patch = new BarData();
+                    BarData patch = new BarData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -569,7 +569,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BarData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BarData patch = new BarData();
+                    BarData patch = new BarData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -616,7 +616,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BarData patch = new BarData();
+                    BarData patch = new BarData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BarResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -659,7 +659,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BarData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BarData patch = new BarData();
+                    BarData patch = new BarData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BarResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -701,7 +701,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BarData patch = new BarData();
+                    BarData patch = new BarData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -747,7 +747,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     BarData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BarData patch = new BarData();
+                    BarData patch = new BarData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

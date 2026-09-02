@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where the `TableServiceClient` was constructed using the hard-coded `core.windows.net` suffix when `AzureWebJobsStorage__accountName` was set, even if an explicit `AzureWebJobsStorage__tableServiceUri` was also present. The explicit `__tableServiceUri` is now preferred over `__accountName`, and an optional `__endpointSuffix` setting is honored when constructing the URI from `__accountName`. This unblocks bindings that use managed-identity storage in sovereign clouds (e.g. Azure US Government, Azure China). ([#57543](https://github.com/Azure/azure-sdk-for-net/issues/57543))
+
 ### Other Changes
 
 ## 1.4.0 (2025-06-20)

@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticCapacityPoolResource : IJsonModel<NetAppElasticCapacityPoolData>
+    /// <summary></summary>
+    public partial class NetAppElasticCapacityPoolResource : ArmResource, IJsonModel<NetAppElasticCapacityPoolData>
     {
-        private static NetAppElasticCapacityPoolData s_dataDeserializationInstance;
-        private static NetAppElasticCapacityPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticCapacityPoolData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticCapacityPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticCapacityPoolData>)Data).Write(writer, options);
-
-        NetAppElasticCapacityPoolData IJsonModel<NetAppElasticCapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticCapacityPoolData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticCapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticCapacityPoolData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticCapacityPoolData IPersistableModel<NetAppElasticCapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticCapacityPoolData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticCapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticCapacityPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticCapacityPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticCapacityPoolData();
     }
 }

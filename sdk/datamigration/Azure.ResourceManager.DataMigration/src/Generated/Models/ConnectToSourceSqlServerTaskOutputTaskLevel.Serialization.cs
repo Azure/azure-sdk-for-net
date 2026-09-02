@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>
+    /// <summary> Task level output for the task that validates connection to SQL Server and also validates source server requirements. </summary>
+    public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : ConnectToSourceSqlServerTaskOutput, IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ConnectToSourceSqlServerTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToSourceSqlServerTaskOutputTaskLevel IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectToSourceSqlServerTaskOutputTaskLevel)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Databases))
             {
@@ -69,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidationErrors)
+                foreach (DataMigrationReportableException item in ValidationErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -77,26 +117,34 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        ConnectToSourceSqlServerTaskOutputTaskLevel IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToSourceSqlServerTaskOutputTaskLevel IJsonModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectToSourceSqlServerTaskOutputTaskLevel)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ConnectToSourceSqlServerTaskOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(document.RootElement, options);
         }
 
-        internal static ConnectToSourceSqlServerTaskOutputTaskLevel DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectToSourceSqlServerTaskOutputTaskLevel DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string id = default;
+            string resultType = "TaskLevelOutput";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string databases = default;
             string logins = default;
             string agentJobs = default;
@@ -104,76 +152,71 @@ namespace Azure.ResourceManager.DataMigration.Models
             string sourceServerVersion = default;
             string sourceServerBrandVersion = default;
             IReadOnlyList<DataMigrationReportableException> validationErrors = default;
-            string id = default;
-            string resultType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databases"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    databases = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logins"u8))
+                if (prop.NameEquals("resultType"u8))
                 {
-                    logins = property.Value.GetString();
+                    resultType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentJobs"u8))
+                if (prop.NameEquals("databases"u8))
                 {
-                    agentJobs = property.Value.GetString();
+                    databases = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseTdeCertificateMapping"u8))
+                if (prop.NameEquals("logins"u8))
                 {
-                    databaseTdeCertificateMapping = property.Value.GetString();
+                    logins = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerVersion"u8))
+                if (prop.NameEquals("agentJobs"u8))
                 {
-                    sourceServerVersion = property.Value.GetString();
+                    agentJobs = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerBrandVersion"u8))
+                if (prop.NameEquals("databaseTdeCertificateMapping"u8))
                 {
-                    sourceServerBrandVersion = property.Value.GetString();
+                    databaseTdeCertificateMapping = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"u8))
+                if (prop.NameEquals("sourceServerVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    sourceServerVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceServerBrandVersion"u8))
+                {
+                    sourceServerBrandVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("validationErrors"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectToSourceSqlServerTaskOutputTaskLevel(
                 id,
                 resultType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 databases,
                 logins,
                 agentJobs,
@@ -182,36 +225,5 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceServerBrandVersion,
                 validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>());
         }
-
-        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectToSourceSqlServerTaskOutputTaskLevel IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

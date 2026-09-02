@@ -82,6 +82,11 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(TextTokens);
             writer.WritePropertyName("audio_tokens"u8);
             writer.WriteNumberValue(AudioTokens);
+            if (Optional.IsDefined(ReasoningTokens))
+            {
+                writer.WritePropertyName("reasoning_tokens"u8);
+                writer.WriteNumberValue(ReasoningTokens.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,6 +131,7 @@ namespace Azure.AI.VoiceLive
             }
             int textTokens = default;
             int audioTokens = default;
+            int? reasoningTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,12 +145,21 @@ namespace Azure.AI.VoiceLive
                     audioTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("reasoning_tokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reasoningTokens = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputTokenDetails(textTokens, audioTokens, additionalBinaryDataProperties);
+            return new OutputTokenDetails(textTokens, audioTokens, reasoningTokens, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,71 +7,58 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Access rule. </summary>
     public partial class HybridComputeAccessRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeAccessRule"/>. </summary>
         internal HybridComputeAccessRule()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="direction"> Direction of the access rule. </param>
-        /// <param name="addressPrefixes"> Address prefixes that are allowed access. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeAccessRule(string name, HybridComputeAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Access rule properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeAccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Direction = direction;
-            AddressPrefixes = addressPrefixes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the access rule. </summary>
         [WirePath("name")]
         public string Name { get; }
+
+        /// <summary> Access rule properties. </summary>
+        [WirePath("properties")]
+        internal AccessRuleProperties Properties { get; }
+
         /// <summary> Direction of the access rule. </summary>
         [WirePath("properties.direction")]
-        public HybridComputeAccessRuleDirection? Direction { get; }
+        public HybridComputeAccessRuleDirection? Direction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Direction;
+            }
+        }
+
         /// <summary> Address prefixes that are allowed access. </summary>
         [WirePath("properties.addressPrefixes")]
-        public IReadOnlyList<string> AddressPrefixes { get; }
+        public IReadOnlyList<string> AddressPrefixes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefixes;
+            }
+        }
     }
 }

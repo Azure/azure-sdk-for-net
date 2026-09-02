@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -60,31 +61,35 @@ namespace Azure.Generator.Management.Providers
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
         private readonly ResourceMethod _readMethod;
+        internal string? TagPatchHookMethodName { get; }
 
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _operationContext = OperationContext.Create(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
+            _operationContext = OperationContext.Create(resourceMetadata.ResourceIdPattern);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
-            ResourceName = resourceName;
+            ResourceName = resourceName.ToIdentifierName();
+            var resourceTypeName = ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
+            TagPatchHookMethodName = ManagementClientGenerator.Instance.TagPatchHookCustomizationResolver.GetMethodName(resourceTypeName);
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
-            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+            var defaultResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+            _originalResourceDataType = defaultResourceData.Type;
+            ResourceData = ResolveResourceData(model, defaultResourceData);
 
             // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
 
-        internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
-        internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
-        internal string ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
-        internal string? ParentResourceType => _resourceMetadata.ParentResourceType;
+        internal ResourceScope ResourceScope => _resourceMetadata.Scope.Kind;
+        internal RequestPathPattern? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
+        internal RequestPathPattern ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
 
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 
@@ -94,7 +99,8 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
 
-        internal ModelProvider ResourceData { get; }
+        private readonly CSharpType _originalResourceDataType;
+        internal TypeProvider ResourceData { get; }
         internal string ResourceName { get; }
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
@@ -102,6 +108,59 @@ namespace Azure.Generator.Management.Providers
         public bool IsSingleton => SingletonResourceName is not null;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
+
+        internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || _originalResourceDataType.Equals(type);
+
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
+
+        internal bool TryGetResourceDataTypeOverride(CSharpType originalType, out CSharpType resourceDataType)
+        {
+            if (_originalResourceDataType.Equals(originalType) &&
+                !ResourceData.Type.Equals(originalType))
+            {
+                resourceDataType = ResourceData.Type;
+                return true;
+            }
+
+            resourceDataType = null!;
+            return false;
+        }
+
+        private TypeProvider ResolveResourceData(InputModelType model, ModelProvider defaultResourceData)
+        {
+            var customizedDataType = ManagementClientGenerator.Instance.ResourceDataCustomizationResolver.GetResourceDataType(model, ResourceName);
+            if (customizedDataType is not null)
+            {
+                foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+                {
+                    var provider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                    if (provider is not null &&
+                        ((provider.Type.Name == customizedDataType.Name &&
+                            provider.Type.Namespace == customizedDataType.Namespace) ||
+                        inputModel.Name == customizedDataType.Name))
+                    {
+                        return provider;
+                    }
+                }
+
+                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
+                    customizedDataType.Namespace,
+                    customizedDataType.Name,
+                    declaringTypeName: null,
+                    includeReferencedAssemblies: true);
+                if (customProvider is not null)
+                {
+                    return customProvider;
+                }
+
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "codegen-resource-data-not-found",
+                    $"Cannot find resource data type {customizedDataType.Namespace}.{customizedDataType.Name} specified by CodeGenResourceDataAttribute for resource {ResourceName}.");
+            }
+
+            return defaultResourceData;
+        }
 
         private IReadOnlyList<ResourceClientProvider>? _childResources;
         public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
@@ -139,13 +198,13 @@ namespace Azure.Generator.Management.Providers
             }
 
             // if not and this is an extension resource, we return ArmResource as the parent type as fallback
-            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            if (_resourceMetadata.Scope.Kind == ResourceScope.Extension)
             {
                 return typeof(ArmResource);
             }
 
             // if it does not, this resource's parent must be one of the MockableResource
-            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.ResourceScope).ArmCoreType;
+            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.Scope.Kind).ArmCoreType;
         }
 
         private MethodSignature? _factoryMethodSignature;
@@ -300,7 +359,7 @@ namespace Azure.Generator.Management.Providers
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
                 var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
@@ -318,7 +377,10 @@ namespace Azure.Generator.Management.Providers
             {
                 if (segment.IsConstant)
                 {
-                    formatBuilder.Append($"/{segment}");
+                    // Constant path segments can still contain braces from invalid route fragments like
+                    // "{name}?disambiguation_dummy"; escape them so they are emitted as literals rather
+                    // than C# interpolation holes in the generated resource identifier string.
+                    formatBuilder.Append($"/{EscapeFormatLiteral(segment.Value)}");
                 }
                 else
                 {
@@ -348,11 +410,28 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(signature, bodyStatements, this);
+
+            static string EscapeFormatLiteral(string value)
+                => value.Replace("{", "{{{{").Replace("}", "}}}}");
         }
 
-        internal string ResourceTypeValue => _resourceMetadata.ResourceType;
+        internal ResourceTypePattern ResourceType => _resourceMetadata.ResourceType;
+        internal string ResourceTypeValue => ResourceType.SerializedResourceType;
 
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
+
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            if (LastContractView?.Methods == null || LastContractView.Methods.Count == 0)
+            {
+                return [.. originalMethods];
+            }
+
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -370,14 +449,15 @@ namespace Azure.Generator.Management.Providers
                 // Get the appropriate rest client for this specific method
                 var restClientInfo = _clientInfos[inputClient];
 
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
-                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false, this);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true, this);
 
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
+                    var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, parameterMappings, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, parameterMappings, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
 
                     continue;
                 }
@@ -387,18 +467,19 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, true, methodKind, isFakeLro);
+                    var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, restClientInfo, method, true, methodKind, isFakeLro);
                     operationMethods.Add(updateAsyncMethodProvider);
 
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, false, methodKind, isFakeLro);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, restClientInfo, method, false, methodKind, isFakeLro);
                     operationMethods.Add(updateMethodProvider);
                 }
                 else
                 {
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
-                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, methodKind, true, asyncMethodName, isFakeLro));
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
-                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, methodKind, false, methodName, isFakeLro));
                 }
             }
 
@@ -423,7 +504,15 @@ namespace Azure.Generator.Management.Providers
                         var updateRestClientInfo = _clientInfos[inputUpdateClient];
                         var getRestClientInfo = _clientInfos[inputReadClient];
                         var isFakeLro = ResourceHelpers.ShouldMakeLro(tagUpdateMethod.Kind);
-                        var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
+                        var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(tagUpdateMethod.InputMethod.Operation.Path));
+                        var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
+                        MethodProvider tagUpdateMethodAsMethod = tagUpdateMethodProvider;
+
+                        if (!CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings))
+                        {
+                            methods.AddRange(BuildGetChildResourceMethods());
+                            return [.. methods];
+                        }
 
                         methods.AddRange([
                             new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
@@ -443,16 +532,44 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
+        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, ResourceOperationKind methodKind, bool isAsync, string? methodName, bool isFakeLro)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
-                return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, isAsync, methodName);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
+            return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
+        }
+
+        private static bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings)
+        {
+            foreach (var parameter in updateSignature.Parameters)
+            {
+                if (parameter.Type.Equals(typeof(WaitUntil)) ||
+                    parameter.Type.Equals(typeof(CancellationToken)) ||
+                    parameter.Location == ParameterLocation.Body ||
+                    parameter.DefaultValue is not null)
+                {
+                    continue;
+                }
+
+                var serializedName = parameter.WireInfo?.SerializedName;
+                if (serializedName is not null &&
+                    parameterMappings.TryGetValue(serializedName, out var mapping) &&
+                    mapping.ContextualParameter is not null)
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()
@@ -485,13 +602,7 @@ namespace Azure.Generator.Management.Providers
 
         private static bool OperationReturnsContent(InputServiceMethod method)
         {
-            if (method is InputLongRunningServiceMethod lroMethod)
-            {
-                return lroMethod.LongRunningServiceMetadata.ReturnType is not null;
-            }
-
-            var response = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
-            return response?.BodyType is not null;
+            return method.GetResponseBodyType() is not null;
         }
 
         private List<MethodProvider> BuildGetChildResourceMethods()

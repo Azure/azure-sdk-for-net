@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupNetworkProtocol : IEquatable<ContainerGroupNetworkProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TcpValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupNetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupNetworkProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
+            _value = value;
+        }
 
         /// <summary> TCP. </summary>
         public static ContainerGroupNetworkProtocol Tcp { get; } = new ContainerGroupNetworkProtocol(TcpValue);
+
         /// <summary> UDP. </summary>
         public static ContainerGroupNetworkProtocol Udp { get; } = new ContainerGroupNetworkProtocol(UdpValue);
+
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupNetworkProtocol left, ContainerGroupNetworkProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupNetworkProtocol left, ContainerGroupNetworkProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupNetworkProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerGroupNetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupNetworkProtocol(string value) => new ContainerGroupNetworkProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerGroupNetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerGroupNetworkProtocol?(string value) => value == null ? null : new ContainerGroupNetworkProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupNetworkProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerGroupNetworkProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

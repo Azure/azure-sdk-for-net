@@ -33,12 +33,18 @@ public class ArmProviderSchema
     /// </summary>
     /// <param name="arguments">The decorator arguments containing resources and nonResourceMethods data</param>
     /// <param name="library">The management input library containing models cache</param>
-    /// <param name="methodFilter">Optional predicate to filter non-resource methods</param>
+    /// <param name="shouldDeserializeMethod">
+    /// Optional predicate evaluated against the raw method ID before deserialization. This allows callers to
+    /// skip decorator entries whose methods have already been removed from the input namespace.
+    /// </param>
     /// <returns>A new ArmProviderSchema instance</returns>
-    public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<NonResourceMethod, bool>? methodFilter = null)
+    public static ArmProviderSchema Deserialize(
+        IReadOnlyDictionary<string, BinaryData> arguments,
+        ManagementInputLibrary library,
+        Func<string, bool>? shouldDeserializeMethod = null)
     {
         var resourceMetadata = new List<ArmResourceMetadata>();
-        var resourceChildren = new Dictionary<string, List<string>>();
+        var resourceChildren = new Dictionary<string, List<RequestPathPattern>>();
 
         // Deserialize resources
         if (arguments.TryGetValue("resources", out var resourcesData))
@@ -61,7 +67,7 @@ public class ArmProviderSchema
                     continue;
                 }
 
-                var children = new List<string>();
+                var children = new List<RequestPathPattern>();
                 var metadata = ArmResourceMetadata.DeserializeResourceMetadata(item, model, children);
                 resourceMetadata.Add(metadata);
                 resourceChildren.Add(metadata.ResourceIdPattern, children);
@@ -84,12 +90,10 @@ public class ArmProviderSchema
             using var document = JsonDocument.Parse(nonResourceMethodsData);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
-
-                // Apply filter if provided
-                if (methodFilter == null || methodFilter(nonResourceMethod))
+                var methodId = item.GetProperty("methodId").GetString() ?? throw new JsonException("methodId cannot be null");
+                if (shouldDeserializeMethod == null || shouldDeserializeMethod(methodId))
                 {
-                    nonResourceMethods.Add(nonResourceMethod);
+                    nonResourceMethods.Add(NonResourceMethod.DeserializeNonResourceMethod(item));
                 }
             }
         }

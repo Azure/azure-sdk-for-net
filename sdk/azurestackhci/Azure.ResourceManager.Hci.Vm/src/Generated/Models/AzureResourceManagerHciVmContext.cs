@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(HciVmInstanceHardwareProfile))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceHardwareProfileDynamicMemoryConfiguration))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceHardwareProfileGpuConfiguration))]
-    [ModelReaderWriterBuildable(typeof(HciVmInstanceHardwareProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(HciVmInstanceHardwareProfilePatch))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceOSProfile))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceOSProfileLinuxConfiguration))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceOSProfileWindowsConfiguration))]

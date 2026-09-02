@@ -20,17 +20,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="OfferDetails"/>. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
-        /// <param name="planId"> Plan Id for the marketplace offer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
-        public OfferDetails(string publisherId, string offerId, string planId)
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> or <paramref name="offerId"/> is null. </exception>
+        public OfferDetails(string publisherId, string offerId)
         {
             Argument.AssertNotNull(publisherId, nameof(publisherId));
             Argument.AssertNotNull(offerId, nameof(offerId));
-            Argument.AssertNotNull(planId, nameof(planId));
 
             PublisherId = publisherId;
             OfferId = offerId;
-            PlanId = planId;
         }
 
         /// <summary> Initializes a new instance of <see cref="OfferDetails"/>. </summary>
@@ -40,10 +37,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="planName"> Plan Name for the marketplace offer. </param>
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
-        /// <param name="renewalMode"> Subscription renewal mode. </param>
-        /// <param name="endOn"> Current subscription end date and time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, RenewalMode? renewalMode, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             OfferId = offerId;
@@ -51,8 +46,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             PlanName = planName;
             TermUnit = termUnit;
             TermId = termId;
-            RenewalMode = renewalMode;
-            EndOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -79,13 +72,5 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Plan Display Name for the marketplace offer. </summary>
         [WirePath("termId")]
         public string TermId { get; set; }
-
-        /// <summary> Subscription renewal mode. </summary>
-        [WirePath("renewalMode")]
-        public RenewalMode? RenewalMode { get; set; }
-
-        /// <summary> Current subscription end date and time. </summary>
-        [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; }
     }
 }

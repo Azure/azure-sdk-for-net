@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsDataIngestionStatus : IEquatable<OperationalInsightsDataIngestionStatus>
     {
         private readonly string _value;
+        /// <summary> Ingestion enabled following daily cap quota reset, or subscription enablement. </summary>
+        private const string RespectQuotaValue = "RespectQuota";
+        /// <summary> Ingestion started following service setting change. </summary>
+        private const string ForceOnValue = "ForceOn";
+        /// <summary> Ingestion stopped following service setting change. </summary>
+        private const string ForceOffValue = "ForceOff";
+        /// <summary> Reached daily cap quota, ingestion stopped. </summary>
+        private const string OverQuotaValue = "OverQuota";
+        /// <summary> Ingestion stopped following suspended subscription. </summary>
+        private const string SubscriptionSuspendedValue = "SubscriptionSuspended";
+        /// <summary> 80% of daily cap quota reached. </summary>
+        private const string ApproachingQuotaValue = "ApproachingQuota";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataIngestionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsDataIngestionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RespectQuotaValue = "RespectQuota";
-        private const string ForceOnValue = "ForceOn";
-        private const string ForceOffValue = "ForceOff";
-        private const string OverQuotaValue = "OverQuota";
-        private const string SubscriptionSuspendedValue = "SubscriptionSuspended";
-        private const string ApproachingQuotaValue = "ApproachingQuota";
+            _value = value;
+        }
 
         /// <summary> Ingestion enabled following daily cap quota reset, or subscription enablement. </summary>
         public static OperationalInsightsDataIngestionStatus RespectQuota { get; } = new OperationalInsightsDataIngestionStatus(RespectQuotaValue);
+
         /// <summary> Ingestion started following service setting change. </summary>
         public static OperationalInsightsDataIngestionStatus ForceOn { get; } = new OperationalInsightsDataIngestionStatus(ForceOnValue);
+
         /// <summary> Ingestion stopped following service setting change. </summary>
         public static OperationalInsightsDataIngestionStatus ForceOff { get; } = new OperationalInsightsDataIngestionStatus(ForceOffValue);
+
         /// <summary> Reached daily cap quota, ingestion stopped. </summary>
         public static OperationalInsightsDataIngestionStatus OverQuota { get; } = new OperationalInsightsDataIngestionStatus(OverQuotaValue);
+
         /// <summary> Ingestion stopped following suspended subscription. </summary>
         public static OperationalInsightsDataIngestionStatus SubscriptionSuspended { get; } = new OperationalInsightsDataIngestionStatus(SubscriptionSuspendedValue);
+
         /// <summary> 80% of daily cap quota reached. </summary>
         public static OperationalInsightsDataIngestionStatus ApproachingQuota { get; } = new OperationalInsightsDataIngestionStatus(ApproachingQuotaValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataIngestionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsDataIngestionStatus left, OperationalInsightsDataIngestionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataIngestionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsDataIngestionStatus left, OperationalInsightsDataIngestionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsDataIngestionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsDataIngestionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsDataIngestionStatus(string value) => new OperationalInsightsDataIngestionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsDataIngestionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsDataIngestionStatus?(string value) => value == null ? null : new OperationalInsightsDataIngestionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsDataIngestionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsDataIngestionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

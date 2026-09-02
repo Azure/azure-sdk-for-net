@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlPrivateEndpointProvisioningState : IEquatable<SqlPrivateEndpointProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Approving. </summary>
+        private const string ApprovingValue = "Approving";
+        /// <summary> Ready. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Dropping. </summary>
+        private const string DroppingValue = "Dropping";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Rejecting. </summary>
+        private const string RejectingValue = "Rejecting";
 
         /// <summary> Initializes a new instance of <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlPrivateEndpointProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApprovingValue = "Approving";
-        private const string ReadyValue = "Ready";
-        private const string DroppingValue = "Dropping";
-        private const string FailedValue = "Failed";
-        private const string RejectingValue = "Rejecting";
+            _value = value;
+        }
 
         /// <summary> Approving. </summary>
         public static SqlPrivateEndpointProvisioningState Approving { get; } = new SqlPrivateEndpointProvisioningState(ApprovingValue);
+
         /// <summary> Ready. </summary>
         public static SqlPrivateEndpointProvisioningState Ready { get; } = new SqlPrivateEndpointProvisioningState(ReadyValue);
+
         /// <summary> Dropping. </summary>
         public static SqlPrivateEndpointProvisioningState Dropping { get; } = new SqlPrivateEndpointProvisioningState(DroppingValue);
+
         /// <summary> Failed. </summary>
         public static SqlPrivateEndpointProvisioningState Failed { get; } = new SqlPrivateEndpointProvisioningState(FailedValue);
+
         /// <summary> Rejecting. </summary>
         public static SqlPrivateEndpointProvisioningState Rejecting { get; } = new SqlPrivateEndpointProvisioningState(RejectingValue);
+
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlPrivateEndpointProvisioningState left, SqlPrivateEndpointProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlPrivateEndpointProvisioningState left, SqlPrivateEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlPrivateEndpointProvisioningState(string value) => new SqlPrivateEndpointProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlPrivateEndpointProvisioningState?(string value) => value == null ? null : new SqlPrivateEndpointProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlPrivateEndpointProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlPrivateEndpointProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

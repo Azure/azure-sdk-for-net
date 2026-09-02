@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TopNFeaturesByAttribution : IUtf8JsonSerializable, IJsonModel<TopNFeaturesByAttribution>
+    /// <summary> The TopNFeaturesByAttribution. </summary>
+    public partial class TopNFeaturesByAttribution : MonitoringFeatureFilterBase, IJsonModel<TopNFeaturesByAttribution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopNFeaturesByAttribution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringFeatureFilterBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTopNFeaturesByAttribution(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TopNFeaturesByAttribution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TopNFeaturesByAttribution IPersistableModel<TopNFeaturesByAttribution>.Create(BinaryData data, ModelReaderWriterOptions options) => (TopNFeaturesByAttribution)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TopNFeaturesByAttribution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TopNFeaturesByAttribution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Top))
             {
@@ -43,128 +82,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        TopNFeaturesByAttribution IJsonModel<TopNFeaturesByAttribution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TopNFeaturesByAttribution IJsonModel<TopNFeaturesByAttribution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TopNFeaturesByAttribution)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringFeatureFilterBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTopNFeaturesByAttribution(document.RootElement, options);
         }
 
-        internal static TopNFeaturesByAttribution DeserializeTopNFeaturesByAttribution(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TopNFeaturesByAttribution DeserializeTopNFeaturesByAttribution(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? top = default;
             MonitoringFeatureFilterType filterType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? top = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("top"u8))
+                if (prop.NameEquals("filterType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    filterType = new MonitoringFeatureFilterType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("top"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    top = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("filterType"u8))
-                {
-                    filterType = new MonitoringFeatureFilterType(property.Value.GetString());
+                    top = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new TopNFeaturesByAttribution(filterType, serializedAdditionalRawData, top);
+            return new TopNFeaturesByAttribution(filterType, additionalBinaryDataProperties, top);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Top), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  top: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Top))
-                {
-                    builder.Append("  top: ");
-                    builder.AppendLine($"{Top.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FilterType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  filterType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  filterType: ");
-                builder.AppendLine($"'{FilterType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TopNFeaturesByAttribution>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TopNFeaturesByAttribution IPersistableModel<TopNFeaturesByAttribution>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTopNFeaturesByAttribution(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TopNFeaturesByAttribution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

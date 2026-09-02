@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CertificateDeleteAction : IEquatable<CertificateDeleteAction>
     {
         private readonly string _value;
+        private const string NoActionValue = "NoAction";
 
         /// <summary> Initializes a new instance of <see cref="CertificateDeleteAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateDeleteAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoActionValue = "NoAction";
-
-        /// <summary> NoAction. </summary>
+        /// <summary> Gets the NoAction. </summary>
         public static CertificateDeleteAction NoAction { get; } = new CertificateDeleteAction(NoActionValue);
+
         /// <summary> Determines if two <see cref="CertificateDeleteAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateDeleteAction left, CertificateDeleteAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateDeleteAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateDeleteAction left, CertificateDeleteAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateDeleteAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateDeleteAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateDeleteAction(string value) => new CertificateDeleteAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateDeleteAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateDeleteAction?(string value) => value == null ? null : new CertificateDeleteAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateDeleteAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateDeleteAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

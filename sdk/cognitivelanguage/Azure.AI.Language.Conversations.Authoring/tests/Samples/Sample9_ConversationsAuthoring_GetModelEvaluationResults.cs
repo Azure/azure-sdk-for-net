@@ -22,10 +22,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-            Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResults(projectName, trainedModelLabel, stringIndexType);
+            Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(projectName, trainedModelLabel, stringIndexType);
 
             foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
             {
@@ -63,11 +65,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
-            AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResultsAsync(projectName, trainedModelLabel, stringIndexType);
+            AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(projectName, trainedModelLabel, stringIndexType);
 
             await foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
             {

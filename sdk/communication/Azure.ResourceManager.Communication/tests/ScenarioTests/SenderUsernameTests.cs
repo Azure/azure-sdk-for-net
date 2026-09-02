@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _domainResource.GetSenderUsernameResources();
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
             bool exists = await collection.ExistsAsync(username);
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [Test]
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
-            Assert.IsNotNull(senderUsername);
-            Assert.AreEqual(username, senderUsername.Data.Username);
-            Assert.AreEqual(displayName, senderUsername.Data.DisplayName);
+            Assert.That(senderUsername, Is.Not.Null);
+            Assert.That(senderUsername.Data.Username, Is.EqualTo(username));
+            Assert.That(senderUsername.Data.DisplayName, Is.EqualTo(displayName));
         }
 
         // todo: follow up on update bug. Updating a record with the same name results in 400 error a username already exists.
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Communication.Tests
         //    };
         //    var senderUsername2 = (await senderUsername1.UpdateAsync(WaitUntil.Completed, patch)).Value;
 
-        //    Assert.IsNotNull(senderUsername2);
-        //    Assert.AreEqual(senderUsername1.Data.Name, senderUsername2.Data.Name);
-        //    Assert.AreNotEqual(senderUsername1.Data.Username, senderUsername2.Data.Username);
-        //    Assert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
+        //    Assert.That(senderUsername2, Is.Not.Null);
+        //    Assert.That(senderUsername2.Data.Name, Is.EqualTo(senderUsername1.Data.Name));
+        //    Assert.That(senderUsername2.Data.Username, Is.Not.EqualTo(senderUsername1.Data.Username));
+        //    Assert.That(senderUsername2.Data.DisplayName, Is.Not.EqualTo(senderUsername1.Data.DisplayName));
         //}
 
         [Test]
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
             await senderUsername.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(username);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         [Test]
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             var actualSenderUsername = await collection.GetAsync(username);
-            Assert.IsNotNull(actualSenderUsername);
-            Assert.AreEqual(actualSenderUsername.Value.Data.Username, username);
-            Assert.AreEqual(actualSenderUsername.Value.Data.DisplayName, displayName);
+            Assert.That(actualSenderUsername, Is.Not.Null);
+            Assert.That(username, Is.EqualTo(actualSenderUsername.Value.Data.Username));
+            Assert.That(displayName, Is.EqualTo(actualSenderUsername.Value.Data.DisplayName));
         }
 
         [Test]
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             var list = await _domainResource.GetSenderUsernameResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.Username == username));
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.DisplayName == displayName));
+            Assert.That(list, Is.Not.Empty);
+            Assert.That(list.Any(s => s.HasData && s.Data.Username == username), Is.True);
+            Assert.That(list.Any(s => s.HasData && s.Data.DisplayName == displayName), Is.True);
         }
     }
 }

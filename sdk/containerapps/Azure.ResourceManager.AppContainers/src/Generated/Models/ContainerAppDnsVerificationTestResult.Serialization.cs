@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal static partial class ContainerAppDnsVerificationTestResultExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContainerAppDnsVerificationTestResult value) => value switch
         {
             ContainerAppDnsVerificationTestResult.Passed => "Passed",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppContainers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppDnsVerificationTestResult value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ContainerAppDnsVerificationTestResult ToContainerAppDnsVerificationTestResult(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Passed")) return ContainerAppDnsVerificationTestResult.Passed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ContainerAppDnsVerificationTestResult.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return ContainerAppDnsVerificationTestResult.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Passed"))
+            {
+                return ContainerAppDnsVerificationTestResult.Passed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return ContainerAppDnsVerificationTestResult.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped"))
+            {
+                return ContainerAppDnsVerificationTestResult.Skipped;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppDnsVerificationTestResult value.");
         }
     }

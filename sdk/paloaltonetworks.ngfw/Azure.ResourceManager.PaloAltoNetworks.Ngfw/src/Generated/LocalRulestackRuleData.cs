@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal LocalRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RuleEntry properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RuleEntry properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.RuleState = value.Value;
+                Properties.RuleState = value;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.NegateSource = value.Value;
+                Properties.NegateSource = value;
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.NegateDestination = value.Value;
+                Properties.NegateDestination = value;
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.ActionType = value.Value;
+                Properties.ActionType = value;
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.EnableLogging = value.Value;
+                Properties.EnableLogging = value;
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RuleEntry();
                 }
-                Properties.DecryptionRuleType = value.Value;
+                Properties.DecryptionRuleType = value;
             }
         }
 

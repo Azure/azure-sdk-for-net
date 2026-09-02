@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Models;
 
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(DirectLineSite))]
     [ModelReaderWriterBuildable(typeof(DirectLineSpeechChannel))]
     [ModelReaderWriterBuildable(typeof(DirectLineSpeechChannelProperties))]
+    [ModelReaderWriterBuildable(typeof(Dynamics365OmnichannelChannel))]
     [ModelReaderWriterBuildable(typeof(EmailChannel))]
     [ModelReaderWriterBuildable(typeof(EmailChannelProperties))]
     [ModelReaderWriterBuildable(typeof(FacebookChannel))]
@@ -82,13 +82,11 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(NspAccessRule))]
     [ModelReaderWriterBuildable(typeof(NspAccessRuleProperties))]
-    [ModelReaderWriterBuildable(typeof(Omnichannel))]
     [ModelReaderWriterBuildable(typeof(OutlookChannel))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ProvisioningIssue))]
     [ModelReaderWriterBuildable(typeof(ProvisioningIssueProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SearchAssistant))]
     [ModelReaderWriterBuildable(typeof(ServiceProviderParameterMetadata))]
     [ModelReaderWriterBuildable(typeof(ServiceProviderParameterMetadataConstraints))]

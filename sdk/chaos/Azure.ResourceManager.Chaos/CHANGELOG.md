@@ -1,14 +1,31 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.3 (2026-08-31)
 
 ### Features Added
 
-### Breaking Changes
+- Updated the default api-version to `2026-08-01-preview`.
+- Added new resource `ChaosConnectionResource` and collection `ChaosConnectionCollection` (with `GetChaosConnection`, `GetChaosConnections`, and `GetChaosConnectionResource` accessors).
+- Added new models `ResourceTargeting`, `ResourceTargetingCriteria`, `WorkspaceDiscovery`, `WorkspaceDiscoveryProperties`, `WorkspaceDiscoveryStatus`, `ChaosConnectionKind`, `ChaosConnectionStatus`, `ChaosConnectionProperties`, `TemplateEvaluationResultItem`, and `ValidationProperties`.
 
-### Bugs Fixed
+## 1.2.0-beta.2 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Choas` AOT-compatible.
+
+## 1.2.0-beta.1 (2026-05-29)
+
+### Features Added
+
+- Updated the api-version to 2026-05-01-preview.
+
+## 1.1.1 (2026-04-20)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.1.0 (2025-05-22)
 

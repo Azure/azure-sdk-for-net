@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct ManagedRuleExclusionMatchVariable : IEquatable<ManagedRuleExclusionMatchVariable>
     {
         private readonly string _value;
+        /// <summary> RequestHeaderNames. </summary>
+        private const string RequestHeaderNamesValue = "RequestHeaderNames";
+        /// <summary> RequestCookieNames. </summary>
+        private const string RequestCookieNamesValue = "RequestCookieNames";
+        /// <summary> QueryStringArgNames. </summary>
+        private const string QueryStringArgNamesValue = "QueryStringArgNames";
+        /// <summary> RequestBodyPostArgNames. </summary>
+        private const string RequestBodyPostArgNamesValue = "RequestBodyPostArgNames";
+        /// <summary> RequestBodyJsonArgNames. </summary>
+        private const string RequestBodyJsonArgNamesValue = "RequestBodyJsonArgNames";
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleExclusionMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedRuleExclusionMatchVariable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequestHeaderNamesValue = "RequestHeaderNames";
-        private const string RequestCookieNamesValue = "RequestCookieNames";
-        private const string QueryStringArgNamesValue = "QueryStringArgNames";
-        private const string RequestBodyPostArgNamesValue = "RequestBodyPostArgNames";
-        private const string RequestBodyJsonArgNamesValue = "RequestBodyJsonArgNames";
+            _value = value;
+        }
 
         /// <summary> RequestHeaderNames. </summary>
         public static ManagedRuleExclusionMatchVariable RequestHeaderNames { get; } = new ManagedRuleExclusionMatchVariable(RequestHeaderNamesValue);
+
         /// <summary> RequestCookieNames. </summary>
         public static ManagedRuleExclusionMatchVariable RequestCookieNames { get; } = new ManagedRuleExclusionMatchVariable(RequestCookieNamesValue);
+
         /// <summary> QueryStringArgNames. </summary>
         public static ManagedRuleExclusionMatchVariable QueryStringArgNames { get; } = new ManagedRuleExclusionMatchVariable(QueryStringArgNamesValue);
+
         /// <summary> RequestBodyPostArgNames. </summary>
         public static ManagedRuleExclusionMatchVariable RequestBodyPostArgNames { get; } = new ManagedRuleExclusionMatchVariable(RequestBodyPostArgNamesValue);
+
         /// <summary> RequestBodyJsonArgNames. </summary>
         public static ManagedRuleExclusionMatchVariable RequestBodyJsonArgNames { get; } = new ManagedRuleExclusionMatchVariable(RequestBodyJsonArgNamesValue);
+
         /// <summary> Determines if two <see cref="ManagedRuleExclusionMatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedRuleExclusionMatchVariable left, ManagedRuleExclusionMatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedRuleExclusionMatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedRuleExclusionMatchVariable left, ManagedRuleExclusionMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedRuleExclusionMatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedRuleExclusionMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedRuleExclusionMatchVariable(string value) => new ManagedRuleExclusionMatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedRuleExclusionMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedRuleExclusionMatchVariable?(string value) => value == null ? null : new ManagedRuleExclusionMatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedRuleExclusionMatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedRuleExclusionMatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

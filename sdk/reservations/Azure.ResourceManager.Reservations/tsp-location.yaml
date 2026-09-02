@@ -1,0 +1,4 @@
+directory: specification/reservations/resource-manager/Microsoft.Capacity/Reservations
+commit: 0822e0ed16af3db17639c459b0163012e3c18377
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

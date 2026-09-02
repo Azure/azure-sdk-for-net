@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            await bgpConnection.DeleteAsync(WaitUntil.Completed);
+            await bgpConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Samples
                 PeerIP = "192.168.1.5",
                 HubVirtualNetworkConnectionId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1/hubVirtualNetworkConnections/hubVnetConn1"),
             };
-            ArmOperation<BgpConnectionResource> lro = await bgpConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<BgpConnectionResource> lro = await bgpConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             BgpConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionLearnedRoutesAsync(WaitUntil.Completed);
+            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionLearnedRoutesAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             IDictionary<string, IList<PeerRoute>> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionAdvertisedRoutesAsync(WaitUntil.Completed);
+            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionAdvertisedRoutesAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             IDictionary<string, IList<PeerRoute>> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

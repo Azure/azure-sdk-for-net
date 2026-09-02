@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The HostNetwork of a cluster. </summary>
     public partial class DeploymentSettingHostNetwork
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingHostNetwork"/>. </summary>
         public DeploymentSettingHostNetwork()
@@ -55,29 +27,56 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingHostNetwork"/>. </summary>
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sanNetworks"> SAN network configuration for the host network. Applicable when StorageType is 'SAN' or 'SANS2D'. </param>
         /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less.. </param>
         /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingHostNetwork(IList<DeploymentSettingIntents> intents, IList<DeploymentSettingStorageNetworks> storageNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentSettingHostNetwork(IList<DeploymentSettingIntents> intents, IList<DeploymentSettingStorageNetworks> storageNetworks, SanNetworks sanNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Intents = intents;
             StorageNetworks = storageNetworks;
+            SanNetworks = sanNetworks;
             StorageConnectivitySwitchless = storageConnectivitySwitchless;
             EnableStorageAutoIP = enableStorageAutoIP;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </summary>
         [WirePath("intents")]
         public IList<DeploymentSettingIntents> Intents { get; }
+
         /// <summary> List of StorageNetworks config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("storageNetworks")]
         public IList<DeploymentSettingStorageNetworks> StorageNetworks { get; }
+
+        /// <summary> SAN network configuration for the host network. Applicable when StorageType is 'SAN' or 'SANS2D'. </summary>
+        [WirePath("sanNetworks")]
+        internal SanNetworks SanNetworks { get; set; }
+
         /// <summary> Defines how the storage adapters between nodes are connected either switch or switch less.. </summary>
         [WirePath("storageConnectivitySwitchless")]
         public bool? StorageConnectivitySwitchless { get; set; }
+
         /// <summary> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </summary>
         [WirePath("enableStorageAutoIp")]
         public bool? EnableStorageAutoIP { get; set; }
+
+        /// <summary> Cluster (CSV/LiveMig) network configuration for SAN deployments. </summary>
+        [WirePath("sanNetworks.clusterNetworkConfig")]
+        public SanClusterNetworkConfig SanNetworksClusterNetworkConfig
+        {
+            get
+            {
+                return SanNetworks is null ? default : SanNetworks.ClusterNetworkConfig;
+            }
+            set
+            {
+                if (SanNetworks is null)
+                {
+                    SanNetworks = new SanNetworks();
+                }
+                SanNetworks.ClusterNetworkConfig = value;
+            }
+        }
     }
 }

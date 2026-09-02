@@ -11,21 +11,40 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class RollingUpgradeStatusCodeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RollingUpgradeStatusCode value) => value switch
         {
             RollingUpgradeStatusCode.RollingForward => "RollingForward",
+            RollingUpgradeStatusCode.RollingBack => "RollingBack",
             RollingUpgradeStatusCode.Cancelled => "Cancelled",
             RollingUpgradeStatusCode.Completed => "Completed",
             RollingUpgradeStatusCode.Faulted => "Faulted",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RollingUpgradeStatusCode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RollingUpgradeStatusCode ToRollingUpgradeStatusCode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward")) return RollingUpgradeStatusCode.RollingForward;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return RollingUpgradeStatusCode.Cancelled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed")) return RollingUpgradeStatusCode.Completed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted")) return RollingUpgradeStatusCode.Faulted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward"))
+            {
+                return RollingUpgradeStatusCode.RollingForward;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingBack"))
+            {
+                return RollingUpgradeStatusCode.RollingBack;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled"))
+            {
+                return RollingUpgradeStatusCode.Cancelled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed"))
+            {
+                return RollingUpgradeStatusCode.Completed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted"))
+            {
+                return RollingUpgradeStatusCode.Faulted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RollingUpgradeStatusCode value.");
         }
     }

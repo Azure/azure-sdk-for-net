@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,21 +15,25 @@ namespace Azure.ResourceManager.Billing.Models
     internal partial class SavingsPlanModelListResult : SavingsPlanModelList
     {
         /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
-        internal SavingsPlanModelListResult()
+        /// <param name="value"> The SavingsPlanModel items on this page. </param>
+        /// <param name="summary"> The roll out count summary of the savings plans. </param>
+        internal SavingsPlanModelListResult(IEnumerable<BillingSavingsPlanModelData> value, SavingsPlanSummaryCount summary) : base(value)
         {
+            Summary = summary;
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> Url to get the next page. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="value"> The SavingsPlanModel items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="summary"> The roll out count summary of the savings plans. </param>
-        internal SavingsPlanModelListResult(IReadOnlyList<BillingSavingsPlanModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, SavingsPlanSummaryCount summary) : base(value, nextLink, serializedAdditionalRawData)
+        internal SavingsPlanModelListResult(IList<BillingSavingsPlanModelData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavingsPlanSummaryCount summary) : base(value, nextLink, additionalBinaryDataProperties)
         {
             Summary = summary;
         }
 
         /// <summary> The roll out count summary of the savings plans. </summary>
+        [WirePath("summary")]
         public SavingsPlanSummaryCount Summary { get; }
     }
 }

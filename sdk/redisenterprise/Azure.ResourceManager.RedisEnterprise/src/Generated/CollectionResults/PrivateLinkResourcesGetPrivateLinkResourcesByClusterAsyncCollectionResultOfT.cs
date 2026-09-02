@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.RedisEnterprise
                     yield break;
                 }
                 RedisEnterprisePrivateLinkResourceListResult result = RedisEnterprisePrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<RedisEnterprisePrivateLinkResource>.FromValues((IReadOnlyList<RedisEnterprisePrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RedisEnterprisePrivateLinkResource>.FromValues((IReadOnlyList<RedisEnterprisePrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -25,15 +25,25 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListIndexesSelectedResult"/>. </summary>
+        /// <param name="count"> The total count of indexes in the service, or null if the count was not requested. </param>
         /// <param name="value"> The indexes in the Search service. </param>
+        /// <param name="nextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListIndexesSelectedResult(IReadOnlyList<SearchIndexResponse> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListIndexesSelectedResult(long? count, IReadOnlyList<SearchIndexResponse> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Count = count;
             Value = value;
+            NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The total count of indexes in the service, or null if the count was not requested. </summary>
+        public long? Count { get; }
+
         /// <summary> The indexes in the Search service. </summary>
         public IReadOnlyList<SearchIndexResponse> Value { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                         PatchSettings = new()
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
-                            AssessmentMode = WindowsPatchAssessmentMode.ImageDefault
+                            AssessmentMode = WindowsPatchAssessmentMode.AutomaticByPlatform
                         }
                     }
                 },

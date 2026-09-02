@@ -44,6 +44,8 @@ public partial class CommentStatement : IJsonModel<BicepStatement>
 
     string IPersistableModel<BicepStatement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepStatement? other) => other is CommentStatement c && Comment == c.Comment;
+    /// <inheritdoc/>
     public override int GetHashCode() => (typeof(CommentStatement).GetHashCode() * 31 + (Comment?.GetHashCode() ?? 0));
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The result of the assessment. </summary>
+    /// <summary> The SecurityAssessmentStatusResult. </summary>
     public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/>. </summary>
@@ -23,22 +23,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="firstEvaluatedOn"> The time that the assessment was created and first evaluated. Returned as UTC time in ISO 8601 format. </param>
         /// <param name="statusChangeOn"> The time that the status of the assessment last changed. Returned as UTC time in ISO 8601 format. </param>
-        internal SecurityAssessmentStatusResult(SecurityAssessmentStatusCode code, string cause, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? firstEvaluatedOn, DateTimeOffset? statusChangeOn) : base(code, cause, description, serializedAdditionalRawData)
+        internal SecurityAssessmentStatusResult(SecurityAssessmentStatusCode code, string cause, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? firstEvaluatedOn, DateTimeOffset? statusChangeOn) : base(code, cause, description, additionalBinaryDataProperties)
         {
             FirstEvaluatedOn = firstEvaluatedOn;
             StatusChangeOn = statusChangeOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/> for deserialization. </summary>
-        internal SecurityAssessmentStatusResult()
-        {
-        }
-
         /// <summary> The time that the assessment was created and first evaluated. Returned as UTC time in ISO 8601 format. </summary>
         public DateTimeOffset? FirstEvaluatedOn { get; }
+
         /// <summary> The time that the status of the assessment last changed. Returned as UTC time in ISO 8601 format. </summary>
         public DateTimeOffset? StatusChangeOn { get; }
     }

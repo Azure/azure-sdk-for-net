@@ -10,6 +10,20 @@
 
 ### Other Changes
 
+## 1.5.2 (2026-09-08)
+
+### Other Changes
+
+- Updated `Azure.Core` dependency from 1.54.0 to 1.61.0.
+- Updated `Azure.Security.KeyVault.Secrets` dependency from 4.10.0 to 4.11.0.
+- Updated `Microsoft.Extensions.Configuration` dependency from 10.0.3 to the serviced 10.0.10 release.
+
+## 1.5.1 (2026-04-29)
+
+### Other Changes
+
+- Adopted the new `Azure.Core` version that includes the identity types moved from `Azure.Identity`.
+
 ## 1.5.0 (2026-03-04)
 
 ### Features Added

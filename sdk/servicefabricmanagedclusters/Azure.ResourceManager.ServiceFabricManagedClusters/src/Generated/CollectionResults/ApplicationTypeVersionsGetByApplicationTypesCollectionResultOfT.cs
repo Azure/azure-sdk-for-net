@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     yield break;
                 }
                 ApplicationTypeVersionResourceList result = ApplicationTypeVersionResourceList.FromResponse(response);
-                yield return Page<ServiceFabricManagedApplicationTypeVersionData>.FromValues((IReadOnlyList<ServiceFabricManagedApplicationTypeVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceFabricManagedApplicationTypeVersionData>.FromValues((IReadOnlyList<ServiceFabricManagedApplicationTypeVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

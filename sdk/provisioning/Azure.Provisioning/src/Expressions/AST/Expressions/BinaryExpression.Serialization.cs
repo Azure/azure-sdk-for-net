@@ -50,7 +50,9 @@ public partial class BinaryExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is BinaryExpression b && Left.Equals(b.Left) && Operator == b.Operator && Right.Equals(b.Right);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(BinaryExpression).GetHashCode() ^ (Left?.GetHashCode() ?? 0) ^ Operator.GetHashCode() ^ (Right?.GetHashCode() ?? 0);
 
     internal static BinaryExpression DeserializeBinaryExpression(JsonElement element)

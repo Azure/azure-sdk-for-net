@@ -172,7 +172,14 @@ filter Remove-PurgeableResources {
     switch ($r.AzsdkResourceType) {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
-          Write-Verbose "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)" -Verbose:$verboseFlag
+          $purgeMsg = "Key Vault '$($r.VaultName)' has purge protection enabled"
+          if ($r.PSObject.Properties['ScheduledPurgeDate'] -and $r.ScheduledPurgeDate) {
+            $purgeMsg += " and may not be purged until $($r.ScheduledPurgeDate)"
+          }
+          else{
+            $purgeMsg += " and cannot be deleted"
+          }
+          Write-Verbose $purgeMsg -Verbose:$verboseFlag
           continue
         }
 
@@ -185,7 +192,14 @@ filter Remove-PurgeableResources {
 
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
-          Write-Verbose "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)" -Verbose:$verboseFlag
+          $purgeMsg = "Managed HSM '$($r.Name)' has purge protection enabled"
+          if ($r.PSObject.Properties['ScheduledPurgeDate'] -and $r.ScheduledPurgeDate) {
+            $purgeMsg += " and may not be purged until $($r.ScheduledPurgeDate)"
+          }
+          else{
+            $purgeMsg += " and cannot be deleted"
+          }
+          Write-Verbose $purgeMsg -Verbose:$verboseFlag
           continue
         }
 
@@ -283,7 +297,8 @@ function Remove-WormStorageAccounts() {
   [CmdletBinding(SupportsShouldProcess = $True)]
   param(
     [string]$GroupPrefix,
-    [switch]$CI
+    [switch]$CI,
+    [bool]$CheckPrefix = $true
   )
 
   $ErrorActionPreference = 'Stop'
@@ -292,9 +307,15 @@ function Remove-WormStorageAccounts() {
   # DO NOT REMOVE THIS
   # We call this script from live test pipelines as well, and a string mismatch/error could blow away
   # some static storage accounts we rely on
-  if (!$groupPrefix -or ($CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-')))) {
-    throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' or 'SSS3PT_rg-' in CI contexts"
+  # Note: Prefix check can be disabled via `-CheckPrefix:$false` for scenarios where the resource group prefix isn't standardized.
+  if (!$GroupPrefix) {
+    throw "The -GroupPrefix parameter must not be empty"
   }
+
+  if ($CheckPrefix -and $CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-'))) {
+    throw "In CI contexts with -CheckPrefix enabled, -GroupPrefix must start with 'rg-' or 'SSS3PT_rg-'"
+  }
+
 
   $groups = Get-AzResourceGroup | Where-Object { $_.ResourceGroupName.StartsWith($GroupPrefix) } | Where-Object { $_.ProvisioningState -ne 'Deleting' }
 
@@ -434,11 +455,17 @@ function RemoveStorageAccount($Account) {
 
   try {
     foreach ($container in $containers) {
-      $blobs = $container | Get-AzStorageBlob
-      foreach ($blob in $blobs) {
-        $shouldDelete = EnableBlobDeletion -Blob $blob -Container $container -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
-        if ($shouldDelete) {
-          $deleteNow += $blob
+      # VLW containers need version-aware cleanup: soft-delete causes deleted blobs to linger
+      # as non-current versions that block container deletion. See Remove-VlwContainerBlobs.
+      if (($container | Get-Member 'BlobContainerProperties') -and $container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
+        Remove-VlwContainerBlobs -Container $container -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
+      } else {
+        $blobs = $container | Get-AzStorageBlob
+        foreach ($blob in $blobs) {
+          $shouldDelete = EnableBlobDeletion -Blob $blob -Container $container -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName
+          if ($shouldDelete) {
+            $deleteNow += $blob
+          }
         }
       }
     }
@@ -522,6 +549,41 @@ function EnableBlobDeletion($Blob, $Container, $StorageAccountName, $ResourceGro
   }
 
   return $forceBlobDeletion
+}
+
+# In VLW (Versioned-Level WORM) containers with soft-delete enabled, deleting a blob creates a
+# non-current version instead of truly removing it. A standard Get-AzStorageBlob listing can't
+# see these leftovers, but they still block container deletion (409 Conflict on the management
+# plane DELETE). Listing with -IncludeVersion -IncludeDeleted makes them visible so we can clear
+# immutability policies / legal holds and delete each version individually. Multiple passes handle
+# new non-current versions that surface after each round of deletions.
+function Remove-VlwContainerBlobs($Container, $StorageAccountName, $ResourceGroupName) {
+  Write-Host "Cleaning VLW container '$($Container.Name)' versions and soft-deleted blobs in account '$StorageAccountName', group: $ResourceGroupName"
+
+  for ($round = 0; $round -lt 5; $round++) {
+    $found = $false
+    $blobs = @($Container | Get-AzStorageBlob -IncludeVersion -IncludeDeleted -ErrorAction SilentlyContinue)
+
+    foreach ($blob in $blobs) {
+      $found = $true
+
+      # Unconditionally clear legal holds and immutability policies. Errors are expected for
+      # soft-deleted blobs or blobs that don't have these set.
+      try { $blob | Set-AzStorageBlobLegalHold -DisableLegalHold | Out-Null } catch { }
+      try { $blob | Remove-AzStorageBlobImmutabilityPolicy | Out-Null } catch { }
+      try {
+        $blob | Remove-AzStorageBlob -Force
+      } catch {
+        # Deleting the current version by version ID returns 403
+        # (OperationNotAllowedOnRootBlob); fall back to base blob deletion.
+        try {
+          Remove-AzStorageBlob -Container $Container.Name -Blob $blob.Name -Context $Container.Context -Force
+        } catch { }
+      }
+    }
+
+    if (-not $found) { break }
+  }
 }
 
 function DoesSubnetOverlap([string]$ipOrCidr, [string]$overlapIp) {

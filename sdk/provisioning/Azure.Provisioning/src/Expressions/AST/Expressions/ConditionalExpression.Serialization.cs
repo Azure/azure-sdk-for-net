@@ -51,7 +51,9 @@ public partial class ConditionalExpression : IJsonModel<BicepExpression>
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) => other is ConditionalExpression c && Condition.Equals(c.Condition) && Consequent.Equals(c.Consequent) && Alternate.Equals(c.Alternate);
+    /// <inheritdoc/>
     public override int GetHashCode() => typeof(ConditionalExpression).GetHashCode() ^ (Condition?.GetHashCode() ?? 0) ^ (Consequent?.GetHashCode() ?? 0) ^ (Alternate?.GetHashCode() ?? 0);
 
     internal static ConditionalExpression DeserializeConditionalExpression(JsonElement element)

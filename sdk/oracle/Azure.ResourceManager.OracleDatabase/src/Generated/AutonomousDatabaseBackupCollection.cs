@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(AutonomousDatabaseBackupResource.ResourceType, out string autonomousDatabaseBackupApiVersion);
             _autonomousDatabaseBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseBackupResource.ResourceType.Namespace, Diagnostics);
-            _autonomousDatabaseBackupsRestClient = new AutonomousDatabaseBackups(_autonomousDatabaseBackupsClientDiagnostics, Pipeline, Endpoint, autonomousDatabaseBackupApiVersion ?? "2025-09-01");
+            _autonomousDatabaseBackupsRestClient = new AutonomousDatabaseBackups(_autonomousDatabaseBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseBackupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabaseBackupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, adbbackupid, AutonomousDatabaseBackupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseBackupResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseBackupResource>(
-                    new AutonomousDatabaseBackupOperationSource(Client),
+                    new AutonomousDatabaseBackupResourceOperationSource(Client),
                     _autonomousDatabaseBackupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabaseBackupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, adbbackupid, AutonomousDatabaseBackupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseBackupResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseBackupResource>(
-                    new AutonomousDatabaseBackupOperationSource(Client),
+                    new AutonomousDatabaseBackupResourceOperationSource(Client),
                     _autonomousDatabaseBackupsClientDiagnostics,
                     Pipeline,
                     message.Request,

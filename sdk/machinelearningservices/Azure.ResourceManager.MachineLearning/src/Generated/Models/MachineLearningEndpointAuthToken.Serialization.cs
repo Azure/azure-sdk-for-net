@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointAuthToken : IUtf8JsonSerializable, IJsonModel<MachineLearningEndpointAuthToken>
+    /// <summary> Service Token. </summary>
+    public partial class MachineLearningEndpointAuthToken : IJsonModel<MachineLearningEndpointAuthToken>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEndpointAuthToken>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningEndpointAuthToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningEndpointAuthToken(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningEndpointAuthToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningEndpointAuthToken IPersistableModel<MachineLearningEndpointAuthToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningEndpointAuthToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineLearningEndpointAuthToken"/> from. </param>
+        internal static MachineLearningEndpointAuthToken FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMachineLearningEndpointAuthToken(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningEndpointAuthToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,55 +77,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AccessToken))
             {
-                if (AccessToken != null)
-                {
-                    writer.WritePropertyName("accessToken"u8);
-                    writer.WriteStringValue(AccessToken);
-                }
-                else
-                {
-                    writer.WriteNull("accessToken");
-                }
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteStringValue(AccessToken);
+            }
+            if (Optional.IsDefined(ExpiryTimeUtc))
+            {
+                writer.WritePropertyName("expiryTimeUtc"u8);
+                writer.WriteNumberValue(ExpiryTimeUtc.Value);
+            }
+            if (Optional.IsDefined(RefreshAfterTimeUtc))
+            {
+                writer.WritePropertyName("refreshAfterTimeUtc"u8);
+                writer.WriteNumberValue(RefreshAfterTimeUtc.Value);
             }
             if (Optional.IsDefined(TokenType))
             {
-                if (TokenType != null)
-                {
-                    writer.WritePropertyName("tokenType"u8);
-                    writer.WriteStringValue(TokenType);
-                }
-                else
-                {
-                    writer.WriteNull("tokenType");
-                }
+                writer.WritePropertyName("tokenType"u8);
+                writer.WriteStringValue(TokenType);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("expiryTimeUtc"u8);
-                writer.WriteNumberValue(ExpireOn.Value, "U");
-            }
-            if (Optional.IsDefined(RefreshOn))
-            {
-                writer.WritePropertyName("refreshAfterTimeUtc"u8);
-                writer.WriteNumberValue(RefreshOn.Value, "U");
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,205 +119,82 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningEndpointAuthToken IJsonModel<MachineLearningEndpointAuthToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningEndpointAuthToken IJsonModel<MachineLearningEndpointAuthToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningEndpointAuthToken JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningEndpointAuthToken(document.RootElement, options);
         }
 
-        internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string accessToken = default;
+            long? expiryTimeUtc = default;
+            long? refreshAfterTimeUtc = default;
             string tokenType = default;
-            DateTimeOffset? expiryTimeUtc = default;
-            DateTimeOffset? refreshAfterTimeUtc = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("accessToken"u8))
+                if (prop.NameEquals("accessToken"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         accessToken = null;
                         continue;
                     }
-                    accessToken = property.Value.GetString();
+                    accessToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tokenType"u8))
+                if (prop.NameEquals("expiryTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiryTimeUtc = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("refreshAfterTimeUtc"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshAfterTimeUtc = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("tokenType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tokenType = null;
                         continue;
                     }
-                    tokenType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("expiryTimeUtc"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expiryTimeUtc = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
-                    continue;
-                }
-                if (property.NameEquals("refreshAfterTimeUtc"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    refreshAfterTimeUtc = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    tokenType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningEndpointAuthToken(accessToken, tokenType, expiryTimeUtc, refreshAfterTimeUtc, serializedAdditionalRawData);
+            return new MachineLearningEndpointAuthToken(accessToken, expiryTimeUtc, refreshAfterTimeUtc, tokenType, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  accessToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AccessToken))
-                {
-                    builder.Append("  accessToken: ");
-                    if (AccessToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AccessToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AccessToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tokenType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TokenType))
-                {
-                    builder.Append("  tokenType: ");
-                    if (TokenType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TokenType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TokenType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expiryTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpireOn))
-                {
-                    builder.Append("  expiryTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  refreshAfterTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RefreshOn))
-                {
-                    builder.Append("  refreshAfterTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RefreshOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningEndpointAuthToken>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningEndpointAuthToken IPersistableModel<MachineLearningEndpointAuthToken>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointAuthToken>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningEndpointAuthToken(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningEndpointAuthToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

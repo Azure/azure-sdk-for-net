@@ -57,16 +57,19 @@ public partial class InstanceFunctionCallExpression : IJsonModel<BicepExpression
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+    /// <inheritdoc/>
     public override bool Equals(BicepExpression? other) =>
         other is InstanceFunctionCallExpression f && Base.Equals(f.Base) &&
         Name == f.Name && Arguments.SequenceEqual(f.Arguments);
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         int hash = typeof(InstanceFunctionCallExpression).GetHashCode();
         hash = hash * 31 + (Base?.GetHashCode() ?? 0);
         hash = hash * 31 + (Name?.GetHashCode() ?? 0);
-        foreach (var a in Arguments) hash = hash * 31 + (a?.GetHashCode() ?? 0);
+        foreach (var a in Arguments)
+            hash = hash * 31 + (a?.GetHashCode() ?? 0);
         return hash;
     }
 

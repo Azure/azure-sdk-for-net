@@ -3,6 +3,7 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added preview `InvokeEventAsync` API for invoking upstream events and awaiting correlated responses from the service.
 
 ### Breaking Changes
 

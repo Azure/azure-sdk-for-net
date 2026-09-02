@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Datadog.Models
         {
             get
             {
-                return LogsAgent.Transport;
+                return LogsAgent is null ? default : LogsAgent.Transport;
             }
         }
     }

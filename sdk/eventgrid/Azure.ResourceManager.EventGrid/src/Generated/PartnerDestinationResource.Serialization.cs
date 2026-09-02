@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class PartnerDestinationResource : IJsonModel<PartnerDestinationData>
     {
-        private static PartnerDestinationData s_dataDeserializationInstance;
-        private static PartnerDestinationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PartnerDestinationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PartnerDestinationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PartnerDestinationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PartnerDestinationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerDestinationData>)Data).Write(writer, options);
 
-        PartnerDestinationData IJsonModel<PartnerDestinationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerDestinationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PartnerDestinationData IJsonModel<PartnerDestinationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PartnerDestinationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerDestinationData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PartnerDestinationData IPersistableModel<PartnerDestinationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerDestinationData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<PartnerDestinationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerDestinationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PartnerDestinationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

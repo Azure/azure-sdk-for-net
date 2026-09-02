@@ -8,84 +8,53 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Parameters required for profile upgrade. </summary>
     public partial class ProfileChangeSkuWafMapping
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProfileChangeSkuWafMapping"/>. </summary>
         /// <param name="securityPolicyName"> The security policy name. </param>
-        /// <param name="changeToWafPolicy"> The new waf resource for the security policy to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="changeToWafPolicy"/> is null. </exception>
-        public ProfileChangeSkuWafMapping(string securityPolicyName, WritableSubResource changeToWafPolicy)
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        public ProfileChangeSkuWafMapping(string securityPolicyName)
         {
             Argument.AssertNotNull(securityPolicyName, nameof(securityPolicyName));
-            Argument.AssertNotNull(changeToWafPolicy, nameof(changeToWafPolicy));
 
             SecurityPolicyName = securityPolicyName;
-            ChangeToWafPolicy = changeToWafPolicy;
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileChangeSkuWafMapping"/>. </summary>
         /// <param name="securityPolicyName"> The security policy name. </param>
         /// <param name="changeToWafPolicy"> The new waf resource for the security policy to use. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileChangeSkuWafMapping(string securityPolicyName, WritableSubResource changeToWafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProfileChangeSkuWafMapping(string securityPolicyName, CdnResourceReference changeToWafPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityPolicyName = securityPolicyName;
             ChangeToWafPolicy = changeToWafPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProfileChangeSkuWafMapping"/> for deserialization. </summary>
-        internal ProfileChangeSkuWafMapping()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The security policy name. </summary>
         [WirePath("securityPolicyName")]
         public string SecurityPolicyName { get; }
+
         /// <summary> The new waf resource for the security policy to use. </summary>
-        internal WritableSubResource ChangeToWafPolicy { get; }
-        /// <summary> Gets or sets Id. </summary>
+        [WirePath("changeToWafPolicy")]
+        internal CdnResourceReference ChangeToWafPolicy { get; }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("changeToWafPolicy.id")]
         public ResourceIdentifier ChangeToWafPolicyId
         {
-            get => ChangeToWafPolicy?.Id;
+            get
+            {
+                return ChangeToWafPolicy.Id;
+            }
         }
     }
 }

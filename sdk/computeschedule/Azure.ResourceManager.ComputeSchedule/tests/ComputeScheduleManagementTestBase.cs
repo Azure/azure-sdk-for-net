@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         protected AzureLocation Location { get; private set; }
         protected GenericResourceCollection _genericResourceCollection;
         protected ResourceGroupResource DefaultResourceGroupResource;
+        private const string NetworkResourceApiVersion = "2025-07-01";
 
         protected ComputeScheduleManagementTestBase(bool isAsync)
             : base(isAsync)
@@ -43,7 +44,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetArmClient();
+                ArmClientOptions options = new();
+                options.SetApiVersion("Microsoft.Network/virtualNetworks", NetworkResourceApiVersion);
+                options.SetApiVersion("Microsoft.Network/networkInterfaces", NetworkResourceApiVersion);
+                Client = GetArmClient(options);
                 SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
                 DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
                 DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
@@ -116,7 +120,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                 { "name", subnetName },
                 { "properties", new Dictionary<string, object>()
                 {
-                    { "addressPrefix", "10.0.2.0/24" }
+                    { "addressPrefix", "10.0.2.0/24" },
+                    { "defaultOutboundAccess", false }
                 } }
             };
             var subnets = new List<object>() { subnet };
@@ -531,11 +536,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<CreateFlexResourceOperationResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
+        protected static async Task<ScheduledActionCreateFlexResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteCreateFlexContent content = executeCreateFlexRequest;
-            CreateFlexResourceOperationResult result;
+            ScheduledActionCreateFlexResult result;
 
             try
             {

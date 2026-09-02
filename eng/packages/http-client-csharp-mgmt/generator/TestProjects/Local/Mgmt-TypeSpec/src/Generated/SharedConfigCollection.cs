@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(SharedConfigResource.ResourceType, out string sharedConfigApiVersion);
             _sharedConfigsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SharedConfigResource.ResourceType.Namespace, Diagnostics);
-            _sharedConfigsRestClient = new SharedConfigs(_sharedConfigsClientDiagnostics, Pipeline, Endpoint, sharedConfigApiVersion ?? "2024-05-01");
+            _sharedConfigsRestClient = new SharedConfigs(_sharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sharedConfigApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sharedConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configName, SharedConfigData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SharedConfigResource> operation = new TestsArmOperation<SharedConfigResource>(
-                    new SharedConfigOperationSource(Client),
+                    new SharedConfigResourceOperationSource(Client),
                     _sharedConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sharedConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configName, SharedConfigData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SharedConfigResource> operation = new TestsArmOperation<SharedConfigResource>(
-                    new SharedConfigOperationSource(Client),
+                    new SharedConfigResourceOperationSource(Client),
                     _sharedConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,

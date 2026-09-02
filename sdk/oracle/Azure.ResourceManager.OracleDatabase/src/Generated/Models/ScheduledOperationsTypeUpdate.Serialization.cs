@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 throw new FormatException($"The model {nameof(ScheduledOperationsTypeUpdate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DayOfWeek))
+            if (Optional.IsDefined(ScheduledDay))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
-                writer.WriteObjectValue(DayOfWeek, options);
+                writer.WriteObjectValue(ScheduledDay, options);
             }
             if (Optional.IsDefined(AutoStartOn))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            OracleDatabaseDayOfWeekUpdate dayOfWeek = default;
+            OracleDatabaseDayOfWeekUpdate scheduledDay = default;
             DateTimeOffset? autoStartOn = default;
             DateTimeOffset? autoStopOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dayOfWeek = OracleDatabaseDayOfWeekUpdate.DeserializeOracleDatabaseDayOfWeekUpdate(prop.Value, options);
+                    scheduledDay = OracleDatabaseDayOfWeekUpdate.DeserializeOracleDatabaseDayOfWeekUpdate(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledStartTime"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledOperationsTypeUpdate(dayOfWeek, autoStartOn, autoStopOn, additionalBinaryDataProperties);
+            return new ScheduledOperationsTypeUpdate(scheduledDay, autoStartOn, autoStopOn, additionalBinaryDataProperties);
         }
     }
 }

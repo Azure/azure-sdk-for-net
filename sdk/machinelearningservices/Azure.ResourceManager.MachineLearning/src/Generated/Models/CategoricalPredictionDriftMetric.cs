@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The CategoricalPredictionDriftMetric. </summary>
+    /// <summary></summary>
     public readonly partial struct CategoricalPredictionDriftMetric : IEquatable<CategoricalPredictionDriftMetric>
     {
         private readonly string _value;
+        /// <summary> The Jensen Shannon Distance (JSD) metric. </summary>
+        private const string JensenShannonDistanceValue = "JensenShannonDistance";
+        /// <summary> The Population Stability Index (PSI) metric. </summary>
+        private const string PopulationStabilityIndexValue = "PopulationStabilityIndex";
+        /// <summary> The Pearsons Chi Squared Test metric. </summary>
+        private const string PearsonsChiSquaredTestValue = "PearsonsChiSquaredTest";
 
         /// <summary> Initializes a new instance of <see cref="CategoricalPredictionDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CategoricalPredictionDriftMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JensenShannonDistanceValue = "JensenShannonDistance";
-        private const string PopulationStabilityIndexValue = "PopulationStabilityIndex";
-        private const string PearsonsChiSquaredTestValue = "PearsonsChiSquaredTest";
+            _value = value;
+        }
 
         /// <summary> The Jensen Shannon Distance (JSD) metric. </summary>
         public static CategoricalPredictionDriftMetric JensenShannonDistance { get; } = new CategoricalPredictionDriftMetric(JensenShannonDistanceValue);
+
         /// <summary> The Population Stability Index (PSI) metric. </summary>
         public static CategoricalPredictionDriftMetric PopulationStabilityIndex { get; } = new CategoricalPredictionDriftMetric(PopulationStabilityIndexValue);
+
         /// <summary> The Pearsons Chi Squared Test metric. </summary>
         public static CategoricalPredictionDriftMetric PearsonsChiSquaredTest { get; } = new CategoricalPredictionDriftMetric(PearsonsChiSquaredTestValue);
+
         /// <summary> Determines if two <see cref="CategoricalPredictionDriftMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CategoricalPredictionDriftMetric left, CategoricalPredictionDriftMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CategoricalPredictionDriftMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CategoricalPredictionDriftMetric left, CategoricalPredictionDriftMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CategoricalPredictionDriftMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CategoricalPredictionDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CategoricalPredictionDriftMetric(string value) => new CategoricalPredictionDriftMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CategoricalPredictionDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CategoricalPredictionDriftMetric?(string value) => value == null ? null : new CategoricalPredictionDriftMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CategoricalPredictionDriftMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CategoricalPredictionDriftMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmWorkloadProtectedItem IPersistableModel<VmWorkloadProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownVmWorkloadProtectedItem)PersistableModelCreateCore(data, options);
+        VmWorkloadProtectedItem IPersistableModel<VmWorkloadProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (VmWorkloadProtectedItem)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VmWorkloadProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmWorkloadProtectedItem IJsonModel<VmWorkloadProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownVmWorkloadProtectedItem)JsonModelCreateCore(ref reader, options);
+        VmWorkloadProtectedItem IJsonModel<VmWorkloadProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (VmWorkloadProtectedItem)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -125,6 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isArchiveEnabled = default;
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
+            AzureLocation? sourceLocation = default;
             string vaultId = default;
             BackupSourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -298,6 +305,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteRetentionPeriodInDays = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("vaultId"u8))
                 {
                     vaultId = prop.Value.GetString();
@@ -448,6 +464,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isArchiveEnabled,
                 policyName,
                 softDeleteRetentionPeriodInDays,
+                sourceLocation,
                 vaultId,
                 sourceSideScanInfo,
                 additionalBinaryDataProperties,

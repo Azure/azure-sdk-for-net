@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <description> 2026-04-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <description> 2026-04-16. </description>
         /// </item>
         /// </list>
         /// </summary>

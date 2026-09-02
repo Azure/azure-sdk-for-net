@@ -49,7 +49,9 @@ namespace Azure.Provisioning.Expressions
 
         string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <inheritdoc/>
         public override bool Equals(BicepExpression? other) => other is IfConditionExpression c && Condition.Equals(c.Condition) && Body.Equals(c.Body);
+        /// <inheritdoc/>
         public override int GetHashCode() => typeof(IfConditionExpression).GetHashCode() ^ (Condition?.GetHashCode() ?? 0) ^ (Body?.GetHashCode() ?? 0);
 
         internal static IfConditionExpression DeserializeIfConditionExpression(JsonElement element)

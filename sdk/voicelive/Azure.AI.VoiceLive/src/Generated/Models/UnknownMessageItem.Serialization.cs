@@ -54,7 +54,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageItem IPersistableModel<MessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownMessageItem)PersistableModelCreateCore(data, options);
+        MessageItem IPersistableModel<MessageItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (MessageItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -82,7 +82,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MessageItem IJsonModel<MessageItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownMessageItem)JsonModelCreateCore(ref reader, options);
+        MessageItem IJsonModel<MessageItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MessageItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

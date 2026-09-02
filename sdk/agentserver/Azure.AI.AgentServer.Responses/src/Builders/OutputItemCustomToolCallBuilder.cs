@@ -51,7 +51,8 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
         var item = new OutputItemCustomToolCall(
             callId: _callId,
             name: _name,
-            input: "");
+            input: "",
+            status: FunctionCallStatus.InProgress);
         item.Id = _itemId;
         return EmitAdded(item);
     }
@@ -119,7 +120,8 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
         var item = new OutputItemCustomToolCall(
             callId: _callId,
             name: _name,
-            input: _finalInput ?? "");
+            input: _finalInput ?? "",
+            status: FunctionCallStatus.Completed);
         item.Id = _itemId;
         return EmitDone(item);
     }

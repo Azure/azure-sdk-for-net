@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new AccountProperties(organizationId, accountId, accountName, region, additionalBinaryDataProperties: null));
+                new AccountProperties(organizationId, accountId, accountName, region, additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new OrganizationProperties(organizationId, organizationName, billingSource, additionalBinaryDataProperties: null));
+                new OrganizationProperties(organizationId, organizationName, billingSource, additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new PlanDataProperties(planData, orgCreationSource, accountCreationSource, additionalBinaryDataProperties: null));
+                new PlanDataProperties(planData, orgCreationSource, accountCreationSource, additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of NewRelicMonitorResourceData (17-param overload). </summary>

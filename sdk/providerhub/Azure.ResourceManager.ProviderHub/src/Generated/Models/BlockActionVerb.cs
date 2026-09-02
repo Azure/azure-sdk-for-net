@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct BlockActionVerb : IEquatable<BlockActionVerb>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BlockActionVerb"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BlockActionVerb(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string ReadValue = "Read";
         private const string WriteValue = "Write";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string DeleteValue = "Delete";
         private const string UnrecognizedValue = "Unrecognized";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlockActionVerb"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BlockActionVerb(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static BlockActionVerb NotSpecified { get; } = new BlockActionVerb(NotSpecifiedValue);
-        /// <summary> Read. </summary>
+
+        /// <summary> Gets the Read. </summary>
         public static BlockActionVerb Read { get; } = new BlockActionVerb(ReadValue);
-        /// <summary> Write. </summary>
+
+        /// <summary> Gets the Write. </summary>
         public static BlockActionVerb Write { get; } = new BlockActionVerb(WriteValue);
-        /// <summary> Action. </summary>
+
+        /// <summary> Gets the Action. </summary>
         public static BlockActionVerb Action { get; } = new BlockActionVerb(ActionValue);
-        /// <summary> Delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static BlockActionVerb Delete { get; } = new BlockActionVerb(DeleteValue);
-        /// <summary> Unrecognized. </summary>
+
+        /// <summary> Gets the Unrecognized. </summary>
         public static BlockActionVerb Unrecognized { get; } = new BlockActionVerb(UnrecognizedValue);
+
         /// <summary> Determines if two <see cref="BlockActionVerb"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlockActionVerb left, BlockActionVerb right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlockActionVerb"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlockActionVerb left, BlockActionVerb right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlockActionVerb"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlockActionVerb"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlockActionVerb(string value) => new BlockActionVerb(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlockActionVerb"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlockActionVerb?(string value) => value == null ? null : new BlockActionVerb(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlockActionVerb other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlockActionVerb other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

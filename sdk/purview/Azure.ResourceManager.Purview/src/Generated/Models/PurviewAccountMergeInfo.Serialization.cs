@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("accountSubscriptionId"u8);
                 writer.WriteStringValue(AccountSubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Deprovisioned))
+            if (options.Format != "W" && Optional.IsDefined(IsDeprovisioned))
             {
                 writer.WritePropertyName("deprovisioned"u8);
-                writer.WriteBooleanValue(Deprovisioned.Value);
+                writer.WriteBooleanValue(IsDeprovisioned.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MergeStatus))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Purview.Models
             string accountName = default;
             string accountResourceGroupName = default;
             string accountSubscriptionId = default;
-            bool? deprovisioned = default;
+            bool? isDeprovisioned = default;
             PurviewMergeStatus? mergeStatus = default;
             PurviewMergeAccountType? typeOfAccount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    deprovisioned = prop.Value.GetBoolean();
+                    isDeprovisioned = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("mergeStatus"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Purview.Models
                 accountName,
                 accountResourceGroupName,
                 accountSubscriptionId,
-                deprovisioned,
+                isDeprovisioned,
                 mergeStatus,
                 typeOfAccount,
                 additionalBinaryDataProperties);

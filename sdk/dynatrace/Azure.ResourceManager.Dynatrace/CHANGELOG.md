@@ -10,12 +10,22 @@
 
 ### Other Changes
 
+## 1.2.1 (2026-06-06)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Dynatrace` AOT-compatible.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.58.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
 ## 1.2.0 (2025-11-27)
 
 ### Features Added
 
 - Upgraded api-version to '2024-04-24'.
-- Make `Azure.ResourceManager.Dynatrace` AOT-compatible.
 
 ## 1.1.1 (2025-03-11)
 

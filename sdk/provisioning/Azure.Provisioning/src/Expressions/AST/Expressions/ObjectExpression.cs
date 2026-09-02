@@ -6,8 +6,15 @@ using System.Linq;
 
 namespace Azure.Provisioning.Expressions;
 
+/// <summary>
+/// Represents a Bicep object expression composed of named properties.
+/// </summary>
+/// <param name="properties">The property expressions that make up the object.</param>
 public partial class ObjectExpression(params PropertyExpression[] properties) : BicepExpression
 {
+    /// <summary>
+    /// Gets the property expressions that make up the object.
+    /// </summary>
     public PropertyExpression[] Properties { get; } = properties;
     private static bool IsIdentifierChar(char c) => char.IsLetterOrDigit(c) || c == '_';
     internal override BicepWriter Write(BicepWriter writer) => Properties.Length == 0 ?

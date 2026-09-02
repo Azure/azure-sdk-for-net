@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceGroups.Mocking;
 
@@ -17,25 +19,26 @@ namespace Azure.ResourceManager.ServiceGroups
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceGroups. </summary>
     public static partial class ServiceGroupsExtensions
     {
+        /// <param name="client"></param>
         private static MockableServiceGroupsArmClient GetMockableServiceGroupsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableServiceGroupsArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableServiceGroupsArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableServiceGroupsTenantResource GetMockableServiceGroupsTenantResource(ArmResource resource)
+        /// <param name="tenantResource"></param>
+        private static MockableServiceGroupsTenantResource GetMockableServiceGroupsTenantResource(TenantResource tenantResource)
         {
-            return resource.GetCachedClient(client => new MockableServiceGroupsTenantResource(client, resource.Id));
+            return tenantResource.GetCachedClient(client => new MockableServiceGroupsTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceGroupResource.CreateResourceIdentifier" /> to create a <see cref="ServiceGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceGroupsArmClient.GetServiceGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceGroupsArmClient.GetServiceGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ServiceGroupResource"/> object. </returns>
@@ -47,15 +50,15 @@ namespace Azure.ResourceManager.ServiceGroups
         }
 
         /// <summary>
-        /// Gets a collection of ServiceGroupResources in the TenantResource.
+        /// Gets a collection of ServiceGroups in the <see cref="TenantResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceGroupsTenantResource.GetServiceGroups()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceGroupsTenantResource.GetServiceGroups()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of ServiceGroupResources and their operations over a ServiceGroupResource. </returns>
+        /// <returns> An object representing collection of ServiceGroups and their operations over a ServiceGroupResource. </returns>
         public static ServiceGroupCollection GetServiceGroups(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -65,34 +68,15 @@ namespace Azure.ResourceManager.ServiceGroups
 
         /// <summary>
         /// Get the details of the serviceGroup
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceGroupsTenantResource.GetServiceGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceGroupsTenantResource.GetServiceGroupAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ServiceGroupResource>> GetServiceGroupAsync(this TenantResource tenantResource, string serviceGroupName, CancellationToken cancellationToken = default)
         {
@@ -103,34 +87,15 @@ namespace Azure.ResourceManager.ServiceGroups
 
         /// <summary>
         /// Get the details of the serviceGroup
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceGroupsTenantResource.GetServiceGroup(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceGroupsTenantResource.GetServiceGroup(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="serviceGroupName"> ServiceGroup Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ServiceGroupResource> GetServiceGroup(this TenantResource tenantResource, string serviceGroupName, CancellationToken cancellationToken = default)
         {

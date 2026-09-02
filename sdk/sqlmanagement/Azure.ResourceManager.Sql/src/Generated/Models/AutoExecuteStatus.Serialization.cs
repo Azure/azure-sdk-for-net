@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AutoExecuteStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutoExecuteStatus value) => value switch
         {
-            AutoExecuteStatus.Default => "Default",
             AutoExecuteStatus.Enabled => "Enabled",
             AutoExecuteStatus.Disabled => "Disabled",
+            AutoExecuteStatus.Default => "Default",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoExecuteStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutoExecuteStatus ToAutoExecuteStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutoExecuteStatus.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return AutoExecuteStatus.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AutoExecuteStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return AutoExecuteStatus.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return AutoExecuteStatus.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return AutoExecuteStatus.Default;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoExecuteStatus value.");
         }
     }
