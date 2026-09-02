@@ -865,8 +865,7 @@
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Service Fabric
-/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
-/sdk/servicefabricmanagedclusters/                                 @waldmannly @a-santamaria
+/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket @waldmannly @a-santamaria
 
 # ServiceLabel: %Service Fabric %Mgmt
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
