@@ -57,9 +57,6 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The identity of the Batch account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
-
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint
         {

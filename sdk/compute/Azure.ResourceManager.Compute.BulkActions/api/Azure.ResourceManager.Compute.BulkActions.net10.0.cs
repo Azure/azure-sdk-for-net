@@ -122,6 +122,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.LocationBasedBulkCreateCustomData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.BulkActions.LocationBasedBulkCreateCustomResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.BulkActions.LocationBasedBulkCreateCustomData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.BulkActions.LocationBasedBulkCreateCustomResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.BulkActions.LocationBasedBulkCreateCustomData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult> VirtualMachinesGetOperationStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult> VirtualMachinesGetOperationStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LocationBasedLaunchBulkInstancesOperationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.BulkActions.LocationBasedLaunchBulkInstancesOperationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.LocationBasedLaunchBulkInstancesOperationResource>, System.Collections.IEnumerable
     {
@@ -584,12 +586,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.Models.ApiErrorBase ApiErrorBase(string code = null, string target = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BootDiagnostics BootDiagnostics(bool? enabled = default(bool?), string storageUri = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy retryPolicy = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? optimizationPreference = default(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference?), Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy retryPolicy = null, bool? shouldVerifyVmAgentHealth = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? optimizationPreference = default(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference?), Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy retryPolicy = null, bool? shouldVerifyVmAgentHealth = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent BulkActionsCapacityRecommendationParametersContent(System.Collections.Generic.IEnumerable<string> desiredLocations = null, System.Collections.Generic.IEnumerable<string> desiredSizes = null, bool? isAvailabilityZoneEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsExecuteReimageRequestContent BulkActionsExecuteReimageRequestContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources = null, Azure.ResourceManager.Compute.BulkActions.Models.ResourcesWithContext resourcesWithContext = null, Azure.ResourceManager.Compute.BulkActions.Models.ReimagePayload reimageParameters = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsExecuteVdiCreateRequestContent BulkActionsExecuteVdiCreateRequestContent(Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisionVdiPayload resourceConfigParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent BulkActionsOsProfileProvisioningContent(string adminPassword = null, string customData = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent BulkActionsOSProfileProvisioningContent(string adminPassword = null, string customData = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsReimageResourceOperationResponseResult BulkActionsReimageResourceOperationResponseResult(string description = null, string resourceTypeName = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult> results = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk = default(bool?), string exactVersion = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent osProfile = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk = default(bool?), string exactVersion = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent osProfile = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMExtension BulkActionVMExtension(string name = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMExtensionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMExtensionProperties BulkActionVMExtensionProperties(string forceUpdateTag = null, string publisher = null, string type = null, string typeHandlerVersion = null, bool? isAutoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, bool? isSuppressFailures = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.KeyVaultSecretReference protectedSettingsFromKeyVault = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMProperties BulkActionVMProperties(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsPolicy scheduledEventsPolicy = null, Azure.ResourceManager.Compute.BulkActions.Models.StorageProfile storageProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.HardwareProfile hardwareProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.AdditionalCapabilities additionalCapabilities = null, Azure.ResourceManager.Compute.BulkActions.Models.OSProfile osProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.NetworkProfile networkProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.SecurityProfile securityProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.BootDiagnostics bootDiagnostics = null, string licenseType = null, string extensionsTimeBudget = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsProfile scheduledEventsProfile = null, string userData = null, string capacityReservationGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VMGalleryApplication> galleryApplications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMExtension> vmExtensions = null) { throw null; }
@@ -597,7 +600,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverrideBase BulkCreateCustomOverrideBase(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMProperties virtualMachineProfile = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIdentity identity = null, Azure.ResourceManager.Models.ArmPlan plan = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionVMExtension> extensions = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverridesProfile BulkCreateCustomOverridesProfile(string virtualMachineNamePrefix = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverride> overrides = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomPriorityProfile BulkCreateCustomPriorityProfile(Azure.ResourceManager.Compute.BulkActions.Models.PriorityType? type = default(Azure.ResourceManager.Compute.BulkActions.Models.PriorityType?), float? maxPricePerVM = default(float?), Azure.ResourceManager.Compute.BulkActions.Models.EvictionPolicy? evictionPolicy = default(Azure.ResourceManager.Compute.BulkActions.Models.EvictionPolicy?), Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomAllocationStrategy? allocationStrategy = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomAllocationStrategy?)) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties BulkCreateCustomProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkInstancesOperationProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkInstancesOperationProvisioningState?), int capacity = 0, Azure.ResourceManager.Compute.BulkActions.Models.CapacityType? capacityType = default(Azure.ResourceManager.Compute.BulkActions.Models.CapacityType?), Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomPriorityProfile priorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeProfile computeProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverridesProfile overridesProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties BulkCreateCustomProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkInstancesOperationProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkInstancesOperationProvisioningState?), int capacity = 0, Azure.ResourceManager.Compute.BulkActions.Models.CapacityType? capacityType = default(Azure.ResourceManager.Compute.BulkActions.Models.CapacityType?), int? minCapacity = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy partialFulfillmentPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem> resources = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomPriorityProfile priorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeProfile computeProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverridesProfile overridesProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem BulkCreateCustomResolvedItem(Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo virtualMachineInfo = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo BulkCreateCustomVirtualMachineInfo(string name = null, string vmSize = null, string zone = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVmSizeProfile BulkCreateCustomVmSizeProfile(string name = null, int rank = 0, Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverrideBase @override = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomZoneAllocationPolicy BulkCreateCustomZoneAllocationPolicy(Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomDistributionStrategy? distributionStrategy = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomDistributionStrategy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ZonePreference> zonePreferences = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.BulkInstancesInnerError BulkInstancesInnerError(string exceptionType = null, string errorDetail = null) { throw null; }
@@ -605,10 +610,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.Models.CancelBulkOperationsContent CancelBulkOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.CancelBulkOperationsResult CancelBulkOperationsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.CancelOccurrenceRequestContent CancelOccurrenceRequestContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation CapacityRecommendation(Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus status = default(Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus), string error = null, string errorDetails = null, Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails details = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails CapacityRecommendationDetails(System.Collections.Generic.IEnumerable<string> desiredLocations = null, System.DateTimeOffset? recommendationRequestedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize> desiredSizes = null, bool? isSplitByAvailabilityZone = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore> placementScores = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore CapacityRecommendationPlacementScore(string sku = null, string region = null, string availabilityZone = null, string score = null, bool? isQuotaAvailable = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize CapacityRecommendationSize(string sku = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsSubResourceInfo ComputeBulkActionsSubResourceInfo(string id = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkFallbackOperationInfo ComputeBulkFallbackOperationInfo(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind lastOperationKind = default(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind), string status = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationError error = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind? operationKind = default(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind?), System.Guid? subscriptionId = default(System.Guid?), System.DateTimeOffset? deadlineOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind? deadlineKind = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState? state = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState?), string timeZone = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationError error = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkFallbackOperationInfo fallbackOperationInfo = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy retryPolicy = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind? operationKind = default(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind?), System.Guid? subscriptionId = default(System.Guid?), System.DateTimeOffset? deadlineOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind? deadlineKind = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState? state = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState?), string timeZone = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationError error = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkFallbackOperationInfo fallbackOperationInfo = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy retryPolicy = null, string resourceContext = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind? operationKind = default(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationKind?), System.Guid? subscriptionId = default(System.Guid?), System.DateTimeOffset? deadlineOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind? deadlineKind = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind?), Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState? state = default(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState?), string timeZone = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationError error = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkFallbackOperationInfo fallbackOperationInfo = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy retryPolicy = null, string resourceContext = null, Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation capacityRecommendation = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationError ComputeBulkOperationError(string errorCode = null, string errorDetails = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult ComputeBulkOperationResult(Azure.Core.ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails operation = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult ComputeBulkOperationResult(Azure.Core.ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails operation = null, Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineInfo virtualMachineInfo = null) { throw null; }
@@ -630,7 +639,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.Models.ExecuteHibernateContent ExecuteHibernateContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources = null, Azure.ResourceManager.Compute.BulkActions.Models.ResourcesWithContext resourcesWithContext = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ExecuteStartContent ExecuteStartContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ExecuteStartContent ExecuteStartContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources = null, Azure.ResourceManager.Compute.BulkActions.Models.ResourcesWithContext resourcesWithContext = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.FlexProperties FlexProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VmSizeProfile> vmSizeProfiles = null, Azure.ResourceManager.Compute.BulkActions.Models.OsType osType = default(Azure.ResourceManager.Compute.BulkActions.Models.OsType), Azure.ResourceManager.Compute.BulkActions.Models.PriorityProfile priorityProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.ZoneAllocationPolicy zoneAllocationPolicy = null, int? minCapacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.FlexProperties FlexProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VmSizeProfile> vmSizeProfiles = null, Azure.ResourceManager.Compute.BulkActions.Models.OSType osType = default(Azure.ResourceManager.Compute.BulkActions.Models.OSType), Azure.ResourceManager.Compute.BulkActions.Models.PriorityProfile priorityProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.ZoneAllocationPolicy zoneAllocationPolicy = null, int? minCapacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.GetBulkOperationStatusContent GetBulkOperationStatusContent(System.Collections.Generic.IEnumerable<string> operationIds = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.GetBulkOperationStatusResult GetBulkOperationStatusResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.HardwareProfile HardwareProfile(string vmSize = null, Azure.ResourceManager.Compute.BulkActions.Models.VmSizeProperties vmSizeProperties = null) { throw null; }
@@ -651,19 +660,18 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.Models.NetworkProfile NetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NetworkInterfaceReference> networkInterfaces = null, Azure.ResourceManager.Compute.BulkActions.Models.NetworkApiVersion? networkApiVersion = default(Azure.ResourceManager.Compute.BulkActions.Models.NetworkApiVersion?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties NotificationProperties(string destination = null, Azure.ResourceManager.Compute.BulkActions.Models.NotificationType type = default(Azure.ResourceManager.Compute.BulkActions.Models.NotificationType), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionLanguage language = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionLanguage), bool? disabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceExtension OccurrenceExtension(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceExtensionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceExtensionProperties OccurrenceExtensionProperties(Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState?), Azure.ResponseError errorDetails = null, Azure.Core.ResourceIdentifier scheduledActionId = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceExtensionProperties OccurrenceExtensionProperties(Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState?), Azure.ResponseError errorDetails = null, Azure.Core.ResourceIdentifier scheduledActionId = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceProperties OccurrenceProperties(System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResultSummary resultSummary = null, Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceState?)) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceMetadata OccurrenceResourceMetadata(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceMetadata OccurrenceResourceMetadata(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, System.DateTimeOffset scheduledOn = default(System.DateTimeOffset), Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResultSummary OccurrenceResultSummary(int total = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ResourceResultSummary> statuses = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.OSDisk OSDisk(Azure.ResourceManager.Compute.BulkActions.Models.OperatingSystemTypes? osType = default(Azure.ResourceManager.Compute.BulkActions.Models.OperatingSystemTypes?), Azure.ResourceManager.Compute.BulkActions.Models.DiskEncryptionSettings encryptionSettings = null, string name = null, string vhdUri = null, string imageUri = null, Azure.ResourceManager.Compute.BulkActions.Models.CachingTypes? caching = default(Azure.ResourceManager.Compute.BulkActions.Models.CachingTypes?), bool? isWriteAcceleratorEnabled = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.DiffDiskSettings diffDiskSettings = null, Azure.ResourceManager.Compute.BulkActions.Models.DiskCreateOptionTypes createOption = default(Azure.ResourceManager.Compute.BulkActions.Models.DiskCreateOptionTypes), int? diskSizeGB = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.ManagedDiskParametersContent managedDisk = null, Azure.ResourceManager.Compute.BulkActions.Models.DiskDeleteOptionTypes? deleteOption = default(Azure.ResourceManager.Compute.BulkActions.Models.DiskDeleteOptionTypes?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.OSImageNotificationProfile OSImageNotificationProfile(string notBeforeTimeout = null, bool? enable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.OSProfile OSProfile(string computerName = null, string adminUsername = null, string adminPassword = null, string customData = null, Azure.ResourceManager.Compute.BulkActions.Models.WindowsConfiguration windowsConfiguration = null, Azure.ResourceManager.Compute.BulkActions.Models.LinuxConfiguration linuxConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VaultSecretGroup> secrets = null, bool? allowExtensionOperations = default(bool?), bool? doesRequireGuestProvisionSignal = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy PartialFulfillmentPolicy(int? fulfilledCapacity = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode? mode = default(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode?), Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason? reason = default(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.PatchSettings PatchSettings(Azure.ResourceManager.Compute.BulkActions.Models.WindowsVMGuestPatchMode? patchMode = default(Azure.ResourceManager.Compute.BulkActions.Models.WindowsVMGuestPatchMode?), bool? enableHotpatching = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.WindowsPatchAssessmentMode? assessmentMode = default(Azure.ResourceManager.Compute.BulkActions.Models.WindowsPatchAssessmentMode?), Azure.ResourceManager.Compute.BulkActions.Models.WindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.PriorityProfile PriorityProfile(Azure.ResourceManager.Compute.BulkActions.Models.PriorityType? type = default(Azure.ResourceManager.Compute.BulkActions.Models.PriorityType?), float? maxPricePerVM = default(float?), Azure.ResourceManager.Compute.BulkActions.Models.EvictionPolicy? evictionPolicy = default(Azure.ResourceManager.Compute.BulkActions.Models.EvictionPolicy?), Azure.ResourceManager.Compute.BulkActions.Models.AllocationStrategy? allocationStrategy = default(Azure.ResourceManager.Compute.BulkActions.Models.AllocationStrategy?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ProxyAgentSettings ProxyAgentSettings(bool? enabled = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.ProxyAgentMode? mode = default(Azure.ResourceManager.Compute.BulkActions.Models.ProxyAgentMode?), int? keyIncarnationId = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.HostEndpointSettings wireServer = null, Azure.ResourceManager.Compute.BulkActions.Models.HostEndpointSettings imds = null, bool? shouldAddProxyAgentExtension = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAddressSku PublicIPAddressSku(Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAddressSkuName? name = default(Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAddressSkuName?), Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAddressSkuTier? tier = default(Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAddressSkuTier?)) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent RecurringScheduledActionsExecutionParametersContent(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? optimizationPreference = default(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference?), Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy retryPolicy = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy RecurringScheduledActionsRetryPolicy(int? retryCount = default(int?), int? retryWindowInMinutes = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType? onFailureAction = default(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ReimagePayload ReimagePayload(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsVirtualMachineReimageParametersContent baseProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ReimageResourceOverride> resourceOverrides = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ReimageResourceOverride ReimageResourceOverride(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsVirtualMachineReimageParametersContent profile = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ResourceAttachRequestContent ResourceAttachRequestContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResourceInput> resources = null) { throw null; }
@@ -679,13 +687,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.ScheduledActionData ScheduledActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.ScheduledActionOccurrenceData ScheduledActionOccurrenceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionPatch ScheduledActionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionProperties ScheduledActionProperties(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType resourceType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType actionType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, bool? disabled = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionProperties ScheduledActionProperties(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType resourceType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType actionType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, bool? disabled = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResourceInput ScheduledActionResourceInput(Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResourceMetadata ScheduledActionResourceMetadata(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResources ScheduledActionResources(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType resourceType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType actionType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, bool? disabled = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> resourceNotificationSettings = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule ScheduledActionsSchedule(System.TimeSpan scheduledTime = default(System.TimeSpan), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.WeekDay> requestedWeekDays = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.Month> requestedMonths = null, System.Collections.Generic.IEnumerable<int> requestedDaysOfTheMonth = null, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType? deadlineType = default(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType?)) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedulePatch ScheduledActionsSchedulePatch(System.TimeSpan? scheduledTime = default(System.TimeSpan?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.WeekDay> requestedWeekDays = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.Month> requestedMonths = null, System.Collections.Generic.IEnumerable<int> requestedDaysOfTheMonth = null, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType? deadlineType = default(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent ScheduledActionsExecutionParametersContent(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? optimizationPreference = default(Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy retryPolicy = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType resourceType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType actionType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, bool? disabled = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> resourceNotificationSettings = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy ScheduledActionsRetryPolicy(int? retryCount = default(int?), int? retryWindowInMinutes = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType? onFailureAction = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule ScheduledActionsSchedule(System.TimeSpan scheduledTime = default(System.TimeSpan), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.WeekDay> requestedWeekDays = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.Month> requestedMonths = null, System.Collections.Generic.IEnumerable<int> requestedDaysOfTheMonth = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType? deadlineType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedulePatch ScheduledActionsSchedulePatch(System.TimeSpan? scheduledTime = default(System.TimeSpan?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.WeekDay> requestedWeekDays = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.Month> requestedMonths = null, System.Collections.Generic.IEnumerable<int> requestedDaysOfTheMonth = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent executionParameters = null, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType? deadlineType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionUpdateProperties ScheduledActionUpdateProperties(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType? resourceType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType? actionType = default(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionType?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedulePatch schedule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> notificationSettings = null, bool? disabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsPolicy ScheduledEventsPolicy(bool? userInitiatedRedeployAutomaticallyApprove = default(bool?), bool? userInitiatedRebootAutomaticallyApprove = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.EventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = null, bool? isAllInstancesDownAutomaticallyApproved = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsProfile ScheduledEventsProfile(Azure.ResourceManager.Compute.BulkActions.Models.TerminateNotificationProfile terminateNotificationProfile = null, Azure.ResourceManager.Compute.BulkActions.Models.OSImageNotificationProfile osImageNotificationProfile = null) { throw null; }
@@ -702,13 +712,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachine VirtualMachine(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.ResourceManager.Compute.BulkActions.Models.VMOperationStatus operationStatus = default(Azure.ResourceManager.Compute.BulkActions.Models.VMOperationStatus), Azure.ResourceManager.Compute.BulkActions.Models.ApiError error = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIdentity VirtualMachineIdentity(string principalId = null, string tenantId = null, Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsIdentityType? type = default(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Compute.BulkActions.Models.UserAssignedIdentitiesValue> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineInfo VirtualMachineInfo(string vmSize = null, string zone = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag VirtualMachineIpTag(string ipTagType = null, string tag = null) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag VirtualMachineIPTag(string ipTagType = null, string tag = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = null, Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfigurationProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig? deleteOption = default(Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), bool? enableIPForwarding = default(bool?), string networkSecurityGroupId = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = null, string dscpConfigurationId = null, Azure.ResourceManager.Compute.BulkActions.Models.NetworkInterfaceAuxiliaryMode? auxiliaryMode = default(Azure.ResourceManager.Compute.BulkActions.Models.NetworkInterfaceAuxiliaryMode?), Azure.ResourceManager.Compute.BulkActions.Models.NetworkInterfaceAuxiliarySku? auxiliarySku = default(Azure.ResourceManager.Compute.BulkActions.Models.NetworkInterfaceAuxiliarySku?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name = null, Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceIPConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = null, bool? isPrimary = default(bool?), Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = null, Azure.ResourceManager.Compute.BulkActions.Models.IPVersions? privateIPAddressVersion = default(Azure.ResourceManager.Compute.BulkActions.Models.IPVersions?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsSubResourceInfo> applicationSecurityGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsSubResourceInfo> applicationGatewayBackendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsSubResourceInfo> loadBalancerBackendAddressPools = null) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = null, Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressConfigurationProperties properties = null, Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAddressSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig? deleteOption = default(Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig?), Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag> ipTags = null, string publicIPPrefixId = null, Azure.ResourceManager.Compute.BulkActions.Models.IPVersions? publicIPAddressVersion = default(Azure.ResourceManager.Compute.BulkActions.Models.IPVersions?), Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod? publicIPAllocationMethod = default(Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod?)) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default(int?), Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig? deleteOption = default(Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig?), Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag> ipTags = null, string publicIPPrefixId = null, Azure.ResourceManager.Compute.BulkActions.Models.IPVersions? publicIPAddressVersion = default(Azure.ResourceManager.Compute.BulkActions.Models.IPVersions?), Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod? publicIPAllocationMethod = default(Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = null, Azure.ResourceManager.Compute.BulkActions.Models.DomainNameLabelScopeTypes? domainNameLabelScope = default(Azure.ResourceManager.Compute.BulkActions.Models.DomainNameLabelScopeTypes?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VMAttributeMinMaxDouble VMAttributeMinMaxDouble(double? min = default(double?), double? max = default(double?)) { throw null; }
         public static Azure.ResourceManager.Compute.BulkActions.Models.VMAttributeMinMaxInteger VMAttributeMinMaxInteger(int? min = default(int?), int? max = default(int?)) { throw null; }
@@ -759,6 +769,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class BulkActionExecutionParameterDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail>
     {
         public BulkActionExecutionParameterDetail() { }
+        public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent CapacityRecommendationParameters { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? OptimizationPreference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy RetryPolicy { get { throw null; } set { } }
         public bool? ShouldVerifyVmAgentHealth { get { throw null; } set { } }
@@ -796,6 +807,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState left, Azure.ResourceManager.Compute.BulkActions.Models.BulkActionOperationState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class BulkActionsCapacityRecommendationParametersContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>
+    {
+        public BulkActionsCapacityRecommendationParametersContent() { }
+        public System.Collections.Generic.IList<string> DesiredLocations { get { throw null; } }
+        public System.Collections.Generic.IList<string> DesiredSizes { get { throw null; } }
+        public bool? IsAvailabilityZoneEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsCapacityRecommendationParametersContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class BulkActionsExecuteReimageRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsExecuteReimageRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsExecuteReimageRequestContent>
     {
         public BulkActionsExecuteReimageRequestContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters) { }
@@ -828,20 +855,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsExecuteVdiCreateRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsExecuteVdiCreateRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BulkActionsOsProfileProvisioningContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>
+    public partial class BulkActionsOSProfileProvisioningContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>
     {
-        public BulkActionsOsProfileProvisioningContent() { }
+        public BulkActionsOSProfileProvisioningContent() { }
         public string AdminPassword { get { throw null; } set { } }
         public string CustomData { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BulkActionsReimageResourceOperationResponseResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsReimageResourceOperationResponseResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsReimageResourceOperationResponseResult>
     {
@@ -865,7 +892,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public BulkActionsVirtualMachineReimageParametersContent() { }
         public string ExactVersion { get { throw null; } set { } }
         public bool? IsTempDisk { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOsProfileProvisioningContent OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsOSProfileProvisioningContent OSProfile { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsVirtualMachineReimageParametersContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkActionsVirtualMachineReimageParametersContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -926,7 +953,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public Azure.ResourceManager.Compute.BulkActions.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.OSProfile OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
@@ -1055,9 +1082,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public Azure.ResourceManager.Compute.BulkActions.Models.ComputeProfile ComputeProfile { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail ExecutionParameters { get { throw null; } set { } }
+        public int? MinCapacity { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomOverridesProfile OverridesProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy PartialFulfillmentPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomPriorityProfile PriorityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkInstancesOperationProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem> Resources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVmSizeProfile> VmSizesProfile { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1069,6 +1099,36 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BulkCreateCustomResolvedItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>
+    {
+        internal BulkCreateCustomResolvedItem() { }
+        public Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo VirtualMachineInfo { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomResolvedItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BulkCreateCustomVirtualMachineInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>
+    {
+        internal BulkCreateCustomVirtualMachineInfo() { }
+        public string Name { get { throw null; } }
+        public string VmSize { get { throw null; } }
+        public string Zone { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVirtualMachineInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BulkCreateCustomVmSizeProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVmSizeProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.BulkCreateCustomVmSizeProfile>
     {
@@ -1212,6 +1272,92 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CancelOccurrenceRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CancelOccurrenceRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CapacityRecommendation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>
+    {
+        internal CapacityRecommendation() { }
+        public Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails Details { get { throw null; } }
+        public string Error { get { throw null; } }
+        public string ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CapacityRecommendationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>
+    {
+        internal CapacityRecommendationDetails() { }
+        public System.Collections.Generic.IList<string> DesiredLocations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize> DesiredSizes { get { throw null; } }
+        public bool? IsSplitByAvailabilityZone { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore> PlacementScores { get { throw null; } }
+        public System.DateTimeOffset? RecommendationRequestedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CapacityRecommendationPlacementScore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>
+    {
+        internal CapacityRecommendationPlacementScore() { }
+        public string AvailabilityZone { get { throw null; } }
+        public bool? IsQuotaAvailable { get { throw null; } }
+        public string Region { get { throw null; } }
+        public string Score { get { throw null; } }
+        public string Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationPlacementScore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CapacityRecommendationSize : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>
+    {
+        internal CapacityRecommendationSize() { }
+        public string Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationSize>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapacityRecommendationStatus : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapacityRecommendationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus NotInitiated { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus Skipped { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus left, Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus left, Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CapacityType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.CapacityType>
     {
@@ -1269,6 +1415,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ComputeBulkOperationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails>
     {
         internal ComputeBulkOperationDetails() { }
+        public Azure.ResourceManager.Compute.BulkActions.Models.CapacityRecommendation CapacityRecommendation { get { throw null; } }
         public System.DateTimeOffset? CompletedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionDeadlineKind? DeadlineKind { get { throw null; } }
         public System.DateTimeOffset? DeadlineOn { get { throw null; } }
@@ -1782,9 +1929,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     }
     public partial class FlexProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.FlexProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.FlexProperties>
     {
-        public FlexProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VmSizeProfile> vmSizeProfiles, Azure.ResourceManager.Compute.BulkActions.Models.OsType osType, Azure.ResourceManager.Compute.BulkActions.Models.PriorityProfile priorityProfile) { }
+        public FlexProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.BulkActions.Models.VmSizeProfile> vmSizeProfiles, Azure.ResourceManager.Compute.BulkActions.Models.OSType osType, Azure.ResourceManager.Compute.BulkActions.Models.PriorityProfile priorityProfile) { }
         public int? MinCapacity { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.OsType OsType { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OSType OSType { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.PriorityProfile PriorityProfile { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.VmSizeProfile> VmSizeProfiles { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
@@ -2312,7 +2459,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal OccurrenceExtensionProperties() { }
         public Azure.ResponseError ErrorDetails { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> NotificationSettings { get { throw null; } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier ScheduledActionId { get { throw null; } }
         public System.DateTimeOffset ScheduledOn { get { throw null; } }
@@ -2349,7 +2496,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> NotificationSettings { get { throw null; } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.DateTimeOffset ScheduledOn { get { throw null; } }
         public string Type { get { throw null; } }
@@ -2362,6 +2509,29 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OccurrenceResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OccurrenceResourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Cancelling { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState InvalidState { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Rescheduling { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Scheduled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResourceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class OccurrenceResultSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResultSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResultSummary>
     {
@@ -2448,7 +2618,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? IsWriteAcceleratorEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ManagedDiskParametersContent ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.OperatingSystemTypes? OsType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public string VhdUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.OSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2498,20 +2668,71 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.OSProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OsType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.OsType>
+    public readonly partial struct OSType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.OSType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OsType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.OsType Linux { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.OsType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.OsType other) { throw null; }
+        public OSType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OSType Linux { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.OSType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.OSType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.OsType left, Azure.ResourceManager.Compute.BulkActions.Models.OsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.OsType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.OsType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.OsType left, Azure.ResourceManager.Compute.BulkActions.Models.OsType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.OSType left, Azure.ResourceManager.Compute.BulkActions.Models.OSType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.OSType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.OSType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.OSType left, Azure.ResourceManager.Compute.BulkActions.Models.OSType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PartialFulfillmentMode : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PartialFulfillmentMode(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode left, Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode left, Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PartialFulfillmentPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>
+    {
+        public PartialFulfillmentPolicy() { }
+        public int? FulfilledCapacity { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentMode? Mode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PartialFulfillmentReason : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PartialFulfillmentReason(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason InsufficientCapacity { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason InsufficientQuota { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason left, Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason left, Azure.ResourceManager.Compute.BulkActions.Models.PartialFulfillmentReason right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PatchSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.PatchSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.PatchSettings>
@@ -2684,95 +2905,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod left, Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecurringScheduledActionsDeadlineType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecurringScheduledActionsDeadlineType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType CompleteBy { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType InitiateAt { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType left, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType left, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RecurringScheduledActionsExecutionParametersContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>
-    {
-        public RecurringScheduledActionsExecutionParametersContent() { }
-        public Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? OptimizationPreference { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy RetryPolicy { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecurringScheduledActionsProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecurringScheduledActionsProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecurringScheduledActionsResourceOperationType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecurringScheduledActionsResourceOperationType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType Create { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType Deallocate { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType Delete { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType Hibernate { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType Start { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType left, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType left, Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RecurringScheduledActionsRetryPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>
-    {
-        public RecurringScheduledActionsRetryPolicy() { }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsResourceOperationType? OnFailureAction { get { throw null; } set { } }
-        public int? RetryCount { get { throw null; } set { } }
-        public int? RetryWindowInMinutes { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsRetryPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ReimagePayload : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ReimagePayload>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ReimagePayload>
     {
         public ReimagePayload() { }
@@ -2876,24 +3008,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         Azure.ResourceManager.Compute.BulkActions.Models.ResourcePatchRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ResourcePatchRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ResourcePatchRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ResourcePatchRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ResourceProvisionPayload : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisionPayload>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ResourceProvisionPayload>
     {
@@ -3029,7 +3143,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? Disabled { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> NotificationSettings { get { throw null; } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType ResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule Schedule { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
@@ -3090,6 +3204,39 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledActionsDeadlineType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledActionsDeadlineType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType CompleteBy { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType InitiateAt { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ScheduledActionsExecutionParametersContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>
+    {
+        public ScheduledActionsExecutionParametersContent() { }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OptimizationPreference? OptimizationPreference { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy RetryPolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ScheduledActionsExtensionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties>
     {
         internal ScheduledActionsExtensionProperties() { }
@@ -3097,7 +3244,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? Disabled { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> NotificationSettings { get { throw null; } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.BulkActions.Models.NotificationProperties> ResourceNotificationSettings { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType ResourceType { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule Schedule { get { throw null; } }
@@ -3111,6 +3258,46 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExtensionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledActionsProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledActionsProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledActionsResourceOperationType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledActionsResourceOperationType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType Create { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType Deallocate { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType Delete { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType Hibernate { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType Start { get { throw null; } }
+        public static Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduledActionsResourceType : System.IEquatable<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType>
@@ -3129,11 +3316,27 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static bool operator !=(Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType left, Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ScheduledActionsRetryPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>
+    {
+        public ScheduledActionsRetryPolicy() { }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsResourceOperationType? OnFailureAction { get { throw null; } set { } }
+        public int? RetryCount { get { throw null; } set { } }
+        public int? RetryWindowInMinutes { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsRetryPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ScheduledActionsSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedule>
     {
         public ScheduledActionsSchedule(System.TimeSpan scheduledTime, string timeZone) { }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType? DeadlineType { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent ExecutionParameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType? DeadlineType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent ExecutionParameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> RequestedDaysOfTheMonth { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.Month> RequestedMonths { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.WeekDay> RequestedWeekDays { get { throw null; } }
@@ -3152,8 +3355,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ScheduledActionsSchedulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsSchedulePatch>
     {
         public ScheduledActionsSchedulePatch() { }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsDeadlineType? DeadlineType { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.RecurringScheduledActionsExecutionParametersContent ExecutionParameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsDeadlineType? DeadlineType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionsExecutionParametersContent ExecutionParameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> RequestedDaysOfTheMonth { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.Month> RequestedMonths { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.WeekDay> RequestedWeekDays { get { throw null; } }
@@ -3227,7 +3430,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ScheduledEventsProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsProfile>
     {
         public ScheduledEventsProfile() { }
-        public Azure.ResourceManager.Compute.BulkActions.Models.OSImageNotificationProfile OsImageNotificationProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OSImageNotificationProfile OSImageNotificationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.TerminateNotificationProfile TerminateNotificationProfile { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.ScheduledEventsProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3369,7 +3572,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.DataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.DiskControllerTypes? DiskControllerType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ImageReference ImageReference { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.BulkActions.Models.OSDisk OsDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.BulkActions.Models.OSDisk OSDisk { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.StorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.StorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3519,20 +3722,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualMachineIpTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>
+    public partial class VirtualMachineIPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>
     {
-        public VirtualMachineIpTag() { }
-        public string IpTagType { get { throw null; } set { } }
+        public VirtualMachineIPTag() { }
+        public string IPTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VirtualMachineNetworkInterfaceConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfiguration>
     {
@@ -3562,7 +3765,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
         public bool? IsPrimary { get { throw null; } set { } }
         public string NetworkSecurityGroupId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineNetworkInterfaceConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3633,7 +3836,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public Azure.ResourceManager.Compute.BulkActions.Models.DeleteConfig? DeleteOption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIpTag> IpTags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.BulkActions.Models.VirtualMachineIPTag> IPTags { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.IPVersions? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.PublicIPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
         public string PublicIPPrefixId { get { throw null; } set { } }

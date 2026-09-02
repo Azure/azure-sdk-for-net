@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastJobProvisioningState"> State of the last job associated to this assignment. </param>
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentProperties(string targetResourceName, DateTimeOffset? lastJobEndOn, TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceManagerAssignmentProperties(string targetResourceName, DateTimeOffset? lastJobEndOn, JobProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceName = targetResourceName;
             LastJobEndOn = lastJobEndOn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> State of the last job associated to this assignment. </summary>
         [WirePath("lastJobProvisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? LastJobProvisioningState { get; }
+        public JobProvisioningState? LastJobProvisioningState { get; }
 
         /// <summary> List of resources included in this workspace manager assignment. </summary>
         [WirePath("items")]

@@ -146,7 +146,7 @@
         },
         "modelName": {
             "type": "string",
-            "defaultValue": "gpt-4.1",
+            "defaultValue": "gpt-5.5",
             "metadata": {
                 "description": "The name of the OpenAI model you want to deploy"
             }
@@ -160,7 +160,7 @@
         },
         "modelVersion": {
             "type": "string",
-            "defaultValue": "2025-04-14",
+            "defaultValue": "2026-04-24",
             "metadata": {
                 "description": "The version of the model you want to deploy. Example: 2024-11-20"
             }
@@ -251,6 +251,8 @@
     },
     "variables": {
         "aiServicesName": "[concat(parameters('baseName'), '-ai')]",
+        "bingAccountName": "[concat(parameters('baseName'), '-bing')]",
+        "bingConnectionName": "[concat(parameters('baseName'), '-bing-connection')]",
         "defaultVNetName": "[concat(parameters('baseName'), '-vnet')]",
         "defaultSubnetName": "default",
         "defaultAddressPrefix": "10.0.0.0/16",
@@ -358,6 +360,39 @@
             ],
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/', 'deployVnet')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Bing/accounts",
+            "apiVersion": "2025-05-01-preview",
+            "name": "[variables('bingAccountName')]",
+            "location": "global",
+            "kind": "Bing.Grounding",
+            "sku": {
+                "name": "G1"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/connections",
+            "apiVersion": "2025-04-01-preview",
+            "name": "[concat(variables('aiServicesName'), '/', variables('bingConnectionName'))]",
+            "properties": {
+                "category": "GroundingWithBingSearch",
+                "target": "https://api.bing.microsoft.com/",
+                "authType": "ApiKey",
+                "isSharedToAll": true,
+                "credentials": {
+                    "key": "[listKeys(resourceId('Microsoft.Bing/accounts', variables('bingAccountName')), '2025-05-01-preview').key1]"
+                },
+                "metadata": {
+                    "ApiType": "Azure",
+                    "type": "bing_grounding",
+                    "ResourceId": "[resourceId('Microsoft.Bing/accounts', variables('bingAccountName'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]",
+                "[resourceId('Microsoft.Bing/accounts', variables('bingAccountName'))]"
             ]
         },
         {
@@ -812,6 +847,10 @@
         "CUSTOM_BING_CONNECTION_NAME": {
             "type": "string",
             "value": "[variables('bingCustomSearchConnectionName')]"
+        },
+        "BING_CONNECTION_NAME": {
+            "type": "string",
+            "value": "[variables('bingConnectionName')]"
         }
     }
 }

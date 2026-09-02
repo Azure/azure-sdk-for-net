@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 vmGroupName,
                 autoScaleConfiguration,
                 hardwareVmSize is null ? default : new HardwareProfile(hardwareVmSize, default),
-                osLinuxProfile is null ? default : new OsProfile(osLinuxProfile, default),
+                osLinuxProfile is null ? default : new OSProfile(osLinuxProfile, default),
                 virtualNetworkProfile,
                 (dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>()).ToList(),
                 (scriptActions ?? new ChangeTrackingList<ScriptAction>()).ToList(),

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TerminateNotificationProfile = terminateNotificationProfile;
-            OsImageNotificationProfile = osImageNotificationProfile;
+            OSImageNotificationProfile = osImageNotificationProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public TerminateNotificationProfile TerminateNotificationProfile { get; set; }
 
         /// <summary> Specifies OS Image Scheduled Event related configurations. </summary>
-        public OSImageNotificationProfile OsImageNotificationProfile { get; set; }
+        public OSImageNotificationProfile OSImageNotificationProfile { get; set; }
     }
 }

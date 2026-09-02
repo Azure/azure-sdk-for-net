@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="HorizonDB.HorizonDBClusterData"/> instance for mocking. </returns>
-        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default)
+        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 default);
         }
 
@@ -58,8 +60,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
+        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
+        /// <param name="computeModel"> The compute model for the cluster. </param>
+        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readOnlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
+        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readOnlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDBClusterAuthConfig authConfig = default, HorizonDBComputeModel computeModel = default, HorizonDBClusterMirroring mirroring = default)
         {
             return new HorizonDBClusterProperties(
                 administratorLogin,
@@ -79,6 +84,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 provisioningState,
                 zonePlacementPolicy,
                 parameterGroup,
+                authConfig,
+                computeModel,
+                mirroring,
                 default);
         }
 
@@ -91,23 +99,63 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, default);
         }
 
+        /// <param name="entraIdAuth"> Indicates whether Microsoft Entra ID authentication is enabled or disabled. </param>
+        /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
+        /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterAuthConfig"/> instance for mocking. </returns>
+        public static HorizonDBClusterAuthConfig HorizonDBClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth = default, string tenantId = default, HorizonDBAuthenticationState? passwordAuth = default)
+        {
+            return new HorizonDBClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, default);
+        }
+
+        /// <param name="type"> The compute model type. Supported values: 'Provisioned', 'Serverless'. </param>
+        /// <param name="vCores"> The fixed vCore count for Provisioned compute. </param>
+        /// <param name="minvCores"> The minimum vCores for Serverless compute. Defines the lower autoscaling bound. </param>
+        /// <param name="maxvCores"> The maximum vCores for Serverless compute. Defines the upper autoscaling bound. </param>
+        /// <returns> A new <see cref="Models.HorizonDBComputeModel"/> instance for mocking. </returns>
+        public static HorizonDBComputeModel HorizonDBComputeModel(HorizonDBComputeModelType? @type = default, int? vCores = default, double? minvCores = default, double? maxvCores = default)
+        {
+            return new HorizonDBComputeModel(@type, vCores, minvCores, maxvCores, default);
+        }
+
+        /// <param name="databaseNames"> The names of the databases to mirror. </param>
+        /// <param name="userAssignedIdentityId"> The resource ID of the user-assigned managed identity used for mirroring. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterMirroring"/> instance for mocking. </returns>
+        public static HorizonDBClusterMirroring HorizonDBClusterMirroring(IEnumerable<string> databaseNames = default, ResourceIdentifier userAssignedIdentityId = default)
+        {
+            databaseNames ??= new ChangeTrackingList<string>();
+
+            return new HorizonDBClusterMirroring((databaseNames ?? new ChangeTrackingList<string>()).ToList(), userAssignedIdentityId, default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
+        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HorizonDBClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new HorizonDBClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="vCores"> Number of vCores. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
+        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
+        /// <param name="computeModel"> The compute model for the cluster. </param>
+        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterPatchProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = default, int? vCores = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
+        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = default, int? vCores = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDBClusterAuthConfig authConfig = default, HorizonDBComputeModel computeModel = default, HorizonDBClusterMirroring mirroring = default)
         {
-            return new HorizonDBClusterPatchProperties(administratorLoginPassword, vCores, parameterGroup, default);
+            return new HorizonDBClusterPatchProperties(
+                administratorLoginPassword,
+                vCores,
+                parameterGroup,
+                authConfig,
+                computeModel,
+                mirroring,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -208,14 +256,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDB firewall rule. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <returns> A new <see cref="Models.HorizonDBFirewallRuleProperties"/> instance for mocking. </returns>
-        public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIPAddress = default, string endIPAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDBFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, default);
+            return new HorizonDBFirewallRuleProperties(startIPAddress, endIPAddress, description, provisioningState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -254,38 +302,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public static HorizonDBPrivateLinkServiceConnectionState HorizonDBPrivateLinkServiceConnectionState(HorizonDBPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
             return new HorizonDBPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <param name="horizonDBPrivateEndpointConnectionPatchProperties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionPatch"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnectionPatch HorizonDBPrivateEndpointConnectionPatch(HorizonDBPrivateEndpointConnectionPatchProperties horizonDBPrivateEndpointConnectionPatchProperties = default)
-        {
-            return new HorizonDBPrivateEndpointConnectionPatch(horizonDBPrivateEndpointConnectionPatchProperties, default);
-        }
-
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionPatchProperties"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnectionPatchProperties HorizonDBPrivateEndpointConnectionPatchProperties(ResourceIdentifier privateEndpointId = default, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
-        {
-            return new HorizonDBPrivateEndpointConnectionPatchProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnection HorizonDBPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateEndpointConnectionProperties properties = default)
-        {
-            return new HorizonDBPrivateEndpointConnection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -414,6 +430,56 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public static HorizonDBParameterGroupConnectionProperties HorizonDBParameterGroupConnectionProperties(string name = default, ResourceIdentifier id = default, string @type = default)
         {
             return new HorizonDBParameterGroupConnectionProperties(name, id, @type, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.HorizonDBAdministratorData"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorData HorizonDBAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBAdministratorProperties properties = default)
+        {
+            return new HorizonDBAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
+        /// <param name="principalType"> The type of the Entra ID principal. </param>
+        /// <param name="objectId"> The Entra ID object identifier of the principal (an RFC 4122 GUID). On PUT requests, this value comes from the URI path parameter. </param>
+        /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>
+        /// <param name="provisioningState"> The provisioning state of the administrator. </param>
+        /// <returns> A new <see cref="Models.HorizonDBAdministratorProperties"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorProperties HorizonDBAdministratorProperties(string principalName = default, HorizonDBPrincipalType principalType = default, string objectId = default, string tenantId = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new HorizonDBAdministratorProperties(
+                principalName,
+                principalType,
+                objectId,
+                tenantId,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="properties"> The properties for adding a HorizonDB administrator. </param>
+        /// <returns> A new <see cref="Models.HorizonDBAdministratorContent"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorContent HorizonDBAdministratorContent(HorizonDBAdministratorContentProperties properties = default)
+        {
+            return new HorizonDBAdministratorContent(properties, default);
+        }
+
+        /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
+        /// <param name="principalType"> The type of the Entra ID principal. </param>
+        /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>
+        /// <returns> A new <see cref="Models.HorizonDBAdministratorContentProperties"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorContentProperties HorizonDBAdministratorContentProperties(string principalName = default, HorizonDBPrincipalType principalType = default, string tenantId = default)
+        {
+            return new HorizonDBAdministratorContentProperties(principalName, principalType, tenantId, default);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new SocketAddressMatchCondition. </summary>
         public SocketAddressMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleSocketAddrConditionParameters);
         }
 
         /// <summary> Gets or sets the SocketAddressOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleSocketAddrConditionParameters");
             _socketAddressOperator = DefineProperty<SocketAddressOperator>(nameof(SocketAddressOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<string>(nameof(MatchValues), new string[] { "matchValues" });

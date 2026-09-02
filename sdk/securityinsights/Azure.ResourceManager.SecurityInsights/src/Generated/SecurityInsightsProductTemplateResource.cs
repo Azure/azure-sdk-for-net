@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsProductTemplateApiVersion);
             _productTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _productTemplateRestClient = new ProductTemplate(_productTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductTemplateApiVersion ?? "2025-07-01-preview");
+            _productTemplateRestClient = new ProductTemplate(_productTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductTemplateApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

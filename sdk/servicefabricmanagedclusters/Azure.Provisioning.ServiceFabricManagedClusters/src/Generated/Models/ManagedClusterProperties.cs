@@ -18,7 +18,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         private BicepValue<string> _dnsName;
         private BicepValue<string> _fqdn;
-        private BicepValue<IPAddress> _iPv4Address;
+        private BicepValue<IPAddress> _ipv4Address;
         private BicepValue<Guid> _clusterId;
         private BicepValue<ServiceFabricManagedClusterState> _clusterState;
         private BicepList<BinaryData> _clusterCertificateThumbprints;
@@ -43,7 +43,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         private BicepValue<bool> _isIPv6Enabled;
         private BicepValue<string> _subnetId;
         private BicepList<ManagedClusterIPTag> _ipTags;
-        private BicepValue<IPAddress> _iPv6Address;
+        private BicepValue<IPAddress> _ipv6Address;
         private BicepValue<bool> _isServicePublicIPEnabled;
         private BicepList<ManagedClusterSubnet> _auxiliarySubnets;
         private BicepList<ManagedClusterServiceEndpoint> _serviceEndpoints;
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             get
             {
                 Initialize();
-                return _iPv4Address;
+                return _ipv4Address;
             }
         }
 
@@ -447,7 +447,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             get
             {
                 Initialize();
-                return _iPv6Address;
+                return _ipv6Address;
             }
         }
 
@@ -714,7 +714,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             base.DefineProvisionableProperties();
             _dnsName = DefineProperty<string>(nameof(DnsName), new string[] { "dnsName" }, isRequired: true);
             _fqdn = DefineProperty<string>(nameof(Fqdn), new string[] { "fqdn" }, isOutput: true);
-            _iPv4Address = DefineProperty<IPAddress>(nameof(IPv4Address), new string[] { "ipv4Address" }, isOutput: true);
+            _ipv4Address = DefineProperty<IPAddress>(nameof(IPv4Address), new string[] { "ipv4Address" }, isOutput: true);
             _clusterId = DefineProperty<Guid>(nameof(ClusterId), new string[] { "clusterId" }, isOutput: true);
             _clusterState = DefineProperty<ServiceFabricManagedClusterState>(nameof(ClusterState), new string[] { "clusterState" }, isOutput: true);
             _clusterCertificateThumbprints = DefineListProperty<BinaryData>(nameof(ClusterCertificateThumbprints), new string[] { "clusterCertificateThumbprints" }, isOutput: true);
@@ -739,7 +739,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _isIPv6Enabled = DefineProperty<bool>(nameof(IsIPv6Enabled), new string[] { "enableIpv6" });
             _subnetId = DefineProperty<string>(nameof(SubnetId), new string[] { "subnetId" });
             _ipTags = DefineListProperty<ManagedClusterIPTag>(nameof(IPTags), new string[] { "ipTags" });
-            _iPv6Address = DefineProperty<IPAddress>(nameof(IPv6Address), new string[] { "ipv6Address" }, isOutput: true);
+            _ipv6Address = DefineProperty<IPAddress>(nameof(IPv6Address), new string[] { "ipv6Address" }, isOutput: true);
             _isServicePublicIPEnabled = DefineProperty<bool>(nameof(IsServicePublicIPEnabled), new string[] { "enableServicePublicIP" });
             _auxiliarySubnets = DefineListProperty<ManagedClusterSubnet>(nameof(AuxiliarySubnets), new string[] { "auxiliarySubnets" });
             _serviceEndpoints = DefineListProperty<ManagedClusterServiceEndpoint>(nameof(ServiceEndpoints), new string[] { "serviceEndpoints" });

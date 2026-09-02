@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.DomainServices.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DomainControllerIpAddress))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DomainControllerIPAddress))
             {
                 writer.WritePropertyName("domainControllerIpAddress"u8);
                 writer.WriteStartArray();
-                foreach (string item in DomainControllerIpAddress)
+                foreach (string item in DomainControllerIPAddress)
                 {
                     if (item == null)
                     {
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.DomainServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExternalAccessIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(ExternalAccessIPAddress))
             {
                 writer.WritePropertyName("externalAccessIpAddress"u8);
-                writer.WriteStringValue(ExternalAccessIpAddress);
+                writer.WriteStringValue(ExternalAccessIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceStatus))
             {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.DomainServices.Models
             AzureLocation? location = default;
             string vnetSiteId = default;
             ResourceIdentifier subnetId = default;
-            IReadOnlyList<string> domainControllerIpAddress = default;
-            string externalAccessIpAddress = default;
+            IReadOnlyList<string> domainControllerIPAddress = default;
+            string externalAccessIPAddress = default;
             string serviceStatus = default;
             int? selfUnsuspendCounter = default;
             DateTimeOffset? healthLastEvaluatedOn = default;
@@ -252,12 +252,12 @@ namespace Azure.ResourceManager.DomainServices.Models
                             array.Add(item.GetString());
                         }
                     }
-                    domainControllerIpAddress = array;
+                    domainControllerIPAddress = array;
                     continue;
                 }
                 if (prop.NameEquals("externalAccessIpAddress"u8))
                 {
-                    externalAccessIpAddress = prop.Value.GetString();
+                    externalAccessIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("serviceStatus"u8))
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.DomainServices.Models
                 location,
                 vnetSiteId,
                 subnetId,
-                domainControllerIpAddress ?? new ChangeTrackingList<string>(),
-                externalAccessIpAddress,
+                domainControllerIPAddress ?? new ChangeTrackingList<string>(),
+                externalAccessIPAddress,
                 serviceStatus,
                 selfUnsuspendCounter,
                 healthLastEvaluatedOn,

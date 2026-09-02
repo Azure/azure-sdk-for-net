@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ExtensionTypeData item in Value)
+                foreach (KubernetesConfigurationExtensionTypeData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             {
                 return null;
             }
-            IReadOnlyList<ExtensionTypeData> value = default;
+            IReadOnlyList<KubernetesConfigurationExtensionTypeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ExtensionTypeData> array = new List<ExtensionTypeData>();
+                    List<KubernetesConfigurationExtensionTypeData> array = new List<KubernetesConfigurationExtensionTypeData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionTypeData.DeserializeExtensionTypeData(item, options));
+                        array.Add(KubernetesConfigurationExtensionTypeData.DeserializeKubernetesConfigurationExtensionTypeData(item, options));
                     }
                     value = array;
                     continue;

@@ -191,6 +191,95 @@ Some key concepts for OpenTelemetry include:
 
 For more information on the OpenTelemetry project, please review the [OpenTelemetry Specifications](https://github.com/open-telemetry/opentelemetry-specification).
 
+## Telemetry delivery on shutdown
+
+Uploading telemetry takes an ingestion round trip, which can take several seconds. A process that
+exits before that completes would lose whatever was still buffered. To avoid that, shutdown writes
+pending telemetry to persistent storage first and leaves delivery to a background upload, either in
+the remaining moments of this process or in a later run.
+
+Nothing needs to be configured for this. The defaults below apply as soon as offline storage is
+enabled, which it is unless you set `DisableOfflineStorage`.
+
+### What happens by default
+
+| Operation | Behavior | Time added to the operation |
+| --- | --- | --- |
+| `Shutdown()` | Writes pending telemetry to disk, starts a background upload, does not wait for it | file write only |
+| `Dispose()` | Same, but waits up to the drain budget for the upload to finish | up to 2 seconds |
+| `ForceFlush()` | Uploads directly, without going through storage | until ingestion answers |
+
+`Shutdown()` and `Dispose()` differ because OpenTelemetry passes a different timeout for each:
+`Shutdown()` passes `Timeout.Infinite`, which is treated as "do not block exit", while `Dispose()`
+passes a 5 second grace period, part of which is spent trying to deliver before exit.
+
+`ForceFlush()` is left alone because callers that flush explicitly are usually asking for delivery,
+not durability. It is bounded only by `Retry.NetworkTimeout`, which defaults to 100 seconds.
+
+### Changing the behavior
+
+All three settings are `AppContext` values. Set them before building your providers, or declare them
+in `runtimeconfig.template.json` so they are baked into the application:
+
+```json
+{
+  "configProperties": {
+    "Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds": 0
+  }
+}
+```
+
+Equivalently, in code:
+
+```csharp
+AppContext.SetData("Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds", 0);
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush", true);
+```
+
+| Setting | Type | Default | Effect |
+| --- | --- | --- | --- |
+| `...ShutdownDrainBudgetMilliseconds` | int | `2000` | How long `Dispose()` may wait for the background upload |
+| `...PersistOnForceFlush` | switch | `false` | Makes `ForceFlush()` persist instead of upload |
+| `...DisablePersistOnShutdown` | switch | `false` | Restores the previous behavior: shutdown uploads and blocks |
+
+Raising the drain budget has a ceiling. `Dispose()` only ever grants the drain what is left of the
+five second grace period OpenTelemetry gives it, and `Shutdown()` does not wait on the drain at all,
+so a value above about five seconds behaves the same as five seconds.
+
+### Choosing a value for your application
+
+**Command-line tools and other short-lived processes** care about exit latency, and there will be a
+later run to deliver the backlog. Set the drain budget to `0` so exit costs only the file write:
+
+```json
+{ "configProperties": { "Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds": 0 } }
+```
+
+Be aware of the trade-off: with a budget of `0`, a process that always exits within a few hundred
+milliseconds may never finish an upload, so telemetry accumulates on disk until some run lives long
+enough to drain it. Ingestion rejects telemetry older than 48 hours. If your tool runs briefly and
+infrequently, prefer a small non-zero budget such as `500` over `0`.
+
+**Single-run CI jobs** have no later run, and the agent is usually discarded when the job ends, so
+anything left on disk is gone. Block until ingestion answers by disabling the feature and bounding
+the network timeout instead:
+
+```csharp
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown", true);
+
+builder.AddAzureMonitorTraceExporter(options =>
+{
+    options.Retry.NetworkTimeout = TimeSpan.FromSeconds(30);
+});
+```
+
+**Long-running services** should keep the defaults. The 2 second budget fits inside a typical
+graceful shutdown window and delivers the final batch without leaving it for a restart.
+
+**Multiple applications on one machine** should each set `StorageDirectory` to a separate path.
+Concurrent processes may share a directory safely, but separate directories keep one application's
+backlog from filling another's storage quota.
+
 ## Examples
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Program.cs) for a complete demo.

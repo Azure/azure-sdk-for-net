@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.BulkActions.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.BulkActions
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ResourceType, out string locationBasedBulkCreateCustomApiVersion);
             _bulkCreateCustomClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _bulkCreateCustomRestClient = new BulkCreateCustom(_bulkCreateCustomClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateCustomApiVersion ?? "2026-07-06-preview");
+            _bulkCreateCustomRestClient = new BulkCreateCustom(_bulkCreateCustomClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateCustomApiVersion ?? "2026-08-06-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -302,7 +303,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -351,7 +352,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -388,6 +389,84 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
+        /// Gets the operation status for virtual machines in a BulkCreateCustom operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}/virtualMachinesGetOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreateCustom_VirtualMachinesGetOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-06-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocationBasedBulkCreateCustomResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ComputeBulkOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeBulkOperationResult> VirtualMachinesGetOperationStatusAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BulkCreateCustomVirtualMachinesGetOperationStatusAsyncCollectionResultOfT(
+                _bulkCreateCustomRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "LocationBasedBulkCreateCustomResource.VirtualMachinesGetOperationStatus");
+        }
+
+        /// <summary>
+        /// Gets the operation status for virtual machines in a BulkCreateCustom operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}/virtualMachinesGetOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreateCustom_VirtualMachinesGetOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-06-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocationBasedBulkCreateCustomResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ComputeBulkOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeBulkOperationResult> VirtualMachinesGetOperationStatus(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BulkCreateCustomVirtualMachinesGetOperationStatusCollectionResultOfT(
+                _bulkCreateCustomRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "LocationBasedBulkCreateCustomResource.VirtualMachinesGetOperationStatus");
+        }
+
+        /// <summary>
         /// Update a LocationBasedBulkCreateCustom.
         /// <list type="bullet">
         /// <item>
@@ -400,7 +479,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -459,7 +538,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

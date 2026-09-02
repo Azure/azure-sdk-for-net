@@ -17,6 +17,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     public partial class BackupGenericProtectionPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _protectedItemsCount;
+        private BicepValue<string> _backupManagementType;
         private BicepList<string> _resourceGuardOperationRequests;
 
         /// <summary> Creates a new BackupGenericProtectionPolicy. </summary>
@@ -36,6 +37,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             {
                 Initialize();
                 _protectedItemsCount.Assign(value);
+            }
+        }
+
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> BackupManagementType
+        {
+            get
+            {
+                Initialize();
+                return _backupManagementType;
             }
         }
 
@@ -59,6 +70,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _protectedItemsCount = DefineProperty<int>(nameof(ProtectedItemsCount), new string[] { "protectedItemsCount" });
+            _backupManagementType = DefineProperty<string>(nameof(BackupManagementType), new string[] { "backupManagementType" }, isRequired: true);
             _resourceGuardOperationRequests = DefineListProperty<string>(nameof(ResourceGuardOperationRequests), new string[] { "resourceGuardOperationRequests" });
             DefineAdditionalProperties();
         }

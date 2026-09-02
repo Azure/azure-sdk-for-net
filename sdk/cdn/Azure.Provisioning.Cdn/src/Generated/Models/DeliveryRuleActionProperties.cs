@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.Cdn
     /// </summary>
     public partial class DeliveryRuleActionProperties : ProvisionableConstruct
     {
+        private BicepValue<DeliveryRuleActionParametersType> _typeName;
+
         /// <summary> Creates a new DeliveryRuleActionProperties. </summary>
         public DeliveryRuleActionProperties()
         {
+        }
+
+        /// <summary> Gets the TypeName. </summary>
+        internal BicepValue<DeliveryRuleActionParametersType> TypeName
+        {
+            get
+            {
+                Initialize();
+                return _typeName;
+            }
         }
 
         /// <summary> Define all the provisionable properties for DeliveryRuleActionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _typeName = DefineProperty<DeliveryRuleActionParametersType>(nameof(TypeName), new string[] { "typeName" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

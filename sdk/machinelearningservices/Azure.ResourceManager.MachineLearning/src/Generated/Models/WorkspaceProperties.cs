@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AssociatedWorkspaces = new ChangeTrackingList<string>();
             ContainerRegistries = new ChangeTrackingList<string>();
             ExistingWorkspaces = new ChangeTrackingList<string>();
-            IpAllowlist = new ChangeTrackingList<string>();
+            IPAllowlist = new ChangeTrackingList<string>();
             KeyVaults = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IsHbiWorkspace = isHbiWorkspace;
             HubResourceId = hubResourceId;
             ImageBuildCompute = imageBuildCompute;
-            IpAllowlist = ipAllowlist;
+            IPAllowlist = ipAllowlist;
             KeyVault = keyVault;
             KeyVaults = keyVaults;
             ManagedNetwork = managedNetwork;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The list of IPv4  addresses that are allowed to access the workspace. </summary>
         [WirePath("ipAllowlist")]
-        public IList<string> IpAllowlist { get; } = new ChangeTrackingList<string>();
+        public IList<string> IPAllowlist { get; } = new ChangeTrackingList<string>();
 
         /// <summary> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         [WirePath("keyVault")]
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
+        public int? ServiceManagedResourcesCosmosDBCollectionsThroughput
         {
             get
             {
-                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
+                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput;
             }
             set
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
                 }
-                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
+                ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput = value;
             }
         }
     }

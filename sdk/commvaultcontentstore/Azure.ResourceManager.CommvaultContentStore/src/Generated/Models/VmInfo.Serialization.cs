@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(ShouldAttachAndSwapOsDisk))
+            if (Optional.IsDefined(ShouldAttachAndSwapOSDisk))
             {
                 writer.WritePropertyName("attachAndSwapOsDisk"u8);
-                writer.WriteBooleanValue(ShouldAttachAndSwapOsDisk.Value);
+                writer.WriteBooleanValue(ShouldAttachAndSwapOSDisk.Value);
             }
             if (Optional.IsDefined(TargetVmGuid))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string region = default;
             string networkId = default;
             string subnetId = default;
-            bool? shouldAttachAndSwapOsDisk = default;
+            bool? shouldAttachAndSwapOSDisk = default;
             string targetVmGuid = default;
             IList<VmTag> vmTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    shouldAttachAndSwapOsDisk = prop.Value.GetBoolean();
+                    shouldAttachAndSwapOSDisk = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("targetVmGuid"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 region,
                 networkId,
                 subnetId,
-                shouldAttachAndSwapOsDisk,
+                shouldAttachAndSwapOSDisk,
                 targetVmGuid,
                 vmTags ?? new ChangeTrackingList<VmTag>(),
                 additionalBinaryDataProperties);

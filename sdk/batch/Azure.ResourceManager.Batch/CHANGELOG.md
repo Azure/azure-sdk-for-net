@@ -10,8 +10,6 @@
 
 ### Bugs Fixed
 
-- Fixed `BatchAccountData` JSON serialization and deserialization when location is `null`.
-
 ### Other Changes
 
 ## 1.7.0 (2026-06-02)

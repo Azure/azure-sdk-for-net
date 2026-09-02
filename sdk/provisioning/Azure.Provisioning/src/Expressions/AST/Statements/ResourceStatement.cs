@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.Expressions;
 
@@ -32,6 +33,7 @@ public class ResourceStatement(string name, BicepExpression type, BicepExpressio
     /// <summary>
     /// Gets or sets an optional condition expression that controls whether the resource is deployed.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public BicepExpression? Condition { get; set; }
     /// <summary>
     /// Gets the decorators applied to this resource statement.

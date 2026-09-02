@@ -38,34 +38,34 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260812.4",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260812.5"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260825.4",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260825.9"
   },
   "devDependencies": {
-    "@azure-tools/azure-http-specs": "0.1.0-alpha.43",
-    "@azure-tools/typespec-autorest": "0.70.1",
-    "@azure-tools/typespec-azure-core": "0.70.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.70.0",
-    "@azure-tools/typespec-azure-rulesets": "0.70.0",
-    "@azure-tools/typespec-client-generator-core": "0.70.0",
+    "@azure-tools/azure-http-specs": "0.1.0-alpha.44",
+    "@azure-tools/typespec-autorest": "0.71.0",
+    "@azure-tools/typespec-azure-core": "0.71.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.71.0",
+    "@azure-tools/typespec-azure-rulesets": "0.71.0",
+    "@azure-tools/typespec-client-generator-core": "0.71.2",
     "@azure-tools/typespec-liftr-base": "0.14.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "~26.0.1",
     "@types/pluralize": "^0.0.33",
     "@types/prettier": "^2.7.3",
-    "@typespec/compiler": "1.14.0",
-    "@typespec/events": "0.84.0",
-    "@typespec/http": "1.14.0",
-    "@typespec/http-specs": "0.1.0-alpha.40",
-    "@typespec/openapi": "1.14.0",
-    "@typespec/rest": "0.84.0",
+    "@typespec/compiler": "1.15.0",
+    "@typespec/events": "0.85.0",
+    "@typespec/http": "1.15.0",
+    "@typespec/http-specs": "0.1.0-alpha.41",
+    "@typespec/openapi": "1.15.0",
+    "@typespec/rest": "0.85.0",
     "@typespec/spec-api": "0.1.0-alpha.15",
     "@typespec/spector": "0.1.0-alpha.26",
-    "@typespec/sse": "0.84.0",
-    "@typespec/streams": "0.84.0",
-    "@typespec/tspd": "0.76.0",
-    "@typespec/versioning": "0.84.0",
-    "@typespec/xml": "0.84.0",
+    "@typespec/sse": "0.85.0",
+    "@typespec/streams": "0.85.0",
+    "@typespec/tspd": "0.77.0",
+    "@typespec/versioning": "0.85.0",
+    "@typespec/xml": "0.85.0",
     "@vitest/coverage-v8": "^4.1.9",
     "@vitest/ui": "^4.1.9",
     "c8": "^12.0.0",
@@ -79,6 +79,14 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.62.0",
     "vitest": "^4.1.9"
+  },
+  "overrides": {
+    "body-parser": {
+      "content-type": "2.0.0"
+    },
+    "type-is": {
+      "content-type": "2.0.0"
+    }
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-autorest",

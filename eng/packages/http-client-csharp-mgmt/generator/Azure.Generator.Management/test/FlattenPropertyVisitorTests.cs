@@ -207,7 +207,7 @@ namespace Azure.Generator.Mgmt.Tests
                     new AutoPropertyBody(true),
                     lastContractView)
             ];
-            SetLastContractView(parentProvider, lastContractView);
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
@@ -260,7 +260,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertiesProvider, Is.Not.Null);
 
             var lastContractView = CreateStrategyStagesView(parentProvider!.Name);
-            SetLastContractView(parentProvider, lastContractView);
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
 
             var customCodeView = CreateStrategyStagesView(parentProvider.Name);
             ManagementMockHelpers.SetCustomCodeView(parentProvider, customCodeView);
@@ -698,7 +698,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var lastContractView = new TestTypeView(modelFactory.Name);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
 
             ProcessTypeForBackCompatibility(modelFactory);
 
@@ -889,14 +889,6 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(actualName, Is.EqualTo(expectedName), $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
         }
 
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
-        }
-
         private static void ProcessTypeForBackCompatibility(TypeProvider typeProvider)
         {
             typeof(TypeProvider).GetMethod(
@@ -952,6 +944,67 @@ namespace Azure.Generator.Mgmt.Tests
                 BindingFlags.Public | BindingFlags.Instance);
             Assert.That(decoratorsProperty, Is.Not.Null, "Could not find InputModelProperty.Decorators property");
             decoratorsProperty!.SetValue(property, new[] { decorator });
+        }
+
+        [Test]
+        public void TestPropertyFlattenSkipsDynamicPatchProperty()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                properties: [valueProperty],
+                isDynamicModel: true);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: true, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                properties: [propertiesProperty],
+                isDynamicModel: true);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            Assert.That(parentProvider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "Value"), Is.True);
+        }
+
+        [Test]
+        public void TestSafeFlattenIgnoresDynamicPatchProperty()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                properties: [valueProperty],
+                isDynamicModel: true);
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            AssertSafeFlattenApplied(parentProvider, "dynamic Patch property");
+        }
+
+        private static void RunVisitors(ModelProvider model)
+        {
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
         }
 
         /// <summary>

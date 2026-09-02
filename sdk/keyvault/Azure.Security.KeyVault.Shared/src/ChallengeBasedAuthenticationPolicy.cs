@@ -132,17 +132,20 @@ namespace Azure.Security.KeyVault
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
-                // Get the scope from the cache
-                s_challengeCache.TryGetValue(authority, out _challenge);
-                scope = _challenge.Scopes[0];
+                // Reuse the cached scope for this authority when one is present; on a cache miss there
+                // is no scope to reuse, so fall through and surface the challenge below.
+                if (s_challengeCache.TryGetValue(authority, out ChallengeParameters cached))
+                {
+                    _challenge = cached;
+                    scope = _challenge.Scopes[0];
+                }
             }
 
             if (scope is null)
             {
-                if (s_challengeCache.TryGetValue(authority, out _challenge))
-                {
-                    return false;
-                }
+                // No scope from this challenge or the cache - surface the service failure rather than
+                // building a token request context from a null challenge.
+                return false;
             }
             else
             {

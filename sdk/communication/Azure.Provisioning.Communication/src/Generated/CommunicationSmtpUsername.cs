@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Communication
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SmtpUsernameProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CommunicationService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CommunicationService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

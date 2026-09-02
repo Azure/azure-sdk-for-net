@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> DocumentDB Collection dataset properties. </param>
-        internal DocumentDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DocumentDbCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DocumentDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DocumentDBCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> DocumentDB Collection dataset properties. </summary>
-        internal DocumentDbCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal DocumentDBCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CollectionName
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new DocumentDbCollectionDatasetTypeProperties();
+                    TypeProperties = new DocumentDBCollectionDatasetTypeProperties();
                 }
                 TypeProperties.CollectionName = value;
             }
