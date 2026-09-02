@@ -20,7 +20,6 @@ namespace Azure.Security.KeyVault
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
         /// </summary>
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
-        private ChallengeParameters _challenge;
 
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
         {
@@ -42,17 +41,16 @@ namespace Azure.Security.KeyVault
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            // If this policy doesn't have challenge parameters cached try to get it from the static challenge cache.
-            if (_challenge == null)
-            {
-                string authority = GetRequestAuthority(message.Request);
-                s_challengeCache.TryGetValue(authority, out _challenge);
-            }
-
-            if (_challenge != null)
+            // Resolve the challenge for the current request's authority from the static cache, which is keyed
+            // by authority. A challenge (and the token acquired for its scope and tenant) cached for one
+            // endpoint is therefore never applied to a request bound for a different endpoint. No challenge is
+            // memoized on the policy instance, so concurrent requests to different authorities on the same
+            // instance cannot observe each other's challenge.
+            string authority = GetRequestAuthority(message.Request);
+            if (s_challengeCache.TryGetValue(authority, out ChallengeParameters challenge))
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true);
+                var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -129,17 +127,18 @@ namespace Azure.Security.KeyVault
             }
 
             // Handle CAE Challenges
+            ChallengeParameters challenge = null;
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
                 // Get the scope from the cache
-                s_challengeCache.TryGetValue(authority, out _challenge);
-                scope = _challenge.Scopes[0];
+                s_challengeCache.TryGetValue(authority, out challenge);
+                scope = challenge.Scopes[0];
             }
 
             if (scope is null)
             {
-                if (s_challengeCache.TryGetValue(authority, out _challenge))
+                if (s_challengeCache.TryGetValue(authority, out challenge))
                 {
                     return false;
                 }
@@ -171,11 +170,11 @@ namespace Azure.Security.KeyVault
                     throw new UriFormatException($"The challenge authorization URI '{authorization}' is invalid.");
                 }
 
-                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
-                s_challengeCache[authority] = _challenge;
+                challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
+                s_challengeCache[authority] = challenge;
             }
 
-            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims);
+            var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true, claims: claims);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
