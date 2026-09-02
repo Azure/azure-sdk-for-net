@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     /// </summary>
     public partial class ManagedServicePartitionScheme : ProvisionableConstruct
     {
+        private BicepValue<PartitionScheme> _partitionScheme;
+
         /// <summary> Creates a new ManagedServicePartitionScheme. </summary>
         public ManagedServicePartitionScheme()
         {
+        }
+
+        /// <summary> Gets the PartitionScheme. </summary>
+        internal BicepValue<PartitionScheme> PartitionScheme
+        {
+            get
+            {
+                Initialize();
+                return _partitionScheme;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedServicePartitionScheme. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _partitionScheme = DefineProperty<PartitionScheme>(nameof(PartitionScheme), new string[] { "partitionScheme" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

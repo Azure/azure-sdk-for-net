@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Kusto
         /// <param name="resourceVersion"> The resource API version. </param>
         public KustoReadOnlyFollowingDatabase(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign(KustoKind.ReadOnlyFollowing);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -184,7 +185,6 @@ namespace Azure.Provisioning.Kusto
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "ReadOnlyFollowing");
             _properties = DefineModelProperty<ReadOnlyFollowingDatabaseProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

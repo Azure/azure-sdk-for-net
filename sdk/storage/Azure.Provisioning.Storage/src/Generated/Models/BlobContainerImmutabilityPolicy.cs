@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.ImmutabilityPeriodSinceCreationInDays;
+                return Properties is null ? default : Properties.ImmutabilityPeriodSinceCreationInDays;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.AllowProtectedAppendWrites;
+                return Properties is null ? default : Properties.AllowProtectedAppendWrites;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.AllowProtectedAppendWritesAll;
+                return Properties is null ? default : Properties.AllowProtectedAppendWritesAll;
             }
         }
 

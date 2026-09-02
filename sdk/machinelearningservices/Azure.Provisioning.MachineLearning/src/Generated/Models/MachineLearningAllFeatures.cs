@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningAllFeatures. </summary>
         public MachineLearningAllFeatures()
         {
+            FilterType.Assign(MonitoringFeatureFilterType.AllFeatures);
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningAllFeatures. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("filterType", new string[] { "filterType" }, defaultValue: "AllFeatures");
             DefineAdditionalProperties();
         }
 

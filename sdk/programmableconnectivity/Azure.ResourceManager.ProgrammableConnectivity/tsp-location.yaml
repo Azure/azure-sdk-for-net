@@ -1,0 +1,6 @@
+directory: specification/programmableconnectivity/ProgrammableConnectivity.Management
+commit: 0b88a75e26694ede7f787f19d3512cfd52cdd340
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
