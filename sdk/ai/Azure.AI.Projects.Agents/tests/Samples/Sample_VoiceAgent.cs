@@ -57,8 +57,9 @@ public class Sample_VoiceAgent : SamplesBase
             if (string.IsNullOrEmpty(existingAgentName))
             {
                 #region Snippet:Sample_VoiceAgent_Create
-                VoiceAgentDefinition definition = new(voiceModelType)
+                VoiceAgentDefinition definition = new()
                 {
+                    ModelType = voiceModelType,
                     Model = modelDeploymentName,
                     Instructions = "Respond briefly and helpfully.",
                     Audio = new VoiceAgentAudioConfig

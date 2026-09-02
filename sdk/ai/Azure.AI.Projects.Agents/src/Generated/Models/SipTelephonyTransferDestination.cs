@@ -10,15 +10,12 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A SIP destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    public partial class SipTelephonyTransferDestination
+    public partial class SipTelephonyTransferDestination : TelephonyTransferDestination
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SipTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The SIP or SIPS URI to call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SipTelephonyTransferDestination(Uri value)
+        public SipTelephonyTransferDestination(Uri value) : base(TelephonyTransferDestinationKind.Sip)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -26,18 +23,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="SipTelephonyTransferDestination"/>. </summary>
-        /// <param name="kind"> The SIP destination type. </param>
-        /// <param name="value"> The SIP or SIPS URI to call. </param>
+        /// <param name="kind"> The telephony transfer destination type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SipTelephonyTransferDestination(string kind, Uri value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="value"> The SIP or SIPS URI to call. </param>
+        internal SipTelephonyTransferDestination(TelephonyTransferDestinationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri value) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
             Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The SIP destination type. </summary>
-        public string Kind { get; } = "sip";
 
         /// <summary> The SIP or SIPS URI to call. </summary>
         public Uri Value { get; set; }

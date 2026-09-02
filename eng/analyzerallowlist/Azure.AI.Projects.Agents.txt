@@ -37,17 +37,22 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.CreateAgentVersionRequest1.JsonModelWr
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.#ctor(System.String,System.String,System.String,Azure.AI.Projects.Agents.AgentState,System.Nullable{Azure.AI.Projects.Agents.AgentStateSource},Azure.AI.Projects.Agents.AgentObjectVersions,Azure.AI.Projects.Agents.AgentEndpointConfiguration,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentBlueprintReference,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 
-# AAIP001 also fires for the AgentTelephony call-listing pagination helpers:
-# AgentsPagedResultTelephonyCallSummary is marked [Experimental] (like several
-# sibling AgentsPagedResult* page-envelope types), but unlike those siblings its
-# consuming CollectionResult classes were not also attributed [Experimental] by
-# ExperimentalAttributeVisitor (sdk/ai/codegen), which currently only cascades
-# that attribution for the AgentEndpointConversations client by name. Point-
-# suppressing here until the visitor is generalized to cover AgentTelephony too.
+# AAIP001 also fires for the AgentTelephony call/binding-listing pagination
+# helpers: AgentsPagedResultTelephonyCallSummary / AgentsPagedResultTelephonyBindingListItem
+# are marked [Experimental] (like several sibling AgentsPagedResult* page-envelope
+# types), but unlike those siblings their consuming CollectionResult classes were
+# not also attributed [Experimental] by ExperimentalAttributeVisitor
+# (sdk/ai/codegen), which currently only cascades that attribution for the
+# AgentEndpointConversations client by name. Point-suppressing here until the
+# visitor is generalized to cover AgentTelephony too.
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsAsyncCollectionResult.GetRawPagesAsync
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsAsyncCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsCollectionResult.GetRawPages
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsAsyncCollectionResult.GetRawPagesAsync
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsAsyncCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsCollectionResult.GetRawPages
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
 
 # AAIP002 marks generated declarations that expose OpenAI-experimental surface
 # (see OpenAIExperimentalVisitor in sdk/ai/codegen). The visitor attributes

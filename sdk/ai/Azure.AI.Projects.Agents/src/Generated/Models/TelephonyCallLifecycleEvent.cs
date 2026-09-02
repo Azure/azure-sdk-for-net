@@ -19,14 +19,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The stable provider-neutral event name. </param>
         /// <param name="source"> The component that supplied the observation. </param>
         /// <param name="outcome"> The outcome of the observed lifecycle operation. </param>
-        /// <param name="observedAtMs"> When the service observed the event, as Unix time in milliseconds. </param>
+        /// <param name="observedAt"> The Unix timestamp (in seconds) for when the service observed the event. </param>
         /// <param name="timestampSource"> The source of the event timestamp. </param>
-        internal TelephonyCallLifecycleEvent(TelephonyCallLifecycleEventName name, TelephonyCallLifecycleEventSource source, TelephonyCallLifecycleEventOutcome outcome, long observedAtMs, TelephonyCallTimestampSource timestampSource)
+        internal TelephonyCallLifecycleEvent(TelephonyCallLifecycleEventName name, TelephonyCallLifecycleEventSource source, TelephonyCallLifecycleEventOutcome outcome, DateTimeOffset observedAt, TelephonyCallTimestampSource timestampSource)
         {
             Name = name;
             Source = source;
             Outcome = outcome;
-            ObservedAtMs = observedAtMs;
+            ObservedAt = observedAt;
             TimestampSource = timestampSource;
         }
 
@@ -35,8 +35,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The stable provider-neutral event name. </param>
         /// <param name="source"> The component that supplied the observation. </param>
         /// <param name="outcome"> The outcome of the observed lifecycle operation. </param>
-        /// <param name="observedAtMs"> When the service observed the event, as Unix time in milliseconds. </param>
-        /// <param name="occurredAtMs"> When the event occurred according to the provider, as Unix time in milliseconds. </param>
+        /// <param name="observedAt"> The Unix timestamp (in seconds) for when the service observed the event. </param>
+        /// <param name="occurredAt"> The Unix timestamp (in seconds) for when the event occurred according to the provider. </param>
         /// <param name="timestampSource"> The source of the event timestamp. </param>
         /// <param name="reason"> A stable service-generated reason associated with the event. </param>
         /// <param name="providerEventId"> The provider event identifier used for idempotency, when supplied. </param>
@@ -44,14 +44,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="providerStatusCode"> The provider status code associated with the event. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallLifecycleEvent(long sequence, TelephonyCallLifecycleEventName name, TelephonyCallLifecycleEventSource source, TelephonyCallLifecycleEventOutcome outcome, long observedAtMs, long? occurredAtMs, TelephonyCallTimestampSource timestampSource, string reason, string providerEventId, long? providerSequence, int? providerStatusCode, int? providerSubCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallLifecycleEvent(long sequence, TelephonyCallLifecycleEventName name, TelephonyCallLifecycleEventSource source, TelephonyCallLifecycleEventOutcome outcome, DateTimeOffset observedAt, DateTimeOffset? occurredAt, TelephonyCallTimestampSource timestampSource, string reason, string providerEventId, long? providerSequence, int? providerStatusCode, int? providerSubCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sequence = sequence;
             Name = name;
             Source = source;
             Outcome = outcome;
-            ObservedAtMs = observedAtMs;
-            OccurredAtMs = occurredAtMs;
+            ObservedAt = observedAt;
+            OccurredAt = occurredAt;
             TimestampSource = timestampSource;
             Reason = reason;
             ProviderEventId = providerEventId;
@@ -73,11 +73,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The outcome of the observed lifecycle operation. </summary>
         public TelephonyCallLifecycleEventOutcome Outcome { get; }
 
-        /// <summary> When the service observed the event, as Unix time in milliseconds. </summary>
-        public long ObservedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the service observed the event. </summary>
+        public DateTimeOffset ObservedAt { get; }
 
-        /// <summary> When the event occurred according to the provider, as Unix time in milliseconds. </summary>
-        public long? OccurredAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the event occurred according to the provider. </summary>
+        public DateTimeOffset? OccurredAt { get; }
 
         /// <summary> The source of the event timestamp. </summary>
         public TelephonyCallTimestampSource TimestampSource { get; }

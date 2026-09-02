@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult, and for delivery of their responses. </summary>
+    /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
     public partial class VoiceAgentSubAgentConfig : IJsonModel<VoiceAgentSubAgentConfig>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgentConfig"/> for deserialization. </summary>
@@ -82,11 +82,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ResponsePolicy))
-            {
-                writer.WritePropertyName("response_policy"u8);
-                writer.WriteObjectValue(ResponsePolicy, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,7 +125,6 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             IList<VoiceAgentSubAgent> subagents = default;
-            VoiceAgentSubagentResponsePolicy responsePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,21 +138,12 @@ namespace Azure.AI.Projects.Agents
                     subagents = array;
                     continue;
                 }
-                if (prop.NameEquals("response_policy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    responsePolicy = VoiceAgentSubagentResponsePolicy.DeserializeVoiceAgentSubagentResponsePolicy(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentSubAgentConfig(subagents, responsePolicy, additionalBinaryDataProperties);
+            return new VoiceAgentSubAgentConfig(subagents, additionalBinaryDataProperties);
         }
     }
 }

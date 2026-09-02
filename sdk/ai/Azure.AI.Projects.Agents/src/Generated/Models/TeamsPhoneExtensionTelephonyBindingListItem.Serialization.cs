@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams Phone Extension binding returned in a list, including its entity tag. </summary>
-    public partial class TeamsPhoneExtensionTelephonyBindingListItem : IJsonModel<TeamsPhoneExtensionTelephonyBindingListItem>
+    public partial class TeamsPhoneExtensionTelephonyBindingListItem : TelephonyBindingListItem, IJsonModel<TeamsPhoneExtensionTelephonyBindingListItem>
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensionTelephonyBindingListItem"/> for deserialization. </summary>
         internal TeamsPhoneExtensionTelephonyBindingListItem()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TeamsPhoneExtensionTelephonyBindingListItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TelephonyBindingListItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TeamsPhoneExtensionTelephonyBindingListItem IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TeamsPhoneExtensionTelephonyBindingListItem IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (TeamsPhoneExtensionTelephonyBindingListItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,64 +68,30 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TeamsPhoneExtensionTelephonyBindingListItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("provider"u8);
-            writer.WriteStringValue(Provider);
-            writer.WritePropertyName("connection"u8);
-            writer.WriteStringValue(Connection);
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phone_number"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
             writer.WritePropertyName("resource_account_object_id"u8);
             writer.WriteStringValue(ResourceAccountObjectId);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("incoming_call_url"u8);
-            writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TeamsPhoneExtensionTelephonyBindingListItem IJsonModel<TeamsPhoneExtensionTelephonyBindingListItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TeamsPhoneExtensionTelephonyBindingListItem IJsonModel<TeamsPhoneExtensionTelephonyBindingListItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TeamsPhoneExtensionTelephonyBindingListItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TeamsPhoneExtensionTelephonyBindingListItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TelephonyBindingListItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TeamsPhoneExtensionTelephonyBindingListItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -145,15 +111,15 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string id = default;
-            string provider = default;
+            TelephonyProvider provider = default;
             string connection = default;
-            string phoneNumber = default;
             string label = default;
-            string resourceAccountObjectId = default;
             TelephonyBindingStatus status = default;
             Uri incomingCallUrl = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string phoneNumber = default;
+            string resourceAccountObjectId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -163,7 +129,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("provider"u8))
                 {
-                    provider = prop.Value.GetString();
+                    provider = new TelephonyProvider(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connection"u8))
@@ -171,19 +137,9 @@ namespace Azure.AI.Projects.Agents
                     connection = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("phone_number"u8))
-                {
-                    phoneNumber = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("label"u8))
                 {
                     label = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("resource_account_object_id"u8))
-                {
-                    resourceAccountObjectId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -201,6 +157,16 @@ namespace Azure.AI.Projects.Agents
                     etag = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("phone_number"u8))
+                {
+                    phoneNumber = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resource_account_object_id"u8))
+                {
+                    resourceAccountObjectId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -210,13 +176,13 @@ namespace Azure.AI.Projects.Agents
                 id,
                 provider,
                 connection,
-                phoneNumber,
                 label,
-                resourceAccountObjectId,
                 status,
                 incomingCallUrl,
                 etag,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                phoneNumber,
+                resourceAccountObjectId);
         }
     }
 }

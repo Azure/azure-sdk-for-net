@@ -24,8 +24,9 @@ public class VoiceAgentWebSocketTests
     [Test]
     public void SerializesVoiceAgentRestConfiguration()
     {
-        VoiceAgentDefinition definition = new(VoiceModelType.SelfDeployed)
+        VoiceAgentDefinition definition = new()
         {
+            ModelType = VoiceModelType.SelfDeployed,
             Model = "voice-model",
             Instructions = "Keep replies short and natural.",
             Audio = new VoiceAgentAudioConfig

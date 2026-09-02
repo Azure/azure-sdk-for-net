@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A SIP destination for a telephony transfer target. </summary>
-    public partial class SipTelephonyTransferDestination : IJsonModel<SipTelephonyTransferDestination>
+    public partial class SipTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<SipTelephonyTransferDestination>
     {
         /// <summary> Initializes a new instance of <see cref="SipTelephonyTransferDestination"/> for deserialization. </summary>
         internal SipTelephonyTransferDestination()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SipTelephonyTransferDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TelephonyTransferDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SipTelephonyTransferDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SipTelephonyTransferDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SipTelephonyTransferDestination IPersistableModel<SipTelephonyTransferDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SipTelephonyTransferDestination IPersistableModel<SipTelephonyTransferDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => (SipTelephonyTransferDestination)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SipTelephonyTransferDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,41 +68,25 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SipTelephonyTransferDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SipTelephonyTransferDestination)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value.AbsoluteUri);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SipTelephonyTransferDestination IJsonModel<SipTelephonyTransferDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SipTelephonyTransferDestination IJsonModel<SipTelephonyTransferDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SipTelephonyTransferDestination)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SipTelephonyTransferDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TelephonyTransferDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SipTelephonyTransferDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -121,14 +105,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string kind = default;
-            Uri value = default;
+            TelephonyTransferDestinationKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Uri value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = prop.Value.GetString();
+                    kind = new TelephonyTransferDestinationKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -141,7 +125,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SipTelephonyTransferDestination(kind, value, additionalBinaryDataProperties);
+            return new SipTelephonyTransferDestination(kind, additionalBinaryDataProperties, value);
         }
     }
 }

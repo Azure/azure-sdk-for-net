@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult, and for delivery of their responses. </summary>
+    /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
     [Experimental("AAIP001")]
     public partial class VoiceAgentSubAgentConfig
     {
@@ -28,19 +28,14 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgentConfig"/>. </summary>
         /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
-        /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for a subagent response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSubAgentConfig(IList<VoiceAgentSubAgent> subagents, VoiceAgentSubagentResponsePolicy responsePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentSubAgentConfig(IList<VoiceAgentSubAgent> subagents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subagents = subagents;
-            ResponsePolicy = responsePolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The sibling Foundry text agents, in the same project, that this voice agent may consult. </summary>
         public IList<VoiceAgentSubAgent> Subagents { get; }
-
-        /// <summary> Policy for acknowledging forwarded requests and filling gaps while waiting for a subagent response. </summary>
-        public VoiceAgentSubagentResponsePolicy ResponsePolicy { get; set; }
     }
 }

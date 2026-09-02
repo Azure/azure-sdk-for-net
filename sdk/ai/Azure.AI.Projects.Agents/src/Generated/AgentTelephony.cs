@@ -121,13 +121,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> CreateTelephonyBinding(string agentName, BinaryData body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = CreateTelephonyBinding(agentName, BinaryContent.Create(body), foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = CreateTelephonyBinding(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
@@ -138,13 +139,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> CreateTelephonyBindingAsync(string agentName, BinaryData body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = await CreateTelephonyBindingAsync(agentName, BinaryContent.Create(body), foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            ClientResult result = await CreateTelephonyBindingAsync(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -299,7 +301,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("AAIP001")]
-        public virtual CollectionResult<BinaryData> GetTelephonyBindings(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<TelephonyBindingListItem> GetTelephonyBindings(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -344,7 +346,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("AAIP001")]
-        public virtual AsyncCollectionResult<BinaryData> GetTelephonyBindingsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<TelephonyBindingListItem> GetTelephonyBindingsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -439,13 +441,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> GetTelephonyBinding(string agentName, string bindingId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyBinding> GetTelephonyBinding(string agentName, string bindingId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(bindingId, nameof(bindingId));
 
             ClientResult result = GetTelephonyBinding(agentName, bindingId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieves a telephony binding owned by the voice agent named in the path. </summary>
@@ -456,13 +459,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> GetTelephonyBindingAsync(string agentName, string bindingId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyBinding>> GetTelephonyBindingAsync(string agentName, string bindingId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(bindingId, nameof(bindingId));
 
             ClientResult result = await GetTelephonyBindingAsync(agentName, bindingId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
         /// <summary>

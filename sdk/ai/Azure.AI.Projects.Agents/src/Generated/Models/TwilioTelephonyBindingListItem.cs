@@ -10,71 +10,35 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Twilio binding returned in a list, including its entity tag. </summary>
     [Experimental("AAIP001")]
-    public partial class TwilioTelephonyBindingListItem
+    public partial class TwilioTelephonyBindingListItem : TelephonyBindingListItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="TwilioTelephonyBindingListItem"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with Twilio. </param>
-        internal TwilioTelephonyBindingListItem(string id, string connection, string phoneNumber, TelephonyBindingStatus status, Uri incomingCallUrl)
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        internal TwilioTelephonyBindingListItem(string id, string connection, TelephonyBindingStatus status, Uri incomingCallUrl, string phoneNumber) : base(id, TelephonyProvider.Twilio, connection, status, incomingCallUrl)
         {
-            Id = id;
-            Connection = connection;
             PhoneNumber = phoneNumber;
-            Status = status;
-            IncomingCallUrl = incomingCallUrl;
         }
 
         /// <summary> Initializes a new instance of <see cref="TwilioTelephonyBindingListItem"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="provider"> The Twilio provider. </param>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with Twilio. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TwilioTelephonyBindingListItem(string id, string provider, string connection, string phoneNumber, string label, TelephonyBindingStatus status, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        internal TwilioTelephonyBindingListItem(string id, TelephonyProvider provider, string connection, string label, TelephonyBindingStatus status, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber) : base(id, provider, connection, label, status, incomingCallUrl, etag, additionalBinaryDataProperties)
         {
-            Id = id;
-            Provider = provider;
-            Connection = connection;
             PhoneNumber = phoneNumber;
-            Label = label;
-            Status = status;
-            IncomingCallUrl = incomingCallUrl;
-            Etag = etag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The service-generated binding identifier. </summary>
-        public string Id { get; }
-
-        /// <summary> The Twilio provider. </summary>
-        public string Provider { get; } = "twilio";
-
-        /// <summary> The Foundry connection name for the Twilio provider. </summary>
-        public string Connection { get; }
 
         /// <summary> The Twilio E.164 phone number. </summary>
         public string PhoneNumber { get; }
-
-        /// <summary> The optional display label for the binding. </summary>
-        public string Label { get; }
-
-        /// <summary> The lifecycle status. </summary>
-        public TelephonyBindingStatus Status { get; }
-
-        /// <summary> The service-generated webhook URL to configure with Twilio. </summary>
-        public Uri IncomingCallUrl { get; }
-
-        /// <summary> The entity tag to send in the `If-Match` header when updating or deleting this binding. </summary>
-        public string Etag { get; }
     }
 }

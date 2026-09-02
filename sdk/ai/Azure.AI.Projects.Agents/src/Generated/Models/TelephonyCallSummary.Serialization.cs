@@ -120,10 +120,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("ended_at"u8);
                 writer.WriteNumberValue(EndedAt.Value, "U");
             }
-            if (Optional.IsDefined(DurationSeconds))
+            if (Optional.IsDefined(DurationMs))
             {
-                writer.WritePropertyName("duration_seconds"u8);
-                writer.WriteNumberValue(DurationSeconds.Value);
+                writer.WritePropertyName("duration_ms"u8);
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DurationMs.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(EndReason))
             {
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset? mediaConnectedAt = default;
             DateTimeOffset? agentSessionReadyAt = default;
             DateTimeOffset? endedAt = default;
-            long? durationSeconds = default;
+            TimeSpan? durationMs = default;
             string endReason = default;
             int? providerStatusCode = default;
             int? providerSubCode = default;
@@ -283,13 +283,13 @@ namespace Azure.AI.Projects.Agents
                     endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("duration_seconds"u8))
+                if (prop.NameEquals("duration_ms"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    durationSeconds = prop.Value.GetInt64();
+                    durationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("end_reason"u8))
@@ -338,7 +338,7 @@ namespace Azure.AI.Projects.Agents
                 mediaConnectedAt,
                 agentSessionReadyAt,
                 endedAt,
-                durationSeconds,
+                durationMs,
                 endReason,
                 providerStatusCode,
                 providerSubCode,

@@ -25,15 +25,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="gapFillingInterval"> The number of seconds without subagent content or user input before the voice agent provides a gap-filling response. </param>
         /// <param name="ackInstructions"> Instructions used to generate the immediate acknowledgement. </param>
         /// <param name="gapFillingInstructions"> Instructions used to generate gap-filling speech while waiting for progress. </param>
+        /// <param name="enableDeltaProgress"> Whether progress updates are emitted incrementally instead of only when the subagent invocation completes. Defaults to `false`. </param>
         /// <param name="progressInstructions"> Instructions used to summarize streamed subagent progress for speech. </param>
         /// <param name="progressUpdateInterval"> The minimum number of seconds between spoken progress updates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSubagentResponsePolicy(bool? immediateAck, TimeSpan? gapFillingInterval, string ackInstructions, string gapFillingInstructions, string progressInstructions, TimeSpan? progressUpdateInterval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentSubagentResponsePolicy(bool? immediateAck, TimeSpan? gapFillingInterval, string ackInstructions, string gapFillingInstructions, bool? enableDeltaProgress, string progressInstructions, TimeSpan? progressUpdateInterval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImmediateAck = immediateAck;
             GapFillingInterval = gapFillingInterval;
             AckInstructions = ackInstructions;
             GapFillingInstructions = gapFillingInstructions;
+            EnableDeltaProgress = enableDeltaProgress;
             ProgressInstructions = progressInstructions;
             ProgressUpdateInterval = progressUpdateInterval;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,6 +52,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Instructions used to generate gap-filling speech while waiting for progress. </summary>
         public string GapFillingInstructions { get; set; }
+
+        /// <summary> Whether progress updates are emitted incrementally instead of only when the subagent invocation completes. Defaults to `false`. </summary>
+        public bool? EnableDeltaProgress { get; set; }
 
         /// <summary> Instructions used to summarize streamed subagent progress for speech. </summary>
         public string ProgressInstructions { get; set; }

@@ -86,12 +86,12 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Source.ToString());
             writer.WritePropertyName("outcome"u8);
             writer.WriteStringValue(Outcome.ToString());
-            writer.WritePropertyName("observed_at_ms"u8);
-            writer.WriteNumberValue(ObservedAtMs);
-            if (Optional.IsDefined(OccurredAtMs))
+            writer.WritePropertyName("observed_at"u8);
+            writer.WriteNumberValue(ObservedAt, "U");
+            if (Optional.IsDefined(OccurredAt))
             {
-                writer.WritePropertyName("occurred_at_ms"u8);
-                writer.WriteNumberValue(OccurredAtMs.Value);
+                writer.WritePropertyName("occurred_at"u8);
+                writer.WriteNumberValue(OccurredAt.Value, "U");
             }
             writer.WritePropertyName("timestamp_source"u8);
             writer.WriteStringValue(TimestampSource.ToString());
@@ -166,8 +166,8 @@ namespace Azure.AI.Projects.Agents
             TelephonyCallLifecycleEventName name = default;
             TelephonyCallLifecycleEventSource source = default;
             TelephonyCallLifecycleEventOutcome outcome = default;
-            long observedAtMs = default;
-            long? occurredAtMs = default;
+            DateTimeOffset observedAt = default;
+            DateTimeOffset? occurredAt = default;
             TelephonyCallTimestampSource timestampSource = default;
             string reason = default;
             string providerEventId = default;
@@ -197,18 +197,18 @@ namespace Azure.AI.Projects.Agents
                     outcome = new TelephonyCallLifecycleEventOutcome(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("observed_at_ms"u8))
+                if (prop.NameEquals("observed_at"u8))
                 {
-                    observedAtMs = prop.Value.GetInt64();
+                    observedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("occurred_at_ms"u8))
+                if (prop.NameEquals("occurred_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    occurredAtMs = prop.Value.GetInt64();
+                    occurredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("timestamp_source"u8))
@@ -263,8 +263,8 @@ namespace Azure.AI.Projects.Agents
                 name,
                 source,
                 outcome,
-                observedAtMs,
-                occurredAtMs,
+                observedAt,
+                occurredAt,
                 timestampSource,
                 reason,
                 providerEventId,

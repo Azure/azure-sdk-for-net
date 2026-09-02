@@ -8,33 +8,29 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A closed reference to the hosted text agent that a `hosted_agent` voice agent fronts, containing only its name and optional version. The target is resolved within the same project. </summary>
+    /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentTargetAgent
+    public partial class VoiceHostedAgentConversationEngine : VoiceConversationEngine
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentTargetAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceHostedAgentConversationEngine"/>. </summary>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VoiceAgentTargetAgent(string name)
+        public VoiceHostedAgentConversationEngine(string name) : base("hosted_agent")
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentTargetAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceHostedAgentConversationEngine"/>. </summary>
+        /// <param name="type"> The conversation engine type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <param name="version"> The target agent version. Omit this property to select the latest version when the voice session starts. When supplied, use a positive integer or `draft-{positive-unix-timestamp}` whose numeric component fits in a signed 64-bit integer. </param>
-        /// <param name="additionalProperties"></param>
-        internal VoiceAgentTargetAgent(string name, string version, IDictionary<string, BinaryData> additionalProperties)
+        internal VoiceHostedAgentConversationEngine(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;
-            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The non-empty DNS-like name of the target hosted text agent in the same project. </summary>
@@ -42,8 +38,5 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The target agent version. Omit this property to select the latest version when the voice session starts. When supplied, use a positive integer or `draft-{positive-unix-timestamp}` whose numeric component fits in a signed 64-bit integer. </summary>
         public string Version { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

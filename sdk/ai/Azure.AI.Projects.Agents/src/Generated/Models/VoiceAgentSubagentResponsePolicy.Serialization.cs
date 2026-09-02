@@ -90,6 +90,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("gap_filling_instructions"u8);
                 writer.WriteStringValue(GapFillingInstructions);
             }
+            if (Optional.IsDefined(EnableDeltaProgress))
+            {
+                writer.WritePropertyName("enable_delta_progress"u8);
+                writer.WriteBooleanValue(EnableDeltaProgress.Value);
+            }
             if (Optional.IsDefined(ProgressInstructions))
             {
                 writer.WritePropertyName("progress_instructions"u8);
@@ -146,6 +151,7 @@ namespace Azure.AI.Projects.Agents
             TimeSpan? gapFillingInterval = default;
             string ackInstructions = default;
             string gapFillingInstructions = default;
+            bool? enableDeltaProgress = default;
             string progressInstructions = default;
             TimeSpan? progressUpdateInterval = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -179,6 +185,15 @@ namespace Azure.AI.Projects.Agents
                     gapFillingInstructions = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("enable_delta_progress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableDeltaProgress = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("progress_instructions"u8))
                 {
                     progressInstructions = prop.Value.GetString();
@@ -203,6 +218,7 @@ namespace Azure.AI.Projects.Agents
                 gapFillingInterval,
                 ackInstructions,
                 gapFillingInstructions,
+                enableDeltaProgress,
                 progressInstructions,
                 progressUpdateInterval,
                 additionalBinaryDataProperties);

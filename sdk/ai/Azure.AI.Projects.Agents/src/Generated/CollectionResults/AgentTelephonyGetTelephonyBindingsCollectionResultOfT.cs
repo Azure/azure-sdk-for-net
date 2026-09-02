@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentTelephonyGetTelephonyBindingsCollectionResultOfT : CollectionResult<BinaryData>
+    [Experimental("AAIP001")]
+    internal partial class AgentTelephonyGetTelephonyBindingsCollectionResultOfT : CollectionResult<TelephonyBindingListItem>
     {
         private readonly AgentTelephony _client;
         private readonly string _agentName;
@@ -100,7 +102,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<BinaryData> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<TelephonyBindingListItem> GetValuesFromPage(ClientResult page)
         {
             return ((AgentsPagedResultTelephonyBindingListItem)page).Data;
         }

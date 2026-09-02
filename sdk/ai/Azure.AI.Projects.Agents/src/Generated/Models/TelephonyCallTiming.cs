@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Detailed provider-neutral timing for an inbound telephony call. Millisecond values are Unix timestamps. </summary>
+    /// <summary> Detailed provider-neutral timing for an inbound telephony call. </summary>
     [Experimental("AAIP001")]
     public partial class TelephonyCallTiming
     {
@@ -23,65 +23,65 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="TelephonyCallTiming"/>. </summary>
-        /// <param name="receivedAtMs"> When the provider webhook was received, as Unix time in milliseconds. </param>
-        /// <param name="validatedAtMs"> When webhook validation completed, as Unix time in milliseconds. </param>
-        /// <param name="admittedAtMs"> When the call was admitted to an agent binding, as Unix time in milliseconds. </param>
-        /// <param name="answerRequestedAtMs"> When the service requested that the provider answer the call, as Unix time in milliseconds. </param>
-        /// <param name="answeredAtMs"> When the provider reported that the call was answered, as Unix time in milliseconds. </param>
-        /// <param name="mediaConnectedAtMs"> When the provider media channel connected, as Unix time in milliseconds. </param>
-        /// <param name="agentSessionReadyAtMs"> When the voice-agent session became ready, as Unix time in milliseconds. </param>
-        /// <param name="firstCallerAudioAtMs"> When caller audio was first observed, as Unix time in milliseconds. </param>
-        /// <param name="firstAgentAudioAtMs"> When agent audio was first observed, as Unix time in milliseconds. </param>
-        /// <param name="endedAtMs"> When the call reached a terminal state, as Unix time in milliseconds. </param>
+        /// <param name="receivedAt"> The Unix timestamp (in seconds) for when the provider webhook was received. </param>
+        /// <param name="validatedAt"> The Unix timestamp (in seconds) for when webhook validation completed. </param>
+        /// <param name="admittedAt"> The Unix timestamp (in seconds) for when the call was admitted to an agent binding. </param>
+        /// <param name="answerRequestedAt"> The Unix timestamp (in seconds) for when the service requested that the provider answer the call. </param>
+        /// <param name="answeredAt"> The Unix timestamp (in seconds) for when the provider reported that the call was answered. </param>
+        /// <param name="mediaConnectedAt"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
+        /// <param name="agentSessionReadyAt"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
+        /// <param name="firstCallerAudioAt"> The Unix timestamp (in seconds) for when caller audio was first observed. </param>
+        /// <param name="firstAgentAudioAt"> The Unix timestamp (in seconds) for when agent audio was first observed. </param>
+        /// <param name="endedAt"> The Unix timestamp (in seconds) for when the call reached a terminal state. </param>
         /// <param name="durationBasis"> The timestamp used as the basis for duration. </param>
         /// <param name="timestampSource"> The primary source of the timing milestones. Individual lifecycle events identify their own timestamp source separately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallTiming(long? receivedAtMs, long? validatedAtMs, long? admittedAtMs, long? answerRequestedAtMs, long? answeredAtMs, long? mediaConnectedAtMs, long? agentSessionReadyAtMs, long? firstCallerAudioAtMs, long? firstAgentAudioAtMs, long? endedAtMs, TelephonyCallDurationBasis? durationBasis, TelephonyCallTimestampSource timestampSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallTiming(DateTimeOffset? receivedAt, DateTimeOffset? validatedAt, DateTimeOffset? admittedAt, DateTimeOffset? answerRequestedAt, DateTimeOffset? answeredAt, DateTimeOffset? mediaConnectedAt, DateTimeOffset? agentSessionReadyAt, DateTimeOffset? firstCallerAudioAt, DateTimeOffset? firstAgentAudioAt, DateTimeOffset? endedAt, TelephonyCallDurationBasis? durationBasis, TelephonyCallTimestampSource timestampSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ReceivedAtMs = receivedAtMs;
-            ValidatedAtMs = validatedAtMs;
-            AdmittedAtMs = admittedAtMs;
-            AnswerRequestedAtMs = answerRequestedAtMs;
-            AnsweredAtMs = answeredAtMs;
-            MediaConnectedAtMs = mediaConnectedAtMs;
-            AgentSessionReadyAtMs = agentSessionReadyAtMs;
-            FirstCallerAudioAtMs = firstCallerAudioAtMs;
-            FirstAgentAudioAtMs = firstAgentAudioAtMs;
-            EndedAtMs = endedAtMs;
+            ReceivedAt = receivedAt;
+            ValidatedAt = validatedAt;
+            AdmittedAt = admittedAt;
+            AnswerRequestedAt = answerRequestedAt;
+            AnsweredAt = answeredAt;
+            MediaConnectedAt = mediaConnectedAt;
+            AgentSessionReadyAt = agentSessionReadyAt;
+            FirstCallerAudioAt = firstCallerAudioAt;
+            FirstAgentAudioAt = firstAgentAudioAt;
+            EndedAt = endedAt;
             DurationBasis = durationBasis;
             TimestampSource = timestampSource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> When the provider webhook was received, as Unix time in milliseconds. </summary>
-        public long? ReceivedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the provider webhook was received. </summary>
+        public DateTimeOffset? ReceivedAt { get; }
 
-        /// <summary> When webhook validation completed, as Unix time in milliseconds. </summary>
-        public long? ValidatedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when webhook validation completed. </summary>
+        public DateTimeOffset? ValidatedAt { get; }
 
-        /// <summary> When the call was admitted to an agent binding, as Unix time in milliseconds. </summary>
-        public long? AdmittedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the call was admitted to an agent binding. </summary>
+        public DateTimeOffset? AdmittedAt { get; }
 
-        /// <summary> When the service requested that the provider answer the call, as Unix time in milliseconds. </summary>
-        public long? AnswerRequestedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the service requested that the provider answer the call. </summary>
+        public DateTimeOffset? AnswerRequestedAt { get; }
 
-        /// <summary> When the provider reported that the call was answered, as Unix time in milliseconds. </summary>
-        public long? AnsweredAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the provider reported that the call was answered. </summary>
+        public DateTimeOffset? AnsweredAt { get; }
 
-        /// <summary> When the provider media channel connected, as Unix time in milliseconds. </summary>
-        public long? MediaConnectedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the provider media channel connected. </summary>
+        public DateTimeOffset? MediaConnectedAt { get; }
 
-        /// <summary> When the voice-agent session became ready, as Unix time in milliseconds. </summary>
-        public long? AgentSessionReadyAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the voice-agent session became ready. </summary>
+        public DateTimeOffset? AgentSessionReadyAt { get; }
 
-        /// <summary> When caller audio was first observed, as Unix time in milliseconds. </summary>
-        public long? FirstCallerAudioAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when caller audio was first observed. </summary>
+        public DateTimeOffset? FirstCallerAudioAt { get; }
 
-        /// <summary> When agent audio was first observed, as Unix time in milliseconds. </summary>
-        public long? FirstAgentAudioAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when agent audio was first observed. </summary>
+        public DateTimeOffset? FirstAgentAudioAt { get; }
 
-        /// <summary> When the call reached a terminal state, as Unix time in milliseconds. </summary>
-        public long? EndedAtMs { get; }
+        /// <summary> The Unix timestamp (in seconds) for when the call reached a terminal state. </summary>
+        public DateTimeOffset? EndedAt { get; }
 
         /// <summary> The timestamp used as the basis for duration. </summary>
         public TelephonyCallDurationBasis? DurationBasis { get; }

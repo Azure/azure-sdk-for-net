@@ -10,49 +10,32 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The request to create a Twilio binding. </summary>
     [Experimental("AAIP001")]
-    public partial class CreateTwilioTelephonyBindingContent
+    public partial class CreateTwilioTelephonyBindingContent : CreateTelephonyBindingContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="CreateTwilioTelephonyBindingContent"/>. </summary>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> or <paramref name="phoneNumber"/> is null. </exception>
-        public CreateTwilioTelephonyBindingContent(string connection, string phoneNumber)
+        public CreateTwilioTelephonyBindingContent(string connection, string phoneNumber) : base(TelephonyProvider.Twilio, connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
 
-            Connection = connection;
             PhoneNumber = phoneNumber;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateTwilioTelephonyBindingContent"/>. </summary>
-        /// <param name="provider"> The Twilio provider. </param>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTwilioTelephonyBindingContent(string provider, string connection, string phoneNumber, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        internal CreateTwilioTelephonyBindingContent(TelephonyProvider provider, string connection, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber) : base(provider, connection, label, additionalBinaryDataProperties)
         {
-            Provider = provider;
-            Connection = connection;
             PhoneNumber = phoneNumber;
-            Label = label;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The Twilio provider. </summary>
-        internal string Provider { get; } = "twilio";
-
-        /// <summary> The Foundry connection name for the Twilio provider. </summary>
-        public string Connection { get; }
 
         /// <summary> The Twilio E.164 phone number. </summary>
         public string PhoneNumber { get; }
-
-        /// <summary> An optional display label for the binding. </summary>
-        public string Label { get; set; }
     }
 }

@@ -86,21 +86,9 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (BinaryData item in Data)
+            foreach (TelephonyBindingListItem item in Data)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FirstId))
@@ -157,7 +145,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<BinaryData> data = default;
+            IList<TelephonyBindingListItem> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -166,17 +154,10 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<BinaryData> array = new List<BinaryData>();
+                    List<TelephonyBindingListItem> array = new List<TelephonyBindingListItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
+                        array.Add(TelephonyBindingListItem.DeserializeTelephonyBindingListItem(item, options));
                     }
                     data = array;
                     continue;

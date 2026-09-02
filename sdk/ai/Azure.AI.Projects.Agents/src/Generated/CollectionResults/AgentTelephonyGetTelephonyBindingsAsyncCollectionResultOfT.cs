@@ -6,11 +6,13 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentTelephonyGetTelephonyBindingsAsyncCollectionResultOfT : AsyncCollectionResult<BinaryData>
+    [Experimental("AAIP001")]
+    internal partial class AgentTelephonyGetTelephonyBindingsAsyncCollectionResultOfT : AsyncCollectionResult<TelephonyBindingListItem>
     {
         private readonly AgentTelephony _client;
         private readonly string _agentName;
@@ -101,9 +103,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<BinaryData> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<TelephonyBindingListItem> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (BinaryData item in ((AgentsPagedResultTelephonyBindingListItem)page).Data)
+            foreach (TelephonyBindingListItem item in ((AgentsPagedResultTelephonyBindingListItem)page).Data)
             {
                 yield return item;
                 await Task.Yield();

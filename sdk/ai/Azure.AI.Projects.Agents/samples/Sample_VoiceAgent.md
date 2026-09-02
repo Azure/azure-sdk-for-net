@@ -9,8 +9,9 @@ When creating a temporary agent, set `FOUNDRY_VOICE_MODEL_TYPE` to `managed` for
 1. Create a managed or self-deployed voice agent. Set `Store` to `true` when its conversations and audio should be available through the Foundry REST APIs.
 
 ```C# Snippet:Sample_VoiceAgent_Create
-VoiceAgentDefinition definition = new(voiceModelType)
+VoiceAgentDefinition definition = new()
 {
+    ModelType = voiceModelType,
     Model = modelDeploymentName,
     Instructions = "Respond briefly and helpfully.",
     Audio = new VoiceAgentAudioConfig

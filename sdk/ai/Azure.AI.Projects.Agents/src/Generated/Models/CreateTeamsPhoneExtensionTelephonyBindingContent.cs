@@ -10,52 +10,35 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The request to create a Microsoft Teams Phone Extension binding. </summary>
     [Experimental("AAIP001")]
-    public partial class CreateTeamsPhoneExtensionTelephonyBindingContent
+    public partial class CreateTeamsPhoneExtensionTelephonyBindingContent : CreateTelephonyBindingContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/>. </summary>
-        /// <param name="connection"> The Foundry connection name for the Teams Phone Extension provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> or <paramref name="resourceAccountObjectId"/> is null. </exception>
-        public CreateTeamsPhoneExtensionTelephonyBindingContent(string connection, string resourceAccountObjectId)
+        public CreateTeamsPhoneExtensionTelephonyBindingContent(string connection, string resourceAccountObjectId) : base(TelephonyProvider.TeamsPhoneExtension, connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(resourceAccountObjectId, nameof(resourceAccountObjectId));
 
-            Connection = connection;
             ResourceAccountObjectId = resourceAccountObjectId;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/>. </summary>
-        /// <param name="provider"> The Microsoft Teams Phone Extension provider. </param>
-        /// <param name="connection"> The Foundry connection name for the Teams Phone Extension provider. </param>
-        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
-        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTeamsPhoneExtensionTelephonyBindingContent(string provider, string connection, string phoneNumber, string label, string resourceAccountObjectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
+        internal CreateTeamsPhoneExtensionTelephonyBindingContent(TelephonyProvider provider, string connection, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(provider, connection, label, additionalBinaryDataProperties)
         {
-            Provider = provider;
-            Connection = connection;
             PhoneNumber = phoneNumber;
-            Label = label;
             ResourceAccountObjectId = resourceAccountObjectId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The Microsoft Teams Phone Extension provider. </summary>
-        internal string Provider { get; } = "teams_phone_extension";
-
-        /// <summary> The Foundry connection name for the Teams Phone Extension provider. </summary>
-        public string Connection { get; }
 
         /// <summary> The optional display phone number for the Teams resource account. </summary>
         public string PhoneNumber { get; set; }
-
-        /// <summary> An optional display label for the binding. </summary>
-        public string Label { get; set; }
 
         /// <summary> The Microsoft Teams resource-account object identifier as a GUID. </summary>
         public string ResourceAccountObjectId { get; }

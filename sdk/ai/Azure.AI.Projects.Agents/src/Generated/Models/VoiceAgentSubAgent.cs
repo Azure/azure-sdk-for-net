@@ -32,15 +32,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the subagent. The subagent must be in the same project as the voice agent. </param>
         /// <param name="agentVersion"> The version of the subagent. When omitted, the active version is used. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
-        /// <param name="enableDeltaProgress"> Whether progress updates are emitted incrementally instead of only when the subagent invocation completes. Defaults to `false`. </param>
+        /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </param>
         /// <param name="invokeTimeoutSeconds"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSubAgent(string agentName, string agentVersion, string agentCapabilities, bool? enableDeltaProgress, TimeSpan? invokeTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentSubAgent(string agentName, string agentVersion, string agentCapabilities, VoiceAgentSubagentResponsePolicy responsePolicy, TimeSpan? invokeTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;
             AgentCapabilities = agentCapabilities;
-            EnableDeltaProgress = enableDeltaProgress;
+            ResponsePolicy = responsePolicy;
             InvokeTimeoutSeconds = invokeTimeoutSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,8 +54,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </summary>
         public string AgentCapabilities { get; set; }
 
-        /// <summary> Whether progress updates are emitted incrementally instead of only when the subagent invocation completes. Defaults to `false`. </summary>
-        public bool? EnableDeltaProgress { get; set; }
+        /// <summary> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </summary>
+        public VoiceAgentSubagentResponsePolicy ResponsePolicy { get; set; }
 
         /// <summary> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </summary>
         public TimeSpan? InvokeTimeoutSeconds { get; set; }

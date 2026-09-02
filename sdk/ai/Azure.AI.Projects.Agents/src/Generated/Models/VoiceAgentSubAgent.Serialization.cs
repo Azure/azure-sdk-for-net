@@ -84,10 +84,10 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("agent_capabilities"u8);
             writer.WriteStringValue(AgentCapabilities);
-            if (Optional.IsDefined(EnableDeltaProgress))
+            if (Optional.IsDefined(ResponsePolicy))
             {
-                writer.WritePropertyName("enable_delta_progress"u8);
-                writer.WriteBooleanValue(EnableDeltaProgress.Value);
+                writer.WritePropertyName("response_policy"u8);
+                writer.WriteObjectValue(ResponsePolicy, options);
             }
             if (Optional.IsDefined(InvokeTimeoutSeconds))
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects.Agents
             string agentName = default;
             string agentVersion = default;
             string agentCapabilities = default;
-            bool? enableDeltaProgress = default;
+            VoiceAgentSubagentResponsePolicy responsePolicy = default;
             TimeSpan? invokeTimeoutSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,13 +159,13 @@ namespace Azure.AI.Projects.Agents
                     agentCapabilities = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("enable_delta_progress"u8))
+                if (prop.NameEquals("response_policy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableDeltaProgress = prop.Value.GetBoolean();
+                    responsePolicy = VoiceAgentSubagentResponsePolicy.DeserializeVoiceAgentSubagentResponsePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("invoke_timeout_seconds"u8))
@@ -186,7 +186,7 @@ namespace Azure.AI.Projects.Agents
                 agentName,
                 agentVersion,
                 agentCapabilities,
-                enableDeltaProgress,
+                responsePolicy,
                 invokeTimeoutSeconds,
                 additionalBinaryDataProperties);
         }

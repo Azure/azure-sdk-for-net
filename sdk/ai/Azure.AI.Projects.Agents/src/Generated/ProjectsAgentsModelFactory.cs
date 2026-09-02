@@ -1006,9 +1006,9 @@ namespace Azure.AI.Projects.Agents
         /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
         /// </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <param name="modelType"> How the voice agent obtains its conversational backend. `managed` uses the service-managed model named by `model`; `self_deployed` uses the customer's Foundry deployment named by `model`; `hosted_agent` fronts the hosted text agent referenced by `target_agent`. This is independent of the architecture (realtime or cascaded), which the service derives from the selected backend. </param>
-        /// <param name="model"> The model to use for this agent. Required when `model_type` is `managed` (the service-managed model name) or `self_deployed` (the customer's Foundry deployment name). Omit this property when `model_type` is `hosted_agent`; `target_agent` identifies the conversational backend. The model must support realtime or cascaded voice. </param>
-        /// <param name="targetAgent"> The hosted text agent that this voice agent fronts. Required when `model_type` is `hosted_agent` and not applicable otherwise. In this mode, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the target agent owns the conversation logic. The target must be in the same project and support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </param>
+        /// <param name="modelType"> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </param>
+        /// <param name="model"> The model to use for this agent. Required with `model_type` for a model-backed voice agent and omitted when `conversation_engine` is provided. The model must support realtime or cascaded voice. </param>
+        /// <param name="conversationEngine"> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </param>
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. Supports template substitution via `structured_inputs`, rendered per session before the live session starts. </param>
         /// <param name="greeting"> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </param>
         /// <param name="audio">
@@ -1046,7 +1046,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType modelType = default, string model = default, VoiceAgentTargetAgent targetAgent = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubAgentConfig subagentConfig = default, bool? store = default)
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubAgentConfig subagentConfig = default, bool? store = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
             include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -1059,7 +1059,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null,
                 modelType,
                 model,
-                targetAgent,
+                conversationEngine,
                 instructions,
                 greeting,
                 audio,
@@ -1076,17 +1076,26 @@ namespace Azure.AI.Projects.Agents
                 store);
         }
 
-        /// <summary> A closed reference to the hosted text agent that a `hosted_agent` voice agent fronts, containing only its name and optional version. The target is resolved within the same project. </summary>
+        /// <summary>
+        /// An engine that owns conversation handling for a voice agent.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceHostedAgentConversationEngine"/>.
+        /// </summary>
+        /// <param name="type"> The conversation engine type. </param>
+        /// <returns> A new <see cref="Agents.VoiceConversationEngine"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceConversationEngine VoiceConversationEngine(string @type = default)
+        {
+            return new UnknownVoiceConversationEngine(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </summary>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <param name="version"> The target agent version. Omit this property to select the latest version when the voice session starts. When supplied, use a positive integer or `draft-{positive-unix-timestamp}` whose numeric component fits in a signed 64-bit integer. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Agents.VoiceAgentTargetAgent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceHostedAgentConversationEngine"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentTargetAgent VoiceAgentTargetAgent(string name = default, string version = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static VoiceHostedAgentConversationEngine VoiceHostedAgentConversationEngine(string name = default, string version = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new VoiceAgentTargetAgent(name, version, additionalProperties);
+            return new VoiceHostedAgentConversationEngine("hosted_agent", additionalBinaryDataProperties: null, name, version);
         }
 
         /// <summary>
@@ -1698,33 +1707,32 @@ namespace Azure.AI.Projects.Agents
             return new VoiceAgentToolboxTool("toolbox", additionalBinaryDataProperties: null, toolboxName, toolboxVersion, responseScheduling);
         }
 
-        /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult, and for delivery of their responses. </summary>
+        /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
         /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
-        /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for a subagent response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSubAgentConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubAgentConfig VoiceAgentSubAgentConfig(IEnumerable<VoiceAgentSubAgent> subagents = default, VoiceAgentSubagentResponsePolicy responsePolicy = default)
+        public static VoiceAgentSubAgentConfig VoiceAgentSubAgentConfig(IEnumerable<VoiceAgentSubAgent> subagents = default)
         {
             subagents ??= new ChangeTrackingList<VoiceAgentSubAgent>();
 
-            return new VoiceAgentSubAgentConfig(subagents.ToList(), responsePolicy, additionalBinaryDataProperties: null);
+            return new VoiceAgentSubAgentConfig(subagents.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A sibling Foundry text agent that a voice agent may consult as a background specialist. </summary>
         /// <param name="agentName"> The name of the subagent. The subagent must be in the same project as the voice agent. </param>
         /// <param name="agentVersion"> The version of the subagent. When omitted, the active version is used. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
-        /// <param name="enableDeltaProgress"> Whether progress updates are emitted incrementally instead of only when the subagent invocation completes. Defaults to `false`. </param>
+        /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </param>
         /// <param name="invokeTimeoutSeconds"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSubAgent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubAgent VoiceAgentSubAgent(string agentName = default, string agentVersion = default, string agentCapabilities = default, bool? enableDeltaProgress = default, TimeSpan? invokeTimeoutSeconds = default)
+        public static VoiceAgentSubAgent VoiceAgentSubAgent(string agentName = default, string agentVersion = default, string agentCapabilities = default, VoiceAgentSubagentResponsePolicy responsePolicy = default, TimeSpan? invokeTimeoutSeconds = default)
         {
             return new VoiceAgentSubAgent(
                 agentName,
                 agentVersion,
                 agentCapabilities,
-                enableDeltaProgress,
+                responsePolicy,
                 invokeTimeoutSeconds,
                 additionalBinaryDataProperties: null);
         }
@@ -1734,17 +1742,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="gapFillingInterval"> The number of seconds without subagent content or user input before the voice agent provides a gap-filling response. </param>
         /// <param name="ackInstructions"> Instructions used to generate the immediate acknowledgement. </param>
         /// <param name="gapFillingInstructions"> Instructions used to generate gap-filling speech while waiting for progress. </param>
+        /// <param name="enableDeltaProgress"> Whether progress updates are emitted incrementally instead of only when the subagent invocation completes. Defaults to `false`. </param>
         /// <param name="progressInstructions"> Instructions used to summarize streamed subagent progress for speech. </param>
         /// <param name="progressUpdateInterval"> The minimum number of seconds between spoken progress updates. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSubagentResponsePolicy"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubagentResponsePolicy VoiceAgentSubagentResponsePolicy(bool? immediateAck = default, TimeSpan? gapFillingInterval = default, string ackInstructions = default, string gapFillingInstructions = default, string progressInstructions = default, TimeSpan? progressUpdateInterval = default)
+        public static VoiceAgentSubagentResponsePolicy VoiceAgentSubagentResponsePolicy(bool? immediateAck = default, TimeSpan? gapFillingInterval = default, string ackInstructions = default, string gapFillingInstructions = default, bool? enableDeltaProgress = default, string progressInstructions = default, TimeSpan? progressUpdateInterval = default)
         {
             return new VoiceAgentSubagentResponsePolicy(
                 immediateAck,
                 gapFillingInterval,
                 ackInstructions,
                 gapFillingInstructions,
+                enableDeltaProgress,
                 progressInstructions,
                 progressUpdateInterval,
                 additionalBinaryDataProperties: null);
@@ -2653,129 +2663,193 @@ namespace Azure.AI.Projects.Agents
             return new VoiceRecordingChannelLayout("user", "agent", additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The request to create a Microsoft Teams Phone Extension binding. </summary>
-        /// <param name="connection"> The Foundry connection name for the Teams Phone Extension provider. </param>
-        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <summary>
+        /// The request to create a telephony binding.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateTeamsPhoneExtensionTelephonyBindingContent"/> and <see cref="Agents.CreateTwilioTelephonyBindingContent"/>.
+        /// </summary>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
+        /// <returns> A new <see cref="Agents.CreateTelephonyBindingContent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CreateTelephonyBindingContent CreateTelephonyBindingContent(string provider = default, string connection = default, string label = default)
+        {
+            return new UnknownCreateTelephonyBindingContent(new TelephonyProvider(provider), connection, label, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The request to create a Microsoft Teams Phone Extension binding. </summary>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> An optional display label for the binding. </param>
+        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.CreateTeamsPhoneExtensionTelephonyBindingContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTeamsPhoneExtensionTelephonyBindingContent CreateTeamsPhoneExtensionTelephonyBindingContent(string connection = default, string phoneNumber = default, string label = default, string resourceAccountObjectId = default)
+        public static CreateTeamsPhoneExtensionTelephonyBindingContent CreateTeamsPhoneExtensionTelephonyBindingContent(string connection = default, string label = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new CreateTeamsPhoneExtensionTelephonyBindingContent(
-                "teams_phone_extension",
+                TelephonyProvider.TeamsPhoneExtension,
                 connection,
-                phoneNumber,
                 label,
-                resourceAccountObjectId,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                resourceAccountObjectId);
         }
 
         /// <summary> The request to create a Twilio binding. </summary>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.CreateTwilioTelephonyBindingContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTwilioTelephonyBindingContent CreateTwilioTelephonyBindingContent(string connection = default, string phoneNumber = default, string label = default)
+        public static CreateTwilioTelephonyBindingContent CreateTwilioTelephonyBindingContent(string connection = default, string label = default, string phoneNumber = default)
         {
-            return new CreateTwilioTelephonyBindingContent("twilio", connection, phoneNumber, label, additionalBinaryDataProperties: null);
+            return new CreateTwilioTelephonyBindingContent(TelephonyProvider.Twilio, connection, label, additionalBinaryDataProperties: null, phoneNumber);
+        }
+
+        /// <summary>
+        /// A telephony binding owned by a voice agent.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TeamsPhoneExtensionTelephonyBinding"/> and <see cref="Agents.TwilioTelephonyBinding"/>.
+        /// </summary>
+        /// <param name="id"> The service-generated binding identifier. </param>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> The optional display label for the binding. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <returns> A new <see cref="Agents.TelephonyBinding"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyBinding TelephonyBinding(string id = default, string provider = default, string connection = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default)
+        {
+            return new UnknownTelephonyBinding(
+                id,
+                new TelephonyProvider(provider),
+                connection,
+                label,
+                status,
+                incomingCallUrl,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Microsoft Teams Phone Extension binding owned by a voice agent. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the Teams Phone Extension provider. </param>
-        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensionTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsPhoneExtensionTelephonyBinding TeamsPhoneExtensionTelephonyBinding(string id = default, string connection = default, string phoneNumber = default, string label = default, string resourceAccountObjectId = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default)
+        public static TeamsPhoneExtensionTelephonyBinding TeamsPhoneExtensionTelephonyBinding(string id = default, string connection = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new TeamsPhoneExtensionTelephonyBinding(
                 id,
-                "teams_phone_extension",
+                TelephonyProvider.TeamsPhoneExtension,
                 connection,
-                phoneNumber,
                 label,
-                resourceAccountObjectId,
                 status,
                 incomingCallUrl,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                resourceAccountObjectId);
         }
 
         /// <summary> A Twilio binding owned by a voice agent. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with Twilio. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TwilioTelephonyBinding TwilioTelephonyBinding(string id = default, string connection = default, string phoneNumber = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default)
+        public static TwilioTelephonyBinding TwilioTelephonyBinding(string id = default, string connection = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default)
         {
             return new TwilioTelephonyBinding(
                 id,
-                "twilio",
+                TelephonyProvider.Twilio,
                 connection,
-                phoneNumber,
                 label,
                 status,
                 incomingCallUrl,
+                additionalBinaryDataProperties: null,
+                phoneNumber);
+        }
+
+        /// <summary>
+        /// A telephony binding returned in a list, including its entity tag.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TeamsPhoneExtensionTelephonyBindingListItem"/> and <see cref="Agents.TwilioTelephonyBindingListItem"/>.
+        /// </summary>
+        /// <param name="id"> The service-generated binding identifier. </param>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> The optional display label for the binding. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
+        /// <returns> A new <see cref="Agents.TelephonyBindingListItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyBindingListItem TelephonyBindingListItem(string id = default, string provider = default, string connection = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default)
+        {
+            return new UnknownTelephonyBindingListItem(
+                id,
+                new TelephonyProvider(provider),
+                connection,
+                label,
+                status,
+                incomingCallUrl,
+                etag,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Microsoft Teams Phone Extension binding returned in a list, including its entity tag. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the Teams Phone Extension provider. </param>
-        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
+        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensionTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsPhoneExtensionTelephonyBindingListItem TeamsPhoneExtensionTelephonyBindingListItem(string id = default, string connection = default, string phoneNumber = default, string label = default, string resourceAccountObjectId = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default)
+        public static TeamsPhoneExtensionTelephonyBindingListItem TeamsPhoneExtensionTelephonyBindingListItem(string id = default, string connection = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new TeamsPhoneExtensionTelephonyBindingListItem(
                 id,
-                "teams_phone_extension",
+                TelephonyProvider.TeamsPhoneExtension,
                 connection,
-                phoneNumber,
                 label,
-                resourceAccountObjectId,
                 status,
                 incomingCallUrl,
                 etag,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                resourceAccountObjectId);
         }
 
         /// <summary> A Twilio binding returned in a list, including its entity tag. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the Twilio provider. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with Twilio. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = default, string connection = default, string phoneNumber = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default)
+        public static TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = default, string connection = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default)
         {
             return new TwilioTelephonyBindingListItem(
                 id,
-                "twilio",
+                TelephonyProvider.Twilio,
                 connection,
-                phoneNumber,
                 label,
                 status,
                 incomingCallUrl,
                 etag,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                phoneNumber);
         }
 
         /// <summary> A summary of a durable inbound call to a voice agent. </summary>
@@ -2791,14 +2865,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="mediaConnectedAt"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
         /// <param name="agentSessionReadyAt"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
         /// <param name="endedAt"> The Unix timestamp (in seconds) for when the call ended. </param>
-        /// <param name="durationSeconds"> The call duration in seconds. </param>
+        /// <param name="durationMs"> The call duration. </param>
         /// <param name="endReason"> The service-generated reason that the call ended. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the terminal result. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the terminal result. </param>
         /// <param name="providerMessage"> The provider message associated with the terminal result. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallSummary"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallSummary TelephonyCallSummary(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedAt = default, DateTimeOffset? answeredAt = default, DateTimeOffset? mediaConnectedAt = default, DateTimeOffset? agentSessionReadyAt = default, DateTimeOffset? endedAt = default, long? durationSeconds = default, string endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default)
+        public static TelephonyCallSummary TelephonyCallSummary(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedAt = default, DateTimeOffset? answeredAt = default, DateTimeOffset? mediaConnectedAt = default, DateTimeOffset? agentSessionReadyAt = default, DateTimeOffset? endedAt = default, TimeSpan? durationMs = default, string endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default)
         {
             return new TelephonyCallSummary(
                 id,
@@ -2813,7 +2887,7 @@ namespace Azure.AI.Projects.Agents
                 mediaConnectedAt,
                 agentSessionReadyAt,
                 endedAt,
-                durationSeconds,
+                durationMs,
                 endReason,
                 providerStatusCode,
                 providerSubCode,
@@ -2834,18 +2908,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="mediaConnectedAt"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
         /// <param name="agentSessionReadyAt"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
         /// <param name="endedAt"> The Unix timestamp (in seconds) for when the call ended. </param>
-        /// <param name="durationSeconds"> The call duration in seconds. </param>
+        /// <param name="durationMs"> The call duration. </param>
         /// <param name="endReason"> The service-generated reason that the call ended. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the terminal result. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the terminal result. </param>
         /// <param name="providerMessage"> The provider message associated with the terminal result. </param>
         /// <param name="timing"> Detailed provider-neutral call timing. </param>
         /// <param name="trace"> Correlation to the customer-facing Foundry trace. </param>
-        /// <param name="events"> The bounded lifecycle timeline. </param>
-        /// <param name="eventsTruncated"> Whether older lifecycle events were omitted because the bounded event limit was reached. </param>
+        /// <param name="events"> The lifecycle timeline. </param>
+        /// <param name="eventsTruncated"> Whether older lifecycle events were omitted from the timeline. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallRecord"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallRecord TelephonyCallRecord(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedAt = default, DateTimeOffset? answeredAt = default, DateTimeOffset? mediaConnectedAt = default, DateTimeOffset? agentSessionReadyAt = default, DateTimeOffset? endedAt = default, long? durationSeconds = default, string endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default, TelephonyCallTiming timing = default, TelephonyCallTrace trace = default, IEnumerable<TelephonyCallLifecycleEvent> events = default, bool eventsTruncated = default)
+        public static TelephonyCallRecord TelephonyCallRecord(string id = default, TelephonyProvider provider = default, string providerCallId = default, string callerNumber = default, string providerNumber = default, TelephonyCallStatus status = default, TelephonyCallPhase phase = default, DateTimeOffset startedAt = default, DateTimeOffset? answeredAt = default, DateTimeOffset? mediaConnectedAt = default, DateTimeOffset? agentSessionReadyAt = default, DateTimeOffset? endedAt = default, TimeSpan? durationMs = default, string endReason = default, int? providerStatusCode = default, int? providerSubCode = default, string providerMessage = default, TelephonyCallTiming timing = default, TelephonyCallTrace trace = default, IEnumerable<TelephonyCallLifecycleEvent> events = default, bool eventsTruncated = default)
         {
             events ??= new ChangeTrackingList<TelephonyCallLifecycleEvent>();
 
@@ -2862,7 +2936,7 @@ namespace Azure.AI.Projects.Agents
                 mediaConnectedAt,
                 agentSessionReadyAt,
                 endedAt,
-                durationSeconds,
+                durationMs,
                 endReason,
                 providerStatusCode,
                 providerSubCode,
@@ -2874,34 +2948,34 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Detailed provider-neutral timing for an inbound telephony call. Millisecond values are Unix timestamps. </summary>
-        /// <param name="receivedAtMs"> When the provider webhook was received, as Unix time in milliseconds. </param>
-        /// <param name="validatedAtMs"> When webhook validation completed, as Unix time in milliseconds. </param>
-        /// <param name="admittedAtMs"> When the call was admitted to an agent binding, as Unix time in milliseconds. </param>
-        /// <param name="answerRequestedAtMs"> When the service requested that the provider answer the call, as Unix time in milliseconds. </param>
-        /// <param name="answeredAtMs"> When the provider reported that the call was answered, as Unix time in milliseconds. </param>
-        /// <param name="mediaConnectedAtMs"> When the provider media channel connected, as Unix time in milliseconds. </param>
-        /// <param name="agentSessionReadyAtMs"> When the voice-agent session became ready, as Unix time in milliseconds. </param>
-        /// <param name="firstCallerAudioAtMs"> When caller audio was first observed, as Unix time in milliseconds. </param>
-        /// <param name="firstAgentAudioAtMs"> When agent audio was first observed, as Unix time in milliseconds. </param>
-        /// <param name="endedAtMs"> When the call reached a terminal state, as Unix time in milliseconds. </param>
+        /// <summary> Detailed provider-neutral timing for an inbound telephony call. </summary>
+        /// <param name="receivedAt"> The Unix timestamp (in seconds) for when the provider webhook was received. </param>
+        /// <param name="validatedAt"> The Unix timestamp (in seconds) for when webhook validation completed. </param>
+        /// <param name="admittedAt"> The Unix timestamp (in seconds) for when the call was admitted to an agent binding. </param>
+        /// <param name="answerRequestedAt"> The Unix timestamp (in seconds) for when the service requested that the provider answer the call. </param>
+        /// <param name="answeredAt"> The Unix timestamp (in seconds) for when the provider reported that the call was answered. </param>
+        /// <param name="mediaConnectedAt"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
+        /// <param name="agentSessionReadyAt"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
+        /// <param name="firstCallerAudioAt"> The Unix timestamp (in seconds) for when caller audio was first observed. </param>
+        /// <param name="firstAgentAudioAt"> The Unix timestamp (in seconds) for when agent audio was first observed. </param>
+        /// <param name="endedAt"> The Unix timestamp (in seconds) for when the call reached a terminal state. </param>
         /// <param name="durationBasis"> The timestamp used as the basis for duration. </param>
         /// <param name="timestampSource"> The primary source of the timing milestones. Individual lifecycle events identify their own timestamp source separately. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallTiming"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallTiming TelephonyCallTiming(long? receivedAtMs = default, long? validatedAtMs = default, long? admittedAtMs = default, long? answerRequestedAtMs = default, long? answeredAtMs = default, long? mediaConnectedAtMs = default, long? agentSessionReadyAtMs = default, long? firstCallerAudioAtMs = default, long? firstAgentAudioAtMs = default, long? endedAtMs = default, TelephonyCallDurationBasis? durationBasis = default, TelephonyCallTimestampSource timestampSource = default)
+        public static TelephonyCallTiming TelephonyCallTiming(DateTimeOffset? receivedAt = default, DateTimeOffset? validatedAt = default, DateTimeOffset? admittedAt = default, DateTimeOffset? answerRequestedAt = default, DateTimeOffset? answeredAt = default, DateTimeOffset? mediaConnectedAt = default, DateTimeOffset? agentSessionReadyAt = default, DateTimeOffset? firstCallerAudioAt = default, DateTimeOffset? firstAgentAudioAt = default, DateTimeOffset? endedAt = default, TelephonyCallDurationBasis? durationBasis = default, TelephonyCallTimestampSource timestampSource = default)
         {
             return new TelephonyCallTiming(
-                receivedAtMs,
-                validatedAtMs,
-                admittedAtMs,
-                answerRequestedAtMs,
-                answeredAtMs,
-                mediaConnectedAtMs,
-                agentSessionReadyAtMs,
-                firstCallerAudioAtMs,
-                firstAgentAudioAtMs,
-                endedAtMs,
+                receivedAt,
+                validatedAt,
+                admittedAt,
+                answerRequestedAt,
+                answeredAt,
+                mediaConnectedAt,
+                agentSessionReadyAt,
+                firstCallerAudioAt,
+                firstAgentAudioAt,
+                endedAt,
                 durationBasis,
                 timestampSource,
                 additionalBinaryDataProperties: null);
@@ -2931,8 +3005,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The stable provider-neutral event name. </param>
         /// <param name="source"> The component that supplied the observation. </param>
         /// <param name="outcome"> The outcome of the observed lifecycle operation. </param>
-        /// <param name="observedAtMs"> When the service observed the event, as Unix time in milliseconds. </param>
-        /// <param name="occurredAtMs"> When the event occurred according to the provider, as Unix time in milliseconds. </param>
+        /// <param name="observedAt"> The Unix timestamp (in seconds) for when the service observed the event. </param>
+        /// <param name="occurredAt"> The Unix timestamp (in seconds) for when the event occurred according to the provider. </param>
         /// <param name="timestampSource"> The source of the event timestamp. </param>
         /// <param name="reason"> A stable service-generated reason associated with the event. </param>
         /// <param name="providerEventId"> The provider event identifier used for idempotency, when supplied. </param>
@@ -2941,15 +3015,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="providerSubCode"> The provider subcode associated with the event. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallLifecycleEvent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallLifecycleEvent TelephonyCallLifecycleEvent(long sequence = default, TelephonyCallLifecycleEventName name = default, TelephonyCallLifecycleEventSource source = default, TelephonyCallLifecycleEventOutcome outcome = default, long observedAtMs = default, long? occurredAtMs = default, TelephonyCallTimestampSource timestampSource = default, string reason = default, string providerEventId = default, long? providerSequence = default, int? providerStatusCode = default, int? providerSubCode = default)
+        public static TelephonyCallLifecycleEvent TelephonyCallLifecycleEvent(long sequence = default, TelephonyCallLifecycleEventName name = default, TelephonyCallLifecycleEventSource source = default, TelephonyCallLifecycleEventOutcome outcome = default, DateTimeOffset observedAt = default, DateTimeOffset? occurredAt = default, TelephonyCallTimestampSource timestampSource = default, string reason = default, string providerEventId = default, long? providerSequence = default, int? providerStatusCode = default, int? providerSubCode = default)
         {
             return new TelephonyCallLifecycleEvent(
                 sequence,
                 name,
                 source,
                 outcome,
-                observedAtMs,
-                occurredAtMs,
+                observedAt,
+                occurredAt,
                 timestampSource,
                 reason,
                 providerEventId,
@@ -2976,9 +3050,21 @@ namespace Azure.AI.Projects.Agents
         /// <param name="destination"> The provider-specific transfer destination. </param>
         /// <returns> A new <see cref="Agents.TelephonyTransferTarget"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyTransferTarget TelephonyTransferTarget(string name = default, string description = default, BinaryData destination = default)
+        public static TelephonyTransferTarget TelephonyTransferTarget(string name = default, string description = default, TelephonyTransferDestination destination = default)
         {
             return new TelephonyTransferTarget(name, description, destination, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A destination for a telephony transfer target.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PSTNTelephonyTransferDestination"/>, <see cref="Agents.TeamsTelephonyTransferDestination"/>, and <see cref="Agents.SipTelephonyTransferDestination"/>.
+        /// </summary>
+        /// <param name="kind"> The telephony transfer destination type. </param>
+        /// <returns> A new <see cref="Agents.TelephonyTransferDestination"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyTransferDestination TelephonyTransferDestination(string kind = default)
+        {
+            return new UnknownTelephonyTransferDestination(new TelephonyTransferDestinationKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A PSTN destination for a telephony transfer target. </summary>
@@ -2987,7 +3073,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static PSTNTelephonyTransferDestination PSTNTelephonyTransferDestination(string value = default)
         {
-            return new PSTNTelephonyTransferDestination("pstn", value, additionalBinaryDataProperties: null);
+            return new PSTNTelephonyTransferDestination(TelephonyTransferDestinationKind.Pstn, additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> A Microsoft Teams destination for a telephony transfer target. </summary>
@@ -2996,7 +3082,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static TeamsTelephonyTransferDestination TeamsTelephonyTransferDestination(string value = default)
         {
-            return new TeamsTelephonyTransferDestination("teams", value, additionalBinaryDataProperties: null);
+            return new TeamsTelephonyTransferDestination(TelephonyTransferDestinationKind.Teams, additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> A SIP destination for a telephony transfer target. </summary>
@@ -3005,7 +3091,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static SipTelephonyTransferDestination SipTelephonyTransferDestination(Uri value = default)
         {
-            return new SipTelephonyTransferDestination("sip", value, additionalBinaryDataProperties: null);
+            return new SipTelephonyTransferDestination(TelephonyTransferDestinationKind.Sip, additionalBinaryDataProperties: null, value);
         }
 
         /// <summary>

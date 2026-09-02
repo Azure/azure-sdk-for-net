@@ -19,10 +19,8 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
-        /// <param name="modelType"> How the voice agent obtains its conversational backend. `managed` uses the service-managed model named by `model`; `self_deployed` uses the customer's Foundry deployment named by `model`; `hosted_agent` fronts the hosted text agent referenced by `target_agent`. This is independent of the architecture (realtime or cascaded), which the service derives from the selected backend. </param>
-        public VoiceAgentDefinition(VoiceModelType modelType) : base(ProjectsAgentKind.Voice)
+        public VoiceAgentDefinition() : base(ProjectsAgentKind.Voice)
         {
-            ModelType = modelType;
             OutputModalities = new ChangeTrackingList<VoiceOutputModality>();
             Include = new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
             Tools = new ChangeTrackingList<VoiceAgentTool>();
@@ -33,9 +31,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="modelType"> How the voice agent obtains its conversational backend. `managed` uses the service-managed model named by `model`; `self_deployed` uses the customer's Foundry deployment named by `model`; `hosted_agent` fronts the hosted text agent referenced by `target_agent`. This is independent of the architecture (realtime or cascaded), which the service derives from the selected backend. </param>
-        /// <param name="model"> The model to use for this agent. Required when `model_type` is `managed` (the service-managed model name) or `self_deployed` (the customer's Foundry deployment name). Omit this property when `model_type` is `hosted_agent`; `target_agent` identifies the conversational backend. The model must support realtime or cascaded voice. </param>
-        /// <param name="targetAgent"> The hosted text agent that this voice agent fronts. Required when `model_type` is `hosted_agent` and not applicable otherwise. In this mode, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the target agent owns the conversation logic. The target must be in the same project and support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </param>
+        /// <param name="modelType"> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </param>
+        /// <param name="model"> The model to use for this agent. Required with `model_type` for a model-backed voice agent and omitted when `conversation_engine` is provided. The model must support realtime or cascaded voice. </param>
+        /// <param name="conversationEngine"> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </param>
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. Supports template substitution via `structured_inputs`, rendered per session before the live session starts. </param>
         /// <param name="greeting"> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </param>
         /// <param name="audio">
@@ -71,11 +69,11 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType modelType, string model, VoiceAgentTargetAgent targetAgent, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubAgentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubAgentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
-            TargetAgent = targetAgent;
+            ConversationEngine = conversationEngine;
             Instructions = instructions;
             Greeting = greeting;
             Audio = audio;
@@ -92,14 +90,14 @@ namespace Azure.AI.Projects.Agents
             Store = store;
         }
 
-        /// <summary> How the voice agent obtains its conversational backend. `managed` uses the service-managed model named by `model`; `self_deployed` uses the customer's Foundry deployment named by `model`; `hosted_agent` fronts the hosted text agent referenced by `target_agent`. This is independent of the architecture (realtime or cascaded), which the service derives from the selected backend. </summary>
-        public VoiceModelType ModelType { get; set; }
+        /// <summary> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </summary>
+        public VoiceModelType? ModelType { get; set; }
 
-        /// <summary> The model to use for this agent. Required when `model_type` is `managed` (the service-managed model name) or `self_deployed` (the customer's Foundry deployment name). Omit this property when `model_type` is `hosted_agent`; `target_agent` identifies the conversational backend. The model must support realtime or cascaded voice. </summary>
+        /// <summary> The model to use for this agent. Required with `model_type` for a model-backed voice agent and omitted when `conversation_engine` is provided. The model must support realtime or cascaded voice. </summary>
         public string Model { get; set; }
 
-        /// <summary> The hosted text agent that this voice agent fronts. Required when `model_type` is `hosted_agent` and not applicable otherwise. In this mode, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the target agent owns the conversation logic. The target must be in the same project and support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </summary>
-        public VoiceAgentTargetAgent TargetAgent { get; set; }
+        /// <summary> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </summary>
+        public VoiceConversationEngine ConversationEngine { get; set; }
 
         /// <summary> A system (or developer) message inserted into the model's context. Supports template substitution via `structured_inputs`, rendered per session before the live session starts. </summary>
         public string Instructions { get; set; }

@@ -80,14 +80,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("destination"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Destination);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Destination))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue(Destination, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,7 +125,7 @@ namespace Azure.AI.Projects.Agents
             }
             string name = default;
             string description = default;
-            BinaryData destination = default;
+            TelephonyTransferDestination destination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("destination"u8))
                 {
-                    destination = BinaryData.FromString(prop.Value.GetRawText());
+                    destination = TelephonyTransferDestination.DeserializeTelephonyTransferDestination(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

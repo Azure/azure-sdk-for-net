@@ -10,15 +10,12 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    public partial class TeamsTelephonyTransferDestination
+    public partial class TeamsTelephonyTransferDestination : TelephonyTransferDestination
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="TeamsTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The Microsoft Teams user or resource-account identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TeamsTelephonyTransferDestination(string value)
+        public TeamsTelephonyTransferDestination(string value) : base(TelephonyTransferDestinationKind.Teams)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -26,18 +23,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamsTelephonyTransferDestination"/>. </summary>
-        /// <param name="kind"> The Microsoft Teams destination type. </param>
-        /// <param name="value"> The Microsoft Teams user or resource-account identifier. </param>
+        /// <param name="kind"> The telephony transfer destination type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TeamsTelephonyTransferDestination(string kind, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="value"> The Microsoft Teams user or resource-account identifier. </param>
+        internal TeamsTelephonyTransferDestination(TelephonyTransferDestinationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
             Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The Microsoft Teams destination type. </summary>
-        public string Kind { get; } = "teams";
 
         /// <summary> The Microsoft Teams user or resource-account identifier. </summary>
         public string Value { get; set; }

@@ -10,15 +10,12 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A PSTN destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    public partial class PSTNTelephonyTransferDestination
+    public partial class PSTNTelephonyTransferDestination : TelephonyTransferDestination
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="PSTNTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The E.164 phone number to call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PSTNTelephonyTransferDestination(string value)
+        public PSTNTelephonyTransferDestination(string value) : base(TelephonyTransferDestinationKind.Pstn)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -26,18 +23,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="PSTNTelephonyTransferDestination"/>. </summary>
-        /// <param name="kind"> The PSTN destination type. </param>
-        /// <param name="value"> The E.164 phone number to call. </param>
+        /// <param name="kind"> The telephony transfer destination type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PSTNTelephonyTransferDestination(string kind, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="value"> The E.164 phone number to call. </param>
+        internal PSTNTelephonyTransferDestination(TelephonyTransferDestinationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
             Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The PSTN destination type. </summary>
-        public string Kind { get; } = "pstn";
 
         /// <summary> The E.164 phone number to call. </summary>
         public string Value { get; set; }

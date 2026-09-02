@@ -16,11 +16,6 @@ namespace Azure.AI.Projects.Agents
     /// </summary>
     public partial class VoiceAgentDefinition : ProjectsAgentDefinition, IJsonModel<VoiceAgentDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/> for deserialization. </summary>
-        internal VoiceAgentDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,17 +75,20 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("model_type"u8);
-            writer.WriteStringValue(ModelType.ToString());
+            if (Optional.IsDefined(ModelType))
+            {
+                writer.WritePropertyName("model_type"u8);
+                writer.WriteStringValue(ModelType.Value.ToString());
+            }
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(TargetAgent))
+            if (Optional.IsDefined(ConversationEngine))
             {
-                writer.WritePropertyName("target_agent"u8);
-                writer.WriteObjectValue(TargetAgent, options);
+                writer.WritePropertyName("conversation_engine"u8);
+                writer.WriteObjectValue(ConversationEngine, options);
             }
             if (Optional.IsDefined(Instructions))
             {
@@ -227,9 +225,9 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VoiceModelType modelType = default;
+            VoiceModelType? modelType = default;
             string model = default;
-            VoiceAgentTargetAgent targetAgent = default;
+            VoiceConversationEngine conversationEngine = default;
             string instructions = default;
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
@@ -262,6 +260,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("model_type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     modelType = new VoiceModelType(prop.Value.GetString());
                     continue;
                 }
@@ -270,13 +272,13 @@ namespace Azure.AI.Projects.Agents
                     model = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("target_agent"u8))
+                if (prop.NameEquals("conversation_engine"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetAgent = VoiceAgentTargetAgent.DeserializeVoiceAgentTargetAgent(prop.Value, options);
+                    conversationEngine = VoiceConversationEngine.DeserializeVoiceConversationEngine(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -432,7 +434,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 modelType,
                 model,
-                targetAgent,
+                conversationEngine,
                 instructions,
                 greeting,
                 audio,

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A description that helps the voice agent decide when to use this target. </param>
         /// <param name="destination"> The provider-specific transfer destination. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="destination"/> is null. </exception>
-        public TelephonyTransferTarget(string name, string description, BinaryData destination)
+        public TelephonyTransferTarget(string name, string description, TelephonyTransferDestination destination)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(description, nameof(description));
@@ -37,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A description that helps the voice agent decide when to use this target. </param>
         /// <param name="destination"> The provider-specific transfer destination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyTransferTarget(string name, string description, BinaryData destination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyTransferTarget(string name, string description, TelephonyTransferDestination destination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -51,48 +50,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A description that helps the voice agent decide when to use this target. </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// The provider-specific transfer destination.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="PSTNTelephonyTransferDestination"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="TeamsTelephonyTransferDestination"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="SipTelephonyTransferDestination"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Destination { get; set; }
+        /// <summary> The provider-specific transfer destination. </summary>
+        public TelephonyTransferDestination Destination { get; set; }
     }
 }

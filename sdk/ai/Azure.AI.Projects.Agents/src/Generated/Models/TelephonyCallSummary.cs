@@ -43,13 +43,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="mediaConnectedAt"> The Unix timestamp (in seconds) for when the provider media channel connected. </param>
         /// <param name="agentSessionReadyAt"> The Unix timestamp (in seconds) for when the voice-agent session became ready. </param>
         /// <param name="endedAt"> The Unix timestamp (in seconds) for when the call ended. </param>
-        /// <param name="durationSeconds"> The call duration in seconds. </param>
+        /// <param name="durationMs"> The call duration. </param>
         /// <param name="endReason"> The service-generated reason that the call ended. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the terminal result. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the terminal result. </param>
         /// <param name="providerMessage"> The provider message associated with the terminal result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallSummary(string id, TelephonyProvider provider, string providerCallId, string callerNumber, string providerNumber, TelephonyCallStatus status, TelephonyCallPhase phase, DateTimeOffset startedAt, DateTimeOffset? answeredAt, DateTimeOffset? mediaConnectedAt, DateTimeOffset? agentSessionReadyAt, DateTimeOffset? endedAt, long? durationSeconds, string endReason, int? providerStatusCode, int? providerSubCode, string providerMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallSummary(string id, TelephonyProvider provider, string providerCallId, string callerNumber, string providerNumber, TelephonyCallStatus status, TelephonyCallPhase phase, DateTimeOffset startedAt, DateTimeOffset? answeredAt, DateTimeOffset? mediaConnectedAt, DateTimeOffset? agentSessionReadyAt, DateTimeOffset? endedAt, TimeSpan? durationMs, string endReason, int? providerStatusCode, int? providerSubCode, string providerMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Provider = provider;
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects.Agents
             MediaConnectedAt = mediaConnectedAt;
             AgentSessionReadyAt = agentSessionReadyAt;
             EndedAt = endedAt;
-            DurationSeconds = durationSeconds;
+            DurationMs = durationMs;
             EndReason = endReason;
             ProviderStatusCode = providerStatusCode;
             ProviderSubCode = providerSubCode;
@@ -107,8 +107,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The Unix timestamp (in seconds) for when the call ended. </summary>
         public DateTimeOffset? EndedAt { get; }
 
-        /// <summary> The call duration in seconds. </summary>
-        public long? DurationSeconds { get; }
+        /// <summary> The call duration. </summary>
+        public TimeSpan? DurationMs { get; }
 
         /// <summary> The service-generated reason that the call ended. </summary>
         public string EndReason { get; }

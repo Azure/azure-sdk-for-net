@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Detailed provider-neutral timing for an inbound telephony call. Millisecond values are Unix timestamps. </summary>
+    /// <summary> Detailed provider-neutral timing for an inbound telephony call. </summary>
     public partial class TelephonyCallTiming : IJsonModel<TelephonyCallTiming>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallTiming"/> for deserialization. </summary>
@@ -75,55 +75,55 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(TelephonyCallTiming)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ReceivedAtMs))
+            if (Optional.IsDefined(ReceivedAt))
             {
-                writer.WritePropertyName("received_at_ms"u8);
-                writer.WriteNumberValue(ReceivedAtMs.Value);
+                writer.WritePropertyName("received_at"u8);
+                writer.WriteNumberValue(ReceivedAt.Value, "U");
             }
-            if (Optional.IsDefined(ValidatedAtMs))
+            if (Optional.IsDefined(ValidatedAt))
             {
-                writer.WritePropertyName("validated_at_ms"u8);
-                writer.WriteNumberValue(ValidatedAtMs.Value);
+                writer.WritePropertyName("validated_at"u8);
+                writer.WriteNumberValue(ValidatedAt.Value, "U");
             }
-            if (Optional.IsDefined(AdmittedAtMs))
+            if (Optional.IsDefined(AdmittedAt))
             {
-                writer.WritePropertyName("admitted_at_ms"u8);
-                writer.WriteNumberValue(AdmittedAtMs.Value);
+                writer.WritePropertyName("admitted_at"u8);
+                writer.WriteNumberValue(AdmittedAt.Value, "U");
             }
-            if (Optional.IsDefined(AnswerRequestedAtMs))
+            if (Optional.IsDefined(AnswerRequestedAt))
             {
-                writer.WritePropertyName("answer_requested_at_ms"u8);
-                writer.WriteNumberValue(AnswerRequestedAtMs.Value);
+                writer.WritePropertyName("answer_requested_at"u8);
+                writer.WriteNumberValue(AnswerRequestedAt.Value, "U");
             }
-            if (Optional.IsDefined(AnsweredAtMs))
+            if (Optional.IsDefined(AnsweredAt))
             {
-                writer.WritePropertyName("answered_at_ms"u8);
-                writer.WriteNumberValue(AnsweredAtMs.Value);
+                writer.WritePropertyName("answered_at"u8);
+                writer.WriteNumberValue(AnsweredAt.Value, "U");
             }
-            if (Optional.IsDefined(MediaConnectedAtMs))
+            if (Optional.IsDefined(MediaConnectedAt))
             {
-                writer.WritePropertyName("media_connected_at_ms"u8);
-                writer.WriteNumberValue(MediaConnectedAtMs.Value);
+                writer.WritePropertyName("media_connected_at"u8);
+                writer.WriteNumberValue(MediaConnectedAt.Value, "U");
             }
-            if (Optional.IsDefined(AgentSessionReadyAtMs))
+            if (Optional.IsDefined(AgentSessionReadyAt))
             {
-                writer.WritePropertyName("agent_session_ready_at_ms"u8);
-                writer.WriteNumberValue(AgentSessionReadyAtMs.Value);
+                writer.WritePropertyName("agent_session_ready_at"u8);
+                writer.WriteNumberValue(AgentSessionReadyAt.Value, "U");
             }
-            if (Optional.IsDefined(FirstCallerAudioAtMs))
+            if (Optional.IsDefined(FirstCallerAudioAt))
             {
-                writer.WritePropertyName("first_caller_audio_at_ms"u8);
-                writer.WriteNumberValue(FirstCallerAudioAtMs.Value);
+                writer.WritePropertyName("first_caller_audio_at"u8);
+                writer.WriteNumberValue(FirstCallerAudioAt.Value, "U");
             }
-            if (Optional.IsDefined(FirstAgentAudioAtMs))
+            if (Optional.IsDefined(FirstAgentAudioAt))
             {
-                writer.WritePropertyName("first_agent_audio_at_ms"u8);
-                writer.WriteNumberValue(FirstAgentAudioAtMs.Value);
+                writer.WritePropertyName("first_agent_audio_at"u8);
+                writer.WriteNumberValue(FirstAgentAudioAt.Value, "U");
             }
-            if (Optional.IsDefined(EndedAtMs))
+            if (Optional.IsDefined(EndedAt))
             {
-                writer.WritePropertyName("ended_at_ms"u8);
-                writer.WriteNumberValue(EndedAtMs.Value);
+                writer.WritePropertyName("ended_at"u8);
+                writer.WriteNumberValue(EndedAt.Value, "U");
             }
             if (Optional.IsDefined(DurationBasis))
             {
@@ -174,109 +174,109 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            long? receivedAtMs = default;
-            long? validatedAtMs = default;
-            long? admittedAtMs = default;
-            long? answerRequestedAtMs = default;
-            long? answeredAtMs = default;
-            long? mediaConnectedAtMs = default;
-            long? agentSessionReadyAtMs = default;
-            long? firstCallerAudioAtMs = default;
-            long? firstAgentAudioAtMs = default;
-            long? endedAtMs = default;
+            DateTimeOffset? receivedAt = default;
+            DateTimeOffset? validatedAt = default;
+            DateTimeOffset? admittedAt = default;
+            DateTimeOffset? answerRequestedAt = default;
+            DateTimeOffset? answeredAt = default;
+            DateTimeOffset? mediaConnectedAt = default;
+            DateTimeOffset? agentSessionReadyAt = default;
+            DateTimeOffset? firstCallerAudioAt = default;
+            DateTimeOffset? firstAgentAudioAt = default;
+            DateTimeOffset? endedAt = default;
             TelephonyCallDurationBasis? durationBasis = default;
             TelephonyCallTimestampSource timestampSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("received_at_ms"u8))
+                if (prop.NameEquals("received_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    receivedAtMs = prop.Value.GetInt64();
+                    receivedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("validated_at_ms"u8))
+                if (prop.NameEquals("validated_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validatedAtMs = prop.Value.GetInt64();
+                    validatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("admitted_at_ms"u8))
+                if (prop.NameEquals("admitted_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    admittedAtMs = prop.Value.GetInt64();
+                    admittedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("answer_requested_at_ms"u8))
+                if (prop.NameEquals("answer_requested_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    answerRequestedAtMs = prop.Value.GetInt64();
+                    answerRequestedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("answered_at_ms"u8))
+                if (prop.NameEquals("answered_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    answeredAtMs = prop.Value.GetInt64();
+                    answeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("media_connected_at_ms"u8))
+                if (prop.NameEquals("media_connected_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mediaConnectedAtMs = prop.Value.GetInt64();
+                    mediaConnectedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("agent_session_ready_at_ms"u8))
+                if (prop.NameEquals("agent_session_ready_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentSessionReadyAtMs = prop.Value.GetInt64();
+                    agentSessionReadyAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("first_caller_audio_at_ms"u8))
+                if (prop.NameEquals("first_caller_audio_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firstCallerAudioAtMs = prop.Value.GetInt64();
+                    firstCallerAudioAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("first_agent_audio_at_ms"u8))
+                if (prop.NameEquals("first_agent_audio_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firstAgentAudioAtMs = prop.Value.GetInt64();
+                    firstAgentAudioAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("ended_at_ms"u8))
+                if (prop.NameEquals("ended_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endedAtMs = prop.Value.GetInt64();
+                    endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("duration_basis"u8))
@@ -299,16 +299,16 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new TelephonyCallTiming(
-                receivedAtMs,
-                validatedAtMs,
-                admittedAtMs,
-                answerRequestedAtMs,
-                answeredAtMs,
-                mediaConnectedAtMs,
-                agentSessionReadyAtMs,
-                firstCallerAudioAtMs,
-                firstAgentAudioAtMs,
-                endedAtMs,
+                receivedAt,
+                validatedAt,
+                admittedAt,
+                answerRequestedAt,
+                answeredAt,
+                mediaConnectedAt,
+                agentSessionReadyAt,
+                firstCallerAudioAt,
+                firstAgentAudioAt,
+                endedAt,
                 durationBasis,
                 timestampSource,
                 additionalBinaryDataProperties);
