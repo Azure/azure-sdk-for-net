@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("start_time"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("end_time"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.AppService.Models
             string webJobId = default;
             string webJobName = default;
             TriggeredWebJobStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             TimeSpan? duration = default;
             Uri outputUri = default;
             Uri errorUri = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.AppService.Models
                 webJobId,
                 webJobName,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 outputUri,
                 errorUri,

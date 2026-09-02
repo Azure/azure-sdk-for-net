@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService.Models
             string selfLink = default;
             string issuer = default;
             DateTimeOffset? issueOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string thumbprintString = default;
             bool? isValid = default;
             BinaryData cerBlob = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService.Models
                 selfLink,
                 issuer,
                 issueOn,
-                expireOn,
+                expiresOn,
                 thumbprintString,
                 isValid,
                 cerBlob,

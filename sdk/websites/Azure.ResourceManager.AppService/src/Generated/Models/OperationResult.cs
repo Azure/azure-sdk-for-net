@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
-        /// <param name="startOn"> The start time of the workflow scope repetition. </param>
-        /// <param name="endOn"> The end time of the workflow scope repetition. </param>
+        /// <param name="startsOn"> The start time of the workflow scope repetition. </param>
+        /// <param name="endsOn"> The end time of the workflow scope repetition. </param>
         /// <param name="correlation"> The correlation properties. </param>
         /// <param name="status"> The status of the workflow scope repetition. </param>
         /// <param name="code"> The workflow scope repetition code. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
-        internal OperationResult(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount) : base(startOn, endOn, correlation, status, code, error, additionalBinaryDataProperties)
+        internal OperationResult(DateTimeOffset? startsOn, DateTimeOffset? endsOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount) : base(startsOn, endsOn, correlation, status, code, error, additionalBinaryDataProperties)
         {
             TrackingId = trackingId;
             Inputs = inputs;

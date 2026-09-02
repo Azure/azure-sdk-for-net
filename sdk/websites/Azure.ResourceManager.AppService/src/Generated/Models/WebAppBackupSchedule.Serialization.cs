@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteBooleanValue(ShouldKeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays"u8);
             writer.WriteNumberValue(RetentionPeriodInDays);
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastExecutedOn))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             BackupFrequencyUnit frequencyUnit = default;
             bool shouldKeepAtLeastOneBackup = default;
             int retentionPeriodInDays = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? lastExecutedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastExecutionTime"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService.Models
                 frequencyUnit,
                 shouldKeepAtLeastOneBackup,
                 retentionPeriodInDays,
-                startOn,
+                startsOn,
                 lastExecutedOn,
                 additionalBinaryDataProperties);
         }
