@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         {
             TryGetApiVersion(ResourceType, out string providerInstanceApiVersion);
             _providerInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HanaOnAzure", ResourceType.Namespace, Diagnostics);
-            _providerInstancesRestClient = new ProviderInstances(_providerInstancesClientDiagnostics, Pipeline, Endpoint, providerInstanceApiVersion ?? "2020-02-07-preview");
+            _providerInstancesRestClient = new ProviderInstances(_providerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerInstanceApiVersion ?? "2020-02-07-preview");
             ValidateResourceId(id);
         }
 

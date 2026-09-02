@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
 
         private ClientDiagnostics SapMonitorsClientDiagnostics => _sapMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HanaOnAzure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SapMonitors SapMonitorsRestClient => _sapMonitorsRestClient ??= new SapMonitors(SapMonitorsClientDiagnostics, Pipeline, Endpoint, "2020-02-07-preview");
+        private SapMonitors SapMonitorsRestClient => _sapMonitorsRestClient ??= new SapMonitors(SapMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-02-07-preview");
 
         /// <summary>
         /// The product Microsoft.Workloads/sapMonitors (AMS Classic) is officially retired as of May 31, 2023.
