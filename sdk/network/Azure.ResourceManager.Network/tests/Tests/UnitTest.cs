@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
