@@ -17,30 +17,30 @@ namespace Azure.ResourceManager.StorageCache
     /// A rebalance job instance. Rebalances OST data across storage targets after a cluster expansion.
     /// Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
     /// </summary>
-    public partial class RebalanceJobData : ResourceData
+    public partial class StorageCacheRebalanceJobData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobData"/>. </summary>
-        internal RebalanceJobData()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobData"/>. </summary>
+        internal StorageCacheRebalanceJobData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the rebalance job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RebalanceJobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal StorageCacheRebalanceJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageCacheRebalanceJobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the rebalance job. </summary>
-        public RebalanceJobProperties Properties { get; }
+        public StorageCacheRebalanceJobProperties Properties { get; }
     }
 }

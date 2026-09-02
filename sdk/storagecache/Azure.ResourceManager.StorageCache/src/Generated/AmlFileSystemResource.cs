@@ -853,11 +853,11 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Gets a collection of RebalanceJobs in the <see cref="AmlFileSystemResource"/>. </summary>
-        /// <returns> An object representing collection of RebalanceJobs and their operations over a RebalanceJobResource. </returns>
-        public virtual RebalanceJobCollection GetRebalanceJobs()
+        /// <summary> Gets a collection of StorageCacheRebalanceJobs in the <see cref="AmlFileSystemResource"/>. </summary>
+        /// <returns> An object representing collection of StorageCacheRebalanceJobs and their operations over a StorageCacheRebalanceJobResource. </returns>
+        public virtual StorageCacheRebalanceJobCollection GetStorageCacheRebalanceJobs()
         {
-            return GetCachedClient(client => new RebalanceJobCollection(client, Id));
+            return GetCachedClient(client => new StorageCacheRebalanceJobCollection(client, Id));
         }
 
         /// <summary> Returns a rebalance job. </summary>
@@ -866,11 +866,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="rebalanceJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rebalanceJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RebalanceJobResource>> GetRebalanceJobAsync(string rebalanceJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageCacheRebalanceJobResource>> GetStorageCacheRebalanceJobAsync(string rebalanceJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            return await GetRebalanceJobs().GetAsync(rebalanceJobName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageCacheRebalanceJobs().GetAsync(rebalanceJobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Returns a rebalance job. </summary>
@@ -879,11 +879,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="rebalanceJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rebalanceJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RebalanceJobResource> GetRebalanceJob(string rebalanceJobName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageCacheRebalanceJobResource> GetStorageCacheRebalanceJob(string rebalanceJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            return GetRebalanceJobs().Get(rebalanceJobName, cancellationToken);
+            return GetStorageCacheRebalanceJobs().Get(rebalanceJobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AutoExportJobs in the <see cref="AmlFileSystemResource"/>. </summary>

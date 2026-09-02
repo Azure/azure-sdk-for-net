@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
-            if (Optional.IsDefined(RunRebalanceJob))
+            if (Optional.IsDefined(ShouldRunRebalanceJob))
             {
                 writer.WritePropertyName("runRebalanceJob"u8);
-                writer.WriteBooleanValue(RunRebalanceJob.Value);
+                writer.WriteBooleanValue(ShouldRunRebalanceJob.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RebalanceJobId))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             AmlFileSystemExpansionJobProvisioningState? provisioningState = default;
             float? newStorageCapacityTiB = default;
             ExpansionJobPropertiesStatus status = default;
-            bool? runRebalanceJob = default;
+            bool? shouldRunRebalanceJob = default;
             ResourceIdentifier rebalanceJobId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    runRebalanceJob = prop.Value.GetBoolean();
+                    shouldRunRebalanceJob = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("rebalanceJobId"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 provisioningState,
                 newStorageCapacityTiB,
                 status,
-                runRebalanceJob,
+                shouldRunRebalanceJob,
                 rebalanceJobId,
                 additionalBinaryDataProperties);
         }

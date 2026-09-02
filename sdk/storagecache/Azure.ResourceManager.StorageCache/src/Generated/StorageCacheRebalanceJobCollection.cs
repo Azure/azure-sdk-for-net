@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RebalanceJobResource"/> and their operations.
-    /// Each <see cref="RebalanceJobResource"/> in the collection will belong to the same instance of <see cref="AmlFileSystemResource"/>.
-    /// To get a <see cref="RebalanceJobCollection"/> instance call the GetRebalanceJobs method from an instance of <see cref="AmlFileSystemResource"/>.
+    /// A class representing a collection of <see cref="StorageCacheRebalanceJobResource"/> and their operations.
+    /// Each <see cref="StorageCacheRebalanceJobResource"/> in the collection will belong to the same instance of <see cref="AmlFileSystemResource"/>.
+    /// To get a <see cref="StorageCacheRebalanceJobCollection"/> instance call the GetStorageCacheRebalanceJobs method from an instance of <see cref="AmlFileSystemResource"/>.
     /// </summary>
-    public partial class RebalanceJobCollection : ArmCollection, IEnumerable<RebalanceJobResource>, IAsyncEnumerable<RebalanceJobResource>
+    public partial class StorageCacheRebalanceJobCollection : ArmCollection, IEnumerable<StorageCacheRebalanceJobResource>, IAsyncEnumerable<StorageCacheRebalanceJobResource>
     {
         private readonly ClientDiagnostics _rebalanceJobsClientDiagnostics;
         private readonly RebalanceJobs _rebalanceJobsRestClient;
 
-        /// <summary> Initializes a new instance of RebalanceJobCollection for mocking. </summary>
-        protected RebalanceJobCollection()
+        /// <summary> Initializes a new instance of StorageCacheRebalanceJobCollection for mocking. </summary>
+        protected StorageCacheRebalanceJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RebalanceJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageCacheRebalanceJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RebalanceJobResource.ResourceType, out string rebalanceJobApiVersion);
-            _rebalanceJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", RebalanceJobResource.ResourceType.Namespace, Diagnostics);
-            _rebalanceJobsRestClient = new RebalanceJobs(_rebalanceJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, rebalanceJobApiVersion ?? "2026-08-01");
+            TryGetApiVersion(StorageCacheRebalanceJobResource.ResourceType, out string storageCacheRebalanceJobApiVersion);
+            _rebalanceJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", StorageCacheRebalanceJobResource.ResourceType.Namespace, Diagnostics);
+            _rebalanceJobsRestClient = new RebalanceJobs(_rebalanceJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageCacheRebalanceJobApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rebalanceJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rebalanceJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RebalanceJobResource>> GetAsync(string rebalanceJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageCacheRebalanceJobResource>> GetAsync(string rebalanceJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("RebalanceJobCollection.Get");
+            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("StorageCacheRebalanceJobCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.StorageCache
                 };
                 HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rebalanceJobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RebalanceJobData> response = Response.FromValue(RebalanceJobData.FromResponse(result), result);
+                Response<StorageCacheRebalanceJobData> response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RebalanceJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheRebalanceJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rebalanceJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rebalanceJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RebalanceJobResource> Get(string rebalanceJobName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageCacheRebalanceJobResource> Get(string rebalanceJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("RebalanceJobCollection.Get");
+            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("StorageCacheRebalanceJobCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.StorageCache
                 };
                 HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rebalanceJobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RebalanceJobData> response = Response.FromValue(RebalanceJobData.FromResponse(result), result);
+                Response<StorageCacheRebalanceJobData> response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RebalanceJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheRebalanceJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RebalanceJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RebalanceJobResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageCacheRebalanceJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageCacheRebalanceJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RebalanceJobData, RebalanceJobResource>(new RebalanceJobsGetByAmlFilesystemAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageCacheRebalanceJobData, StorageCacheRebalanceJobResource>(new RebalanceJobsGetByAmlFilesystemAsyncCollectionResultOfT(
                 _rebalanceJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "RebalanceJobCollection.GetAll"), data => new RebalanceJobResource(Client, data));
+                "StorageCacheRebalanceJobCollection.GetAll"), data => new StorageCacheRebalanceJobResource(Client, data));
         }
 
         /// <summary>
@@ -204,20 +204,20 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RebalanceJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RebalanceJobResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageCacheRebalanceJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageCacheRebalanceJobResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RebalanceJobData, RebalanceJobResource>(new RebalanceJobsGetByAmlFilesystemCollectionResultOfT(
+            return new PageableWrapper<StorageCacheRebalanceJobData, StorageCacheRebalanceJobResource>(new RebalanceJobsGetByAmlFilesystemCollectionResultOfT(
                 _rebalanceJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "RebalanceJobCollection.GetAll"), data => new RebalanceJobResource(Client, data));
+                "StorageCacheRebalanceJobCollection.GetAll"), data => new StorageCacheRebalanceJobResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("RebalanceJobCollection.Exists");
+            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("StorageCacheRebalanceJobCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rebalanceJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RebalanceJobData> response = default;
+                Response<StorageCacheRebalanceJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RebalanceJobData.FromResponse(result), result);
+                        response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RebalanceJobData)null, result);
+                        response = Response.FromValue((StorageCacheRebalanceJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("RebalanceJobCollection.Exists");
+            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("StorageCacheRebalanceJobCollection.Exists");
             scope.Start();
             try
             {
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rebalanceJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RebalanceJobData> response = default;
+                Response<StorageCacheRebalanceJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RebalanceJobData.FromResponse(result), result);
+                        response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RebalanceJobData)null, result);
+                        response = Response.FromValue((StorageCacheRebalanceJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rebalanceJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rebalanceJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<RebalanceJobResource>> GetIfExistsAsync(string rebalanceJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<StorageCacheRebalanceJobResource>> GetIfExistsAsync(string rebalanceJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("RebalanceJobCollection.GetIfExists");
+            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("StorageCacheRebalanceJobCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -370,23 +370,23 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rebalanceJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RebalanceJobData> response = default;
+                Response<StorageCacheRebalanceJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RebalanceJobData.FromResponse(result), result);
+                        response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RebalanceJobData)null, result);
+                        response = Response.FromValue((StorageCacheRebalanceJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RebalanceJobResource>(response.GetRawResponse());
+                    return new NoValueResponse<StorageCacheRebalanceJobResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RebalanceJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheRebalanceJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rebalanceJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rebalanceJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<RebalanceJobResource> GetIfExists(string rebalanceJobName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<StorageCacheRebalanceJobResource> GetIfExists(string rebalanceJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rebalanceJobName, nameof(rebalanceJobName));
 
-            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("RebalanceJobCollection.GetIfExists");
+            using DiagnosticScope scope = _rebalanceJobsClientDiagnostics.CreateScope("StorageCacheRebalanceJobCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -431,23 +431,23 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rebalanceJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RebalanceJobData> response = default;
+                Response<StorageCacheRebalanceJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RebalanceJobData.FromResponse(result), result);
+                        response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RebalanceJobData)null, result);
+                        response = Response.FromValue((StorageCacheRebalanceJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RebalanceJobResource>(response.GetRawResponse());
+                    return new NoValueResponse<StorageCacheRebalanceJobResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RebalanceJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheRebalanceJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        IEnumerator<RebalanceJobResource> IEnumerable<RebalanceJobResource>.GetEnumerator()
+        IEnumerator<StorageCacheRebalanceJobResource> IEnumerable<StorageCacheRebalanceJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<RebalanceJobResource> IAsyncEnumerable<RebalanceJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageCacheRebalanceJobResource> IAsyncEnumerable<StorageCacheRebalanceJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

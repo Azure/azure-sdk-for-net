@@ -12,7 +12,7 @@ using Azure.ResourceManager.StorageCache;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The operational state of the rebalance job. InProgress indicates the rebalance is running on the cluster. Cancelling indicates a cancel has been requested. Canceled indicates the rebalance was cancelled. Completed indicates the rebalance finished successfully (imbalance below low watermark). Failed indicates the rebalance was unable to complete due to a fatal error. Deleting indicates the job is being cleaned up during deletion. RollingBack indicates the orchestrator is rolling back provisioned resources after a failure. </summary>
-    public readonly partial struct RebalanceJobStatusType : IEquatable<RebalanceJobStatusType>
+    public readonly partial struct StorageCacheRebalanceJobStatusType : IEquatable<StorageCacheRebalanceJobStatusType>
     {
         private readonly string _value;
         /// <summary> The rebalance job is currently running on the cluster. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> The orchestrator is rolling back provisioned resources after a failure. </summary>
         private const string RollingBackValue = "RollingBack";
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobStatusType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RebalanceJobStatusType(string value)
+        public StorageCacheRebalanceJobStatusType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> The rebalance job is currently running on the cluster. </summary>
-        public static RebalanceJobStatusType InProgress { get; } = new RebalanceJobStatusType(InProgressValue);
+        public static StorageCacheRebalanceJobStatusType InProgress { get; } = new StorageCacheRebalanceJobStatusType(InProgressValue);
 
         /// <summary> A cancel has been requested and the job is stopping. </summary>
-        public static RebalanceJobStatusType Cancelling { get; } = new RebalanceJobStatusType(CancellingValue);
+        public static StorageCacheRebalanceJobStatusType Cancelling { get; } = new StorageCacheRebalanceJobStatusType(CancellingValue);
 
         /// <summary> The rebalance job was canceled before completion. </summary>
-        public static RebalanceJobStatusType Canceled { get; } = new RebalanceJobStatusType(CanceledValue);
+        public static StorageCacheRebalanceJobStatusType Canceled { get; } = new StorageCacheRebalanceJobStatusType(CanceledValue);
 
         /// <summary> The rebalance job finished successfully. </summary>
-        public static RebalanceJobStatusType Completed { get; } = new RebalanceJobStatusType(CompletedValue);
+        public static StorageCacheRebalanceJobStatusType Completed { get; } = new StorageCacheRebalanceJobStatusType(CompletedValue);
 
         /// <summary> The rebalance job failed due to a fatal error. </summary>
-        public static RebalanceJobStatusType Failed { get; } = new RebalanceJobStatusType(FailedValue);
+        public static StorageCacheRebalanceJobStatusType Failed { get; } = new StorageCacheRebalanceJobStatusType(FailedValue);
 
         /// <summary> The job is being cleaned up during deletion. </summary>
-        public static RebalanceJobStatusType Deleting { get; } = new RebalanceJobStatusType(DeletingValue);
+        public static StorageCacheRebalanceJobStatusType Deleting { get; } = new StorageCacheRebalanceJobStatusType(DeletingValue);
 
         /// <summary> The orchestrator is rolling back provisioned resources after a failure. </summary>
-        public static RebalanceJobStatusType RollingBack { get; } = new RebalanceJobStatusType(RollingBackValue);
+        public static StorageCacheRebalanceJobStatusType RollingBack { get; } = new StorageCacheRebalanceJobStatusType(RollingBackValue);
 
-        /// <summary> Determines if two <see cref="RebalanceJobStatusType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageCacheRebalanceJobStatusType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RebalanceJobStatusType left, RebalanceJobStatusType right) => left.Equals(right);
+        public static bool operator ==(StorageCacheRebalanceJobStatusType left, StorageCacheRebalanceJobStatusType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RebalanceJobStatusType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageCacheRebalanceJobStatusType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RebalanceJobStatusType left, RebalanceJobStatusType right) => !left.Equals(right);
+        public static bool operator !=(StorageCacheRebalanceJobStatusType left, StorageCacheRebalanceJobStatusType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RebalanceJobStatusType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageCacheRebalanceJobStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RebalanceJobStatusType(string value) => new RebalanceJobStatusType(value);
+        public static implicit operator StorageCacheRebalanceJobStatusType(string value) => new StorageCacheRebalanceJobStatusType(value);
 
-        /// <summary> Converts a string to a <see cref="RebalanceJobStatusType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageCacheRebalanceJobStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RebalanceJobStatusType?(string value) => value == null ? null : new RebalanceJobStatusType(value);
+        public static implicit operator StorageCacheRebalanceJobStatusType?(string value) => value == null ? null : new StorageCacheRebalanceJobStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RebalanceJobStatusType other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageCacheRebalanceJobStatusType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RebalanceJobStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageCacheRebalanceJobStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The status of the rebalance job. </summary>
-    public partial class RebalanceJobPropertiesStatus
+    public partial class StorageCacheRebalanceJobPropertiesStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobPropertiesStatus"/>. </summary>
-        internal RebalanceJobPropertiesStatus()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobPropertiesStatus"/>. </summary>
+        internal StorageCacheRebalanceJobPropertiesStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobPropertiesStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobPropertiesStatus"/>. </summary>
         /// <param name="state"> The operational state of the rebalance job. InProgress indicates the rebalance is running on the cluster. Cancelling indicates a cancel has been requested. Canceled indicates the rebalance was cancelled. Completed indicates the rebalance finished successfully. Failed indicates the rebalance was unable to complete due to a fatal error. Deleting indicates the job is being cleaned up during deletion. RollingBack indicates the orchestrator is rolling back provisioned resources after a failure. </param>
         /// <param name="statusCode"> Server-defined status code for rebalance job. </param>
         /// <param name="statusMessage"> Server-defined status message for rebalance job. </param>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="throughputMiBps"> Average throughput in mebibytes per second (1024x1024 bytes per second) over the most recent reporting interval. </param>
         /// <param name="totalErrors"> Total cumulative non-skip errors since the rebalance started. Reported in periodic rebalance status updates. Resets to 0 if the rebalancer node restarts. </param>
         /// <param name="totalSkipped"> Total cumulative benign skips since the rebalance started: files intentionally not migrated (for example, a lost migration lease or a stale layout), as distinct from the hard failures counted in totalErrors. Reported in periodic rebalance status updates. Resets to 0 if the rebalancer node restarts. </param>
-        /// <param name="startTimeUTC"> The time (in UTC) the rebalance job started. </param>
-        /// <param name="completionTimeUTC"> The time (in UTC) when the rebalance job completed. Only populated when the job reaches a terminal state (Completed, Failed, or Canceled). </param>
+        /// <param name="startedOn"> The time (in UTC) the rebalance job started. </param>
+        /// <param name="completedOn"> The time (in UTC) when the rebalance job completed. Only populated when the job reaches a terminal state (Completed, Failed, or Canceled). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceJobPropertiesStatus(RebalanceJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, double? balancePercent, int? estimatedRemainingSeconds, long? filesMigrated, long? dirsMigrated, long? bytesMoved, double? filesMovedPerSecond, double? throughputMiBps, int? totalErrors, long? totalSkipped, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageCacheRebalanceJobPropertiesStatus(StorageCacheRebalanceJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, double? balancePercent, int? estimatedRemainingSeconds, long? filesMigrated, long? dirsMigrated, long? bytesMoved, double? filesMovedPerSecond, double? throughputMiBps, int? totalErrors, long? totalSkipped, DateTimeOffset? startedOn, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StatusCode = statusCode;
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.StorageCache.Models
             ThroughputMiBps = throughputMiBps;
             TotalErrors = totalErrors;
             TotalSkipped = totalSkipped;
-            StartTimeUTC = startTimeUTC;
-            CompletionTimeUTC = completionTimeUTC;
+            StartedOn = startedOn;
+            CompletedOn = completedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operational state of the rebalance job. InProgress indicates the rebalance is running on the cluster. Cancelling indicates a cancel has been requested. Canceled indicates the rebalance was cancelled. Completed indicates the rebalance finished successfully. Failed indicates the rebalance was unable to complete due to a fatal error. Deleting indicates the job is being cleaned up during deletion. RollingBack indicates the orchestrator is rolling back provisioned resources after a failure. </summary>
-        public RebalanceJobStatusType? State { get; }
+        public StorageCacheRebalanceJobStatusType? State { get; }
 
         /// <summary> Server-defined status code for rebalance job. </summary>
         public string StatusCode { get; }
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public long? TotalSkipped { get; }
 
         /// <summary> The time (in UTC) the rebalance job started. </summary>
-        public DateTimeOffset? StartTimeUTC { get; }
+        public DateTimeOffset? StartedOn { get; }
 
         /// <summary> The time (in UTC) when the rebalance job completed. Only populated when the job reaches a terminal state (Completed, Failed, or Canceled). </summary>
-        public DateTimeOffset? CompletionTimeUTC { get; }
+        public DateTimeOffset? CompletedOn { get; }
     }
 }

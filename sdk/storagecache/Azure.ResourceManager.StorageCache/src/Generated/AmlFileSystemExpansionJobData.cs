@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </summary>
-        public bool? RunRebalanceJob
+        public bool? ShouldRunRebalanceJob
         {
             get
             {
-                return Properties is null ? default : Properties.RunRebalanceJob;
+                return Properties is null ? default : Properties.ShouldRunRebalanceJob;
             }
             set
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     Properties = new ExpansionJobProperties();
                 }
-                Properties.RunRebalanceJob = value;
+                Properties.ShouldRunRebalanceJob = value;
             }
         }
 

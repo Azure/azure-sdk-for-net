@@ -14,51 +14,51 @@ using Azure.ResourceManager.StorageCache;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The status of the rebalance job. </summary>
-    public partial class RebalanceJobPropertiesStatus : IJsonModel<RebalanceJobPropertiesStatus>
+    public partial class StorageCacheRebalanceJobPropertiesStatus : IJsonModel<StorageCacheRebalanceJobPropertiesStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RebalanceJobPropertiesStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageCacheRebalanceJobPropertiesStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRebalanceJobPropertiesStatus(document.RootElement, options);
+                        return DeserializeStorageCacheRebalanceJobPropertiesStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RebalanceJobPropertiesStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheRebalanceJobPropertiesStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RebalanceJobPropertiesStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheRebalanceJobPropertiesStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RebalanceJobPropertiesStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RebalanceJobPropertiesStatus IPersistableModel<RebalanceJobPropertiesStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageCacheRebalanceJobPropertiesStatus IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RebalanceJobPropertiesStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RebalanceJobPropertiesStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageCacheRebalanceJobPropertiesStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RebalanceJobPropertiesStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheRebalanceJobPropertiesStatus)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("totalSkipped"u8);
                 writer.WriteNumberValue(TotalSkipped.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTimeUTC"u8);
-                writer.WriteStringValue(StartTimeUTC.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletionTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completionTimeUTC"u8);
-                writer.WriteStringValue(CompletionTimeUTC.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -168,30 +168,30 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RebalanceJobPropertiesStatus IJsonModel<RebalanceJobPropertiesStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageCacheRebalanceJobPropertiesStatus IJsonModel<StorageCacheRebalanceJobPropertiesStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RebalanceJobPropertiesStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageCacheRebalanceJobPropertiesStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobPropertiesStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RebalanceJobPropertiesStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheRebalanceJobPropertiesStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRebalanceJobPropertiesStatus(document.RootElement, options);
+            return DeserializeStorageCacheRebalanceJobPropertiesStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RebalanceJobPropertiesStatus DeserializeRebalanceJobPropertiesStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageCacheRebalanceJobPropertiesStatus DeserializeStorageCacheRebalanceJobPropertiesStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RebalanceJobStatusType? state = default;
+            StorageCacheRebalanceJobStatusType? state = default;
             string statusCode = default;
             string statusMessage = default;
             float? percentComplete = default;
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             double? throughputMiBps = default;
             int? totalErrors = default;
             long? totalSkipped = default;
-            DateTimeOffset? startTimeUTC = default;
-            DateTimeOffset? completionTimeUTC = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    state = new RebalanceJobStatusType(prop.Value.GetString());
+                    state = new StorageCacheRebalanceJobStatusType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusCode"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    startTimeUTC = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completionTimeUTC"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    completionTimeUTC = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RebalanceJobPropertiesStatus(
+            return new StorageCacheRebalanceJobPropertiesStatus(
                 state,
                 statusCode,
                 statusMessage,
@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                 throughputMiBps,
                 totalErrors,
                 totalSkipped,
-                startTimeUTC,
-                completionTimeUTC,
+                startedOn,
+                completedOn,
                 additionalBinaryDataProperties);
         }
     }

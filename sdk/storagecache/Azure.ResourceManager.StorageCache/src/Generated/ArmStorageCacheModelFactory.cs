@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the rebalance job. </param>
-        /// <returns> A new <see cref="StorageCache.RebalanceJobData"/> instance for mocking. </returns>
-        public static RebalanceJobData RebalanceJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RebalanceJobProperties properties = default)
+        /// <returns> A new <see cref="StorageCache.StorageCacheRebalanceJobData"/> instance for mocking. </returns>
+        public static StorageCacheRebalanceJobData StorageCacheRebalanceJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageCacheRebalanceJobProperties properties = default)
         {
-            return new RebalanceJobData(
+            return new StorageCacheRebalanceJobData(
                 id,
                 name,
                 resourceType,
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="adminStatus"> The current administrative status of the rebalance job. 'Active' indicates the job is running normally; 'Cancel' indicates cancellation has been requested. </param>
         /// <param name="expansionJobId"> Fully qualified ARM resource ID of the parent expansion job that initiated this rebalance. Populated when the rebalance was created as part of an expansion. </param>
         /// <param name="status"> The status of the rebalance job. </param>
-        /// <returns> A new <see cref="Models.RebalanceJobProperties"/> instance for mocking. </returns>
-        public static RebalanceJobProperties RebalanceJobProperties(RebalanceJobPropertiesProvisioningState? provisioningState = default, RebalanceJobAdminStatus? adminStatus = default, ResourceIdentifier expansionJobId = default, RebalanceJobPropertiesStatus status = default)
+        /// <returns> A new <see cref="Models.StorageCacheRebalanceJobProperties"/> instance for mocking. </returns>
+        public static StorageCacheRebalanceJobProperties StorageCacheRebalanceJobProperties(StorageCacheRebalanceJobPropertiesProvisioningState? provisioningState = default, StorageCacheRebalanceJobAdminStatus? adminStatus = default, ResourceIdentifier expansionJobId = default, StorageCacheRebalanceJobPropertiesStatus status = default)
         {
-            return new RebalanceJobProperties(provisioningState, adminStatus, expansionJobId, status, default);
+            return new StorageCacheRebalanceJobProperties(provisioningState, adminStatus, expansionJobId, status, default);
         }
 
         /// <param name="state"> The operational state of the rebalance job. InProgress indicates the rebalance is running on the cluster. Cancelling indicates a cancel has been requested. Canceled indicates the rebalance was cancelled. Completed indicates the rebalance finished successfully. Failed indicates the rebalance was unable to complete due to a fatal error. Deleting indicates the job is being cleaned up during deletion. RollingBack indicates the orchestrator is rolling back provisioned resources after a failure. </param>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="throughputMiBps"> Average throughput in mebibytes per second (1024x1024 bytes per second) over the most recent reporting interval. </param>
         /// <param name="totalErrors"> Total cumulative non-skip errors since the rebalance started. Reported in periodic rebalance status updates. Resets to 0 if the rebalancer node restarts. </param>
         /// <param name="totalSkipped"> Total cumulative benign skips since the rebalance started: files intentionally not migrated (for example, a lost migration lease or a stale layout), as distinct from the hard failures counted in totalErrors. Reported in periodic rebalance status updates. Resets to 0 if the rebalancer node restarts. </param>
-        /// <param name="startTimeUTC"> The time (in UTC) the rebalance job started. </param>
-        /// <param name="completionTimeUTC"> The time (in UTC) when the rebalance job completed. Only populated when the job reaches a terminal state (Completed, Failed, or Canceled). </param>
-        /// <returns> A new <see cref="Models.RebalanceJobPropertiesStatus"/> instance for mocking. </returns>
-        public static RebalanceJobPropertiesStatus RebalanceJobPropertiesStatus(RebalanceJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, double? balancePercent = default, int? estimatedRemainingSeconds = default, long? filesMigrated = default, long? dirsMigrated = default, long? bytesMoved = default, double? filesMovedPerSecond = default, double? throughputMiBps = default, int? totalErrors = default, long? totalSkipped = default, DateTimeOffset? startTimeUTC = default, DateTimeOffset? completionTimeUTC = default)
+        /// <param name="startedOn"> The time (in UTC) the rebalance job started. </param>
+        /// <param name="completedOn"> The time (in UTC) when the rebalance job completed. Only populated when the job reaches a terminal state (Completed, Failed, or Canceled). </param>
+        /// <returns> A new <see cref="Models.StorageCacheRebalanceJobPropertiesStatus"/> instance for mocking. </returns>
+        public static StorageCacheRebalanceJobPropertiesStatus StorageCacheRebalanceJobPropertiesStatus(StorageCacheRebalanceJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, double? balancePercent = default, int? estimatedRemainingSeconds = default, long? filesMigrated = default, long? dirsMigrated = default, long? bytesMoved = default, double? filesMovedPerSecond = default, double? throughputMiBps = default, int? totalErrors = default, long? totalSkipped = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
         {
-            return new RebalanceJobPropertiesStatus(
+            return new StorageCacheRebalanceJobPropertiesStatus(
                 state,
                 statusCode,
                 statusMessage,
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 throughputMiBps,
                 totalErrors,
                 totalSkipped,
-                startTimeUTC,
-                completionTimeUTC,
+                startedOn,
+                completedOn,
                 default);
         }
 
         /// <param name="rebalanceJobUpdateAdminStatus"> The administrative status of the rebalance job. Passing in a value of 'Cancel' will cancel the current active rebalance job. </param>
-        /// <returns> A new <see cref="Models.RebalanceJobPatch"/> instance for mocking. </returns>
-        public static RebalanceJobPatch RebalanceJobPatch(RebalanceJobAdminStatus? rebalanceJobUpdateAdminStatus = default)
+        /// <returns> A new <see cref="Models.StorageCacheRebalanceJobPatch"/> instance for mocking. </returns>
+        public static StorageCacheRebalanceJobPatch StorageCacheRebalanceJobPatch(StorageCacheRebalanceJobAdminStatus? rebalanceJobUpdateAdminStatus = default)
         {
-            return new RebalanceJobPatch(rebalanceJobUpdateAdminStatus is null ? default : new RebalanceJobUpdateProperties(rebalanceJobUpdateAdminStatus, default), default);
+            return new StorageCacheRebalanceJobPatch(rebalanceJobUpdateAdminStatus is null ? default : new RebalanceJobUpdateProperties(rebalanceJobUpdateAdminStatus, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="newStorageCapacityTiB"> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </param>
-        /// <param name="runRebalanceJob"> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </param>
+        /// <param name="shouldRunRebalanceJob"> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </param>
         /// <param name="rebalanceJobId"> Fully qualified ARM resource ID of the child rebalance job created by this expansion. Populated after RebalanceJob is created. </param>
         /// <param name="state"> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </param>
         /// <param name="statusCode"> Server-defined status code for expansion job. </param>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="startedOn"> The time (in UTC) the expansion job started. </param>
         /// <param name="completedOn"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemExpansionJobData"/> instance for mocking. </returns>
-        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, bool? runRebalanceJob = default, ResourceIdentifier rebalanceJobId = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
+        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, bool? shouldRunRebalanceJob = default, ResourceIdentifier rebalanceJobId = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && newStorageCapacityTiB is null && state is null && statusCode is null && statusMessage is null && percentComplete is null && startedOn is null && completedOn is null && runRebalanceJob is null && rebalanceJobId is null ? default : new ExpansionJobProperties(
+                provisioningState is null && newStorageCapacityTiB is null && state is null && statusCode is null && statusMessage is null && percentComplete is null && startedOn is null && completedOn is null && shouldRunRebalanceJob is null && rebalanceJobId is null ? default : new ExpansionJobProperties(
                     provisioningState,
                     newStorageCapacityTiB,
                     new ExpansionJobPropertiesStatus(
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         startedOn,
                         completedOn,
                         default),
-                    runRebalanceJob,
+                    shouldRunRebalanceJob,
                     rebalanceJobId,
                     default),
                 default);

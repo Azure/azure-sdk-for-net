@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RebalanceJobData item in Value)
+                foreach (StorageCacheRebalanceJobData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            IList<RebalanceJobData> value = default;
+            IList<StorageCacheRebalanceJobData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    List<RebalanceJobData> array = new List<RebalanceJobData>();
+                    List<StorageCacheRebalanceJobData> array = new List<StorageCacheRebalanceJobData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RebalanceJobData.DeserializeRebalanceJobData(item, options));
+                        array.Add(StorageCacheRebalanceJobData.DeserializeStorageCacheRebalanceJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RebalanceJobsListResult(value ?? new ChangeTrackingList<RebalanceJobData>(), nextLink, additionalBinaryDataProperties);
+            return new RebalanceJobsListResult(value ?? new ChangeTrackingList<StorageCacheRebalanceJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> A rebalance job update instance. </summary>
-    public partial class RebalanceJobPatch
+    public partial class StorageCacheRebalanceJobPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobPatch"/>. </summary>
-        public RebalanceJobPatch()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobPatch"/>. </summary>
+        public StorageCacheRebalanceJobPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobPatch"/>. </summary>
         /// <param name="properties"> Properties for the rebalance job update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceJobPatch(RebalanceJobUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageCacheRebalanceJobPatch(RebalanceJobUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         internal RebalanceJobUpdateProperties Properties { get; set; }
 
         /// <summary> The administrative status of the rebalance job. Passing in a value of 'Cancel' will cancel the current active rebalance job. </summary>
-        public RebalanceJobAdminStatus? RebalanceJobUpdateAdminStatus
+        public StorageCacheRebalanceJobAdminStatus? RebalanceJobUpdateAdminStatus
         {
             get
             {

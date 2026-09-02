@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of <see cref="RebalanceJobsListResult"/>. </summary>
         internal RebalanceJobsListResult()
         {
-            Value = new ChangeTrackingList<RebalanceJobData>();
+            Value = new ChangeTrackingList<StorageCacheRebalanceJobData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RebalanceJobsListResult"/>. </summary>
         /// <param name="value"> List of rebalance jobs. </param>
         /// <param name="nextLink"> URL to get the next set of rebalance job list results, if there are any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceJobsListResult(IList<RebalanceJobData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RebalanceJobsListResult(IList<StorageCacheRebalanceJobData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> List of rebalance jobs. </summary>
-        public IList<RebalanceJobData> Value { get; }
+        public IList<StorageCacheRebalanceJobData> Value { get; }
 
         /// <summary> URL to get the next set of rebalance job list results, if there are any. </summary>
         public Uri NextLink { get; }

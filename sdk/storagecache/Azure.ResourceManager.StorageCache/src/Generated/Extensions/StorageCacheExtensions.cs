@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RebalanceJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="StorageCacheRebalanceJobResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageCacheArmClient.GetRebalanceJobResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableStorageCacheArmClient.GetStorageCacheRebalanceJobResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RebalanceJobResource"/> object. </returns>
-        public static RebalanceJobResource GetRebalanceJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageCacheRebalanceJobResource"/> object. </returns>
+        public static StorageCacheRebalanceJobResource GetStorageCacheRebalanceJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableStorageCacheArmClient(client).GetRebalanceJobResource(id);
+            return GetMockableStorageCacheArmClient(client).GetStorageCacheRebalanceJobResource(id);
         }
 
         /// <summary>

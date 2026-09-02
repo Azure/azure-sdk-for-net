@@ -14,7 +14,7 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal partial class RebalanceJobsGetByAmlFilesystemCollectionResultOfT : Pageable<RebalanceJobData>
+    internal partial class RebalanceJobsGetByAmlFilesystemCollectionResultOfT : Pageable<StorageCacheRebalanceJobData>
     {
         private readonly RebalanceJobs _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RebalanceJobsGetByAmlFilesystemCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RebalanceJobData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<StorageCacheRebalanceJobData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 RebalanceJobsListResult result = RebalanceJobsListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<RebalanceJobData>.FromValues((IReadOnlyList<RebalanceJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<StorageCacheRebalanceJobData>.FromValues((IReadOnlyList<StorageCacheRebalanceJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

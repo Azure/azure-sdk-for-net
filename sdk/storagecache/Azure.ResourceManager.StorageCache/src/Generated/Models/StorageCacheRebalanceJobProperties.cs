@@ -12,23 +12,23 @@ using Azure.Core;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Properties of the rebalance job. </summary>
-    public partial class RebalanceJobProperties
+    public partial class StorageCacheRebalanceJobProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobProperties"/>. </summary>
-        internal RebalanceJobProperties()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobProperties"/>. </summary>
+        internal StorageCacheRebalanceJobProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobProperties"/>. </summary>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="adminStatus"> The current administrative status of the rebalance job. 'Active' indicates the job is running normally; 'Cancel' indicates cancellation has been requested. </param>
         /// <param name="expansionJobId"> Fully qualified ARM resource ID of the parent expansion job that initiated this rebalance. Populated when the rebalance was created as part of an expansion. </param>
         /// <param name="status"> The status of the rebalance job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceJobProperties(RebalanceJobPropertiesProvisioningState? provisioningState, RebalanceJobAdminStatus? adminStatus, ResourceIdentifier expansionJobId, RebalanceJobPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageCacheRebalanceJobProperties(StorageCacheRebalanceJobPropertiesProvisioningState? provisioningState, StorageCacheRebalanceJobAdminStatus? adminStatus, ResourceIdentifier expansionJobId, StorageCacheRebalanceJobPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AdminStatus = adminStatus;
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public RebalanceJobPropertiesProvisioningState? ProvisioningState { get; }
+        public StorageCacheRebalanceJobPropertiesProvisioningState? ProvisioningState { get; }
 
         /// <summary> The current administrative status of the rebalance job. 'Active' indicates the job is running normally; 'Cancel' indicates cancellation has been requested. </summary>
-        public RebalanceJobAdminStatus? AdminStatus { get; }
+        public StorageCacheRebalanceJobAdminStatus? AdminStatus { get; }
 
         /// <summary> Fully qualified ARM resource ID of the parent expansion job that initiated this rebalance. Populated when the rebalance was created as part of an expansion. </summary>
         public ResourceIdentifier ExpansionJobId { get; }
 
         /// <summary> The status of the rebalance job. </summary>
-        public RebalanceJobPropertiesStatus Status { get; }
+        public StorageCacheRebalanceJobPropertiesStatus Status { get; }
     }
 }

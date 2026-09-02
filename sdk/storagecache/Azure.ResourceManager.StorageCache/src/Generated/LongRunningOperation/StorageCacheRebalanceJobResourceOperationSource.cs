@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class RebalanceJobResourceOperationSource : IOperationSource<RebalanceJobResource>
+    internal partial class StorageCacheRebalanceJobResourceOperationSource : IOperationSource<StorageCacheRebalanceJobResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal RebalanceJobResourceOperationSource(ArmClient client)
+        internal StorageCacheRebalanceJobResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        RebalanceJobResource IOperationSource<RebalanceJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageCacheRebalanceJobResource IOperationSource<StorageCacheRebalanceJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RebalanceJobData data = RebalanceJobData.DeserializeRebalanceJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RebalanceJobResource(_client, data);
+            StorageCacheRebalanceJobData data = StorageCacheRebalanceJobData.DeserializeStorageCacheRebalanceJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageCacheRebalanceJobResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<RebalanceJobResource> IOperationSource<RebalanceJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageCacheRebalanceJobResource> IOperationSource<StorageCacheRebalanceJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RebalanceJobData data = RebalanceJobData.DeserializeRebalanceJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RebalanceJobResource(_client, data);
+            StorageCacheRebalanceJobData data = StorageCacheRebalanceJobData.DeserializeStorageCacheRebalanceJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageCacheRebalanceJobResource(_client, data);
         }
     }
 }

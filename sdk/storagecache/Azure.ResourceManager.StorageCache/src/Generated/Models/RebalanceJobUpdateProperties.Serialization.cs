@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            RebalanceJobAdminStatus? adminStatus = default;
+            StorageCacheRebalanceJobAdminStatus? adminStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    adminStatus = new RebalanceJobAdminStatus(prop.Value.GetString());
+                    adminStatus = new StorageCacheRebalanceJobAdminStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

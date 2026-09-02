@@ -12,7 +12,7 @@ using Azure.ResourceManager.StorageCache;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The administrative status of the rebalance job. Active means the job is running normally. Cancel requests the job to stop. </summary>
-    public readonly partial struct RebalanceJobAdminStatus : IEquatable<RebalanceJobAdminStatus>
+    public readonly partial struct StorageCacheRebalanceJobAdminStatus : IEquatable<StorageCacheRebalanceJobAdminStatus>
     {
         private readonly string _value;
         /// <summary> The rebalance job is running normally. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Request the rebalance job to stop. </summary>
         private const string CancelValue = "Cancel";
 
-        /// <summary> Initializes a new instance of <see cref="RebalanceJobAdminStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheRebalanceJobAdminStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RebalanceJobAdminStatus(string value)
+        public StorageCacheRebalanceJobAdminStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> The rebalance job is running normally. </summary>
-        public static RebalanceJobAdminStatus Active { get; } = new RebalanceJobAdminStatus(ActiveValue);
+        public static StorageCacheRebalanceJobAdminStatus Active { get; } = new StorageCacheRebalanceJobAdminStatus(ActiveValue);
 
         /// <summary> Request the rebalance job to stop. </summary>
-        public static RebalanceJobAdminStatus Cancel { get; } = new RebalanceJobAdminStatus(CancelValue);
+        public static StorageCacheRebalanceJobAdminStatus Cancel { get; } = new StorageCacheRebalanceJobAdminStatus(CancelValue);
 
-        /// <summary> Determines if two <see cref="RebalanceJobAdminStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageCacheRebalanceJobAdminStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RebalanceJobAdminStatus left, RebalanceJobAdminStatus right) => left.Equals(right);
+        public static bool operator ==(StorageCacheRebalanceJobAdminStatus left, StorageCacheRebalanceJobAdminStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RebalanceJobAdminStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageCacheRebalanceJobAdminStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RebalanceJobAdminStatus left, RebalanceJobAdminStatus right) => !left.Equals(right);
+        public static bool operator !=(StorageCacheRebalanceJobAdminStatus left, StorageCacheRebalanceJobAdminStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RebalanceJobAdminStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageCacheRebalanceJobAdminStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RebalanceJobAdminStatus(string value) => new RebalanceJobAdminStatus(value);
+        public static implicit operator StorageCacheRebalanceJobAdminStatus(string value) => new StorageCacheRebalanceJobAdminStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RebalanceJobAdminStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageCacheRebalanceJobAdminStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RebalanceJobAdminStatus?(string value) => value == null ? null : new RebalanceJobAdminStatus(value);
+        public static implicit operator StorageCacheRebalanceJobAdminStatus?(string value) => value == null ? null : new StorageCacheRebalanceJobAdminStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RebalanceJobAdminStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageCacheRebalanceJobAdminStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RebalanceJobAdminStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageCacheRebalanceJobAdminStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

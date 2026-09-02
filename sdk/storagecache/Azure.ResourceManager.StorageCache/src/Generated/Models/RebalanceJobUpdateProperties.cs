@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of <see cref="RebalanceJobUpdateProperties"/>. </summary>
         /// <param name="adminStatus"> The administrative status of the rebalance job. Passing in a value of 'Cancel' will cancel the current active rebalance job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RebalanceJobUpdateProperties(RebalanceJobAdminStatus? adminStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RebalanceJobUpdateProperties(StorageCacheRebalanceJobAdminStatus? adminStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminStatus = adminStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The administrative status of the rebalance job. Passing in a value of 'Cancel' will cancel the current active rebalance job. </summary>
-        public RebalanceJobAdminStatus? AdminStatus { get; set; }
+        public StorageCacheRebalanceJobAdminStatus? AdminStatus { get; set; }
     }
 }

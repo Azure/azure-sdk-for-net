@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="newStorageCapacityTiB"> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </param>
         /// <param name="status"> The status of the expansion job. </param>
-        /// <param name="runRebalanceJob"> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </param>
+        /// <param name="shouldRunRebalanceJob"> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </param>
         /// <param name="rebalanceJobId"> Fully qualified ARM resource ID of the child rebalance job created by this expansion. Populated after RebalanceJob is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobProperties(AmlFileSystemExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobPropertiesStatus status, bool? runRebalanceJob, ResourceIdentifier rebalanceJobId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpansionJobProperties(AmlFileSystemExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobPropertiesStatus status, bool? shouldRunRebalanceJob, ResourceIdentifier rebalanceJobId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             NewStorageCapacityTiB = newStorageCapacityTiB;
             Status = status;
-            RunRebalanceJob = runRebalanceJob;
+            ShouldRunRebalanceJob = shouldRunRebalanceJob;
             RebalanceJobId = rebalanceJobId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         internal ExpansionJobPropertiesStatus Status { get; }
 
         /// <summary> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </summary>
-        public bool? RunRebalanceJob { get; set; }
+        public bool? ShouldRunRebalanceJob { get; set; }
 
         /// <summary> Fully qualified ARM resource ID of the child rebalance job created by this expansion. Populated after RebalanceJob is created. </summary>
         public ResourceIdentifier RebalanceJobId { get; }
