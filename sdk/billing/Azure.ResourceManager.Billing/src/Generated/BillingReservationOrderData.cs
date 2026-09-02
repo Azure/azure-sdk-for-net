@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
         [WirePath("properties.benefitStartTime")]
-        public DateTimeOffset? BenefitStartOn
+        public DateTimeOffset? BenefitStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
             set
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     Properties = new ReservationOrderProperty();
                 }
-                Properties.BenefitStartOn = value;
+                Properties.BenefitStartsOn = value;
             }
         }
 

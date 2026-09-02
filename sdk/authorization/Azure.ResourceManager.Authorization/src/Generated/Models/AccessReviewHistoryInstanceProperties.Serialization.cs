@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(AccessReviewHistoryInstanceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ReviewHistoryPeriodStartOn))
+            if (Optional.IsDefined(ReviewHistoryPeriodStartsOn))
             {
                 writer.WritePropertyName("reviewHistoryPeriodStartDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodStartOn.Value, "O");
+                writer.WriteStringValue(ReviewHistoryPeriodStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(ReviewHistoryPeriodEndOn))
+            if (Optional.IsDefined(ReviewHistoryPeriodEndsOn))
             {
                 writer.WritePropertyName("reviewHistoryPeriodEndDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodEndOn.Value, "O");
+                writer.WriteStringValue(ReviewHistoryPeriodEndsOn.Value, "O");
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            DateTimeOffset? reviewHistoryPeriodStartOn = default;
-            DateTimeOffset? reviewHistoryPeriodEndOn = default;
+            DateTimeOffset? reviewHistoryPeriodStartsOn = default;
+            DateTimeOffset? reviewHistoryPeriodEndsOn = default;
             string displayName = default;
             AccessReviewHistoryDefinitionStatus? status = default;
             DateTimeOffset? runOn = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    reviewHistoryPeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reviewHistoryPeriodEndDateTime"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    reviewHistoryPeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             return new AccessReviewHistoryInstanceProperties(
-                reviewHistoryPeriodStartOn,
-                reviewHistoryPeriodEndOn,
+                reviewHistoryPeriodStartsOn,
+                reviewHistoryPeriodEndsOn,
                 displayName,
                 status,
                 runOn,

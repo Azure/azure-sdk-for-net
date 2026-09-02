@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             return new ArtifactSigningAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, default), default), default);
         }
 
+        /// <summary> The parameters used to check the availability of the artifact signing account name. </summary>
         /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <param name="name"> Artifact signing account name. </param>
         /// <returns> A new <see cref="Models.ArtifactSigningAccountNameAvailabilityContent"/> instance for mocking. </returns>
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             return new ArtifactSigningAccountNameAvailabilityContent(resourceType, name, default);
         }
 
+        /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that an artifact signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
@@ -105,6 +107,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 default);
         }
 
+        /// <summary> Defines the list of certificates for revocation in certificate profile. </summary>
         /// <param name="revokeCertificates"> List of certificates to be revoked in a certificate profile. </param>
         /// <returns> A new <see cref="Models.RevokeCertificateList"/> instance for mocking. </returns>
         public static RevokeCertificateList RevokeCertificateList(IEnumerable<RevokeCertificateContent> revokeCertificates = default)
@@ -114,6 +117,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             return new RevokeCertificateList((revokeCertificates ?? new ChangeTrackingList<RevokeCertificateContent>()).ToList(), default);
         }
 
+        /// <summary> Defines the certificate revocation properties. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>

@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </param>
         /// <param name="termDuration"> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="quantity"> The quantity of licenses or fulfillment units for the subscription. </param>
-        /// <param name="termEndOn"> End date of the term in UTC time. </param>
+        /// <param name="termEndsOn"> End date of the term in UTC time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionRenewalTermDetails(string billingFrequency, string productId, string productTypeId, string skuId, TimeSpan? termDuration, long? quantity, DateTimeOffset? termEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionRenewalTermDetails(string billingFrequency, string productId, string productTypeId, string skuId, TimeSpan? termDuration, long? quantity, DateTimeOffset? termEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingFrequency = billingFrequency;
             ProductId = productId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
             SkuId = skuId;
             TermDuration = termDuration;
             Quantity = quantity;
-            TermEndOn = termEndOn;
+            TermEndsOn = termEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> End date of the term in UTC time. </summary>
         [WirePath("termEndDate")]
-        public DateTimeOffset? TermEndOn { get; }
+        public DateTimeOffset? TermEndsOn { get; }
     }
 }

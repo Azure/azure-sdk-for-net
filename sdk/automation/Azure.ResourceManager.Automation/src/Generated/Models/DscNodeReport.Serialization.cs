@@ -82,20 +82,20 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(DscNodeReportType))
             {
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             DateTimeOffset? lastModifiedOn = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string dscNodeReportType = default;
             string reportId = default;
             string status = default;
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startOn = null;
+                        startsOn = null;
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -444,9 +444,9 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             return new DscNodeReport(
-                endOn,
+                endsOn,
                 lastModifiedOn,
-                startOn,
+                startsOn,
                 dscNodeReportType,
                 reportId,
                 status,

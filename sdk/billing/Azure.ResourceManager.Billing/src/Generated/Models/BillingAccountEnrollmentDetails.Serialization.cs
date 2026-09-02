@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Currency))
             {
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string currency = default;
             string channel = default;
             string language = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("currency"u8))
@@ -314,8 +314,8 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             return new BillingAccountEnrollmentDetails(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 currency,
                 channel,
                 language,

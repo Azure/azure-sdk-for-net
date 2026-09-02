@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> This is the DateTime when the savings plan benefit starts. </summary>
         [WirePath("properties.benefitStartTime")]
-        public DateTimeOffset? BenefitStartOn
+        public DateTimeOffset? BenefitStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
         }
 
