@@ -994,6 +994,56 @@ namespace Azure.Generator.Mgmt.Tests
             AssertSafeFlattenApplied(parentProvider, "dynamic Patch property");
         }
 
+        [Test]
+        public void TestSafeFlattenCountsCustomizedReplacementProperty()
+        {
+            var nameProperty = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var tierProperty = InputFactory.Property("tier", InputPrimitiveType.String, isRequired: false, serializedName: "tier");
+            var skuModel = InputFactory.Model(
+                "TestSku",
+                properties: [nameProperty, tierProperty]);
+            var skuProperty = InputFactory.Property("sku", skuModel, isRequired: false, serializedName: "sku");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [skuProperty]);
+
+            const string customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    [System.AttributeUsage(System.AttributeTargets.Property)]
+                    internal sealed class CodeGenMemberAttribute : System.Attribute
+                    {
+                        public CodeGenMemberAttribute(string originalName) { }
+                    }
+                }
+
+                namespace Samples.Models
+                {
+                    using Microsoft.TypeSpec.Generator.Customizations;
+
+                    public partial class TestSku
+                    {
+                        [CodeGenMember("Name")]
+                        public string Name { get; set; }
+                    }
+                }
+                """;
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, skuModel],
+                customizationSources: [customization]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            var resultingSkuProperty = parentProvider.Properties.Single(p => p.Name == "Sku");
+            Assert.That(
+                resultingSkuProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                "A model with generated Tier and customized Name properties must not be treated as a single-property wrapper.");
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "SkuTier"), Is.False);
+        }
+
         private static void RunVisitors(ModelProvider model)
         {
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
