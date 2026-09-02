@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,14 @@ internal sealed class MtgDateTimePropertyMatcher
         "On",
         "At",
     ];
+
+    private static readonly Dictionary<string, string> _mpgDateTimeNounToVerb = new(StringComparer.Ordinal)
+    {
+        ["Creation"] = "Created",
+        ["Deletion"] = "Deleted",
+        ["Expiration"] = "Expire",
+        ["Modification"] = "Modified",
+    };
 
     internal void RegisterSourceProperty(PropertyProvider propertyProvider, InputProperty inputProperty)
     {
@@ -75,6 +84,35 @@ internal sealed class MtgDateTimePropertyMatcher
         }
 
         return false;
+    }
+
+    internal bool TryGetPreviousMpgDateTimePropertyName(PropertyProvider property, out string previousName)
+    {
+        previousName = string.Empty;
+        if (!IsMtgRenamedDateTimeProperty(property) ||
+            !_sourceProperties.TryGetValue(property, out var inputProperty))
+        {
+            return false;
+        }
+
+        var inputName = inputProperty.Name.ToIdentifierName();
+        if (inputName.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
+            inputName.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase) ||
+            inputName.EndsWith("On", StringComparison.OrdinalIgnoreCase))
+        {
+            previousName = inputName;
+            return true;
+        }
+
+        var suffixLength = GetPreviousMpgDateTimeSuffixLength(inputName);
+        if (suffixLength == 0 || suffixLength == inputName.Length)
+        {
+            return false;
+        }
+
+        var prefix = inputName[..^suffixLength];
+        previousName = $"{(_mpgDateTimeNounToVerb.TryGetValue(prefix, out var verb) ? verb : prefix)}On";
+        return true;
     }
 
     internal bool HasSameSourceProperty(PropertyProvider expectedProperty, PropertyProvider? candidateProperty)
@@ -122,6 +160,24 @@ internal sealed class MtgDateTimePropertyMatcher
         }
 
         return 0;
+    }
+
+    private static int GetPreviousMpgDateTimeSuffixLength(string name)
+    {
+        if (name.Length > "DateTime".Length && name.EndsWith("DateTime", StringComparison.Ordinal))
+        {
+            return "DateTime".Length;
+        }
+
+        if (name.Length > "Time".Length &&
+            (name.EndsWith("Time", StringComparison.Ordinal) || name.EndsWith("Date", StringComparison.Ordinal)))
+        {
+            return "Time".Length;
+        }
+
+        return name.Length > "At".Length && name.EndsWith("At", StringComparison.Ordinal)
+            ? "At".Length
+            : 0;
     }
 
     private static bool HasExcludedMtgDateTimeComponent(string name, int suffixLength)
