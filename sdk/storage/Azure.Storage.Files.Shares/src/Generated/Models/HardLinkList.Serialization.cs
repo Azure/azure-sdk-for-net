@@ -53,7 +53,7 @@ namespace Azure.Storage.Files.Shares.Models
                     {
                         using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "EnumerationResults");
+                            WriteXml(writer, options, "HardLinks");
                         }
                         if (stream.Position > int.MaxValue)
                         {

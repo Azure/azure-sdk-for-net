@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
@@ -302,10 +303,95 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(fileId, response.Value.Properties.SmbProperties.FileId);
             Assert.AreEqual(Constants.KB, response.Value.Properties.ContentLength);
             Assert.AreEqual("application/octet-stream", response.Value.Properties.ContentType);
+
+            FileSmbProperties smbProperties = response.Value.Properties.SmbProperties;
+            Assert.AreEqual(pathProperties.Value.SmbProperties.ParentId, smbProperties.ParentId);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileAttributes, smbProperties.FileAttributes);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FilePermissionKey, smbProperties.FilePermissionKey);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileCreatedOn, smbProperties.FileCreatedOn);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileLastWrittenOn, smbProperties.FileLastWrittenOn);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileChangedOn, smbProperties.FileChangedOn);
+
             Assert.IsNotNull(response.Value.Links);
             Assert.AreEqual(1, response.Value.Links.Count);
             Assert.AreEqual(file.Name, response.Value.Links[0].Name);
             Assert.AreEqual(pathProperties.Value.SmbProperties.ParentId, response.Value.Links[0].ParentId);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task GetFileLinksAsync_ContentHeaders()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directory = InstrumentClient(
+                await test.Share.GetRootDirectoryClient().CreateSubdirectoryAsync(GetNewDirectoryName()));
+            ShareFileClient file = InstrumentClient(
+                await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+
+            // Set every content property
+            await file.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions
+            {
+                HttpHeaders = new ShareFileHttpHeaders
+                {
+                    CacheControl = constants.CacheControl,
+                    ContentDisposition = constants.ContentDisposition,
+                    ContentEncoding = new string[] { constants.ContentEncoding },
+                    ContentLanguage = new string[] { constants.ContentLanguage },
+                    ContentHash = constants.ContentMD5,
+                    ContentType = constants.ContentType
+                }
+            });
+
+            Response<ShareFileProperties> pathProperties = await file.GetPropertiesAsync();
+            string fileId = pathProperties.Value.SmbProperties.FileId;
+            ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
+
+            // Act
+            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+
+            // Assert
+            Assert.AreEqual(constants.CacheControl, response.Value.Properties.CacheControl);
+            Assert.AreEqual(constants.ContentDisposition, response.Value.Properties.ContentDisposition);
+            TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.Properties.ContentHash);
+            Assert.AreEqual(1, response.Value.Properties.ContentEncoding.Count());
+            Assert.AreEqual(constants.ContentEncoding, response.Value.Properties.ContentEncoding.First());
+            Assert.AreEqual(1, response.Value.Properties.ContentLanguage.Count());
+            Assert.AreEqual(constants.ContentLanguage, response.Value.Properties.ContentLanguage.First());
+
+            FileSmbProperties smbProperties = response.Value.Properties.SmbProperties;
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileAttributes, smbProperties.FileAttributes);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FilePermissionKey, smbProperties.FilePermissionKey);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileCreatedOn, smbProperties.FileCreatedOn);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileLastWrittenOn, smbProperties.FileLastWrittenOn);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.FileChangedOn, smbProperties.FileChangedOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task GetFileLinksAsync_Encoded()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directory = InstrumentClient(
+                await test.Share.GetRootDirectoryClient().CreateSubdirectoryAsync(GetNewDirectoryName()));
+
+            // \uFFFE cannot be represented in XML, so the service percent-encodes the
+            // FileName element and marks it with Encoded="true".
+            string specialCharFileName = $"{GetNewFileName()}\uFFFE";
+            ShareFileClient file = InstrumentClient(
+                await directory.CreateFileAsync(specialCharFileName, maxSize: Constants.KB));
+
+            string fileId = (await file.GetPropertiesAsync()).Value.SmbProperties.FileId;
+            ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
+
+            // Act
+            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Links.Count);
+            Assert.AreEqual(specialCharFileName, response.Value.Links[0].Name);
         }
 
         [RecordedTest]
@@ -559,6 +645,45 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> response = await fileIdClient.GetPropertiesAsync();
             Assert.AreEqual(fileId, response.Value.SmbProperties.FileId);
             Assert.AreEqual(file.Name, response.Value.FileName);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task Ctor_ConnectionString_ByFileId()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directory = InstrumentClient(
+                await test.Share.GetRootDirectoryClient().CreateSubdirectoryAsync(GetNewDirectoryName()));
+            ShareFileClient file = InstrumentClient(
+                await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+
+            string fileId = (await file.GetPropertiesAsync()).Value.SmbProperties.FileId;
+            string directoryId = (await directory.GetPropertiesAsync()).Value.SmbProperties.FileId;
+
+            StorageConnectionString connectionString = new StorageConnectionString(
+                Tenants.GetNewSharedKeyCredentials(),
+                fileStorageUri: (
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
+                    new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
+
+            ShareClient shareClient = InstrumentClient(new ShareClient(
+                connectionString.ToString(exportSecrets: true),
+                test.Share.Name,
+                GetOptions()));
+
+            // Act
+            ShareFileClient fileIdClient = InstrumentClient(shareClient.GetFileClientByFileId(fileId));
+            ShareDirectoryClient directoryIdClient = InstrumentClient(shareClient.GetDirectoryClientByFileId(directoryId));
+
+            // Assert
+            Response<ShareFileProperties> fileProperties = await fileIdClient.GetPropertiesAsync();
+            Assert.AreEqual(fileId, fileProperties.Value.SmbProperties.FileId);
+            Assert.AreEqual(file.Name, fileProperties.Value.FileName);
+
+            Response<ShareDirectoryProperties> directoryProperties = await directoryIdClient.GetPropertiesAsync();
+            Assert.AreEqual(directoryId, directoryProperties.Value.SmbProperties.FileId);
+            Assert.AreEqual(directory.Name, directoryProperties.Value.FileName);
         }
         #endregion
     }
