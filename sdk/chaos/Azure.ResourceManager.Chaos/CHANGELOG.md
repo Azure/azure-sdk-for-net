@@ -1,14 +1,12 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2026-08-31)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the default api-version to `2026-08-01-preview`.
+- Added new resource `ChaosConnectionResource` and collection `ChaosConnectionCollection` (with `GetChaosConnection`, `GetChaosConnections`, and `GetChaosConnectionResource` accessors).
+- Added new models `ResourceTargeting`, `ResourceTargetingCriteria`, `WorkspaceDiscovery`, `WorkspaceDiscoveryProperties`, `WorkspaceDiscoveryStatus`, `ChaosConnectionKind`, `ChaosConnectionStatus`, `ChaosConnectionProperties`, `TemplateEvaluationResultItem`, and `ValidationProperties`.
 
 ## 1.2.0-beta.2 (2026-06-09)
 
