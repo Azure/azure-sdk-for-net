@@ -14,52 +14,52 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Properties of the expansion job. </summary>
-    internal partial class ExpansionJobProperties : IJsonModel<ExpansionJobProperties>
+    /// <summary> Properties of the rebalance job. </summary>
+    public partial class StorageCacheRebalanceJobProperties : IJsonModel<StorageCacheRebalanceJobProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExpansionJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageCacheRebalanceJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExpansionJobProperties(document.RootElement, options);
+                        return DeserializeStorageCacheRebalanceJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpansionJobProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheRebalanceJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExpansionJobProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheRebalanceJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExpansionJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageCacheRebalanceJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExpansionJobProperties IPersistableModel<ExpansionJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageCacheRebalanceJobProperties IPersistableModel<StorageCacheRebalanceJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExpansionJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageCacheRebalanceJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExpansionJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageCacheRebalanceJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,35 +70,30 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpansionJobProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheRebalanceJobProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(NewStorageCapacityTiB))
+            if (options.Format != "W" && Optional.IsDefined(AdminStatus))
             {
-                writer.WritePropertyName("newStorageCapacityTiB"u8);
-                writer.WriteNumberValue(NewStorageCapacityTiB.Value);
+                writer.WritePropertyName("adminStatus"u8);
+                writer.WriteStringValue(AdminStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpansionJobId))
+            {
+                writer.WritePropertyName("expansionJobId"u8);
+                writer.WriteStringValue(ExpansionJobId);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
-            }
-            if (Optional.IsDefined(ShouldRunRebalanceJob))
-            {
-                writer.WritePropertyName("runRebalanceJob"u8);
-                writer.WriteBooleanValue(ShouldRunRebalanceJob.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(RebalanceJobId))
-            {
-                writer.WritePropertyName("rebalanceJobId"u8);
-                writer.WriteStringValue(RebalanceJobId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -119,34 +114,33 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExpansionJobProperties IJsonModel<ExpansionJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageCacheRebalanceJobProperties IJsonModel<StorageCacheRebalanceJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExpansionJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageCacheRebalanceJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheRebalanceJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpansionJobProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheRebalanceJobProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExpansionJobProperties(document.RootElement, options);
+            return DeserializeStorageCacheRebalanceJobProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExpansionJobProperties DeserializeExpansionJobProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageCacheRebalanceJobProperties DeserializeStorageCacheRebalanceJobProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AmlFileSystemExpansionJobProvisioningState? provisioningState = default;
-            float? newStorageCapacityTiB = default;
-            ExpansionJobPropertiesStatus status = default;
-            bool? shouldRunRebalanceJob = default;
-            ResourceIdentifier rebalanceJobId = default;
+            StorageCacheRebalanceJobPropertiesProvisioningState? provisioningState = default;
+            StorageCacheRebalanceJobAdminStatus? adminStatus = default;
+            ResourceIdentifier expansionJobId = default;
+            StorageCacheRebalanceJobPropertiesStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,16 +150,25 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    provisioningState = new AmlFileSystemExpansionJobProvisioningState(prop.Value.GetString());
+                    provisioningState = new StorageCacheRebalanceJobPropertiesProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("newStorageCapacityTiB"u8))
+                if (prop.NameEquals("adminStatus"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    newStorageCapacityTiB = prop.Value.GetSingle();
+                    adminStatus = new StorageCacheRebalanceJobAdminStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("expansionJobId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expansionJobId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -174,25 +177,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    status = ExpansionJobPropertiesStatus.DeserializeExpansionJobPropertiesStatus(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("runRebalanceJob"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shouldRunRebalanceJob = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("rebalanceJobId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rebalanceJobId = new ResourceIdentifier(prop.Value.GetString());
+                    status = StorageCacheRebalanceJobPropertiesStatus.DeserializeStorageCacheRebalanceJobPropertiesStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,13 +185,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpansionJobProperties(
-                provisioningState,
-                newStorageCapacityTiB,
-                status,
-                shouldRunRebalanceJob,
-                rebalanceJobId,
-                additionalBinaryDataProperties);
+            return new StorageCacheRebalanceJobProperties(provisioningState, adminStatus, expansionJobId, status, additionalBinaryDataProperties);
         }
     }
 }
