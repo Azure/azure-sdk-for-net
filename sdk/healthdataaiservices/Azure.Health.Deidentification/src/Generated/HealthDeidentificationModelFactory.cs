@@ -143,7 +143,7 @@ namespace Azure.Health.Deidentification
         /// <param name="taggedEntities"> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, TaggedPhiEntities taggedEntities = default, DeidentificationCustomizationOptions customizations = default)
+        public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, TaggedPhiEntities taggedEntities, DeidentificationCustomizationOptions customizations)
         {
             return new DeidentificationContent(inputText, operationType, taggedEntities, customizations, additionalBinaryDataProperties: null);
         }
@@ -242,7 +242,7 @@ namespace Azure.Health.Deidentification
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
+        public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, DeidentificationCustomizationOptions customizations = default)
         {
             return DeidentificationContent(inputText: inputText, operationType: operationType, taggedEntities: default, customizations: customizations);
         }

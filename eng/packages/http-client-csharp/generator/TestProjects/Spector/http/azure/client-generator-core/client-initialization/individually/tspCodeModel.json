@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "BlobProperties",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient.BlobProperties",
       "usage": "Output,Json",
@@ -59,6 +60,7 @@
           "$id": "6",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "7",
@@ -85,6 +87,7 @@
           "$id": "8",
           "kind": "property",
           "name": "size",
+          "apiVersions": [],
           "serializedName": "size",
           "type": {
             "$id": "9",
@@ -111,6 +114,7 @@
           "$id": "10",
           "kind": "property",
           "name": "contentType",
+          "apiVersions": [],
           "serializedName": "contentType",
           "type": {
             "$id": "11",
@@ -137,6 +141,7 @@
           "$id": "12",
           "kind": "property",
           "name": "createdOn",
+          "apiVersions": [],
           "serializedName": "createdOn",
           "type": {
             "$id": "13",
