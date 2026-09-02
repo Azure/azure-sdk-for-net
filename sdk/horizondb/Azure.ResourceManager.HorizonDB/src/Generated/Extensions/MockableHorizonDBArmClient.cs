@@ -88,5 +88,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             HorizonDBParameterGroupResource.ValidateResourceId(id);
             return new HorizonDBParameterGroupResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="HorizonDBAdministratorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HorizonDBAdministratorResource"/> object. </returns>
+        public virtual HorizonDBAdministratorResource GetHorizonDBAdministratorResource(ResourceIdentifier id)
+        {
+            HorizonDBAdministratorResource.ValidateResourceId(id);
+            return new HorizonDBAdministratorResource(Client, id);
+        }
     }
 }

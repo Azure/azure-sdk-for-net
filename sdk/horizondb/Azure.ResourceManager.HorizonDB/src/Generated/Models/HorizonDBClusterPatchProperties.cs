@@ -25,12 +25,18 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="vCores"> Number of vCores. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
+        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
+        /// <param name="computeModel"> The compute model for the cluster. </param>
+        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterPatchProperties(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatchProperties(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDBClusterAuthConfig authConfig, HorizonDBComputeModel computeModel, HorizonDBClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLoginPassword = administratorLoginPassword;
             VCores = vCores;
             ParameterGroup = parameterGroup;
+            AuthConfig = authConfig;
+            ComputeModel = computeModel;
+            Mirroring = mirroring;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +48,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Defines connection to a parameter group. </summary>
         public HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
+
+        /// <summary> Authentication configuration for the HorizonDB cluster. </summary>
+        public HorizonDBClusterAuthConfig AuthConfig { get; set; }
+
+        /// <summary> The compute model for the cluster. </summary>
+        public HorizonDBComputeModel ComputeModel { get; set; }
+
+        /// <summary> Mirroring configuration for the HorizonDB cluster. </summary>
+        public HorizonDBClusterMirroring Mirroring { get; set; }
     }
 }

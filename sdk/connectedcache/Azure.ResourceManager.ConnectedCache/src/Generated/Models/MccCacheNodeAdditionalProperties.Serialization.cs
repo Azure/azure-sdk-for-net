@@ -249,50 +249,50 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("tlsStatus"u8);
                 writer.WriteStringValue(TlsStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostOsEdition))
+            if (options.Format != "W" && Optional.IsDefined(HostOSEdition))
             {
                 writer.WritePropertyName("hostOsEdition"u8);
-                writer.WriteStringValue(HostOsEdition);
+                writer.WriteStringValue(HostOSEdition);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostOsVersion))
+            if (options.Format != "W" && Optional.IsDefined(HostOSVersion))
             {
                 writer.WritePropertyName("hostOsVersion"u8);
-                writer.WriteStringValue(HostOsVersion);
+                writer.WriteStringValue(HostOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostOsBuild))
+            if (options.Format != "W" && Optional.IsDefined(HostOSBuild))
             {
                 writer.WritePropertyName("hostOsBuild"u8);
-                writer.WriteStringValue(HostOsBuild);
+                writer.WriteStringValue(HostOSBuild);
             }
-            if (options.Format != "W" && Optional.IsDefined(DistroOsEditionWsl))
+            if (options.Format != "W" && Optional.IsDefined(DistroOSEditionWsl))
             {
                 writer.WritePropertyName("distroOsEditionWsl"u8);
-                writer.WriteStringValue(DistroOsEditionWsl);
+                writer.WriteStringValue(DistroOSEditionWsl);
             }
-            if (options.Format != "W" && Optional.IsDefined(DistroOsVersionWsl))
+            if (options.Format != "W" && Optional.IsDefined(DistroOSVersionWsl))
             {
                 writer.WritePropertyName("distroOsVersionWsl"u8);
-                writer.WriteStringValue(DistroOsVersionWsl);
+                writer.WriteStringValue(DistroOSVersionWsl);
             }
-            if (options.Format != "W" && Optional.IsDefined(DistroOsBuildWsl))
+            if (options.Format != "W" && Optional.IsDefined(DistroOSBuildWsl))
             {
                 writer.WritePropertyName("distroOsBuildWsl"u8);
-                writer.WriteStringValue(DistroOsBuildWsl);
+                writer.WriteStringValue(DistroOSBuildWsl);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerOsEdition))
+            if (options.Format != "W" && Optional.IsDefined(ContainerOSEdition))
             {
                 writer.WritePropertyName("containerOsEdition"u8);
-                writer.WriteStringValue(ContainerOsEdition);
+                writer.WriteStringValue(ContainerOSEdition);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerOsVersion))
+            if (options.Format != "W" && Optional.IsDefined(ContainerOSVersion))
             {
                 writer.WritePropertyName("containerOsVersion"u8);
-                writer.WriteStringValue(ContainerOsVersion);
+                writer.WriteStringValue(ContainerOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerOsBuild))
+            if (options.Format != "W" && Optional.IsDefined(ContainerOSBuild))
             {
                 writer.WritePropertyName("containerOsBuild"u8);
-                writer.WriteStringValue(ContainerOsBuild);
+                writer.WriteStringValue(ContainerOSBuild);
             }
             if (options.Format != "W" && Optional.IsDefined(InstallVersionMsix))
             {
@@ -406,15 +406,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DateTimeOffset? autoUpdateLastTriggeredOn = default;
             int? creationMethod = default;
             string tlsStatus = default;
-            string hostOsEdition = default;
-            string hostOsVersion = default;
-            string hostOsBuild = default;
-            string distroOsEditionWsl = default;
-            string distroOsVersionWsl = default;
-            string distroOsBuildWsl = default;
-            string containerOsEdition = default;
-            string containerOsVersion = default;
-            string containerOsBuild = default;
+            string hostOSEdition = default;
+            string hostOSVersion = default;
+            string hostOSBuild = default;
+            string distroOSEditionWsl = default;
+            string distroOSVersionWsl = default;
+            string distroOSBuildWsl = default;
+            string containerOSEdition = default;
+            string containerOSVersion = default;
+            string containerOSBuild = default;
             string installVersionMsix = default;
             string installVersionScript = default;
             string appVersionWsl = default;
@@ -679,47 +679,47 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
                 if (prop.NameEquals("hostOsEdition"u8))
                 {
-                    hostOsEdition = prop.Value.GetString();
+                    hostOSEdition = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("hostOsVersion"u8))
                 {
-                    hostOsVersion = prop.Value.GetString();
+                    hostOSVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("hostOsBuild"u8))
                 {
-                    hostOsBuild = prop.Value.GetString();
+                    hostOSBuild = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("distroOsEditionWsl"u8))
                 {
-                    distroOsEditionWsl = prop.Value.GetString();
+                    distroOSEditionWsl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("distroOsVersionWsl"u8))
                 {
-                    distroOsVersionWsl = prop.Value.GetString();
+                    distroOSVersionWsl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("distroOsBuildWsl"u8))
                 {
-                    distroOsBuildWsl = prop.Value.GetString();
+                    distroOSBuildWsl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containerOsEdition"u8))
                 {
-                    containerOsEdition = prop.Value.GetString();
+                    containerOSEdition = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containerOsVersion"u8))
                 {
-                    containerOsVersion = prop.Value.GetString();
+                    containerOSVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containerOsBuild"u8))
                 {
-                    containerOsBuild = prop.Value.GetString();
+                    containerOSBuild = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("installVersionMsix"u8))
@@ -798,15 +798,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateLastTriggeredOn,
                 creationMethod,
                 tlsStatus,
-                hostOsEdition,
-                hostOsVersion,
-                hostOsBuild,
-                distroOsEditionWsl,
-                distroOsVersionWsl,
-                distroOsBuildWsl,
-                containerOsEdition,
-                containerOsVersion,
-                containerOsBuild,
+                hostOSEdition,
+                hostOSVersion,
+                hostOSBuild,
+                distroOSEditionWsl,
+                distroOSVersionWsl,
+                distroOSBuildWsl,
+                containerOSEdition,
+                containerOSVersion,
+                containerOSBuild,
                 installVersionMsix,
                 installVersionScript,
                 appVersionWsl,

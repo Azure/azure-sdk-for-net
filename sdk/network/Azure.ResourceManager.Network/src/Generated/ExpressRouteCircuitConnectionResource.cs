@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRouteCircuitConnectionApiVersion);
             _expressRouteCircuitConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitConnectionsRestClient = new ExpressRouteCircuitConnections(_expressRouteCircuitConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitConnectionApiVersion ?? "2025-07-01");
+            _expressRouteCircuitConnectionsRestClient = new ExpressRouteCircuitConnections(_expressRouteCircuitConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitConnectionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

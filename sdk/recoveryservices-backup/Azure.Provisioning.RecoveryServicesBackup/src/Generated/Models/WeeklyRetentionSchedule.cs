@@ -73,7 +73,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _daysOfTheWeek = DefineListProperty<BackupDayOfWeek>(nameof(DaysOfTheWeek), new string[] { "daysOfTheWeek" });
-            _retentionTimes = DefineListProperty<DateTimeOffset>(nameof(RetentionTimes), new string[] { "retentionTimes" });
+            _retentionTimes = DefineListProperty<DateTimeOffset>(nameof(RetentionTimes), new string[] { "retentionTimes" }, format: "O");
             _retentionDuration = DefineModelProperty<RetentionDuration>(nameof(RetentionDuration), new string[] { "retentionDuration" });
             DefineAdditionalProperties();
         }

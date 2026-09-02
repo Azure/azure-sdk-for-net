@@ -1,6 +1,4 @@
 directory: specification/securityinsights/resource-manager/Microsoft.SecurityInsights/SecurityInsights
 commit: d7da39437a8330fabdc4151f75aebab8e5ca3a64
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
-
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -18,6 +18,7 @@ namespace Azure.Provisioning.BotService
     /// </summary>
     public partial class BotChannelProperties : ProvisionableConstruct
     {
+        private BicepValue<string> _channelName;
         private BicepValue<ETag> _eTag;
         private BicepValue<string> _provisioningState;
         private BicepValue<AzureLocation> _location;
@@ -25,6 +26,16 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new BotChannelProperties. </summary>
         public BotChannelProperties()
         {
+        }
+
+        /// <summary> The channel name. </summary>
+        internal BicepValue<string> ChannelName
+        {
+            get
+            {
+                Initialize();
+                return _channelName;
+            }
         }
 
         /// <summary> Gets or sets the ETag. </summary>
@@ -71,6 +82,7 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _channelName = DefineProperty<string>(nameof(ChannelName), new string[] { "channelName" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });

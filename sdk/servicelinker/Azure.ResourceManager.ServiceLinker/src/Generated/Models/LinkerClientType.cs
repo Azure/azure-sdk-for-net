@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public readonly partial struct LinkerClientType : IEquatable<LinkerClientType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LinkerClientType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinkerClientType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "none";
         private const string DotnetValue = "dotnet";
         private const string JavaValue = "java";
@@ -32,44 +25,89 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         private const string DjangoValue = "django";
         private const string NodejsValue = "nodejs";
         private const string SpringBootValue = "springBoot";
+        private const string KafkaSpringBootValue = "kafka-springBoot";
+        private const string JmsSpringBootValue = "jms-springBoot";
+        private const string DaprValue = "dapr";
 
-        /// <summary> none. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerClientType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LinkerClientType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static LinkerClientType None { get; } = new LinkerClientType(NoneValue);
-        /// <summary> dotnet. </summary>
+
+        /// <summary> Gets the Dotnet. </summary>
         public static LinkerClientType Dotnet { get; } = new LinkerClientType(DotnetValue);
-        /// <summary> java. </summary>
+
+        /// <summary> Gets the Java. </summary>
         public static LinkerClientType Java { get; } = new LinkerClientType(JavaValue);
-        /// <summary> python. </summary>
+
+        /// <summary> Gets the Python. </summary>
         public static LinkerClientType Python { get; } = new LinkerClientType(PythonValue);
-        /// <summary> go. </summary>
+
+        /// <summary> Gets the Go. </summary>
         public static LinkerClientType Go { get; } = new LinkerClientType(GoValue);
-        /// <summary> php. </summary>
+
+        /// <summary> Gets the Php. </summary>
         public static LinkerClientType Php { get; } = new LinkerClientType(PhpValue);
-        /// <summary> ruby. </summary>
+
+        /// <summary> Gets the Ruby. </summary>
         public static LinkerClientType Ruby { get; } = new LinkerClientType(RubyValue);
-        /// <summary> django. </summary>
+
+        /// <summary> Gets the Django. </summary>
         public static LinkerClientType Django { get; } = new LinkerClientType(DjangoValue);
-        /// <summary> nodejs. </summary>
+
+        /// <summary> Gets the Nodejs. </summary>
         public static LinkerClientType Nodejs { get; } = new LinkerClientType(NodejsValue);
-        /// <summary> springBoot. </summary>
+
+        /// <summary> Gets the SpringBoot. </summary>
         public static LinkerClientType SpringBoot { get; } = new LinkerClientType(SpringBootValue);
+
+        /// <summary> Gets the KafkaSpringBoot. </summary>
+        public static LinkerClientType KafkaSpringBoot { get; } = new LinkerClientType(KafkaSpringBootValue);
+
+        /// <summary> Gets the JmsSpringBoot. </summary>
+        public static LinkerClientType JmsSpringBoot { get; } = new LinkerClientType(JmsSpringBootValue);
+
+        /// <summary> Gets the Dapr. </summary>
+        public static LinkerClientType Dapr { get; } = new LinkerClientType(DaprValue);
+
         /// <summary> Determines if two <see cref="LinkerClientType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkerClientType left, LinkerClientType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinkerClientType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkerClientType left, LinkerClientType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkerClientType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinkerClientType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinkerClientType(string value) => new LinkerClientType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinkerClientType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinkerClientType?(string value) => value == null ? null : new LinkerClientType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkerClientType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinkerClientType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

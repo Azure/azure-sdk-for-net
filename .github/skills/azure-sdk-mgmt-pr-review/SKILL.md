@@ -26,19 +26,19 @@ Review only new or changed public API relative to the latest stable release. Exi
 
 1. Read `ApiCompatVersion` from `.csproj`. If absent and never present, treat the whole API surface as new and skip breaking-change checks.
 2. If present, fetch the released API file from tag `<PackageName>_<Version>`, e.g. `Azure.ResourceManager.Foo_1.0.0`, under `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` or older TFM variants.
-3. Diff released API against the PR API file. Review only added/modified types, members, and enums.
+3. Use CI ApiCompat results as the authoritative automated signal for binary compatibility and parameter names/order. Repository history and current `main` are context, not evidence that an API shipped.
+4. Diff released API against the PR API file. Review only added/modified types, members, and enums.
 
 ### Workflow
 
 1. Fetch existing PR comments and reviews first. Suppress duplicate inline and non-inline findings already raised by humans or earlier automation. Reinforce existing threads by replying instead of opening duplicates.
 2. Run the trusted naming scanner:
    ```powershell
-   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file> -BaselineVersion <ApiCompatVersion>
    ```
-   Omit `-BaselineApiFilePath` when there is no stable baseline. Use `-PackagePath` only for local/manual trusted reviews. In GitHub Agentic Workflow mode, run the scanner from the base branch against explicit API files fetched from PR/baseline; do not execute PR scripts.
-   When a baseline is supplied, the scanner also compares required/optional parameter metadata for every matching public method and constructor. Investigate every `OPTPARAM001` and `OPTPARAM002` finding as a potential blocking source-compatibility issue; ApiCompat may not report them.
+   Omit `-BaselineApiFilePath` and `-BaselineVersion` when there is no stable baseline. Use `-PackagePath` only for local/manual trusted reviews. In GitHub Agentic Workflow mode, run the scanner from the base branch against explicit API files fetched from PR/baseline; do not execute PR scripts.
 
-   Before requesting restoration for `OPTPARAM001`, inspect the complete overload set and verify the change compiles for representative positional and named calls. A compatibility shim may need to keep parameters required when restoring defaults would introduce `CS0121`; the text scanner intentionally reports these cases rather than approximating the C# overload-resolution binder. Neither `[Obsolete]` nor `[EditorBrowsable]` changes overload resolution, and `[OverloadResolutionPriority]` only helps consumers compiling with C# 13 or later.
+   The scanner reports `OPTPARAM001` only when a parameter changed from optional to required on the sole current overload, which deterministically breaks the GA call that omits the argument. It suppresses optionality differences when sibling overloads exist and does not emit required-to-optional findings. Those cases require a future deterministic compiler-backed check; do not turn textual differences into review findings.
 3. Treat scanner API-file line numbers as symbol identifiers, not final comment targets. Resolve each finding to generated source, customization source, or TypeSpec customization files before commenting.
 4. Run contextual naming exhaustively using inventory mode:
    ```powershell
@@ -47,7 +47,7 @@ Review only new or changed public API relative to the latest stable release. Exi
    Evaluate every `NEW` class/struct/enum. Verdicts: `OK`, `Flag`, or `OK (low confidence)`. The number of verdicts must equal the number of `NEW` entries. Report `Contextual naming: evaluated N new public types, flagged M`.
 5. Review API files, `src/Generated/`, TypeSpec customizations (`client.tsp`, `main.tsp`, `tspconfig.yaml`), and SDK customizations for issues not covered by the scanner.
 
-Scanner rule families include `OPTPARAM001`, `OPTPARAM002`, `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
+Scanner rule families include `OPTPARAM001`, `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
 
 ### Comment Targets
 
@@ -155,7 +155,7 @@ If `ApiCompatVersion` exists, check breaking changes after Phase 2. Locally, bui
 
 For each ApiCompat error, list the removed/changed API and target the relevant source line when possible. Do not fix it during review; request mitigation through customization code, generator/spec features, or the `mitigate-breaking-changes` skill. Any unmitigated breaking change is blocking. If no `ApiCompatVersion` exists, skip this phase.
 
-ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, investigate every `OPTPARAM001` and `OPTPARAM002` finding against the complete overload set. Do not infer that a previously reviewed overload covers its siblings; compare every matching signature against the stable baseline.
+ApiCompat passing is not sufficient for the deterministic `OPTPARAM001` case: changing an optional parameter to required on the sole current overload breaks callers that omit it. Do not report other required/optional metadata differences without compiler-backed evidence over the complete GA and current overload sets.
 
 ## Finding Severity
 
@@ -163,7 +163,7 @@ Report every finding and recommend resolving it in the current PR. Do not defer 
 
 | Severity | Finding categories | Review event |
 |----------|--------------------|--------------|
-| Blocking | Phase 1 versioning violations; deterministic scanner findings other than advisory `TYPE001` and `TYPE003` findings; all contextual naming findings; naming, suffix, acronym, resource-name, and ARM common-type violations; `TSPRENAME001`; required/optional parameter compatibility findings; unmitigated breaking changes; manual generated-code edits; and migration-specific violations | `REQUEST_CHANGES` |
+| Blocking | Phase 1 versioning violations; deterministic scanner findings other than advisory `TYPE001` and `TYPE003` findings; all contextual naming findings; naming, suffix, acronym, resource-name, and ARM common-type violations; `TSPRENAME001`; sole-overload `OPTPARAM001` breaks; unmitigated breaking changes; manual generated-code edits; and migration-specific violations | `REQUEST_CHANGES` |
 | Non-blocking | Advisory type-formatting recommendations, including scanner rules `TYPE001` and `TYPE003` and recommendations explicitly phrased as `Consider`, such as using `ResourceIdentifier`, `AzureLocation`, or a numeric type instead of `string`, when they do not also violate a blocking compatibility or API rule | `COMMENT` |
 
 When a review contains both severities, use `REQUEST_CHANGES`. Do not label a naming finding as non-blocking.

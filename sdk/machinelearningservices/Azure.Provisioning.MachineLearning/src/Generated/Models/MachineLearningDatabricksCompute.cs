@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningDatabricksCompute. </summary>
         public MachineLearningDatabricksCompute()
         {
+            ComputeType.Assign(MachineLearning.ComputeType.Databricks);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "Databricks");
             _properties = DefineModelProperty<MachineLearningDatabricksProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
