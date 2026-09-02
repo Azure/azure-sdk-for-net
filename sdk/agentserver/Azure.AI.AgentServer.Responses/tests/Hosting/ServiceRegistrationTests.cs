@@ -231,10 +231,10 @@ public class ServiceRegistrationTests
 
     private sealed class StubResponsesProvider : ResponsesProvider
     {
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
         public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
         public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
@@ -257,17 +257,17 @@ public class ServiceRegistrationTests
     /// </summary>
     private sealed class RecordingStateProvider : ResponsesProvider
     {
-        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+        private readonly ConcurrentDictionary<string, ResponseObject> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -275,7 +275,7 @@ public class ServiceRegistrationTests
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
@@ -332,8 +332,8 @@ public class ServiceRegistrationTests
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         try
         {
             await Task.Delay(Timeout.Infinite, ct);
@@ -343,6 +343,6 @@ public class ServiceRegistrationTests
             // Expected
         }
         response.SetCancelled();
-        yield return new ResponseIncompleteEvent(0, response);
+        yield return new ResponseIncompleteEvent { SequenceNumber = (int)(0), Response = response };
     }
 }

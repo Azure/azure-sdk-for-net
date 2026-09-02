@@ -76,6 +76,27 @@ internal static partial class ResponseValidator
                 errors.Add(new ValidationError("$.completed_at", $"Expected integer, got {completedAtProp.ValueKind}"));
         }
 
+        // Optional: content_filters
+        if (element.TryGetProperty("content_filters", out var contentFiltersProp))
+        {
+            if (contentFiltersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.content_filters", $"Expected array, got {contentFiltersProp.ValueKind}"));
+            else
+            {
+                var contentFiltersIdx = 0;
+                foreach (var item in contentFiltersProp.EnumerateArray())
+                {
+                    var itemResult = ContentFilterResultValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.content_filters[{contentFiltersIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    contentFiltersIdx++;
+                }
+            }
+        }
+
         // Optional: conversation
         if (element.TryGetProperty("conversation", out var conversationProp) && conversationProp.ValueKind != JsonValueKind.Null)
         {
@@ -184,6 +205,17 @@ internal static partial class ResponseValidator
         {
             if (modelProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.model", $"Expected string, got {modelProp.ValueKind}"));
+        }
+
+        // Optional: model_selection_details
+        if (element.TryGetProperty("model_selection_details", out var modelSelectionDetailsProp))
+        {
+            var modelSelectionDetailsResult = ModelSelectionDetailsValidator.Validate(modelSelectionDetailsProp);
+            if (!modelSelectionDetailsResult.IsValid)
+            {
+                foreach (var e in modelSelectionDetailsResult.Errors)
+                    errors.Add(new ValidationError("$.model_selection_details" + e.Path.Substring(1), e.Message));
+            }
         }
 
         // Required: object

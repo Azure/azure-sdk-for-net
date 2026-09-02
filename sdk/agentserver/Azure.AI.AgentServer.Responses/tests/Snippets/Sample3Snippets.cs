@@ -59,8 +59,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var stream = new ResponseEventStream(context, request);
 
                 // Configure Response properties BEFORE EmitCreated().
-                stream.Response.Temperature = 0.7;
-                stream.Response.MaxOutputTokens = 1024;
+                stream.Response.Temperature = 0.7f;
+                stream.Response.MaxOutputTokenCount = 1024;
 
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
@@ -130,8 +130,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
 
-                stream.Response.Temperature = 0.7;
-                stream.Response.MaxOutputTokens = 1024;
+                stream.Response.Temperature = 0.7f;
+                stream.Response.MaxOutputTokenCount = 1024;
 
                 // Emit the opening lifecycle events.
                 yield return stream.EmitCreated();   // response.created

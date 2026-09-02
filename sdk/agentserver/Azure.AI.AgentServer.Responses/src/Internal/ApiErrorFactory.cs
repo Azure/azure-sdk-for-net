@@ -17,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </list>
 /// All user-facing error messages are sanitized here. Internal details are never exposed.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ApiErrorFactory
 {
     // --- Constants ---
@@ -39,7 +40,7 @@ internal static class ApiErrorFactory
         string? code = null,
         string? param = null)
     {
-        var error = ModelFactory.Error(code: code, message: message, param: param, type: type);
+        var error = ModelFactory.ApiError(code: code, message: message, param: param, type: type);
         return new ApiErrorResult(ModelFactory.ApiErrorResponse(error), statusCode);
     }
 
@@ -66,7 +67,7 @@ internal static class ApiErrorFactory
     /// Creates an <see cref="IResult"/> wrapping a pre-built <see cref="ResponsesApiException"/>.
     /// </summary>
     internal static ApiErrorResult FromApiException(ResponsesApiException ex)
-        => new(ModelFactory.ApiErrorResponse(ex.Error), ex.StatusCode);
+        => new(ModelFactory.ApiErrorResponse(ToApiError(ex.Error)), ex.StatusCode);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a <see cref="PayloadValidationException"/>
@@ -74,17 +75,17 @@ internal static class ApiErrorFactory
     /// </summary>
     internal static ApiErrorResult PayloadValidation(PayloadValidationException ex)
     {
-        var detailsList = new List<Models.Error>();
+        var detailsList = new List<ApiError>();
         foreach (var validationError in ex.Errors)
         {
-            detailsList.Add(ModelFactory.Error(
+            detailsList.Add(ModelFactory.ApiError(
                 code: "invalid_value",
                 message: validationError.Message,
                 param: validationError.Path,
                 type: "invalid_request_error"));
         }
 
-        var topLevelError = ModelFactory.Error(
+        var topLevelError = ModelFactory.ApiError(
             message: ex.Message,
             type: "invalid_request_error",
             details: detailsList);
@@ -98,8 +99,32 @@ internal static class ApiErrorFactory
     /// Creates a <see cref="Error"/> with <c>type: "server_error"</c>.
     /// Used when constructing <see cref="ResponsesApiException"/> to throw.
     /// </summary>
-    internal static Models.Error NewServerError(string message)
-        => ModelFactory.Error(code: "server_error", message: message, type: "server_error");
+    internal static Error NewServerError(string message)
+        => OpenAIModelFactory.CreateError("server_error", message, kind: "server_error");
+
+    /// <summary>
+    /// Projects an <see cref="Error"/> onto the Azure-extended <see cref="ApiError"/> body model.
+    /// </summary>
+    internal static ApiError ToApiError(Error error)
+        => ModelFactory.ApiError(
+            code: error?.Code.ToString(),
+            message: error?.Message ?? GenericServerErrorMessage,
+            param: error?.Param,
+            type: ReadErrorKind(error) ?? "server_error");
+
+    /// <summary>
+    /// Reads the Azure-only <c>type</c> discriminator, which lives in the patch because the
+    /// OpenAI error model does not declare it.
+    /// </summary>
+    private static string? ReadErrorKind(Error? error)
+    {
+        if (error is null)
+        {
+            return null;
+        }
+
+        return error.Patch.TryGetValue("$.type"u8, out string? kind) ? kind : null;
+    }
 
     /// <summary>
     /// Creates a <see cref="ResponsesApiException"/> with HTTP 500 and the
@@ -128,7 +153,7 @@ internal static class ApiErrorFactory
     {
         if (exception is ResponsesApiException apiEx)
         {
-            return (apiEx.Error.Code ?? "server_error", apiEx.Error.Message);
+            return (apiEx.Error.Code.ToString(), apiEx.Error.Message);
         }
 
         if (exception is PayloadValidationException payloadEx)
@@ -155,10 +180,10 @@ internal static class ApiErrorFactory
     /// Maps any handler exception to a <see cref="ResponseErrorInfo"/> with the correct
     /// <see cref="ResponseErrorCode"/> and message.
     /// </summary>
-    internal static Models.ResponseErrorInfo ToResponseError(Exception exception)
+    internal static ResponseErrorInfo ToResponseError(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new Models.ResponseErrorInfo(ParseResponseErrorCode(code), message);
+        return OpenAIModelFactory.CreateError(ParseResponseErrorCode(code).ToString(), message);
     }
 
     // --- SSE standalone error event ---
@@ -169,7 +194,11 @@ internal static class ApiErrorFactory
     /// The message is sanitized — internal details are never exposed.
     /// </summary>
     internal static ResponseErrorEvent SseErrorEvent(string? safeMessage = null)
-        => new(0, "server_error", safeMessage ?? GenericServerErrorMessage, null!);
+        => new()
+        {
+            Code = "server_error",
+            Message = safeMessage ?? GenericServerErrorMessage,
+        };
 
     /// <summary>
     /// Maps any handler exception to a <see cref="ResponseErrorEvent"/> with the correct
@@ -178,7 +207,7 @@ internal static class ApiErrorFactory
     internal static ResponseErrorEvent ToSseErrorEvent(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new ResponseErrorEvent(0, code, message, null!);
+        return new ResponseErrorEvent { SequenceNumber = (int)(0), Code = code, Message = message, Param = null! };
     }
 
     // --- Helpers ---
@@ -195,6 +224,6 @@ internal static class ApiErrorFactory
             return ResponseErrorCode.ServerError;
         }
 
-        return new ResponseErrorCode(code);
+        return new ResponseErrorCode(code!);
     }
 }

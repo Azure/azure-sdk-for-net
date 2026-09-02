@@ -72,31 +72,13 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (contextManagementProp.ValueKind != JsonValueKind.Array)
                 errors.Add(new ValidationError("$.context_management", $"Expected array, got {contextManagementProp.ValueKind}"));
-            else
-            {
-                var contextManagementIdx = 0;
-                foreach (var item in contextManagementProp.EnumerateArray())
-                {
-                    var itemResult = ContextManagementParamValidator.Validate(item);
-                    if (!itemResult.IsValid)
-                    {
-                        foreach (var e in itemResult.Errors)
-                            errors.Add(new ValidationError($"$.context_management[{contextManagementIdx}]" + e.Path.Substring(1), e.Message));
-                    }
-                    contextManagementIdx++;
-                }
-            }
         }
 
         // Optional: conversation
         if (element.TryGetProperty("conversation", out var conversationProp) && conversationProp.ValueKind != JsonValueKind.Null)
         {
-            var conversationResult = ConversationParamValidator.Validate(conversationProp);
-            if (!conversationResult.IsValid)
-            {
-                foreach (var e in conversationResult.Errors)
-                    errors.Add(new ValidationError("$.conversation" + e.Path.Substring(1), e.Message));
-            }
+            if (conversationProp.ValueKind != JsonValueKind.String && conversationProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.conversation", $"Expected string or object, got {conversationProp.ValueKind}"));
         }
 
         // Optional: include
@@ -109,11 +91,21 @@ internal static partial class CreateResponsePayloadValidator
         // Optional: input
         if (element.TryGetProperty("input", out var inputProp))
         {
-            var inputResult = InputParamValidator.Validate(inputProp);
-            if (!inputResult.IsValid)
+            if (inputProp.ValueKind != JsonValueKind.String && inputProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.input", $"Expected string or array, got {inputProp.ValueKind}"));
+            else if (inputProp.ValueKind == JsonValueKind.Array)
             {
-                foreach (var e in inputResult.Errors)
-                    errors.Add(new ValidationError("$.input" + e.Path.Substring(1), e.Message));
+                var inputidx = 0;
+                foreach (var item in inputProp.EnumerateArray())
+                {
+                    var itemResult = ItemValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.input[{inputidx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    inputidx++;
+                }
             }
         }
 
@@ -247,12 +239,8 @@ internal static partial class CreateResponsePayloadValidator
         // Optional: stream_options
         if (element.TryGetProperty("stream_options", out var streamOptionsProp) && streamOptionsProp.ValueKind != JsonValueKind.Null)
         {
-            var streamOptionsResult = ResponseStreamOptionsValidator.Validate(streamOptionsProp);
-            if (!streamOptionsResult.IsValid)
-            {
-                foreach (var e in streamOptionsResult.Errors)
-                    errors.Add(new ValidationError("$.stream_options" + e.Path.Substring(1), e.Message));
-            }
+            if (streamOptionsProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.stream_options", $"Expected object, got {streamOptionsProp.ValueKind}"));
         }
 
         // Optional: structured_inputs
@@ -345,6 +333,13 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (userProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.user", $"Expected string, got {userProp.ValueKind}"));
+        }
+
+        // Optional: user_security_context
+        if (element.TryGetProperty("user_security_context", out var userSecurityContextProp))
+        {
+            if (userSecurityContextProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.user_security_context", $"Expected object, got {userSecurityContextProp.ValueKind}"));
         }
 
         ValidateCustom(element, errors);

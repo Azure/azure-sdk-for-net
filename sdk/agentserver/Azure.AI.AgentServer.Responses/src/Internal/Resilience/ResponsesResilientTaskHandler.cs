@@ -26,6 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// bespoke Responses recovery/steering machinery.
 /// </para>
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ResponsesResilientTaskHandler
 {
     /// <summary>The Core task name for one-shot (non-conversation) resilient response invocations.</summary>
@@ -51,9 +52,9 @@ internal static class ResponsesResilientTaskHandler
         CreateResponse request = payload.Request;
         string responseId = payload.ResponseId;
 
-        bool isBackground = request.Background == true;
-        bool isStreaming = request.Stream == true;
-        bool store = request.Store != false;
+        bool isBackground = request.BackgroundModeEnabled == true;
+        bool isStreaming = request.StreamingEnabled == true;
+        bool store = request.StoredOutputEnabled != false;
         bool isRecovery = ctx.EntryMode == EntryMode.Recovered;
 
         using IServiceScope scope = rootProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -171,7 +172,7 @@ internal static class ResponsesResilientTaskHandler
         execution.UserIdKey = payload.UserIdKey;
         if (persisted is not null)
         {
-            execution.RecoveredOutputWatermark = persisted.Output?.Count ?? 0;
+            execution.RecoveredOutputWatermark = persisted.OutputItems?.Count ?? 0;
         }
 
         ResponseContextImpl context = BuildContext();

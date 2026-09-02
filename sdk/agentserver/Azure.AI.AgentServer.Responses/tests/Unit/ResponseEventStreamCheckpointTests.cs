@@ -55,7 +55,7 @@ public class ResponseEventStreamCheckpointTests : IDisposable
     public void Checkpoint_ReturnsCheckpointControlEvent_CarryingResponse()
     {
         var ctx = new StubContext("caresp_unit");
-        var request = new CreateResponse { Model = "test-model", Background = true };
+        var request = new CreateResponse { Model = "test-model", BackgroundModeEnabled = true };
         var stream = new ResponseEventStream(ctx, request);
 
         var evt = stream.Checkpoint();
@@ -209,7 +209,7 @@ public class ResponseEventStreamCheckpointTests : IDisposable
         public int FailUpdateCallNumber { get; init; }
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);

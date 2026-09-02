@@ -10,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a code interpreter tool call output item. Provides methods
 /// for the lifecycle events and streaming code deltas.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItemCodeInterpreterToolCall>
 {
     private string? _finalCode;
@@ -36,12 +37,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this code interpreter call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemCodeInterpreterToolCall(
-            id: _itemId,
-            status: ItemCodeInterpreterToolCallStatus.InProgress,
-            containerId: "",
-            code: "",
-            outputs: Array.Empty<BinaryData>());
+        var item = new OutputItemCodeInterpreterToolCall(string.Empty)
+        {
+            Id = _itemId,
+            Status = CodeInterpreterCallStatus.InProgress,
+            ContainerId = string.Empty,
+        };
         return EmitAdded(item);
     }
 
@@ -51,8 +52,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallInProgressEvent"/>.</returns>
     public virtual ResponseCodeInterpreterCallInProgressEvent EmitInProgress()
     {
-        return new ResponseCodeInterpreterCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseCodeInterpreterCallInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -61,8 +61,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallInterpretingEvent"/>.</returns>
     public virtual ResponseCodeInterpreterCallInterpretingEvent EmitInterpreting()
     {
-        return new ResponseCodeInterpreterCallInterpretingEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseCodeInterpreterCallInterpretingEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -72,8 +71,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallCodeDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCodeInterpreterCallCodeDeltaEvent EmitCodeDelta(string delta)
     {
-        return new ResponseCodeInterpreterCallCodeDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return new ResponseCodeInterpreterCallCodeDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, Delta = delta };
     }
 
     /// <summary>
@@ -84,8 +82,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     public virtual ResponseCodeInterpreterCallCodeDoneEvent EmitCodeDone(string code)
     {
         _finalCode = code;
-        return new ResponseCodeInterpreterCallCodeDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, code);
+        return new ResponseCodeInterpreterCallCodeDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, Code = code };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -130,8 +127,7 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallCompletedEvent"/>.</returns>
     public virtual ResponseCodeInterpreterCallCompletedEvent EmitCompleted()
     {
-        return new ResponseCodeInterpreterCallCompletedEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseCodeInterpreterCallCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -140,12 +136,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this code interpreter call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemCodeInterpreterToolCall(
-            id: _itemId,
-            status: ItemCodeInterpreterToolCallStatus.Completed,
-            containerId: "",
-            code: _finalCode ?? "",
-            outputs: Array.Empty<BinaryData>());
+        var item = new OutputItemCodeInterpreterToolCall(_finalCode ?? string.Empty)
+        {
+            Id = _itemId,
+            Status = CodeInterpreterCallStatus.Completed,
+            ContainerId = string.Empty,
+        };
         return EmitDone(item);
     }
 }

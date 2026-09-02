@@ -261,7 +261,7 @@ public class GetInputItemsProtocolTests : IDisposable
     // ═══════════════════════════════════════════════════════════════════════
 
     /// <summary>
-    /// T064: POST with previous_response_id chains history. Models.ResponseObject B's
+    /// T064: POST with previous_response_id chains history. ResponseObject B's
     /// input_items contain both response A's input (as history) and response B's own input.
     /// </summary>
     [Test]
@@ -304,7 +304,7 @@ public class GetInputItemsProtocolTests : IDisposable
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
 
-        // Models.ResponseObject A had 1 input item, response B also has 1 → total 2
+        // ResponseObject A had 1 input item, response B also has 1 → total 2
         Assert.That(data.GetArrayLength(), Is.EqualTo(2));
     }
 
@@ -380,7 +380,7 @@ public class GetInputItemsProtocolTests : IDisposable
 
     /// <summary>
     /// Verifies that a three-response chain (A → B → C) correctly resolves history
-    /// from the entire chain. Models.ResponseObject C's input_items should include history from
+    /// from the entire chain. ResponseObject C's input_items should include history from
     /// both A and B, plus C's own inline input.
     /// </summary>
     [Test]

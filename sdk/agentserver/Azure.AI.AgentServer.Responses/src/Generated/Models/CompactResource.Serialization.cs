@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
+            writer.WriteNumberValue(CreatedOn, "U");
             writer.WritePropertyName("usage"u8);
             writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -147,8 +148,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string @object = default;
             IList<ItemField> output = default;
-            DateTimeOffset createdAt = default;
-            ResponseUsage usage = default;
+            DateTimeOffset createdOn = default;
+            ResponseTokenUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,12 +175,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<ResponseTokenUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +192,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 @object,
                 output,
-                createdAt,
+                createdOn,
                 usage,
                 additionalBinaryDataProperties);
         }

@@ -4,11 +4,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
 
 /// <summary>
-/// T003: Tests for Models.ResponseObject.Snapshot() deep copy via ModelReaderWriter round-trip.
+/// T003: Tests for ResponseObject.Snapshot() deep copy via ModelReaderWriter round-trip.
 /// Verifies snapshot independence, round-trip fidelity, and polymorphic subtype support.
 /// </summary>
 public class ResponseSnapshotTests
@@ -17,10 +18,7 @@ public class ResponseSnapshotTests
     public void Snapshot_ReturnsIndependentCopy_StatusMutationDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap1", "gpt-4o")
-        {
-            Status = ResponseStatus.InProgress,
-        };
+        var original = new ResponseObject { Id = "resp_snap1", Model = "gpt-4o", Status = ResponseStatus.InProgress };
 
         // Act
         var snapshot = original.Snapshot();
@@ -35,40 +33,33 @@ public class ResponseSnapshotTests
     public void Snapshot_ReturnsIndependentCopy_AddingOutputDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap2", "gpt-4o")
-        {
-            Status = ResponseStatus.InProgress,
-        };
-        var message = new OutputItemMessage(
+        var original = new ResponseObject { Id = "resp_snap2", Model = "gpt-4o", Status = ResponseStatus.InProgress };
+        var message = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            Array.Empty<MessageContent>());
-        original.Output.Add(message);
+            Array.Empty<ResponseContentPart>());
+        original.OutputItems.Add(message);
 
         // Act
         var snapshot = original.Snapshot();
-        var message2 = new OutputItemMessage(
+        var message2 = MessageItemFactory.OutputMessage(
             "msg_2",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            Array.Empty<MessageContent>());
-        original.Output.Add(message2);
+            Array.Empty<ResponseContentPart>());
+        original.OutputItems.Add(message2);
 
         // Assert
-        XAssert.Single(snapshot.Output);
-        Assert.That(original.Output.Count, Is.EqualTo(2));
+        XAssert.Single(snapshot.OutputItems);
+        Assert.That(original.OutputItems.Count, Is.EqualTo(2));
     }
 
     [Test]
     public void Snapshot_PreservesAllCoreProperties()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap3", "gpt-4o")
-        {
-            Status = ResponseStatus.Completed,
-            CompletedAt = new DateTimeOffset(2026, 3, 8, 12, 0, 0, TimeSpan.Zero),
-        };
+        var original = new ResponseObject { Id = "resp_snap3", Model = "gpt-4o", Status = ResponseStatus.Completed, CompletedAt = new DateTimeOffset(2026, 3, 8, 12, 0, 0, TimeSpan.Zero) };
 
         // Act
         var snapshot = original.Snapshot();
@@ -86,95 +77,69 @@ public class ResponseSnapshotTests
     public void Snapshot_PreservesPolymorphicOutputItems()
     {
         // Arrange
-        var message = new OutputItemMessage(
+        var message = MessageItemFactory.OutputMessage(
             "msg_poly",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            Array.Empty<MessageContent>());
+            Array.Empty<ResponseContentPart>());
 
-        var functionCall = new OutputItemFunctionToolCall(
-            "call_fn1",
-            "get_weather",
-            """{"location":"Seattle"}""");
+        var functionCall = new OutputItemFunctionToolCall("call_fn1", "get_weather", BinaryData.FromString("""{"location":"Seattle"}"""));
 
-        var original = new Models.ResponseObject("resp_snap4", "gpt-4o")
-        {
-            Status = ResponseStatus.Completed,
-        };
-        original.Output.Add(message);
-        original.Output.Add(functionCall);
+        var original = new ResponseObject { Id = "resp_snap4", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        original.OutputItems.Add(message);
+        original.OutputItems.Add(functionCall);
 
         // Act
         var snapshot = original.Snapshot();
 
         // Assert — polymorphic types preserved
-        Assert.That(snapshot.Output.Count, Is.EqualTo(2));
+        Assert.That(snapshot.OutputItems.Count, Is.EqualTo(2));
 
-        var snappedMessage = XAssert.IsType<OutputItemMessage>(snapshot.Output[0]);
+        var snappedMessage = XAssert.IsType<OutputItemMessage>(snapshot.OutputItems[0]);
         Assert.That(snappedMessage.Id, Is.EqualTo("msg_poly"));
         Assert.That(snappedMessage.Role, Is.EqualTo(MessageRole.Assistant));
 
-        var snappedFunction = XAssert.IsType<OutputItemFunctionToolCall>(snapshot.Output[1]);
+        var snappedFunction = XAssert.IsType<OutputItemFunctionToolCall>(snapshot.OutputItems[1]);
         Assert.That(snappedFunction.CallId, Is.EqualTo("call_fn1"));
-        Assert.That(snappedFunction.Name, Is.EqualTo("get_weather"));
-        Assert.That(snappedFunction.Arguments, Is.EqualTo("""{"location":"Seattle"}"""));
+        Assert.That(snappedFunction.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(snappedFunction.FunctionArguments.ToString(), Is.EqualTo("""{"location":"Seattle"}"""));
     }
 
     [Test]
     public void Snapshot_PreservesMetadata()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap5", "gpt-4o")
-        {
-            Status = ResponseStatus.InProgress,
-            Metadata = new Metadata
-            {
-                AdditionalProperties = { ["user_id"] = "u_123", ["session"] = "s_456" },
-            },
-        };
+        var original = new ResponseObject { Id = "resp_snap5", Model = "gpt-4o", Status = ResponseStatus.InProgress, Metadata = { ["user_id"] = "u_123", ["session"] = "s_456" } };
 
         // Act
         var snapshot = original.Snapshot();
 
         // Assert
         Assert.That(snapshot.Metadata, Is.Not.Null);
-        Assert.That(snapshot.Metadata.AdditionalProperties["user_id"], Is.EqualTo("u_123"));
-        Assert.That(snapshot.Metadata.AdditionalProperties["session"], Is.EqualTo("s_456"));
+        Assert.That(snapshot.Metadata["user_id"], Is.EqualTo("u_123"));
+        Assert.That(snapshot.Metadata["session"], Is.EqualTo("s_456"));
     }
 
     [Test]
     public void Snapshot_MetadataMutationDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap6", "gpt-4o")
-        {
-            Status = ResponseStatus.InProgress,
-            Metadata = new Metadata
-            {
-                AdditionalProperties = { ["key1"] = "value1" },
-            },
-        };
+        var original = new ResponseObject { Id = "resp_snap6", Model = "gpt-4o", Status = ResponseStatus.InProgress, Metadata = { ["key1"] = "value1" } };
 
         // Act
         var snapshot = original.Snapshot();
-        original.Metadata.AdditionalProperties["key2"] = "value2";
+        original.Metadata["key2"] = "value2";
 
         // Assert — snapshot unaffected by mutation of original's metadata
-        Assert.That(snapshot.Metadata.AdditionalProperties.ContainsKey("key2"), Is.False);
-        XAssert.Single(snapshot.Metadata.AdditionalProperties);
+        Assert.That(snapshot.Metadata.ContainsKey("key2"), Is.False);
+        XAssert.Single(snapshot.Metadata);
     }
 
     [Test]
     public void Snapshot_PreservesErrorField()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap7", "gpt-4o")
-        {
-            Status = ResponseStatus.Failed,
-            Error = ResponsesModelFactory.ResponseErrorInfo(
-                code: ResponseErrorCode.ServerError,
-                message: "Something went wrong"),
-        };
+        var original = new ResponseObject { Id = "resp_snap7", Model = "gpt-4o", Status = ResponseStatus.Failed, Error = ResponsesModelFactory.ResponseErrorInfo(code: ResponseErrorCode.ServerError, message: "Something went wrong") };
 
         // Act
         var snapshot = original.Snapshot();
@@ -189,7 +154,7 @@ public class ResponseSnapshotTests
     public void Snapshot_ReturnsNewInstance_NotSameReference()
     {
         // Arrange
-        var original = new Models.ResponseObject("resp_snap8", "gpt-4o");
+        var original = new ResponseObject { Id = "resp_snap8", Model = "gpt-4o" };
 
         // Act
         var snapshot = original.Snapshot();
@@ -202,10 +167,7 @@ public class ResponseSnapshotTests
     public void Snapshot_EmptyResponse_RoundTripsSuccessfully()
     {
         // Arrange — minimal response with no output, no error, no metadata
-        var original = new Models.ResponseObject("resp_snap9", "gpt-4o")
-        {
-            Status = ResponseStatus.InProgress,
-        };
+        var original = new ResponseObject { Id = "resp_snap9", Model = "gpt-4o", Status = ResponseStatus.InProgress };
 
         // Act
         var snapshot = original.Snapshot();
@@ -214,6 +176,6 @@ public class ResponseSnapshotTests
         Assert.That(snapshot.Id, Is.EqualTo("resp_snap9"));
         Assert.That(snapshot.Model, Is.EqualTo("gpt-4o"));
         Assert.That(snapshot.Status, Is.EqualTo(ResponseStatus.InProgress));
-        Assert.That(snapshot.Output, Is.Empty);
+        Assert.That(snapshot.OutputItems, Is.Empty);
     }
 }

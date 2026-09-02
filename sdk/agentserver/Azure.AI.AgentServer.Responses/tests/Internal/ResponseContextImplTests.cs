@@ -5,6 +5,7 @@ using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Internal;
@@ -52,13 +53,13 @@ public class ResponseContextImplTests
     [Test]
     public async Task GetInputItemsAsync_Resolves_ItemReferenceParam_Via_Provider()
     {
-        var referencedItem = new OutputItemMessage(
+        var referencedItem = MessageItemFactory.OutputMessage(
             "msg_existing",
             MessageStatus.Completed,
             MessageRole.Assistant,
-            new List<MessageContent>
+            new List<ResponseContentPart>
             {
-                new MessageContentInputTextContent("I'm a resolved item")
+                ResponseContentPart.CreateInputTextPart("I'm a resolved item")
             });
 
         var provider = new StubProvider();
@@ -102,9 +103,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_With_References_Calls_Provider_Only_Once()
     {
         var provider = new RecordingProvider();
-        provider.AddItem("ref_1", new OutputItemMessage(
+        provider.AddItem("ref_1", MessageItemFactory.OutputMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -126,9 +127,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_Preserves_Input_Item_Order()
     {
         var provider = new StubProvider();
-        provider.AddItem("ref_middle", new OutputItemMessage(
+        provider.AddItem("ref_middle", MessageItemFactory.OutputMessage(
             "ref_middle", MessageStatus.Completed, MessageRole.Assistant,
-            new List<MessageContent> { new MessageContentInputTextContent("middle ref") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("middle ref") }));
 
         var request = CreateRequestWithJsonInput("""
             [
@@ -206,9 +207,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_ResolveReferencesFalse_DoesNotCallProvider()
     {
         var provider = new RecordingProvider();
-        provider.AddItem("ref_1", new OutputItemMessage(
+        provider.AddItem("ref_1", MessageItemFactory.OutputMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -223,9 +224,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_BothModes_CacheIndependently()
     {
         var provider = new RecordingProvider();
-        provider.AddItem("ref_1", new OutputItemMessage(
+        provider.AddItem("ref_1", MessageItemFactory.OutputMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("resolved") }));
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart("resolved") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -386,18 +387,20 @@ public class ResponseContextImplTests
 
     private static CreateResponse CreateRequestWithJsonInput(string inputJson)
     {
-        return new CreateResponse
+        var request = new CreateResponse { Model = "test" };
+        foreach (var item in OpenAIJson.Items(inputJson))
         {
-            Model = "test",
-            Input = BinaryData.FromString(inputJson),
-        };
+            request.InputItems.Add(item);
+        }
+
+        return request;
     }
 
     private static OutputItemMessage MakeMessage(string id, string text)
     {
-        return new OutputItemMessage(
+        return MessageItemFactory.OutputMessage(
             id, MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent(text) });
+            new List<ResponseContentPart> { ResponseContentPart.CreateInputTextPart(text) });
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -414,13 +417,13 @@ public class ResponseContextImplTests
         public void SetHistoryItemIds(string previousResponseId, string[] ids)
             => _historyItemIds[previousResponseId] = ids;
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
             => Task.CompletedTask;
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
             => Task.CompletedTask;
 
         public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)

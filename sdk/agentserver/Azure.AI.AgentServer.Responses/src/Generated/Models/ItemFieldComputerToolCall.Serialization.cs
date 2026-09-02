@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -92,8 +93,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (ComputerAction item in Actions)
+                foreach (ComputerCallAction item in Actions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -138,8 +144,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ComputerAction action = default;
-            IList<ComputerAction> actions = default;
+            ComputerCallAction action = default;
+            IList<ComputerCallAction> actions = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
             ItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -165,7 +171,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    action = ComputerAction.DeserializeComputerAction(prop.Value, options);
+                    action = ModelReaderWriter.Read<ComputerCallAction>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("actions"u8))
@@ -174,10 +180,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    List<ComputerAction> array = new List<ComputerAction>();
+                    List<ComputerCallAction> array = new List<ComputerCallAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputerAction.DeserializeComputerAction(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ComputerCallAction>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     actions = array;
                     continue;
@@ -208,7 +221,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 callId,
                 action,
-                actions ?? new ChangeTrackingList<ComputerAction>(),
+                actions ?? new ChangeTrackingList<ComputerCallAction>(),
                 pendingSafetyChecks,
                 status);
         }

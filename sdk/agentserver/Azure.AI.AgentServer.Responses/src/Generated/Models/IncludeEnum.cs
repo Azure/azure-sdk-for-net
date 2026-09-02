@@ -20,8 +20,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string FileSearchCallResultsValue = "file_search_call.results";
         private const string WebSearchCallResultsValue = "web_search_call.results";
         private const string WebSearchCallActionSourcesValue = "web_search_call.action.sources";
-        private const string MessageInputImageImageUrlValue = "message.input_image.image_url";
-        private const string ComputerCallOutputOutputImageUrlValue = "computer_call_output.output.image_url";
+        private const string MessageInputImageImageUriValue = "message.input_image.image_url";
+        private const string ComputerCallOutputOutputImageUriValue = "computer_call_output.output.image_url";
         private const string CodeInterpreterCallOutputsValue = "code_interpreter_call.outputs";
         private const string ReasoningEncryptedContentValue = "reasoning.encrypted_content";
         private const string MessageOutputTextLogprobsValue = "message.output_text.logprobs";
@@ -46,11 +46,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the WebSearchCallActionSources. </summary>
         public static IncludeEnum WebSearchCallActionSources { get; } = new IncludeEnum(WebSearchCallActionSourcesValue);
 
-        /// <summary> Gets the MessageInputImageImageUrl. </summary>
-        public static IncludeEnum MessageInputImageImageUrl { get; } = new IncludeEnum(MessageInputImageImageUrlValue);
+        /// <summary> Gets the MessageInputImageImageUri. </summary>
+        public static IncludeEnum MessageInputImageImageUri { get; } = new IncludeEnum(MessageInputImageImageUriValue);
 
-        /// <summary> Gets the ComputerCallOutputOutputImageUrl. </summary>
-        public static IncludeEnum ComputerCallOutputOutputImageUrl { get; } = new IncludeEnum(ComputerCallOutputOutputImageUrlValue);
+        /// <summary> Gets the ComputerCallOutputOutputImageUri. </summary>
+        public static IncludeEnum ComputerCallOutputOutputImageUri { get; } = new IncludeEnum(ComputerCallOutputOutputImageUriValue);
 
         /// <summary> Gets the CodeInterpreterCallOutputs. </summary>
         public static IncludeEnum CodeInterpreterCallOutputs { get; } = new IncludeEnum(CodeInterpreterCallOutputsValue);
