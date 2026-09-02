@@ -5,7 +5,7 @@ type: capability
 environment: azsdk-mcp-mock
 
 tags:
-  area: azsdk-common-sdk-breaking-change-test
+  area: azsdk-common-sdk-breaking-change
   type: ci-gate
 
 defaults:
