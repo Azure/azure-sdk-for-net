@@ -26,7 +26,7 @@ steps:
         scriptLocation: inlineScript
         # PackageInfoFiles example: @('a/file1.json','a/file2.json')
         inlineScript: |
-          $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1 `
+          $(Build.SourcesDirectory)/eng/common/scripts/Update-Package-WorkItems.ps1 `
             -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name) `
             -ArtifactPath ${{ parameters.ArtifactPath }} `
             -RepoRoot $(Build.SourcesDirectory) `
