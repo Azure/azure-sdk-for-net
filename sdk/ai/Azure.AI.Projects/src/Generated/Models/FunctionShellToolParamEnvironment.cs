@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The FunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerAutoParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>.
     /// </summary>
     internal abstract partial class FunctionShellToolParamEnvironment
     {

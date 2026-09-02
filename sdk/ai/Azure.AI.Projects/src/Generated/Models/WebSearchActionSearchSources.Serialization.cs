@@ -78,7 +78,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Url.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,7 +122,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string @type = default;
-            string url = default;
+            Uri url = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

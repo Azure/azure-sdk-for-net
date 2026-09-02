@@ -17,7 +17,7 @@
     "@azure-tools/typespec-azure-rulesets": "0.71.0",
     "@azure-tools/typespec-azure-resource-manager": "0.71.0",
     "@azure-tools/typespec-autorest": "0.71.0",
-    "@azure-tools/openai-typespec": "1.14.0",
+    "@azure-tools/openai-typespec": "1.23.0",
     "@typespec/sse": "0.85.0",
     "@typespec/events": "0.85.0"
   }
