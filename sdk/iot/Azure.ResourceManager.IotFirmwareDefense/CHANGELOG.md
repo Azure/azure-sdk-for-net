@@ -31,7 +31,7 @@
 
 ### Features Added
 
-- Updated Microsoft.IoTfirmwareDefense API version to `2025-04-01-preview`
+- Updated Microsoft.IoTFirmwareDefense API version to `2025-04-01-preview`
 - Added new get operations for fetching workspace usage metrics
 
 ### Breaking Changes
@@ -50,7 +50,7 @@ This release is the first stable release of the IoT Firmware Defense Management 
 
 ### Features Added
 
-- Updated Microsoft.IoTfirmwareDefense API version to `2024-01-10`
+- Updated Microsoft.IoTFirmwareDefense API version to `2024-01-10`
 - Added new Get operations and models for fetching firmware analysis results and result summaries as resources.
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
