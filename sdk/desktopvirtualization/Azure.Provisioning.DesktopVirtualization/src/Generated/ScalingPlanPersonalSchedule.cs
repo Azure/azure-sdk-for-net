@@ -545,7 +545,7 @@ namespace Azure.Provisioning.DesktopVirtualization
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ScalingPlanPersonalScheduleProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<ScalingPlan>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ScalingPlan>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

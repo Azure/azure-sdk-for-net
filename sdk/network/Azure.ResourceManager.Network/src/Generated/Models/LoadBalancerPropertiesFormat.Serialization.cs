@@ -159,6 +159,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -211,6 +216,7 @@ namespace Azure.ResourceManager.Network.Models
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             LoadBalancerScope? scope = default;
+            LoadBalancerMode? mode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -339,6 +345,15 @@ namespace Azure.ResourceManager.Network.Models
                     scope = new LoadBalancerScope(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("mode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new LoadBalancerMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -355,6 +370,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 scope,
+                mode,
                 additionalBinaryDataProperties);
         }
     }

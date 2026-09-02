@@ -53,18 +53,6 @@ public partial class DeclarativeAgentDefinition
     }
 
     /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
-    /// <param name="model"> The model deployment to use for this agent. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-    public DeclarativeAgentDefinition(string model) : base(ProjectsAgentKind.Prompt)
-    {
-        Argument.AssertNotNull(model, nameof(model));
-
-        Model = model;
-        Tools = new ChangeTrackingList<ResponseTool>();
-        StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
-    }
-
-    /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
     /// <param name="kind"></param>
     /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

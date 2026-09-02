@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
@@ -26,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSafeFlattenModel(document.RootElement, options);
+                        return DeserializeSafeFlattenModel(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SafeFlattenModel)} does not support reading '{options.Format}' format.");
@@ -60,6 +61,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SafeFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -74,36 +83,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 throw new FormatException($"The model {nameof(SafeFlattenModel)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(FlattenedProperty))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$.flattenedProperty"u8))
+            {
+                if (!Patch.IsRemoved("$.flattenedProperty"u8))
+                {
+                    writer.WritePropertyName("flattenedProperty"u8);
+                    Patch.WriteTo(writer, "$.flattenedProperty"u8);
+                }
+            }
+            else if (Optional.IsCollectionDefined(FlattenedProperty))
             {
                 writer.WritePropertyName("flattenedProperty"u8);
                 writer.WriteStartArray();
-                foreach (string item in FlattenedProperty)
+                for (int i = 0; i < FlattenedProperty.Count; i++)
                 {
-                    if (item == null)
+                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.flattenedProperty[{i}]")))
+                    {
+                        continue;
+                    }
+                    if (FlattenedProperty[i] == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(FlattenedProperty[i]);
                 }
+                Patch.WriteTo(writer, "$.flattenedProperty"u8);
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -120,19 +131,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 throw new FormatException($"The model {nameof(SafeFlattenModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSafeFlattenModel(document.RootElement, options);
+            return DeserializeSafeFlattenModel(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SafeFlattenModel DeserializeSafeFlattenModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static SafeFlattenModel DeserializeSafeFlattenModel(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> flattenedProperty = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("flattenedProperty"u8))
@@ -156,12 +170,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     flattenedProperty = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
-            return new SafeFlattenModel(flattenedProperty ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new SafeFlattenModel(flattenedProperty ?? new ChangeTrackingList<string>(), patch);
         }
     }
 }

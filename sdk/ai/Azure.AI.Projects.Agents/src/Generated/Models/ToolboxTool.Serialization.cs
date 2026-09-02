@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// An abstract representation of a tool stored in a toolbox.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2AToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, <see cref="FabricIQPreviewToolboxTool"/>, <see cref="WebIQPreviewToolboxTool"/>, <see cref="ToolboxSearchPreviewToolboxTool"/>, and <see cref="ToolSearchToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="ShellToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2AToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, <see cref="FabricIQPreviewToolboxTool"/>, <see cref="WebIQPreviewToolboxTool"/>, <see cref="ToolboxSearchPreviewToolboxTool"/>, and <see cref="ToolSearchToolboxTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolboxTool))]
     public abstract partial class ToolboxTool : IJsonModel<ToolboxTool>
@@ -159,6 +159,8 @@ namespace Azure.AI.Projects.Agents
                         return FileSearchToolboxTool.DeserializeFileSearchToolboxTool(element, options);
                     case "web_search":
                         return WebSearchToolboxTool.DeserializeWebSearchToolboxTool(element, options);
+                    case "shell":
+                        return ShellToolboxTool.DeserializeShellToolboxTool(element, options);
                     case "mcp":
                         return MCPToolboxTool.DeserializeMCPToolboxTool(element, options);
                     case "azure_ai_search":

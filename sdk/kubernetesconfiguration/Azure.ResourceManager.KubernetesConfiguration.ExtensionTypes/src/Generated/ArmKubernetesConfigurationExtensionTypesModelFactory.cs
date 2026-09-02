@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="ExtensionTypes.ExtensionTypeData"/> instance for mocking. </returns>
-        public static ExtensionTypeData ExtensionTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtensionTypeProperties properties = default)
+        /// <returns> A new <see cref="ExtensionTypes.KubernetesConfigurationExtensionTypeData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeData KubernetesConfigurationExtensionTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationExtensionTypeProperties properties = default)
         {
-            return new ExtensionTypeData(
+            return new KubernetesConfigurationExtensionTypeData(
                 id,
                 name,
                 resourceType,
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="planInfo"> Plan information only for the Marketplace Extension Type. </param>
         /// <param name="supportedClusterTypes"> Cluster Types supported for this Extension Type. </param>
         /// <param name="supportedScopes"> Supported Kubernetes Scopes for this Extension Type. </param>
-        /// <returns> A new <see cref="Models.ExtensionTypeProperties"/> instance for mocking. </returns>
-        public static ExtensionTypeProperties ExtensionTypeProperties(bool? isSystemExtension = default, bool? isManagedIdentityRequired = default, string description = default, string publisher = default, ExtensionTypePlanInfo planInfo = default, IEnumerable<string> supportedClusterTypes = default, ExtensionTypeSupportedScopes supportedScopes = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeProperties"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeProperties KubernetesConfigurationExtensionTypeProperties(bool? isSystemExtension = default, bool? isManagedIdentityRequired = default, string description = default, string publisher = default, KubernetesConfigurationExtensionTypePlanInfo planInfo = default, IEnumerable<string> supportedClusterTypes = default, KubernetesConfigurationExtensionTypeSupportedScopes supportedScopes = default)
         {
             supportedClusterTypes ??= new ChangeTrackingList<string>();
 
-            return new ExtensionTypeProperties(
+            return new KubernetesConfigurationExtensionTypeProperties(
                 isSystemExtension,
                 isManagedIdentityRequired,
                 description,
@@ -60,18 +60,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="publisherId"> Publisher ID of the Marketplace Extension Type. </param>
         /// <param name="planId"> Plan ID of the Marketplace Extension Type. </param>
         /// <param name="offerId"> Offer or Product ID of the Marketplace Extension Type. </param>
-        /// <returns> A new <see cref="Models.ExtensionTypePlanInfo"/> instance for mocking. </returns>
-        public static ExtensionTypePlanInfo ExtensionTypePlanInfo(string publisherId = default, string planId = default, string offerId = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypePlanInfo"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypePlanInfo KubernetesConfigurationExtensionTypePlanInfo(string publisherId = default, string planId = default, string offerId = default)
         {
-            return new ExtensionTypePlanInfo(publisherId, planId, offerId, default);
+            return new KubernetesConfigurationExtensionTypePlanInfo(publisherId, planId, offerId, default);
         }
 
         /// <param name="defaultScope"> The default scope of the extension type. This scope will be used if the user does not provide a scope while creating an extension. </param>
         /// <param name="clusterScopeSettings"> Extension scope settings. </param>
-        /// <returns> A new <see cref="Models.ExtensionTypeSupportedScopes"/> instance for mocking. </returns>
-        public static ExtensionTypeSupportedScopes ExtensionTypeSupportedScopes(string defaultScope = default, ExtensionTypeClusterScopeSettings clusterScopeSettings = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeSupportedScopes"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeSupportedScopes KubernetesConfigurationExtensionTypeSupportedScopes(string defaultScope = default, KubernetesConfigurationExtensionTypeClusterScopeSettings clusterScopeSettings = default)
         {
-            return new ExtensionTypeSupportedScopes(defaultScope, clusterScopeSettings, default);
+            return new KubernetesConfigurationExtensionTypeSupportedScopes(defaultScope, clusterScopeSettings, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isMultipleInstancesAllowed"> Describes if multiple instances of the extension are allowed. </param>
         /// <param name="defaultReleaseNamespace"> Default extension release namespace. </param>
-        /// <returns> A new <see cref="Models.ExtensionTypeClusterScopeSettings"/> instance for mocking. </returns>
-        public static ExtensionTypeClusterScopeSettings ExtensionTypeClusterScopeSettings(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isMultipleInstancesAllowed = default, string defaultReleaseNamespace = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeClusterScopeSettings"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeClusterScopeSettings KubernetesConfigurationExtensionTypeClusterScopeSettings(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isMultipleInstancesAllowed = default, string defaultReleaseNamespace = default)
         {
-            return new ExtensionTypeClusterScopeSettings(
+            return new KubernetesConfigurationExtensionTypeClusterScopeSettings(
                 id,
                 name,
                 resourceType,
                 systemData,
-                isMultipleInstancesAllowed is null && defaultReleaseNamespace is null ? default : new ExtensionTypeClusterScopeSettingsProperties(isMultipleInstancesAllowed, defaultReleaseNamespace, default),
+                isMultipleInstancesAllowed is null && defaultReleaseNamespace is null ? default : new KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties(isMultipleInstancesAllowed, defaultReleaseNamespace, default),
                 default);
         }
 
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="ExtensionTypes.ExtensionTypeVersionForReleaseTrainData"/> instance for mocking. </returns>
-        public static ExtensionTypeVersionForReleaseTrainData ExtensionTypeVersionForReleaseTrainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtensionTypeVersionForReleaseTrainProperties properties = default)
+        /// <returns> A new <see cref="ExtensionTypes.KubernetesConfigurationExtensionTypeVersionForReleaseTrainData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeVersionForReleaseTrainData KubernetesConfigurationExtensionTypeVersionForReleaseTrainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties properties = default)
         {
-            return new ExtensionTypeVersionForReleaseTrainData(
+            return new KubernetesConfigurationExtensionTypeVersionForReleaseTrainData(
                 id,
                 name,
                 resourceType,
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="version"> The version number for the extension type. </param>
         /// <param name="unsupportedKubernetesVersions"> The list of supported Kubernetes cluster versions for this extension type. </param>
         /// <param name="supportedClusterTypes"> A list of supported cluster types for this version of the Extension Type. </param>
-        /// <returns> A new <see cref="Models.ExtensionTypeVersionForReleaseTrainProperties"/> instance for mocking. </returns>
-        public static ExtensionTypeVersionForReleaseTrainProperties ExtensionTypeVersionForReleaseTrainProperties(string version = default, ExtensionTypeUnsupportedKubernetesVersions unsupportedKubernetesVersions = default, IEnumerable<string> supportedClusterTypes = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties(string version = default, KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions unsupportedKubernetesVersions = default, IEnumerable<string> supportedClusterTypes = default)
         {
             supportedClusterTypes ??= new ChangeTrackingList<string>();
 
-            return new ExtensionTypeVersionForReleaseTrainProperties(version, unsupportedKubernetesVersions, (supportedClusterTypes ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties(version, unsupportedKubernetesVersions, (supportedClusterTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="connectedCluster"></param>
         /// <param name="appliances"></param>
         /// <param name="provisionedCluster"></param>
         /// <param name="managedCluster"></param>
-        /// <returns> A new <see cref="Models.ExtensionTypeUnsupportedKubernetesVersions"/> instance for mocking. </returns>
-        public static ExtensionTypeUnsupportedKubernetesVersions ExtensionTypeUnsupportedKubernetesVersions(IEnumerable<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> connectedCluster = default, IEnumerable<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> appliances = default, IEnumerable<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> provisionedCluster = default, IEnumerable<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> managedCluster = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions(IEnumerable<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> connectedCluster = default, IEnumerable<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> appliances = default, IEnumerable<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> provisionedCluster = default, IEnumerable<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> managedCluster = default)
         {
-            connectedCluster ??= new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
-            appliances ??= new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
-            provisionedCluster ??= new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
-            managedCluster ??= new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+            connectedCluster ??= new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+            appliances ??= new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+            provisionedCluster ??= new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+            managedCluster ??= new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
 
-            return new ExtensionTypeUnsupportedKubernetesVersions((connectedCluster ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (appliances ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (provisionedCluster ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (managedCluster ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), default);
+            return new KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions((connectedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (appliances ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (provisionedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (managedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), default);
         }
 
         /// <param name="distributions"> The list of Kubernetes Cluster Distribution Names not supported. </param>
         /// <param name="unsupportedVersions"> The list of Kubernetes Versions not supported by the list of Kubernetes Cluster Distribution names in this object. </param>
-        /// <returns> A new <see cref="Models.ExtensionTypeVersionUnsupportedKubernetesMatrixItem"/> instance for mocking. </returns>
-        public static ExtensionTypeVersionUnsupportedKubernetesMatrixItem ExtensionTypeVersionUnsupportedKubernetesMatrixItem(IEnumerable<string> distributions = default, IEnumerable<string> unsupportedVersions = default)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem(IEnumerable<string> distributions = default, IEnumerable<string> unsupportedVersions = default)
         {
             distributions ??= new ChangeTrackingList<string>();
             unsupportedVersions ??= new ChangeTrackingList<string>();
 
-            return new ExtensionTypeVersionUnsupportedKubernetesMatrixItem((distributions ?? new ChangeTrackingList<string>()).ToList(), (unsupportedVersions ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem((distributions ?? new ChangeTrackingList<string>()).ToList(), (unsupportedVersions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

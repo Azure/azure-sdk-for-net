@@ -17,6 +17,6 @@ public partial class ProjectsAgentRecord
 [CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }
 
 // Internal types
-[CodeGenType("AgentVersionStatus ")] public partial struct AgentVersionStatus { }
+[CodeGenType("AgentVersionStatus")] public partial struct AgentVersionStatus { }
 [CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("AgentObjectVersions")] public partial class AgentObjectVersions { }
