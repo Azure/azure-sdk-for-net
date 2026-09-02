@@ -9,72 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderFrontloadPayload. </summary>
-    public partial class ProviderFrontloadPayload : IJsonModel<ProviderFrontloadPayload>
+    /// <summary> The manifest properties. </summary>
+    public partial class ManifestInfoProperties : IJsonModel<ManifestInfoProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ProviderFrontloadPayload"/> for deserialization. </summary>
-        internal ProviderFrontloadPayload()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderFrontloadPayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManifestInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProviderFrontloadPayload(document.RootElement, options);
+                        return DeserializeManifestInfoProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderFrontloadPayload)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManifestInfoProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderFrontloadPayload)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManifestInfoProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProviderFrontloadPayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManifestInfoProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderFrontloadPayload IPersistableModel<ProviderFrontloadPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManifestInfoProperties IPersistableModel<ManifestInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProviderFrontloadPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="providerFrontloadPayload"> The <see cref="ProviderFrontloadPayload"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ProviderFrontloadPayload providerFrontloadPayload)
-        {
-            if (providerFrontloadPayload == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(providerFrontloadPayload, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ManifestInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProviderFrontloadPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManifestInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +69,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderFrontloadPayload)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManifestInfoProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Manifest))
+            {
+                writer.WritePropertyName("manifest"u8);
+                writer.WriteStringValue(Manifest);
+            }
+            if (Optional.IsDefined(ManifestUri))
+            {
+                writer.WritePropertyName("manifestUri"u8);
+                writer.WriteStringValue(ManifestUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CommitId))
+            {
+                writer.WritePropertyName("commitId"u8);
+                writer.WriteStringValue(CommitId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +108,48 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderFrontloadPayload IJsonModel<ProviderFrontloadPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManifestInfoProperties IJsonModel<ManifestInfoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderFrontloadPayload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManifestInfoProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFrontloadPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderFrontloadPayload)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManifestInfoProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProviderFrontloadPayload(document.RootElement, options);
+            return DeserializeManifestInfoProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProviderFrontloadPayload DeserializeProviderFrontloadPayload(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManifestInfoProperties DeserializeManifestInfoProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ProviderFrontloadPayloadProperties properties = default;
+            string manifest = default;
+            string manifestUri = default;
+            string commitId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("manifest"u8))
                 {
-                    properties = ProviderFrontloadPayloadProperties.DeserializeProviderFrontloadPayloadProperties(prop.Value, options);
+                    manifest = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("manifestUri"u8))
+                {
+                    manifestUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("commitId"u8))
+                {
+                    commitId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +157,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProviderFrontloadPayload(properties, additionalBinaryDataProperties);
+            return new ManifestInfoProperties(manifest, manifestUri, commitId, additionalBinaryDataProperties);
         }
     }
 }

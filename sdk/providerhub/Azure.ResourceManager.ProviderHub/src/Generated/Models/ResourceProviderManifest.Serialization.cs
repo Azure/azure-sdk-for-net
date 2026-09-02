@@ -239,6 +239,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
                 writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
             }
+            if (Optional.IsDefined(TokenAuthConfiguration))
+            {
+                writer.WritePropertyName("tokenAuthConfiguration"u8);
+                writer.WriteObjectValue(TokenAuthConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -302,6 +307,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IReadOnlyList<ProviderNotification> notifications = default;
             IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
+            TokenAuthConfiguration tokenAuthConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -530,6 +536,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("tokenAuthConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -557,6 +572,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<FanoutLinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
+                tokenAuthConfiguration,
                 additionalBinaryDataProperties);
         }
     }

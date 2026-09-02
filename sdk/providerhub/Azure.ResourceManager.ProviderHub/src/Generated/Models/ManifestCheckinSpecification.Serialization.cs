@@ -13,57 +13,52 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderDstsConfiguration. </summary>
-    public partial class ProviderDstsConfiguration : IJsonModel<ProviderDstsConfiguration>
+    /// <summary> The manifest checkin specification. </summary>
+    public partial class ManifestCheckinSpecification : IJsonModel<ManifestCheckinSpecification>
     {
-        /// <summary> Initializes a new instance of <see cref="ProviderDstsConfiguration"/> for deserialization. </summary>
-        internal ProviderDstsConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderDstsConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManifestCheckinSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderDstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestCheckinSpecification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProviderDstsConfiguration(document.RootElement, options);
+                        return DeserializeManifestCheckinSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderDstsConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManifestCheckinSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderDstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestCheckinSpecification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderDstsConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManifestCheckinSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProviderDstsConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManifestCheckinSpecification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderDstsConfiguration IPersistableModel<ProviderDstsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManifestCheckinSpecification IPersistableModel<ManifestCheckinSpecification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProviderDstsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManifestCheckinSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProviderDstsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManifestCheckinSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +69,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderDstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestCheckinSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderDstsConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManifestCheckinSpecification)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("serviceName"u8);
-            writer.WriteStringValue(ServiceName);
-            if (Optional.IsDefined(ServiceDnsName))
+            if (Optional.IsDefined(ManifestCheckinOption))
             {
-                writer.WritePropertyName("serviceDnsName"u8);
-                writer.WriteStringValue(ServiceDnsName);
+                writer.WritePropertyName("manifestCheckinOption"u8);
+                writer.WriteStringValue(ManifestCheckinOption.Value.ToString());
+            }
+            if (Optional.IsDefined(ManifestCheckinParams))
+            {
+                writer.WritePropertyName("manifestCheckinParams"u8);
+                writer.WriteObjectValue(ManifestCheckinParams, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,42 +103,50 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderDstsConfiguration IJsonModel<ProviderDstsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManifestCheckinSpecification IJsonModel<ManifestCheckinSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderDstsConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManifestCheckinSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderDstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManifestCheckinSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderDstsConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManifestCheckinSpecification)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProviderDstsConfiguration(document.RootElement, options);
+            return DeserializeManifestCheckinSpecification(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProviderDstsConfiguration DeserializeProviderDstsConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManifestCheckinSpecification DeserializeManifestCheckinSpecification(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string serviceName = default;
-            string serviceDnsName = default;
+            ManifestCheckinOption? manifestCheckinOption = default;
+            CheckinManifestContent manifestCheckinParams = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("serviceName"u8))
+                if (prop.NameEquals("manifestCheckinOption"u8))
                 {
-                    serviceName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manifestCheckinOption = new ManifestCheckinOption(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("serviceDnsName"u8))
+                if (prop.NameEquals("manifestCheckinParams"u8))
                 {
-                    serviceDnsName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manifestCheckinParams = CheckinManifestContent.DeserializeCheckinManifestContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProviderDstsConfiguration(serviceName, serviceDnsName, additionalBinaryDataProperties);
+            return new ManifestCheckinSpecification(manifestCheckinOption, manifestCheckinParams, additionalBinaryDataProperties);
         }
     }
 }

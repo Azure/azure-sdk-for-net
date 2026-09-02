@@ -13,52 +13,57 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ManifestLevelPropertyBag. </summary>
-    public partial class ManifestLevelPropertyBag : IJsonModel<ManifestLevelPropertyBag>
+    /// <summary> The private endpoint configuration. </summary>
+    public partial class PrivateEndpointConfiguration : IJsonModel<PrivateEndpointConfiguration>
     {
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConfiguration"/> for deserialization. </summary>
+        internal PrivateEndpointConfiguration()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManifestLevelPropertyBag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PrivateEndpointConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManifestLevelPropertyBag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManifestLevelPropertyBag(document.RootElement, options);
+                        return DeserializePrivateEndpointConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManifestLevelPropertyBag)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManifestLevelPropertyBag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManifestLevelPropertyBag)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManifestLevelPropertyBag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateEndpointConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManifestLevelPropertyBag IPersistableModel<ManifestLevelPropertyBag>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PrivateEndpointConfiguration IPersistableModel<PrivateEndpointConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManifestLevelPropertyBag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateEndpointConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManifestLevelPropertyBag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateEndpointConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,21 +74,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManifestLevelPropertyBag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManifestLevelPropertyBag)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ResourceHydrationAccounts))
+            writer.WritePropertyName("minApiVersion"u8);
+            writer.WriteStringValue(MinApiVersion);
+            writer.WritePropertyName("groupConnectivityInformation"u8);
+            writer.WriteStartArray();
+            foreach (GroupConnectivityInformation item in GroupConnectivityInformation)
             {
-                writer.WritePropertyName("resourceHydrationAccounts"u8);
-                writer.WriteStartArray();
-                foreach (ResourceHydrationAccount item in ResourceHydrationAccounts)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,45 +107,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManifestLevelPropertyBag IJsonModel<ManifestLevelPropertyBag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PrivateEndpointConfiguration IJsonModel<PrivateEndpointConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManifestLevelPropertyBag JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PrivateEndpointConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManifestLevelPropertyBag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManifestLevelPropertyBag)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManifestLevelPropertyBag(document.RootElement, options);
+            return DeserializePrivateEndpointConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManifestLevelPropertyBag DeserializeManifestLevelPropertyBag(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateEndpointConfiguration DeserializePrivateEndpointConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ResourceHydrationAccount> resourceHydrationAccounts = default;
+            string minApiVersion = default;
+            IList<GroupConnectivityInformation> groupConnectivityInformation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceHydrationAccounts"u8))
+                if (prop.NameEquals("minApiVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceHydrationAccount> array = new List<ResourceHydrationAccount>();
+                    minApiVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("groupConnectivityInformation"u8))
+                {
+                    List<GroupConnectivityInformation> array = new List<GroupConnectivityInformation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHydrationAccount.DeserializeResourceHydrationAccount(item, options));
+                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item, options));
                     }
-                    resourceHydrationAccounts = array;
+                    groupConnectivityInformation = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManifestLevelPropertyBag(resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>(), additionalBinaryDataProperties);
+            return new PrivateEndpointConfiguration(minApiVersion, groupConnectivityInformation, additionalBinaryDataProperties);
         }
     }
 }

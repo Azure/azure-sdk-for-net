@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("autoProvisionConfig"u8);
                 writer.WriteObjectValue(AutoProvisionConfig, options);
             }
+            if (Optional.IsDefined(ManifestCheckinSpecification))
+            {
+                writer.WritePropertyName("manifestCheckinSpecification"u8);
+                writer.WriteObjectValue(ManifestCheckinSpecification, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -181,6 +186,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             DefaultRolloutAutoProvisionConfig autoProvisionConfig = default;
+            ManifestCheckinSpecification manifestCheckinSpecification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -279,6 +285,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     autoProvisionConfig = DefaultRolloutAutoProvisionConfig.DeserializeDefaultRolloutAutoProvisionConfig(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("manifestCheckinSpecification"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manifestCheckinSpecification = ManifestCheckinSpecification.DeserializeManifestCheckinSpecification(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -295,6 +310,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
                 autoProvisionConfig,
+                manifestCheckinSpecification,
                 additionalBinaryDataProperties);
         }
     }
