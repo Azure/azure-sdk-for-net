@@ -1,12 +1,5 @@
 namespace Azure.Provisioning.AppContainers
 {
-    public enum Affinity
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="sticky")]
-        Sticky = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="none")]
-        None = 1,
-    }
     public partial class AppContainerResources : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppContainerResources() { }
@@ -938,7 +931,9 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<bool> External { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppIPSecurityRestrictionRule> IPSecurityRestrictions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.Affinity> StickySessionsAffinity { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use StickySessionsAffinityValue instead.", false)]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.StickySessionAffinity> StickySessionsAffinity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.StickySessionAffinity> StickySessionsAffinityValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TargetPort { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppRevisionTrafficWeight> Traffic { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppIngressTransportMethod> Transport { get { throw null; } set { } }
@@ -2259,6 +2254,13 @@ namespace Azure.Provisioning.AppContainers
         public SpringCloudEurekaComponent() { }
         public Azure.Provisioning.BicepValue<string> IngressFqdn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum StickySessionAffinity
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="sticky")]
+        Sticky = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="none")]
+        None = 1,
     }
     public partial class WorkflowErrorEntity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Sticky Session Affinity. </summary>
-    public enum Affinity
+    public enum StickySessionAffinity
     {
         /// <summary> sticky. </summary>
         [DataMember(Name = "sticky")]

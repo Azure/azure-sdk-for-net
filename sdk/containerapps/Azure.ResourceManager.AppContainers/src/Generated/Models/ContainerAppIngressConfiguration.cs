@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Sticky Session Affinity. </summary>
         [WirePath("stickySessions.affinity")]
-        public Affinity? StickySessionsAffinity
+        public StickySessionAffinity? StickySessionsAffinityValue
         {
             get
             {
-                return StickySessions is null ? default : StickySessions.Affinity;
+                return StickySessions is null ? default : StickySessions.StickySessionsAffinityValue;
             }
             set
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     StickySessions = new IngressStickySessions();
                 }
-                StickySessions.Affinity = value;
+                StickySessions.StickySessionsAffinityValue = value;
             }
         }
     }

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IngressStickySessions"/>. </summary>
-        /// <param name="affinity"> Sticky Session Affinity. </param>
+        /// <param name="stickySessionsAffinityValue"> Sticky Session Affinity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngressStickySessions(Affinity? affinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngressStickySessions(StickySessionAffinity? stickySessionsAffinityValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Affinity = affinity;
+            StickySessionsAffinityValue = stickySessionsAffinityValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sticky Session Affinity. </summary>
         [WirePath("affinity")]
-        public Affinity? Affinity { get; set; }
+        public StickySessionAffinity? StickySessionsAffinityValue { get; set; }
     }
 }
