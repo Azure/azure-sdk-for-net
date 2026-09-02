@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateIPAddress"> A private IP address obtained from the private endpoint's subnet. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointIPConfiguration"/> instance for mocking. </returns>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string name = default, string privateEndpointIPConfigurationType = default, ETag? etag = default, string groupId = default, string memberName = default, IPAddress privateIPAddress = default)
+        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress)
         {
             return PrivateEndpointIPConfiguration(groupId, memberName, privateIPAddress?.ToString(), name, privateEndpointIPConfigurationType, etag);
         }

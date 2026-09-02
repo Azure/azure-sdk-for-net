@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.Network.Tests
             PrivateEndpointIPConfiguration configuration = ArmNetworkModelFactory.PrivateEndpointIPConfiguration(
                 name: "ipconfig1",
                 privateEndpointIPConfigurationType: "Microsoft.Network/privateEndpoints/ipConfigurations",
+                etag: default,
+                groupId: "group1",
+                memberName: "member1",
                 privateIPAddress: privateIPAddress);
 
             Assert.AreEqual(privateIPAddress, configuration.PrivateIPAddress);
