@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             return new KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> An Azure Arc PrivateLinkScope definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -87,6 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 default);
         }
 
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="clusterResourceId"> Managed Cluster ARM ID for the private link scope  (Required). </param>
@@ -106,6 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 default);
         }
 
+        /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopePatch"/> instance for mocking. </returns>
         public static KubernetesConfigurationPrivateLinkScopePatch KubernetesConfigurationPrivateLinkScopePatch(IDictionary<string, string> tags = default)
