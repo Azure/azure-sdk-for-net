@@ -1,0 +1,88 @@
+name: azure-sdk-dotnet-code-review-invocation-eval
+description: Invocation, composition, and anti-trigger tests for Azure SDK for .NET code review.
+
+type: capability
+
+environment:
+  skills:
+    - ".."
+    - "../../azure-sdk-mgmt-pr-review"
+    - "../../mpg-migration-pr-review"
+
+tags:
+  area: code-review
+  type: routing
+
+defaults:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: invoke-generic-pr-review
+    prompt: >-
+      Use the azure-sdk-dotnet-code-review skill to review this synthetic Azure SDK for .NET PR
+      diff and return findings only: `for (int i = 0; i <= items.Count; i++) total += items[i];`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+
+  - name: invoke-local-change-review
+    prompt: >-
+      Use the azure-sdk-dotnet-code-review skill to review this synthetic local change before a PR:
+      `<NoWarn>$(NoWarn);CA2000</NoWarn>` was added to a test csproj.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+
+  - name: compose-management-review
+    prompt: >-
+      Use the azure-sdk-dotnet-code-review skill to review this synthetic diff. In
+      sdk/compute/Azure.ResourceManager.Compute/src/WidgetResource.cs the PR adds:
+      `public DateTime CreatedOn { get; }`
+    graders:
+      - type: skill-invocation
+        config:
+          required:
+            - "azure-sdk-dotnet-code-review"
+            - "azure-sdk-mgmt-pr-review"
+
+  - name: compose-management-migration-review
+    prompt: >-
+      Use the azure-sdk-dotnet-code-review skill to review this synthetic PR migrating
+      sdk/compute/Azure.ResourceManager.Compute from Swagger/AutoRest to TypeSpec. It adds:
+      `public DateTime CreatedOn { get; }`
+    graders:
+      - type: skill-invocation
+        config:
+          required:
+            - "azure-sdk-dotnet-code-review"
+            - "azure-sdk-mgmt-pr-review"
+            - "mpg-migration-pr-review"
+
+  - name: anti-trigger-implementation
+    prompt: "Implement retry support in Azure.Storage.Blobs."
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azure-sdk-dotnet-code-review"]
+
+  - name: anti-trigger-ci-analysis
+    prompt: "The net - pullrequest build is failing. Analyze the CI logs."
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azure-sdk-dotnet-code-review"]
+
+  - name: anti-trigger-release
+    prompt: "Prepare Azure.Core for release."
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azure-sdk-dotnet-code-review"]
