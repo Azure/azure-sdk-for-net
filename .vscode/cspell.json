@@ -1137,12 +1137,6 @@
       ]
     },
     {
-      "filename": "**/sdk/programmableconnectivity/**/*.cs",
-      "words": [
-        "pseudonymize"
-      ]
-    },
-    {
       "filename": "**/sdk/privatedns/**/*.cs",
       "words": [
         "cname",
