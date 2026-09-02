@@ -14,37 +14,50 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// The task name and its <typeparamref name="TInput"/>/<typeparamref name="TOutput"/> types are
 /// bound once at registration, so starting or running the task is strongly typed — an input or
 /// output that does not match the registration is a compile-time error rather than a runtime failure.
+/// The protected constructor and virtual members support substitution in consumer unit tests.
 /// </summary>
 /// <typeparam name="TInput">The task input type.</typeparam>
 /// <typeparam name="TOutput">The task output type.</typeparam>
-public sealed class TaskDefinition<TInput, TOutput>
+public class TaskDefinition<TInput, TOutput>
 {
-    private readonly TaskEngineAccessor _engine;
+    private readonly string? _name;
+    private readonly TaskEngineAccessor? _engine;
+
+    /// <summary>Initializes a new instance of the <see cref="TaskDefinition{TInput, TOutput}"/> class for mocking.</summary>
+    protected TaskDefinition()
+    {
+    }
 
     internal TaskDefinition(string name, TaskEngineAccessor engine)
     {
-        Name = name;
+        _name = name;
         _engine = engine;
     }
 
+    private TaskEngine Engine => _engine?.Require()
+        ?? throw new System.InvalidOperationException(
+            "TaskDefinition was not initialized by resilient task registration.");
+
     /// <summary>The registered task name.</summary>
-    public string Name { get; }
+    public virtual string Name => _name
+        ?? throw new System.InvalidOperationException(
+            "TaskDefinition was not initialized by resilient task registration.");
 
     /// <summary>Starts the task and awaits it to completion, returning the typed result.</summary>
     /// <param name="input">The typed input.</param>
     /// <param name="options">Optional per-invocation options.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>The typed result.</returns>
-    public Task<TOutput> RunAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
-        => _engine.Require().RunAsync<TInput, TOutput>(Name, input, options, cancellationToken);
+    public virtual Task<TOutput> RunAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
+        => Engine.RunAsync<TInput, TOutput>(Name, input, options, cancellationToken);
 
     /// <summary>Starts the task and returns an awaitable handle once the creation round-trip succeeds.</summary>
     /// <param name="input">The typed input.</param>
     /// <param name="options">Optional per-invocation options.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>An awaitable <see cref="TaskRun{TOutput}"/> handle.</returns>
-    public Task<TaskRun<TOutput>> StartAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
-        => _engine.Require().StartAsync<TInput, TOutput>(Name, input, options, cancellationToken);
+    public virtual Task<TaskRun<TOutput>> StartAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
+        => Engine.StartAsync<TInput, TOutput>(Name, input, options, cancellationToken);
 
     /// <summary>
     /// Returns the in-flight run for a one-shot task keyed by <paramref name="taskId"/>, or
@@ -53,8 +66,8 @@ public sealed class TaskDefinition<TInput, TOutput>
     /// <param name="taskId">The task id.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>The in-flight run, or <see langword="null"/>.</returns>
-    public Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, CancellationToken cancellationToken = default)
-        => _engine.Require().GetActiveRunAsync<TOutput>(Name, taskId, cancellationToken);
+    public virtual Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, CancellationToken cancellationToken = default)
+        => Engine.GetActiveRunAsync<TOutput>(Name, taskId, cancellationToken);
 
     /// <summary>
     /// Returns the in-flight run for a multi-turn task keyed by <paramref name="taskId"/> and
@@ -64,8 +77,8 @@ public sealed class TaskDefinition<TInput, TOutput>
     /// <param name="inputId">The input id of the turn to attach to.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>The in-flight run, or <see langword="null"/>.</returns>
-    public Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, CancellationToken cancellationToken = default)
-        => _engine.Require().GetActiveRunAsync<TOutput>(Name, taskId, inputId, cancellationToken);
+    public virtual Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, CancellationToken cancellationToken = default)
+        => Engine.GetActiveRunAsync<TOutput>(Name, taskId, inputId, cancellationToken);
 
     /// <summary>
     /// Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled,
@@ -74,6 +87,6 @@ public sealed class TaskDefinition<TInput, TOutput>
     /// <param name="taskId">The chain id.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>A task that completes when the chain has been removed.</returns>
-    public Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
-        => _engine.Require().DeleteAsync(Name, taskId, cancellationToken);
+    public virtual Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+        => Engine.DeleteAsync(Name, taskId, cancellationToken);
 }
