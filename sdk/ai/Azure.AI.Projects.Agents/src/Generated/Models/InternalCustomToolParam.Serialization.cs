@@ -93,6 +93,16 @@ namespace OpenAI
                 writer.WritePropertyName("defer_loading"u8);
                 writer.WriteBooleanValue(DeferLoading.Value);
             }
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,6 +136,7 @@ namespace OpenAI
             string description = default;
             CustomToolParamFormat format = default;
             bool? deferLoading = default;
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -161,6 +172,20 @@ namespace OpenAI
                     deferLoading = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -172,7 +197,8 @@ namespace OpenAI
                 name,
                 description,
                 format,
-                deferLoading);
+                deferLoading,
+                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>());
         }
     }
 }

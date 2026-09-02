@@ -92,6 +92,16 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("file_url"u8);
                 writer.WriteStringValue(FileUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(Detail))
+            {
+                writer.WritePropertyName("detail"u8);
+                writer.WriteStringValue(Detail.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,6 +149,8 @@ namespace Azure.AI.Projects
             string filename = default;
             string fileData = default;
             Uri fileUri = default;
+            FileInputDetail? detail = default;
+            PromptCacheBreakpointParam promptCacheBreakpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,6 +199,25 @@ namespace Azure.AI.Projects
                     fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("detail"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detail = prop.Value.GetString().ToFileInputDetail();
+                    continue;
+                }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        promptCacheBreakpoint = null;
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointParam.DeserializePromptCacheBreakpointParam(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -198,6 +229,8 @@ namespace Azure.AI.Projects
                 filename,
                 fileData,
                 fileUri,
+                detail,
+                promptCacheBreakpoint,
                 additionalBinaryDataProperties);
         }
     }

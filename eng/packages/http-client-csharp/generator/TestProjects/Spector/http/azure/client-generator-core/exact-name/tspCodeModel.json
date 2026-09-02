@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "AgentEndpointProtocol",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ExactName.EnumValue.AgentEndpointProtocol",
       "valueType": {
         "$id": "2",
@@ -189,6 +190,7 @@
       "$id": "19",
       "kind": "model",
       "name": "my_model",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ExactName.Model",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ExactName.Model.ExactModel",
       "usage": "Input,Output,Json",
@@ -204,6 +206,7 @@
           "$id": "20",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "21",
@@ -232,6 +235,7 @@
       "$id": "22",
       "kind": "model",
       "name": "ScopedModel",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ExactName.Property",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ExactName.Property.ScopedModel",
       "usage": "Input,Output,Json",
@@ -247,6 +251,7 @@
           "$id": "23",
           "kind": "property",
           "name": "_MyName",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "24",
@@ -275,6 +280,7 @@
       "$id": "25",
       "kind": "model",
       "name": "EndpointConfig",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ExactName.EnumValue",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ExactName.EnumValue.EndpointConfig",
       "usage": "Input,Output,Json",
@@ -290,6 +296,7 @@
           "$id": "26",
           "kind": "property",
           "name": "protocol",
+          "apiVersions": [],
           "serializedName": "protocol",
           "type": {
             "$ref": "1"
