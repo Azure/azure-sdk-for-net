@@ -678,25 +678,50 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Attempts to purge all messages from an entity.  Locked messages are not eligible for removal and
-        /// will remain in the entity.
+        /// Attempts to permanently delete all eligible messages that were enqueued before one fixed cutoff.
         /// </summary>
         /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <remarks>
-        /// If the lock for a message is held by a receiver, it will be respected and the message will not be deleted.
+        /// Locked, deferred, and scheduled messages are not eligible and remain in the entity. Messages are
+        /// permanently removed from the receiver's entity or subqueue.
         ///
         /// This method may invoke multiple service requests to delete all messages.  As a result, it may exceed the configured <see cref="ServiceBusRetryOptions.TryTimeout"/>.
         /// If you need control over the amount of time the operation takes, it is recommended that you pass a <paramref name="cancellationToken"/> with the desired timeout set for cancellation.
         ///
-        /// Because multiple service requests may be made, the possibility of partial success exists.  In this scenario, the method will stop attempting to delete additional messages
-        /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been deleted.
+        /// The operation uses 500-message requests across all tiers, continues after every positive result,
+        /// and stops only when the service reports zero. Because multiple service requests may be made, partial
+        /// success is possible. If an exception, cancellation, or timeout occurs, the exact deletion outcome is
+        /// unknown and no additional destructive request is automatically dispatched.
         /// </remarks>
-        /// <returns>The number of messages that were deleted.</returns>
-        internal virtual async Task<int> PurgeMessagesAsync(
+        /// <returns>A <see cref="PurgeMessagesResult"/> containing the total number of messages that were deleted.</returns>
+        public virtual Task<PurgeMessagesResult> PurgeMessagesAsync(
+            DateTimeOffset? beforeEnqueueTime = null,
+            CancellationToken cancellationToken = default) =>
+            PurgeMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTime, cancellationToken);
+
+        /// <summary>
+        /// Attempts to permanently delete all eligible messages that were enqueued before the purge started,
+        /// or before the time supplied by the caller, using the requested batch size for each service call.
+        /// </summary>
+        /// <param name="maxMessagesPerBatch">The positive number of messages requested in each batch-delete call. The service limit is 500 for Basic and Standard and 4,000 for Premium.</param>
+        /// <param name="beforeEnqueueTime">Only messages enqueued before this time can be deleted. The purge start time is used when omitted.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+        /// <returns>A <see cref="PurgeMessagesResult"/> containing the total number of messages actually deleted.</returns>
+        /// <remarks>
+        /// The enqueue-time threshold and batch size stay unchanged for every request, so messages enqueued after the
+        /// purge started remain. Large messages can cause the service to delete fewer messages than requested; purge
+        /// continues after those smaller results. If a request fails after dispatch, the purge can be partial and its
+        /// exact outcome is unknown.
+        ///
+        /// Currently, purge is not supported when partitioning is enabled.
+        /// </remarks>
+        public virtual async Task<PurgeMessagesResult> PurgeMessagesAsync(
+            int maxMessagesPerBatch,
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertAtLeast(maxMessagesPerBatch, 1, nameof(maxMessagesPerBatch));
             beforeEnqueueTime ??= DateTimeOffset.UtcNow;
             Logger.PurgeMessagesStart(Identifier, beforeEnqueueTime.Value);
 
@@ -707,26 +732,19 @@ namespace Azure.Messaging.ServiceBus
 
             scope.Start();
 
-            int purgeCount;
+            long purgeCount;
 
             try
             {
-                purgeCount = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false);
+                purgeCount = (await DeleteMessagesAsync(maxMessagesPerBatch, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false)).DeletedCount;
 
-                // The service currently has a known bug that should be fixed before GA, where the
-                // delete operation may not delete the requested batch size in a single call, even
-                // when there are enough messages to do so.  This logic should check "purgeCount == MaxDeleteMessageCount"
-                // for efficiency, as should the while condition below.
-                //
-                // Until this is fixed, we'll need to loop if there were any messages purgeCount, which will cost an extra
-                // service call. see: https://github.com/Azure/azure-sdk-for-net/issues/43801
                 if (purgeCount > 0)
                 {
                     var batchCount = purgeCount;
 
                     while (batchCount > 0)
                     {
-                        batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false);
+                        batchCount = (await DeleteMessagesAsync(maxMessagesPerBatch, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false)).DeletedCount;
                         purgeCount += batchCount;
                     }
                 }
@@ -739,32 +757,34 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.PurgeMessagesComplete(Identifier, purgeCount);
-            return purgeCount;
+            return new PurgeMessagesResult(purgeCount);
         }
 
         /// <summary>
-        /// Deletes up to <paramref name="messageCount"/> messages from the entity. The actual number
-        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// Permanently deletes up to <paramref name="messageCount"/> eligible messages from the entity or subqueue.
+        /// Large messages can cause the service to delete fewer messages than requested.
         /// </summary>
-        /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.  The service may delete fewer messages than this limit.</param>
-        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
+        /// <param name="messageCount">The desired positive number of messages to delete. The service limit is 500 for Basic and Standard and 4,000 for Premium.</param>
+        /// <param name="beforeEnqueueTime">Only messages enqueued before this UTC time can be deleted. The operation start time is used when omitted.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <returns>The number of messages that were deleted.</returns>
-        /// <remarks>If the lock for a message is held by a receiver, it will be respected and the message will not be deleted.</remarks>
+        /// <returns>A <see cref="DeleteMessagesResult"/> containing the actual number of messages that were deleted.</returns>
+        /// <remarks>
+        /// Locked, deferred, and scheduled messages are not eligible. The service returns the actual deleted count.
+        /// A dispatched request is not automatically retried; after an exception, cancellation, or timeout, the
+        /// deletion outcome is unknown.
+        ///
+        /// Currently, batch delete is not supported when partitioning is enabled.
+        /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
+        /// Occurs when the <paramref name="messageCount"/> is less than 1. The service reports counts above the
+        /// tier limit.
         /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
         /// </exception>
-        internal virtual async Task<int> DeleteMessagesAsync(
+        public virtual async Task<DeleteMessagesResult> DeleteMessagesAsync(
             int messageCount,
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
         {
-            // Remove after service bug fixed.  Currently, the service responds
-            // with a completely indecipherable message when the count is too high.
-            // https://github.com/Azure/azure-sdk-for-net/issues/43801
-            Argument.AssertInRange(messageCount, 1, MaxDeleteMessageCount, nameof(messageCount));
-
             Argument.AssertAtLeast(messageCount, 1, nameof(messageCount));
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
@@ -794,7 +814,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.DeleteMessagesComplete(Identifier, numMessagesDeleted);
-            return numMessagesDeleted;
+            return new DeleteMessagesResult(numMessagesDeleted);
         }
 
         /// <summary>

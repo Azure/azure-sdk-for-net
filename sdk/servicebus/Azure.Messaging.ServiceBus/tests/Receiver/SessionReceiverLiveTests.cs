@@ -614,8 +614,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.NotZero(numMessagesDeleted.DeletedCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
             }
         }
 
@@ -646,8 +646,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.NotZero(numMessagesDeleted);
-                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+                Assert.NotZero(numMessagesDeleted.DeletedCount);
+                Assert.LessOrEqual(numMessagesDeleted.DeletedCount, messageCount);
             }
         }
 

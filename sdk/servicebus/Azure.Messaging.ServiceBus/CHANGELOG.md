@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `DeleteMessagesAsync` and `PurgeMessagesAsync` to `ServiceBusReceiver`. Both methods return result objects containing the number of deleted messages, and purge handles smaller batches caused by large messages.
 - Added `SqlFilterCount` and `CorrelationFilterCount` properties to `TopicRuntimeProperties`, exposing the total number of SQL filters and correlation filters across all of a topic's subscriptions. These are populated by `GetTopicRuntimePropertiesAsync` and `GetTopicsRuntimePropertiesAsync`.
 - Added `ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05` and made it the default service version. The topic filter counts above are served by the `2024-05` service API version, so the administration client now sends `api-version=2024-05` by default.
 - Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. The no-filter overload returns the IDs of sessions that have active messages or session state, and the `sessionStateUpdatedAfter` overload returns session IDs whose session state was updated after the specified timestamp. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
