@@ -12,58 +12,60 @@ using BenchmarkDotNet.Attributes;
 using OpenTelemetry;
 
 /*
-Baseline captured before the AzMonList/ActivityTagsProcessor rework.
-
 Measures the full Activity -> TelemetryItem conversion (CategorizeTags plus every
-MappedTags lookup performed by TelemetryItem/RequestData/RemoteDependencyData), with no
-transmitter and no network. This is the granularity the existing benchmarks miss:
-TagObjectsGetValuesBenchmarks measures a single lookup, but a real conversion performs
-13-26 of them.
+recognized-attribute read performed by TelemetryItem/RequestData/RemoteDependencyData),
+with no transmitter and no network. This is the granularity the existing benchmarks miss:
+TagObjectsGetValuesBenchmarks measures a single read, but a real conversion performs 13-26
+of them.
 
-NOTE: ShortRun (3 iterations) - Error is wide. Re-run without --job short for a
-publishable comparison.
+Both tables below are MediumRun on the same machine. The "before" run is this file compiled
+against the unmodified exporter, so the pair is like for like. Deltas exceed the combined
+error on every shape except HttpClient_OldSemConv, Messaging, AzureSdk and ArrayValuedTags,
+where they are marginal and should be read as directional only.
 
 BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.9106/25H2/2025Update/HudsonValley2) (Hyper-V)
 Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 physical cores
 .NET SDK 10.0.400
-  [Host]   : .NET 8.0.30 (8.0.30, 8.0.3026.36720), X64 RyuJIT x86-64-v4
-  ShortRun : .NET 8.0.30 (8.0.30, 8.0.3026.36720), X64 RyuJIT x86-64-v4
+  [Host]    : .NET 8.0.30 (8.0.30, 8.0.3026.36720), X64 RyuJIT x86-64-v4
+  MediumRun : .NET 8.0.30 (8.0.30, 8.0.3026.36720), X64 RyuJIT x86-64-v4
 
-Job=ShortRun  IterationCount=3  LaunchCount=1  WarmupCount=3
+Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10
 
-| Method                | Mean       | Error    | StdDev   | Ratio | Gen0   | Allocated |
-|---------------------- |-----------:|---------:|---------:|------:|-------:|----------:|
-| HttpServer_NewSemConv | 1,558.3 ns | 514.9 ns | 28.22 ns |  1.00 | 0.0916 |   2.26 KB |
-| HttpServer_OldSemConv | 1,388.6 ns | 133.3 ns |  7.30 ns |  0.89 | 0.0782 |   1.94 KB |
-| HttpClient_NewSemConv | 1,436.0 ns | 272.2 ns | 14.92 ns |  0.92 | 0.0687 |   1.73 KB |
-| HttpClient_OldSemConv | 1,523.3 ns | 416.6 ns | 22.84 ns |  0.98 | 0.0629 |   1.56 KB |
-| DbClient_NewSemConv   | 1,232.8 ns | 369.2 ns | 20.24 ns |  0.79 | 0.0648 |   1.62 KB |
-| DbClient_OldSemConv   | 1,118.4 ns | 159.2 ns |  8.73 ns |  0.72 | 0.0591 |   1.49 KB |
-| Messaging             | 1,014.7 ns | 449.6 ns | 24.64 ns |  0.65 | 0.0706 |   1.75 KB |
-| AzureSdk              |   896.8 ns | 234.0 ns | 12.82 ns |  0.58 | 0.0601 |   1.48 KB |
-| OverrideAttributes    | 2,001.5 ns | 235.6 ns | 12.92 ns |  1.28 | 0.0725 |   1.84 KB |
-| ArrayValuedTags       | 1,937.4 ns | 770.6 ns | 42.24 ns |  1.24 | 0.1030 |   2.62 KB |
+BEFORE
 
-OverrideAttributes is the slowest shape because it performs the most MappedTags lookups
-(7 context-tag overrides plus 4 request overrides on top of the base path).
+| Method                | Mean       | Error    | StdDev   | Gen0   | Allocated |
+|---------------------- |-----------:|---------:|---------:|-------:|----------:|
+| HttpServer_NewSemConv | 1,570.1 ns | 31.32 ns | 44.91 ns | 0.0916 |   2.26 KB |
+| HttpServer_OldSemConv | 1,401.9 ns | 27.76 ns | 41.55 ns | 0.0782 |   1.94 KB |
+| HttpClient_NewSemConv | 1,449.4 ns | 23.10 ns | 34.57 ns | 0.0687 |   1.73 KB |
+| HttpClient_OldSemConv | 1,522.5 ns | 20.03 ns | 29.98 ns | 0.0629 |   1.56 KB |
+| DbClient_NewSemConv   | 1,238.4 ns | 20.42 ns | 29.29 ns | 0.0648 |   1.62 KB |
+| DbClient_OldSemConv   | 1,146.0 ns | 23.40 ns | 35.02 ns | 0.0591 |   1.49 KB |
+| Messaging             | 1,019.8 ns | 18.41 ns | 27.56 ns | 0.0706 |   1.75 KB |
+| AzureSdk              |   901.2 ns | 11.38 ns | 16.32 ns | 0.0601 |   1.48 KB |
+| OverrideAttributes    | 2,024.6 ns | 37.40 ns | 55.97 ns | 0.0725 |   1.84 KB |
+| ArrayValuedTags       | 1,968.9 ns | 34.74 ns | 52.00 ns | 0.1030 |   2.62 KB |
 
-After switching mapped-tag reads to slot indexing, and holding recognized attributes in the
-slot array alone so a mapped list rents one pooled buffer instead of two. Every shape
-improves against the baseline; the read-heavy shapes improve most because a conversion
-performs 13-26 attribute reads.
+AFTER
 
-| Method                | Mean       | Error     | StdDev  | Ratio | Gen0   | Allocated |
-|---------------------- |-----------:|----------:|--------:|------:|-------:|----------:|
-| HttpServer_NewSemConv | 1,363.5 ns |  56.16 ns | 3.08 ns |  1.00 | 0.0858 |   2.13 KB |
-| HttpServer_OldSemConv | 1,237.0 ns |  88.55 ns | 4.85 ns |  0.91 | 0.0782 |   1.94 KB |
-| HttpClient_NewSemConv | 1,293.4 ns | 103.95 ns | 5.70 ns |  0.95 | 0.0668 |   1.65 KB |
-| HttpClient_OldSemConv | 1,372.2 ns |  83.27 ns | 4.56 ns |  1.01 | 0.0629 |   1.56 KB |
-| DbClient_NewSemConv   |   924.0 ns |  34.60 ns | 1.90 ns |  0.68 | 0.0553 |   1.37 KB |
-| DbClient_OldSemConv   |   952.2 ns |   8.46 ns | 0.46 ns |  0.70 | 0.0544 |   1.34 KB |
-| Messaging             |   942.6 ns | 153.39 ns | 8.41 ns |  0.69 | 0.0668 |   1.67 KB |
-| AzureSdk              |   824.1 ns | 143.90 ns | 7.89 ns |  0.60 | 0.0563 |    1.4 KB |
-| OverrideAttributes    | 1,259.3 ns | 140.93 ns | 7.72 ns |  0.92 | 0.0687 |   1.72 KB |
-| ArrayValuedTags       | 1,744.7 ns | 143.73 ns | 7.88 ns |  1.28 | 0.1011 |   2.49 KB |
+| Method                | Mean       | Error    | StdDev   | Gen0   | Allocated | Delta  |
+|---------------------- |-----------:|---------:|---------:|-------:|----------:|-------:|
+| HttpServer_NewSemConv | 1,406.9 ns | 32.18 ns | 48.16 ns | 0.0858 |   2.13 KB | -10.4% |
+| HttpServer_OldSemConv | 1,273.5 ns | 20.12 ns | 30.12 ns | 0.0782 |   1.94 KB |  -9.2% |
+| HttpClient_NewSemConv | 1,322.2 ns | 25.67 ns | 37.62 ns | 0.0668 |   1.65 KB |  -8.8% |
+| HttpClient_OldSemConv | 1,462.6 ns | 43.43 ns | 63.66 ns | 0.0629 |   1.56 KB |  -3.9% |
+| DbClient_NewSemConv   |   962.8 ns | 16.38 ns | 24.51 ns | 0.0553 |   1.37 KB | -22.3% |
+| DbClient_OldSemConv   |   978.2 ns | 17.93 ns | 26.83 ns | 0.0534 |   1.34 KB | -14.6% |
+| Messaging             |   981.0 ns | 19.05 ns | 28.51 ns | 0.0677 |   1.67 KB |  -3.8% |
+| AzureSdk              |   873.2 ns | 17.35 ns | 24.89 ns | 0.0563 |    1.4 KB |  -3.1% |
+| OverrideAttributes    | 1,361.7 ns | 49.72 ns | 72.87 ns | 0.0687 |   1.72 KB | -32.7% |
+| ArrayValuedTags       | 1,892.9 ns | 57.24 ns | 85.68 ns | 0.1011 |   2.49 KB |  -3.9% |
+
+OverrideAttributes gains the most because it performs the most reads: 7 context-tag
+overrides and 4 request overrides on top of the base path. Averaged across the ten shapes
+a conversion costs 173 ns less and allocates 105 bytes less. Two shapes are unchanged on
+managed allocation; the pooled buffer a mapped list no longer rents does not appear in the
+Allocated column, because MemoryDiagnoser does not count ArrayPool rents.
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
