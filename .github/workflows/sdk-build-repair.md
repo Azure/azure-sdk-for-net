@@ -44,7 +44,7 @@ on:
   # Manual fallback: a maintainer (write+) comments `/repair-build` on the PR.
   slash_command:
     name: repair-build
-    events: [pull_request, pull_request_comment]
+    events: [pull_request_comment]
   # Only repository maintainers (write+) may trigger; the release bot that applies the
   # label is allow-listed so the automatic path works. This is the prompt-injection /
   # abuse guard (gh-aw default roles are [admin, maintainer, write]).
