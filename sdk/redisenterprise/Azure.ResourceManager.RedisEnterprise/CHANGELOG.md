@@ -4,7 +4,15 @@
 
 ### Features Added
 
+- Updated the default service API version from `2025-08-01-preview` to `2026-06-01-preview`, incorporating the `2026-02-01-preview` and `2026-05-01-preview` API updates.
+- Added `NotifyKeyspaceEvents` to database create, update, and response models for configuring Redis keyspace event notifications, introduced in `2026-02-01-preview`.
+- Added `AccessString` to access policy assignments for configuring custom Redis ACL permissions, introduced in `2026-05-01-preview`.
+- Added `AccessPolicyAssignmentProvisioningError` and the `ProvisioningError` response property to expose access-string provisioning failure details, introduced in `2026-05-01-preview`.
+- Made `AccessPolicyName` optional and deprecated it in favor of `AccessString`, as introduced in `2026-05-01-preview`.
+
 ### Breaking Changes
+
+- Removed the service no-op `IsForceMigrate` property from `RedisEnterpriseMigrationValidationRequestContent`. `IsForceMigrate` remains available when starting a migration.
 
 ### Bugs Fixed
 
@@ -181,4 +189,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-
