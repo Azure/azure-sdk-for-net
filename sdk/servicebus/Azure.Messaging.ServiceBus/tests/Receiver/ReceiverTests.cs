@@ -600,7 +600,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task PurgeMessagesSupportsPremiumBatchSize()
         {
             const int premiumBatchSize = 4000;
-            var timestamps = new List<DateTimeOffset>();
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             var mockReceiver = new Mock<ServiceBusReceiver>(
                 mockConnection.Object,
