@@ -2,9 +2,9 @@
 name: azsdk-common-generate-sdk-locally
 license: MIT
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   distribution: shared
-description: 'Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: "generate SDK locally", "build SDK", "run SDK tests", "run CI checks", "validate package", "run checks", "update changelog", "fix SDK build errors", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version.'
+description: 'Generate and finalize Azure SDKs locally from TypeSpec, including build, checks, tests, changelog, metadata, and version updates by default. WHEN: "generate SDK locally", "build SDK", "run SDK tests", "run CI checks", "validate package", "run checks", "update changelog", "fix SDK build errors", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
@@ -20,6 +20,10 @@ DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API
 
 ## Rules
 
+- Interpret **"generate SDK"** and **"generate SDK locally"** as requests for the complete workflow: generate, build, validate, test, update changelog, update metadata, and update version. Do not treat the word "generate" by itself as a generate-only request.
+- Stop after generation and a successful build when the user explicitly says **"generate only"**, **"only generate"**, or otherwise explicitly asks to skip checks, tests, changelog, metadata, and version updates. Bind `only` to the generation action even when a target qualifier follows: **"generate SDK only for Web PubSub"** is a generate-only request scoped to Web PubSub. By contrast, **"generate the SDK for only the Web PubSub service"** scopes the complete workflow to one service. Once a request is classified as generate-only, do not prompt for a commit or run steps 8–11. If the user's intent is unclear, default to the complete workflow.
+- This skill generates an SDK **locally** from a local clone. Use it to generate an SDK **only when the user indicates local generation** — they say "local"/"locally", or are working from a local clone. If the user asks to "generate SDK for **all languages**", to generate **for a release plan / release ID** (even a single language), to generate **without a local clone**, or wants SDK **pull requests created** for them, do **not** generate locally — use the `azsdk-common-generate-sdk-pipeline` skill, which runs the SDK generation pipeline for each language and produces the SDK pull requests.
+- Never use `azure-sdk-mcp:azsdk_get_sdk_pull_request_link` or `azure-sdk-mcp:azsdk_get_pull_request` to _generate_ an SDK; those only retrieve links for SDKs that were already generated.
 - Requires the `azure-sdk-mcp` server for the MCP workflow; without MCP, use `npm exec --prefix eng/common/tsp-client -- tsp-client` CLI.
 - Verify the target language repo and the correct TypeSpec configuration file before generation.
 - After generation or customization, run the check and test steps before updating metadata or finalizing changes.
@@ -49,7 +53,7 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
    - From an SDK language repo: use path to `tsp-location.yaml`.
 4. **Verify setup** — Run `azure-sdk-mcp:azsdk_verify_setup` to confirm environment.
 5. **Generate** — Run `azure-sdk-mcp:azsdk_package_generate_code` with the config file path.
-6. **Build** — Run `azure-sdk-mcp:azsdk_package_build_code`. If build succeeds, proceed to step 8.
+6. **Build** — Run `azure-sdk-mcp:azsdk_package_build_code`.
 7. **Customize** — If build fails, or if user requests SDK modifications, run `azure-sdk-mcp:azsdk_customized_code_update` with the build errors or user request. The tool handles the full workflow internally: it classifies the issue, applies TypeSpec decorators and/or code patches, regenerates the SDK, and builds — all in one call. See [customization workflow](references/customization-workflow.md). _(If the user requested "generate only", stop here — skip steps 8–11.)_
 8. **Commit checkpoint** — Prompt the user to commit generated changes before proceeding. See [commit checkpoint details](references/detailed-workflow.md).
 9. **Validate** — Run `azure-sdk-mcp:azsdk_package_run_check` and `azure-sdk-mcp:azsdk_package_run_tests`.
@@ -82,6 +86,7 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 
 ## Troubleshooting
 
+- For "generate SDK for all languages", pipeline-based generation, or when no local SDK clone exists, call `azure-sdk-mcp:azsdk_run_generate_sdk` instead of the local generate flow, and never substitute `azure-sdk-mcp:azsdk_get_sdk_pull_request_link` / `azure-sdk-mcp:azsdk_get_pull_request` for generation.
 - Run `azure-sdk-mcp:azsdk_verify_setup` to confirm MCP and tools.
 - If build fails with type conflicts, breaking changes, analyzer errors, or customization drift, use `azure-sdk-mcp:azsdk_customized_code_update` to apply customizations.
 - The customization tool uses a two-phase approach: TypeSpec decorators first (Phase A), then code repairs if needed (Phase B).
