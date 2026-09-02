@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             return message;
         }
 
-        internal HttpMessage CreateRequestAdminCredentialRequest(Guid subscriptionId, string resourceGroupName, string hcpOpenShiftClusterName, RequestContext context)
+        internal HttpMessage CreateRequestAdminCredentialRequest(Guid subscriptionId, string resourceGroupName, string hcpOpenShiftClusterName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -249,7 +249,9 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 

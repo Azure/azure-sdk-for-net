@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         {
             TryGetApiVersion(ResourceType, out string hcpOpenShiftVersionApiVersion);
             _hcpOpenShiftVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp", ResourceType.Namespace, Diagnostics);
-            _hcpOpenShiftVersionsRestClient = new HcpOpenShiftVersions(_hcpOpenShiftVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftVersionApiVersion ?? "2026-06-30-preview");
+            _hcpOpenShiftVersionsRestClient = new HcpOpenShiftVersions(_hcpOpenShiftVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftVersionApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-30-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-30-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
