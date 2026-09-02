@@ -15,6 +15,9 @@
 
   <PropertyGroup Condition="'$(IsStorageTest)' == 'true'">
     <CodeCoverageExcludeByFile>
+      **/Argument.cs,
+      **/BinaryContentHelper.cs,
+      **/ClientPipelineExtensions.cs,
       **/CodeGenMemberAttribute.cs,
       **/CodeGenMemberSerializationAttribute.cs,
       **/CodeGenMemberSerializationHooksAttribute.cs,
@@ -24,13 +27,15 @@
       **/CodeGenTypeAttribute.cs,
       **/ChangeTrackingDictionary.cs,
       **/ChangeTrackingList.cs,
+      **/ClientUriBuilder.cs,
       **/ErrorResult.cs,
-      **/Generated/Models/Internal/ListBlobsIncludeItemExtensions.cs,
-      **/Generated/Internal/Utf8JsonRequestContent.cs,
-      **/Generated/Models/BlobDeleteType.Serialization.cs,
-      **/Generated/Models/BlobExpiryOptions.cs,
-      **/Generated/Models/FilterBlobsIncludeItem.Serialization.cs,
-      **/Generated/Models/ListContainersIncludeType.Serialization.cs
+      **/ListBlobsIncludeItemExtensions.cs,
+      **/Utf8JsonRequestContent.cs,
+      **/Optional.cs,
+      **/PipelineRequestHeadersExtensions.cs,
+      **/RawRequestUriBuilderExtensions.cs,
+      **/RequestContextExtensions.cs,
+      **/TypeFormatters.cs
     </CodeCoverageExcludeByFile>
   </PropertyGroup>
   
