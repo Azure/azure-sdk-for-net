@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location.Value);
+            WriteLocation(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    ReadLocation(prop, ref location);
                     continue;
                 }
                 if (options.Format != "W")

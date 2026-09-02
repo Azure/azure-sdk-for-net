@@ -1,12 +1,16 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2026-09-02)
 
 ### Features Added
+
+- Added an overload to create `BatchAccountData` with its location.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `BatchAccountData` JSON serialization and deserialization when location is `null`.
 
 ### Other Changes
 
