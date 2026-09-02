@@ -37,5 +37,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The Availability zone in which machine is located. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
+
+        /// <summary> Azure resource id of the machine. It can be used to GET underlying VM Instance. </summary>
+        [WirePath("properties.resourceId")]
+        public ResourceIdentifier ContainerServiceMachineResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                Properties = new ContainerServiceMachineProperties(value);
+            }
+        }
     }
 }
