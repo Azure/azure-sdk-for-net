@@ -781,5 +781,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 RoutedAuthenticationFailed(route, statusCode, hint);
             }
         }
+
+        [NonEvent]
+        public void OneSettingsCallbackFailed(Exception ex)
+        {
+            // EventSource cannot serialize Exception; avoid formatting it unless verbose logging is enabled.
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                OneSettingsCallbackFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(86, Message = "A OneSettings configuration callback failed. This is only for internal configuration and can safely be ignored. {0}", Level = EventLevel.Verbose)]
+        public void OneSettingsCallbackFailed(string exceptionMessage) => WriteEvent(86, exceptionMessage);
     }
 }

@@ -16,6 +16,8 @@
 
 ### Other Changes
 
+- Added internal groundwork for future OneSettings dynamic configuration. This does not change exporter behavior.
+
 ## 1.11.0-beta.1 (2026-11-09)
 
 ### Features Added
