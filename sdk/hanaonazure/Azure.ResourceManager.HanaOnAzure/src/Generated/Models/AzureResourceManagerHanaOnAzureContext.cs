@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.HanaOnAzure.Models;
 using Azure.ResourceManager.Models;
 
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.HanaOnAzure
     [ModelReaderWriterBuildable(typeof(ProviderInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(ProviderInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(ProviderInstanceResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapMonitorData))]
     [ModelReaderWriterBuildable(typeof(SapMonitorListResult))]
     [ModelReaderWriterBuildable(typeof(SapMonitorPatch))]

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         {
             TryGetApiVersion(SapMonitorResource.ResourceType, out string sapMonitorApiVersion);
             _sapMonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HanaOnAzure", SapMonitorResource.ResourceType.Namespace, Diagnostics);
-            _sapMonitorsRestClient = new SapMonitors(_sapMonitorsClientDiagnostics, Pipeline, Endpoint, sapMonitorApiVersion ?? "2020-02-07-preview");
+            _sapMonitorsRestClient = new SapMonitors(_sapMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapMonitorApiVersion ?? "2020-02-07-preview");
             ValidateResourceId(id);
         }
 
