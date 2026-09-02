@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2026-09-03)
+
+This is the first stable release of Service Groups management client library.
 
 ### Features Added
-
-- Added support for service group attributes.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 - Updated the service API version to `2026-08-01`.
 
