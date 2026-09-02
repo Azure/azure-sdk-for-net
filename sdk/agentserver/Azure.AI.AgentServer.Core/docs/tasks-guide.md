@@ -570,8 +570,9 @@ TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THand
 
 `AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks
 services on first use, so `AddResilientTasks()` is optional — call it explicitly only
-when you need to supply a `credential`, and do so before registering any task (a
-credential cannot be attached once the services are already set up). `credential` is
+when you need to supply a `credential`. It may be called before or after task
+registrations while the service collection is being composed; the first non-null
+credential wins, and a later conflicting credential is rejected. `credential` is
 required when the host is running in Foundry hosted mode and the framework selects
 hosted task storage; local development uses the file-backed store and does not require
 one.
@@ -590,6 +591,10 @@ register it as a **keyed singleton** service — keyed by `name` — so resoluti
 ambiguous even when several tasks share the same `<TInput, TOutput>` pair. Resolve it in
 a request handler with `IServiceProvider.GetResilientTask<TInput, TOutput>(name)`
 (equivalent to `GetRequiredKeyedService<TaskDefinition<TInput, TOutput>>(name)`).
+
+For unit tests, derive a substitute from `TaskDefinition<TInput, TOutput>` using its
+protected constructor and override the virtual members needed by the component under
+test.
 
 Both `RunAsync` and `StartAsync` perform a storage round-trip and so are async.
 `StartAsync` returns once the run has been durably created; awaiting the returned
