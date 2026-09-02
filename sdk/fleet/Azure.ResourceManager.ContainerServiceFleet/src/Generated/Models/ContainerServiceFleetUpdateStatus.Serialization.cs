@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CompletedOn))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? completedOn = default;
             ContainerServiceFleetUpdateState? state = default;
             ResponseError error = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completedTime"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceFleetUpdateStatus(startOn, completedOn, state, error, additionalBinaryDataProperties);
+            return new ContainerServiceFleetUpdateStatus(startsOn, completedOn, state, error, additionalBinaryDataProperties);
         }
     }
 }
