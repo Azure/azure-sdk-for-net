@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             writer.WriteNumberValue(Cores);
             writer.WritePropertyName("pricingModel"u8);
             writer.WriteStringValue(PricingModel.ToString());
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "D");
+                writer.WriteStringValue(StartsOn.Value, "D");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "D");
+                writer.WriteStringValue(EndsOn.Value, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             }
             int cores = default;
             DisconnectedOperationsPricingModel pricingModel = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("D");
+                    startsOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("D");
+                    endsOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startOn, endOn, additionalBinaryDataProperties);
+            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startsOn, endsOn, additionalBinaryDataProperties);
         }
     }
 }
