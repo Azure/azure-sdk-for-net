@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 

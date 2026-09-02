@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Maintenance.Models
         public MaintenancePatchConfiguration InstallPatches { get; set; }
 
         /// <summary> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return MaintenanceWindow is null ? default : MaintenanceWindow.StartOn;
+                return MaintenanceWindow is null ? default : MaintenanceWindow.StartsOn;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     MaintenanceWindow = new MaintenanceWindow();
                 }
-                MaintenanceWindow.StartOn = value;
+                MaintenanceWindow.StartsOn = value;
             }
         }
 
