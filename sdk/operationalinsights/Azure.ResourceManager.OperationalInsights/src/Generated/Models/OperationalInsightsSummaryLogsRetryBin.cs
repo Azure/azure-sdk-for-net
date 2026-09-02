@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The time (UTC) of the bin to retry. </summary>
         [WirePath("properties.retryBinStartTime")]
-        public DateTimeOffset? RetryBinStartOn
+        public DateTimeOffset? RetryBinStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.RetryBinStartOn;
+                return Properties is null ? default : Properties.RetryBinStartsOn;
             }
             set
             {

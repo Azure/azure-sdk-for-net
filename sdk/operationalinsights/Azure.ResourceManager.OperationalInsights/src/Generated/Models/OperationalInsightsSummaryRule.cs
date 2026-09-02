@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="query"> Summary rule query. </param>
         /// <param name="binSize"> Scheduled window in minutes. Allowed values: 20, 30, 60, 120, 180, 360, 720, 1440. </param>
         /// <param name="binDelay"> The minimum delay in seconds before bin processing. </param>
-        /// <param name="binStartOn"> The start time (UTC) when Summary rule execution starts. </param>
+        /// <param name="binStartsOn"> The start time (UTC) when Summary rule execution starts. </param>
         /// <param name="timeSelector"> The time cursor used in Summary rules bins processing, e.g. TimeGenerated. </param>
         /// <param name="destinationTable"> The destination table used for the Summary rule results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSummaryRule(string query, int? binSize, int? binDelay, DateTimeOffset? binStartOn, OperationalInsightsSummaryTimeSelector? timeSelector, string destinationTable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsSummaryRule(string query, int? binSize, int? binDelay, DateTimeOffset? binStartsOn, OperationalInsightsSummaryTimeSelector? timeSelector, string destinationTable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             BinSize = binSize;
             BinDelay = binDelay;
-            BinStartOn = binStartOn;
+            BinStartsOn = binStartsOn;
             TimeSelector = timeSelector;
             DestinationTable = destinationTable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The start time (UTC) when Summary rule execution starts. </summary>
         [WirePath("binStartTime")]
-        public DateTimeOffset? BinStartOn { get; set; }
+        public DateTimeOffset? BinStartsOn { get; set; }
 
         /// <summary> The time cursor used in Summary rules bins processing, e.g. TimeGenerated. </summary>
         [WirePath("timeSelector")]
