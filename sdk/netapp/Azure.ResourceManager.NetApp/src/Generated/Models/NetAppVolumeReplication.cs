@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <param name="mirrorState"> The status of the replication. </param>
-        /// <param name="replicationCreationOn"> Replication creation time. </param>
-        /// <param name="replicationDeletionOn"> Replication deletion time. </param>
+        /// <param name="replicationCreatedOn"> Replication creation time. </param>
+        /// <param name="replicationDeletedOn"> Replication deletion time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, ReplicationMirrorState? mirrorState, DateTimeOffset? replicationCreationOn, DateTimeOffset? replicationDeletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, ReplicationMirrorState? mirrorState, DateTimeOffset? replicationCreatedOn, DateTimeOffset? replicationDeletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemoteVolumeRegion = remoteVolumeRegion;
             MirrorState = mirrorState;
-            ReplicationCreationOn = replicationCreationOn;
-            ReplicationDeletionOn = replicationDeletionOn;
+            ReplicationCreatedOn = replicationCreatedOn;
+            ReplicationDeletedOn = replicationDeletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public ReplicationMirrorState? MirrorState { get; }
 
         /// <summary> Replication creation time. </summary>
-        public DateTimeOffset? ReplicationCreationOn { get; }
+        public DateTimeOffset? ReplicationCreatedOn { get; }
 
         /// <summary> Replication deletion time. </summary>
-        public DateTimeOffset? ReplicationDeletionOn { get; }
+        public DateTimeOffset? ReplicationDeletedOn { get; }
     }
 }

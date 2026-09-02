@@ -55,5 +55,18 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> SMB Properties. </summary>
         internal ElasticSmbProperties SmbProperties { get; set; }
+
+        /// <summary> Used to configure backups on an elastic volume. </summary>
+        public ElasticVolumeBackupProperties DataProtectionBackup
+        {
+            get
+            {
+                return DataProtection is null ? default : DataProtection.Backup;
+            }
+            set
+            {
+                DataProtection = new ElasticVolumeDataProtectionProperties(value);
+            }
+        }
     }
 }
