@@ -17,7 +17,7 @@ Param (
   [array] $PackageInfoFiles
 )
 
-# Validate-All-Packages.ps1 folds in the code that was originally in Validate-Package.ps1
+# Update-Package-WorkItems.ps1 folds in the code that was originally in Validate-Package.ps1
 # since Validate-Package.ps1 was only called from Validate-All-Packages.ps1. This replaces
 # script calls with function calls and also allows calling CheckAzLoginAndDevOpsExtensionInstall
 # and CheckDevOpsAccess once for all of the PackageInfo files being processed instead of once
