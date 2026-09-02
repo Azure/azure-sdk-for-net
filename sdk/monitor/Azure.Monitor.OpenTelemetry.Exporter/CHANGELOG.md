@@ -33,6 +33,8 @@
 
 ### Other Changes
 
+- Added internal groundwork for future OneSettings dynamic configuration. This does not change exporter behavior.
+
 ## 1.8.3 (2026-07-24)
 
 ### Bugs Fixed
