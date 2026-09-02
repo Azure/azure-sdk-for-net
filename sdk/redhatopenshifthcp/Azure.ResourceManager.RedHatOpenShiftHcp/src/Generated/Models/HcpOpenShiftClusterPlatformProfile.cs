@@ -13,12 +13,12 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Azure specific configuration. </summary>
-    public partial class PlatformProfile
+    public partial class HcpOpenShiftClusterPlatformProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlatformProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterPlatformProfile"/>. </summary>
         /// <param name="subnetId">
         /// The Azure resource ID of the worker subnet
         /// Note that a subnet cannot be reused between ARO-HCP Clusters.
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// to perform Operators authentication based on Azure User-Assigned Managed Identities
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/>, <paramref name="vnetIntegrationSubnetId"/>, <paramref name="networkSecurityGroupId"/> or <paramref name="operatorsAuthenticationUserAssignedIdentities"/> is null. </exception>
-        public PlatformProfile(ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, ResourceIdentifier networkSecurityGroupId, UserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities)
+        public HcpOpenShiftClusterPlatformProfile(ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, ResourceIdentifier networkSecurityGroupId, UserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(vnetIntegrationSubnetId, nameof(vnetIntegrationSubnetId));
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             OperatorsAuthentication = new OperatorsAuthenticationProfile(operatorsAuthenticationUserAssignedIdentities);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterPlatformProfile"/>. </summary>
         /// <param name="managedResourceGroup">
         /// Resource group name to put cluster resources
         /// If not specified then a unique name is generated from the
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// to authenticate against user Azure cloud account
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformProfile(string managedResourceGroup, ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, OutboundType? outboundType, ResourceIdentifier networkSecurityGroupId, OperatorsAuthenticationProfile operatorsAuthentication, Uri issuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterPlatformProfile(string managedResourceGroup, ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, OutboundType? outboundType, ResourceIdentifier networkSecurityGroupId, OperatorsAuthenticationProfile operatorsAuthentication, Uri issuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedResourceGroup = managedResourceGroup;
             SubnetId = subnetId;

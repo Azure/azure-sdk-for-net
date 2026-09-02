@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Representation of the possible values of a condition status. </summary>
-    public readonly partial struct StatusType : IEquatable<StatusType>
+    public readonly partial struct HcpOpenShiftClusterConditionStatusType : IEquatable<HcpOpenShiftClusterConditionStatusType>
     {
         private readonly string _value;
         /// <summary> Indicates that the condition status is True. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> Indicates that the condition status is unknown. </summary>
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Initializes a new instance of <see cref="StatusType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterConditionStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StatusType(string value)
+        public HcpOpenShiftClusterConditionStatusType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <summary> Indicates that the condition status is True. </summary>
-        public static StatusType True { get; } = new StatusType(TrueValue);
+        public static HcpOpenShiftClusterConditionStatusType True { get; } = new HcpOpenShiftClusterConditionStatusType(TrueValue);
 
         /// <summary> Indicates that the condition status is False. </summary>
-        public static StatusType False { get; } = new StatusType(FalseValue);
+        public static HcpOpenShiftClusterConditionStatusType False { get; } = new HcpOpenShiftClusterConditionStatusType(FalseValue);
 
         /// <summary> Indicates that the condition status is unknown. </summary>
-        public static StatusType Unknown { get; } = new StatusType(UnknownValue);
+        public static HcpOpenShiftClusterConditionStatusType Unknown { get; } = new HcpOpenShiftClusterConditionStatusType(UnknownValue);
 
-        /// <summary> Determines if two <see cref="StatusType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HcpOpenShiftClusterConditionStatusType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StatusType left, StatusType right) => left.Equals(right);
+        public static bool operator ==(HcpOpenShiftClusterConditionStatusType left, HcpOpenShiftClusterConditionStatusType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StatusType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HcpOpenShiftClusterConditionStatusType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StatusType left, StatusType right) => !left.Equals(right);
+        public static bool operator !=(HcpOpenShiftClusterConditionStatusType left, HcpOpenShiftClusterConditionStatusType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StatusType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterConditionStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StatusType(string value) => new StatusType(value);
+        public static implicit operator HcpOpenShiftClusterConditionStatusType(string value) => new HcpOpenShiftClusterConditionStatusType(value);
 
-        /// <summary> Converts a string to a <see cref="StatusType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterConditionStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StatusType?(string value) => value == null ? null : new StatusType(value);
+        public static implicit operator HcpOpenShiftClusterConditionStatusType?(string value) => value == null ? null : new HcpOpenShiftClusterConditionStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StatusType other && Equals(other);
+        public override bool Equals(object obj) => obj is HcpOpenShiftClusterConditionStatusType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HcpOpenShiftClusterConditionStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

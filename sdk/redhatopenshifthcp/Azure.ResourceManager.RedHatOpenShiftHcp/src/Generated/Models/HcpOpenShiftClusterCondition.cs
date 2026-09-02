@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Condition represents an observation of a resource's state. </summary>
-    public partial class Condition
+    public partial class HcpOpenShiftClusterCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
-        internal Condition()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterCondition"/>. </summary>
+        internal HcpOpenShiftClusterCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterCondition"/>. </summary>
         /// <param name="type">
         /// Type of the condition.
         /// This is a PascalCase identifier representing the type of the condition.
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// This may be an empty string.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Condition(ConditionType @type, StatusType status, DateTimeOffset lastTransitionOn, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterCondition(HcpOpenShiftClusterConditionType @type, HcpOpenShiftClusterConditionStatusType status, DateTimeOffset lastTransitionOn, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Status = status;
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Type of the condition.
         /// This is a PascalCase identifier representing the type of the condition.
         /// </summary>
-        public ConditionType Type { get; }
+        public HcpOpenShiftClusterConditionType Type { get; }
 
         /// <summary> The status of the condition. </summary>
-        public StatusType Status { get; }
+        public HcpOpenShiftClusterConditionStatusType Status { get; }
 
         /// <summary> The last time the condition transitioned from one status to another. </summary>
         public DateTimeOffset LastTransitionOn { get; }

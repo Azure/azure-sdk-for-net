@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftVersionProperties"/>. </summary>
         /// <param name="channelGroup"> ChannelGroup is the name of the group where this version belongs. </param>
         /// <param name="enabled"> Enabled indicates if this version can be used to create clusters. </param>
-        /// <param name="endOfLifeTimestamp"> EndOfLifeTimestamp is the date and time when this version will reach End of Life. </param>
-        internal HcpOpenShiftVersionProperties(string channelGroup, bool enabled, DateTimeOffset endOfLifeTimestamp)
+        /// <param name="endOfLifeTimestampOn"> EndOfLifeTimestamp is the date and time when this version will reach End of Life. </param>
+        internal HcpOpenShiftVersionProperties(string channelGroup, bool enabled, DateTimeOffset endOfLifeTimestampOn)
         {
             ChannelGroup = channelGroup;
             Enabled = enabled;
-            EndOfLifeTimestamp = endOfLifeTimestamp;
+            EndOfLifeTimestampOn = endOfLifeTimestampOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftVersionProperties"/>. </summary>
         /// <param name="channelGroup"> ChannelGroup is the name of the group where this version belongs. </param>
         /// <param name="enabled"> Enabled indicates if this version can be used to create clusters. </param>
-        /// <param name="endOfLifeTimestamp"> EndOfLifeTimestamp is the date and time when this version will reach End of Life. </param>
+        /// <param name="endOfLifeTimestampOn"> EndOfLifeTimestamp is the date and time when this version will reach End of Life. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftVersionProperties(string channelGroup, bool enabled, DateTimeOffset endOfLifeTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftVersionProperties(string channelGroup, bool enabled, DateTimeOffset endOfLifeTimestampOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ChannelGroup = channelGroup;
             Enabled = enabled;
-            EndOfLifeTimestamp = endOfLifeTimestamp;
+            EndOfLifeTimestampOn = endOfLifeTimestampOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public bool Enabled { get; }
 
         /// <summary> EndOfLifeTimestamp is the date and time when this version will reach End of Life. </summary>
-        public DateTimeOffset EndOfLifeTimestamp { get; }
+        public DateTimeOffset EndOfLifeTimestampOn { get; }
     }
 }

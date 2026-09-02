@@ -12,23 +12,23 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Information about the API of a cluster. </summary>
-    public partial class ApiProfile
+    public partial class HcpOpenShiftClusterAPIProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
-        public ApiProfile()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAPIProfile"/>. </summary>
+        public HcpOpenShiftClusterAPIProfile()
         {
             AuthorizedCIDRs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAPIProfile"/>. </summary>
         /// <param name="uri"> URL endpoint for the API server. </param>
         /// <param name="visibility"> The internet visibility of the OpenShift API server. </param>
         /// <param name="authorizedCIDRs"> The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiProfile(Uri uri, Visibility? visibility, IList<string> authorizedCIDRs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterAPIProfile(Uri uri, HcpOpenShiftClusterAPIVisibility? visibility, IList<string> authorizedCIDRs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Visibility = visibility;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public Uri Uri { get; }
 
         /// <summary> The internet visibility of the OpenShift API server. </summary>
-        public Visibility? Visibility { get; set; }
+        public HcpOpenShiftClusterAPIVisibility? Visibility { get; set; }
 
         /// <summary> The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries. </summary>
         public IList<string> AuthorizedCIDRs { get; }

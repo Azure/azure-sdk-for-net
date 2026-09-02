@@ -14,51 +14,51 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Condition represents an observation of a resource's state. </summary>
-    public partial class Condition : IJsonModel<Condition>
+    public partial class HcpOpenShiftClusterCondition : IJsonModel<HcpOpenShiftClusterCondition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Condition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HcpOpenShiftClusterCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCondition(document.RootElement, options);
+                        return DeserializeHcpOpenShiftClusterCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Condition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HcpOpenShiftClusterCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftHcpContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Condition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HcpOpenShiftClusterCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Condition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HcpOpenShiftClusterCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Condition IPersistableModel<Condition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HcpOpenShiftClusterCondition IPersistableModel<HcpOpenShiftClusterCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Condition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HcpOpenShiftClusterCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Condition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HcpOpenShiftClusterCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Condition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HcpOpenShiftClusterCondition)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -118,31 +118,31 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Condition IJsonModel<Condition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HcpOpenShiftClusterCondition IJsonModel<HcpOpenShiftClusterCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Condition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HcpOpenShiftClusterCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Condition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HcpOpenShiftClusterCondition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCondition(document.RootElement, options);
+            return DeserializeHcpOpenShiftClusterCondition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Condition DeserializeCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static HcpOpenShiftClusterCondition DeserializeHcpOpenShiftClusterCondition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ConditionType @type = default;
-            StatusType status = default;
+            HcpOpenShiftClusterConditionType @type = default;
+            HcpOpenShiftClusterConditionStatusType status = default;
             DateTimeOffset lastTransitionOn = default;
             string reason = default;
             string message = default;
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ConditionType(prop.Value.GetString());
+                    @type = new HcpOpenShiftClusterConditionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new StatusType(prop.Value.GetString());
+                    status = new HcpOpenShiftClusterConditionStatusType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastTransitionTime"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Condition(
+            return new HcpOpenShiftClusterCondition(
                 @type,
                 status,
                 lastTransitionOn,

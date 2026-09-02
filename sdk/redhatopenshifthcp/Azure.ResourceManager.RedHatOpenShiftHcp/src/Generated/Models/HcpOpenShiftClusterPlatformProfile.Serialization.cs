@@ -15,56 +15,56 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Azure specific configuration. </summary>
-    public partial class PlatformProfile : IJsonModel<PlatformProfile>
+    public partial class HcpOpenShiftClusterPlatformProfile : IJsonModel<HcpOpenShiftClusterPlatformProfile>
     {
-        /// <summary> Initializes a new instance of <see cref="PlatformProfile"/> for deserialization. </summary>
-        internal PlatformProfile()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterPlatformProfile"/> for deserialization. </summary>
+        internal HcpOpenShiftClusterPlatformProfile()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlatformProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HcpOpenShiftClusterPlatformProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterPlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePlatformProfile(document.RootElement, options);
+                        return DeserializeHcpOpenShiftClusterPlatformProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlatformProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HcpOpenShiftClusterPlatformProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterPlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftHcpContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PlatformProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HcpOpenShiftClusterPlatformProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlatformProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HcpOpenShiftClusterPlatformProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PlatformProfile IPersistableModel<PlatformProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HcpOpenShiftClusterPlatformProfile IPersistableModel<HcpOpenShiftClusterPlatformProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlatformProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HcpOpenShiftClusterPlatformProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PlatformProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HcpOpenShiftClusterPlatformProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterPlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HcpOpenShiftClusterPlatformProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ManagedResourceGroup))
             {
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PlatformProfile IJsonModel<PlatformProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HcpOpenShiftClusterPlatformProfile IJsonModel<HcpOpenShiftClusterPlatformProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlatformProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HcpOpenShiftClusterPlatformProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterPlatformProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HcpOpenShiftClusterPlatformProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlatformProfile(document.RootElement, options);
+            return DeserializeHcpOpenShiftClusterPlatformProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PlatformProfile DeserializePlatformProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static HcpOpenShiftClusterPlatformProfile DeserializeHcpOpenShiftClusterPlatformProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PlatformProfile(
+            return new HcpOpenShiftClusterPlatformProfile(
                 managedResourceGroup,
                 subnetId,
                 vnetIntegrationSubnetId,

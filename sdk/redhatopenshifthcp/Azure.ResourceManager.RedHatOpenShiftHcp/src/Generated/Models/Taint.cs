@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="key"> The key of the taint. </param>
         /// <param name="effect"> The effect of the taint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public Taint(string key, Effect effect)
+        public Taint(string key, HcpOpenShiftClusterNodePoolTaintEffect effect)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="value"> The value of the taint. </param>
         /// <param name="effect"> The effect of the taint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Taint(string key, string value, Effect effect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Taint(string key, string value, HcpOpenShiftClusterNodePoolTaintEffect effect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public string Value { get; set; }
 
         /// <summary> The effect of the taint. </summary>
-        public Effect Effect { get; set; }
+        public HcpOpenShiftClusterNodePoolTaintEffect Effect { get; set; }
     }
 }

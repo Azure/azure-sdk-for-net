@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public ExternalAuthClaimProfile Claim { get; set; }
 
         /// <summary> The conditions on the resource. </summary>
-        public IReadOnlyList<Condition> StatusConditions
+        public IReadOnlyList<HcpOpenShiftClusterCondition> StatusConditions
         {
             get
             {

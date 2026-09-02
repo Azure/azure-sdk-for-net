@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             writer.WritePropertyName("endOfLifeTimestamp"u8);
-            writer.WriteStringValue(EndOfLifeTimestamp, "O");
+            writer.WriteStringValue(EndOfLifeTimestampOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             }
             string channelGroup = default;
             bool enabled = default;
-            DateTimeOffset endOfLifeTimestamp = default;
+            DateTimeOffset endOfLifeTimestampOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (prop.NameEquals("endOfLifeTimestamp"u8))
                 {
-                    endOfLifeTimestamp = prop.Value.GetDateTimeOffset("O");
+                    endOfLifeTimestampOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HcpOpenShiftVersionProperties(channelGroup, enabled, endOfLifeTimestamp, additionalBinaryDataProperties);
+            return new HcpOpenShiftVersionProperties(channelGroup, enabled, endOfLifeTimestampOn, additionalBinaryDataProperties);
         }
     }
 }

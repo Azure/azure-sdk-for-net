@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             }
             string key = default;
             string value = default;
-            Effect effect = default;
+            HcpOpenShiftClusterNodePoolTaintEffect effect = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (prop.NameEquals("effect"u8))
                 {
-                    effect = new Effect(prop.Value.GetString());
+                    effect = new HcpOpenShiftClusterNodePoolTaintEffect(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

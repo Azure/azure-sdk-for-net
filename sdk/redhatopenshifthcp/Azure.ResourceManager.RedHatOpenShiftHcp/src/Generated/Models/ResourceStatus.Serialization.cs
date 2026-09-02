@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
-                foreach (Condition item in Conditions)
+                foreach (HcpOpenShiftClusterCondition item in Conditions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 return null;
             }
-            IReadOnlyList<Condition> conditions = default;
+            IReadOnlyList<HcpOpenShiftClusterCondition> conditions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    List<Condition> array = new List<Condition>();
+                    List<HcpOpenShiftClusterCondition> array = new List<HcpOpenShiftClusterCondition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Condition.DeserializeCondition(item, options));
+                        array.Add(HcpOpenShiftClusterCondition.DeserializeHcpOpenShiftClusterCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceStatus(conditions ?? new ChangeTrackingList<Condition>(), additionalBinaryDataProperties);
+            return new ResourceStatus(conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>(), additionalBinaryDataProperties);
         }
     }
 }

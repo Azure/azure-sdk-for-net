@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             Argument.AssertNotNull(platform, nameof(platform));
 
             Platform = platform;
-            Labels = new ChangeTrackingList<Label>();
+            Labels = new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>();
             Taints = new ChangeTrackingList<Taint>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Validation:
         /// <list type="bullet"><item><description>Minimum: 0</description></item><item><description>Maximum: 200 (only when availabilityZone is not specified)</description></item><item><description>No maximum when availabilityZone is specified</description></item></list>
         /// </param>
-        /// <param name="autoRepair"> Auto-repair. </param>
+        /// <param name="canAutoRepair"> Auto-repair. </param>
         /// <param name="autoScaling"> Representation of a autoscaling in a node pool. </param>
         /// <param name="labels">
         /// Kubernetes labels to propagate to the NodePool Nodes
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </param>
         /// <param name="status"> Status of the node pool resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodePoolProperties(ProvisioningState? provisioningState, NodePoolVersionProfile version, NodePoolPlatformProfile platform, int? replicas, bool? autoRepair, NodePoolAutoScaling autoScaling, IList<Label> labels, IList<Taint> taints, int? nodeDrainTimeoutMinutes, ResourceStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodePoolProperties(ProvisioningState? provisioningState, NodePoolVersionProfile version, NodePoolPlatformProfile platform, int? replicas, bool? canAutoRepair, NodePoolAutoScaling autoScaling, IList<HcpOpenShiftClusterNodePoolLabel> labels, IList<Taint> taints, int? nodeDrainTimeoutMinutes, ResourceStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
             Platform = platform;
             Replicas = replicas;
-            AutoRepair = autoRepair;
+            CanAutoRepair = canAutoRepair;
             AutoScaling = autoScaling;
             Labels = labels;
             Taints = taints;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public int? Replicas { get; set; }
 
         /// <summary> Auto-repair. </summary>
-        public bool? AutoRepair { get; set; }
+        public bool? CanAutoRepair { get; set; }
 
         /// <summary> Representation of a autoscaling in a node pool. </summary>
         public NodePoolAutoScaling AutoScaling { get; set; }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Note that when the labels are updated this is only applied to newly
         /// create nodes in the Nodepool, existing node labels remain unchanged.
         /// </summary>
-        public IList<Label> Labels { get; }
+        public IList<HcpOpenShiftClusterNodePoolLabel> Labels { get; }
 
         /// <summary> Taints for the nodes. </summary>
         public IList<Taint> Taints { get; }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         internal ResourceStatus Status { get; }
 
         /// <summary> The conditions on the resource. </summary>
-        public IReadOnlyList<Condition> StatusConditions
+        public IReadOnlyList<HcpOpenShiftClusterCondition> StatusConditions
         {
             get
             {

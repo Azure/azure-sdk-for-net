@@ -12,26 +12,26 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Label represents the Kubernetes label. </summary>
-    public partial class Label
+    public partial class HcpOpenShiftClusterNodePoolLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Label"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolLabel"/>. </summary>
         /// <param name="key"> The key of the label. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public Label(string key)
+        public HcpOpenShiftClusterNodePoolLabel(string key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Label"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolLabel"/>. </summary>
         /// <param name="key"> The key of the label. </param>
         /// <param name="value"> The value of the label. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Label(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterNodePoolLabel(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;

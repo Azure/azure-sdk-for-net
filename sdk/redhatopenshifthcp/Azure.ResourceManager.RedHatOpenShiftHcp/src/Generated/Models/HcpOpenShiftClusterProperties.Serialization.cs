@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 return null;
             }
             ProvisioningState? provisioningState = default;
-            VersionProfile version = default;
+            HcpOpenShiftClusterVersionProfile version = default;
             DnsProfile dns = default;
             NetworkProfile network = default;
             ConsoleProfile console = default;
-            ApiProfile api = default;
+            HcpOpenShiftClusterAPIProfile api = default;
             IngressProfile ingress = default;
-            PlatformProfile platform = default;
+            HcpOpenShiftClusterPlatformProfile platform = default;
             ClusterAutoscalingProfile autoscaling = default;
             EtcdProfile etcd = default;
             IList<ImageDigestMirror> imageDigestMirrors = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    version = VersionProfile.DeserializeVersionProfile(prop.Value, options);
+                    version = HcpOpenShiftClusterVersionProfile.DeserializeHcpOpenShiftClusterVersionProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dns"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    api = ApiProfile.DeserializeApiProfile(prop.Value, options);
+                    api = HcpOpenShiftClusterAPIProfile.DeserializeHcpOpenShiftClusterAPIProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ingress"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (prop.NameEquals("platform"u8))
                 {
-                    platform = PlatformProfile.DeserializePlatformProfile(prop.Value, options);
+                    platform = HcpOpenShiftClusterPlatformProfile.DeserializeHcpOpenShiftClusterPlatformProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("autoscaling"u8))

@@ -15,10 +15,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ApiProfile))]
     [ModelReaderWriterBuildable(typeof(ClusterAutoscalingProfile))]
     [ModelReaderWriterBuildable(typeof(ClusterImageRegistryProfile))]
-    [ModelReaderWriterBuildable(typeof(Condition))]
     [ModelReaderWriterBuildable(typeof(ConsoleProfile))]
     [ModelReaderWriterBuildable(typeof(CustomerManagedEncryptionProfile))]
     [ModelReaderWriterBuildable(typeof(DnsProfile))]
@@ -33,11 +31,15 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(ExternalAuthResource))]
     [ModelReaderWriterBuildable(typeof(GroupClaimProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredential))]
-    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredentialContent))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAPIProfile))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterCondition))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterData))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolLabel))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterPlatformProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterProperties))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterResource))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterVersionProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftVersionData))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftVersionListResult))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftVersionProperties))]
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(IngressProfile))]
     [ModelReaderWriterBuildable(typeof(KmsEncryptionProfile))]
     [ModelReaderWriterBuildable(typeof(KmsKey))]
-    [ModelReaderWriterBuildable(typeof(Label))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkProfile))]
     [ModelReaderWriterBuildable(typeof(NodePoolAutoScaling))]
@@ -63,7 +64,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(OperatorIdentityRoles))]
     [ModelReaderWriterBuildable(typeof(OperatorsAuthenticationProfile))]
     [ModelReaderWriterBuildable(typeof(OSDiskProfile))]
-    [ModelReaderWriterBuildable(typeof(PlatformProfile))]
     [ModelReaderWriterBuildable(typeof(ResourceStatus))]
     [ModelReaderWriterBuildable(typeof(RoleDefinitionInfo))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesProfile))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UsernameClaimProfile))]
-    [ModelReaderWriterBuildable(typeof(VersionProfile))]
     public partial class AzureResourceManagerRedHatOpenShiftHcpContext : ModelReaderWriterContext
     {
     }

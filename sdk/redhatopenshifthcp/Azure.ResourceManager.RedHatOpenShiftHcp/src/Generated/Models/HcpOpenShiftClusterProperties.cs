@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="version"> Version of the control plane components. </param>
         /// <param name="platform"> Azure platform configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="platform"/> is null. </exception>
-        public HcpOpenShiftClusterProperties(VersionProfile version, PlatformProfile platform)
+        public HcpOpenShiftClusterProperties(HcpOpenShiftClusterVersionProfile version, HcpOpenShiftClusterPlatformProfile platform)
         {
             Argument.AssertNotNull(version, nameof(version));
             Argument.AssertNotNull(platform, nameof(platform));
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, VersionProfile version, DnsProfile dns, NetworkProfile network, ConsoleProfile console, ApiProfile api, IngressProfile ingress, PlatformProfile platform, ClusterAutoscalingProfile autoscaling, EtcdProfile etcd, IList<ImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, ClusterImageRegistryProfile clusterImageRegistry, ResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, DnsProfile dns, NetworkProfile network, ConsoleProfile console, HcpOpenShiftClusterAPIProfile api, IngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, ClusterAutoscalingProfile autoscaling, EtcdProfile etcd, IList<ImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, ClusterImageRegistryProfile clusterImageRegistry, ResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public ProvisioningState? ProvisioningState { get; }
 
         /// <summary> Version of the control plane components. </summary>
-        public VersionProfile Version { get; set; }
+        public HcpOpenShiftClusterVersionProfile Version { get; set; }
 
         /// <summary> Cluster DNS configuration. </summary>
         public DnsProfile Dns { get; set; }
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         internal ConsoleProfile Console { get; }
 
         /// <summary> Shows the cluster API server profile. </summary>
-        public ApiProfile Api { get; set; }
+        public HcpOpenShiftClusterAPIProfile Api { get; set; }
 
         /// <summary> The cluster ingress configuration. </summary>
         internal IngressProfile Ingress { get; set; }
 
         /// <summary> Azure platform configuration. </summary>
-        public PlatformProfile Platform { get; set; }
+        public HcpOpenShiftClusterPlatformProfile Platform { get; set; }
 
         /// <summary> Configure ClusterAutoscaling . </summary>
         public ClusterAutoscalingProfile Autoscaling { get; set; }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <summary> The conditions on the resource. </summary>
-        public IReadOnlyList<Condition> StatusConditions
+        public IReadOnlyList<HcpOpenShiftClusterCondition> StatusConditions
         {
             get
             {

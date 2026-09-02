@@ -12,22 +12,22 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Versions represents an OpenShift version. </summary>
-    public partial class VersionProfile
+    public partial class HcpOpenShiftClusterVersionProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VersionProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterVersionProfile"/>. </summary>
         /// <param name="id"> ID is the desired X.Y version of the cluster control plane. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public VersionProfile(string id)
+        public HcpOpenShiftClusterVersionProfile(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VersionProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterVersionProfile"/>. </summary>
         /// <param name="id"> ID is the desired X.Y version of the cluster control plane. </param>
         /// <param name="channelGroup">
         /// ChannelGroup is the name of the set to which this version belongs.
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// If not specified, the default value is 'stable'.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VersionProfile(string id, string channelGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterVersionProfile(string id, string channelGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ChannelGroup = channelGroup;

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAdminCredential"/>. </summary>
         /// <param name="kubeconfig"> Admin kubeconfig with a temporary client certificate. </param>
-        /// <param name="expirationTimestamp"> Expiration timestamp for the kubeconfig's client certificate. </param>
+        /// <param name="expirationTimestampOn"> Expiration timestamp for the kubeconfig's client certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterAdminCredential(string kubeconfig, DateTimeOffset expirationTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterAdminCredential(string kubeconfig, DateTimeOffset expirationTimestampOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kubeconfig = kubeconfig;
-            ExpirationTimestamp = expirationTimestamp;
+            ExpirationTimestampOn = expirationTimestampOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public string Kubeconfig { get; }
 
         /// <summary> Expiration timestamp for the kubeconfig's client certificate. </summary>
-        public DateTimeOffset ExpirationTimestamp { get; }
+        public DateTimeOffset ExpirationTimestampOn { get; }
     }
 }

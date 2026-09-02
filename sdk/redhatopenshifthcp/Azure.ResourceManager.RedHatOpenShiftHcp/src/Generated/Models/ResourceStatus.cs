@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> Initializes a new instance of <see cref="ResourceStatus"/>. </summary>
         internal ResourceStatus()
         {
-            Conditions = new ChangeTrackingList<Condition>();
+            Conditions = new ChangeTrackingList<HcpOpenShiftClusterCondition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceStatus"/>. </summary>
         /// <param name="conditions"> The conditions on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceStatus(IReadOnlyList<Condition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conditions = conditions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The conditions on the resource. </summary>
-        public IReadOnlyList<Condition> Conditions { get; } = new ChangeTrackingList<Condition>();
+        public IReadOnlyList<HcpOpenShiftClusterCondition> Conditions { get; } = new ChangeTrackingList<HcpOpenShiftClusterCondition>();
     }
 }

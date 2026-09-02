@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("expirationTimestamp"u8);
-                writer.WriteStringValue(ExpirationTimestamp, "O");
+                writer.WriteStringValue(ExpirationTimestampOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 return null;
             }
             string kubeconfig = default;
-            DateTimeOffset expirationTimestamp = default;
+            DateTimeOffset expirationTimestampOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (prop.NameEquals("expirationTimestamp"u8))
                 {
-                    expirationTimestamp = prop.Value.GetDateTimeOffset("O");
+                    expirationTimestampOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HcpOpenShiftClusterAdminCredential(kubeconfig, expirationTimestamp, additionalBinaryDataProperties);
+            return new HcpOpenShiftClusterAdminCredential(kubeconfig, expirationTimestampOn, additionalBinaryDataProperties);
         }
     }
 }

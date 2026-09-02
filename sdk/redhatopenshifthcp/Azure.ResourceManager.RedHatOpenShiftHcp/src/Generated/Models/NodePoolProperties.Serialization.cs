@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteNumberValue(Replicas.Value);
             }
-            if (Optional.IsDefined(AutoRepair))
+            if (Optional.IsDefined(CanAutoRepair))
             {
                 writer.WritePropertyName("autoRepair"u8);
-                writer.WriteBooleanValue(AutoRepair.Value);
+                writer.WriteBooleanValue(CanAutoRepair.Value);
             }
             if (Optional.IsDefined(AutoScaling))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (Label item in Labels)
+                foreach (HcpOpenShiftClusterNodePoolLabel item in Labels)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             NodePoolVersionProfile version = default;
             NodePoolPlatformProfile platform = default;
             int? replicas = default;
-            bool? autoRepair = default;
+            bool? canAutoRepair = default;
             NodePoolAutoScaling autoScaling = default;
-            IList<Label> labels = default;
+            IList<HcpOpenShiftClusterNodePoolLabel> labels = default;
             IList<Taint> taints = default;
             int? nodeDrainTimeoutMinutes = default;
             ResourceStatus status = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    autoRepair = prop.Value.GetBoolean();
+                    canAutoRepair = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("autoScaling"u8))
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    List<Label> array = new List<Label>();
+                    List<HcpOpenShiftClusterNodePoolLabel> array = new List<HcpOpenShiftClusterNodePoolLabel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Label.DeserializeLabel(item, options));
+                        array.Add(HcpOpenShiftClusterNodePoolLabel.DeserializeHcpOpenShiftClusterNodePoolLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -297,9 +297,9 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 version,
                 platform,
                 replicas,
-                autoRepair,
+                canAutoRepair,
                 autoScaling,
-                labels ?? new ChangeTrackingList<Label>(),
+                labels ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>(),
                 taints ?? new ChangeTrackingList<Taint>(),
                 nodeDrainTimeoutMinutes,
                 status,
