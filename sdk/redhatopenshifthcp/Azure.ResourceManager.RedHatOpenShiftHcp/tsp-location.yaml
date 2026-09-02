@@ -1,5 +1,5 @@
 directory: specification/redhatopenshift/resource-manager/Microsoft.RedHatOpenShift/hcpopenshiftclusters
-commit: bfdd1b0bc8ed879f5c94eb650ea33c5570841f54
+commit: 1c7db3e1dfe82c556dfa7a05c367b60e170e27ae
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

@@ -12,23 +12,23 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> Information about the API of a cluster. </summary>
-    public partial class HcpOpenShiftClusterAPIProfile
+    public partial class HcpOpenShiftClusterApiProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAPIProfile"/>. </summary>
-        public HcpOpenShiftClusterAPIProfile()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterApiProfile"/>. </summary>
+        public HcpOpenShiftClusterApiProfile()
         {
             AuthorizedCIDRs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAPIProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterApiProfile"/>. </summary>
         /// <param name="uri"> URL endpoint for the API server. </param>
         /// <param name="visibility"> The internet visibility of the OpenShift API server. </param>
         /// <param name="authorizedCIDRs"> The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterAPIProfile(Uri uri, HcpOpenShiftClusterAPIVisibility? visibility, IList<string> authorizedCIDRs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterApiProfile(Uri uri, HcpOpenShiftClusterApiVisibility? visibility, IList<string> authorizedCIDRs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Visibility = visibility;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public Uri Uri { get; }
 
         /// <summary> The internet visibility of the OpenShift API server. </summary>
-        public HcpOpenShiftClusterAPIVisibility? Visibility { get; set; }
+        public HcpOpenShiftClusterApiVisibility? Visibility { get; set; }
 
         /// <summary> The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries. </summary>
         public IList<string> AuthorizedCIDRs { get; }

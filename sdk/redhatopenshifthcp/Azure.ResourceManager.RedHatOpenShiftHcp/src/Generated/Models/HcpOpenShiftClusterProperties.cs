@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, DnsProfile dns, NetworkProfile network, ConsoleProfile console, HcpOpenShiftClusterAPIProfile api, IngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, ClusterAutoscalingProfile autoscaling, EtcdProfile etcd, IList<ImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, ClusterImageRegistryProfile clusterImageRegistry, ResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, DnsProfile dns, NetworkProfile network, ConsoleProfile console, HcpOpenShiftClusterApiProfile api, IngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, ClusterAutoscalingProfile autoscaling, EtcdProfile etcd, IList<ImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, ClusterImageRegistryProfile clusterImageRegistry, ResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         internal ConsoleProfile Console { get; }
 
         /// <summary> Shows the cluster API server profile. </summary>
-        public HcpOpenShiftClusterAPIProfile Api { get; set; }
+        public HcpOpenShiftClusterApiProfile Api { get; set; }
 
         /// <summary> The cluster ingress configuration. </summary>
         internal IngressProfile Ingress { get; set; }

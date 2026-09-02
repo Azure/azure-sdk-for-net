@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             DnsProfile dns = default;
             NetworkProfile network = default;
             ConsoleProfile console = default;
-            HcpOpenShiftClusterAPIProfile api = default;
+            HcpOpenShiftClusterApiProfile api = default;
             IngressProfile ingress = default;
             HcpOpenShiftClusterPlatformProfile platform = default;
             ClusterAutoscalingProfile autoscaling = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    api = HcpOpenShiftClusterAPIProfile.DeserializeHcpOpenShiftClusterAPIProfile(prop.Value, options);
+                    api = HcpOpenShiftClusterApiProfile.DeserializeHcpOpenShiftClusterApiProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ingress"u8))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> The internet visibility of the OpenShift API server. </summary>
-    public readonly partial struct HcpOpenShiftClusterAPIVisibility : IEquatable<HcpOpenShiftClusterAPIVisibility>
+    public readonly partial struct HcpOpenShiftClusterApiVisibility : IEquatable<HcpOpenShiftClusterApiVisibility>
     {
         private readonly string _value;
         /// <summary> The API server is visible from the internet. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> The API server is not visible from the internet. </summary>
         private const string PrivateValue = "Private";
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAPIVisibility"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterApiVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HcpOpenShiftClusterAPIVisibility(string value)
+        public HcpOpenShiftClusterApiVisibility(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <summary> The API server is visible from the internet. </summary>
-        public static HcpOpenShiftClusterAPIVisibility Public { get; } = new HcpOpenShiftClusterAPIVisibility(PublicValue);
+        public static HcpOpenShiftClusterApiVisibility Public { get; } = new HcpOpenShiftClusterApiVisibility(PublicValue);
 
         /// <summary> The API server is not visible from the internet. </summary>
-        public static HcpOpenShiftClusterAPIVisibility Private { get; } = new HcpOpenShiftClusterAPIVisibility(PrivateValue);
+        public static HcpOpenShiftClusterApiVisibility Private { get; } = new HcpOpenShiftClusterApiVisibility(PrivateValue);
 
-        /// <summary> Determines if two <see cref="HcpOpenShiftClusterAPIVisibility"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HcpOpenShiftClusterApiVisibility"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(HcpOpenShiftClusterAPIVisibility left, HcpOpenShiftClusterAPIVisibility right) => left.Equals(right);
+        public static bool operator ==(HcpOpenShiftClusterApiVisibility left, HcpOpenShiftClusterApiVisibility right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HcpOpenShiftClusterAPIVisibility"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HcpOpenShiftClusterApiVisibility"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(HcpOpenShiftClusterAPIVisibility left, HcpOpenShiftClusterAPIVisibility right) => !left.Equals(right);
+        public static bool operator !=(HcpOpenShiftClusterApiVisibility left, HcpOpenShiftClusterApiVisibility right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterAPIVisibility"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterApiVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterAPIVisibility(string value) => new HcpOpenShiftClusterAPIVisibility(value);
+        public static implicit operator HcpOpenShiftClusterApiVisibility(string value) => new HcpOpenShiftClusterApiVisibility(value);
 
-        /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterAPIVisibility"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HcpOpenShiftClusterApiVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HcpOpenShiftClusterAPIVisibility?(string value) => value == null ? null : new HcpOpenShiftClusterAPIVisibility(value);
+        public static implicit operator HcpOpenShiftClusterApiVisibility?(string value) => value == null ? null : new HcpOpenShiftClusterApiVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HcpOpenShiftClusterAPIVisibility other && Equals(other);
+        public override bool Equals(object obj) => obj is HcpOpenShiftClusterApiVisibility other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(HcpOpenShiftClusterAPIVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HcpOpenShiftClusterApiVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

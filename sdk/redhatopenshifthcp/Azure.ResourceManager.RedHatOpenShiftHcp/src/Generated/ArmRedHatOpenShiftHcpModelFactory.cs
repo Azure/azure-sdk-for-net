@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="statusConditions"> The conditions on the resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterProperties"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, DnsProfile dns = default, NetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterAPIProfile api = default, IngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, ClusterAutoscalingProfile autoscaling = default, EtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<ImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, ClusterImageRegistryState? clusterImageRegistryState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, CryptoRestrictions? cryptoRestrictions = default)
+        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, DnsProfile dns = default, NetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, IngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, ClusterAutoscalingProfile autoscaling = default, EtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<ImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, ClusterImageRegistryState? clusterImageRegistryState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, CryptoRestrictions? cryptoRestrictions = default)
         {
             imageDigestMirrors ??= new ChangeTrackingList<ImageDigestMirror>();
 
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="uri"> URL endpoint for the API server. </param>
         /// <param name="visibility"> The internet visibility of the OpenShift API server. </param>
         /// <param name="authorizedCIDRs"> The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries. </param>
-        /// <returns> A new <see cref="Models.HcpOpenShiftClusterAPIProfile"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterAPIProfile HcpOpenShiftClusterAPIProfile(Uri uri = default, HcpOpenShiftClusterAPIVisibility? visibility = default, IEnumerable<string> authorizedCIDRs = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterApiProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterApiProfile HcpOpenShiftClusterApiProfile(Uri uri = default, HcpOpenShiftClusterApiVisibility? visibility = default, IEnumerable<string> authorizedCIDRs = default)
         {
             authorizedCIDRs ??= new ChangeTrackingList<string>();
 
-            return new HcpOpenShiftClusterAPIProfile(uri, visibility, (authorizedCIDRs ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new HcpOpenShiftClusterApiProfile(uri, visibility, (authorizedCIDRs ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="managedResourceGroup">
