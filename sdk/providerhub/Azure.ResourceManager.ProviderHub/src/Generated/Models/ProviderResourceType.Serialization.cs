@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
-            Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ProviderQuotaRule quotaRule = default;
             IReadOnlyList<ProviderNotification> notifications = default;
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new Models.ManifestResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new ResourceDeletionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicies"u8))

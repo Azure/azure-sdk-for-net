@@ -4,7 +4,20 @@
 
 ### Features Added
 
+- Regenerated from the relocated ProviderHub TypeSpec (`specification/providerhub/resource-manager/Microsoft.ProviderHub/ProviderHub`), targeting API version `2025-10-01`.
+- Added `ManifestInfo` and `OperationsPutContent` resources, along with the models supporting them.
+
 ### Breaking Changes
+
+The service intentionally removed the following API surface, so it is no longer generated:
+
+- Removed the `ProviderDstsConfiguration` model and the `DstsConfiguration` property from `FanoutLinkedNotificationRule`, `ResourceProviderManifestProperties`, `ResourceTypeEndpoint`, and `ResourceTypeRegistrationProperties`.
+- Removed the `ServiceTreeInfo` and `ServiceTreeReadiness` models and the `ServiceTreeInfos` property from `ProviderResourceType`, `ResourceProviderManagement`, and `ResourceTypeRegistrationProperties`.
+- Removed the `RegistrationNewRegionFrontloadRelease` resource and collection, `ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease`, and the `ProviderFrontloadPayload`, `ProviderFrontloadPayloadProperties`, `ManifestLevelPropertyBag`, `ResourceTypeEndpointBase`, `AvailableCheckInManifestEnvironment`, and `ServiceFeatureFlagAction` models.
+- Removed the `ManifestResourceDeletionPolicy` model; `ProviderResourceType.ResourceDeletionPolicy` now uses `ResourceDeletionPolicy`.
+- Removed the `Models.OperationsPutContent` model. The put-content operations are now exposed through the `OperationsPutContent` resource and `OperationsPutContentData`.
+- `ResourceAccessPolicy` changed from a closed enum to an extensible enum, and only `NotSpecified` remains a well-known value.
+- `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupportSupportedOperations` was replaced by `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupport`.
 
 ### Bugs Fixed
 
