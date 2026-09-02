@@ -11,10 +11,10 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("AzureFunctionDefinitionFunction")]
 public partial class AzureFunctionDefinitionFunction
 {
-	/// <summary> The JSON-encoded parameter schema for the Azure Function. </summary>
-	// Customization: retain IDictionary<string, BinaryData> despite Record<unknown> basis
-	[CodeGenMember("parameters")]
-	public BinaryData Parameters { get; set; }
+    /// <summary> The JSON-encoded parameter schema for the Azure Function. </summary>
+    // Customization: retain IDictionary<string, BinaryData> despite Record<unknown> basis
+    [CodeGenMember("parameters")]
+    public BinaryData Parameters { get; set; }
 }
 [CodeGenType("AzureFunctionStorageQueue")] public partial class AzureFunctionStorageQueue { }
 [CodeGenType("AzureFunctionTool")] public partial class AzureFunctionTool { }
@@ -27,7 +27,7 @@ public partial class AzureFunctionDefinitionFunction
 [CodeGenType("CaptureStructuredOutputsTool")] public partial class CaptureStructuredOutputsTool { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class FabricDataAgentToolOptions { }
 [CodeGenType("FabricIQPreviewTool")] public partial class FabricIQPreviewTool { }
-[CodeGenType("MemorySearchOptions")] public partial class MemorySearchResultOptions { }
+[CodeGenType("MemorySearchResultOptions")] public partial class MemorySearchResultOptions { }
 [CodeGenType("MemorySearchPreviewTool")] public partial class MemorySearchPreviewTool { }
 [CodeGenType("MicrosoftFabricPreviewTool")] public partial class MicrosoftFabricPreviewTool { }
 [CodeGenType("OpenApiManagedSecurityScheme")] public partial class OpenApiManagedSecurityScheme { }

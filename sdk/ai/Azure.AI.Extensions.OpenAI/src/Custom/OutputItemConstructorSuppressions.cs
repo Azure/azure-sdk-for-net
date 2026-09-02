@@ -228,10 +228,10 @@ public partial class MemoryCommandToolCallOutput
     }
 }
 
-[CodeGenSuppress(nameof(MemorySearchToolCall), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(ToolCallStatus), typeof(IList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem>), typeof(IDictionary<string, BinaryData>))]
+[CodeGenSuppress(nameof(MemorySearchToolCall), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(ToolCallStatus), typeof(IList<MemoryOutputItem>), typeof(IDictionary<string, BinaryData>))]
 public partial class MemorySearchToolCall
 {
-    internal MemorySearchToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, ToolCallStatus status, IList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
+    internal MemorySearchToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
         Status = status;
         Memories = memories;

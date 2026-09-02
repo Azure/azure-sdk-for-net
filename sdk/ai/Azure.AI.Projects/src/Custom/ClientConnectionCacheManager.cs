@@ -99,8 +99,6 @@ namespace Azure.AI.Projects
                     return new("DirectPipelinePassthrough");
                 case "Internal.AgentsPipelinePassthrough":
                     return new("AgentsPipelinePassthrough");
-                case "Internal.AgentsTokenProvider":
-                    return new("AgentsTokenProvider");
                 case "Internal.EndpointPipelineData":
                     return new("EndpointPipelineData");
 

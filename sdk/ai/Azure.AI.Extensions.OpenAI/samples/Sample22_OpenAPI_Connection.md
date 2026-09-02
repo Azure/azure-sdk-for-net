@@ -24,15 +24,17 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
-AgentsOpenApiFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
-);
-toolDefinition.Description = "Trip Advisor API to get travel information.";
-AgentsOpenAPITool openapiTool = new(toolDefinition);
+)
+{
+    Description = "Trip Advisor API to get travel information."
+};
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -48,15 +50,17 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Async
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
-AgentsOpenApiFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
-);
-toolDefinition.Description = "Trip Advisor API to get travel information.";
-AgentsOpenAPITool openapiTool = new(toolDefinition);
+)
+{
+    Description = "Trip Advisor API to get travel information."
+};
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

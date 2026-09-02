@@ -23,8 +23,8 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-AgentsBingCustomSearchPreviewTool customBingSearchAgentTool = new(new AgentsBingCustomSearchToolOptions(
-    searchConfigurations: [new AgentsBingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
+    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -40,8 +40,8 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-AgentsBingCustomSearchPreviewTool customBingSearchAgentTool = new(new AgentsBingCustomSearchToolOptions(
-    searchConfigurations: [new AgentsBingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
+    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

@@ -12,7 +12,7 @@
 
 ## 3.0.0-beta.1 (2026-08-24)
 
-This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/MigrationGuide.md) for step-by-step upgrade guidance.
+This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](https://aka.ms/Azure.AI.Extensions.OpenAI-V2V3Migration) for step-by-step upgrade guidance.
 
 ### Features Added
 - Added distributed tracing support.
@@ -105,9 +105,6 @@ This release migrates the library from emitting its own copies of the OpenAI Res
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`. `2.11.0` reshaped `OpenAI.Responses.ResponsesClientOptions` to derive directly from `System.ClientModel.Primitives.ClientPipelineOptions` (a sibling of `OpenAI.OpenAIClientOptions` rather than a subclass), which is why `ProjectResponsesClientOptions` now derives from `ResponsesClientOptions`. `2.12.0` adds strongly-typed conversation support (`OpenAI.Conversations.ConversationResource`, `ConversationCreationOptions`, `ConversationUpdateOptions`); the conversation data models previously emitted by this package are no longer generated, and the temporary local convenience layer now delegates to the upstream types.
-
-- Regenerated the SDK from the unified Foundry v1 data-plane contract and aligned response, tool, and conversation integrations with OpenAI 2.12.0.
-- `AzureFunctionToolCall` is no longer marked experimental.
 
 ### Sample Updates
 - Added sample for running responses in specific sessions.

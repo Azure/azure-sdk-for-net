@@ -19,8 +19,8 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-AgentsBingGroundingTool bingGroundingAgentTool = new(new AgentsBingGroundingSearchToolOptions(
-    searchConfigurations: [new AgentsBingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -36,8 +36,8 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-AgentsBingGroundingTool bingGroundingAgentTool = new(new AgentsBingGroundingSearchToolOptions(
-    searchConfigurations: [new AgentsBingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

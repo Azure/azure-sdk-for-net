@@ -305,7 +305,7 @@ Synchronous sample:
 Console.WriteLine("Wait for a half of a second and inspect the routines.");
 Thread.Sleep(500);
 ProjectsRoutine created = null;
-foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1, before: default))
+foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
 {
     // The routine created no earlier than response and not later than one minute after response.
     if (routine.CreatedOn >= responseTime && routine.CreatedOn < responseTime.AddMinutes(1))
@@ -331,7 +331,7 @@ Asynchronous sample:
 Console.WriteLine("Wait for a half of a second and inspect the routines.");
 await Task.Delay(500);
 ProjectsRoutine created = null;
-await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1, before: default))
+await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
 {
     // The routine created no earlier than response and not later than one minute after response.
     if (routine.CreatedOn >= responseTime && routine.CreatedOn < responseTime.AddMinutes(1))

@@ -207,9 +207,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParameters"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, BinaryData specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
         {
-            specification ??= new ChangeTrackingDictionary<string, BinaryData>();
             defaultParameters ??= new ChangeTrackingList<string>();
             functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
 

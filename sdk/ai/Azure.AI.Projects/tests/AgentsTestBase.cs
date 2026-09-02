@@ -330,9 +330,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         return store;
     }
 
-    private Azure.AI.Projects.Agents.AzureAISearchToolIndex GetAISearchIndex()
+    private global::Azure.AI.Extensions.OpenAI.AzureAISearchToolIndex GetAISearchIndex()
     {
-        Azure.AI.Projects.Agents.AzureAISearchToolIndex index = new()
+        global::Azure.AI.Extensions.OpenAI.AzureAISearchToolIndex index = new()
         {
             ProjectConnectionId = TestEnvironment.AI_SEARCH_CONNECTION_NAME,
             IndexName = "sample_index",
@@ -356,11 +356,11 @@ public class AgentsTestBase : ProjectsClientTestBase
 
     private global::Azure.AI.Extensions.OpenAI.OpenApiTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
-        Azure.AI.Projects.Agents.OpenApiAuthenticationDetails auth;
+        global::Azure.AI.Extensions.OpenAI.OpenApiAuthenticationDetails auth;
         string filePath;
         if (withConnection)
         {
-            auth = new Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+            auth = new global::Azure.AI.Extensions.OpenAI.OpenApiProjectConnectionAuthenticationDetails(new global::Azure.AI.Extensions.OpenAI.OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: TestEnvironment.OPENAPI_PROJECT_CONNECTION_ID
             ));
             filePath = GetAgentTestFile(name: "tripadvisor_openapi.json");
@@ -381,7 +381,7 @@ public class AgentsTestBase : ProjectsClientTestBase
 
     private SharePointPreviewTool GetSharepointTool(AIProjectClient projectClient)
     {
-        Azure.AI.Projects.Agents.SharePointGroundingToolOptions sharepointToolOption = new()
+        global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolOptions sharepointToolOption = new()
         {
             ProjectConnections = { new global::Azure.AI.Extensions.OpenAI.ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
         };
@@ -591,13 +591,13 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             ToolType.WebSearchPreview => ResponseTool.CreateWebSearchPreviewTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             ToolType.WebSearchCustom => GetCustomWebSearch(),
-            ToolType.Memory => new MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
-            ToolType.AzureAISearch => new AzureAISearchTool(new Azure.AI.Projects.Agents.AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
-            ToolType.BingGrounding => new BingGroundingTool(new Azure.AI.Projects.Agents.BingGroundingSearchToolOptions(
-                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
+            ToolType.Memory => new global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
+            ToolType.AzureAISearch => new global::Azure.AI.Extensions.OpenAI.AzureAISearchTool(new global::Azure.AI.Extensions.OpenAI.AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
+            ToolType.BingGrounding => new global::Azure.AI.Extensions.OpenAI.BingGroundingTool(new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchToolOptions(
+                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchOptions(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
-            ToolType.BingGroundingCustom => new BingCustomSearchPreviewTool(new Azure.AI.Projects.Agents.BingCustomSearchToolOptions(
-                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
+            ToolType.BingGroundingCustom => new global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool(new global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions(
+                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingCustomSearchOptions(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
@@ -608,9 +608,9 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
-            ToolType.BrowserAutomation => new BrowserAutomationPreviewTool(
-            new Azure.AI.Projects.Agents.BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
+            new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
             ToolType.FabricIQ => GetFabricIQAgentTool(),

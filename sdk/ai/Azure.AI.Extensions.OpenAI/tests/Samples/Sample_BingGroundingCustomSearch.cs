@@ -9,9 +9,6 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using AgentsBingCustomSearchConfiguration = Azure.AI.Projects.Agents.BingCustomSearchConfiguration;
-using AgentsBingCustomSearchPreviewTool = Azure.AI.Projects.Agents.BingCustomSearchPreviewTool;
-using AgentsBingCustomSearchToolOptions = Azure.AI.Projects.Agents.BingCustomSearchToolOptions;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 #pragma warning disable AAIP001
@@ -39,8 +36,8 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_CustomBingSearch_Async
         AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-        AgentsBingCustomSearchPreviewTool customBingSearchAgentTool = new(new AgentsBingCustomSearchToolOptions(
-            searchConfigurations: [new AgentsBingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+        BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
+            searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -87,8 +84,8 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_CustomBingSearch_Sync
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-        AgentsBingCustomSearchPreviewTool customBingSearchAgentTool = new(new AgentsBingCustomSearchToolOptions(
-            searchConfigurations: [new AgentsBingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+        BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
+            searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

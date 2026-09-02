@@ -18,7 +18,7 @@ public partial class MemorySearchToolCall
     /// <param name="status"> The status of the tool call. </param>
     /// <param name="memories"> The results returned from the memory search. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal MemorySearchToolCall(string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.MemorySearchCall)
+    internal MemorySearchToolCall(string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.MemorySearchCall)
     {
         Status = status;
         Memories = memories;
@@ -41,7 +41,7 @@ public partial class MemorySearchToolCall
     /// <param name="status"> The status of the tool call. </param>
     /// <param name="memories"> The results returned from the memory search. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal MemorySearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<global::Azure.AI.Extensions.OpenAI.MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+    internal MemorySearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
         this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         Status = status;

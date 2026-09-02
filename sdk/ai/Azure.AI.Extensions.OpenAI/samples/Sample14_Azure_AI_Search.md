@@ -19,18 +19,18 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AzureAISearch_Sync
-AgentsAzureAISearchToolIndex index = new()
+AzureAISearchToolIndex index = new()
 {
     ProjectConnectionId = aiSearchConnectionName,
     IndexName = "sample_index",
     TopK = 5,
     Filter = "category eq 'sleeping bag'",
-    QueryType = AgentsAzureAISearchQueryType.Simple
+    QueryType = AzureAISearchQueryKind.Simple
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AgentsAzureAISearchTool(new AgentsAzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
@@ -39,18 +39,18 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_AzureAISearch_Async
-AgentsAzureAISearchToolIndex index = new()
+AzureAISearchToolIndex index = new()
 {
     ProjectConnectionId = aiSearchConnectionName,
     IndexName = "sample_index",
     TopK = 5,
     Filter = "category eq 'sleeping bag'",
-    QueryType = AgentsAzureAISearchQueryType.Simple
+    QueryType = AzureAISearchQueryKind.Simple
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AgentsAzureAISearchTool(new AgentsAzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

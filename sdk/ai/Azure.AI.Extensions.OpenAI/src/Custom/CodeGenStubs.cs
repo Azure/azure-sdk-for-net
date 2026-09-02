@@ -3,8 +3,6 @@
 
 global using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS1591
-
 namespace Azure.AI.Extensions.OpenAI;
 
 // Public type renames
