@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.startDate")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new SubscriptionContractProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.endDate")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new SubscriptionContractProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

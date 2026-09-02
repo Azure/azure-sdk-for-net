@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("triggerTime"u8);
                 writer.WriteStringValue(TriggerOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationEndOn))
+            if (options.Format != "W" && Optional.IsDefined(EvaluationEndsOn))
             {
                 writer.WritePropertyName("evaluationEndTime"u8);
-                writer.WriteStringValue(EvaluationEndOn.Value, "O");
+                writer.WriteStringValue(EvaluationEndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(ResourceIds))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             DateTimeOffset? triggerOn = default;
-            DateTimeOffset? evaluationEndOn = default;
+            DateTimeOffset? evaluationEndsOn = default;
             IReadOnlyList<string> resourceIds = default;
             IReadOnlyList<QuickAssessment> quickAssessments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    evaluationEndOn = prop.Value.GetDateTimeOffset("O");
+                    evaluationEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceIds"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TriggerEvaluationProperty(triggerOn, evaluationEndOn, resourceIds ?? new ChangeTrackingList<string>(), quickAssessments ?? new ChangeTrackingList<QuickAssessment>(), additionalBinaryDataProperties);
+            return new TriggerEvaluationProperty(triggerOn, evaluationEndsOn, resourceIds ?? new ChangeTrackingList<string>(), quickAssessments ?? new ChangeTrackingList<QuickAssessment>(), additionalBinaryDataProperties);
         }
     }
 }
