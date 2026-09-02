@@ -22,7 +22,7 @@
           BeforeTargets="VSTest"
           Condition="'$(_CollectCoverage)' == 'true' and '$(CodeCoverageExcludeByFile)' != '' and '$(VSTestSetting)' == '$(_BaseCoverageRunSettings)'">
     <PropertyGroup>
-      <_NormalizedExcludeByFile>$([System.Text.RegularExpressions.Regex]::Replace($(CodeCoverageExcludeByFile), '\s+', ''))</_NormalizedExcludeByFile>
+      <_NormalizedExcludeByFile>$([System.Text.RegularExpressions.Regex]::Replace('$(CodeCoverageExcludeByFile)', '\s+', ''))</_NormalizedExcludeByFile>
     </PropertyGroup>
     <MakeDir Directories="$(_CoverageTempDir)" />
 
