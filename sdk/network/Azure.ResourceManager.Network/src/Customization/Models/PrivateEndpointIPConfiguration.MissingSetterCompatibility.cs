@@ -16,11 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("properties.privateIPAddress")]
         public System.Net.IPAddress PrivateIPAddress
         {
-            get => Properties?.PrivateIPAddress is null ? null : System.Net.IPAddress.Parse(Properties.PrivateIPAddress);
+            get => System.Net.IPAddress.TryParse(Properties?.PrivateIPAddress, out System.Net.IPAddress ipAddress) ? ipAddress : null;
             set
             {
+                if (value is null)
+                {
+                    if (Properties != null)
+                    {
+                        Properties.PrivateIPAddress = null;
+                    }
+                    return;
+                }
+
                 Properties ??= new PrivateEndpointIPConfigurationProperties();
-                Properties.PrivateIPAddress = value?.ToString();
+                Properties.PrivateIPAddress = value.ToString();
             }
         }
     }
