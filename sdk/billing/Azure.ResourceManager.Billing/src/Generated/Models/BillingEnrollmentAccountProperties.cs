@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="accountOwner"> The owner of the enrollment account. </param>
         /// <param name="authType"> The authorization type of the enrollment account. </param>
         /// <param name="status"> The status of the enrollment account. </param>
-        /// <param name="startOn"> The date from which the enrollment account became valid and functional. </param>
-        /// <param name="endOn"> The date of expiration of the enrollment account. </param>
+        /// <param name="startsOn"> The date from which the enrollment account became valid and functional. </param>
+        /// <param name="endsOn"> The date of expiration of the enrollment account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingEnrollmentAccountProperties(string costCenter, string displayName, string departmentDisplayName, string departmentId, bool? isDevTestEnabled, string accountOwner, string authType, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingEnrollmentAccountProperties(string costCenter, string displayName, string departmentDisplayName, string departmentId, bool? isDevTestEnabled, string accountOwner, string authType, string status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CostCenter = costCenter;
             DisplayName = displayName;
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Billing.Models
             AccountOwner = accountOwner;
             AuthType = authType;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The date from which the enrollment account became valid and functional. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The date of expiration of the enrollment account. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

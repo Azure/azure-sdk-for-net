@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicy"/>. </summary>
         /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
         /// <param name="type"> The type of the immutability policy. </param>
-        /// <param name="policyStartOn"> The time when the immutability policy was set on the snapshot. </param>
-        /// <param name="policyExpirationOn"> The time when the immutability policy will expire on the snapshot. </param>
+        /// <param name="policyStartsOn"> The time when the immutability policy was set on the snapshot. </param>
+        /// <param name="policyExpiresOn"> The time when the immutability policy will expire on the snapshot. </param>
         /// <param name="isPolicyExpired"> Indicates whether the immutability policy has expired. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImmutabilityPolicy(int? immutabilityDurationDays, ImmutabilityPolicyType? @type, DateTimeOffset? policyStartOn, DateTimeOffset? policyExpirationOn, bool? isPolicyExpired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImmutabilityPolicy(int? immutabilityDurationDays, ImmutabilityPolicyType? @type, DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, bool? isPolicyExpired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImmutabilityDurationDays = immutabilityDurationDays;
             Type = @type;
-            PolicyStartOn = policyStartOn;
-            PolicyExpirationOn = policyExpirationOn;
+            PolicyStartsOn = policyStartsOn;
+            PolicyExpiresOn = policyExpiresOn;
             IsPolicyExpired = isPolicyExpired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Compute.Models
         public ImmutabilityPolicyType? Type { get; }
 
         /// <summary> The time when the immutability policy was set on the snapshot. </summary>
-        public DateTimeOffset? PolicyStartOn { get; }
+        public DateTimeOffset? PolicyStartsOn { get; }
 
         /// <summary> The time when the immutability policy will expire on the snapshot. </summary>
-        public DateTimeOffset? PolicyExpirationOn { get; }
+        public DateTimeOffset? PolicyExpiresOn { get; }
 
         /// <summary> Indicates whether the immutability policy has expired. </summary>
         public bool? IsPolicyExpired { get; }

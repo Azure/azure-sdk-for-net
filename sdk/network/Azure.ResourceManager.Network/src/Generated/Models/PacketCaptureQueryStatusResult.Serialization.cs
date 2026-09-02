@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(CaptureStartOn))
+            if (Optional.IsDefined(CaptureStartsOn))
             {
                 writer.WritePropertyName("captureStartTime"u8);
-                writer.WriteStringValue(CaptureStartOn.Value, "O");
+                writer.WriteStringValue(CaptureStartsOn.Value, "O");
             }
             if (Optional.IsDefined(PacketCaptureStatus))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string name = default;
             string id = default;
-            DateTimeOffset? captureStartOn = default;
+            DateTimeOffset? captureStartsOn = default;
             PcStatus? packetCaptureStatus = default;
             string stopReason = default;
             IReadOnlyList<PcError> packetCaptureError = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    captureStartOn = prop.Value.GetDateTimeOffset("O");
+                    captureStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("packetCaptureStatus"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
             return new PacketCaptureQueryStatusResult(
                 name,
                 id,
-                captureStartOn,
+                captureStartsOn,
                 packetCaptureStatus,
                 stopReason,
                 packetCaptureError ?? new ChangeTrackingList<PcError>(),

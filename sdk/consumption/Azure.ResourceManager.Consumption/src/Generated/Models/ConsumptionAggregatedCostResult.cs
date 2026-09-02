@@ -62,20 +62,20 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The start of the date time range covered by aggregated cost. </summary>
-        public DateTimeOffset? UsageStartOn
+        public DateTimeOffset? UsageStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UsageStartOn;
+                return Properties is null ? default : Properties.UsageStartsOn;
             }
         }
 
         /// <summary> The end of the date time range covered by the aggregated cost. </summary>
-        public DateTimeOffset? UsageEndOn
+        public DateTimeOffset? UsageEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UsageEndOn;
+                return Properties is null ? default : Properties.UsageEndsOn;
             }
         }
 

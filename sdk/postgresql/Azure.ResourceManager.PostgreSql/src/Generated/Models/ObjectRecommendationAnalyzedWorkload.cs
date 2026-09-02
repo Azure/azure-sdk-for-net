@@ -23,25 +23,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationAnalyzedWorkload"/>. </summary>
-        /// <param name="startOn"> Start time (UTC) of the workload analyzed. </param>
-        /// <param name="endOn"> End time (UTC) of the workload analyzed. </param>
+        /// <param name="startsOn"> Start time (UTC) of the workload analyzed. </param>
+        /// <param name="endsOn"> End time (UTC) of the workload analyzed. </param>
         /// <param name="queryCount"> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startOn, DateTimeOffset? endOn, int? queryCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startsOn, DateTimeOffset? endsOn, int? queryCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             QueryCount = queryCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start time (UTC) of the workload analyzed. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time (UTC) of the workload analyzed. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </summary>
         [WirePath("queryCount")]

@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistrySyncResult"/>. </summary>
         /// <param name="syncTrigger"> The action that triggered the most recent registry sync. </param>
         /// <param name="syncState"> The status of the connected registry's most recent sync. </param>
-        /// <param name="lastSyncStartOn"> The time that the connected registry's most recent sync started. </param>
-        /// <param name="lastSyncEndOn"> The time that the connected registry's most recent sync ended. </param>
-        /// <param name="lastSuccessfulSyncEndOn"> The time that the connected registry's most recent successful sync ended. </param>
+        /// <param name="lastSyncStartsOn"> The time that the connected registry's most recent sync started. </param>
+        /// <param name="lastSyncEndsOn"> The time that the connected registry's most recent sync ended. </param>
+        /// <param name="lastSuccessfulSyncEndsOn"> The time that the connected registry's most recent successful sync ended. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger, ContainerRegistrySyncState syncState, DateTimeOffset? lastSyncStartOn, DateTimeOffset? lastSyncEndOn, DateTimeOffset? lastSuccessfulSyncEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger, ContainerRegistrySyncState syncState, DateTimeOffset? lastSyncStartsOn, DateTimeOffset? lastSyncEndsOn, DateTimeOffset? lastSuccessfulSyncEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SyncTrigger = syncTrigger;
             SyncState = syncState;
-            LastSyncStartOn = lastSyncStartOn;
-            LastSyncEndOn = lastSyncEndOn;
-            LastSuccessfulSyncEndOn = lastSuccessfulSyncEndOn;
+            LastSyncStartsOn = lastSyncStartsOn;
+            LastSyncEndsOn = lastSyncEndsOn;
+            LastSuccessfulSyncEndsOn = lastSuccessfulSyncEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The time that the connected registry's most recent sync started. </summary>
         [WirePath("lastSyncStartTime")]
-        public DateTimeOffset? LastSyncStartOn { get; set; }
+        public DateTimeOffset? LastSyncStartsOn { get; set; }
 
         /// <summary> The time that the connected registry's most recent sync ended. </summary>
         [WirePath("lastSyncEndTime")]
-        public DateTimeOffset? LastSyncEndOn { get; set; }
+        public DateTimeOffset? LastSyncEndsOn { get; set; }
 
         /// <summary> The time that the connected registry's most recent successful sync ended. </summary>
         [WirePath("lastSuccessfulSyncEndTime")]
-        public DateTimeOffset? LastSuccessfulSyncEndOn { get; set; }
+        public DateTimeOffset? LastSuccessfulSyncEndsOn { get; set; }
     }
 }

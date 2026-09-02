@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="instanceId"> The instanceId. </param>
         /// <param name="duration"> Time elapsed for task. </param>
         /// <param name="status"> The status. </param>
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// eg: number of bytes transferred etc
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IaasVmBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IaasVmBackupJobTaskDetails(string taskId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             InstanceId = instanceId;
             Duration = duration;
             Status = status;
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TaskId { get; set; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The instanceId. </summary>
         public string InstanceId { get; set; }

@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(SessionStartsOn))
             {
                 writer.WritePropertyName("sessionStartTime"u8);
-                writer.WriteStringValue(SessionStartOn.Value, "O");
+                writer.WriteStringValue(SessionStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionEndOn))
+            if (options.Format != "W" && Optional.IsDefined(SessionEndsOn))
             {
                 writer.WritePropertyName("sessionEndTime"u8);
-                writer.WriteStringValue(SessionEndOn.Value, "O");
+                writer.WriteStringValue(SessionEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AccessLevel))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string sessionId = default;
-            DateTimeOffset? sessionStartOn = default;
-            DateTimeOffset? sessionEndOn = default;
+            DateTimeOffset? sessionStartsOn = default;
+            DateTimeOffset? sessionEndsOn = default;
             RemoteSupportAccessLevel? accessLevel = default;
             string transcriptLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sessionStartOn = prop.Value.GetDateTimeOffset("O");
+                    sessionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sessionEndTime"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sessionEndOn = prop.Value.GetDateTimeOffset("O");
+                    sessionEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("accessLevel"u8))
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Hci.Models
             }
             return new RemoteSupportSession(
                 sessionId,
-                sessionStartOn,
-                sessionEndOn,
+                sessionStartsOn,
+                sessionEndsOn,
                 accessLevel,
                 transcriptLocation,
                 additionalBinaryDataProperties);

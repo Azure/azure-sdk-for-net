@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Start time of order item. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

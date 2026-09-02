@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TroubleshootingResult"/>. </summary>
-        /// <param name="startOn"> The start time of the troubleshooting. </param>
-        /// <param name="endOn"> The end time of the troubleshooting. </param>
+        /// <param name="startsOn"> The start time of the troubleshooting. </param>
+        /// <param name="endsOn"> The end time of the troubleshooting. </param>
         /// <param name="code"> The result code of the troubleshooting. </param>
         /// <param name="results"> Information from troubleshooting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshootingResult(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, IReadOnlyList<TroubleshootingDetails> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TroubleshootingResult(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string code, IReadOnlyList<TroubleshootingDetails> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Code = code;
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The start time of the troubleshooting. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the troubleshooting. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The result code of the troubleshooting. </summary>
         [WirePath("code")]

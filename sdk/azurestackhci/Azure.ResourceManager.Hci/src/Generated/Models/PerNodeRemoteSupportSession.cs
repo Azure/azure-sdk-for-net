@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerNodeRemoteSupportSession"/>. </summary>
-        /// <param name="sessionStartOn"> Remote Support Session StartTime on the Node. </param>
-        /// <param name="sessionEndOn"> Remote Support Session EndTime on the Node. </param>
+        /// <param name="sessionStartsOn"> Remote Support Session StartTime on the Node. </param>
+        /// <param name="sessionEndsOn"> Remote Support Session EndTime on the Node. </param>
         /// <param name="nodeName"> Name of the node. </param>
         /// <param name="duration"> Duration of Remote Support Enablement. </param>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
         /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartsOn, DateTimeOffset? sessionEndsOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SessionStartOn = sessionStartOn;
-            SessionEndOn = sessionEndOn;
+            SessionStartsOn = sessionStartsOn;
+            SessionEndsOn = sessionEndsOn;
             NodeName = nodeName;
             Duration = duration;
             AccessLevel = accessLevel;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Remote Support Session StartTime on the Node. </summary>
         [WirePath("sessionStartTime")]
-        public DateTimeOffset? SessionStartOn { get; }
+        public DateTimeOffset? SessionStartsOn { get; }
 
         /// <summary> Remote Support Session EndTime on the Node. </summary>
         [WirePath("sessionEndTime")]
-        public DateTimeOffset? SessionEndOn { get; }
+        public DateTimeOffset? SessionEndsOn { get; }
 
         /// <summary> Name of the node. </summary>
         [WirePath("nodeName")]

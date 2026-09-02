@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Frequency = frequency;
             DaysOfWeek = new ChangeTrackingList<ScheduledActionDaysOfWeek>();
             WeeksOfMonth = new ChangeTrackingList<ScheduledActionWeeksOfMonth>();
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             DaysOfWeek = daysOfWeek;
             WeeksOfMonth = weeksOfMonth;
             DayOfMonth = dayOfMonth;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         public int? DayOfMonth { get; set; }
 
         /// <summary> The start date and time of the scheduled action (UTC). </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> The end date and time of the scheduled action (UTC). </summary>
-        public DateTimeOffset EndOn { get; set; }
+        public DateTimeOffset EndsOn { get; set; }
     }
 }

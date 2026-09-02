@@ -204,24 +204,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
-        [WirePath("properties.linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinuxProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.LinuxProfile = value;
-            }
-        }
-
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("properties.windowsProfile")]
         public ManagedClusterWindowsProfile WindowsProfile
@@ -606,24 +588,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
-        [WirePath("properties.workloadAutoScalerProfile")]
-        public ManagedClusterWorkloadAutoScalerProfile WorkloadAutoScalerProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.WorkloadAutoScalerProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.WorkloadAutoScalerProfile = value;
-            }
-        }
-
         /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
         [WirePath("properties.azureMonitorProfile")]
         public ManagedClusterAzureMonitorProfile AzureMonitorProfile
@@ -734,6 +698,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> The administrator username to use for Linux VMs. </summary>
+        [WirePath("properties.linuxProfile.adminUsername")]
+        public string LinuxAdminUsername
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinuxAdminUsername;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.LinuxAdminUsername = value;
+            }
+        }
+
         /// <summary> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </summary>
         [WirePath("properties.nodeResourceGroupProfile.restrictionLevel")]
         public ManagedClusterNodeResourceGroupRestrictionLevel? NodeResourceGroupRestrictionLevel
@@ -767,6 +749,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.UpgradeOverrideSettings = value;
+            }
+        }
+
+        /// <summary> Whether to enable KEDA. </summary>
+        [WirePath("properties.workloadAutoScalerProfile.keda.enabled")]
+        public bool? IsKedaEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsKedaEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsKedaEnabled = value;
             }
         }
 

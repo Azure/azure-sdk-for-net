@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatDescription"> Threat Description. </param>
         /// <param name="lastUpdatedOn"> Timestamp when the last (latest)threat information was sent. </param>
         /// <param name="threatState"> Threat Status Types. </param>
-        /// <param name="threatStartOn"> Start timestamp of the threat. </param>
-        /// <param name="threatEndOn"> End timestamp of the threat. </param>
+        /// <param name="threatStartsOn"> Start timestamp of the threat. </param>
+        /// <param name="threatEndsOn"> End timestamp of the threat. </param>
         /// <param name="threatUri"> threat details link. </param>
         /// <param name="threatSeverity"> Threat Severity Types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupThreatInfo(string threatTitle, string threatDescription, DateTimeOffset? lastUpdatedOn, BackupThreatState? threatState, DateTimeOffset? threatStartOn, DateTimeOffset? threatEndOn, Uri threatUri, BackupThreatSeverity? threatSeverity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupThreatInfo(string threatTitle, string threatDescription, DateTimeOffset? lastUpdatedOn, BackupThreatState? threatState, DateTimeOffset? threatStartsOn, DateTimeOffset? threatEndsOn, Uri threatUri, BackupThreatSeverity? threatSeverity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ThreatTitle = threatTitle;
             ThreatDescription = threatDescription;
             LastUpdatedOn = lastUpdatedOn;
             ThreatState = threatState;
-            ThreatStartOn = threatStartOn;
-            ThreatEndOn = threatEndOn;
+            ThreatStartsOn = threatStartsOn;
+            ThreatEndsOn = threatEndsOn;
             ThreatUri = threatUri;
             ThreatSeverity = threatSeverity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupThreatState? ThreatState { get; set; }
 
         /// <summary> Start timestamp of the threat. </summary>
-        public DateTimeOffset? ThreatStartOn { get; }
+        public DateTimeOffset? ThreatStartsOn { get; }
 
         /// <summary> End timestamp of the threat. </summary>
-        public DateTimeOffset? ThreatEndOn { get; }
+        public DateTimeOffset? ThreatEndsOn { get; }
 
         /// <summary> threat details link. </summary>
         public Uri ThreatUri { get; }

@@ -77,20 +77,20 @@ namespace Azure.ResourceManager.StorageMover
         }
 
         /// <summary> Start time of the run. Null if no Agent reported that the job has started. </summary>
-        public DateTimeOffset? ExecutionStartOn
+        public DateTimeOffset? ExecutionStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExecutionStartOn;
+                return Properties is null ? default : Properties.ExecutionStartsOn;
             }
         }
 
         /// <summary> End time of the run. Null if Agent has not reported that the job has ended. </summary>
-        public DateTimeOffset? ExecutionEndOn
+        public DateTimeOffset? ExecutionEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExecutionEndOn;
+                return Properties is null ? default : Properties.ExecutionEndsOn;
             }
         }
 

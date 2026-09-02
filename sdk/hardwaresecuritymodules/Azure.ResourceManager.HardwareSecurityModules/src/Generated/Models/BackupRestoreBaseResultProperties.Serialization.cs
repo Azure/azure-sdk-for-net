@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(JobId))
             {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             BackupRestoreOperationStatus? status = default;
             string statusDetails = default;
             ResponseError error = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string jobId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 status,
                 statusDetails,
                 error,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 jobId,
                 additionalBinaryDataProperties);
         }

@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequestHistoryProperties"/>. </summary>
-        /// <param name="startOn"> The time the request started. </param>
-        /// <param name="endOn"> The time the request ended. </param>
+        /// <param name="startsOn"> The time the request started. </param>
+        /// <param name="endsOn"> The time the request ended. </param>
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppRequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRequest request, WebAppResponse response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppRequestHistoryProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, WebAppRequest request, WebAppResponse response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Request = request;
             Response = response;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The time the request started. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The time the request ended. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The request. </summary>
         [WirePath("request")]

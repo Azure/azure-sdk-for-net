@@ -222,15 +222,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode);
             }
-            if (Optional.IsDefined(ServicePeriodStartOn))
+            if (Optional.IsDefined(ServicePeriodStartsOn))
             {
                 writer.WritePropertyName("servicePeriodStartDate"u8);
-                writer.WriteStringValue(ServicePeriodStartOn.Value, "O");
+                writer.WriteStringValue(ServicePeriodStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(ServicePeriodEndOn))
+            if (Optional.IsDefined(ServicePeriodEndsOn))
             {
                 writer.WritePropertyName("servicePeriodEndDate"u8);
-                writer.WriteStringValue(ServicePeriodEndOn.Value, "O");
+                writer.WriteStringValue(ServicePeriodEndsOn.Value, "O");
             }
             if (Optional.IsDefined(SubTotal))
             {
@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.Billing.Models
             string productType = default;
             int? quantity = default;
             string reasonCode = default;
-            DateTimeOffset? servicePeriodStartOn = default;
-            DateTimeOffset? servicePeriodEndOn = default;
+            DateTimeOffset? servicePeriodStartsOn = default;
+            DateTimeOffset? servicePeriodEndsOn = default;
             BillingAmount subTotal = default;
             BillingAmount tax = default;
             BillingAmount transactionAmount = default;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    servicePeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    servicePeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("servicePeriodEndDate"u8))
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    servicePeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    servicePeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("subTotal"u8))
@@ -686,8 +686,8 @@ namespace Azure.ResourceManager.Billing.Models
                 productType,
                 quantity,
                 reasonCode,
-                servicePeriodStartOn,
-                servicePeriodEndOn,
+                servicePeriodStartsOn,
+                servicePeriodEndsOn,
                 subTotal,
                 tax,
                 transactionAmount,

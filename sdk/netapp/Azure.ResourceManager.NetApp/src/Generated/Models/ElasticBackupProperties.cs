@@ -18,6 +18,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticBackupProperties"/>. </summary>
+        /// <param name="createdOn"> The creation date of the backup. </param>
+        /// <param name="snapshotCreatedOn"> The snapshot creation date of the backup. </param>
+        /// <param name="completionOn"> The completion date of the backup. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="size"> Size of backup in bytes. </param>
         /// <param name="label"> Label for backup. </param>
@@ -29,8 +32,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupProperties(NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, ElasticBackupSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, ElasticBackupVolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreatedOn, DateTimeOffset? completionOn, NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, ElasticBackupSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, ElasticBackupVolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            CreatedOn = createdOn;
+            SnapshotCreatedOn = snapshotCreatedOn;
+            CompletionOn = completionOn;
             ProvisioningState = provisioningState;
             Size = size;
             Label = label;
@@ -43,5 +49,8 @@ namespace Azure.ResourceManager.NetApp.Models
             VolumeSize = volumeSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The snapshot creation date of the backup. </summary>
+        public DateTimeOffset? SnapshotCreatedOn { get; }
     }
 }

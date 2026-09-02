@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="stageStatus"> Stage status. </param>
         /// <param name="stageName"> Stage name. </param>
         /// <param name="displayName"> Display name of the resource stage. </param>
-        /// <param name="startOn"> Stage start time. </param>
+        /// <param name="startsOn"> Stage start time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus, EdgeOrderStageName? stageName, string displayName, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus, EdgeOrderStageName? stageName, string displayName, DateTimeOffset? startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StageStatus = stageStatus;
             StageName = stageName;
             DisplayName = displayName;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string DisplayName { get; }
 
         /// <summary> Stage start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
     }
 }

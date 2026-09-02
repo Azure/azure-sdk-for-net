@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsBillingPeriod"/>. </summary>
         /// <param name="cores"> The number of cores. </param>
         /// <param name="pricingModel"> The pricing model. </param>
-        /// <param name="startOn"> The billing start date. </param>
-        /// <param name="endOn"> The billing end date. </param>
+        /// <param name="startsOn"> The billing start date. </param>
+        /// <param name="endsOn"> The billing end date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationsBillingPeriod(int cores, DisconnectedOperationsPricingModel pricingModel, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DisconnectedOperationsBillingPeriod(int cores, DisconnectedOperationsPricingModel pricingModel, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cores = cores;
             PricingModel = pricingModel;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public DisconnectedOperationsPricingModel PricingModel { get; set; }
 
         /// <summary> The billing start date. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The billing end date. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

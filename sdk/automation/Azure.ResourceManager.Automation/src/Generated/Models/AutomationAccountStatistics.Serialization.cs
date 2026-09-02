@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("counterValue"u8);
                 writer.WriteNumberValue(CounterValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             string counterProperty = default;
             long? counterValue = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,17 +169,17 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationAccountStatistics(
                 counterProperty,
                 counterValue,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 id,
                 additionalBinaryDataProperties);
         }

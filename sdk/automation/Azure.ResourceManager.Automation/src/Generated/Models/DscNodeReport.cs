@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DscNodeReport"/>. </summary>
-        /// <param name="endOn"> Gets or sets the end time of the node report. </param>
+        /// <param name="endsOn"> Gets or sets the end time of the node report. </param>
         /// <param name="lastModifiedOn"> Gets or sets the lastModifiedTime of the node report. </param>
-        /// <param name="startOn"> Gets or sets the start time of the node report. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the node report. </param>
         /// <param name="dscNodeReportType"> Gets or sets the type of the node report. </param>
         /// <param name="reportId"> Gets or sets the id of the node report. </param>
         /// <param name="status"> Gets or sets the status of the node report. </param>
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="numberOfResources"> Gets or sets the number of resource in the node report. </param>
         /// <param name="rawErrors"> Gets or sets the unparsed errors for the node report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscNodeReport(DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? startOn, string dscNodeReportType, string reportId, string status, string refreshMode, string rebootRequested, string reportFormatVersion, string configurationVersion, string id, IReadOnlyList<DscReportError> errors, IReadOnlyList<DscReportResource> resources, DscMetaConfiguration metaConfiguration, string hostName, IReadOnlyList<string> ipV4Addresses, IReadOnlyList<string> ipV6Addresses, int? numberOfResources, string rawErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscNodeReport(DateTimeOffset? endsOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? startsOn, string dscNodeReportType, string reportId, string status, string refreshMode, string rebootRequested, string reportFormatVersion, string configurationVersion, string id, IReadOnlyList<DscReportError> errors, IReadOnlyList<DscReportResource> resources, DscMetaConfiguration metaConfiguration, string hostName, IReadOnlyList<string> ipV4Addresses, IReadOnlyList<string> ipV6Addresses, int? numberOfResources, string rawErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndOn = endOn;
+            EndsOn = endsOn;
             LastModifiedOn = lastModifiedOn;
-            StartOn = startOn;
+            StartsOn = startsOn;
             DscNodeReportType = dscNodeReportType;
             ReportId = reportId;
             Status = status;
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets the end time of the node report. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets or sets the lastModifiedTime of the node report. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Gets or sets the start time of the node report. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets or sets the type of the node report. </summary>
         public string DscNodeReportType { get; }
