@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, linkedDomains is null && publicNetworkAccess is null && disableLocalAuth is null ? default : new CommunicationServiceUpdateProperties((linkedDomains ?? new ChangeTrackingList<string>()).ToList(), publicNetworkAccess, disableLocalAuth, default), identity);
         }
 
+        /// <summary> An ARM resource with that can accept tags. </summary>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
         /// <returns> A new <see cref="Models.CommunicationAcceptTags"/> instance for mocking. </returns>
         public static CommunicationAcceptTags CommunicationAcceptTags(IDictionary<string, string> tags = default)
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationAcceptTags(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Description of an Azure Notification Hub to link to the communication service. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <param name="connectionString"> Connection string for the notification hub. </param>
         /// <returns> A new <see cref="Models.LinkNotificationHubContent"/> instance for mocking. </returns>
@@ -92,6 +94,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new LinkNotificationHubContent(resourceId, connectionString, default);
         }
 
+        /// <summary> A notification hub that has been linked to the communication service. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <returns> A new <see cref="Models.LinkedNotificationHub"/> instance for mocking. </returns>
         public static LinkedNotificationHub LinkedNotificationHub(ResourceIdentifier resourceId = default)
@@ -99,6 +102,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new LinkedNotificationHub(resourceId, default);
         }
 
+        /// <summary> A class representing the access keys of a CommunicationService. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>
@@ -109,6 +113,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, default);
         }
 
+        /// <summary> Parameters describes the request to regenerate access keys. </summary>
         /// <param name="keyType"> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </param>
         /// <returns> A new <see cref="Models.RegenerateCommunicationServiceKeyContent"/> instance for mocking. </returns>
         public static RegenerateCommunicationServiceKeyContent RegenerateCommunicationServiceKeyContent(CommunicationServiceKeyType? keyType = default)
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new RegenerateCommunicationServiceKeyContent(keyType, default);
         }
 
+        /// <summary> Data POST-ed to the nameAvailability action. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.CommunicationServiceNameAvailabilityContent"/> instance for mocking. </returns>
@@ -124,6 +130,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationServiceNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.CommunicationNameAvailabilityContent"/> instance for mocking. </returns>
@@ -132,6 +139,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
@@ -180,6 +188,7 @@ namespace Azure.ResourceManager.Communication.Models
                 default);
         }
 
+        /// <summary> List of VerificationStatusRecord. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -197,6 +206,7 @@ namespace Azure.ResourceManager.Communication.Models
                 default);
         }
 
+        /// <summary> A class that represents a VerificationStatus record. </summary>
         /// <param name="status"> Status of the verification operation. </param>
         /// <param name="errorCode"> Error code. This property will only be present if the status is UnableToVerify. </param>
         /// <returns> A new <see cref="Models.DomainVerificationStatusRecord"/> instance for mocking. </returns>
@@ -205,6 +215,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new DomainVerificationStatusRecord(status, errorCode, default);
         }
 
+        /// <summary> List of DnsRecord. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -222,6 +233,7 @@ namespace Azure.ResourceManager.Communication.Models
                 default);
         }
 
+        /// <summary> A class that represents a VerificationStatus record. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>
@@ -242,6 +254,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationDomainResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, userEngagementTracking is null ? default : new UpdateDomainProperties(userEngagementTracking, default));
         }
 
+        /// <summary> Input parameter for verification APIs. </summary>
         /// <param name="verificationType"> Type of verification. </param>
         /// <returns> A new <see cref="Models.DomainsRecordVerificationContent"/> instance for mocking. </returns>
         public static DomainsRecordVerificationContent DomainsRecordVerificationContent(DomainRecordVerificationType verificationType = default)
@@ -273,6 +286,7 @@ namespace Azure.ResourceManager.Communication.Models
                 default);
         }
 
+        /// <summary> A class representing update parameters for EmailService resource. </summary>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
         /// <returns> A new <see cref="Models.EmailServiceResourcePatch"/> instance for mocking. </returns>
         public static EmailServiceResourcePatch EmailServiceResourcePatch(IDictionary<string, string> tags = default)
@@ -370,14 +384,14 @@ namespace Azure.ResourceManager.Communication.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Communication.CommunicationServiceResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <summary> A class representing a CommunicationService resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
         /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
