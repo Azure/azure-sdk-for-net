@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         /// <param name="name"> Name of the SKU. </param>
         /// <param name="tier"> Pricing tier of the SKU. </param>
         /// <returns> A new <see cref="Models.ManagedOpsSku"/> instance for mocking. </returns>
-        public static ManagedOpsSku ManagedOpsSku(string name = default, string tier = default)
+        public static ManagedOpsSku ManagedOpsSku(ManagedOpsSkuName name = default, ManagedOpsSkuTier tier = default)
         {
             return new ManagedOpsSku(name, tier, default);
         }
@@ -79,37 +79,79 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <param name="changeTrackingAndInventory"> Change Tracking and Inventory service information. </param>
         /// <param name="azureMonitorInsights"> Azure Monitor Insights service information. </param>
-        /// <param name="azureUpdateManagerEnablementStatus"> Indicates whether the service is enabled. </param>
-        /// <param name="azurePolicyAndMachineEnablementStatus"> Indicates whether the service is enabled. </param>
-        /// <param name="defenderForServersEnablementStatus"> Indicates whether the service is enabled. </param>
-        /// <param name="defenderCspmEnablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="azureUpdateManager"> Azure Update Manager service information. </param>
+        /// <param name="azurePolicyAndMachineConfiguration"> Azure Policy and Machine Configuration service information. </param>
+        /// <param name="defenderForServers"> Defender for Servers service information. </param>
+        /// <param name="defenderCspm"> Defender for Cloud's Cloud security posture management (CSPM) service information. </param>
         /// <returns> A new <see cref="Models.ManagedOpsServiceInformation"/> instance for mocking. </returns>
-        public static ManagedOpsServiceInformation ManagedOpsServiceInformation(ManagedOpsChangeTrackingInformation changeTrackingAndInventory = default, ManagedOpsAzureMonitorInformation azureMonitorInsights = default, ManagedOpsEnablementStatus? azureUpdateManagerEnablementStatus = default, ManagedOpsEnablementStatus? azurePolicyAndMachineEnablementStatus = default, ManagedOpsEnablementStatus? defenderForServersEnablementStatus = default, ManagedOpsEnablementStatus? defenderCspmEnablementStatus = default)
+        public static ManagedOpsServiceInformation ManagedOpsServiceInformation(ManagedOpsChangeTrackingInformation changeTrackingAndInventory = default, ManagedOpsAzureMonitorInformation azureMonitorInsights = default, UpdateManagerInformation azureUpdateManager = default, GuestConfigurationInformation azurePolicyAndMachineConfiguration = default, DefenderForServersInformation defenderForServers = default, DefenderCspmInformation defenderCspm = default)
         {
             return new ManagedOpsServiceInformation(
                 changeTrackingAndInventory,
                 azureMonitorInsights,
-                azureUpdateManagerEnablementStatus is null ? default : new UpdateManagerInformation(azureUpdateManagerEnablementStatus.GetValueOrDefault(), default),
-                azurePolicyAndMachineEnablementStatus is null ? default : new GuestConfigurationInformation(azurePolicyAndMachineEnablementStatus.GetValueOrDefault(), default),
-                defenderForServersEnablementStatus is null ? default : new DefenderForServersInformation(defenderForServersEnablementStatus.GetValueOrDefault(), default),
-                defenderCspmEnablementStatus is null ? default : new DefenderCspmInformation(defenderCspmEnablementStatus.GetValueOrDefault(), default),
+                azureUpdateManager,
+                azurePolicyAndMachineConfiguration,
+                defenderForServers,
+                defenderCspm,
                 default);
         }
 
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
         /// <returns> A new <see cref="Models.ManagedOpsChangeTrackingInformation"/> instance for mocking. </returns>
-        public static ManagedOpsChangeTrackingInformation ManagedOpsChangeTrackingInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default)
+        public static ManagedOpsChangeTrackingInformation ManagedOpsChangeTrackingInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default, ErrorDetails errorDetails = default)
         {
-            return new ManagedOpsChangeTrackingInformation(dcrId, enablementStatus, default);
+            return new ManagedOpsChangeTrackingInformation(dcrId, enablementStatus, errorDetails, default);
+        }
+
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Detailed error message. </param>
+        /// <returns> A new <see cref="Models.ErrorDetails"/> instance for mocking. </returns>
+        public static ErrorDetails ErrorDetails(string code = default, string message = default)
+        {
+            return new ErrorDetails(code, message, default);
         }
 
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
         /// <returns> A new <see cref="Models.ManagedOpsAzureMonitorInformation"/> instance for mocking. </returns>
-        public static ManagedOpsAzureMonitorInformation ManagedOpsAzureMonitorInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default)
+        public static ManagedOpsAzureMonitorInformation ManagedOpsAzureMonitorInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default, ErrorDetails errorDetails = default)
         {
-            return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, default);
+            return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, errorDetails, default);
+        }
+
+        /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
+        /// <returns> A new <see cref="Models.UpdateManagerInformation"/> instance for mocking. </returns>
+        public static UpdateManagerInformation UpdateManagerInformation(ManagedOpsEnablementStatus enablementStatus = default, ErrorDetails errorDetails = default)
+        {
+            return new UpdateManagerInformation(enablementStatus, errorDetails, default);
+        }
+
+        /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
+        /// <returns> A new <see cref="Models.GuestConfigurationInformation"/> instance for mocking. </returns>
+        public static GuestConfigurationInformation GuestConfigurationInformation(ManagedOpsEnablementStatus enablementStatus = default, ErrorDetails errorDetails = default)
+        {
+            return new GuestConfigurationInformation(enablementStatus, errorDetails, default);
+        }
+
+        /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
+        /// <returns> A new <see cref="Models.DefenderForServersInformation"/> instance for mocking. </returns>
+        public static DefenderForServersInformation DefenderForServersInformation(ManagedOpsEnablementStatus enablementStatus = default, ErrorDetails errorDetails = default)
+        {
+            return new DefenderForServersInformation(enablementStatus, errorDetails, default);
+        }
+
+        /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
+        /// <returns> A new <see cref="Models.DefenderCspmInformation"/> instance for mocking. </returns>
+        public static DefenderCspmInformation DefenderCspmInformation(ManagedOpsEnablementStatus enablementStatus = default, ErrorDetails errorDetails = default)
+        {
+            return new DefenderCspmInformation(enablementStatus, errorDetails, default);
         }
 
         /// <param name="managedOpUpdateDesiredConfiguration"> Desired configuration input by the user. </param>
