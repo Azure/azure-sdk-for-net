@@ -160,7 +160,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
             }
         }
 
-        // Schema 8 stores only dynamic SDK service roots. Common and build infrastructure are
+        // The canonical graph stores only dynamic SDK service roots. Common and build infrastructure are
         // unconditional, so their configurations correctly have no entry in this index.
         var paths = NewTable();
         foreach ((string configuration, string[] checkoutRoots) in graph.CheckoutRoots)
