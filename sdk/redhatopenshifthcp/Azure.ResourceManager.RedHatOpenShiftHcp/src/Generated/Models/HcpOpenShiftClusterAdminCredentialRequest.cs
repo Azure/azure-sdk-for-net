@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> HCP cluster admin credential request body. </summary>
-    public partial class HcpOpenShiftClusterAdminCredentialContent
+    public partial class HcpOpenShiftClusterAdminCredentialRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAdminCredentialContent"/>. </summary>
-        public HcpOpenShiftClusterAdminCredentialContent()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAdminCredentialRequest"/>. </summary>
+        public HcpOpenShiftClusterAdminCredentialRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAdminCredentialContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAdminCredentialRequest"/>. </summary>
         /// <param name="certificateSigningRequest"> PEM encoded certificate request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterAdminCredentialContent(string certificateSigningRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterAdminCredentialRequest(string certificateSigningRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateSigningRequest = certificateSigningRequest;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
