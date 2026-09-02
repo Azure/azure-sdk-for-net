@@ -1007,31 +1007,24 @@ namespace Azure.Generator.Mgmt.Tests
                 "ParentModel",
                 properties: [skuProperty]);
 
-            const string customization = """
-                namespace Microsoft.TypeSpec.Generator.Customizations
-                {
-                    [System.AttributeUsage(System.AttributeTargets.Property)]
-                    internal sealed class CodeGenMemberAttribute : System.Attribute
-                    {
-                        public CodeGenMemberAttribute(string originalName) { }
-                    }
-                }
-
-                namespace Samples.Models
-                {
-                    using Microsoft.TypeSpec.Generator.Customizations;
-
-                    public partial class TestSku
-                    {
-                        [CodeGenMember("Name")]
-                        public string Name { get; set; }
-                    }
-                }
-                """;
-
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [parentModel, skuModel],
-                customizationSources: [customization]);
+                inputModels: () => [parentModel, skuModel]);
+            var skuProvider = plugin.Object.TypeFactory.CreateModel(skuModel)!;
+            var customCodeView = new TestTypeView(skuProvider.Name)
+            {
+                PropertiesToBuild =
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        typeof(string),
+                        "Name",
+                        new AutoPropertyBody(true),
+                        skuProvider)
+                ]
+            };
+            ManagementMockHelpers.SetCustomCodeView(skuProvider, customCodeView);
+
             var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
 
             RunVisitors(parentProvider);
