@@ -26,6 +26,44 @@ stimuli:
           required:
             - name: azure-sdk-mcp-azsdk_verify_setup
             - name: azure-sdk-mcp-azsdk_package_generate_code
+            - name: azure-sdk-mcp-azsdk_package_build_code
+            - name: azure-sdk-mcp-azsdk_package_run_check
+            - name: azure-sdk-mcp-azsdk_package_run_tests
+            - name: azure-sdk-mcp-azsdk_package_update_changelog_content
+            - name: azure-sdk-mcp-azsdk_package_update_metadata
+            - name: azure-sdk-mcp-azsdk_package_update_version
+
+  - name: sdk-local-generate-only-001
+    prompt: "Generate only the Python SDK locally from my TypeSpec project at specification/compute/resource-manager/Microsoft.Compute/ComputeRP/tspconfig.yaml. My azure-sdk-for-python repo is at ~/repos/azure-sdk-for-python."
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_verify_setup
+            - name: azure-sdk-mcp-azsdk_package_generate_code
+            - name: azure-sdk-mcp-azsdk_package_build_code
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_package_run_check
+            - name: azure-sdk-mcp-azsdk_package_run_tests
+            - name: azure-sdk-mcp-azsdk_package_update_changelog_content
+            - name: azure-sdk-mcp-azsdk_package_update_metadata
+            - name: azure-sdk-mcp-azsdk_package_update_version
+
+  - name: sdk-local-generate-only-002
+    prompt: "Only generate the Python SDK locally from my TypeSpec project at specification/compute/resource-manager/Microsoft.Compute/ComputeRP/tspconfig.yaml. My azure-sdk-for-python repo is at ~/repos/azure-sdk-for-python."
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_verify_setup
+            - name: azure-sdk-mcp-azsdk_package_generate_code
+            - name: azure-sdk-mcp-azsdk_package_build_code
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_package_run_check
+            - name: azure-sdk-mcp-azsdk_package_run_tests
+            - name: azure-sdk-mcp-azsdk_package_update_changelog_content
+            - name: azure-sdk-mcp-azsdk_package_update_metadata
+            - name: azure-sdk-mcp-azsdk_package_update_version
 
   - name: sdk-local-negative-001
     prompt: "I want to use the Azure DevOps pipeline to generate SDKs automatically and have PRs created for me. I don't want to set up local tools."
