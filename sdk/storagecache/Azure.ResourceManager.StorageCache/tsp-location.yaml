@@ -1,6 +1,6 @@
 directory: specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache
 commit: e16457ec7e3a852b849042ac03d802c3d9e777f7
 repo: Azure/azure-rest-api-specs
-additionalDirectories: []
+additionalDirectories: 
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
