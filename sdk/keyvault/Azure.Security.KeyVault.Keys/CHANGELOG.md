@@ -1,5 +1,11 @@
 # Release History
 
+## 4.10.1 (2026-09-02)
+
+### Bugs Fixed
+
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
 ## 4.10.0 (2026-05-05)
 
 ### Features Added
