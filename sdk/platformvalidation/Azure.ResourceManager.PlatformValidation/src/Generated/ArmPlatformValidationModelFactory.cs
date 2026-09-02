@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="overallState"> The overall state of the resource. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <returns> A new <see cref="Models.CloudValidationProperties"/> instance for mocking. </returns>
-        public static CloudValidationProperties CloudValidationProperties(string description = default, ProvisioningState? provisioningState = default, ResponseError error = default, CloudValidationOverallState? overallState = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default)
+        public static CloudValidationProperties CloudValidationProperties(string description = default, ProvisioningState? provisioningState = default, ResponseError error = default, CloudValidationOverallState? overallState = default, IEnumerable<PlatformValidationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default)
         {
             return new CloudValidationProperties(
                 description,
                 provisioningState,
                 error,
                 overallState,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), default),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<PlatformValidationMoboBrokerResourceInfo>()).ToList(), default),
                 default);
         }
 
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResource"/> instance for mocking. </returns>
-        public static MoboBrokerResource MoboBrokerResource(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.PlatformValidationMoboBrokerResourceInfo"/> instance for mocking. </returns>
+        public static PlatformValidationMoboBrokerResourceInfo PlatformValidationMoboBrokerResourceInfo(ResourceIdentifier id = default)
         {
-            return new MoboBrokerResource(id, default);
+            return new PlatformValidationMoboBrokerResourceInfo(id, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -253,7 +253,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="completedOn"> The completion time of the test run. </param>
         /// <param name="reportedOn"> The time at which the test run result was reported. </param>
         /// <param name="testId"> The name of the validation test (ValidationTest resource name, not an ARM resource ID) in the validation test catalog. </param>
-        /// <param name="testCategoryIds"> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test run. </param>
         /// <param name="inputsJson">
         /// Validation test run inputs json, conforming to the input contract declared by `ValidationTestInput` on the corresponding validation test.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
@@ -261,9 +260,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="passDetails"> Detailed pass information when the test passes. </param>
         /// <param name="failureDetails"> Detailed failure information when the test fails. </param>
         /// <returns> A new <see cref="Models.ValidationTestRunProperties"/> instance for mocking. </returns>
-        public static ValidationTestRunProperties ValidationTestRunProperties(ValidationTestRunStatus? status = default, ResponseError error = default, ValidationTestRunProvisioningState? provisioningState = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, DateTimeOffset? reportedOn = default, string testId = default, IEnumerable<string> testCategoryIds = default, string inputsJson = default, IEnumerable<ValidationTestPassDetails> passDetails = default, IEnumerable<ValidationTestFailureDetails> failureDetails = default)
+        public static ValidationTestRunProperties ValidationTestRunProperties(ValidationTestRunStatus? status = default, ResponseError error = default, ValidationTestRunProvisioningState? provisioningState = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, DateTimeOffset? reportedOn = default, string testId = default, string inputsJson = default, IEnumerable<ValidationTestPassDetails> passDetails = default, IEnumerable<ValidationTestFailureDetails> failureDetails = default)
         {
-            testCategoryIds ??= new ChangeTrackingList<string>();
             passDetails ??= new ChangeTrackingList<ValidationTestPassDetails>();
             failureDetails ??= new ChangeTrackingList<ValidationTestFailureDetails>();
 
@@ -275,7 +273,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 completedOn,
                 reportedOn,
                 testId,
-                (testCategoryIds ?? new ChangeTrackingList<string>()).ToList(),
                 inputsJson,
                 (passDetails ?? new ChangeTrackingList<ValidationTestPassDetails>()).ToList(),
                 (failureDetails ?? new ChangeTrackingList<ValidationTestFailureDetails>()).ToList(),

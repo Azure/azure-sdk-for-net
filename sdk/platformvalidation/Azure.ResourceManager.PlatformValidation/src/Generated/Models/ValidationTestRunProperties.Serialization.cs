@@ -111,21 +111,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("testId"u8);
                 writer.WriteStringValue(TestId);
             }
-            if (Optional.IsCollectionDefined(TestCategoryIds))
-            {
-                writer.WritePropertyName("testCategoryIds"u8);
-                writer.WriteStartArray();
-                foreach (string item in TestCategoryIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(InputsJson))
             {
                 writer.WritePropertyName("inputsJson"u8);
@@ -200,7 +185,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             DateTimeOffset? completedOn = default;
             DateTimeOffset? reportedOn = default;
             string testId = default;
-            IList<string> testCategoryIds = default;
             string inputsJson = default;
             IReadOnlyList<ValidationTestPassDetails> passDetails = default;
             IReadOnlyList<ValidationTestFailureDetails> failureDetails = default;
@@ -266,27 +250,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     testId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("testCategoryIds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    testCategoryIds = array;
-                    continue;
-                }
                 if (prop.NameEquals("inputsJson"u8))
                 {
                     inputsJson = prop.Value.GetString();
@@ -333,7 +296,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 completedOn,
                 reportedOn,
                 testId,
-                testCategoryIds ?? new ChangeTrackingList<string>(),
                 inputsJson,
                 passDetails ?? new ChangeTrackingList<ValidationTestPassDetails>(),
                 failureDetails ?? new ChangeTrackingList<ValidationTestFailureDetails>(),

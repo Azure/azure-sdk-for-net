@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ValidationTestRunProperties"/>. </summary>
-        public ValidationTestRunProperties()
+        internal ValidationTestRunProperties()
         {
-            TestCategoryIds = new ChangeTrackingList<string>();
             PassDetails = new ChangeTrackingList<ValidationTestPassDetails>();
             FailureDetails = new ChangeTrackingList<ValidationTestFailureDetails>();
         }
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="completedOn"> The completion time of the test run. </param>
         /// <param name="reportedOn"> The time at which the test run result was reported. </param>
         /// <param name="testId"> The name of the validation test (ValidationTest resource name, not an ARM resource ID) in the validation test catalog. </param>
-        /// <param name="testCategoryIds"> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test run. </param>
         /// <param name="inputsJson">
         /// Validation test run inputs json, conforming to the input contract declared by `ValidationTestInput` on the corresponding validation test.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="passDetails"> Detailed pass information when the test passes. </param>
         /// <param name="failureDetails"> Detailed failure information when the test fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationTestRunProperties(ValidationTestRunStatus? status, ResponseError error, ValidationTestRunProvisioningState? provisioningState, DateTimeOffset? startedOn, DateTimeOffset? completedOn, DateTimeOffset? reportedOn, string testId, IList<string> testCategoryIds, string inputsJson, IReadOnlyList<ValidationTestPassDetails> passDetails, IReadOnlyList<ValidationTestFailureDetails> failureDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationTestRunProperties(ValidationTestRunStatus? status, ResponseError error, ValidationTestRunProvisioningState? provisioningState, DateTimeOffset? startedOn, DateTimeOffset? completedOn, DateTimeOffset? reportedOn, string testId, string inputsJson, IReadOnlyList<ValidationTestPassDetails> passDetails, IReadOnlyList<ValidationTestFailureDetails> failureDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Error = error;
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             CompletedOn = completedOn;
             ReportedOn = reportedOn;
             TestId = testId;
-            TestCategoryIds = testCategoryIds;
             InputsJson = inputsJson;
             PassDetails = passDetails;
             FailureDetails = failureDetails;
@@ -77,16 +74,13 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         public DateTimeOffset? ReportedOn { get; }
 
         /// <summary> The name of the validation test (ValidationTest resource name, not an ARM resource ID) in the validation test catalog. </summary>
-        public string TestId { get; set; }
-
-        /// <summary> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test run. </summary>
-        public IList<string> TestCategoryIds { get; }
+        public string TestId { get; }
 
         /// <summary>
         /// Validation test run inputs json, conforming to the input contract declared by `ValidationTestInput` on the corresponding validation test.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
         /// </summary>
-        public string InputsJson { get; set; }
+        public string InputsJson { get; }
 
         /// <summary> Detailed pass information when the test passes. </summary>
         public IReadOnlyList<ValidationTestPassDetails> PassDetails { get; }

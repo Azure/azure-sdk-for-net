@@ -60,16 +60,6 @@ namespace Azure.ResourceManager.PlatformValidation
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ValidationTestRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="validationTestRunData"> The <see cref="ValidationTestRunData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ValidationTestRunData validationTestRunData)
-        {
-            if (validationTestRunData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(validationTestRunData, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ValidationTestRunData"/> from. </param>
         internal static ValidationTestRunData FromResponse(Response response)
         {

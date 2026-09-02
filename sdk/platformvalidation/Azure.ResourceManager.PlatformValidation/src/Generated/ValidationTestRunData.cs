@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PlatformValidation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ValidationTestRunData"/>. </summary>
-        public ValidationTestRunData()
+        internal ValidationTestRunData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.PlatformValidation
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ValidationTestRunProperties Properties { get; set; }
+        public ValidationTestRunProperties Properties { get; }
     }
 }

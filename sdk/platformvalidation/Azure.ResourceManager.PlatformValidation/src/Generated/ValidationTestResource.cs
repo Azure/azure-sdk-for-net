@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PlatformValidation
         {
             TryGetApiVersion(ResourceType, out string validationTestApiVersion);
             _validationTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlatformValidation", ResourceType.Namespace, Diagnostics);
-            _validationTestsRestClient = new ValidationTests(_validationTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validationTestApiVersion ?? "2026-07-01-preview");
+            _validationTestsRestClient = new ValidationTests(_validationTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validationTestApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

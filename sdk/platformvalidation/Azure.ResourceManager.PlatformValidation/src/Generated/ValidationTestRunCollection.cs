@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PlatformValidation
         {
             TryGetApiVersion(ValidationTestRunResource.ResourceType, out string validationTestRunApiVersion);
             _validationTestRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlatformValidation", ValidationTestRunResource.ResourceType.Namespace, Diagnostics);
-            _validationTestRunsRestClient = new ValidationTestRuns(_validationTestRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validationTestRunApiVersion ?? "2026-07-01-preview");
+            _validationTestRunsRestClient = new ValidationTestRuns(_validationTestRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validationTestRunApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,122 +51,6 @@ namespace Azure.ResourceManager.PlatformValidation
             if (id.ResourceType != ExecutionPlanRunResource.ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ExecutionPlanRunResource.ResourceType), nameof(id));
-            }
-        }
-
-        /// <summary>
-        /// Create or update a validation test run
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PlatformValidation/cloudValidations/{cloudValidationName}/validationExecutionPlans/{validationExecutionPlanName}/executionPlanRuns/{executionPlanRunName}/validationTestRuns/{validationTestRunName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ValidationTestRuns_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="validationTestRunName"> The name of the ValidationTestRun. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validationTestRunName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="validationTestRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ValidationTestRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string validationTestRunName, ValidationTestRunData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(validationTestRunName, nameof(validationTestRunName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _validationTestRunsClientDiagnostics.CreateScope("ValidationTestRunCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _validationTestRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, validationTestRunName, ValidationTestRunData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PlatformValidationArmOperation<ValidationTestRunResource> operation = new PlatformValidationArmOperation<ValidationTestRunResource>(
-                    new ValidationTestRunResourceOperationSource(Client),
-                    _validationTestRunsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a validation test run
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PlatformValidation/cloudValidations/{cloudValidationName}/validationExecutionPlans/{validationExecutionPlanName}/executionPlanRuns/{executionPlanRunName}/validationTestRuns/{validationTestRunName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ValidationTestRuns_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="validationTestRunName"> The name of the ValidationTestRun. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validationTestRunName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="validationTestRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ValidationTestRunResource> CreateOrUpdate(WaitUntil waitUntil, string validationTestRunName, ValidationTestRunData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(validationTestRunName, nameof(validationTestRunName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _validationTestRunsClientDiagnostics.CreateScope("ValidationTestRunCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _validationTestRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, validationTestRunName, ValidationTestRunData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PlatformValidationArmOperation<ValidationTestRunResource> operation = new PlatformValidationArmOperation<ValidationTestRunResource>(
-                    new ValidationTestRunResourceOperationSource(Client),
-                    _validationTestRunsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
             }
         }
 
@@ -183,7 +67,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +116,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +165,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +201,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +237,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +294,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +351,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +412,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

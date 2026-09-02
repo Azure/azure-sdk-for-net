@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         internal ManagedOnBehalfOfConfiguration()
         {
-            MoboBrokerResources = new ChangeTrackingList<MoboBrokerResource>();
+            MoboBrokerResources = new ChangeTrackingList<PlatformValidationMoboBrokerResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         /// <param name="moboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerResource> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<PlatformValidationMoboBrokerResourceInfo> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MoboBrokerResources = moboBrokerResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; } = new ChangeTrackingList<MoboBrokerResource>();
+        public IReadOnlyList<PlatformValidationMoboBrokerResourceInfo> MoboBrokerResources { get; } = new ChangeTrackingList<PlatformValidationMoboBrokerResourceInfo>();
     }
 }
