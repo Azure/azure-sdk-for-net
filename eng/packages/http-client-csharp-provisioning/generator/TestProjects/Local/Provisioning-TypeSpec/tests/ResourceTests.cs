@@ -72,41 +72,41 @@ public class ResourceTests
 
             resource keyValue 'ProvisioningTypeSpec/configurationStores/keyValues@2024-04-01' = {
               name: take('keyValue-${uniqueString(resourceGroup().id)}', 24)
-              properties: {
-                value: 'value'
-                contentType: 'text/plain'
-              }
               parent: store
+              properties: {
+                contentType: 'text/plain'
+                value: 'value'
+              }
             }
 
             resource extension 'ProvisioningTypeSpec/extensionAssignments@2024-05-01' = {
               name: take('extension${uniqueString(resourceGroup().id)}', 24)
+              scope: store
               properties: {
                 displayName: 'store assignment'
               }
-              scope: store
             }
 
             resource profile 'ProvisioningTypeSpec/configurationStores/profiles@2024-05-01' = {
               name: take('profile-${uniqueString(resourceGroup().id)}', 24)
+              parent: store
               properties: {
                 description: 'current profile'
                 sku: {
                   name: 'Standard'
                 }
               }
-              parent: store
             }
 
             resource revision 'ProvisioningTypeSpec/configurationStores/profiles/revisions@2024-05-01' = {
               name: take('revision-${uniqueString(resourceGroup().id)}', 24)
+              parent: profile
               properties: {
                 description: 'profile revision'
                 sku: {
                   name: 'Standard'
                 }
               }
-              parent: profile
             }
 
             resource specialized 'ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles@2024-05-01' = {
@@ -150,12 +150,12 @@ public class ResourceTests
 
             resource store_ConfigStoreReader_test 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(store.id, '11111111-1111-1111-1111-111111111111', subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00000000-0000-0000-0000-000000000002'))
+              scope: store
               properties: {
                 principalId: '11111111-1111-1111-1111-111111111111'
-                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00000000-0000-0000-0000-000000000002')
                 principalType: 'ServicePrincipal'
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00000000-0000-0000-0000-000000000002')
               }
-              scope: store
             }
             """);
     }
