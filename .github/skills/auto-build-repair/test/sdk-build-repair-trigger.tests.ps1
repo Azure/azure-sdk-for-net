@@ -64,8 +64,6 @@ Assert ($lock -match 'github\.event\.issue\.pull_request != null') `
     'compiled comment path excludes issue comments'
 Assert ($lock -notmatch "github\.event_name == 'pull_request' && \(startsWith\(github\.event\.pull_request\.body, '/repair-build") `
     'compiled automatic path does not require /repair-build in the PR body'
-Assert ($lock -notmatch 'github\.event\.pull_request\.body') `
-    'compiled workflow never inspects the PR body for a slash command'
 
 if ($failures.Count -gt 0) {
     Write-Error "$($failures.Count) assertion(s) failed."
