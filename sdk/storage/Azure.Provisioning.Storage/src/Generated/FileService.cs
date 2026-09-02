@@ -75,7 +75,7 @@ namespace Azure.Provisioning.Storage
         }
 
         /// <summary> Gets the Sku. </summary>
-        public StorageSku Sku
+        internal StorageSku Sku
         {
             get
             {
@@ -147,6 +147,15 @@ namespace Azure.Provisioning.Storage
                     FileServiceProperties = new FileServicePropertiesProperties();
                 }
                 FileServiceProperties.CorsRules = value;
+            }
+        }
+
+        /// <summary> Gets the Tier. </summary>
+        public BicepValue<StorageSkuTier> SkuTier
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Tier;
             }
         }
 

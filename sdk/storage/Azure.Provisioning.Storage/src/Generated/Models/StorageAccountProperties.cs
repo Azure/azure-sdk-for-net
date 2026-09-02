@@ -555,6 +555,19 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the IPv6Rules. </summary>
+        public BicepList<StorageAccountIPRule> NetworkRuleSetIPv6Rules
+        {
+            get
+            {
+                if (NetworkRuleSet is null)
+                {
+                    NetworkRuleSet = new StorageAccountNetworkRuleSet();
+                }
+                return NetworkRuleSet.IPv6Rules;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for StorageAccountProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
