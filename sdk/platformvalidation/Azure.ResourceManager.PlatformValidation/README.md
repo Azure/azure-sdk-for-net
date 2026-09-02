@@ -1,4 +1,4 @@
-# Azure.ResourceManager.PlatformValidation management client library for .NET
+# Azure Platform Validation management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
