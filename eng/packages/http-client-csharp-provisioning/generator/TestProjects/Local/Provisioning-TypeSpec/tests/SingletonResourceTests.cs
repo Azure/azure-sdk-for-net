@@ -39,10 +39,10 @@ public class SingletonResourceTests
 
             resource singleton 'ProvisioningTypeSpec/configurationStores/settings@2024-05-01' = {
               name: 'default'
+              parent: store
               properties: {
                 enabled: true
               }
-              parent: store
             }
             """);
     }
