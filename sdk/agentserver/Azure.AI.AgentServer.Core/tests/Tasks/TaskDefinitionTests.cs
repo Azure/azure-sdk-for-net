@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks;
 using NUnit.Framework;
@@ -15,6 +16,21 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 [TestFixture]
 public sealed class TaskDefinitionTests
 {
+    [Test]
+    public async Task DefinitionCanBeSubstitutedForUnitTests()
+    {
+        var definition = new StubTaskDefinition();
+
+        Assert.That(definition.Name, Is.EqualTo("stub"));
+        Assert.That(await definition.RunAsync("input"), Is.EqualTo("result:input"));
+        Assert.That(await (await definition.StartAsync("started")).Completion, Is.EqualTo("started"));
+        Assert.That(await definition.GetActiveRunAsync("task"), Is.Null);
+        Assert.That(await definition.GetActiveRunAsync("task", "input"), Is.Null);
+
+        await definition.DeleteAsync("deleted-task");
+        Assert.That(definition.DeletedTaskId, Is.EqualTo("deleted-task"));
+    }
+
     [Test]
     public void RegistrationReturnsDefinitionCarryingTheName()
     {
@@ -120,5 +136,52 @@ public sealed class TaskDefinitionTests
 
         Assert.That(turn2.TaskId, Is.EqualTo("chain-2"));
         Assert.That(turn2.InputId, Is.Not.EqualTo(turn1.InputId));
+    }
+
+    private sealed class StubTaskDefinition : TaskDefinition<string, string>
+    {
+        public string? DeletedTaskId { get; private set; }
+
+        public override string Name => "stub";
+
+        public override Task<string> RunAsync(
+            string input,
+            RunOptions? options = null,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult($"result:{input}");
+
+        public override Task<TaskRun<string>> StartAsync(
+            string input,
+            RunOptions? options = null,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRun<string>>(new StubTaskRun(input));
+
+        public override Task<TaskRun<string>?> GetActiveRunAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRun<string>?>(null);
+
+        public override Task<TaskRun<string>?> GetActiveRunAsync(
+            string taskId,
+            string inputId,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRun<string>?>(null);
+
+        public override Task DeleteAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+        {
+            DeletedTaskId = taskId;
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class StubTaskRun : TaskRun<string>
+    {
+        private readonly string _result;
+
+        public StubTaskRun(string result) => _result = result;
+
+        public override Task<string> Completion => Task.FromResult(_result);
     }
 }

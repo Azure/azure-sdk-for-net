@@ -440,15 +440,15 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual bool TimeoutExceeded { get { throw null; } }
         public virtual System.Threading.Tasks.Task ExitForRecoveryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public sealed partial class TaskDefinition<TInput, TOutput>
+    public partial class TaskDefinition<TInput, TOutput>
     {
-        internal TaskDefinition() { }
-        public string Name { get { throw null; } }
-        public System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected TaskDefinition() { }
+        public virtual string Name { get { throw null; } }
+        public virtual System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public sealed partial class TaskFailureDetail
     {
