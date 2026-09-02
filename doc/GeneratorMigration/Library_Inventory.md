@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 454
-- Management Plane (MPG): 264
+- Total libraries: 458
+- Management Plane (MPG): 268
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 225
+  - New Emitter (TypeSpec): 229
   - Old TypeSpec: 0
 - Data Plane (DPG): 125
   - Autorest/Swagger: 30
@@ -138,7 +138,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 225 / 225 (100%)
+**Migration Status**: 229 / 229 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -245,6 +245,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | frontdoor | Azure.ResourceManager.FrontDoor | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration | ✅ |
+| hanaonazure | Azure.ResourceManager.HanaOnAzure | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | hdinsight | Azure.ResourceManager.HDInsight | ✅ |
 | healthbot | Azure.ResourceManager.HealthBot | ✅ |
@@ -278,6 +279,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | manufacturingplatform | Azure.ResourceManager.ManufacturingPlatform | ✅ |
 | maps | Azure.ResourceManager.Maps | ✅ |
 | marketplace | Azure.ResourceManager.Marketplace | ✅ |
+| marketplace | Azure.ResourceManager.Marketplace.Reviews | ✅ |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
@@ -309,6 +311,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | powerplatform | Azure.ResourceManager.PowerPlatform | ✅ |
 | privatedns | Azure.ResourceManager.PrivateDns | ✅ |
 | programenrollment | Azure.ResourceManager.ProgramEnrollment | ✅ |
+| programmableconnectivity | Azure.ResourceManager.ProgrammableConnectivity | ✅ |
 | providerhub | Azure.ResourceManager.ProviderHub | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
 | purview | Azure.ResourceManager.Purview | ✅ |
