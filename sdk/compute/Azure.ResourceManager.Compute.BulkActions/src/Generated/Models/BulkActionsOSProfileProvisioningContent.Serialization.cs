@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using Azure.ResourceManager.Compute.BulkActions;
 
-namespace OpenAI
+namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The RealtimeResponseUsageOutputTokenDetails. </summary>
-    public partial class RealtimeResponseUsageOutputTokenDetails : IJsonModel<RealtimeResponseUsageOutputTokenDetails>
+    /// <summary> Additional parameters for Reimaging Non-Ephemeral Virtual Machine. </summary>
+    public partial class BulkActionsOSProfileProvisioningContent : IJsonModel<BulkActionsOSProfileProvisioningContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeResponseUsageOutputTokenDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionsOSProfileProvisioningContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageOutputTokenDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeResponseUsageOutputTokenDetails(document.RootElement, options);
+                        return DeserializeBulkActionsOSProfileProvisioningContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeResponseUsageOutputTokenDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageOutputTokenDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeResponseUsageOutputTokenDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeResponseUsageOutputTokenDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionsOSProfileProvisioningContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeResponseUsageOutputTokenDetails IPersistableModel<RealtimeResponseUsageOutputTokenDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionsOSProfileProvisioningContent IPersistableModel<BulkActionsOSProfileProvisioningContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeResponseUsageOutputTokenDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionsOSProfileProvisioningContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeResponseUsageOutputTokenDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionsOSProfileProvisioningContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageOutputTokenDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeResponseUsageOutputTokenDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TextTokens))
+            if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("text_tokens"u8);
-                writer.WriteNumberValue(TextTokens.Value);
+                writer.WritePropertyName("adminPassword"u8);
+                writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(AudioTokens))
+            if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("audio_tokens"u8);
-                writer.WriteNumberValue(AudioTokens.Value);
+                writer.WritePropertyName("customData"u8);
+                writer.WriteStringValue(CustomData);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,42 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeResponseUsageOutputTokenDetails IJsonModel<RealtimeResponseUsageOutputTokenDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionsOSProfileProvisioningContent IJsonModel<BulkActionsOSProfileProvisioningContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeResponseUsageOutputTokenDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionsOSProfileProvisioningContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageOutputTokenDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeResponseUsageOutputTokenDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeResponseUsageOutputTokenDetails(document.RootElement, options);
+            return DeserializeBulkActionsOSProfileProvisioningContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeResponseUsageOutputTokenDetails DeserializeRealtimeResponseUsageOutputTokenDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionsOSProfileProvisioningContent DeserializeBulkActionsOSProfileProvisioningContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? textTokens = default;
-            long? audioTokens = default;
+            string adminPassword = default;
+            string customData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("text_tokens"u8))
+                if (prop.NameEquals("adminPassword"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    textTokens = prop.Value.GetInt64();
+                    adminPassword = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("audio_tokens"u8))
+                if (prop.NameEquals("customData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    audioTokens = prop.Value.GetInt64();
+                    customData = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +146,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeResponseUsageOutputTokenDetails(textTokens, audioTokens, additionalBinaryDataProperties);
+            return new BulkActionsOSProfileProvisioningContent(adminPassword, customData, additionalBinaryDataProperties);
         }
     }
 }

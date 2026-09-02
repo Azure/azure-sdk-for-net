@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using Azure.ResourceManager.CommvaultContentStore;
 
-namespace OpenAI
+namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> The RealtimeFunctionToolParameters. </summary>
-    public partial class RealtimeFunctionToolParameters : IJsonModel<RealtimeFunctionToolParameters>
+    /// <summary> The updatable properties of the CloudAccount. </summary>
+    public partial class CloudAccountPatchProperties : IJsonModel<CloudAccountPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeFunctionToolParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CloudAccountPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeFunctionToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeFunctionToolParameters(document.RootElement, options);
+                        return DeserializeCloudAccountPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeFunctionToolParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeFunctionToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeFunctionToolParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeFunctionToolParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CloudAccountPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeFunctionToolParameters IPersistableModel<RealtimeFunctionToolParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CloudAccountPatchProperties IPersistableModel<CloudAccountPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeFunctionToolParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CloudAccountPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeFunctionToolParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CloudAccountPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,20 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeFunctionToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeFunctionToolParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(Marketplace))
+            {
+                writer.WritePropertyName("marketplace"u8);
+                writer.WriteObjectValue(Marketplace, options);
+            }
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteObjectValue(User, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -93,24 +103,24 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeFunctionToolParameters IJsonModel<RealtimeFunctionToolParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CloudAccountPatchProperties IJsonModel<CloudAccountPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeFunctionToolParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CloudAccountPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeFunctionToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeFunctionToolParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeFunctionToolParameters(document.RootElement, options);
+            return DeserializeCloudAccountPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeFunctionToolParameters DeserializeRealtimeFunctionToolParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudAccountPatchProperties DeserializeCloudAccountPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,7 +154,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeFunctionToolParameters(additionalBinaryDataProperties);
+            return new CloudAccountPatchProperties(marketplace, user, additionalBinaryDataProperties);
         }
     }
 }

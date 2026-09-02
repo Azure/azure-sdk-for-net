@@ -6,73 +6,64 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.CommvaultContentStore;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> The response data for a requested list of items. </summary>
-    internal partial class AgentsPagedResultVoiceConversation : IJsonModel<AgentsPagedResultVoiceConversation>
+    /// <summary> The ProtectionGroupResourcesMatchRules. </summary>
+    public partial class ProtectionGroupResourcesMatchRules : IJsonModel<ProtectionGroupResourcesMatchRules>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceConversation"/> for deserialization. </summary>
-        internal AgentsPagedResultVoiceConversation()
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourcesMatchRules"/> for deserialization. </summary>
+        internal ProtectionGroupResourcesMatchRules()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceConversation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupResourcesMatchRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentsPagedResultVoiceConversation(document.RootElement, options);
+                        return DeserializeProtectionGroupResourcesMatchRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentsPagedResultVoiceConversation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProtectionGroupResourcesMatchRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceConversation IPersistableModel<AgentsPagedResultVoiceConversation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProtectionGroupResourcesMatchRules IPersistableModel<ProtectionGroupResourcesMatchRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentsPagedResultVoiceConversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultVoiceConversation"/> from. </param>
-        public static explicit operator AgentsPagedResultVoiceConversation(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAgentsPagedResultVoiceConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ProtectionGroupResourcesMatchRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentsPagedResultVoiceConversation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProtectionGroupResourcesMatchRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -83,30 +74,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("data"u8);
+            writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
-            foreach (VoiceConversation item in Data)
+            foreach (ProtectionGroupRule item in Rules)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FirstId))
-            {
-                writer.WritePropertyName("first_id"u8);
-                writer.WriteStringValue(FirstId);
-            }
-            if (Optional.IsDefined(LastId))
-            {
-                writer.WritePropertyName("last_id"u8);
-                writer.WriteStringValue(LastId);
-            }
-            writer.WritePropertyName("has_more"u8);
-            writer.WriteBooleanValue(HasMore);
+            writer.WritePropertyName("matchType"u8);
+            writer.WriteStringValue(MatchType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,59 +107,47 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceConversation IJsonModel<AgentsPagedResultVoiceConversation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProtectionGroupResourcesMatchRules IJsonModel<ProtectionGroupResourcesMatchRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceConversation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupResourcesMatchRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsPagedResultVoiceConversation(document.RootElement, options);
+            return DeserializeProtectionGroupResourcesMatchRules(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentsPagedResultVoiceConversation DeserializeAgentsPagedResultVoiceConversation(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProtectionGroupResourcesMatchRules DeserializeProtectionGroupResourcesMatchRules(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VoiceConversation> data = default;
-            string firstId = default;
-            string lastId = default;
-            bool hasMore = default;
+            IList<ProtectionGroupRule> rules = default;
+            ProtectionGroupMatchType matchType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("data"u8))
+                if (prop.NameEquals("rules"u8))
                 {
-                    List<VoiceConversation> array = new List<VoiceConversation>();
+                    List<ProtectionGroupRule> array = new List<ProtectionGroupRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VoiceConversation.DeserializeVoiceConversation(item, options));
+                        array.Add(ProtectionGroupRule.DeserializeProtectionGroupRule(item, options));
                     }
-                    data = array;
+                    rules = array;
                     continue;
                 }
-                if (prop.NameEquals("first_id"u8))
+                if (prop.NameEquals("matchType"u8))
                 {
-                    firstId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("last_id"u8))
-                {
-                    lastId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("has_more"u8))
-                {
-                    hasMore = prop.Value.GetBoolean();
+                    matchType = new ProtectionGroupMatchType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +155,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentsPagedResultVoiceConversation(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new ProtectionGroupResourcesMatchRules(rules, matchType, additionalBinaryDataProperties);
         }
     }
 }

@@ -9,61 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.AI.Discovery
 {
-    /// <summary> Apply patch operation. </summary>
-    internal partial class ApplyPatchFileOperation : IJsonModel<ApplyPatchFileOperation>
+    /// <summary> Result details for an indexing operation. </summary>
+    public partial class IndexingOperationResult : IJsonModel<IndexingOperationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ApplyPatchFileOperation"/> for deserialization. </summary>
-        internal ApplyPatchFileOperation()
+        /// <summary> Initializes a new instance of <see cref="IndexingOperationResult"/> for deserialization. </summary>
+        internal IndexingOperationResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplyPatchFileOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IndexingOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplyPatchFileOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplyPatchFileOperation(document.RootElement, options);
+                        return DeserializeIndexingOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplyPatchFileOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IndexingOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplyPatchFileOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplyPatchFileOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IndexingOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplyPatchFileOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IndexingOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplyPatchFileOperation IPersistableModel<ApplyPatchFileOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IndexingOperationResult IPersistableModel<IndexingOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplyPatchFileOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IndexingOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplyPatchFileOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IndexingOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +73,17 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplyPatchFileOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplyPatchFileOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IndexingOperationResult)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("runId"u8);
+            writer.WriteStringValue(RunId);
+            if (Optional.IsDefined(Metrics))
+            {
+                writer.WritePropertyName("metrics"u8);
+                writer.WriteObjectValue(Metrics, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,36 +104,46 @@ namespace Azure.AI.Extensions.OpenAI.Internal
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplyPatchFileOperation IJsonModel<ApplyPatchFileOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IndexingOperationResult IJsonModel<IndexingOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplyPatchFileOperation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IndexingOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplyPatchFileOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplyPatchFileOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IndexingOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplyPatchFileOperation(document.RootElement, options);
+            return DeserializeIndexingOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplyPatchFileOperation DeserializeApplyPatchFileOperation(JsonElement element, ModelReaderWriterOptions options)
+        internal static IndexingOperationResult DeserializeIndexingOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ApplyPatchFileOperationType @type = default;
+            string runId = default;
+            IndexingMetrics metrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("runId"u8))
                 {
-                    @type = new ApplyPatchFileOperationType(prop.Value.GetString());
+                    runId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("metrics"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metrics = IndexingMetrics.DeserializeIndexingMetrics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +151,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplyPatchFileOperation(@type, additionalBinaryDataProperties);
+            return new IndexingOperationResult(runId, metrics, additionalBinaryDataProperties);
         }
     }
 }

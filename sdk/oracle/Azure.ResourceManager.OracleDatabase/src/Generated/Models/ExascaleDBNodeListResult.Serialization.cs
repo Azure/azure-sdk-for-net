@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure;
+using Azure.ResourceManager.OracleDatabase;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The flat response audio-output projection, with optional `voice`, `voice_type`, `voice_locale`, and `format` fields. </summary>
-    public partial class VoiceResponseAudioOutput : IJsonModel<VoiceResponseAudioOutput>
+    /// <summary> The response of a ExascaleDbNode list operation. </summary>
+    internal partial class ExascaleDBNodeListResult : IJsonModel<ExascaleDBNodeListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeListResult"/> for deserialization. </summary>
         internal ExascaleDBNodeListResult()
@@ -23,47 +24,54 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceResponseAudioOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExascaleDBNodeListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseAudioOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceResponseAudioOutput(document.RootElement, options);
+                        return DeserializeExascaleDBNodeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceResponseAudioOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseAudioOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceResponseAudioOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceResponseAudioOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExascaleDBNodeListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceResponseAudioOutput IPersistableModel<VoiceResponseAudioOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExascaleDBNodeListResult IPersistableModel<ExascaleDBNodeListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceResponseAudioOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExascaleDBNodeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExascaleDBNodeListResult"/> from. </param>
+        internal static ExascaleDBNodeListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExascaleDBNodeListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceResponseAudioOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExascaleDBNodeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,30 +82,22 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseAudioOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceResponseAudioOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Voice))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (ExascaleDBNodeData item in Value)
             {
-                writer.WritePropertyName("voice"u8);
-                writer.WriteStringValue(Voice);
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsDefined(VoiceType))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("voice_type"u8);
-                writer.WriteStringValue(VoiceType.Value.ToString());
-            }
-            if (Optional.IsDefined(VoiceLocale))
-            {
-                writer.WritePropertyName("voice_locale"u8);
-                writer.WriteStringValue(VoiceLocale);
-            }
-            if (Optional.IsDefined(Format))
-            {
-                writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format, options);
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,62 +118,51 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceResponseAudioOutput IJsonModel<VoiceResponseAudioOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExascaleDBNodeListResult IJsonModel<ExascaleDBNodeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceResponseAudioOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExascaleDBNodeListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseAudioOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceResponseAudioOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceResponseAudioOutput(document.RootElement, options);
+            return DeserializeExascaleDBNodeListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceResponseAudioOutput DeserializeVoiceResponseAudioOutput(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExascaleDBNodeListResult DeserializeExascaleDBNodeListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string voice = default;
-            VoiceType? voiceType = default;
-            string voiceLocale = default;
-            RealtimeAudioFormats format = default;
+            IList<ExascaleDBNodeData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("voice"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    voice = prop.Value.GetString();
+                    List<ExascaleDBNodeData> array = new List<ExascaleDBNodeData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ExascaleDBNodeData.DeserializeExascaleDBNodeData(item, options));
+                    }
+                    value = array;
                     continue;
                 }
-                if (prop.NameEquals("voice_type"u8))
+                if (prop.NameEquals("nextLink"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    voiceType = new VoiceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("voice_locale"u8))
-                {
-                    voiceLocale = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("format"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    format = RealtimeAudioFormats.DeserializeRealtimeAudioFormats(prop.Value, options);
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +170,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties);
+            return new ExascaleDBNodeListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

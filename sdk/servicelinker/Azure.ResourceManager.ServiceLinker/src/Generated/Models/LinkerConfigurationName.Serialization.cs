@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    internal partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
+    /// <summary> The configuration names. </summary>
+    public partial class LinkerConfigurationName : IJsonModel<LinkerConfigurationName>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,12 +74,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 throw new FormatException($"The model {nameof(LinkerConfigurationName)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ImageUrl))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl.AbsoluteUri);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -133,15 +131,15 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 return null;
             }
-            string @type = default;
-            Uri imageUrl = default;
-            string fileId = default;
+            string value = default;
+            string description = default;
+            bool? isRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    @type = prop.Value.GetString();
+                    value = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -155,12 +153,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     {
                         continue;
                     }
-                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("file_id"u8))
-                {
-                    fileId = prop.Value.GetString();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +161,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputerScreenshotImage(@type, imageUrl, fileId, additionalBinaryDataProperties);
+            return new LinkerConfigurationName(value, description, isRequired, additionalBinaryDataProperties);
         }
     }
 }

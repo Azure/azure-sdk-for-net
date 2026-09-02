@@ -9,55 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Avatar video encoder and presentation settings. </summary>
-    public partial class VoiceAgentAvatarVideoParams : IJsonModel<VoiceAgentAvatarVideoParams>
+    /// <summary> Indicates public network solution, include firewall rules. </summary>
+    public partial class LinkerPublicNetworkSolution : IJsonModel<LinkerPublicNetworkSolution>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkerPublicNetworkSolution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentAvatarVideoParams(document.RootElement, options);
+                        return DeserializeLinkerPublicNetworkSolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoParams)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoParams)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentAvatarVideoParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkerPublicNetworkSolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoParams IPersistableModel<VoiceAgentAvatarVideoParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkerPublicNetworkSolution IPersistableModel<LinkerPublicNetworkSolution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentAvatarVideoParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerPublicNetworkSolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentAvatarVideoParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerPublicNetworkSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,35 +69,25 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoParams)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Bitrate))
+            if (Optional.IsDefined(DeleteOrUpdateBehavior))
             {
-                writer.WritePropertyName("bitrate"u8);
-                writer.WriteNumberValue(Bitrate.Value);
+                writer.WritePropertyName("deleteOrUpdateBehavior"u8);
+                writer.WriteStringValue(DeleteOrUpdateBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(Crop))
+            if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue(Crop, options);
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(Resolution))
+            if (Optional.IsDefined(FirewallRules))
             {
-                writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution, options);
-            }
-            if (Optional.IsDefined(Background))
-            {
-                writer.WritePropertyName("background"u8);
-                writer.WriteObjectValue(Background, options);
-            }
-            if (Optional.IsDefined(GopSize))
-            {
-                writer.WritePropertyName("gop_size"u8);
-                writer.WriteNumberValue(GopSize.Value);
+                writer.WritePropertyName("firewallRules"u8);
+                writer.WriteObjectValue(FirewallRules, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -117,80 +108,60 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoParams IJsonModel<VoiceAgentAvatarVideoParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkerPublicNetworkSolution IJsonModel<LinkerPublicNetworkSolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkerPublicNetworkSolution JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoParams)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentAvatarVideoParams(document.RootElement, options);
+            return DeserializeLinkerPublicNetworkSolution(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentAvatarVideoParams DeserializeVoiceAgentAvatarVideoParams(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkerPublicNetworkSolution DeserializeLinkerPublicNetworkSolution(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? bitrate = default;
-            VoiceAgentAvatarVideoCrop crop = default;
-            VoiceAgentAvatarVideoResolution resolution = default;
-            VoiceAgentAvatarVideoBackground background = default;
-            int? gopSize = default;
+            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            LinkerActionType? action = default;
+            LinkerFirewallRules firewallRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("bitrate"u8))
+                if (prop.NameEquals("deleteOrUpdateBehavior"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bitrate = prop.Value.GetInt32();
+                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("crop"u8))
+                if (prop.NameEquals("action"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    crop = VoiceAgentAvatarVideoCrop.DeserializeVoiceAgentAvatarVideoCrop(prop.Value, options);
+                    action = new LinkerActionType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resolution"u8))
+                if (prop.NameEquals("firewallRules"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resolution = VoiceAgentAvatarVideoResolution.DeserializeVoiceAgentAvatarVideoResolution(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("background"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    background = VoiceAgentAvatarVideoBackground.DeserializeVoiceAgentAvatarVideoBackground(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("gop_size"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gopSize = prop.Value.GetInt32();
+                    firewallRules = LinkerFirewallRules.DeserializeLinkerFirewallRules(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -198,13 +169,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentAvatarVideoParams(
-                bitrate,
-                crop,
-                resolution,
-                background,
-                gopSize,
-                additionalBinaryDataProperties);
+            return new LinkerPublicNetworkSolution(deleteOrUpdateBehavior, action, firewallRules, additionalBinaryDataProperties);
         }
     }
 }

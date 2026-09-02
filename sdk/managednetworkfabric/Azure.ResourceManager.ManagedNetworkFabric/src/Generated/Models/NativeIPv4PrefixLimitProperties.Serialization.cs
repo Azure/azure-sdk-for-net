@@ -11,58 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class UnknownVoiceAgentInterimResponseConfig : VoiceAgentInterimResponseConfig, IJsonModel<VoiceAgentInterimResponseConfig>
+    /// <summary> External Network native IPv4 prefix limit properties. </summary>
+    internal partial class NativeIPv4PrefixLimitProperties : IJsonModel<NativeIPv4PrefixLimitProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVoiceAgentInterimResponseConfig"/> for deserialization. </summary>
-        internal UnknownVoiceAgentInterimResponseConfig()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentInterimResponseConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NativeIPv4PrefixLimitProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv4PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentInterimResponseConfig(document.RootElement, options);
+                        return DeserializeNativeIPv4PrefixLimitProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativeIPv4PrefixLimitProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv4PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativeIPv4PrefixLimitProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentInterimResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NativeIPv4PrefixLimitProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentInterimResponseConfig IPersistableModel<VoiceAgentInterimResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NativeIPv4PrefixLimitProperties IPersistableModel<NativeIPv4PrefixLimitProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentInterimResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NativeIPv4PrefixLimitProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentInterimResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NativeIPv4PrefixLimitProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,73 +67,81 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv4PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NativeIPv4PrefixLimitProperties)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(PrefixLimits))
+            {
+                writer.WritePropertyName("prefixLimits"u8);
+                writer.WriteStartArray();
+                foreach (PrefixLimitProperties item in PrefixLimits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentInterimResponseConfig IJsonModel<VoiceAgentInterimResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NativeIPv4PrefixLimitProperties IJsonModel<NativeIPv4PrefixLimitProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentInterimResponseConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NativeIPv4PrefixLimitProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv4PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NativeIPv4PrefixLimitProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentInterimResponseConfig(document.RootElement, options);
+            return DeserializeNativeIPv4PrefixLimitProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownVoiceAgentInterimResponseConfig DeserializeUnknownVoiceAgentInterimResponseConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static NativeIPv4PrefixLimitProperties DeserializeNativeIPv4PrefixLimitProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "unknown";
-            IList<VoiceAgentInterimResponseTrigger> triggers = default;
-            TimeSpan? latencyThresholdMs = default;
+            IList<PrefixLimitProperties> prefixLimits = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("triggers"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        array.Add(PrefixLimitProperties.DeserializePrefixLimitProperties(item, options));
-                    }
-                    List<VoiceAgentInterimResponseTrigger> array = new List<VoiceAgentInterimResponseTrigger>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToVoiceAgentInterimResponseTrigger());
-                    }
-                    triggers = array;
-                    continue;
-                }
-                if (prop.NameEquals("latency_threshold_ms"u8))
+                if (prop.NameEquals("prefixLimits"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    latencyThresholdMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    List<PrefixLimitProperties> array = new List<PrefixLimitProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(PrefixLimitProperties.DeserializePrefixLimitProperties(item, options));
+                    }
+                    prefixLimits = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownVoiceAgentInterimResponseConfig(@type, triggers ?? new ChangeTrackingList<VoiceAgentInterimResponseTrigger>(), latencyThresholdMs, additionalBinaryDataProperties);
+            return new NativeIPv4PrefixLimitProperties(prefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>(), additionalBinaryDataProperties);
         }
     }
 }

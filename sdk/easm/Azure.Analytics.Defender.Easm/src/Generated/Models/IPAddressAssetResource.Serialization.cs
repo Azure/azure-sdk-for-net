@@ -9,10 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
-using OpenAI.Responses;
 
-namespace OpenAI
+namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The IPAddressAssetResource. </summary>
     public partial class IPAddressAssetResource : AssetResource, IJsonModel<IPAddressAssetResource>
@@ -81,76 +79,8 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(IPAddressAssetResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("vector_store_ids"u8);
-            writer.WriteStartArray();
-            foreach (string item in VectorStoreIds)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(MaxNumResults))
-            {
-                writer.WritePropertyName("max_num_results"u8);
-                writer.WriteNumberValue(MaxNumResults.Value);
-            }
-            if (Optional.IsDefined(RankingOptions))
-            {
-                writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue<object>(RankingOptions, options);
-            }
-            if (Optional.IsDefined(Filters))
-            {
-                writer.WritePropertyName("filters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Filters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Filters))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            writer.WritePropertyName("asset"u8);
+            writer.WriteObjectValue(Asset, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -178,11 +108,8 @@ namespace OpenAI
             {
                 return null;
             }
-            ResponseToolKind @type = "file_search";
-            IList<string> vectorStoreIds = default;
-            long? maxNumResults = default;
-            object rankingOptions = default;
-            BinaryData filters = default;
+            string kind = "ipAddress";
+            string id = default;
             string name = default;
             string displayName = default;
             Guid? uuid = default;
@@ -196,11 +123,12 @@ namespace OpenAI
             IList<AuditTrailItem> auditTrail = default;
             string reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IPAddressAsset asset = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    @type = new ResponseToolKind(prop.Value.GetString());
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -300,12 +228,8 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    rankingOptions = prop.Value.GetObject();
-                    continue;
-                }
-                if (prop.NameEquals("filters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    List<AuditTrailItem> array = new List<AuditTrailItem>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AuditTrailItem.DeserializeAuditTrailItem(item, options));
                     }
@@ -327,12 +251,9 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalFileSearchTool(
-                @type,
-                vectorStoreIds,
-                maxNumResults,
-                rankingOptions,
-                filters,
+            return new IPAddressAssetResource(
+                kind,
+                id,
                 name,
                 displayName,
                 uuid,

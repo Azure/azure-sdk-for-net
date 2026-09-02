@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.ResourceManager.CommvaultContentStore;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The VM list item for backup. </summary>
     public partial class VmListItem : IJsonModel<VmListItem>

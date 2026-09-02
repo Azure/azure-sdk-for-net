@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Status condition of Kubernetes object. </summary>
     public partial class FluxObjectStatusCondition : IJsonModel<FluxObjectStatusCondition>
@@ -91,8 +91,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue<object>(Attributes, options);
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(Type))
             {
@@ -141,40 +141,15 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 return null;
             }
-            string fileId = default;
-            string text = default;
-            string filename = default;
-            object attributes = default;
-            float? score = default;
+            DateTimeOffset? lastTransitionOn = default;
+            string message = default;
+            string reason = default;
+            string status = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("file_id"u8))
-                {
-                    fileId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("text"u8))
-                {
-                    text = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("filename"u8))
-                {
-                    filename = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("attributes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        attributes = null;
-                        continue;
-                    }
-                    attributes = prop.Value.GetObject();
-                    continue;
-                }
-                if (prop.NameEquals("score"u8))
+                if (prop.NameEquals("lastTransitionTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

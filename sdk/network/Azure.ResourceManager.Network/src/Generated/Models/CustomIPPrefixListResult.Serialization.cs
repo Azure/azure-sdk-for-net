@@ -9,60 +9,69 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.ResourceManager.Network;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> MCP list tools tool. </summary>
-    public partial class VoiceMcpListToolsTool : IJsonModel<VoiceMcpListToolsTool>
+    /// <summary> The response of a CustomIpPrefix list operation. </summary>
+    internal partial class CustomIPPrefixListResult : IJsonModel<CustomIPPrefixListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceMcpListToolsTool"/> for deserialization. </summary>
-        internal VoiceMcpListToolsTool()
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/> for deserialization. </summary>
+        internal CustomIPPrefixListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceMcpListToolsTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CustomIPPrefixListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceMcpListToolsTool(document.RootElement, options);
+                        return DeserializeCustomIPPrefixListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpListToolsTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpListToolsTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceMcpListToolsTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomIPPrefixListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpListToolsTool IPersistableModel<VoiceMcpListToolsTool>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomIPPrefixListResult IPersistableModel<CustomIPPrefixListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceMcpListToolsTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomIPPrefixListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomIPPrefixListResult"/> from. </param>
+        internal static CustomIPPrefixListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCustomIPPrefixListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceMcpListToolsTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomIPPrefixListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +82,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpListToolsTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -109,33 +118,31 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpListToolsTool IJsonModel<VoiceMcpListToolsTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomIPPrefixListResult IJsonModel<CustomIPPrefixListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceMcpListToolsTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CustomIPPrefixListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpListToolsTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceMcpListToolsTool(document.RootElement, options);
+            return DeserializeCustomIPPrefixListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceMcpListToolsTool DeserializeVoiceMcpListToolsTool(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomIPPrefixListResult DeserializeCustomIPPrefixListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            string description = default;
-            VoiceMcpListToolsToolInputSchema inputSchema = default;
-            VoiceMcpListToolsToolAnnotations annotations = default;
+            IList<CustomIPPrefixData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,22 +162,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("input_schema"u8))
-                {
-                    inputSchema = VoiceMcpListToolsToolInputSchema.DeserializeVoiceMcpListToolsToolInputSchema(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("annotations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        annotations = null;
-                        continue;
-                    }
-                    annotations = VoiceMcpListToolsToolAnnotations.DeserializeVoiceMcpListToolsToolAnnotations(prop.Value, options);
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +170,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceMcpListToolsTool(name, description, inputSchema, annotations, additionalBinaryDataProperties);
+            return new CustomIPPrefixListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

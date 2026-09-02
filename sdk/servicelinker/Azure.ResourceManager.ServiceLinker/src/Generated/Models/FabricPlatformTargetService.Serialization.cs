@@ -11,59 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> A deterministic greeting rendered with the voice agent's structured inputs and synthesized without model-authored generation. </summary>
-    public partial class TemplateVoiceGreetingConfig : VoiceGreetingConfig, IJsonModel<TemplateVoiceGreetingConfig>
+    /// <summary> The service properties when target service type is FabricPlatform. </summary>
+    public partial class FabricPlatformTargetService : TargetServiceBaseInfo, IJsonModel<FabricPlatformTargetService>
     {
-        /// <summary> Initializes a new instance of <see cref="TemplateVoiceGreetingConfig"/> for deserialization. </summary>
-        internal TemplateVoiceGreetingConfig()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceGreetingConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TargetServiceBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateVoiceGreetingConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricPlatformTargetService>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTemplateVoiceGreetingConfig(document.RootElement, options);
+                        return DeserializeFabricPlatformTargetService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateVoiceGreetingConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricPlatformTargetService)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateVoiceGreetingConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricPlatformTargetService>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateVoiceGreetingConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricPlatformTargetService)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TemplateVoiceGreetingConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FabricPlatformTargetService>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TemplateVoiceGreetingConfig IPersistableModel<TemplateVoiceGreetingConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (TemplateVoiceGreetingConfig)PersistableModelCreateCore(data, options);
+        FabricPlatformTargetService IPersistableModel<FabricPlatformTargetService>.Create(BinaryData data, ModelReaderWriterOptions options) => (FabricPlatformTargetService)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TemplateVoiceGreetingConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FabricPlatformTargetService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TemplateVoiceGreetingConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FabricPlatformTargetService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,54 +69,57 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateVoiceGreetingConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricPlatformTargetService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateVoiceGreetingConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricPlatformTargetService)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("text"u8);
-            writer.WriteStringValue(Text);
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TemplateVoiceGreetingConfig IJsonModel<TemplateVoiceGreetingConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TemplateVoiceGreetingConfig)JsonModelCreateCore(ref reader, options);
+        FabricPlatformTargetService IJsonModel<FabricPlatformTargetService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FabricPlatformTargetService)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceGreetingConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TargetServiceBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateVoiceGreetingConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricPlatformTargetService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateVoiceGreetingConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricPlatformTargetService)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTemplateVoiceGreetingConfig(document.RootElement, options);
+            return DeserializeFabricPlatformTargetService(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TemplateVoiceGreetingConfig DeserializeTemplateVoiceGreetingConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static FabricPlatformTargetService DeserializeFabricPlatformTargetService(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "template";
+            TargetServiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string text = default;
+            string endpoint = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new TargetServiceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("text"u8))
+                if (prop.NameEquals("endpoint"u8))
                 {
-                    text = prop.Value.GetString();
+                    endpoint = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +127,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TemplateVoiceGreetingConfig(@type, additionalBinaryDataProperties, text);
+            return new FabricPlatformTargetService(@type, additionalBinaryDataProperties, endpoint);
         }
     }
 }

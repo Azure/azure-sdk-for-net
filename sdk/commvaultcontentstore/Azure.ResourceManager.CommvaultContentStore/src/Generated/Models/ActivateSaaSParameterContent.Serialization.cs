@@ -14,61 +14,67 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary>
-    /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownOpenApiAuthenticationDetails))]
-    public abstract partial class OpenApiAuthenticationDetails : IJsonModel<OpenApiAuthenticationDetails>
+    /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
+    public partial class ActivateSaaSParameterContent : IJsonModel<ActivateSaaSParameterContent>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/> for deserialization. </summary>
-        internal OpenApiAuthenticationDetails()
+        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/> for deserialization. </summary>
+        internal ActivateSaaSParameterContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenApiAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActivateSaaSParameterContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenApiAuthenticationDetails(document.RootElement, options);
+                        return DeserializeActivateSaaSParameterContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenApiAuthenticationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenApiAuthenticationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenApiAuthenticationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActivateSaaSParameterContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiAuthenticationDetails IPersistableModel<OpenApiAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActivateSaaSParameterContent IPersistableModel<ActivateSaaSParameterContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenApiAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActivateSaaSParameterContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="activateSaaSParameterContent"> The <see cref="ActivateSaaSParameterContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ActivateSaaSParameterContent activateSaaSParameterContent)
+        {
+            if (activateSaaSParameterContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(activateSaaSParameterContent, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenApiAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActivateSaaSParameterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,13 +85,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenApiAuthenticationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("saaSGuid"u8);
+            writer.WriteStringValue(SaaSGuid);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -105,24 +111,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiAuthenticationDetails IJsonModel<OpenApiAuthenticationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActivateSaaSParameterContent IJsonModel<ActivateSaaSParameterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenApiAuthenticationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActivateSaaSParameterContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenApiAuthenticationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenApiAuthenticationDetails(document.RootElement, options);
+            return DeserializeActivateSaaSParameterContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenApiAuthenticationDetails DeserializeOpenApiAuthenticationDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActivateSaaSParameterContent DeserializeActivateSaaSParameterContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,15 +140,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 if (prop.NameEquals("saaSGuid"u8))
                 {
-                    case "anonymous":
-                        return OpenApiAnonymousAuthenticationDetails.DeserializeOpenApiAnonymousAuthenticationDetails(element, options);
-                    case "project_connection":
-                        return OpenApiProjectConnectionAuthenticationDetails.DeserializeOpenApiProjectConnectionAuthenticationDetails(element, options);
-                    case "managed_identity":
-                        return OpenApiManagedAuthenticationDetails.DeserializeOpenApiManagedAuthenticationDetails(element, options);
+                    saaSGuid = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownOpenApiAuthenticationDetails.DeserializeUnknownOpenApiAuthenticationDetails(element, options);
+            return new ActivateSaaSParameterContent(saaSGuid, additionalBinaryDataProperties);
         }
     }
 }

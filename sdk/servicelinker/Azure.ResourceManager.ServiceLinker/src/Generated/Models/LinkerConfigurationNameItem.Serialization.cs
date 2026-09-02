@@ -11,54 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The role assigned to each channel of a merged stereo voice recording. </summary>
-    public partial class VoiceRecordingChannelLayout : IJsonModel<VoiceRecordingChannelLayout>
+    /// <summary> The LinkerConfigurationNameItem. </summary>
+    public partial class LinkerConfigurationNameItem : IJsonModel<LinkerConfigurationNameItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceRecordingChannelLayout PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkerConfigurationNameItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingChannelLayout>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationNameItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceRecordingChannelLayout(document.RootElement, options);
+                        return DeserializeLinkerConfigurationNameItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceRecordingChannelLayout)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerConfigurationNameItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingChannelLayout>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationNameItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceRecordingChannelLayout)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerConfigurationNameItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceRecordingChannelLayout>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkerConfigurationNameItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceRecordingChannelLayout IPersistableModel<VoiceRecordingChannelLayout>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkerConfigurationNameItem IPersistableModel<LinkerConfigurationNameItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceRecordingChannelLayout>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerConfigurationNameItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceRecordingChannelLayout>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerConfigurationNameItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingChannelLayout>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationNameItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceRecordingChannelLayout)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerConfigurationNameItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("left"u8);
-            writer.WriteStringValue(Left);
-            writer.WritePropertyName("right"u8);
-            writer.WriteStringValue(Right);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -97,42 +98,41 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceRecordingChannelLayout IJsonModel<VoiceRecordingChannelLayout>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkerConfigurationNameItem IJsonModel<LinkerConfigurationNameItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceRecordingChannelLayout JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkerConfigurationNameItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingChannelLayout>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerConfigurationNameItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceRecordingChannelLayout)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerConfigurationNameItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceRecordingChannelLayout(document.RootElement, options);
+            return DeserializeLinkerConfigurationNameItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceRecordingChannelLayout DeserializeVoiceRecordingChannelLayout(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkerConfigurationNameItem DeserializeLinkerConfigurationNameItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string left = default;
-            string right = default;
+            ConfigurationNames properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("left"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    left = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("right"u8))
-                {
-                    right = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    properties = ConfigurationNames.DeserializeConfigurationNames(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceRecordingChannelLayout(left, right, additionalBinaryDataProperties);
+            return new LinkerConfigurationNameItem(properties, additionalBinaryDataProperties);
         }
     }
 }

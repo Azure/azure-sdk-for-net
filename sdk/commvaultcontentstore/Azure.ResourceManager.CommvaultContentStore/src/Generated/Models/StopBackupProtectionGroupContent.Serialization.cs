@@ -12,54 +12,69 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> The VoiceMcpListToolsToolInputSchema. </summary>
-    public partial class VoiceMcpListToolsToolInputSchema : IJsonModel<VoiceMcpListToolsToolInputSchema>
+    /// <summary> The properties of StopBackupProtectionGroupRequest. </summary>
+    public partial class StopBackupProtectionGroupContent : IJsonModel<StopBackupProtectionGroupContent>
     {
+        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupContent"/> for deserialization. </summary>
+        internal StopBackupProtectionGroupContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceMcpListToolsToolInputSchema PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StopBackupProtectionGroupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolInputSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceMcpListToolsToolInputSchema(document.RootElement, options);
+                        return DeserializeStopBackupProtectionGroupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpListToolsToolInputSchema)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolInputSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpListToolsToolInputSchema)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceMcpListToolsToolInputSchema>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StopBackupProtectionGroupContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpListToolsToolInputSchema IPersistableModel<VoiceMcpListToolsToolInputSchema>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StopBackupProtectionGroupContent IPersistableModel<StopBackupProtectionGroupContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceMcpListToolsToolInputSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StopBackupProtectionGroupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="stopBackupProtectionGroupContent"> The <see cref="StopBackupProtectionGroupContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StopBackupProtectionGroupContent stopBackupProtectionGroupContent)
+        {
+            if (stopBackupProtectionGroupContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(stopBackupProtectionGroupContent, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceMcpListToolsToolInputSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StopBackupProtectionGroupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +85,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolInputSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpListToolsToolInputSchema)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("reason"u8);
+            writer.WriteStringValue(Reason);
+            if (Optional.IsDefined(Comment))
+            {
+                writer.WritePropertyName("comment"u8);
+                writer.WriteStringValue(Comment);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -94,38 +116,50 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpListToolsToolInputSchema IJsonModel<VoiceMcpListToolsToolInputSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StopBackupProtectionGroupContent IJsonModel<StopBackupProtectionGroupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceMcpListToolsToolInputSchema JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StopBackupProtectionGroupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolInputSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpListToolsToolInputSchema)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceMcpListToolsToolInputSchema(document.RootElement, options);
+            return DeserializeStopBackupProtectionGroupContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceMcpListToolsToolInputSchema DeserializeVoiceMcpListToolsToolInputSchema(JsonElement element, ModelReaderWriterOptions options)
+        internal static StopBackupProtectionGroupContent DeserializeStopBackupProtectionGroupContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string reason = default;
+            string comment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("reason"u8))
+                {
+                    reason = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("comment"u8))
+                {
+                    comment = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceMcpListToolsToolInputSchema(additionalBinaryDataProperties);
+            return new StopBackupProtectionGroupContent(reason, comment, additionalBinaryDataProperties);
         }
     }
 }

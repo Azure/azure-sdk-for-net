@@ -9,60 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class InternalVoiceCustomToolChoice : VoiceAgentToolChoice, IJsonModel<InternalVoiceCustomToolChoice>
+    /// <summary> The service properties when target service type is SelfHostedServer. </summary>
+    public partial class SelfHostedServerTargetService : TargetServiceBaseInfo, IJsonModel<SelfHostedServerTargetService>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalVoiceCustomToolChoice"/> for deserialization. </summary>
-        internal InternalVoiceCustomToolChoice()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentToolChoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TargetServiceBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalVoiceCustomToolChoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedServerTargetService>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalVoiceCustomToolChoice(document.RootElement, options);
+                        return DeserializeSelfHostedServerTargetService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalVoiceCustomToolChoice)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHostedServerTargetService)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalVoiceCustomToolChoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedServerTargetService>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalVoiceCustomToolChoice)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHostedServerTargetService)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalVoiceCustomToolChoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SelfHostedServerTargetService>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalVoiceCustomToolChoice IPersistableModel<InternalVoiceCustomToolChoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalVoiceCustomToolChoice)PersistableModelCreateCore(data, options);
+        SelfHostedServerTargetService IPersistableModel<SelfHostedServerTargetService>.Create(BinaryData data, ModelReaderWriterOptions options) => (SelfHostedServerTargetService)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalVoiceCustomToolChoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SelfHostedServerTargetService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalVoiceCustomToolChoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SelfHostedServerTargetService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,54 +69,57 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalVoiceCustomToolChoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedServerTargetService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalVoiceCustomToolChoice)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHostedServerTargetService)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalVoiceCustomToolChoice IJsonModel<InternalVoiceCustomToolChoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalVoiceCustomToolChoice)JsonModelCreateCore(ref reader, options);
+        SelfHostedServerTargetService IJsonModel<SelfHostedServerTargetService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SelfHostedServerTargetService)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentToolChoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TargetServiceBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalVoiceCustomToolChoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedServerTargetService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalVoiceCustomToolChoice)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHostedServerTargetService)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalVoiceCustomToolChoice(document.RootElement, options);
+            return DeserializeSelfHostedServerTargetService(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InternalVoiceCustomToolChoice DeserializeInternalVoiceCustomToolChoice(JsonElement element, ModelReaderWriterOptions options)
+        internal static SelfHostedServerTargetService DeserializeSelfHostedServerTargetService(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ToolChoiceParamType @type = default;
+            TargetServiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
+            string endpoint = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolChoiceParamType(prop.Value.GetString());
+                    @type = new TargetServiceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("endpoint"u8))
                 {
-                    name = prop.Value.GetString();
+                    endpoint = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +127,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalVoiceCustomToolChoice(@type, additionalBinaryDataProperties, name);
+            return new SelfHostedServerTargetService(@type, additionalBinaryDataProperties, endpoint);
         }
     }
 }

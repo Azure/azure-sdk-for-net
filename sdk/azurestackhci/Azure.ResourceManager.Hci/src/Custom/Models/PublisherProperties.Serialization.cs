@@ -12,59 +12,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Hci;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Input audio noise reduction configuration. </summary>
-    public partial class VoiceNoiseReduction : IJsonModel<VoiceNoiseReduction>
+    /// <summary> Publisher properties. </summary>
+    internal partial class PublisherProperties : IJsonModel<PublisherProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceNoiseReduction"/> for deserialization. </summary>
-        internal VoiceNoiseReduction()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceNoiseReduction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PublisherProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceNoiseReduction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PublisherProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceNoiseReduction(document.RootElement, options);
+                        return DeserializePublisherProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceNoiseReduction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublisherProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceNoiseReduction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PublisherProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceNoiseReduction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublisherProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceNoiseReduction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PublisherProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceNoiseReduction IPersistableModel<VoiceNoiseReduction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PublisherProperties IPersistableModel<PublisherProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceNoiseReduction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PublisherProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceNoiseReduction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PublisherProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,13 +70,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceNoiseReduction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PublisherProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceNoiseReduction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PublisherProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -101,36 +99,36 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceNoiseReduction IJsonModel<VoiceNoiseReduction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PublisherProperties IJsonModel<PublisherProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceNoiseReduction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PublisherProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceNoiseReduction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PublisherProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceNoiseReduction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PublisherProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceNoiseReduction(document.RootElement, options);
+            return DeserializePublisherProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceNoiseReduction DeserializeVoiceNoiseReduction(JsonElement element, ModelReaderWriterOptions options)
+        internal static PublisherProperties DeserializePublisherProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            VoiceNoiseReductionType @type = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    @type = new VoiceNoiseReductionType(prop.Value.GetString());
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceNoiseReduction(@type, additionalBinaryDataProperties);
+            return new PublisherProperties(provisioningState, additionalBinaryDataProperties);
         }
     }
 }

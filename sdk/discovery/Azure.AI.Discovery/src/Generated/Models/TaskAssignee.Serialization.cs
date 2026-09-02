@@ -9,65 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Discovery
 {
-    /// <summary>
-    /// The RealtimeMCPError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPProtocolError"/>, <see cref="RealtimeMCPToolExecutionError"/>, and <see cref="RealtimeMCPHTTPError"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownRealtimeMCPError))]
-    public abstract partial class RealtimeMCPError : IJsonModel<RealtimeMCPError>
+    /// <summary> Task assignee information. </summary>
+    public partial class TaskAssignee : IJsonModel<TaskAssignee>
     {
-        /// <summary> Initializes a new instance of <see cref="RealtimeMCPError"/> for deserialization. </summary>
-        internal RealtimeMCPError()
+        /// <summary> Initializes a new instance of <see cref="TaskAssignee"/> for deserialization. </summary>
+        internal TaskAssignee()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeMCPError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TaskAssignee PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeMCPError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskAssignee>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeMCPError(document.RootElement, options);
+                        return DeserializeTaskAssignee(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeMCPError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaskAssignee)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeMCPError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskAssignee>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeMCPError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaskAssignee)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeMCPError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TaskAssignee>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeMCPError IPersistableModel<RealtimeMCPError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TaskAssignee IPersistableModel<TaskAssignee>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeMCPError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TaskAssignee>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeMCPError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TaskAssignee>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,10 +73,10 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeMCPError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskAssignee>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeMCPError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TaskAssignee)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -106,24 +101,24 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeMCPError IJsonModel<RealtimeMCPError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TaskAssignee IJsonModel<TaskAssignee>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeMCPError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TaskAssignee JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeMCPError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskAssignee>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeMCPError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TaskAssignee)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeMCPError(document.RootElement, options);
+            return DeserializeTaskAssignee(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeMCPError DeserializeRealtimeMCPError(JsonElement element, ModelReaderWriterOptions options)
+        internal static TaskAssignee DeserializeTaskAssignee(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,15 +131,20 @@ namespace OpenAI
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    case "protocol_error":
-                        return RealtimeMCPProtocolError.DeserializeRealtimeMCPProtocolError(element, options);
-                    case "tool_execution_error":
-                        return RealtimeMCPToolExecutionError.DeserializeRealtimeMCPToolExecutionError(element, options);
-                    case "http_error":
-                        return RealtimeMCPHTTPError.DeserializeRealtimeMCPHTTPError(element, options);
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new DiscoveryActorType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownRealtimeMCPError.DeserializeUnknownRealtimeMCPError(element, options);
+            return new TaskAssignee(id, @type, additionalBinaryDataProperties);
         }
     }
 }

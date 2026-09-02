@@ -7,65 +7,62 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Discovery
 {
-    /// <summary>
-    /// Base discriminated model for dataset input. Either inline items or a registered reference.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationInlineDatasetInput"/> and <see cref="AgentOptimizationReferenceDatasetInput"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownAgentOptimizationDatasetInput))]
-    public abstract partial class AgentOptimizationDatasetInput : IJsonModel<AgentOptimizationDatasetInput>
+    /// <summary> The RunRequestEnvironmentVariable. </summary>
+    public partial class RunRequestEnvironmentVariable : IJsonModel<RunRequestEnvironmentVariable>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentOptimizationDatasetInput"/> for deserialization. </summary>
-        internal AgentOptimizationDatasetInput()
+        /// <summary> Initializes a new instance of <see cref="RunRequestEnvironmentVariable"/> for deserialization. </summary>
+        internal RunRequestEnvironmentVariable()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentOptimizationDatasetInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RunRequestEnvironmentVariable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunRequestEnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentOptimizationDatasetInput(document.RootElement, options);
+                        return DeserializeRunRequestEnvironmentVariable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunRequestEnvironmentVariable)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunRequestEnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunRequestEnvironmentVariable)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentOptimizationDatasetInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RunRequestEnvironmentVariable>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentOptimizationDatasetInput IPersistableModel<AgentOptimizationDatasetInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunRequestEnvironmentVariable IPersistableModel<RunRequestEnvironmentVariable>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentOptimizationDatasetInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunRequestEnvironmentVariable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentOptimizationDatasetInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunRequestEnvironmentVariable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,13 +73,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunRequestEnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunRequestEnvironmentVariable)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,40 +104,50 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentOptimizationDatasetInput IJsonModel<AgentOptimizationDatasetInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunRequestEnvironmentVariable IJsonModel<RunRequestEnvironmentVariable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentOptimizationDatasetInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RunRequestEnvironmentVariable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunRequestEnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunRequestEnvironmentVariable)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentOptimizationDatasetInput(document.RootElement, options);
+            return DeserializeRunRequestEnvironmentVariable(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentOptimizationDatasetInput DeserializeAgentOptimizationDatasetInput(JsonElement element, ModelReaderWriterOptions options)
+        internal static RunRequestEnvironmentVariable DeserializeRunRequestEnvironmentVariable(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            string name = default;
+            string value = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("name"u8))
                 {
-                    case "inline":
-                        return AgentOptimizationInlineDatasetInput.DeserializeAgentOptimizationInlineDatasetInput(element, options);
-                    case "reference":
-                        return AgentOptimizationReferenceDatasetInput.DeserializeAgentOptimizationReferenceDatasetInput(element, options);
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    value = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownAgentOptimizationDatasetInput.DeserializeUnknownAgentOptimizationDatasetInput(element, options);
+            return new RunRequestEnvironmentVariable(name, value, additionalBinaryDataProperties);
         }
     }
 }

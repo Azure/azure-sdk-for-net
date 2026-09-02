@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The resource properties when type is Azure App Configuration. </summary>
     public partial class AzureAppConfigProperties : AzureResourceBaseProperties, IJsonModel<AzureAppConfigProperties>

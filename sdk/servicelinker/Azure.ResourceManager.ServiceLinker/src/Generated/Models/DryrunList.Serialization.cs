@@ -12,59 +12,61 @@ using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> An ICE server used for avatar WebRTC negotiation. </summary>
-    internal partial class VoiceAgentAvatarIceServer : IJsonModel<VoiceAgentAvatarIceServer>
+    /// <summary> The list of dryrun. </summary>
+    internal partial class DryrunList : IJsonModel<DryrunList>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarIceServer"/> for deserialization. </summary>
-        internal VoiceAgentAvatarIceServer()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarIceServer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DryrunList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarIceServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentAvatarIceServer(document.RootElement, options);
+                        return DeserializeDryrunList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarIceServer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DryrunList)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarIceServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarIceServer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DryrunList)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentAvatarIceServer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DryrunList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarIceServer IPersistableModel<VoiceAgentAvatarIceServer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DryrunList IPersistableModel<DryrunList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentAvatarIceServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DryrunList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DryrunList"/> from. </param>
+        internal static DryrunList FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDryrunList(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentAvatarIceServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DryrunList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,32 +77,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarIceServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarIceServer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DryrunList)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("urls"u8);
-            writer.WriteStartArray();
-            foreach (Uri item in Urls)
+            if (Optional.IsCollectionDefined(Value))
             {
-                if (item == null)
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (LinkerDryrunData item in Value)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WriteObjectValue(item, options);
                 }
-                writer.WriteStringValue(item.AbsoluteUri);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
-            }
-            if (Optional.IsDefined(Credential))
-            {
-                writer.WritePropertyName("credential"u8);
-                writer.WriteStringValue(Credential);
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(NextLink))
             {
@@ -126,70 +116,56 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarIceServer IJsonModel<VoiceAgentAvatarIceServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DryrunList IJsonModel<DryrunList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarIceServer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DryrunList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarIceServer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarIceServer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DryrunList)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentAvatarIceServer(document.RootElement, options);
+            return DeserializeDryrunList(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentAvatarIceServer DeserializeVoiceAgentAvatarIceServer(JsonElement element, ModelReaderWriterOptions options)
+        internal static DryrunList DeserializeDryrunList(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<Uri> urls = default;
-            string username = default;
-            string credential = default;
+            IList<LinkerDryrunData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("urls"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    List<Uri> array = new List<Uri>();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LinkerDryrunData> array = new List<LinkerDryrunData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString(), UriKind.RelativeOrAbsolute));
-                        }
+                        array.Add(LinkerDryrunData.DeserializeLinkerDryrunData(item, options));
                     }
-                    urls = array;
+                    value = array;
                     continue;
                 }
-                if (prop.NameEquals("username"u8))
+                if (prop.NameEquals("nextLink"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        username = null;
+                        nextLink = null;
                         continue;
                     }
-                    username = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("credential"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        credential = null;
-                        continue;
-                    }
-                    credential = prop.Value.GetString();
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +173,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentAvatarIceServer(urls, username, credential, additionalBinaryDataProperties);
+            return new DryrunList(value ?? new ChangeTrackingList<LinkerDryrunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

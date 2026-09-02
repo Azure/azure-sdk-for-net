@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 
-namespace OpenAI
+namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
-    /// <summary> The RealtimeConversationItemMessageSystemContent. </summary>
-    public partial class RealtimeConversationItemMessageSystemContent : IJsonModel<RealtimeConversationItemMessageSystemContent>
+    /// <summary> Parameters to specify which layer to pull from the OCI artifact. By default, the first layer in the artifact is pulled. </summary>
+    public partial class FluxLayerSelector : IJsonModel<FluxLayerSelector>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeConversationItemMessageSystemContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FluxLayerSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageSystemContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxLayerSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeConversationItemMessageSystemContent(document.RootElement, options);
+                        return DeserializeFluxLayerSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeConversationItemMessageSystemContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxLayerSelector)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageSystemContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxLayerSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationFluxConfigurationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeConversationItemMessageSystemContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxLayerSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeConversationItemMessageSystemContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FluxLayerSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeConversationItemMessageSystemContent IPersistableModel<RealtimeConversationItemMessageSystemContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FluxLayerSelector IPersistableModel<FluxLayerSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeConversationItemMessageSystemContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FluxLayerSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeConversationItemMessageSystemContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FluxLayerSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageSystemContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxLayerSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeConversationItemMessageSystemContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxLayerSelector)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(MediaType))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("mediaType"u8);
+                writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(Text))
+            if (Optional.IsDefined(Operation))
             {
-                writer.WritePropertyName("text"u8);
-                writer.WriteStringValue(Text);
+                writer.WritePropertyName("operation"u8);
+                writer.WriteStringValue(Operation.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,47 +103,52 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeConversationItemMessageSystemContent IJsonModel<RealtimeConversationItemMessageSystemContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FluxLayerSelector IJsonModel<FluxLayerSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeConversationItemMessageSystemContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FluxLayerSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageSystemContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxLayerSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeConversationItemMessageSystemContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxLayerSelector)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeConversationItemMessageSystemContent(document.RootElement, options);
+            return DeserializeFluxLayerSelector(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeConversationItemMessageSystemContent DeserializeRealtimeConversationItemMessageSystemContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static FluxLayerSelector DeserializeFluxLayerSelector(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RealtimeConversationItemMessageSystemContentType? @type = default;
-            string text = default;
+            string mediaType = default;
+            FluxConfigurationOperationType? operation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("mediaType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         mediaType = null;
                         continue;
                     }
-                    @type = new RealtimeConversationItemMessageSystemContentType(prop.Value.GetString());
+                    mediaType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("text"u8))
+                if (prop.NameEquals("operation"u8))
                 {
-                    text = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        operation = null;
+                        continue;
+                    }
+                    operation = new FluxConfigurationOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +156,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeConversationItemMessageSystemContent(@type, text, additionalBinaryDataProperties);
+            return new FluxLayerSelector(mediaType, operation, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,54 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The avatar video background. </summary>
-    public partial class VoiceAgentAvatarVideoBackground : IJsonModel<VoiceAgentAvatarVideoBackground>
+    /// <summary> External Network native IPv6 prefix limit properties. </summary>
+    internal partial class NativeIPv6PrefixLimitProperties : IJsonModel<NativeIPv6PrefixLimitProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoBackground PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NativeIPv6PrefixLimitProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoBackground>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentAvatarVideoBackground(document.RootElement, options);
+                        return DeserializeNativeIPv6PrefixLimitProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoBackground)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoBackground>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoBackground)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentAvatarVideoBackground>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NativeIPv6PrefixLimitProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoBackground IPersistableModel<VoiceAgentAvatarVideoBackground>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NativeIPv6PrefixLimitProperties IPersistableModel<NativeIPv6PrefixLimitProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentAvatarVideoBackground>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NativeIPv6PrefixLimitProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentAvatarVideoBackground>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NativeIPv6PrefixLimitProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoBackground>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoBackground)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ImageUrl))
+            if (Optional.IsCollectionDefined(PrefixLimits))
             {
-                writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl.AbsoluteUri);
-            }
-            if (Optional.IsDefined(Color))
-            {
-                writer.WritePropertyName("color"u8);
-                writer.WriteStringValue(Color);
+                writer.WritePropertyName("prefixLimits"u8);
+                writer.WriteStartArray();
+                foreach (PrefixLimitProperties item in PrefixLimits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +103,45 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoBackground IJsonModel<VoiceAgentAvatarVideoBackground>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NativeIPv6PrefixLimitProperties IJsonModel<NativeIPv6PrefixLimitProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoBackground JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NativeIPv6PrefixLimitProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoBackground>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoBackground)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentAvatarVideoBackground(document.RootElement, options);
+            return DeserializeNativeIPv6PrefixLimitProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentAvatarVideoBackground DeserializeVoiceAgentAvatarVideoBackground(JsonElement element, ModelReaderWriterOptions options)
+        internal static NativeIPv6PrefixLimitProperties DeserializeNativeIPv6PrefixLimitProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri imageUrl = default;
-            string color = default;
+            IList<PrefixLimitProperties> prefixLimits = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("image_url"u8))
+                if (prop.NameEquals("prefixLimits"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("color"u8))
-                {
-                    color = prop.Value.GetString();
+                    List<PrefixLimitProperties> array = new List<PrefixLimitProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(PrefixLimitProperties.DeserializePrefixLimitProperties(item, options));
+                    }
+                    prefixLimits = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentAvatarVideoBackground(imageUrl, color, additionalBinaryDataProperties);
+            return new NativeIPv6PrefixLimitProperties(prefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>(), additionalBinaryDataProperties);
         }
     }
 }

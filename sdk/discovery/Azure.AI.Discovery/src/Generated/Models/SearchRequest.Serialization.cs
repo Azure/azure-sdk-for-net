@@ -11,59 +11,69 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Discovery
 {
-    /// <summary> The avatar video resolution. </summary>
-    public partial class VoiceAgentAvatarVideoResolution : IJsonModel<VoiceAgentAvatarVideoResolution>
+    /// <summary> The search action request body. </summary>
+    public partial class SearchRequest : IJsonModel<SearchRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoResolution"/> for deserialization. </summary>
-        internal VoiceAgentAvatarVideoResolution()
+        /// <summary> Initializes a new instance of <see cref="SearchRequest"/> for deserialization. </summary>
+        internal SearchRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoResolution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentAvatarVideoResolution(document.RootElement, options);
+                        return DeserializeSearchRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoResolution)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoResolution)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentAvatarVideoResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoResolution IPersistableModel<VoiceAgentAvatarVideoResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchRequest IPersistableModel<SearchRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentAvatarVideoResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="searchRequest"> The <see cref="SearchRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SearchRequest searchRequest)
+        {
+            if (searchRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(searchRequest, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentAvatarVideoResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +84,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoResolution)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchRequest)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("width"u8);
-            writer.WriteNumberValue(Width);
-            writer.WritePropertyName("height"u8);
-            writer.WriteNumberValue(Height);
+            writer.WritePropertyName("query"u8);
+            writer.WriteStringValue(Query);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,42 +110,36 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoResolution IJsonModel<VoiceAgentAvatarVideoResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchRequest IJsonModel<SearchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoResolution JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoResolution)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentAvatarVideoResolution(document.RootElement, options);
+            return DeserializeSearchRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentAvatarVideoResolution DeserializeVoiceAgentAvatarVideoResolution(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchRequest DeserializeSearchRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int width = default;
-            int height = default;
+            string query = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("width"u8))
+                if (prop.NameEquals("query"u8))
                 {
-                    width = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("height"u8))
-                {
-                    height = prop.Value.GetInt32();
+                    query = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +147,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentAvatarVideoResolution(width, height, additionalBinaryDataProperties);
+            return new SearchRequest(query, additionalBinaryDataProperties);
         }
     }
 }

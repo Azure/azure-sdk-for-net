@@ -12,59 +12,66 @@ using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.CommvaultContentStore;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> The rectangular crop applied to avatar video. </summary>
-    public partial class VoiceAgentAvatarVideoCrop : IJsonModel<VoiceAgentAvatarVideoCrop>
+    /// <summary> The response of a ProtectionGroup list operation. </summary>
+    internal partial class ProtectionGroupListResult : IJsonModel<ProtectionGroupListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoCrop"/> for deserialization. </summary>
-        internal VoiceAgentAvatarVideoCrop()
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupListResult"/> for deserialization. </summary>
+        internal ProtectionGroupListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoCrop PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoCrop>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentAvatarVideoCrop(document.RootElement, options);
+                        return DeserializeProtectionGroupListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoCrop)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoCrop>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoCrop)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentAvatarVideoCrop>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProtectionGroupListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoCrop IPersistableModel<VoiceAgentAvatarVideoCrop>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProtectionGroupListResult IPersistableModel<ProtectionGroupListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentAvatarVideoCrop>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProtectionGroupListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProtectionGroupListResult"/> from. </param>
+        internal static ProtectionGroupListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProtectionGroupListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentAvatarVideoCrop>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProtectionGroupListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,35 +82,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoCrop>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoCrop)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupListResult)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("bottom_right"u8);
+            writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (object item in BottomRight)
+            foreach (ProtectionGroupData item in Value)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteObjectValue<object>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("top_left"u8);
-            writer.WriteStartArray();
-            foreach (object item in TopLeft)
+            if (Optional.IsDefined(NextLink))
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteObjectValue<object>(item, options);
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,66 +118,51 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAvatarVideoCrop IJsonModel<VoiceAgentAvatarVideoCrop>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProtectionGroupListResult IJsonModel<ProtectionGroupListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAvatarVideoCrop JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAvatarVideoCrop>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentAvatarVideoCrop)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentAvatarVideoCrop(document.RootElement, options);
+            return DeserializeProtectionGroupListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentAvatarVideoCrop DeserializeVoiceAgentAvatarVideoCrop(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProtectionGroupListResult DeserializeProtectionGroupListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<object> bottomRight = default;
-            IList<object> topLeft = default;
+            IList<ProtectionGroupData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("bottom_right"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    List<object> array = new List<object>();
+                    List<ProtectionGroupData> array = new List<ProtectionGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(ProtectionGroupData.DeserializeProtectionGroupData(item, options));
                     }
-                    bottomRight = array;
+                    value = array;
                     continue;
                 }
-                if (prop.NameEquals("top_left"u8))
+                if (prop.NameEquals("nextLink"u8))
                 {
-                    List<object> array = new List<object>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        continue;
                     }
-                    topLeft = array;
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +170,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentAvatarVideoCrop(bottomRight, topLeft, additionalBinaryDataProperties);
+            return new ProtectionGroupListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

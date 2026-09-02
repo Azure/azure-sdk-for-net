@@ -16,8 +16,8 @@ namespace Azure.AI.Discovery
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesEmptyModelParam"/>. </summary>
-        internal ResponsesEmptyModelParam()
+        /// <summary> Initializes a new instance of <see cref="RunResultToolReportStatusInformation"/>. </summary>
+        internal RunResultToolReportStatusInformation()
         {
         }
 

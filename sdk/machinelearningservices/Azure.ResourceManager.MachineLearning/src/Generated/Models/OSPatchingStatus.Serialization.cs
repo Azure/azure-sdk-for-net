@@ -11,54 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.MachineLearning;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A static interim response selected from configured text. </summary>
-    public partial class VoiceAgentStaticInterimResponseConfig : VoiceAgentInterimResponseConfig, IJsonModel<VoiceAgentStaticInterimResponseConfig>
+    /// <summary> Returns metadata about the os patching. </summary>
+    public partial class OSPatchingStatus : IJsonModel<OSPatchingStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentInterimResponseConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OSPatchingStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentStaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentStaticInterimResponseConfig(document.RootElement, options);
+                        return DeserializeOSPatchingStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentStaticInterimResponseConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentStaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentStaticInterimResponseConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentStaticInterimResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OSPatchingStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentStaticInterimResponseConfig IPersistableModel<VoiceAgentStaticInterimResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceAgentStaticInterimResponseConfig)PersistableModelCreateCore(data, options);
+        OSPatchingStatus IPersistableModel<OSPatchingStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentStaticInterimResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OSPatchingStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentStaticInterimResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OSPatchingStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -67,87 +67,94 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentStaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentStaticInterimResponseConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Texts))
+            if (Optional.IsDefined(PatchStatus))
             {
-                writer.WritePropertyName("texts"u8);
+                writer.WritePropertyName("patchStatus"u8);
+                writer.WriteStringValue(PatchStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(LatestPatchTime))
+            {
+                writer.WritePropertyName("latestPatchTime"u8);
+                writer.WriteStringValue(LatestPatchTime);
+            }
+            if (Optional.IsDefined(IsRebootPending))
+            {
+                writer.WritePropertyName("rebootPending"u8);
+                writer.WriteBooleanValue(IsRebootPending.Value);
+            }
+            if (Optional.IsDefined(ScheduledRebootTime))
+            {
+                writer.WritePropertyName("scheduledRebootTime"u8);
+                writer.WriteStringValue(ScheduledRebootTime);
+            }
+            if (Optional.IsCollectionDefined(OSPatchingErrors))
+            {
+                writer.WritePropertyName("osPatchingErrors"u8);
                 writer.WriteStartArray();
-                foreach (string item in Texts)
+                foreach (MachineLearningError item in OSPatchingErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentStaticInterimResponseConfig IJsonModel<VoiceAgentStaticInterimResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceAgentStaticInterimResponseConfig)JsonModelCreateCore(ref reader, options);
+        OSPatchingStatus IJsonModel<OSPatchingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceAgentInterimResponseConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OSPatchingStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentStaticInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentStaticInterimResponseConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentStaticInterimResponseConfig(document.RootElement, options);
+            return DeserializeOSPatchingStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentStaticInterimResponseConfig DeserializeVoiceAgentStaticInterimResponseConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static OSPatchingStatus DeserializeOSPatchingStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "static_interim_response";
-            IList<VoiceAgentInterimResponseTrigger> triggers = default;
-            TimeSpan? latencyThresholdMs = default;
+            PatchStatus? patchStatus = default;
+            string latestPatchTime = default;
+            bool? isRebootPending = default;
+            string scheduledRebootTime = default;
+            IList<MachineLearningError> osPatchingErrors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> texts = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("triggers"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<VoiceAgentInterimResponseTrigger> array = new List<VoiceAgentInterimResponseTrigger>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToVoiceAgentInterimResponseTrigger());
-                    }
-                    triggers = array;
-                    continue;
-                }
-                if (prop.NameEquals("latency_threshold_ms"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    latencyThresholdMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
-                    continue;
-                }
-                if (prop.NameEquals("texts"u8))
+                if (prop.NameEquals("patchStatus"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,7 +193,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
-                    texts = array;
+                    osPatchingErrors = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +201,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentStaticInterimResponseConfig(@type, triggers ?? new ChangeTrackingList<VoiceAgentInterimResponseTrigger>(), latencyThresholdMs, additionalBinaryDataProperties, texts ?? new ChangeTrackingList<string>());
+            return new OSPatchingStatus(
+                patchStatus,
+                latestPatchTime,
+                isRebootPending,
+                scheduledRebootTime,
+                osPatchingErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -7,14 +7,17 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI.Internal;
+using Azure;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
-    public partial class ResponsesCustomToolParamFormat : IJsonModel<ResponsesCustomToolParamFormat>
+    /// <summary>
+    /// Response indicating the KnowledgeBase operation.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseIndexingOperationResponse"/> and <see cref="KnowledgeBaseSearchOperationResponse"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeBaseOperationResponse))]
+    public abstract partial class KnowledgeBaseOperationResponse : IJsonModel<KnowledgeBaseOperationResponse>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResponse"/> for deserialization. </summary>
         internal KnowledgeBaseOperationResponse()
@@ -139,21 +142,17 @@ namespace Azure.AI.Discovery
             {
                 return null;
             }
-            CustomToolParamFormatType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("operationType"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("type"u8))
+                switch (discriminator.GetString())
                 {
-                    @type = new CustomToolParamFormatType(prop.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    case "Indexing":
+                        return KnowledgeBaseIndexingOperationResponse.DeserializeKnowledgeBaseIndexingOperationResponse(element, options);
+                    case "Search":
+                        return KnowledgeBaseSearchOperationResponse.DeserializeKnowledgeBaseSearchOperationResponse(element, options);
                 }
             }
-            return new ResponsesCustomToolParamFormat(@type, additionalBinaryDataProperties);
+            return UnknownKnowledgeBaseOperationResponse.DeserializeUnknownKnowledgeBaseOperationResponse(element, options);
         }
     }
 }

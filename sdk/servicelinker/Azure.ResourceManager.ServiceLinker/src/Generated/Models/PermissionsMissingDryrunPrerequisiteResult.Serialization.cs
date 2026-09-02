@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
-using OpenAI;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The represent of missing permissions. </summary>
     public partial class PermissionsMissingDryrunPrerequisiteResult : DryrunPrerequisiteResult, IJsonModel<PermissionsMissingDryrunPrerequisiteResult>

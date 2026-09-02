@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
-namespace OpenAI
+namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The RealtimeConversationItemMessageUserContent. </summary>
-    public partial class RealtimeConversationItemMessageUserContent : IJsonModel<RealtimeConversationItemMessageUserContent>
+    /// <summary> MongoDB Atlas linked service properties. </summary>
+    internal partial class MongoDBAtlasLinkedServiceTypeProperties : IJsonModel<MongoDBAtlasLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal MongoDBAtlasLinkedServiceTypeProperties()
@@ -23,47 +24,47 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeConversationItemMessageUserContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasLinkedServiceTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageUserContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeConversationItemMessageUserContent(document.RootElement, options);
+                        return DeserializeMongoDBAtlasLinkedServiceTypeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeConversationItemMessageUserContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageUserContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeConversationItemMessageUserContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeConversationItemMessageUserContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeConversationItemMessageUserContent IPersistableModel<RealtimeConversationItemMessageUserContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MongoDBAtlasLinkedServiceTypeProperties IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeConversationItemMessageUserContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeConversationItemMessageUserContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasLinkedServiceTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,40 +75,19 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageUserContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeConversationItemMessageUserContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            writer.WritePropertyName("connectionString"u8);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
+            writer.WritePropertyName("database"u8);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
+            if (Optional.IsDefined(DriverVersion))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Text))
-            {
-                writer.WritePropertyName("text"u8);
-                writer.WriteStringValue(Text);
-            }
-            if (Optional.IsDefined(Audio))
-            {
-                writer.WritePropertyName("audio"u8);
-                writer.WriteStringValue(Audio);
-            }
-            if (Optional.IsDefined(ImageUrl))
-            {
-                writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl.AbsoluteUri);
-            }
-            if (Optional.IsDefined(Detail))
-            {
-                writer.WritePropertyName("detail"u8);
-                writer.WriteStringValue(Detail.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Transcript))
-            {
-                writer.WritePropertyName("transcript"u8);
-                writer.WriteStringValue(Transcript);
+                writer.WritePropertyName("driverVersion"u8);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DriverVersion, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,55 +108,38 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeConversationItemMessageUserContent IJsonModel<RealtimeConversationItemMessageUserContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MongoDBAtlasLinkedServiceTypeProperties IJsonModel<MongoDBAtlasLinkedServiceTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeConversationItemMessageUserContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasLinkedServiceTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeConversationItemMessageUserContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeConversationItemMessageUserContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeConversationItemMessageUserContent(document.RootElement, options);
+            return DeserializeMongoDBAtlasLinkedServiceTypeProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeConversationItemMessageUserContent DeserializeRealtimeConversationItemMessageUserContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static MongoDBAtlasLinkedServiceTypeProperties DeserializeMongoDBAtlasLinkedServiceTypeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RealtimeConversationItemMessageUserContentType? @type = default;
-            string text = default;
-            string audio = default;
-            Uri imageUrl = default;
-            RealtimeConversationItemMessageUserContentDetail? detail = default;
-            string transcript = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> database = default;
+            DataFactoryElement<string> driverVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("connectionString"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @type = prop.Value.GetString().ToRealtimeConversationItemMessageUserContentType();
-                    continue;
-                }
-                if (prop.NameEquals("text"u8))
-                {
-                    text = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("audio"u8))
-                {
-                    audio = prop.Value.GetString();
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))
@@ -190,21 +153,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("detail"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    detail = prop.Value.GetString().ToRealtimeConversationItemMessageUserContentDetail();
-                    continue;
-                }
-                if (prop.NameEquals("transcript"u8))
-                {
-                    transcript = prop.Value.GetString();
+                    driverVersion = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,14 +161,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeConversationItemMessageUserContent(
-                @type,
-                text,
-                audio,
-                imageUrl,
-                detail,
-                transcript,
-                additionalBinaryDataProperties);
+            return new MongoDBAtlasLinkedServiceTypeProperties(connectionString, database, driverVersion, additionalBinaryDataProperties);
         }
     }
 }

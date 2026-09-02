@@ -9,64 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary>
-    /// Turn-detection configuration for a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceServerVadTurnDetection"/>, <see cref="VoiceAgentSemanticVadTurnDetection"/>, <see cref="VoiceAzureSemanticVadTurnDetection"/>, <see cref="VoiceAzureSemanticVadEnTurnDetection"/>, and <see cref="VoiceAzureSemanticVadMultilingualTurnDetection"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownVoiceTurnDetection))]
-    public abstract partial class VoiceTurnDetection : IJsonModel<VoiceTurnDetection>
+    /// <summary> An option to store configuration into different place. </summary>
+    internal partial class ConfigurationStore : IJsonModel<ConfigurationStore>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceTurnDetection"/> for deserialization. </summary>
-        internal VoiceTurnDetection()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceTurnDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConfigurationStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceTurnDetection(document.RootElement, options);
+                        return DeserializeConfigurationStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceTurnDetection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationStore)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceTurnDetection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationStore)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceTurnDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfigurationStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceTurnDetection IPersistableModel<VoiceTurnDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationStore IPersistableModel<ConfigurationStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceTurnDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfigurationStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceTurnDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfigurationStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,17 +69,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceTurnDetection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationStore)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(AutoTruncate))
+            if (Optional.IsDefined(AppConfigurationId))
             {
-                writer.WritePropertyName("auto_truncate"u8);
-                writer.WriteBooleanValue(AutoTruncate.Value);
+                writer.WritePropertyName("appConfigurationId"u8);
+                writer.WriteStringValue(AppConfigurationId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,24 +98,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceTurnDetection IJsonModel<VoiceTurnDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationStore IJsonModel<ConfigurationStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceTurnDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConfigurationStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceTurnDetection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationStore)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceTurnDetection(document.RootElement, options);
+            return DeserializeConfigurationStore(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceTurnDetection DeserializeVoiceTurnDetection(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfigurationStore DeserializeConfigurationStore(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,19 +127,20 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("appConfigurationId"u8))
                 {
-                    case "server_vad":
-                        return VoiceServerVadTurnDetection.DeserializeVoiceServerVadTurnDetection(element, options);
-                    case "semantic_vad":
-                        return VoiceAgentSemanticVadTurnDetection.DeserializeVoiceAgentSemanticVadTurnDetection(element, options);
-                    case "azure_semantic_vad":
-                        return VoiceAzureSemanticVadTurnDetection.DeserializeVoiceAzureSemanticVadTurnDetection(element, options);
-                    case "azure_semantic_vad_en":
-                        return VoiceAzureSemanticVadEnTurnDetection.DeserializeVoiceAzureSemanticVadEnTurnDetection(element, options);
-                    case "azure_semantic_vad_multilingual":
-                        return VoiceAzureSemanticVadMultilingualTurnDetection.DeserializeVoiceAzureSemanticVadMultilingualTurnDetection(element, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appConfigurationId = null;
+                        continue;
+                    }
+                    appConfigurationId = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownVoiceTurnDetection.DeserializeUnknownVoiceTurnDetection(element, options);
+            return new ConfigurationStore(appConfigurationId, additionalBinaryDataProperties);
         }
     }
 }
