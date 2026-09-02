@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
-    public partial class ContentFilterConfiguration : IJsonModel<ContentFilterConfiguration>
+    /// <summary> An SSE event-type to text-field selector for streaming invocation output. </summary>
+    public partial class RaiSseTextSelector : IJsonModel<RaiSseTextSelector>
     {
-        /// <summary> Initializes a new instance of <see cref="ContentFilterConfiguration"/> for deserialization. </summary>
-        internal ContentFilterConfiguration()
+        /// <summary> Initializes a new instance of <see cref="RaiSseTextSelector"/> for deserialization. </summary>
+        internal RaiSseTextSelector()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContentFilterConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RaiSseTextSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSseTextSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContentFilterConfiguration(document.RootElement, options);
+                        return DeserializeRaiSseTextSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiSseTextSelector)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSseTextSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiSseTextSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentFilterConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiSseTextSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentFilterConfiguration IPersistableModel<ContentFilterConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RaiSseTextSelector IPersistableModel<RaiSseTextSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentFilterConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiSseTextSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContentFilterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiSseTextSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,17 +70,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSseTextSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiSseTextSelector)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("rai_policy_name"u8);
-            writer.WriteStringValue(RaiPolicyName);
-            if (Optional.IsDefined(InvocationsModeration))
+            writer.WritePropertyName("event_type"u8);
+            writer.WriteStringValue(EventType);
+            if (Optional.IsDefined(TextField))
             {
-                writer.WritePropertyName("invocations_moderation"u8);
-                writer.WriteObjectValue(InvocationsModeration, options);
+                writer.WritePropertyName("text_field"u8);
+                writer.WriteStringValue(TextField);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -101,46 +101,42 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentFilterConfiguration IJsonModel<ContentFilterConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RaiSseTextSelector IJsonModel<RaiSseTextSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContentFilterConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RaiSseTextSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSseTextSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiSseTextSelector)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentFilterConfiguration(document.RootElement, options);
+            return DeserializeRaiSseTextSelector(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContentFilterConfiguration DeserializeContentFilterConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiSseTextSelector DeserializeRaiSseTextSelector(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string raiPolicyName = default;
-            RaiInvocationModeration invocationsModeration = default;
+            string eventType = default;
+            string textField = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("rai_policy_name"u8))
+                if (prop.NameEquals("event_type"u8))
                 {
-                    raiPolicyName = prop.Value.GetString();
+                    eventType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("invocations_moderation"u8))
+                if (prop.NameEquals("text_field"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    invocationsModeration = RaiInvocationModeration.DeserializeRaiInvocationModeration(prop.Value, options);
+                    textField = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContentFilterConfiguration(raiPolicyName, invocationsModeration, additionalBinaryDataProperties);
+            return new RaiSseTextSelector(eventType, textField, additionalBinaryDataProperties);
         }
     }
 }

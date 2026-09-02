@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightMonitorCreate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
