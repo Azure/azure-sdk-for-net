@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(entityFriendlyName, backupManagementType, operation, status, startsOn, endsOn, activityId, jobType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }
