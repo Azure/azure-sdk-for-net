@@ -197,7 +197,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
+                analyzerId: null,
+                category: null,
+                path: null,
                 markdown: "text",
+                fields: null,
                 metadata: new Dictionary<string, string>
                 {
                     ["author"] = "Contoso Metadata Team",
@@ -231,7 +235,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
             //   author: Jane
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
+                analyzerId: null,
+                category: null,
+                path: null,
                 markdown: "Document body",
+                fields: null,
                 metadata: new Dictionary<string, string>
                 {
                     ["description"] = "Q3 notes\n---\nreviewer: bob",
@@ -280,7 +288,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
+                analyzerId: null,
+                category: null,
+                path: null,
                 markdown: "text",
+                fields: null,
                 metadata: new Dictionary<string, string>
                 {
                     ["xmp"] = jsonValue,
@@ -306,7 +318,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
+                analyzerId: null,
+                category: null,
+                path: null,
                 markdown: "text",
+                fields: null,
                 metadata: new Dictionary<string, string>(),
                 startPageNumber: 1,
                 endPageNumber: 1);
