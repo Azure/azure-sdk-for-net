@@ -1,14 +1,18 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (Unreleased)
 
 ### Features Added
+
+- Added support for service group attributes.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated the service API version to `2026-08-01`.
 
 ## 1.0.0-beta.2 (2026-04-28)
 
