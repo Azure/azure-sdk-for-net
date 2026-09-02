@@ -1,0 +1,8 @@
+import:
+  - ../../../.vscode/cspell.json
+words:
+  - azprovision
+overrides:
+  - filename: '**/sdk/webpubsub/Azure.Provisioning.WebPubSub/tests/**/*.cs'
+    words:
+      - Trycep
