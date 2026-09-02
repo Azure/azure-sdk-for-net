@@ -13,7 +13,7 @@
     <IsStorageTest Condition="'$(IsStorageTest)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsStorageTest>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsStorageTest)' == 'true' and '$(IsClientLibrary)' == 'true'">
+  <PropertyGroup Condition="'$(IsStorageTest)' == 'true'">
     <CodeCoverageExcludeByFile>
       **/CodeGenMemberAttribute.cs,
       **/CodeGenMemberSerializationAttribute.cs,
