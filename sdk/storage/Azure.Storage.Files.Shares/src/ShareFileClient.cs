@@ -97,7 +97,9 @@ namespace Azure.Storage.Files.Shares
         private string _name;
 
         /// <summary>
-        /// Gets the name of the file.
+        /// Gets the name of the file.  The value is <see cref="string.Empty"/>
+        /// if the file is addressed by its file ID, since the path of the file
+        /// is not known in that case.
         /// </summary>
         public virtual string Name
         {
@@ -114,7 +116,9 @@ namespace Azure.Storage.Files.Shares
         private string _path;
 
         /// <summary>
-        /// Gets the path of the file.
+        /// Gets the path of the file.  The value is <see cref="string.Empty"/>
+        /// if the file is addressed by its file ID, since the path of the file
+        /// is not known in that case.
         /// </summary>
         public virtual string Path
         {
@@ -126,10 +130,41 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
+        /// The file ID of the file, if this client addresses the file by its
+        /// file ID rather than by its path.
+        /// </summary>
+        private string _fileId;
+
+        /// <summary>
+        /// Gets the file ID of the file, if this client addresses the file by
+        /// its file ID rather than by its path.  The value is
+        /// <see cref="string.Empty"/> if the file is addressed by its path.
+        ///
+        /// See <see cref="ShareClient.GetFileClientByFileId(string)"/> for
+        /// creating a client that addresses a file by its file ID.
+        /// </summary>
+        public virtual string FileId
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _fileId;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this client addresses the file by its file ID rather
+        /// than by its path.  A client is file ID addressed when the
+        /// <see cref="Uri"/> it was constructed with contains a file ID query
+        /// parameter.
+        /// </summary>
+        internal virtual bool IsFileIdAddressed => !string.IsNullOrEmpty(FileId);
+
+        /// <summary>
         /// Indicates whether the client is able to generate a SAS uri.
         /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
+        public virtual bool CanGenerateSasUri => !IsFileIdAddressed && ClientConfiguration.SharedKeyCredential != null;
 
         //const string filetype = "file";
 
@@ -497,13 +532,14 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         private void SetNameFieldsIfNull()
         {
-            if (_name == null || _shareName == null || _accountName == null || _path == null)
+            if (_name == null || _shareName == null || _accountName == null || _path == null || _fileId == null)
             {
                 var builder = new ShareUriBuilder(Uri);
                 _name ??= builder.LastDirectoryOrFileName;
                 _shareName ??= builder.ShareName;
                 _accountName ??= builder.AccountName;
                 _path ??= builder.DirectoryOrFilePath;
+                _fileId ??= builder.FileId; // this will be empty if the client is path-addressed
             }
         }
 
@@ -1062,6 +1098,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Create));
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
             ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
@@ -1266,6 +1303,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Exists));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1406,6 +1444,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(DeleteIfExists));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1897,6 +1936,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(StartCopy));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2238,6 +2278,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(AbortCopy));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2627,6 +2668,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Download));
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
@@ -3388,6 +3430,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Delete));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -4063,6 +4106,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(SetHttpHeaders));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -4352,6 +4396,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(SetMetadata));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -4519,6 +4564,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(ClearRange));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(ClearRange)}");
@@ -5013,6 +5059,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(UploadRange));
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
@@ -5448,6 +5495,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(UploadRangeFromUri));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -5846,6 +5894,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Upload));
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
             transferOptions = StorageArgument.PopulateShareFileUploadTransferOptionDefaults(transferOptions);
             StorageArgument.AssertShareFileUploadTransferOptionBounds(transferOptions, nameof(transferOptions));
@@ -6267,6 +6316,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetRangeList));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -6572,6 +6622,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetRangeList));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -6734,6 +6785,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetHandles));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -7060,6 +7112,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = null)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(ForceCloseHandle));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -7214,6 +7267,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Rename));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -7421,6 +7475,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetSymbolicLink));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(ShareFileClient), message: string.Empty);
@@ -7565,6 +7620,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(CreateSymbolicLink));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -7732,6 +7788,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(CreateHardLink));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -7768,6 +7825,151 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(
                         response.ToShareFileInfo(ShareFileInfoHeaderType.CreateHardLink),
                         response);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region GetFileLinks
+        /// <summary>
+        /// Returns the hard links of the file, along with the properties of the
+        /// file.
+        ///
+        /// This operation is only supported when the client addresses the file
+        /// by its file ID.  Use
+        /// <see cref="ShareClient.GetFileClientByFileId(string)"/> to create
+        /// such a client.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on getting the file links.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileLinks}"/> describing the hard links
+        /// of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileLinks> GetFileLinks(
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => GetFileLinksInternal(
+                conditions: conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// Returns the hard links of the file, along with the properties of the
+        /// file.
+        ///
+        /// This operation is only supported when the client addresses the file
+        /// by its file ID.  Use
+        /// <see cref="ShareClient.GetFileClientByFileId(string)"/> to create
+        /// such a client.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on getting the file links.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileLinks}"/> describing the hard links
+        /// of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public async virtual Task<Response<ShareFileLinks>> GetFileLinksAsync(
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await GetFileLinksInternal(
+                conditions: conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// Returns the hard links of the file, along with the properties of the
+        /// file.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on getting the file links.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileLinks}"/> describing the hard links
+        /// of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileLinks>> GetFileLinksInternal(
+            ShareFileRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            ShareErrors.AssertFileIdAddressed(IsFileIdAddressed, nameof(GetFileLinks));
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(GetFileLinks)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<HardLinkList> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetHardLinksAsync(
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetHardLinks(
+                            leaseId: conditions?.LeaseId,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileLinks(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -7900,6 +8102,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(OpenWrite));
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
 
             try
@@ -8124,6 +8327,7 @@ namespace Azure.Storage.Files.Shares
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder, out string stringToSign)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GenerateSasUri));
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
             // Deep copy of builder so we don't modify the user's original ShareSasBuilder.
@@ -8265,6 +8469,7 @@ namespace Azure.Storage.Files.Shares
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GenerateUserDelegationSasUri));
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
@@ -8342,6 +8547,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         protected internal virtual ShareDirectoryClient GetParentShareDirectoryClientCore()
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, "GetParentShareDirectoryClient");
             if (_parentShareDirectoryClient == null)
             {
                 ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
