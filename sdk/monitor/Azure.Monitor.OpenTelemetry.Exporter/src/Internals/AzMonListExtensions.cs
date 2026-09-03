@@ -242,7 +242,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? target = tagObjects[SemanticSlot.ServerAddress]?.ToString();
             var port = tagObjects[SemanticSlot.ServerPort]?.ToString();
-            if (!string.IsNullOrWhiteSpace(target) && port != null && port != defaultPort)
+            if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
             {
                 target = target + ":" + port;
             }
@@ -320,13 +320,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             SemanticSlot dbNameSlot;
             SemanticSlot dbSystemSlot;
-            if (isNewSchemaVersion)
-            {
+            if (isNewSchemaVersion) {
                 dbNameSlot = SemanticSlot.DbNamespace;
                 dbSystemSlot = SemanticSlot.DbSystemName;
-            }
-            else
-            {
+            } else {
                 dbNameSlot = SemanticSlot.DbName;
                 dbSystemSlot = SemanticSlot.DbSystem;
             }

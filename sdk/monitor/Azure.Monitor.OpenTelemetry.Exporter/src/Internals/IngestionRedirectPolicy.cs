@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Azure.Core;
+using System.Threading.Tasks;
+using System;
 using Azure.Core.Pipeline;
+using System.Net.Http.Headers;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals

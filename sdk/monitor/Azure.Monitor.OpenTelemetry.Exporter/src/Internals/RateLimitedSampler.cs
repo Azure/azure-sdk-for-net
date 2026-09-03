@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using OpenTelemetry.Trace;
 using System.Diagnostics;
 using System.Linq;
-using OpenTelemetry.Trace;
+using System.Collections.Concurrent;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -108,8 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var kvp in parentAttributes)
             {
-                if (kvp.Key == "microsoft.sample_rate")
-                    return kvp.Value;
+                if (kvp.Key == "microsoft.sample_rate") return kvp.Value;
             }
             return null;
         }
