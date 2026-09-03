@@ -7,12 +7,15 @@
 - Added a `digitalWorkerType` parameter to `ProjectsAgentsModelFactory.ProjectsAgentRecord` for mocking the (preview) `DigitalWorkerType` value.
 - Added `VoiceAgentDefinition.ConversationEngine` (typed `VoiceConversationEngine`, with `VoiceHostedAgentConversationEngine` as the initial implementation) for fronting a hosted text agent as a voice agent's conversational backend, as an alternative to a directly-configured model.
 - Added `VoiceAgentDefinition.SubagentConfig` for configuring sibling Foundry text agents that a voice agent may consult as background specialists.
+- Added `AgentAdministrationClient.GetAgentTelephony()` for retrieving the client that manages voice-agent telephony bindings and calls.
 
 ### Breaking Changes
 
 - Removed the `model` parameter from the public `VoiceAgentDefinition(VoiceModelType, string)` constructor; use the new parameterless `VoiceAgentDefinition()` constructor and set the now-optional `ModelType`/`Model` properties instead (required together for a model-backed voice agent; omit both when using the new `ConversationEngine` property).
 
 ### Bugs Fixed
+
+- `VoiceAgentWebSocket` now also sends its SDK identifier as an `x-ms-client-sdk` connection-URL query parameter, so identification survives on platforms that disallow setting `User-Agent` on a WebSocket (e.g. .NET Framework) and through intermediaries that strip non-standard headers.
 
 ### Other Changes
 

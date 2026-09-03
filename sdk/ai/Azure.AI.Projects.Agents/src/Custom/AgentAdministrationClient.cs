@@ -72,6 +72,8 @@ public partial class AgentAdministrationClient
     private VoiceAgentWebSocket _cachedVoiceAgentWebSocket;
     [Experimental("AAIP001")]
     private AgentEndpointConversations _cachedAgentEndpointConversations;
+    [Experimental("AAIP001")]
+    private AgentTelephony _cachedAgentTelephony;
 
     internal AgentAdministrationClient(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
         : this(clientDiagnostics, pipeline, endpoint, apiVersion)
@@ -1148,5 +1150,12 @@ public partial class AgentAdministrationClient
     public virtual AgentEndpointConversations GetAgentEndpointConversations()
     {
         return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+    }
+
+    /// <summary> Gets the lazily-initialized voice-agent telephony sub-client. </summary>
+    [Experimental("AAIP001")]
+    public virtual AgentTelephony GetAgentTelephony()
+    {
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 }

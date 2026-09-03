@@ -28,6 +28,11 @@ public partial class VoiceAgentWebSocket
         [GetTokenOptions.AuthorizationUrlPropertyName] = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
     };
 
+    // Also sent as the x-ms-client-sdk query parameter so identification survives on platforms that
+    // disallow setting User-Agent on a WebSocket (e.g. .NET Framework) and through intermediaries that
+    // strip non-standard headers.
+    private const string UserAgentValue = "Azure-VoiceAgents-SDK/.NET";
+
     private readonly Uri _endpoint;
     private readonly string _apiVersion;
     private readonly AuthenticationTokenProvider _tokenProvider;
@@ -94,7 +99,7 @@ public partial class VoiceAgentWebSocket
 
             try
             {
-                webSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceAgents-SDK/.NET");
+                webSocket.Options.SetRequestHeader("User-Agent", UserAgentValue);
             }
             catch (ArgumentException)
             {
@@ -123,6 +128,7 @@ public partial class VoiceAgentWebSocket
 
         StringBuilder query = new StringBuilder();
         AppendQueryParameter(query, "api-version", _apiVersion);
+        AppendQueryParameter(query, "x-ms-client-sdk", UserAgentValue);
         AppendQueryParameter(query, "agent_session_id", options.SessionId);
         AppendQueryParameter(query, "store", options.Store.HasValue ? (options.Store.Value ? "true" : "false") : null);
         AppendQueryParameter(query, "x-agent-version-override", options.AgentVersion);
