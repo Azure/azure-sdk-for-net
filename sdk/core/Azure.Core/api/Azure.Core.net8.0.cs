@@ -396,6 +396,7 @@ namespace Azure.Core
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         protected int MaxApplicationIdLength { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ModelReaderWriterOptions? ModelReaderWriterOptions { get { throw null; } set { } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -54,6 +55,7 @@ namespace Azure.Core
                 RetryPolicy = clientOptions.RetryPolicy;
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
+                ModelReaderWriterOptions = clientOptions.ModelReaderWriterOptions;
                 if (clientOptions.Policies != null)
                 {
                     Policies = new(clientOptions.Policies);
@@ -135,6 +137,21 @@ namespace Azure.Core
         /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
         /// </summary>
         public HttpPipelinePolicy? RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="System.ClientModel.Primitives.ModelReaderWriterOptions"/> a client should use when it
+        /// serializes and deserializes models. When set, the client stores these options and passes them to
+        /// <see cref="ModelReaderWriter"/> automatically, so any proxies registered on them take effect for
+        /// every call — without changing the client's constructors. A derived <see cref="ClientOptions"/> type
+        /// (e.g. a first-party library's) inherits this property, letting that library inject its proxies transparently.
+        /// </summary>
+        /// <remarks>
+        /// PROTOTYPE (MRW proxy E2E): this mirrors the equivalent property on
+        /// <see cref="System.ClientModel.Primitives.ClientPipelineOptions"/> so the same injection mechanism is
+        /// available to Azure SDK clients (e.g. Foundry, which builds on Azure.Core). It exists to validate the
+        /// end-to-end scenario locally and is pending API review before it becomes part of the public surface.
+        /// </remarks>
+        public ModelReaderWriterOptions? ModelReaderWriterOptions { get; set; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.
