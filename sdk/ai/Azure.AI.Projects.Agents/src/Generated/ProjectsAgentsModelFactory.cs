@@ -73,10 +73,49 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
         /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
+        /// <param name="invocationsModeration">
+        /// Author-declared configuration telling the platform where user/agent text lives in the
+        /// agent-defined invocations request/response bodies, so content-safety guardrails can extract
+        /// and moderate it. Optional; a rai_config without it leaves the invocations path without
+        /// content-safety moderation.
+        /// </param>
         /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
-        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default)
+        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName, RaiInvocationModeration invocationsModeration)
         {
-            return new ContentFilterConfiguration(raiPolicyName, additionalBinaryDataProperties: null);
+            return new ContentFilterConfiguration(raiPolicyName, invocationsModeration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Declares where request/response text lives so content-safety guardrails can extract it. </summary>
+        /// <param name="inputContentType"> How the REQUEST body is parsed. When omitted, the service defaults to `json`. </param>
+        /// <param name="outputContentType"> How the RESPONSE body is parsed. When omitted, the service defaults to `json`. </param>
+        /// <param name="responseMode"> Author-declared response shape; drives which output gate runs and which fields are required. </param>
+        /// <param name="inputPaths"> Path(s) to user text in the REQUEST body. Required when input_content_type is `json`. </param>
+        /// <param name="outputPaths"> Path(s) to agent text in a NON-STREAMING response body. Required when response_mode is non_streaming/both and output_content_type is `json`. </param>
+        /// <param name="streamSelectors"> One SSE event-&gt;field selector per event type carrying text. Required when response_mode is streaming/both and output_content_type is `json`. </param>
+        /// <returns> A new <see cref="Agents.RaiInvocationModeration"/> instance for mocking. </returns>
+        public static RaiInvocationModeration RaiInvocationModeration(RaiInvocationContentType? inputContentType = default, RaiInvocationContentType? outputContentType = default, RaiInvocationMode responseMode = default, IEnumerable<string> inputPaths = default, IEnumerable<string> outputPaths = default, IEnumerable<RaiSseTextSelector> streamSelectors = default)
+        {
+            inputPaths ??= new ChangeTrackingList<string>();
+            outputPaths ??= new ChangeTrackingList<string>();
+            streamSelectors ??= new ChangeTrackingList<RaiSseTextSelector>();
+
+            return new RaiInvocationModeration(
+                inputContentType,
+                outputContentType,
+                responseMode,
+                inputPaths.ToList(),
+                outputPaths.ToList(),
+                streamSelectors.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An SSE event-type to text-field selector for streaming invocation output. </summary>
+        /// <param name="eventType"> The SSE event `type` value that carries text. </param>
+        /// <param name="textField"> The field on a matched event holding the text delta. When omitted, the service defaults to `delta`. </param>
+        /// <returns> A new <see cref="Agents.RaiSseTextSelector"/> instance for mocking. </returns>
+        public static RaiSseTextSelector RaiSseTextSelector(string eventType = default, string textField = default)
+        {
+            return new RaiSseTextSelector(eventType, textField, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The hosted agent definition. </summary>
@@ -219,7 +258,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Session defaults applied to sessions created for a hosted agent version. </summary>
         /// <param name="idleTimeoutSeconds">
         /// The idle duration, in seconds, before a session's sandbox is suspended. Optional — when
-        /// unset, the server default of 900 seconds is used. Must be between 300 and 3600 seconds
+        /// unset, the server default of 900 seconds is used. Must be between 120 and 3600 seconds
         /// (inclusive).
         /// </param>
         /// <returns> A new <see cref="Agents.SessionConfiguration"/> instance for mocking. </returns>
@@ -278,7 +317,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.A2ATool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.WebIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.A2ATool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.WebIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, <see cref="OpenAI.ProgrammaticToolCallingParam"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -868,6 +907,51 @@ namespace Azure.AI.Projects.Agents
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The ProgrammaticToolCallingParam. </summary>
+        /// <returns> A new <see cref="OpenAI.ProgrammaticToolCallingParam"/> instance for mocking. </returns>
+        public static ProgrammaticToolCallingParam ProgrammaticToolCallingParam()
+        {
+            return new ProgrammaticToolCallingParam(ToolType.ProgrammaticToolCalling, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The ContainerSkill.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.SkillReferenceParam"/> and <see cref="OpenAI.InlineSkillParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
+        public static ContainerSkill ContainerSkill(string @type = default)
+        {
+            return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SkillReferenceParam. </summary>
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
+        /// <returns> A new <see cref="OpenAI.SkillReferenceParam"/> instance for mocking. </returns>
+        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
+        {
+            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
+        }
+
+        /// <summary> The InlineSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="source"> Inline skill payload. </param>
+        /// <returns> A new <see cref="OpenAI.InlineSkillParam"/> instance for mocking. </returns>
+        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
+        {
+            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
+        }
+
+        /// <summary> Inline skill payload. </summary>
+        /// <param name="data"> Base64-encoded skill zip bundle. </param>
+        /// <returns> A new <see cref="OpenAI.InlineSkillSourceParam"/> instance for mocking. </returns>
+        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
+        {
+            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The EmptyModelParam. </summary>
         /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
         public static EmptyModelParam EmptyModelParam()
@@ -965,12 +1049,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocolConfiguration"> Per-protocol configuration for the agent endpoint. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
+        /// <param name="publishApprovalStatus"> The Microsoft Agent Certification review status of the Microsoft 365 store title published for this agent. Server-populated and best-effort: it is absent when the status could not be determined, and an absent value must not be interpreted as the agent not being published. No value is terminal, because publishing a new version of an agent reuses the same store title and sends it back through review. </param>
         /// <returns> A new <see cref="Agents.AgentEndpointConfiguration"/> instance for mocking. </returns>
-        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, ProtocolConfiguration protocolConfiguration = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
+        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, ProtocolConfiguration protocolConfiguration = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default, PublishApprovalStatus? publishApprovalStatus = default)
         {
             authorizationSchemes ??= new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
 
-            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes.ToList(), publishApprovalStatus, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The VersionSelector. </summary>
@@ -1026,10 +1111,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Configuration specific to the activity protocol. </summary>
         /// <param name="enableM365PublicEndpoint"> Whether to enable the M365 public endpoint for the activity protocol. </param>
+        /// <param name="accessBoundaries"> The access boundaries for the activity protocol. </param>
         /// <returns> A new <see cref="Agents.ActivityProtocolConfiguration"/> instance for mocking. </returns>
-        public static ActivityProtocolConfiguration ActivityProtocolConfiguration(bool? enableM365PublicEndpoint = default)
+        public static ActivityProtocolConfiguration ActivityProtocolConfiguration(bool? enableM365PublicEndpoint = default, IEnumerable<ActivityProtocolAccessBoundary> accessBoundaries = default)
         {
-            return new ActivityProtocolConfiguration(enableM365PublicEndpoint, additionalBinaryDataProperties: null);
+            accessBoundaries ??= new ChangeTrackingList<ActivityProtocolAccessBoundary>();
+
+            return new ActivityProtocolConfiguration(enableM365PublicEndpoint, accessBoundaries.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration specific to the responses protocol. </summary>
@@ -1257,7 +1345,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -1313,6 +1401,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
+        /// <param name="allowedCallers"></param>
         /// <param name="internalContainer">
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
@@ -1320,9 +1409,10 @@ namespace Azure.AI.Projects.Agents
         /// If not provided, the service assumes auto.
         /// </param>
         /// <returns> A new <see cref="Agents.CodeInterpreterToolboxTool"/> instance for mocking. </returns>
-        public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BinaryData internalContainer = default)
+        public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData internalContainer = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
 
             return new CodeInterpreterToolboxTool(
                 ToolboxToolType.CodeInterpreter,
@@ -1330,6 +1420,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs,
                 additionalBinaryDataProperties: null,
+                allowedCallers.ToList(),
                 internalContainer);
         }
 
@@ -1365,6 +1456,89 @@ namespace Azure.AI.Projects.Agents
                 customSearchConfiguration);
         }
 
+        /// <summary> A shell tool stored in a toolbox. This model is additive to toolbox configuration and does not modify the OpenAI tool contract or existing toolbox tool definitions. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="allowedCallers"></param>
+        /// <param name="environment"> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </param>
+        /// <returns> A new <see cref="Agents.ShellToolboxTool"/> instance for mocking. </returns>
+        public static ShellToolboxTool ShellToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, ToolboxShellEnvironment environment = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
+
+            return new ShellToolboxTool(
+                ToolboxToolType.Shell,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                allowedCallers.ToList(),
+                environment);
+        }
+
+        /// <summary>
+        /// An execution environment for a shell tool stored in a toolbox. This environment model is scoped to toolbox configuration and does not modify the OpenAI shell environment contract.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> and <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/>.
+        /// </summary>
+        /// <param name="type"> The type of the shell execution environment. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellEnvironment"/> instance for mocking. </returns>
+        public static ToolboxShellEnvironment ToolboxShellEnvironment(string @type = default)
+        {
+            return new UnknownToolboxShellEnvironment(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
+        /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> instance for mocking. </returns>
+        public static ToolboxShellContainerAutoEnvironment ToolboxShellContainerAutoEnvironment(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ToolboxShellNetworkPolicy networkPolicy = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            skills ??= new ChangeTrackingList<ContainerSkill>();
+
+            return new ToolboxShellContainerAutoEnvironment(
+                "container_auto",
+                additionalBinaryDataProperties: null,
+                fileIds.ToList(),
+                memoryLimit,
+                skills.ToList(),
+                networkPolicy);
+        }
+
+        /// <summary>
+        /// Network access policy for an automatically provisioned toolbox shell container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/>.
+        /// </summary>
+        /// <param name="type"> The type of network access policy. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicy"/> instance for mocking. </returns>
+        public static ToolboxShellNetworkPolicy ToolboxShellNetworkPolicy(string @type = default)
+        {
+            return new UnknownToolboxShellNetworkPolicy(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A network policy that disables outbound access from a toolbox shell container. </summary>
+        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/> instance for mocking. </returns>
+        public static ToolboxShellNetworkPolicyDisabled ToolboxShellNetworkPolicyDisabled()
+        {
+            return new ToolboxShellNetworkPolicyDisabled("disabled", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An existing container environment for a shell tool stored in a toolbox. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/> instance for mocking. </returns>
+        public static ToolboxShellContainerReferenceEnvironment ToolboxShellContainerReferenceEnvironment(string containerId = default)
+        {
+            return new ToolboxShellContainerReferenceEnvironment("container_reference", additionalBinaryDataProperties: null, containerId);
+        }
+
         /// <summary> An MCP tool stored in a toolbox. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
@@ -1375,15 +1549,19 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <param name="serverUri">
-        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
-        ///   provided.
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
         /// </param>
         /// <param name="connectorId">
         /// Identifier for service connectors, like those available in ChatGPT. One of
-        ///   `server_url` or `connector_id` must be provided. Learn more about service
-        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more
+        ///   about service connectors [here](/docs/guides/tools-remote-mcp#connectors).
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
+        /// </param>
+        /// <param name="tunnelId">
+        /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided.
         /// </param>
         /// <param name="authorization">
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -1393,14 +1571,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
+        /// <param name="allowedCallers"></param>
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
-        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, MCPToolboxToolConnectorId? connectorId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
+        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, MCPToolboxToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
             headers ??= new ChangeTrackingDictionary<string, string>();
+            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
 
             return new MCPToolboxTool(
                 ToolboxToolType.Mcp,
@@ -1411,10 +1591,12 @@ namespace Azure.AI.Projects.Agents
                 serverLabel,
                 serverUri,
                 connectorId,
+                tunnelId,
                 authorization,
                 serverDescription,
                 headers,
                 allowedTools,
+                allowedCallers.ToList(),
                 requireApprovalInternal,
                 deferLoading,
                 projectConnectionId);
@@ -2048,11 +2230,12 @@ namespace Azure.AI.Projects.Agents
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, bool? draft = default)
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, DigitalWorkerType? digitalWorkerType = default, bool? draft = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2061,6 +2244,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 definition,
                 blueprintReference,
+                digitalWorkerType,
                 draft,
                 additionalBinaryDataProperties: null);
         }
@@ -2130,6 +2314,15 @@ namespace Azure.AI.Projects.Agents
         public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default)
         {
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, draft: default, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuidInternal: default);
+        }
+
+        /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
+        /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
+        /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default)
+        {
+            return ContentFilterConfiguration(raiPolicyName: raiPolicyName, invocationsModeration: default);
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
@@ -2242,7 +2435,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default)
         {
-            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, draft: default);
+            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, digitalWorkerType: default, draft: default);
         }
     }
 }

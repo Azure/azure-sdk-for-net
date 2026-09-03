@@ -45,6 +45,476 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgenticIdentityPreviewCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgenticIdentityPreviewCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AgentInsight : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsight>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsight>
+    {
+        internal AgentInsight() { }
+        public string AgentName { get { throw null; } }
+        public string AgentVersion { get { throw null; } }
+        public string Category { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string Description { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightDetails Details { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string MonitorId { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightSeverity Severity { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightStatus Status { get { throw null; } }
+        public string Title { get { throw null; } }
+        public int TraceCount { get { throw null; } }
+        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.AgentInsight (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.AgentInsight PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsight System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsight System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsight>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsight>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightDetails>
+    {
+        internal AgentInsightDetails() { }
+        public System.Collections.Generic.IList<Azure.AI.Projects.AgentInsightHighlightedTrace> HighlightedTraces { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.AgentInsightLinkedTrace> LinkedTraces { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightRecommendedAction RecommendedActions { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightEstimatedCost : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightEstimatedCost>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightEstimatedCost>
+    {
+        internal AgentInsightEstimatedCost() { }
+        public double Amount { get { throw null; } }
+        public string Currency { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightEstimatedCost JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightEstimatedCost PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightEstimatedCost System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightEstimatedCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightEstimatedCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightEstimatedCost System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightEstimatedCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightEstimatedCost>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightEstimatedCost>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightHighlightedTrace : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightHighlightedTrace>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightHighlightedTrace>
+    {
+        internal AgentInsightHighlightedTrace() { }
+        public System.TimeSpan DurationMs { get { throw null; } }
+        public string Summary { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public int? TotalTokens { get { throw null; } }
+        public string TraceId { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightHighlightedTrace JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightHighlightedTrace PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightHighlightedTrace System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightHighlightedTrace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightHighlightedTrace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightHighlightedTrace System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightHighlightedTrace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightHighlightedTrace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightHighlightedTrace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightLinkedTrace : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightLinkedTrace>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightLinkedTrace>
+    {
+        internal AgentInsightLinkedTrace() { }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public string TraceId { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightLinkedTrace JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightLinkedTrace PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightLinkedTrace System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightLinkedTrace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightLinkedTrace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightLinkedTrace System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightLinkedTrace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightLinkedTrace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightLinkedTrace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightMonitor : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitor>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitor>
+    {
+        internal AgentInsightMonitor() { }
+        public string AgentName { get { throw null; } }
+        public bool Enabled { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightEstimatedCost EstimatedCost { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string ModelDeploymentName { get { throw null; } }
+        public System.DateTimeOffset? NextScheduledRunOn { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightsOverview Overview { get { throw null; } }
+        public double RunIntervalHours { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightSuspension Suspension { get { throw null; } }
+        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightMonitor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.AgentInsightMonitor (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.AgentInsightMonitor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightMonitor System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightMonitor System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightMonitorCreate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitorCreate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorCreate>
+    {
+        public AgentInsightMonitorCreate(string agentName, string modelDeploymentName) { }
+        public string AgentName { get { throw null; } }
+        public bool? Enabled { get { throw null; } set { } }
+        public string ModelDeploymentName { get { throw null; } }
+        public double? RunIntervalHours { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.AgentInsightMonitorCreate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.AgentInsightMonitorCreate agentInsightMonitorCreate) { throw null; }
+        protected virtual Azure.AI.Projects.AgentInsightMonitorCreate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightMonitorCreate System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitorCreate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitorCreate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightMonitorCreate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorCreate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorCreate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorCreate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightMonitorListItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitorListItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorListItem>
+    {
+        internal AgentInsightMonitorListItem() { }
+        public string AgentName { get { throw null; } }
+        public bool Enabled { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightEstimatedCost EstimatedCost { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string ModelDeploymentName { get { throw null; } }
+        public System.DateTimeOffset? NextScheduledRunOn { get { throw null; } }
+        public double RunIntervalHours { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightSuspension Suspension { get { throw null; } }
+        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightMonitorListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightMonitorListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightMonitorListItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitorListItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightMonitorListItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightMonitorListItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorListItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorListItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightMonitorListItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightMonitors
+    {
+        protected AgentInsightMonitors() { }
+        public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public virtual System.ClientModel.ClientResult CancelRun(string monitorId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightRun> CancelRun(string monitorId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CancelRunAsync(string monitorId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightRun>> CancelRunAsync(string monitorId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightMonitor> Create(Azure.AI.Projects.AgentInsightMonitorCreate monitor, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Create(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightMonitor>> CreateAsync(Azure.AI.Projects.AgentInsightMonitorCreate monitor, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.Primitives.OperationResult CreateRun(bool waitUntilCompleted, string monitorId, Azure.AI.Projects.AgentInsightRunCreate run, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.OperationResult CreateRun(bool waitUntilCompleted, string monitorId, System.ClientModel.BinaryContent content, string operationId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, Azure.AI.Projects.AgentInsightRunCreate run, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, System.ClientModel.BinaryContent content, string operationId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult Delete(string monitorId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult Delete(string monitorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string monitorId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string monitorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Get(string monitorId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightMonitor> Get(string monitorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AgentInsightMonitorListItem> GetAll(string after = null, string before = null, int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AgentInsightMonitorListItem> GetAllAsync(string after = null, string before = null, int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string monitorId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightMonitor>> GetAsync(string monitorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetInsight(string monitorId, string insightId, bool? includeDetails, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsight> GetInsight(string monitorId, string insightId, bool? includeDetails = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetInsightAsync(string monitorId, string insightId, bool? includeDetails, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsight>> GetInsightAsync(string monitorId, string insightId, bool? includeDetails = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AgentInsight> GetInsights(string monitorId, string after = null, string before = null, int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), string category = null, Azure.AI.Projects.AgentInsightSeverity? severity = default(Azure.AI.Projects.AgentInsightSeverity?), Azure.AI.Projects.AgentInsightStatus? status = default(Azure.AI.Projects.AgentInsightStatus?), bool? includeDetails = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AgentInsight> GetInsightsAsync(string monitorId, string after = null, string before = null, int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), string category = null, Azure.AI.Projects.AgentInsightSeverity? severity = default(Azure.AI.Projects.AgentInsightSeverity?), Azure.AI.Projects.AgentInsightStatus? status = default(Azure.AI.Projects.AgentInsightStatus?), bool? includeDetails = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetRun(string monitorId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightRun> GetRun(string monitorId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetRunAsync(string monitorId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.AgentInsightRun>> GetRunAsync(string monitorId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.AgentInsightRun> GetRuns(string monitorId, string after = null, string before = null, int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), Azure.AI.Projects.ProjectsJobStatus? status = default(Azure.AI.Projects.ProjectsJobStatus?), Azure.AI.Projects.AgentInsightRunTrigger? trigger = default(Azure.AI.Projects.AgentInsightRunTrigger?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.AgentInsightRun> GetRunsAsync(string monitorId, string after = null, string before = null, int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), Azure.AI.Projects.ProjectsJobStatus? status = default(Azure.AI.Projects.ProjectsJobStatus?), Azure.AI.Projects.AgentInsightRunTrigger? trigger = default(Azure.AI.Projects.AgentInsightRunTrigger?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Reset(string monitorId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult Reset(string monitorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> ResetAsync(string monitorId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> ResetAsync(string monitorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Update(string monitorId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAsync(string monitorId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult UpdateInsight(string monitorId, string insightId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateInsightAsync(string monitorId, string insightId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentInsightOverviewSource : System.IEquatable<Azure.AI.Projects.AgentInsightOverviewSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentInsightOverviewSource(string value) { throw null; }
+        public static Azure.AI.Projects.AgentInsightOverviewSource Generated { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightOverviewSource UserOverride { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentInsightOverviewSource other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentInsightOverviewSource left, Azure.AI.Projects.AgentInsightOverviewSource right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightOverviewSource (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightOverviewSource? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentInsightOverviewSource left, Azure.AI.Projects.AgentInsightOverviewSource right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentInsightPromptSurface : System.IEquatable<Azure.AI.Projects.AgentInsightPromptSurface>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentInsightPromptSurface(string value) { throw null; }
+        public static Azure.AI.Projects.AgentInsightPromptSurface Instructions { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightPromptSurface Tool { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentInsightPromptSurface other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentInsightPromptSurface left, Azure.AI.Projects.AgentInsightPromptSurface right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightPromptSurface (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightPromptSurface? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentInsightPromptSurface left, Azure.AI.Projects.AgentInsightPromptSurface right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentInsightProposedFix : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightProposedFix>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFix>
+    {
+        internal AgentInsightProposedFix() { }
+        public System.Collections.Generic.IList<Azure.AI.Projects.AgentInsightProposedFixChange> Changes { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightProposedFixKind Kind { get { throw null; } }
+        public string Text { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightProposedFix JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightProposedFix PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightProposedFix System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightProposedFix>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightProposedFix>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightProposedFix System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFix>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFix>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFix>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightProposedFixChange : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightProposedFixChange>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFixChange>
+    {
+        internal AgentInsightProposedFixChange() { }
+        public string Diff { get { throw null; } }
+        public string Language { get { throw null; } }
+        public System.BinaryData NewValue { get { throw null; } }
+        public System.BinaryData OldValue { get { throw null; } }
+        public string Path { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightPromptSurface? Surface { get { throw null; } }
+        public string Target { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightProposedFixChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightProposedFixChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightProposedFixChange System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightProposedFixChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightProposedFixChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightProposedFixChange System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFixChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFixChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightProposedFixChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentInsightProposedFixKind : System.IEquatable<Azure.AI.Projects.AgentInsightProposedFixKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentInsightProposedFixKind(string value) { throw null; }
+        public static Azure.AI.Projects.AgentInsightProposedFixKind CodeChange { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightProposedFixKind PromptChange { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightProposedFixKind Prose { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentInsightProposedFixKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentInsightProposedFixKind left, Azure.AI.Projects.AgentInsightProposedFixKind right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightProposedFixKind (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightProposedFixKind? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentInsightProposedFixKind left, Azure.AI.Projects.AgentInsightProposedFixKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentInsightRecommendedAction : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRecommendedAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRecommendedAction>
+    {
+        internal AgentInsightRecommendedAction() { }
+        public Azure.AI.Projects.AgentInsightProposedFix ProposedFix { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightRecommendedAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightRecommendedAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightRecommendedAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRecommendedAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRecommendedAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightRecommendedAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRecommendedAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRecommendedAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRecommendedAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightRun : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRun>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRun>
+    {
+        internal AgentInsightRun() { }
+        public string AgentName { get { throw null; } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightRunCreate Inputs { get { throw null; } }
+        public string ModelDeploymentName { get { throw null; } }
+        public string MonitorId { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightRunResult Result { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        public Azure.AI.Projects.ProjectsJobStatus Status { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightRunTrigger Trigger { get { throw null; } }
+        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset WindowEnd { get { throw null; } }
+        public System.DateTimeOffset WindowStart { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightRun JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.AgentInsightRun (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.AgentInsightRun PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightRun System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightRun System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRun>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRun>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightRunCreate : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRunCreate>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunCreate>
+    {
+        public AgentInsightRunCreate() { }
+        public double? LookbackHours { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.AgentInsightRunCreate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.AgentInsightRunCreate agentInsightRunCreate) { throw null; }
+        protected virtual Azure.AI.Projects.AgentInsightRunCreate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightRunCreate System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRunCreate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRunCreate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightRunCreate System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunCreate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunCreate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunCreate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightRunResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRunResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunResult>
+    {
+        internal AgentInsightRunResult() { }
+        public int InsightsCreated { get { throw null; } }
+        public int InsightsReopened { get { throw null; } }
+        public int InsightsUpdated { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightTokenUsage TokenUsage { get { throw null; } }
+        public int TracesAnalyzed { get { throw null; } }
+        public int TracesInWindow { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightRunResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.AgentInsightRunResult (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.AgentInsightRunResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightRunResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRunResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightRunResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightRunResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightRunResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentInsightRunTrigger : System.IEquatable<Azure.AI.Projects.AgentInsightRunTrigger>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentInsightRunTrigger(string value) { throw null; }
+        public static Azure.AI.Projects.AgentInsightRunTrigger OnDemand { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightRunTrigger Scheduled { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentInsightRunTrigger other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentInsightRunTrigger left, Azure.AI.Projects.AgentInsightRunTrigger right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightRunTrigger (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightRunTrigger? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentInsightRunTrigger left, Azure.AI.Projects.AgentInsightRunTrigger right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentInsightSeverity : System.IEquatable<Azure.AI.Projects.AgentInsightSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentInsightSeverity(string value) { throw null; }
+        public static Azure.AI.Projects.AgentInsightSeverity High { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightSeverity Low { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightSeverity Medium { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentInsightSeverity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentInsightSeverity left, Azure.AI.Projects.AgentInsightSeverity right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightSeverity (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightSeverity? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentInsightSeverity left, Azure.AI.Projects.AgentInsightSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentInsightsOverview : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightsOverview>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightsOverview>
+    {
+        internal AgentInsightsOverview() { }
+        public string Content { get { throw null; } }
+        public Azure.AI.Projects.AgentInsightOverviewSource Source { get { throw null; } }
+        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightsOverview JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightsOverview PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightsOverview System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightsOverview>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightsOverview>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightsOverview System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightsOverview>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightsOverview>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightsOverview>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentInsightStatus : System.IEquatable<Azure.AI.Projects.AgentInsightStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentInsightStatus(string value) { throw null; }
+        public static Azure.AI.Projects.AgentInsightStatus Active { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightStatus Ignored { get { throw null; } }
+        public static Azure.AI.Projects.AgentInsightStatus Resolved { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentInsightStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentInsightStatus left, Azure.AI.Projects.AgentInsightStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentInsightStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentInsightStatus left, Azure.AI.Projects.AgentInsightStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentInsightSuspension : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightSuspension>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightSuspension>
+    {
+        internal AgentInsightSuspension() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightSuspension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightSuspension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightSuspension System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightSuspension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightSuspension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightSuspension System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightSuspension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightSuspension>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightSuspension>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentInsightTokenUsage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightTokenUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightTokenUsage>
+    {
+        internal AgentInsightTokenUsage() { }
+        public int? CachedTokens { get { throw null; } }
+        public int InputTokens { get { throw null; } }
+        public int OutputTokens { get { throw null; } }
+        public int TotalTokens { get { throw null; } }
+        protected virtual Azure.AI.Projects.AgentInsightTokenUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.AgentInsightTokenUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.AgentInsightTokenUsage System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightTokenUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInsightTokenUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentInsightTokenUsage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightTokenUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightTokenUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInsightTokenUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AgentInvocationsApiDispatchPayload : Azure.AI.Projects.RoutineDispatchPayload, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentInvocationsApiDispatchPayload>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentInvocationsApiDispatchPayload>
     {
         public AgentInvocationsApiDispatchPayload(System.BinaryData input) { }
@@ -130,6 +600,7 @@ namespace Azure.AI.Projects
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public virtual Azure.AI.Projects.Agents.AgentAdministrationClient AgentAdministrationClient { get { throw null; } }
+        public virtual Azure.AI.Projects.AgentInsightMonitors AgentInsightMonitors { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectConnectionsOperations Connections { get { throw null; } }
         public virtual Azure.AI.Projects.DataGenerationJobs DataGenerationJobs { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectDatasetsOperations Datasets { get { throw null; } }
@@ -575,6 +1046,22 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AgentDataGenerationJobSource AgentDataGenerationJobSource(string description = null, string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.AgentEvaluatorGenerationJobSource AgentEvaluatorGenerationJobSource(string description = null, string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.AgenticIdentityPreviewCredentials AgenticIdentityPreviewCredentials() { throw null; }
+        public static Azure.AI.Projects.AgentInsight AgentInsight(string id = null, string monitorId = null, string agentName = null, string agentVersion = null, string title = null, Azure.AI.Projects.AgentInsightSeverity severity = default(Azure.AI.Projects.AgentInsightSeverity), string category = null, Azure.AI.Projects.AgentInsightStatus status = default(Azure.AI.Projects.AgentInsightStatus), int traceCount = 0, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string description = null, Azure.AI.Projects.AgentInsightDetails details = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightDetails AgentInsightDetails(System.Collections.Generic.IEnumerable<Azure.AI.Projects.AgentInsightHighlightedTrace> highlightedTraces = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.AgentInsightLinkedTrace> linkedTraces = null, Azure.AI.Projects.AgentInsightRecommendedAction recommendedActions = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightEstimatedCost AgentInsightEstimatedCost(double amount = 0) { throw null; }
+        public static Azure.AI.Projects.AgentInsightHighlightedTrace AgentInsightHighlightedTrace(string traceId = null, string summary = null, System.TimeSpan durationMs = default(System.TimeSpan), int? totalTokens = default(int?), System.DateTimeOffset timestamp = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightLinkedTrace AgentInsightLinkedTrace(string traceId = null, System.DateTimeOffset timestamp = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightMonitor AgentInsightMonitor(string id = null, string agentName = null, bool enabled = false, double runIntervalHours = 0, string modelDeploymentName = null, System.DateTimeOffset? nextScheduledRunOn = default(System.DateTimeOffset?), Azure.AI.Projects.AgentInsightEstimatedCost estimatedCost = null, Azure.AI.Projects.AgentInsightSuspension suspension = null, Azure.AI.Projects.AgentInsightsOverview overview = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightMonitorCreate AgentInsightMonitorCreate(string agentName = null, bool? enabled = default(bool?), double? runIntervalHours = default(double?), string modelDeploymentName = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = null, string agentName = null, bool enabled = false, double runIntervalHours = 0, string modelDeploymentName = null, System.DateTimeOffset? nextScheduledRunOn = default(System.DateTimeOffset?), Azure.AI.Projects.AgentInsightEstimatedCost estimatedCost = null, Azure.AI.Projects.AgentInsightSuspension suspension = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightProposedFix AgentInsightProposedFix(Azure.AI.Projects.AgentInsightProposedFixKind kind = default(Azure.AI.Projects.AgentInsightProposedFixKind), string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.AgentInsightProposedFixChange> changes = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightProposedFixChange AgentInsightProposedFixChange(string path = null, string language = null, string diff = null, Azure.AI.Projects.AgentInsightPromptSurface? surface = default(Azure.AI.Projects.AgentInsightPromptSurface?), string target = null, System.BinaryData oldValue = null, System.BinaryData newValue = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightRecommendedAction AgentInsightRecommendedAction(Azure.AI.Projects.AgentInsightProposedFix proposedFix = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightRunCreate AgentInsightRunCreate(double? lookbackHours = default(double?)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightRunResult AgentInsightRunResult(int tracesInWindow = 0, int tracesAnalyzed = 0, int insightsCreated = 0, int insightsUpdated = 0, int insightsReopened = 0, Azure.AI.Projects.AgentInsightTokenUsage tokenUsage = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightsOverview AgentInsightsOverview(string content = null, Azure.AI.Projects.AgentInsightOverviewSource source = default(Azure.AI.Projects.AgentInsightOverviewSource), System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.AgentInsightSuspension AgentInsightSuspension(string code = null, string message = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, System.BinaryData> details = null) { throw null; }
+        public static Azure.AI.Projects.AgentInsightTokenUsage AgentInsightTokenUsage(int inputTokens = 0, int outputTokens = 0, int? cachedTokens = default(int?), int totalTokens = 0) { throw null; }
         public static Azure.AI.Projects.AgentInvocationsApiDispatchPayload AgentInvocationsApiDispatchPayload(System.BinaryData input = null) { throw null; }
         public static Azure.AI.Projects.AgentInvocationsApiRoutineAction AgentInvocationsApiRoutineAction(string agentName = null, string agentEndpointId = null, System.BinaryData input = null, string sessionId = null) { throw null; }
         public static Azure.AI.Projects.AgentResponsesApiDispatchPayload AgentResponsesApiDispatchPayload(System.BinaryData input = null) { throw null; }
@@ -663,7 +1150,9 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule HourlyRecurrenceSchedule() { throw null; }
         public static Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = null) { throw null; }
         public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId = null, string filename = null, string fileData = null, System.Uri fileUri = null) { throw null; }
+        public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId, string filename, string fileData, System.Uri fileUri, Azure.AI.Projects.FileInputDetail? detail, Azure.AI.Projects.PromptCacheBreakpointParam promptCacheBreakpoint = null) { throw null; }
         public static Azure.AI.Projects.InputTextContentParam InputTextContentParam(string text = null) { throw null; }
+        public static Azure.AI.Projects.InputTextContentParam InputTextContentParam(string text, Azure.AI.Projects.PromptCacheBreakpointParam promptCacheBreakpoint) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightCluster InsightCluster(string id = null, string label = null, string suggestion = null, string suggestionTitle = null, string description = null, int weight = 0, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.InsightCluster> subClusters = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.InsightSample> samples = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightModelConfiguration InsightModelConfiguration(string modelDeploymentName = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightRequest InsightRequest(string type = null) { throw null; }
@@ -709,12 +1198,14 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.ProjectsSchedule ProjectsSchedule(string id = null, string displayName = null, string description = null, bool enabled = false, Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus? provisioningStatus = default(Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus?), Azure.AI.Projects.Evaluation.ScheduleTrigger trigger = null, Azure.AI.Projects.ProjectsScheduleTask task = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> systemData = null) { throw null; }
         public static Azure.AI.Projects.ProjectsScheduleTask ProjectsScheduleTask(string type = null, System.Collections.Generic.IDictionary<string, string> configuration = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition PromptBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, string promptText = null) { throw null; }
+        public static Azure.AI.Projects.PromptCacheBreakpointParam PromptCacheBreakpointParam() { throw null; }
         public static Azure.AI.Projects.PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = null, string prompt = null) { throw null; }
         public static Azure.AI.Projects.PromptEvaluatorGenerationJobSource PromptEvaluatorGenerationJobSource(string description = null, string prompt = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RecurrenceSchedule RecurrenceSchedule(string type = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RecurrenceTrigger RecurrenceTrigger(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string timeZone = null, int interval = 0, Azure.AI.Projects.Evaluation.RecurrenceSchedule schedule = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RedTeam RedTeam(string name = null, string displayName = null, int? turnCount = default(int?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.AttackStrategy> attackStrategies = null, bool? isSimulationOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.RiskCategory> riskCategories = null, string applicationScenario = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, string status = null, Azure.AI.Projects.Evaluation.TargetConfig target = null) { throw null; }
         public static Azure.AI.Projects.ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = (long)0) { throw null; }
+        public static Azure.AI.Projects.ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens, long cacheWriteTokens) { throw null; }
         public static Azure.AI.Projects.ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = (long)0) { throw null; }
         public static Azure.AI.Projects.RoutineAction RoutineAction(string type = null) { throw null; }
         public static Azure.AI.Projects.RoutineDispatchPayload RoutineDispatchPayload(string type = null) { throw null; }
@@ -1180,6 +1671,12 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FileDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FileDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum FileInputDetail
+    {
+        Auto = 0,
+        Low = 1,
+        High = 2,
+    }
     public partial class FolderDataset : Azure.AI.Projects.AIProjectDataset, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FolderDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FolderDataset>
     {
         public FolderDataset(System.Uri dataUri) { }
@@ -1200,11 +1697,13 @@ namespace Azure.AI.Projects
         RedTeamsV1Preview = 2,
         InsightsV1Preview = 3,
         MemoryStoresV1Preview = 4,
-        RoutinesV2Preview = 5,
-        SkillsV1Preview = 6,
-        DataGenerationJobsV1Preview = 7,
-        ModelsV1Preview = 8,
-        AgentsOptimizationV2Preview = 9,
+        AgentInsightsV1Preview = 5,
+        RoutinesV2Preview = 6,
+        SkillsV1Preview = 7,
+        DataGenerationJobsV1Preview = 8,
+        ModelsV1Preview = 9,
+        AgentsOptimizationV2Preview = 10,
+        ModelRouterControlsV1Preview = 11,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FoundryModelArtifactProfileCategory : System.IEquatable<Azure.AI.Projects.FoundryModelArtifactProfileCategory>
@@ -1364,10 +1863,12 @@ namespace Azure.AI.Projects
     public partial class InputFileContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputFileContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>
     {
         public InputFileContentParam() { }
+        public Azure.AI.Projects.FileInputDetail? Detail { get { throw null; } set { } }
         public string FileData { get { throw null; } set { } }
         public string FileId { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public System.Uri FileUri { get { throw null; } set { } }
+        public Azure.AI.Projects.PromptCacheBreakpointParam PromptCacheBreakpoint { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.InputFileContentParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.InputFileContentParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1381,6 +1882,7 @@ namespace Azure.AI.Projects
     public partial class InputTextContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputTextContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputTextContentParam>
     {
         public InputTextContentParam(string text) { }
+        public Azure.AI.Projects.PromptCacheBreakpointParam PromptCacheBreakpoint { get { throw null; } set { } }
         public string Text { get { throw null; } }
         protected virtual Azure.AI.Projects.InputTextContentParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1722,6 +2224,19 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsScheduleTask>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsScheduleTask>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class PromptCacheBreakpointParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptCacheBreakpointParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>
+    {
+        public PromptCacheBreakpointParam() { }
+        protected virtual Azure.AI.Projects.PromptCacheBreakpointParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.PromptCacheBreakpointParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.PromptCacheBreakpointParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.PromptCacheBreakpointParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PromptDataGenerationJobSource : Azure.AI.Projects.DataGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptDataGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptDataGenerationJobSource>
     {
         public PromptDataGenerationJobSource(string prompt) { }
@@ -1756,6 +2271,7 @@ namespace Azure.AI.Projects
     {
         internal ResponseUsageInputTokensDetails() { }
         public long CachedTokens { get { throw null; } }
+        public long CacheWriteTokens { get { throw null; } }
         protected virtual Azure.AI.Projects.ResponseUsageInputTokensDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.ResponseUsageInputTokensDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

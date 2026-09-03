@@ -665,9 +665,6 @@
 # ServiceLabel: %ARM - Templates %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# PRLabel: %Astronomer
-/sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %App Services %Mgmt
 /sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
 
