@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryTaskSourceUploadResult> response = Response.FromValue(ContainerRegistryTaskSourceUploadResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryTaskSourceUploadResult> response = Response.FromValue(ContainerRegistryTaskSourceUploadResult.FromResponse(result), result);
                 if (response.Value == null)

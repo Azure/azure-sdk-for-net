@@ -11,7 +11,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> AATP (Azure Advanced Threat Protection) data connector properties. </summary>
     internal partial class AatpDataConnectorProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

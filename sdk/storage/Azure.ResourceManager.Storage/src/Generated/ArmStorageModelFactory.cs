@@ -2360,16 +2360,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageTableSignedIdentifier(id, accessPolicy, default);
         }
 
-        /// <summary> Table Access Policy Properties Object. </summary>
-        /// <param name="startOn"> Start time of the access policy. </param>
-        /// <param name="expiresOn"> Expiry time of the access policy. </param>
-        /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </param>
-        /// <returns> A new <see cref="Models.StorageTableAccessPolicy"/> instance for mocking. </returns>
-        public static StorageTableAccessPolicy StorageTableAccessPolicy(DateTimeOffset? startOn = default, DateTimeOffset? expiresOn = default, string permission = default)
-        {
-            return new StorageTableAccessPolicy(startOn, expiresOn, permission, default);
-        }
-
         /// <summary> Storage SKU and its properties. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>

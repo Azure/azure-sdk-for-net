@@ -11,7 +11,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Data connector properties. </summary>
     internal partial class DataConnectorWithAlertsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
