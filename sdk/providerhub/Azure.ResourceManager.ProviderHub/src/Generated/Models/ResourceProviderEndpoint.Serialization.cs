@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             bool? isEnabled = default;
-            IList<string> apiVersions = default;
+            IReadOnlyList<string> apiVersions = default;
             Uri endpointUri = default;
-            IList<AzureLocation> locations = default;
-            IList<string> requiredFeatures = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<string> requiredFeatures = default;
             ProviderFeaturesRule featuresRule = default;
             TimeSpan? timeout = default;
             ProviderEndpointType? endpointType = default;

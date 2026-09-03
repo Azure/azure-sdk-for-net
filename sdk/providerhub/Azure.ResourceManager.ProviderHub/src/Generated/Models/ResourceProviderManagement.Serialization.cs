@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceAccessPolicy))
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
-                writer.WriteStringValue(ResourceAccessPolicy.Value.ToString());
+                writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRoleList))
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceAccessPolicy = new ResourceAccessPolicy(prop.Value.GetString());
+                    resourceAccessPolicy = prop.Value.GetString().ToResourceAccessPolicy();
                     continue;
                 }
                 if (prop.NameEquals("resourceAccessRoles"u8))

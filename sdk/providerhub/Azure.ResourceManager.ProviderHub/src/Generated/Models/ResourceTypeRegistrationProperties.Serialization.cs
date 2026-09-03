@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             ResourceMovePolicy resourceMovePolicy = default;
-            RPaaSResourceDeletionPolicy? resourceDeletionPolicy = default;
+            ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ResourceTypeManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             PrivateEndpointConfiguration privateEndpointConfiguration = default;
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new RPaaSResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new ResourceDeletionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicies"u8))

@@ -1,12 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.3.0-beta.1</Version>
-    <!--
-      ApiCompatVersion is intentionally omitted for 1.3.0-beta.1. The service removed a set of models from the
-      contract, so comparing against 1.2.1 would require recording those removals by name in an ApiCompat
-      suppression file. Azure.ResourceManager.ProviderHub is listed in eng/apicompatbaselines/ApiCompatVersionOptOut.txt.
-      Restore this property once a stable release ships on the current contract.
-    -->
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.2.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ProviderHub</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ProviderHub.</Description>
     <PackageTags>azure;management;arm;resource manager;providerhub</PackageTags>

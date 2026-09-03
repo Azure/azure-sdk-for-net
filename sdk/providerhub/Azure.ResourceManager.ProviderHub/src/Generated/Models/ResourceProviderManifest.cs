@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
         /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, IList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, TokenAuthConfiguration tokenAuthConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IReadOnlyList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, TokenAuthConfiguration tokenAuthConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal ResourceProviderAuthentication ProviderAuthentication { get; }
 
         /// <summary> The provider authorizations. </summary>
-        public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
+        public IReadOnlyList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
 
         /// <summary> The namespace. </summary>
         public string Namespace { get; }
 
         /// <summary> The services. </summary>
-        public IList<ResourceProviderService> Services { get; }
+        public IReadOnlyList<ResourceProviderService> Services { get; }
 
         /// <summary> The service name. </summary>
         public string ServiceName { get; }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceProviderType? ProviderType { get; }
 
         /// <summary> The required features. </summary>
-        public IList<string> RequiredFeatures { get; }
+        public IReadOnlyList<string> RequiredFeatures { get; }
 
         /// <summary> The features rule. </summary>
         internal ProviderFeaturesRule FeaturesRule { get; }
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
 
         /// <summary> The resource types. </summary>
-        public IList<ProviderResourceType> ResourceTypes { get; }
+        public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
 
         /// <summary> The resource provider management. </summary>
         public ResourceProviderManagement Management { get; }
 
         /// <summary> The capabilities. </summary>
-        public IList<ResourceProviderCapabilities> Capabilities { get; }
+        public IReadOnlyList<ResourceProviderCapabilities> Capabilities { get; }
 
         /// <summary> The cross tenant token validation. </summary>
         public CrossTenantTokenValidation? CrossTenantTokenValidation { get; }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public BinaryData Metadata { get; }
 
         /// <summary> The global notification endpoints. </summary>
-        public IList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
+        public IReadOnlyList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
 
         /// <summary> The re-register subscription metadata. </summary>
         public ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public bool? IsTenantLinkedNotificationEnabled { get; }
 
         /// <summary> The notifications. </summary>
-        public IList<ProviderNotification> Notifications { get; }
+        public IReadOnlyList<ProviderNotification> Notifications { get; }
 
         /// <summary> The linked notification rules. </summary>
-        public IList<FanoutLinkedNotificationRule> LinkedNotificationRules { get; }
+        public IReadOnlyList<FanoutLinkedNotificationRule> LinkedNotificationRules { get; }
 
         /// <summary> The resource provider authorization rules. </summary>
         internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; }
