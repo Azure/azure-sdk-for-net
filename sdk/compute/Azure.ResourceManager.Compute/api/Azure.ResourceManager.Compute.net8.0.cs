@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CapacityReservations { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ReservationType? ReservationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and no longer works. Use SharingSubscriptionResources instead.", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> SharingSubscriptionResources { get { throw null; } }
@@ -4745,7 +4745,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CapacityReservations { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ReservationType? ReservationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and no longer works. Use SharingSubscriptionResources instead.", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> SharingSubscriptionResources { get { throw null; } }
@@ -4861,6 +4861,8 @@ namespace Azure.ResourceManager.Compute.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Compute.Models.CapacityReservationType left, Azure.ResourceManager.Compute.Models.CapacityReservationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ReservationType (Azure.ResourceManager.Compute.Models.CapacityReservationType value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.CapacityReservationType (Azure.ResourceManager.Compute.Models.ReservationType value) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.CapacityReservationType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.CapacityReservationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.CapacityReservationType left, Azure.ResourceManager.Compute.Models.CapacityReservationType right) { throw null; }
