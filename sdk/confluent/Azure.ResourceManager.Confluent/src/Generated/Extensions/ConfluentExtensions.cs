@@ -129,39 +129,39 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ConfluentNetworkGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetNetworkGatewayResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetConfluentNetworkGatewayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkGatewayResource"/> object. </returns>
-        public static NetworkGatewayResource GetNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentNetworkGatewayResource"/> object. </returns>
+        public static ConfluentNetworkGatewayResource GetConfluentNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConfluentArmClient(client).GetNetworkGatewayResource(id);
+            return GetMockableConfluentArmClient(client).GetConfluentNetworkGatewayResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AccessPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ConfluentAccessPointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetAccessPointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetConfluentAccessPointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AccessPointResource"/> object. </returns>
-        public static AccessPointResource GetAccessPointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentAccessPointResource"/> object. </returns>
+        public static ConfluentAccessPointResource GetConfluentAccessPointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConfluentArmClient(client).GetAccessPointResource(id);
+            return GetMockableConfluentArmClient(client).GetConfluentAccessPointResource(id);
         }
 
         /// <summary>

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary></summary>
-    internal partial class AccessPointResourceOperationSource : IOperationSource<AccessPointResource>
+    internal partial class ConfluentAccessPointResourceOperationSource : IOperationSource<ConfluentAccessPointResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AccessPointResourceOperationSource(ArmClient client)
+        internal ConfluentAccessPointResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AccessPointResource IOperationSource<AccessPointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConfluentAccessPointResource IOperationSource<ConfluentAccessPointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AccessPointResourceData data = AccessPointResourceData.DeserializeAccessPointResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AccessPointResource(_client, data);
+            ConfluentAccessPointData data = ConfluentAccessPointData.DeserializeConfluentAccessPointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfluentAccessPointResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AccessPointResource> IOperationSource<AccessPointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConfluentAccessPointResource> IOperationSource<ConfluentAccessPointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AccessPointResourceData data = AccessPointResourceData.DeserializeAccessPointResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AccessPointResource(_client, data);
+            ConfluentAccessPointData data = ConfluentAccessPointData.DeserializeConfluentAccessPointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfluentAccessPointResource(_client, data);
         }
     }
 }

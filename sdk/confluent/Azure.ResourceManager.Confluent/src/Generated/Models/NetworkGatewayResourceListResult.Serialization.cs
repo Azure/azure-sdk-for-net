@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NetworkGatewayResourceData item in Value)
+            foreach (ConfluentNetworkGatewayData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            IList<NetworkGatewayResourceData> value = default;
+            IList<ConfluentNetworkGatewayData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NetworkGatewayResourceData> array = new List<NetworkGatewayResourceData>();
+                    List<ConfluentNetworkGatewayData> array = new List<ConfluentNetworkGatewayData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkGatewayResourceData.DeserializeNetworkGatewayResourceData(item, options));
+                        array.Add(ConfluentNetworkGatewayData.DeserializeConfluentNetworkGatewayData(item, options));
                     }
                     value = array;
                     continue;

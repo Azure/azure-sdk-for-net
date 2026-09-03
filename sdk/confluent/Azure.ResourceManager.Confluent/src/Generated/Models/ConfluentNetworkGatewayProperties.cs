@@ -12,16 +12,16 @@ using Azure.ResourceManager.Confluent;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Network Gateway Properties. </summary>
-    public partial class NetworkGatewayProperties
+    public partial class ConfluentNetworkGatewayProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkGatewayProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentNetworkGatewayProperties"/>. </summary>
         /// <param name="networkGatewayName"> Display name of the network gateway. </param>
         /// <param name="region"> The cloud service provider region for the network gateway. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayName"/> or <paramref name="region"/> is null. </exception>
-        public NetworkGatewayProperties(string networkGatewayName, string region)
+        public ConfluentNetworkGatewayProperties(string networkGatewayName, string region)
         {
             Argument.AssertNotNull(networkGatewayName, nameof(networkGatewayName));
             Argument.AssertNotNull(region, nameof(region));
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Confluent.Models
             Dictionary = new ChangeTrackingList<ConfluentKeyValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkGatewayProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentNetworkGatewayProperties"/>. </summary>
         /// <param name="networkGatewayName"> Display name of the network gateway. </param>
         /// <param name="region"> The cloud service provider region for the network gateway. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="provisioningState"> Provisioning state of the network gateway. </param>
         /// <param name="dictionary"> Additional properties for extensibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkGatewayProperties(string networkGatewayName, string region, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<ConfluentKeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfluentNetworkGatewayProperties(string networkGatewayName, string region, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<ConfluentKeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkGatewayName = networkGatewayName;
             Region = region;

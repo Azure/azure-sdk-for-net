@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Initializes a new instance of <see cref="AccessPointResourceListResult"/>. </summary>
         /// <param name="value"> The AccessPointResource items on this page. </param>
-        internal AccessPointResourceListResult(IEnumerable<AccessPointResourceData> value)
+        internal AccessPointResourceListResult(IEnumerable<ConfluentAccessPointData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="value"> The AccessPointResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessPointResourceListResult(IList<AccessPointResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessPointResourceListResult(IList<ConfluentAccessPointData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> The AccessPointResource items on this page. </summary>
-        public IList<AccessPointResourceData> Value { get; }
+        public IList<ConfluentAccessPointData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

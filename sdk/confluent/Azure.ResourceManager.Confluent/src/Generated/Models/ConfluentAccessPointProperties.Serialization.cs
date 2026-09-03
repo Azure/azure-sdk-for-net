@@ -13,57 +13,57 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Network Gateway Properties. </summary>
-    public partial class NetworkGatewayProperties : IJsonModel<NetworkGatewayProperties>
+    /// <summary> Access Point Properties. </summary>
+    public partial class ConfluentAccessPointProperties : IJsonModel<ConfluentAccessPointProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkGatewayProperties"/> for deserialization. </summary>
-        internal NetworkGatewayProperties()
+        /// <summary> Initializes a new instance of <see cref="ConfluentAccessPointProperties"/> for deserialization. </summary>
+        internal ConfluentAccessPointProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkGatewayProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConfluentAccessPointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkGatewayProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentAccessPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkGatewayProperties(document.RootElement, options);
+                        return DeserializeConfluentAccessPointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkGatewayProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentAccessPointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkGatewayProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentAccessPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkGatewayProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentAccessPointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkGatewayProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfluentAccessPointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkGatewayProperties IPersistableModel<NetworkGatewayProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfluentAccessPointProperties IPersistableModel<ConfluentAccessPointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkGatewayProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfluentAccessPointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkGatewayProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfluentAccessPointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +74,32 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkGatewayProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentAccessPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkGatewayProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentAccessPointProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("networkGatewayName"u8);
-            writer.WriteStringValue(NetworkGatewayName);
+            writer.WritePropertyName("accessPointName"u8);
+            writer.WriteStringValue(AccessPointName);
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
+            writer.WritePropertyName("vnetInjection"u8);
+            writer.WriteObjectValue(VnetInjection, options);
+            if (Optional.IsCollectionDefined(EgressRoutes))
+            {
+                writer.WritePropertyName("egressRoutes"u8);
+                writer.WriteStartArray();
+                foreach (string item in EgressRoutes)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -122,45 +139,73 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkGatewayProperties IJsonModel<NetworkGatewayProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfluentAccessPointProperties IJsonModel<ConfluentAccessPointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkGatewayProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConfluentAccessPointProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkGatewayProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentAccessPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkGatewayProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentAccessPointProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkGatewayProperties(document.RootElement, options);
+            return DeserializeConfluentAccessPointProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkGatewayProperties DeserializeNetworkGatewayProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfluentAccessPointProperties DeserializeConfluentAccessPointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string networkGatewayName = default;
+            string accessPointName = default;
             string region = default;
+            VNetInjectionDetails vnetInjection = default;
+            IList<string> egressRoutes = default;
             SCMetadataEntity metadata = default;
             ConfluentProvisionState? provisioningState = default;
             IList<ConfluentKeyValuePair> dictionary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("networkGatewayName"u8))
+                if (prop.NameEquals("accessPointName"u8))
                 {
-                    networkGatewayName = prop.Value.GetString();
+                    accessPointName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("region"u8))
                 {
                     region = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vnetInjection"u8))
+                {
+                    vnetInjection = VNetInjectionDetails.DeserializeVNetInjectionDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("egressRoutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    egressRoutes = array;
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -200,9 +245,11 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkGatewayProperties(
-                networkGatewayName,
+            return new ConfluentAccessPointProperties(
+                accessPointName,
                 region,
+                vnetInjection,
+                egressRoutes ?? new ChangeTrackingList<string>(),
                 metadata,
                 provisioningState,
                 dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>(),

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkGatewayResource"/> and their operations.
-    /// Each <see cref="NetworkGatewayResource"/> in the collection will belong to the same instance of <see cref="SCEnvironmentRecordResource"/>.
-    /// To get a <see cref="NetworkGatewayResourceCollection"/> instance call the GetNetworkGatewayResources method from an instance of <see cref="SCEnvironmentRecordResource"/>.
+    /// A class representing a collection of <see cref="ConfluentNetworkGatewayResource"/> and their operations.
+    /// Each <see cref="ConfluentNetworkGatewayResource"/> in the collection will belong to the same instance of <see cref="SCEnvironmentRecordResource"/>.
+    /// To get a <see cref="ConfluentNetworkGatewayCollection"/> instance call the GetConfluentNetworkGateways method from an instance of <see cref="SCEnvironmentRecordResource"/>.
     /// </summary>
-    public partial class NetworkGatewayResourceCollection : ArmCollection, IEnumerable<NetworkGatewayResource>, IAsyncEnumerable<NetworkGatewayResource>
+    public partial class ConfluentNetworkGatewayCollection : ArmCollection, IEnumerable<ConfluentNetworkGatewayResource>, IAsyncEnumerable<ConfluentNetworkGatewayResource>
     {
         private readonly ClientDiagnostics _networkGatewayResourcesClientDiagnostics;
         private readonly NetworkGatewayResources _networkGatewayResourcesRestClient;
 
-        /// <summary> Initializes a new instance of NetworkGatewayResourceCollection for mocking. </summary>
-        protected NetworkGatewayResourceCollection()
+        /// <summary> Initializes a new instance of ConfluentNetworkGatewayCollection for mocking. </summary>
+        protected ConfluentNetworkGatewayCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkGatewayResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentNetworkGatewayCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkGatewayResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ConfluentNetworkGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkGatewayResource.ResourceType, out string networkGatewayResourceApiVersion);
-            _networkGatewayResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", NetworkGatewayResource.ResourceType.Namespace, Diagnostics);
-            _networkGatewayResourcesRestClient = new NetworkGatewayResources(_networkGatewayResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkGatewayResourceApiVersion ?? "2026-06-02-preview");
+            TryGetApiVersion(ConfluentNetworkGatewayResource.ResourceType, out string confluentNetworkGatewayApiVersion);
+            _networkGatewayResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentNetworkGatewayResource.ResourceType.Namespace, Diagnostics);
+            _networkGatewayResourcesRestClient = new NetworkGatewayResources(_networkGatewayResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentNetworkGatewayApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NetworkGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkGatewayId, NetworkGatewayResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfluentNetworkGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkGatewayId, ConfluentNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, NetworkGatewayResourceData.ToRequestContent(data), context);
+                HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, ConfluentNetworkGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ConfluentArmOperation<NetworkGatewayResource> operation = new ConfluentArmOperation<NetworkGatewayResource>(
-                    new NetworkGatewayResourceOperationSource(Client),
+                ConfluentArmOperation<ConfluentNetworkGatewayResource> operation = new ConfluentArmOperation<ConfluentNetworkGatewayResource>(
+                    new ConfluentNetworkGatewayResourceOperationSource(Client),
                     _networkGatewayResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NetworkGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string networkGatewayId, NetworkGatewayResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfluentNetworkGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string networkGatewayId, ConfluentNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, NetworkGatewayResourceData.ToRequestContent(data), context);
+                HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, ConfluentNetworkGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ConfluentArmOperation<NetworkGatewayResource> operation = new ConfluentArmOperation<NetworkGatewayResource>(
-                    new NetworkGatewayResourceOperationSource(Client),
+                ConfluentArmOperation<ConfluentNetworkGatewayResource> operation = new ConfluentArmOperation<ConfluentNetworkGatewayResource>(
+                    new ConfluentNetworkGatewayResourceOperationSource(Client),
                     _networkGatewayResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetworkGatewayResource>> GetAsync(string networkGatewayId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentNetworkGatewayResource>> GetAsync(string networkGatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.Get");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkGatewayResourceData> response = Response.FromValue(NetworkGatewayResourceData.FromResponse(result), result);
+                Response<ConfluentNetworkGatewayData> response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetworkGatewayResource> Get(string networkGatewayId, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentNetworkGatewayResource> Get(string networkGatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.Get");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkGatewayResourceData> response = Response.FromValue(NetworkGatewayResourceData.FromResponse(result), result);
+                Response<ConfluentNetworkGatewayData> response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,21 +286,21 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentNetworkGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentNetworkGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkGatewayResourceData, NetworkGatewayResource>(new NetworkGatewayResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfluentNetworkGatewayData, ConfluentNetworkGatewayResource>(new NetworkGatewayResourcesGetAllAsyncCollectionResultOfT(
                 _networkGatewayResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "NetworkGatewayResourceCollection.GetAll"), data => new NetworkGatewayResource(Client, data));
+                "ConfluentNetworkGatewayCollection.GetAll"), data => new ConfluentNetworkGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -321,21 +321,21 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkGatewayResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentNetworkGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentNetworkGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkGatewayResourceData, NetworkGatewayResource>(new NetworkGatewayResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<ConfluentNetworkGatewayData, ConfluentNetworkGatewayResource>(new NetworkGatewayResourcesGetAllCollectionResultOfT(
                 _networkGatewayResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "NetworkGatewayResourceCollection.GetAll"), data => new NetworkGatewayResource(Client, data));
+                "ConfluentNetworkGatewayCollection.GetAll"), data => new ConfluentNetworkGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.Exists");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NetworkGatewayResourceData> response = default;
+                Response<ConfluentNetworkGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetworkGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetworkGatewayResourceData)null, result);
+                        response = Response.FromValue((ConfluentNetworkGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.Exists");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NetworkGatewayResourceData> response = default;
+                Response<ConfluentNetworkGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetworkGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetworkGatewayResourceData)null, result);
+                        response = Response.FromValue((ConfluentNetworkGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -473,11 +473,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<NetworkGatewayResource>> GetIfExistsAsync(string networkGatewayId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ConfluentNetworkGatewayResource>> GetIfExistsAsync(string networkGatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,23 +488,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NetworkGatewayResourceData> response = default;
+                Response<ConfluentNetworkGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetworkGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetworkGatewayResourceData)null, result);
+                        response = Response.FromValue((ConfluentNetworkGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<NetworkGatewayResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConfluentNetworkGatewayResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -534,11 +534,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<NetworkGatewayResource> GetIfExists(string networkGatewayId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ConfluentNetworkGatewayResource> GetIfExists(string networkGatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("NetworkGatewayResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkGatewayResourcesClientDiagnostics.CreateScope("ConfluentNetworkGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,23 +549,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NetworkGatewayResourceData> response = default;
+                Response<ConfluentNetworkGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetworkGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetworkGatewayResourceData)null, result);
+                        response = Response.FromValue((ConfluentNetworkGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<NetworkGatewayResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConfluentNetworkGatewayResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        IEnumerator<NetworkGatewayResource> IEnumerable<NetworkGatewayResource>.GetEnumerator()
+        IEnumerator<ConfluentNetworkGatewayResource> IEnumerable<ConfluentNetworkGatewayResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<NetworkGatewayResource> IAsyncEnumerable<NetworkGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ConfluentNetworkGatewayResource> IAsyncEnumerable<ConfluentNetworkGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

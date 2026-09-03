@@ -1053,10 +1053,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Network Gateway Properties. </param>
-        /// <returns> A new <see cref="Confluent.NetworkGatewayResourceData"/> instance for mocking. </returns>
-        public static NetworkGatewayResourceData NetworkGatewayResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkGatewayProperties properties = default)
+        /// <returns> A new <see cref="Confluent.ConfluentNetworkGatewayData"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayData ConfluentNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentNetworkGatewayProperties properties = default)
         {
-            return new NetworkGatewayResourceData(
+            return new ConfluentNetworkGatewayData(
                 id,
                 name,
                 resourceType,
@@ -1070,12 +1070,12 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="provisioningState"> Provisioning state of the network gateway. </param>
         /// <param name="dictionary"> Additional properties for extensibility. </param>
-        /// <returns> A new <see cref="Models.NetworkGatewayProperties"/> instance for mocking. </returns>
-        public static NetworkGatewayProperties NetworkGatewayProperties(string networkGatewayName = default, string region = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
+        /// <returns> A new <see cref="Models.ConfluentNetworkGatewayProperties"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayProperties ConfluentNetworkGatewayProperties(string networkGatewayName = default, string region = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
         {
             dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
 
-            return new NetworkGatewayProperties(
+            return new ConfluentNetworkGatewayProperties(
                 networkGatewayName,
                 region,
                 metadata,
@@ -1097,10 +1097,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Access Point Properties. </param>
-        /// <returns> A new <see cref="Confluent.AccessPointResourceData"/> instance for mocking. </returns>
-        public static AccessPointResourceData AccessPointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AccessPointProperties properties = default)
+        /// <returns> A new <see cref="Confluent.ConfluentAccessPointData"/> instance for mocking. </returns>
+        public static ConfluentAccessPointData ConfluentAccessPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentAccessPointProperties properties = default)
         {
-            return new AccessPointResourceData(
+            return new ConfluentAccessPointData(
                 id,
                 name,
                 resourceType,
@@ -1116,13 +1116,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="provisioningState"> Provisioning state of the access point. </param>
         /// <param name="dictionary"> Additional properties for extensibility. </param>
-        /// <returns> A new <see cref="Models.AccessPointProperties"/> instance for mocking. </returns>
-        public static AccessPointProperties AccessPointProperties(string accessPointName = default, string region = default, VNetInjectionDetails vnetInjection = default, IEnumerable<string> egressRoutes = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
+        /// <returns> A new <see cref="Models.ConfluentAccessPointProperties"/> instance for mocking. </returns>
+        public static ConfluentAccessPointProperties ConfluentAccessPointProperties(string accessPointName = default, string region = default, VNetInjectionDetails vnetInjection = default, IEnumerable<string> egressRoutes = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
         {
             egressRoutes ??= new ChangeTrackingList<string>();
             dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
 
-            return new AccessPointProperties(
+            return new ConfluentAccessPointProperties(
                 accessPointName,
                 region,
                 vnetInjection,

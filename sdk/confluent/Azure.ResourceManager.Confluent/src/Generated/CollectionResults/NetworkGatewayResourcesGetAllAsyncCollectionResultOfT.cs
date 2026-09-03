@@ -15,7 +15,7 @@ using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    internal partial class NetworkGatewayResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<NetworkGatewayResourceData>
+    internal partial class NetworkGatewayResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<ConfluentNetworkGatewayData>
     {
         private readonly NetworkGatewayResources _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of NetworkGatewayResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NetworkGatewayResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ConfluentNetworkGatewayData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Confluent
                 }
                 NetworkGatewayResourceListResult result = NetworkGatewayResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NetworkGatewayResourceData>.FromValues((IReadOnlyList<NetworkGatewayResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ConfluentNetworkGatewayData>.FromValues((IReadOnlyList<ConfluentNetworkGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

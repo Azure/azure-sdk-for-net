@@ -12,17 +12,17 @@ using Azure.ResourceManager.Confluent;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Access Point Properties. </summary>
-    public partial class AccessPointProperties
+    public partial class ConfluentAccessPointProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessPointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAccessPointProperties"/>. </summary>
         /// <param name="accessPointName"> Display name of the access point. </param>
         /// <param name="region"> The cloud service provider region for the access point. </param>
         /// <param name="vnetInjection"> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointName"/>, <paramref name="region"/> or <paramref name="vnetInjection"/> is null. </exception>
-        public AccessPointProperties(string accessPointName, string region, VNetInjectionDetails vnetInjection)
+        public ConfluentAccessPointProperties(string accessPointName, string region, VNetInjectionDetails vnetInjection)
         {
             Argument.AssertNotNull(accessPointName, nameof(accessPointName));
             Argument.AssertNotNull(region, nameof(region));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Confluent.Models
             Dictionary = new ChangeTrackingList<ConfluentKeyValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessPointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAccessPointProperties"/>. </summary>
         /// <param name="accessPointName"> Display name of the access point. </param>
         /// <param name="region"> The cloud service provider region for the access point. </param>
         /// <param name="vnetInjection"> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="provisioningState"> Provisioning state of the access point. </param>
         /// <param name="dictionary"> Additional properties for extensibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessPointProperties(string accessPointName, string region, VNetInjectionDetails vnetInjection, IList<string> egressRoutes, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<ConfluentKeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfluentAccessPointProperties(string accessPointName, string region, VNetInjectionDetails vnetInjection, IList<string> egressRoutes, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<ConfluentKeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessPointName = accessPointName;
             Region = region;

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AccessPointResource"/> and their operations.
-    /// Each <see cref="AccessPointResource"/> in the collection will belong to the same instance of <see cref="NetworkGatewayResource"/>.
-    /// To get a <see cref="AccessPointResourceCollection"/> instance call the GetAccessPointResources method from an instance of <see cref="NetworkGatewayResource"/>.
+    /// A class representing a collection of <see cref="ConfluentAccessPointResource"/> and their operations.
+    /// Each <see cref="ConfluentAccessPointResource"/> in the collection will belong to the same instance of <see cref="ConfluentNetworkGatewayResource"/>.
+    /// To get a <see cref="ConfluentAccessPointCollection"/> instance call the GetConfluentAccessPoints method from an instance of <see cref="ConfluentNetworkGatewayResource"/>.
     /// </summary>
-    public partial class AccessPointResourceCollection : ArmCollection, IEnumerable<AccessPointResource>, IAsyncEnumerable<AccessPointResource>
+    public partial class ConfluentAccessPointCollection : ArmCollection, IEnumerable<ConfluentAccessPointResource>, IAsyncEnumerable<ConfluentAccessPointResource>
     {
         private readonly ClientDiagnostics _accessPointResourcesClientDiagnostics;
         private readonly AccessPointResources _accessPointResourcesRestClient;
 
-        /// <summary> Initializes a new instance of AccessPointResourceCollection for mocking. </summary>
-        protected AccessPointResourceCollection()
+        /// <summary> Initializes a new instance of ConfluentAccessPointCollection for mocking. </summary>
+        protected ConfluentAccessPointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessPointResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAccessPointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AccessPointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ConfluentAccessPointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AccessPointResource.ResourceType, out string accessPointResourceApiVersion);
-            _accessPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", AccessPointResource.ResourceType.Namespace, Diagnostics);
-            _accessPointResourcesRestClient = new AccessPointResources(_accessPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessPointResourceApiVersion ?? "2026-06-02-preview");
+            TryGetApiVersion(ConfluentAccessPointResource.ResourceType, out string confluentAccessPointApiVersion);
+            _accessPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentAccessPointResource.ResourceType.Namespace, Diagnostics);
+            _accessPointResourcesRestClient = new AccessPointResources(_accessPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentAccessPointApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Confluent
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != NetworkGatewayResource.ResourceType)
+            if (id.ResourceType != ConfluentNetworkGatewayResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkGatewayResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentNetworkGatewayResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AccessPointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accessPointId, AccessPointResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfluentAccessPointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accessPointId, ConfluentAccessPointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessPointResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, AccessPointResourceData.ToRequestContent(data), context);
+                HttpMessage message = _accessPointResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, ConfluentAccessPointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ConfluentArmOperation<AccessPointResource> operation = new ConfluentArmOperation<AccessPointResource>(
-                    new AccessPointResourceOperationSource(Client),
+                ConfluentArmOperation<ConfluentAccessPointResource> operation = new ConfluentArmOperation<ConfluentAccessPointResource>(
+                    new ConfluentAccessPointResourceOperationSource(Client),
                     _accessPointResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AccessPointResource> CreateOrUpdate(WaitUntil waitUntil, string accessPointId, AccessPointResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfluentAccessPointResource> CreateOrUpdate(WaitUntil waitUntil, string accessPointId, ConfluentAccessPointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessPointResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, AccessPointResourceData.ToRequestContent(data), context);
+                HttpMessage message = _accessPointResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, ConfluentAccessPointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ConfluentArmOperation<AccessPointResource> operation = new ConfluentArmOperation<AccessPointResource>(
-                    new AccessPointResourceOperationSource(Client),
+                ConfluentArmOperation<ConfluentAccessPointResource> operation = new ConfluentArmOperation<ConfluentAccessPointResource>(
+                    new ConfluentAccessPointResourceOperationSource(Client),
                     _accessPointResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AccessPointResource>> GetAsync(string accessPointId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentAccessPointResource>> GetAsync(string accessPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.Get");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _accessPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AccessPointResourceData> response = Response.FromValue(AccessPointResourceData.FromResponse(result), result);
+                Response<ConfluentAccessPointData> response = Response.FromValue(ConfluentAccessPointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentAccessPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AccessPointResource> Get(string accessPointId, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentAccessPointResource> Get(string accessPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.Get");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _accessPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AccessPointResourceData> response = Response.FromValue(AccessPointResourceData.FromResponse(result), result);
+                Response<ConfluentAccessPointData> response = Response.FromValue(ConfluentAccessPointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentAccessPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccessPointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentAccessPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentAccessPointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessPointResourceData, AccessPointResource>(new AccessPointResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfluentAccessPointData, ConfluentAccessPointResource>(new AccessPointResourcesGetAllAsyncCollectionResultOfT(
                 _accessPointResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Confluent
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "AccessPointResourceCollection.GetAll"), data => new AccessPointResource(Client, data));
+                "ConfluentAccessPointCollection.GetAll"), data => new ConfluentAccessPointResource(Client, data));
         }
 
         /// <summary>
@@ -322,14 +322,14 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccessPointResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentAccessPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentAccessPointResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessPointResourceData, AccessPointResource>(new AccessPointResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<ConfluentAccessPointData, ConfluentAccessPointResource>(new AccessPointResourcesGetAllCollectionResultOfT(
                 _accessPointResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Confluent
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "AccessPointResourceCollection.GetAll"), data => new AccessPointResource(Client, data));
+                "ConfluentAccessPointCollection.GetAll"), data => new ConfluentAccessPointResource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.Exists");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.Exists");
             scope.Start();
             try
             {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _accessPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AccessPointResourceData> response = default;
+                Response<ConfluentAccessPointData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessPointResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentAccessPointData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessPointResourceData)null, result);
+                        response = Response.FromValue((ConfluentAccessPointData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.Exists");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.Exists");
             scope.Start();
             try
             {
@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _accessPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AccessPointResourceData> response = default;
+                Response<ConfluentAccessPointData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessPointResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentAccessPointData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessPointResourceData)null, result);
+                        response = Response.FromValue((ConfluentAccessPointData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AccessPointResource>> GetIfExistsAsync(string accessPointId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ConfluentAccessPointResource>> GetIfExistsAsync(string accessPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -490,23 +490,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _accessPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AccessPointResourceData> response = default;
+                Response<ConfluentAccessPointData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessPointResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentAccessPointData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessPointResourceData)null, result);
+                        response = Response.FromValue((ConfluentAccessPointData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AccessPointResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConfluentAccessPointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentAccessPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessPointId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AccessPointResource> GetIfExists(string accessPointId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ConfluentAccessPointResource> GetIfExists(string accessPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPointId, nameof(accessPointId));
 
-            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("AccessPointResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _accessPointResourcesClientDiagnostics.CreateScope("ConfluentAccessPointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -551,23 +551,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _accessPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, accessPointId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AccessPointResourceData> response = default;
+                Response<ConfluentAccessPointData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessPointResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentAccessPointData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessPointResourceData)null, result);
+                        response = Response.FromValue((ConfluentAccessPointData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AccessPointResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConfluentAccessPointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentAccessPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        IEnumerator<AccessPointResource> IEnumerable<AccessPointResource>.GetEnumerator()
+        IEnumerator<ConfluentAccessPointResource> IEnumerable<ConfluentAccessPointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AccessPointResource> IAsyncEnumerable<AccessPointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ConfluentAccessPointResource> IAsyncEnumerable<ConfluentAccessPointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

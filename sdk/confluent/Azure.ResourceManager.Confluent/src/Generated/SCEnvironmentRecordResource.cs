@@ -621,11 +621,11 @@ namespace Azure.ResourceManager.Confluent
             return GetSCClusterRecords().Get(clusterId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkGatewayResources in the <see cref="SCEnvironmentRecordResource"/>. </summary>
-        /// <returns> An object representing collection of NetworkGatewayResources and their operations over a NetworkGatewayResource. </returns>
-        public virtual NetworkGatewayResourceCollection GetNetworkGatewayResources()
+        /// <summary> Gets a collection of ConfluentNetworkGateways in the <see cref="SCEnvironmentRecordResource"/>. </summary>
+        /// <returns> An object representing collection of ConfluentNetworkGateways and their operations over a ConfluentNetworkGatewayResource. </returns>
+        public virtual ConfluentNetworkGatewayCollection GetConfluentNetworkGateways()
         {
-            return GetCachedClient(client => new NetworkGatewayResourceCollection(client, Id));
+            return GetCachedClient(client => new ConfluentNetworkGatewayCollection(client, Id));
         }
 
         /// <summary> Get confluent network gateway by Id. </summary>
@@ -634,11 +634,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkGatewayResource>> GetNetworkGatewayResourceAsync(string networkGatewayId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentNetworkGatewayResource>> GetConfluentNetworkGatewayAsync(string networkGatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            return await GetNetworkGatewayResources().GetAsync(networkGatewayId, cancellationToken).ConfigureAwait(false);
+            return await GetConfluentNetworkGateways().GetAsync(networkGatewayId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get confluent network gateway by Id. </summary>
@@ -647,11 +647,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkGatewayResource> GetNetworkGatewayResource(string networkGatewayId, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentNetworkGatewayResource> GetConfluentNetworkGateway(string networkGatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
 
-            return GetNetworkGatewayResources().Get(networkGatewayId, cancellationToken);
+            return GetConfluentNetworkGateways().Get(networkGatewayId, cancellationToken);
         }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary></summary>
-    internal partial class NetworkGatewayResourceOperationSource : IOperationSource<NetworkGatewayResource>
+    internal partial class ConfluentNetworkGatewayResourceOperationSource : IOperationSource<ConfluentNetworkGatewayResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkGatewayResourceOperationSource(ArmClient client)
+        internal ConfluentNetworkGatewayResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkGatewayResource IOperationSource<NetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConfluentNetworkGatewayResource IOperationSource<ConfluentNetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkGatewayResourceData data = NetworkGatewayResourceData.DeserializeNetworkGatewayResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkGatewayResource(_client, data);
+            ConfluentNetworkGatewayData data = ConfluentNetworkGatewayData.DeserializeConfluentNetworkGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfluentNetworkGatewayResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkGatewayResource> IOperationSource<NetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConfluentNetworkGatewayResource> IOperationSource<ConfluentNetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkGatewayResourceData data = NetworkGatewayResourceData.DeserializeNetworkGatewayResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkGatewayResource(_client, data);
+            ConfluentNetworkGatewayData data = ConfluentNetworkGatewayData.DeserializeConfluentNetworkGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfluentNetworkGatewayResource(_client, data);
         }
     }
 }

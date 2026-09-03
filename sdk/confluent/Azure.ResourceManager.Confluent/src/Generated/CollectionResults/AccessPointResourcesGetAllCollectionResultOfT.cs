@@ -14,7 +14,7 @@ using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    internal partial class AccessPointResourcesGetAllCollectionResultOfT : Pageable<AccessPointResourceData>
+    internal partial class AccessPointResourcesGetAllCollectionResultOfT : Pageable<ConfluentAccessPointData>
     {
         private readonly AccessPointResources _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AccessPointResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AccessPointResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ConfluentAccessPointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Confluent
                 }
                 AccessPointResourceListResult result = AccessPointResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AccessPointResourceData>.FromValues((IReadOnlyList<AccessPointResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ConfluentAccessPointData>.FromValues((IReadOnlyList<ConfluentAccessPointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

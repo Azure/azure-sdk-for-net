@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkGatewayResourceListResult"/>. </summary>
         /// <param name="value"> The NetworkGatewayResource items on this page. </param>
-        internal NetworkGatewayResourceListResult(IEnumerable<NetworkGatewayResourceData> value)
+        internal NetworkGatewayResourceListResult(IEnumerable<ConfluentNetworkGatewayData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="value"> The NetworkGatewayResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkGatewayResourceListResult(IList<NetworkGatewayResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkGatewayResourceListResult(IList<ConfluentNetworkGatewayData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> The NetworkGatewayResource items on this page. </summary>
-        public IList<NetworkGatewayResourceData> Value { get; }
+        public IList<ConfluentNetworkGatewayData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
