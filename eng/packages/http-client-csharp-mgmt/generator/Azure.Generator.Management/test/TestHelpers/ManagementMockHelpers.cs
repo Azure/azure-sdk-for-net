@@ -37,7 +37,8 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             string? primaryNamespace = null,
             IEnumerable<string>? customizationSources = null,
             Func<Compilation?>? customizationCompilation = null,
-            Func<Compilation?>? lastContractCompilation = null)
+            Func<Compilation?>? lastContractCompilation = null,
+            ApiCompatBaseline? apiCompatBaseline = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? ["2023-01-01"];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -84,7 +85,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
                     ? null
                     : Helpers.BuildCompilation(customizationSources.Select((source, index) => ($"Customization{index}.cs", source))));
             var lastContract = lastContractCompilation?.Invoke();
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(customizationCompilationResult, lastContract)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(customizationCompilationResult, lastContract, apiCompatBaseline ?? ApiCompatBaseline.Empty)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             var configureMethod = typeof(CodeModelGenerator).GetMethod(
                 "Configure",

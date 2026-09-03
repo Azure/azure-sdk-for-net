@@ -19,8 +19,9 @@
 # the same engine via its CLI surface (`azsdk tsp client customized-update`).
 #
 # Safety: the agent job is read-only. All writes go through gh-aw safe-outputs jobs:
-#   * `push-to-pull-request-branch` commits the fix to the PR branch (forks refused,
-#     gated on the `auto-sdk-build-fix` label, protected-files denylist enforced).
+#   * `push-to-pull-request-branch` commits a fix only after the final package build is
+#     green (forks refused, gated on the `auto-sdk-build-fix` label, protected-files
+#     denylist enforced).
 #   * `add-comment` posts the audit summary.
 # There is NO auto-merge — human review stays mandatory. The independent required
 # safety gate (#59654) is the external backstop.
@@ -124,7 +125,7 @@ safe-outputs:
         else
           echo "::notice::No checkout yet at this point in the job; skipping tagOpt config."
         fi
-  # Commit the repair (custom-code edits + regenerated Generated/) to the PR branch.
+  # Commit a successful repair (custom-code edits + regenerated Generated/) to the PR branch.
   # Forks are refused by this safe output; the label is re-checked at apply time; the
   # protected-files denylist blocks .github/, dot-dirs, manifests and instruction files.
   push-to-pull-request-branch:
@@ -148,7 +149,7 @@ concurrency: sdk-build-repair-${{ github.event.pull_request.number || github.eve
 
 You are the Azure SDK for .NET **auto-build-repair** agent for `${{ github.repository }}`.
 
-A release-planner **Auto SDK PR** (#${{ github.event.pull_request.number || github.event.issue.number }}) was generated from a pinned TypeSpec spec and **fails to build because of hand-written customization (custom-code) drift**. Your job is to make the failing package build again by repairing **only custom (non-generated) code**, then commit the fix back to the PR for human review.
+A release-planner **Auto SDK PR** (#${{ github.event.pull_request.number || github.event.issue.number }}) was generated from a pinned TypeSpec spec and **fails to build because of hand-written customization (custom-code) drift**. Your job is to make the failing package build again by repairing **only custom (non-generated) code**. Commit the fix back to the PR for human review only after the final engine result proves that the package build is green.
 
 Follow the checked-in skill **exactly** — it is the source of truth for the procedure, scope, and stop conditions:
 
@@ -196,10 +197,10 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 0. **Verify eligibility first** (see the Eligibility section above) and bail if it fails — before any checkout/build of PR code.
 1. **One engine only.** Drive `azsdk tsp client customized-update` with `--edit-scope CustomCode`. Do **not** hand-edit code, and do **not** use any other fix engine.
 2. **Never edit spec inputs.** Do not modify `client.tsp`, `tspconfig.yaml`, `main.tsp`, any TypeSpec source, or move the pinned commit in `tsp-location.yaml`. `--edit-scope CustomCode` enforces this.
-3. **Commit the regenerated `Generated/`** alongside the custom-code edits — the guard is reproducibility from unchanged inputs, not a frozen `Generated/`.
+3. **Commit the regenerated `Generated/` on a green build only**, alongside the custom-code edits — the guard is reproducibility from unchanged inputs, not a frozen `Generated/`. Never commit custom or generated changes while the final build is red.
 4. **Stay out of infra.** Never touch `.github/`, `eng/`, shared props/targets, pipelines, package metadata, or secrets. (The push safe-output additionally enforces a protected-files denylist.)
-5. **Fully headless.** Never prompt for input. Honor `maxIterations` from `repair-config.yml`; if it is reached without a green build, commit progress and report.
-6. **No auto-merge.** Fixes land as reviewable commits only.
+5. **Fully headless.** Never prompt for input. Honor `maxIterations` from `repair-config.yml`; if it is reached without a green build, do not commit the attempted changes. Report the failure and remaining errors.
+6. **No auto-merge.** Successful fixes land as reviewable commits only.
 7. **Work only in the existing checkout.** The PR is already checked out at `$GITHUB_WORKSPACE`. **Never `git clone` the repository or create a second working copy** (e.g. under `/tmp` or the agent working dir) — a duplicate clone bloats the run artifacts by hundreds of MB and can stall or cancel the downstream comment-delivery job.
 
 ## Steps
@@ -209,7 +210,7 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Create `$RUNNER_TEMP/repair-results` and collect the package's build errors by building the changed package, **redirecting the raw build output to `$RUNNER_TEMP/repair-results/pre-repair-errors.txt`** — the Step 5 emitter parses this to list the errors it fixed (a first-try success leaves no `buildResult` in the engine result, so this capture is the only source for the "Build Errors Fixed" list). This is a mechanical redirect, not authored content. **If the package already builds cleanly (no errors), there is nothing to repair: skip Steps 2–4, render the already-green summary using the `skipped_already_green` invocation in Step 5, post it, and end.**
 2. Apply the `auto-build-repair` skill workflow: call the engine with `--edit-scope CustomCode`, the `--package-path`, and the build errors as `--customization-request`, **redirecting each attempt's `-o json` output to `$RUNNER_TEMP/repair-results/result-<n>.json`**; re-invoke (idempotent) only while the error set keeps shrinking, up to `maxIterations`.
 3. Inspect each structured result. Stop on the skill's stop conditions (`SpecChangeRequired`, `RegenerateFailed` at the pinned commit, suspected generator bug, or `maxIterations` reached) — do not retry past them or escalate to a human prompt.
-4. **Commit the result to the PR branch** using the `push-to-pull-request-branch` safe output (custom-code edits + regenerated `Generated/`). If the only viable fix is a spec/decorator change, push nothing and report it as out of scope (requires a separate spec-repo PR).
+4. **Gate the push on a green build.** Inspect the final `result-<n>.json` and invoke the `push-to-pull-request-branch` safe output (custom-code edits + regenerated `Generated/`) **only when its `success` property is exactly `true`**. That structured success value is the engine's proof that the final package build passed. Do not infer a green build from a successful tool invocation, a smaller error set, applied patches, or exhausted iterations. For every other terminal state — including `SpecChangeRequired`, `RegenerateFailed`, no progress, a suspected generator bug, `maxIterations` reached, a missing/unparseable final result, or any final result whose `success` is not `true` — **do not invoke `push-to-pull-request-branch`**. Render and post the failure report with `add-comment` only; attempted repair changes remain uncommitted in the ephemeral workspace and are discarded when the run ends.
 5. **Render the summary comment deterministically and post it verbatim.** Do **not** author the comment yourself — run the checked-in emitter, which builds the entire comment (classified build errors, files changed with a generated-vs-custom split, iterations, final result, and the machine-readable telemetry object) from the result files, `git`, and env only:
 
    ```bash
