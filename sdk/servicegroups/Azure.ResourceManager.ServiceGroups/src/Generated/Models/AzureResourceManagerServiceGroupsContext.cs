@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceGroups
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ParentServiceGroupProperties))]
-    [ModelReaderWriterBuildable(typeof(ServiceGroupCollectionResponse))]
+    [ModelReaderWriterBuildable(typeof(ServiceGroupAttributes))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupData))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupResource))]
