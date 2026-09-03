@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Relationships.Mocking
 
         private ClientDiagnostics ContainsRelationshipsClientDiagnostics => _containsRelationshipsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relationships.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainsRelationships ContainsRelationshipsRestClient => _containsRelationshipsRestClient ??= new ContainsRelationships(ContainsRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private ContainsRelationships ContainsRelationshipsRestClient => _containsRelationshipsRestClient ??= new ContainsRelationships(ContainsRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         /// <summary>
         /// List ContainsRelationship resources by resource group
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>

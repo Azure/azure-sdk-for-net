@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Relationships
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipListResult))]
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipProperties))]
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipResource))]
+    [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipsByServiceGroupResource))]
     [ModelReaderWriterBuildable(typeof(RelationshipMetadata))]
     [ModelReaderWriterBuildable(typeof(RelationshipOriginInformation))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipData))]
