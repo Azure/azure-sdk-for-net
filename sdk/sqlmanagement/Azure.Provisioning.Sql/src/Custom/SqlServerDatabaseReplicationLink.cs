@@ -1,12 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.Provisioning.Sql;
 
 public partial class SqlServerDatabaseReplicationLink
 {
+    /// <summary>
+    /// Time at which the link was created.
+    /// Please use <see cref="StartsOn"/> instead.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+    public BicepValue<DateTimeOffset> StartOn => StartsOn;
+
     /// <summary>
     /// This property is obsolete and will be removed in a future version.
     /// Please use <see cref="Name"/> instead.

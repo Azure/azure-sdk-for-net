@@ -3332,6 +3332,8 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> ReplicationMode { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ReplicationLinkState> ReplicationState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlServerDatabaseReplicationRole> Role { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -3485,7 +3487,11 @@ namespace Azure.Provisioning.Sql
         public SqlServerJobExecution(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreateOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> CurrentAttempts { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use CurrentAttemptStartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CurrentAttemptStartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CurrentAttemptStartsOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> JobExecutionId { get { throw null; } }
@@ -3495,6 +3501,8 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServerJob Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobExecutionProvisioningState> ProvisioningState { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> StepId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> StepName { get { throw null; } }
@@ -3566,10 +3574,14 @@ namespace Azure.Provisioning.Sql
     public partial class SqlServerJobSchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlServerJobSchedule() { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> Interval { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlServerJobScheduleType> ScheduleType { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
