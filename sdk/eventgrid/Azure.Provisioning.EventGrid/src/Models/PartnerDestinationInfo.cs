@@ -90,6 +90,7 @@ public partial class PartnerDestinationInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _endpointType = DefineProperty<PartnerEndpointType>("EndpointType", ["endpointType"], isRequired: true);
         _azureSubscriptionId = DefineProperty<string>("AzureSubscriptionId", ["azureSubscriptionId"]);
         _resourceGroupName = DefineProperty<string>("ResourceGroupName", ["resourceGroupName"]);
         _name = DefineProperty<string>("Name", ["name"]);

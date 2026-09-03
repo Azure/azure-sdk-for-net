@@ -33,5 +33,6 @@ public partial class PartnerClientAuthentication : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _clientAuthenticationType = DefineProperty<PartnerClientAuthenticationType>("ClientAuthenticationType", ["clientAuthenticationType"], isRequired: true);
     }
 }
