@@ -26,6 +26,7 @@
       "$id": "3",
       "kind": "model",
       "name": "PagedUser",
+      "apiVersions": [],
       "namespace": "Azure.Core",
       "crossLanguageDefinitionId": "Azure.Core.Page",
       "usage": "Output,Json",
@@ -42,6 +43,7 @@
           "$id": "4",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The User items on this page",
           "type": {
@@ -52,6 +54,7 @@
               "$id": "6",
               "kind": "model",
               "name": "User",
+              "apiVersions": [],
               "namespace": "_Specs_.Azure.Payload.Pageable",
               "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.User",
               "usage": "Output,Json",
@@ -68,6 +71,7 @@
                   "$id": "7",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [],
                   "serializedName": "name",
                   "doc": "User name",
                   "type": {
@@ -114,6 +118,7 @@
           "$id": "9",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {

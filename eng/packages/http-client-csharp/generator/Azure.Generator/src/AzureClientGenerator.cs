@@ -31,7 +31,9 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
-    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition { get; } = new();
+    private RawRequestUriBuilderExtensionsDefinition? _rawRequestUriBuilderExtensionsDefinition;
+    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition =>
+        _rawRequestUriBuilderExtensionsDefinition ??= new();
 
     internal RequestHeaderExtensionsDefinition RequestHeaderExtensionsDefinition { get; } = new();
 
@@ -100,6 +102,8 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new SystemTextJsonConverterVisitor());
         AddVisitor(new MultiPartFormDataVisitor());
         AddVisitor(new MultiPartFormDataConvenienceMethodVisitor());
+        AddVisitor(new OptionalResponseBodyVisitor());
+        AddVisitor(new StreamingResponseVisitor());
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
         AddVisitor(new ClientSettingsVisitor());

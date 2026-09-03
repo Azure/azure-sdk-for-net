@@ -424,8 +424,8 @@ namespace Azure.Provisioning.ServiceFabric
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabric.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterUpgradeMode> UpgradeMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseEndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseEndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterUpgradeCadence> UpgradeWave { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VmImage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.VmssZonalUpgradeMode> VmssZonalUpgradeMode { get { throw null; } set { } }
@@ -513,19 +513,24 @@ namespace Azure.Provisioning.ServiceFabric
         public ServicePlacementPolicyDescription() { }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ServiceResourceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ServiceResourceProperties : Azure.Provisioning.ServiceFabric.ServiceResourcePropertiesBase
     {
         public ServiceResourceProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ApplicationMoveCost> DefaultMoveCost { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabric.PartitionSchemeDescription PartitionDescription { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PlacementConstraints { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ServiceDnsName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceLoadMetricDescription> ServiceLoadMetrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ArmServicePackageActivationMode> ServicePackageActivationMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServicePlacementPolicyDescription> ServicePlacementPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceTypeName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ServiceResourcePropertiesBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ServiceResourcePropertiesBase() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ApplicationMoveCost> DefaultMoveCost { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PlacementConstraints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceLoadMetricDescription> ServiceLoadMetrics { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServicePlacementPolicyDescription> ServicePlacementPolicies { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ServiceTypeDeltaHealthPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct

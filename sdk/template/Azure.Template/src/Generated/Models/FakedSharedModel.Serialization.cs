@@ -81,7 +81,7 @@ namespace Azure.Template
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
             writer.WritePropertyName("createdAt"u8);
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,7 +125,7 @@ namespace Azure.Template
                 return null;
             }
             string tag = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.Template
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +144,7 @@ namespace Azure.Template
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FakedSharedModel(tag, createdAt, additionalBinaryDataProperties);
+            return new FakedSharedModel(tag, createdOn, additionalBinaryDataProperties);
         }
     }
 }

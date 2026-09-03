@@ -120,6 +120,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("blueprint_reference"u8);
                 writer.WriteObjectValue(BlueprintReference, options);
             }
+            if (Optional.IsDefined(DigitalWorkerType))
+            {
+                writer.WritePropertyName("digital_worker_type"u8);
+                writer.WriteStringValue(DigitalWorkerType.Value.ToString());
+            }
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
@@ -183,6 +188,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             ProjectsAgentDefinition definition = default;
             AgentBlueprintReference blueprintReference = default;
+            DigitalWorkerType? digitalWorkerType = default;
             bool? draft = default;
             AgentEndpointConfiguration agentEndpoint = default;
             AgentCard agentCard = default;
@@ -243,6 +249,15 @@ namespace Azure.AI.Projects.Agents
                     blueprintReference = AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("digital_worker_type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    digitalWorkerType = new DigitalWorkerType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("draft"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -282,6 +297,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 definition,
                 blueprintReference,
+                digitalWorkerType,
                 draft,
                 agentEndpoint,
                 agentCard,

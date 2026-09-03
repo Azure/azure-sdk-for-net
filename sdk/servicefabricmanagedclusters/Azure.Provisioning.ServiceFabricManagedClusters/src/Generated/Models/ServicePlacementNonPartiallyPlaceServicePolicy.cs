@@ -13,13 +13,13 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
         public ServicePlacementNonPartiallyPlaceServicePolicy()
         {
+            Type.Assign(ServicePlacementPolicyType.NonPartiallyPlaceService);
         }
 
         /// <summary> Define all the provisionable properties for ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "NonPartiallyPlaceService");
             DefineAdditionalProperties();
         }
 

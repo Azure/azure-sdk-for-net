@@ -4,10 +4,12 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Telemetry;
 
+[Experimental("OPENAI001")]
 internal sealed class TelemetryAsyncStreamingCollectionResult : AsyncCollectionResult<StreamingResponseUpdate>
 {
     private readonly AsyncCollectionResult<StreamingResponseUpdate> _innerResult;

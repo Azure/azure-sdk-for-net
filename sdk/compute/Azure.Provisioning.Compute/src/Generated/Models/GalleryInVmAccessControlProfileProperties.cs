@@ -6,17 +6,15 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Describes the properties of a gallery inVMAccessControlProfile. </summary>
-    public partial class GalleryInVmAccessControlProfileProperties : ProvisionableConstruct
+    public partial class GalleryInVmAccessControlProfileProperties : GalleryResourceProfilePropertiesBase
     {
         private BicepValue<string> _description;
         private BicepValue<SupportedOperatingSystemType> _osType;
         private BicepValue<ComputeGalleryEndpointType> _applicableHostEndpoint;
-        private BicepValue<GalleryProvisioningState> _provisioningState;
 
         /// <summary> Creates a new GalleryInVmAccessControlProfileProperties. </summary>
         public GalleryInVmAccessControlProfileProperties()
@@ -68,16 +66,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<GalleryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GalleryInVmAccessControlProfileProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -85,7 +73,6 @@ namespace Azure.Provisioning.Compute
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _osType = DefineProperty<SupportedOperatingSystemType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _applicableHostEndpoint = DefineProperty<ComputeGalleryEndpointType>(nameof(ApplicableHostEndpoint), new string[] { "applicableHostEndpoint" }, isRequired: true);
-            _provisioningState = DefineProperty<GalleryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

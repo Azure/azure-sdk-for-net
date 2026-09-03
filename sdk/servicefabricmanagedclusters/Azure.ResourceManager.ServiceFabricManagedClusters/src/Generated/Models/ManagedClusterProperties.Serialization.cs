@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             string dnsName = default;
             string fqdn = default;
-            IPAddress iPv4Address = default;
+            IPAddress ipv4Address = default;
             Guid? clusterId = default;
             ServiceFabricManagedClusterState? clusterState = default;
             IReadOnlyList<BinaryData> clusterCertificateThumbprints = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             bool? isIPv6Enabled = default;
             string subnetId = default;
             IList<ManagedClusterIPTag> ipTags = default;
-            IPAddress iPv6Address = default;
+            IPAddress ipv6Address = default;
             bool? isServicePublicIPEnabled = default;
             IList<ManagedClusterSubnet> auxiliarySubnets = default;
             IList<ManagedClusterServiceEndpoint> serviceEndpoints = default;
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
+                    ipv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clusterId"u8))
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    iPv6Address = IPAddress.Parse(prop.Value.GetString());
+                    ipv6Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableServicePublicIP"u8))
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterProperties(
                 dnsName,
                 fqdn,
-                iPv4Address,
+                ipv4Address,
                 clusterId,
                 clusterState,
                 clusterCertificateThumbprints ?? new ChangeTrackingList<BinaryData>(),
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 isIPv6Enabled,
                 subnetId,
                 ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>(),
-                iPv6Address,
+                ipv6Address,
                 isServicePublicIPEnabled,
                 auxiliarySubnets ?? new ChangeTrackingList<ManagedClusterSubnet>(),
                 serviceEndpoints ?? new ChangeTrackingList<ManagedClusterServiceEndpoint>(),

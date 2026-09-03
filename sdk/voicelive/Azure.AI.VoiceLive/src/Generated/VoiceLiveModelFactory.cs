@@ -325,19 +325,6 @@ namespace Azure.AI.VoiceLive
                 volume);
         }
 
-        /// <summary>
-        /// Azure realtime native voice configuration. These voices are natively
-        /// supported by the `azure-realtime` model and offer higher quality speech
-        /// synthesis than standard Azure voices. Only valid when using the
-        /// `azure-realtime` model.
-        /// </summary>
-        /// <param name="name"> The name of the Azure realtime native voice. </param>
-        /// <returns> A new <see cref="VoiceLive.AzureRealtimeNativeVoice"/> instance for mocking. </returns>
-        public static AzureRealtimeNativeVoice AzureRealtimeNativeVoice(AzureRealtimeNativeVoiceName name = default)
-        {
-            return new AzureRealtimeNativeVoice("azure-realtime-native", name, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Azure semantic end-of-utterance detection (default). </summary>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
         /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
@@ -2462,7 +2449,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        ///             For pcm16: 8000, 16000, 24000For g711_alaw/g711_ulaw: 8000
+        ///                         For pcm16: 8000, 16000, 24000For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -2477,16 +2464,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
         /// <param name="reasoningEffort">
         /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
-        ///             Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        ///                         Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
         /// </param>
         /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
         /// <param name="include"> List of include options for the session (e.g., logprobs, phrases, file search results). </param>
         /// <param name="metadata">
         /// Set of up to 16 key-value pairs that can be attached to the session. This is useful for
-        ///             storing additional information about the session in a structured format, such as tracking IDs,
-        ///             user context, or application-specific labels. These key-value pairs are also included in
-        ///             Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
-        ///             long and values can be a maximum of 512 characters long.
+        ///                         storing additional information about the session in a structured format, such as tracking IDs,
+        ///                         user context, or application-specific labels. These key-value pairs are also included in
+        ///                         Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
+        ///                         long and values can be a maximum of 512 characters long.
         /// </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
@@ -2504,10 +2491,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        ///                         
-        ///                         - For pcm16: 8000, 16000, 24000
-        ///                         
-        ///                         - For g711_alaw/g711_ulaw: 8000
+        ///                                     
+        ///                                     - For pcm16: 8000, 16000, 24000
+        ///                                     
+        ///                                     - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -2530,9 +2517,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// OpenAI voice configuration with explicit type field.
-        ///                         
-        ///                         This provides a unified interface for OpenAI voices, complementing the
-        ///                         existing string-based OAIVoice for backward compatibility.
+        ///                                     
+        ///                                     This provides a unified interface for OpenAI voices, complementing the
+        ///                                     existing string-based OAIVoice for backward compatibility.
         /// </summary>
         /// <param name="type"> The type of the voice. </param>
         /// <param name="name"> The name of the OpenAI voice. </param>
@@ -2616,37 +2603,37 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"></param>
         /// <param name="status">
         /// The final status of the response.
-        ///                         
-        ///                         One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
+        ///                                     
+        ///                                     One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
         /// <param name="output"> The list of output items generated by the response. </param>
         /// <param name="usage">
         /// Usage statistics for the Response, this will correspond to billing. A
-        ///                         VoiceLive API session will maintain a conversation context and append new
-        ///                         Items to the Conversation, thus output from previous turns (text and
-        ///                         audio tokens) will become the input for later turns.
+        ///                                     VoiceLive API session will maintain a conversation context and append new
+        ///                                     Items to the Conversation, thus output from previous turns (text and
+        ///                                     audio tokens) will become the input for later turns.
         /// </param>
         /// <param name="conversationId">
         /// Which conversation the response is added to, determined by the `conversation`
-        ///                         field in the `response.create` event. If `auto`, the response will be added to
-        ///                         the default conversation and the value of `conversation_id` will be an id like
-        ///                         `conv_1234`. If `none`, the response will not be added to any conversation and
-        ///                         the value of `conversation_id` will be `null`. If responses are being triggered
-        ///                         by server VAD, the response will be added to the default conversation, thus
-        ///                         the `conversation_id` will be an id like `conv_1234`.
+        ///                                     field in the `response.create` event. If `auto`, the response will be added to
+        ///                                     the default conversation and the value of `conversation_id` will be an id like
+        ///                                     `conv_1234`. If `none`, the response will not be added to any conversation and
+        ///                                     the value of `conversation_id` will be `null`. If responses are being triggered
+        ///                                     by server VAD, the response will be added to the default conversation, thus
+        ///                                     the `conversation_id` will be an id like `conv_1234`.
         /// </param>
         /// <param name="voice"> supported voice identifiers and configurations. </param>
         /// <param name="modalities">
         /// The set of modalities the model used to respond. If there are multiple modalities,
-        ///                         the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
-        ///                         could be responding in either text or audio.
+        ///                                     the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
+        ///                                     could be responding in either text or audio.
         /// </param>
         /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens">
         /// Maximum number of output tokens for a single assistant response,
-        ///                             inclusive of tool calls, that was used in this response.
+        ///                                         inclusive of tool calls, that was used in this response.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2698,14 +2685,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// This event is the output of audio transcription for user audio written to the
-        ///                         user audio buffer. Transcription begins when the input audio buffer is
-        ///                         committed by the client or server (in `server_vad` mode). Transcription runs
-        ///                         asynchronously with Response creation, so this event may come before or after
-        ///                         the Response events.
-        ///                         VoiceLive API models accept audio natively, and thus input transcription is a
-        ///                         separate process run on a separate ASR (Automatic Speech Recognition) model.
-        ///                         The transcript may diverge somewhat from the model's interpretation, and
-        ///                         should be treated as a rough guide.
+        ///                                     user audio buffer. Transcription begins when the input audio buffer is
+        ///                                     committed by the client or server (in `server_vad` mode). Transcription runs
+        ///                                     asynchronously with Response creation, so this event may come before or after
+        ///                                     the Response events.
+        ///                                     VoiceLive API models accept audio natively, and thus input transcription is a
+        ///                                     separate process run on a separate ASR (Automatic Speech Recognition) model.
+        ///                                     The transcript may diverge somewhat from the model's interpretation, and
+        ///                                     should be treated as a rough guide.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>
@@ -2720,10 +2707,10 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Returned when an earlier assistant audio message item is truncated by the
-        ///                         client with a `conversation.item.truncate` event. This event is used to
-        ///                         synchronize the server's understanding of the audio with the client's playback.
-        ///                         This action will truncate the audio and remove the server-side text transcript
-        ///                         to ensure there is no text in the context that hasn't been heard by the user.
+        ///                                     client with a `conversation.item.truncate` event. This event is used to
+        ///                                     synchronize the server's understanding of the audio with the client's playback.
+        ///                                     This action will truncate the audio and remove the server-side text transcript
+        ///                                     to ensure there is no text in the context that hasn't been heard by the user.
         /// </summary>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>

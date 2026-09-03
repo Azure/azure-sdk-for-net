@@ -953,6 +953,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private readonly int _dummyPrimitive;
         public EntitySignalRefreshInterval(string value) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT10M { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT15M { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT1H { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT1M { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT2H { get { throw null; } }

@@ -89,6 +89,21 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("parameterGroup"u8);
                 writer.WriteObjectValue(ParameterGroup, options);
             }
+            if (Optional.IsDefined(AuthConfig))
+            {
+                writer.WritePropertyName("authConfig"u8);
+                writer.WriteObjectValue(AuthConfig, options);
+            }
+            if (Optional.IsDefined(ComputeModel))
+            {
+                writer.WritePropertyName("computeModel"u8);
+                writer.WriteObjectValue(ComputeModel, options);
+            }
+            if (Optional.IsDefined(Mirroring))
+            {
+                writer.WritePropertyName("mirroring"u8);
+                writer.WriteObjectValue(Mirroring, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +149,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string administratorLoginPassword = default;
             int? vCores = default;
             HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default;
+            HorizonDBClusterAuthConfig authConfig = default;
+            HorizonDBComputeModel computeModel = default;
+            HorizonDBClusterMirroring mirroring = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,12 +178,46 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     parameterGroup = HorizonDBClusterParameterGroupConnectionProperties.DeserializeHorizonDBClusterParameterGroupConnectionProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("authConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authConfig = HorizonDBClusterAuthConfig.DeserializeHorizonDBClusterAuthConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("computeModel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeModel = HorizonDBComputeModel.DeserializeHorizonDBComputeModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("mirroring"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mirroring = HorizonDBClusterMirroring.DeserializeHorizonDBClusterMirroring(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBClusterPatchProperties(administratorLoginPassword, vCores, parameterGroup, additionalBinaryDataProperties);
+            return new HorizonDBClusterPatchProperties(
+                administratorLoginPassword,
+                vCores,
+                parameterGroup,
+                authConfig,
+                computeModel,
+                mirroring,
+                additionalBinaryDataProperties);
         }
     }
 }

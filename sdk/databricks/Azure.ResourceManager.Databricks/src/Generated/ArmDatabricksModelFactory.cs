@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Databricks;
 using Azure.ResourceManager.Models;
@@ -94,11 +93,11 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="customVirtualNetworkId"> The ID of a Virtual Network where this Databricks Cluster should be created. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customPublicSubnetName"> The name of a Public Subnet within the Virtual Network. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customPrivateSubnetName"> The name of the Private Subnet within the Virtual Network. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="enableNoPublicIp"> Boolean indicating whether the public IP should be disabled. Default value is true. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="enableNoPublicIP"> Boolean indicating whether the public IP should be disabled. Default value is true. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="loadBalancerBackendPoolName"> Name of the outbound Load Balancer Backend Pool for Secure Cluster Connectivity (No Public IP). Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="loadBalancerId"> Resource URI of Outbound Load balancer for Secure Cluster Connectivity (No Public IP) workspace. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="natGatewayName"> Name of the NAT gateway for Secure Cluster Connectivity (No Public IP) workspace subnets. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="publicIpName"> Name of the Public IP for No Public IP workspace with managed vNet. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="publicIPName"> Name of the Public IP for No Public IP workspace with managed vNet. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="prepareEncryption"> Prepare the workspace for encryption. Enables the Managed Identity for managed storage account. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="encryption"> Contains the encryption details for Customer-Managed Key (CMK) enabled workspace.Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the DBFS root file system will be enabled with secondary layer of encryption with platform managed keys for data at rest. Not allowed in Serverless ComputeMode workspace. </param>
@@ -107,18 +106,18 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="vnetAddressPrefix"> Address prefix for Managed virtual network. Default value for this input is 10.139. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="resourceTags"> Tags applied to resources under Managed resource group. These can be updated by updating tags at workspace level. Not allowed in Serverless ComputeMode workspace. </param>
         /// <returns> A new <see cref="Models.WorkspaceCustomProperties"/> instance for mocking. </returns>
-        public static WorkspaceCustomProperties WorkspaceCustomProperties(WorkspaceCustomStringParameterValue amlWorkspaceId = default, WorkspaceCustomStringParameterValue customVirtualNetworkId = default, WorkspaceCustomStringParameterValue customPublicSubnetName = default, WorkspaceCustomStringParameterValue customPrivateSubnetName = default, WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIp = default, WorkspaceCustomStringParameterValue loadBalancerBackendPoolName = default, WorkspaceCustomStringParameterValue loadBalancerId = default, WorkspaceCustomStringParameterValue natGatewayName = default, WorkspaceCustomStringParameterValue publicIpName = default, WorkspaceCustomBooleanParameterValue prepareEncryption = default, WorkspaceEncryptionParameterValue encryption = default, WorkspaceCustomBooleanParameterValue requireInfrastructureEncryption = default, WorkspaceCustomStringParameterValue storageAccountName = default, WorkspaceCustomStringParameterValue storageAccountSkuName = default, WorkspaceCustomStringParameterValue vnetAddressPrefix = default, WorkspaceCustomObjectParameterValue resourceTags = default)
+        public static WorkspaceCustomProperties WorkspaceCustomProperties(WorkspaceCustomStringParameterValue amlWorkspaceId = default, WorkspaceCustomStringParameterValue customVirtualNetworkId = default, WorkspaceCustomStringParameterValue customPublicSubnetName = default, WorkspaceCustomStringParameterValue customPrivateSubnetName = default, WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIP = default, WorkspaceCustomStringParameterValue loadBalancerBackendPoolName = default, WorkspaceCustomStringParameterValue loadBalancerId = default, WorkspaceCustomStringParameterValue natGatewayName = default, WorkspaceCustomStringParameterValue publicIPName = default, WorkspaceCustomBooleanParameterValue prepareEncryption = default, WorkspaceEncryptionParameterValue encryption = default, WorkspaceCustomBooleanParameterValue requireInfrastructureEncryption = default, WorkspaceCustomStringParameterValue storageAccountName = default, WorkspaceCustomStringParameterValue storageAccountSkuName = default, WorkspaceCustomStringParameterValue vnetAddressPrefix = default, WorkspaceCustomObjectParameterValue resourceTags = default)
         {
             return new WorkspaceCustomProperties(
                 amlWorkspaceId,
                 customVirtualNetworkId,
                 customPublicSubnetName,
                 customPrivateSubnetName,
-                enableNoPublicIp,
+                enableNoPublicIP,
                 loadBalancerBackendPoolName,
                 loadBalancerId,
                 natGatewayName,
-                publicIpName,
+                publicIPName,
                 prepareEncryption,
                 encryption,
                 requireInfrastructureEncryption,

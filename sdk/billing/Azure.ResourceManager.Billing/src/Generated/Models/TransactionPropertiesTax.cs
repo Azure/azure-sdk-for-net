@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The tax amount applied to the transaction. </summary>
-    public partial class TransactionPropertiesTax : BillingAmount
+    internal partial class TransactionPropertiesTax : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesTax"/>. </summary>
         public TransactionPropertiesTax()

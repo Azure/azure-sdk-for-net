@@ -12,7 +12,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object that contains properties required to create a security policy. </summary>
-    public partial class CdnSecurityPolicyProperties : FrontDoorStateProperties
+    internal partial class CdnSecurityPolicyProperties : FrontDoorStateProperties
     {
         /// <summary> Initializes a new instance of <see cref="CdnSecurityPolicyProperties"/>. </summary>
         public CdnSecurityPolicyProperties()

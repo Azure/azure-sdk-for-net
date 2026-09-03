@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.LoadTesting
       safeName: AzureResourceManagerLoadTesting
+    - name: Azure.Provisioning.LoadTesting
+      safeName: AzureProvisioningLoadTesting

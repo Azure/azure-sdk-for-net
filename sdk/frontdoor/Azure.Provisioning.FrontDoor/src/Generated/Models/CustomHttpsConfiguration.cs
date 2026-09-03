@@ -80,7 +80,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return KeyVaultCertificateSourceParameters.SecretName;
+                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.SecretName;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return KeyVaultCertificateSourceParameters.SecretVersion;
+                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.SecretVersion;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return KeyVaultCertificateSourceParameters.VaultId;
+                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.VaultId;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return FrontDoorCertificateSourceParameters.CertificateType;
+                return FrontDoorCertificateSourceParameters is null ? default : FrontDoorCertificateSourceParameters.CertificateType;
             }
         }
 

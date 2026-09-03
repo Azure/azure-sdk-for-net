@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1489,7 +1489,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -35,7 +35,8 @@ namespace Azure.Generator.Management.Tests.Common
             var responseModel = InputFactory.Model(ResourceModelName,
                         usage: usage,
                         properties: properties,
-                        decorators: []);
+                        decorators: [],
+                        isDynamicModel: isDynamicModel);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var noContentResponseType = InputFactory.OperationResponse(statusCodes: [204], bodytype: null);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
@@ -44,7 +45,14 @@ namespace Azure.Generator.Management.Tests.Common
             var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
             var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
             var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
-            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            // an optional query parameter used to exercise back-compat overload generation for methods that gained a new optional parameter.
+            var expandOpParameter = InputFactory.QueryParameter("expand", InputPrimitiveType.String, serializedName: "$expand");
+            List<InputParameter> getOperationParameters = [subsIdOpParameter, rgOpParameter, testNameOpParameter];
+            if (includeGetQueryParameter)
+            {
+                getOperationParameters.Add(expandOpParameter);
+            }
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [.. getOperationParameters], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
             var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PATCH");
             var checkExistenceOperation = InputFactory.Operation(name: "checkExistence", responses: [noContentResponseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "HEAD");
@@ -53,7 +61,13 @@ namespace Azure.Generator.Management.Tests.Common
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
             var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
-            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var expandParameter = InputFactory.MethodParameter("expand", InputPrimitiveType.String, location: InputRequestLocation.Query, serializedName: "$expand");
+            List<InputMethodParameter> getMethodParameters = [testNameParameter, subscriptionIdParameter, resourceGroupParameter];
+            if (includeGetQueryParameter)
+            {
+                getMethodParameters.Add(expandParameter);
+            }
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [.. getMethodParameters], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var checkExistenceMethod = InputFactory.BasicServiceMethod("checkExistence", checkExistenceOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
@@ -1078,7 +1092,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList()
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false)
         {
             const string TestClientName = "TestClient";
             var eventModel = InputFactory.Model("EventData",
@@ -1107,7 +1121,15 @@ namespace Azure.Generator.Management.Tests.Common
             var eventResourceId = "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/events/{eventName}";
             var getEventOp = InputFactory.Operation("getEvent", parameters: [subscriptionIdOpParam, eventNameOpParam], responses: [InputFactory.OperationResponse([200], eventModel)], path: eventResourceId);
             var listBySingleResourcePath = "/{resourceUri}/providers/Microsoft.Tests/events";
-            var listBySingleResourceOp = InputFactory.Operation("listBySingleResource", parameters: [resourceUriOpParam, filterOpParam], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath);
+            IReadOnlyList<InputDecoratorInfo>? listDecorators = hasClientNameOverride
+                ? [new InputDecoratorInfo("Azure.ResourceManager.@hasClientNameOverride", new Dictionary<string, BinaryData>())]
+                : null;
+            var operationName = hasClientNameOverride ? listMethodName : "listBySingleResource";
+            var listBySingleResourceOp = InputFactory.Operation(operationName, parameters: [resourceUriOpParam, filterOpParam], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath, decorators: listDecorators);
+            if (hasClientNameOverride)
+            {
+                listBySingleResourceOp.GetType().GetProperty("OriginalName")!.GetSetMethod(true)!.Invoke(listBySingleResourceOp, [listMethodName]);
+            }
 
             var subscriptionIdParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var eventNameParam = InputFactory.MethodParameter("eventName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
@@ -1116,7 +1138,7 @@ namespace Azure.Generator.Management.Tests.Common
 
             var getEventMethod = InputFactory.BasicServiceMethod("getEvent", getEventOp, parameters: [eventNameParam, subscriptionIdParam], crossLanguageDefinitionId: "Microsoft.Tests.Events.get");
             var listBySingleResourceMethod = InputFactory.PagingServiceMethod(
-                "getEventsBySingleResource",
+                listMethodName,
                 listBySingleResourceOp,
                 parameters: [resourceUriParam, filterParam],
                 pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));

@@ -578,8 +578,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvider(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderResource>> GetSiteRecoveryServicesProviderAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderCollection GetSiteRecoveryServicesProviders() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> GetSiteRecoveryVCenter(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> GetSiteRecoveryVCenterAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> GetSiteRecoveryVCenter(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> GetSiteRecoveryVCenterAsync(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterCollection GetSiteRecoveryVCenters() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationResource> GetStorageClassification(string storageClassificationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationResource>> GetStorageClassificationAsync(string storageClassificationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1318,16 +1318,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     public partial class SiteRecoveryVCenterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>, System.Collections.IEnumerable
     {
         protected SiteRecoveryVCenterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVCenterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVCenterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> Get(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vCenterName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVCenterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vCenterName, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVCenterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> Get(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> GetAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> GetIfExists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> GetIfExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> GetAsync(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> GetIfExists(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>> GetIfExistsAsync(string vCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         protected SiteRecoveryVCenterResource() { }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MultiVmGroupCreateOption? MultiVmGroupCreateOption { get { throw null; } }
         public string MultiVmGroupId { get { throw null; } }
         public string MultiVmGroupName { get { throw null; } }
-        public string OsFamilyName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
         public string OSType { get { throw null; } }
         public int? PlatformFaultDomain { get { throw null; } }
         public string PrimaryAvailabilityZone { get { throw null; } }
@@ -5820,7 +5820,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class InMageRcmFabricCreationContent : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.FabricSpecificCreationContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFabricCreationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFabricCreationContent>
     {
-        public InMageRcmFabricCreationContent(Azure.Core.ResourceIdentifier vMwareSiteId, Azure.Core.ResourceIdentifier physicalSiteId, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderContent sourceAgentIdentity) { }
+        public InMageRcmFabricCreationContent(Azure.Core.ResourceIdentifier vmwareSiteId, Azure.Core.ResourceIdentifier physicalSiteId, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderContent sourceAgentIdentity) { }
         public Azure.Core.ResourceIdentifier PhysicalSiteId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderContent SourceAgentIdentity { get { throw null; } }
         public Azure.Core.ResourceIdentifier VMwareSiteId { get { throw null; } }
@@ -6167,7 +6167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string LatestAgentReleaseDate { get { throw null; } }
         public string LatestUpgradableVersionWithoutReboot { get { throw null; } }
         public string LatestVersion { get { throw null; } }
-        public string OsFamilyName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentReinstallBlockedReason> ReasonsBlockingReinstall { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmAgentReinstallBlockingErrorDetails> ReasonsBlockingReinstallDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentUpgradeBlockedReason> ReasonsBlockingUpgrade { get { throw null; } }
@@ -11545,7 +11545,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class VMwareCbtEnableMigrationContent : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.EnableMigrationProviderSpecificContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEnableMigrationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEnableMigrationContent>
     {
-        public VMwareCbtEnableMigrationContent(Azure.Core.ResourceIdentifier vMwareMachineId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent> disksToInclude, Azure.Core.ResourceIdentifier dataMoverRunAsAccountId, Azure.Core.ResourceIdentifier snapshotRunAsAccountId, Azure.Core.ResourceIdentifier targetResourceGroupId, Azure.Core.ResourceIdentifier targetNetworkId) { }
+        public VMwareCbtEnableMigrationContent(Azure.Core.ResourceIdentifier vmwareMachineId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent> disksToInclude, Azure.Core.ResourceIdentifier dataMoverRunAsAccountId, Azure.Core.ResourceIdentifier snapshotRunAsAccountId, Azure.Core.ResourceIdentifier targetResourceGroupId, Azure.Core.ResourceIdentifier targetNetworkId) { }
         public Azure.Core.ResourceIdentifier ConfidentialVmKeyVaultId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DataMoverRunAsAccountId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent> DisksToInclude { get { throw null; } }

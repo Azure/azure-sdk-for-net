@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CosmosDbMongoDbApiLinkedServiceTypeProperties typeProperties = default;
+            CosmosDBMongoDBApiLinkedServiceTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = CosmosDbMongoDbApiLinkedServiceTypeProperties.DeserializeCosmosDbMongoDbApiLinkedServiceTypeProperties(prop.Value, options);
+                    typeProperties = CosmosDBMongoDBApiLinkedServiceTypeProperties.DeserializeCosmosDBMongoDBApiLinkedServiceTypeProperties(prop.Value, options);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

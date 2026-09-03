@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
+        /// <summary> Provisioning state of the network security perimeter configuration. </summary>
         [WirePath("provisioningState")]
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         [WirePath("provisioningIssues")]
         public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
 
-        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Information about the network security perimeter (NSP). </summary>
         [WirePath("networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
-        /// <summary> Gets the ResourceAssociation. </summary>
+        /// <summary> Information about the resource association. </summary>
         [WirePath("resourceAssociation")]
         public ResourceAssociation ResourceAssociation { get; }
 
-        /// <summary> Gets the Profile. </summary>
+        /// <summary> Network security perimeter configuration profile. </summary>
         [WirePath("profile")]
         public NetworkSecurityProfile Profile { get; }
     }

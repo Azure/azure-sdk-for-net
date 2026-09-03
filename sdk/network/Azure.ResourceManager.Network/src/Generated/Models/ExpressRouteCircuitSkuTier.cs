@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string BasicValue = "Basic";
         /// <summary> Local. </summary>
         private const string LocalValue = "Local";
+        /// <summary> MultiCloud tier for cross-cloud connectivity. </summary>
+        private const string MultiCloudValue = "MultiCloud";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitSkuTier"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Local. </summary>
         public static ExpressRouteCircuitSkuTier Local { get; } = new ExpressRouteCircuitSkuTier(LocalValue);
+
+        /// <summary> MultiCloud tier for cross-cloud connectivity. </summary>
+        public static ExpressRouteCircuitSkuTier MultiCloud { get; } = new ExpressRouteCircuitSkuTier(MultiCloudValue);
 
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuTier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

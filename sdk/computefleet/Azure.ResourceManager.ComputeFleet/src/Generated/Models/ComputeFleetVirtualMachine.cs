@@ -30,11 +30,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
+        /// <param name="vmSize"> The VM size of the virtual machine. </param>
+        /// <param name="zone"> The availability zone of the virtual machine. </param>
+        /// <param name="priority"> The priority of the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, string vmSize, string zone, string priority, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             OperationStatus = operationStatus;
             Error = error;
+            VmSize = vmSize;
+            Zone = zone;
+            Priority = priority;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,5 +49,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Error information when `operationStatus` is `Failed`. </summary>
         public ComputeFleetApiError Error { get; }
+
+        /// <summary> The VM size of the virtual machine. </summary>
+        public string VmSize { get; }
+
+        /// <summary> The availability zone of the virtual machine. </summary>
+        public string Zone { get; }
+
+        /// <summary> The priority of the virtual machine. </summary>
+        public string Priority { get; }
     }
 }

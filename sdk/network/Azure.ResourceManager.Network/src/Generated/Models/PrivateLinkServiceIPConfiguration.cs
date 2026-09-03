@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the private link service ip configuration. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PrivateLinkServiceIpConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PrivateLinkServiceIPConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the private link service ip configuration. </summary>
         [WirePath("properties")]
-        internal PrivateLinkServiceIpConfigurationProperties Properties { get; set; }
+        internal PrivateLinkServiceIPConfigurationProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.PrivateIPAddress = value;
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.PrivateIPAllocationMethod = value;
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.Subnet = value;
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.Primary = value;
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.PrivateIPAddressVersion = value;
             }

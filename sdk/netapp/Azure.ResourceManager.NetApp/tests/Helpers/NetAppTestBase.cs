@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "")
+        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "", NetAppNetworkFeature? networkFeature = null)
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
             if (volumeCollection == null)
@@ -315,7 +315,10 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             usageThreshold ??= _defaultUsageThreshold;
 
-            NetAppVolumeData volumeData = new(location, volumeName, usageThreshold.Value, subnetId);
+            NetAppVolumeData volumeData = new(location, volumeName, usageThreshold.Value, subnetId)
+            {
+                NetworkFeatures = networkFeature ?? NetAppNetworkFeature.Standard
+            };
             if (exportPolicyRule != null)
             {
                 volumeData.ExportRules.Add(exportPolicyRule);

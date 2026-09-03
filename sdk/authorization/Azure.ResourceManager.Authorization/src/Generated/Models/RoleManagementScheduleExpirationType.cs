@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleManagementScheduleExpirationType : IEquatable<RoleManagementScheduleExpirationType>
     {
         private readonly string _value;
+        /// <summary> AfterDuration. </summary>
+        private const string AfterDurationValue = "AfterDuration";
+        /// <summary> AfterDateTime. </summary>
+        private const string AfterDateTimeValue = "AfterDateTime";
+        /// <summary> NoExpiration. </summary>
+        private const string NoExpirationValue = "NoExpiration";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementScheduleExpirationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementScheduleExpirationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AfterDurationValue = "AfterDuration";
-        private const string AfterDateTimeValue = "AfterDateTime";
-        private const string NoExpirationValue = "NoExpiration";
+            _value = value;
+        }
 
         /// <summary> AfterDuration. </summary>
         public static RoleManagementScheduleExpirationType AfterDuration { get; } = new RoleManagementScheduleExpirationType(AfterDurationValue);
+
         /// <summary> AfterDateTime. </summary>
         public static RoleManagementScheduleExpirationType AfterDateTime { get; } = new RoleManagementScheduleExpirationType(AfterDateTimeValue);
+
         /// <summary> NoExpiration. </summary>
         public static RoleManagementScheduleExpirationType NoExpiration { get; } = new RoleManagementScheduleExpirationType(NoExpirationValue);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleExpirationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementScheduleExpirationType left, RoleManagementScheduleExpirationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleExpirationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementScheduleExpirationType left, RoleManagementScheduleExpirationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScheduleExpirationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleExpirationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementScheduleExpirationType(string value) => new RoleManagementScheduleExpirationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleExpirationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementScheduleExpirationType?(string value) => value == null ? null : new RoleManagementScheduleExpirationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementScheduleExpirationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementScheduleExpirationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

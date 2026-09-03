@@ -625,5 +625,38 @@ namespace Azure.ResourceManager.MachineLearning
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of MachineLearningRegistryComponentContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningRegistryComponentContainers and their operations over a MachineLearningRegistryComponentContainerResource. </returns>
+        public virtual MachineLearningRegistryComponentContainerCollection GetMachineLearningRegistryComponentContainers()
+        {
+            return GetCachedClient(client => new MachineLearningRegistryComponentContainerCollection(client, Id));
+        }
+
+        /// <summary> Get container. </summary>
+        /// <param name="componentName"> Container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MachineLearningRegistryComponentContainerResource>> GetMachineLearningRegistryComponentContainerAsync(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return await GetMachineLearningRegistryComponentContainers().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get container. </summary>
+        /// <param name="componentName"> Container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningRegistryComponentContainerResource> GetMachineLearningRegistryComponentContainer(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return GetMachineLearningRegistryComponentContainers().Get(componentName, cancellationToken);
+        }
     }
 }

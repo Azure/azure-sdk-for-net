@@ -39,6 +39,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal AzureMonitorResource? TraceResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
+        internal ITransmitter Transmitter => _transmitter;
+
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {

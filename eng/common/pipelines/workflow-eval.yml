@@ -19,22 +19,7 @@ trigger:
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
 
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - evals/**
-      - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
-      - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
-      - .github/skills/**
-      - eng/common/pipelines/workflow-eval.yml
-      - eng/common/pipelines/templates/jobs/**
-      - eng/common/pipelines/templates/steps/eval-invoke.yml
-      - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
-      - eng/common/pipelines/templates/stages/archetype-eval.yml
-      - eng/common/scripts/eval/**
+pr: none
 
 variables:
   # Defines LINUXPOOL + LINUXVMIMAGE used by the archetype's jobs.

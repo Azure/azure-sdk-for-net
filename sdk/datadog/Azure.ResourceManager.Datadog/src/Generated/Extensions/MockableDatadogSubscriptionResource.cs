@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -518,6 +519,30 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Create Datadog marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateMarketplaceAgreementAsync(body: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Datadog marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateMarketplaceAgreement(body: default, cancellationToken: cancellationToken);
         }
     }
 }

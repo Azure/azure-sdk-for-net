@@ -28,10 +28,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cidr"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
-        /// <param name="listUpdatedAt"></param>
+        /// <param name="listUpdatedOn"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReputationDetails(string listName, string threatType, bool? trusted, string cidr, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, DateTimeOffset? listUpdatedAt, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReputationDetails(string listName, string threatType, bool? trusted, string cidr, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, DateTimeOffset? listUpdatedOn, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ListName = listName;
             ThreatType = threatType;
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Defender.Easm
             Cidr = cidr;
             FirstSeen = firstSeen;
             LastSeen = lastSeen;
-            ListUpdatedAt = listUpdatedAt;
+            ListUpdatedOn = listUpdatedOn;
             Recent = recent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -62,8 +62,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
 
-        /// <summary> Gets the ListUpdatedAt. </summary>
-        public DateTimeOffset? ListUpdatedAt { get; }
+        /// <summary> Gets the ListUpdatedOn. </summary>
+        public DateTimeOffset? ListUpdatedOn { get; }
 
         /// <summary> Gets the Recent. </summary>
         public bool? Recent { get; }
