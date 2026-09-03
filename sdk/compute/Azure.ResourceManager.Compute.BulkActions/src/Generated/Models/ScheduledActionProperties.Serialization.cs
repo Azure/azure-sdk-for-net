@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ScheduledActionsSchedule schedule = default;
             IList<NotificationProperties> notificationSettings = default;
             bool? disabled = default;
-            RecurringScheduledActionsProvisioningState? provisioningState = default;
+            ScheduledActionsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    provisioningState = new RecurringScheduledActionsProvisioningState(prop.Value.GetString());
+                    provisioningState = new ScheduledActionsProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

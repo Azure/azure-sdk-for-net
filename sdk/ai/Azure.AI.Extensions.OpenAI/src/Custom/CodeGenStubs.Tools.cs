@@ -27,7 +27,7 @@ public partial class AzureFunctionDefinitionFunction
 [CodeGenType("CaptureStructuredOutputsTool")] public partial class CaptureStructuredOutputsTool { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class FabricDataAgentToolOptions { }
 [CodeGenType("FabricIQPreviewTool")] public partial class FabricIQPreviewTool { }
-[CodeGenType("MemorySearchOptions")] public partial class MemorySearchOptions { }
+[CodeGenType("MemorySearchResultOptions")] public partial class MemorySearchResultOptions { }
 [CodeGenType("MemorySearchPreviewTool")] public partial class MemorySearchPreviewTool { }
 [CodeGenType("MicrosoftFabricPreviewTool")] public partial class MicrosoftFabricPreviewTool { }
 [CodeGenType("OpenApiManagedSecurityScheme")] public partial class OpenApiManagedSecurityScheme { }

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -44,9 +45,9 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionTool))]
 #pragma warning restore AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCall))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
+#pragma warning restore AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
 #pragma warning disable AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCallOutput))]
 #pragma warning restore AAIP002 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCallOutput is experimental and may change in future versions.
@@ -119,12 +120,12 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryOutputItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryOutputItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryOutputItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(MemorySearchOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchResultOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MemorySearchResultOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchResultOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
@@ -154,6 +155,7 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProceduralMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PromptCacheOptionsParam))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharePointGroundingToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolCall is experimental and may change in future versions.

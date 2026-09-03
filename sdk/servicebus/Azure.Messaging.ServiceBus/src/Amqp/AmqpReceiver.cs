@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed => _closed;
+        public override bool IsClosed => Volatile.Read(ref _closed) != 0;
 
         static AmqpReceiver()
         {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 () => new AmqpNonExclusiveSessionFilterCodec());
         }
 
-        private volatile bool _closed;
+        private int _closed;
 
         /// <summary>
         /// Indicates whether or not the session link has been closed.
@@ -1678,37 +1678,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
-            if (_closed)
+            // Claiming the close atomically makes the caller its sole owner, so only that caller may restore the flag below.
+
+            if (Interlocked.CompareExchange(ref _closed, 1, 0) != 0)
             {
                 return;
             }
 
-            _closed = true;
-
-            RequestResponseLockedMessages.Dispose();
-
-            if (_receiveLink?.TryGetOpenedObject(out var link) == true)
+            try
             {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
-
-                if (!_isSessionReceiver && link.LinkCredit > 0)
+                if (_receiveLink?.TryGetOpenedObject(out var link) == true)
                 {
-                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
+
+                    if (!_isSessionReceiver && link.LinkCredit > 0)
+                    {
+                        await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
-                await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-            }
+                if (_managementLink?.TryGetOpenedObject(out var _) == true)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    await _managementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
 
-            if (_managementLink?.TryGetOpenedObject(out var _) == true)
+                // Disposed only on a completed close; unlike the closed flag, this cannot be undone if the close is canceled.
+
+                RequestResponseLockedMessages.Dispose();
+
+                _receiveLink?.Dispose();
+                _managementLink?.Dispose();
+            }
+            catch (Exception)
             {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                await _managementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-            }
+                // The close did not complete; leaving the flag set would short-circuit the guard above, so the links could never be closed.
 
-            _receiveLink?.Dispose();
-            _managementLink?.Dispose();
+                Volatile.Write(ref _closed, 0);
+                throw;
+            }
         }
 
         private void OnReceiverLinkClosed(object receiver, EventArgs e)
@@ -1763,7 +1775,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
-            !_closed && (link?.IsClosing() ?? false);
+            !IsClosed && (link?.IsClosing() ?? false);
 
         private void ThrowIfSessionLockLost()
         {

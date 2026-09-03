@@ -83,25 +83,14 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("spec"u8);
-            writer.WriteStartObject();
-            foreach (var item in Specification)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
+            writer.WriteRawValue(Specification);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+            using (JsonDocument document = JsonDocument.Parse(Specification))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
             }
-            writer.WriteEndObject();
+#endif
             writer.WritePropertyName("auth"u8);
             writer.WriteObjectValue(Authentication, options);
             if (Optional.IsCollectionDefined(DefaultParameters))
@@ -173,7 +162,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string name = default;
             string description = default;
-            IDictionary<string, BinaryData> specification = default;
+            BinaryData specification = default;
             OpenApiAuthenticationDetails authentication = default;
             IList<string> defaultParameters = default;
             IReadOnlyList<OpenApiFunctionDefinitionFunction> functions = default;
@@ -192,19 +181,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("spec"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    specification = dictionary;
+                    specification = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("auth"u8))

@@ -320,6 +320,43 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_DynamicResourceOperationSource_PreservesRawData()
+        {
+            var provider = GetOperationSourceProvider(isDynamicModel: true);
+
+            foreach (var method in provider.Methods)
+            {
+                var body = method.BodyStatements?.ToDisplayString();
+                Assert.That(body, Is.Not.Null);
+                Assert.That(
+                    body,
+                    Does.Contain("DeserializeResponseTypeData(document.RootElement, document.RootElement.GetUtf8Bytes(), global::Samples.ModelSerializationExtensions.WireOptions)"));
+            }
+        }
+
+        [TestCase]
+        public void Verify_DynamicNonResourceOperationSource_PreservesRawData()
+        {
+            var inputModel = InputFactory.Model(
+                "DynamicResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                isDynamicModel: true);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            Assert.That(modelProvider, Is.Not.Null);
+            var provider = new OperationSourceProvider(modelProvider!.Type, isDynamicModel: true);
+
+            foreach (var method in provider.Methods)
+            {
+                var body = method.BodyStatements?.ToDisplayString();
+                Assert.That(body, Is.Not.Null);
+                Assert.That(
+                    body,
+                    Does.Contain("DeserializeDynamicResult(document.RootElement, document.RootElement.GetUtf8Bytes(), global::Samples.ModelSerializationExtensions.WireOptions)"));
+            }
+        }
+
+        [TestCase]
         public void Verify_NonResourceFrameworkType_CreateResult_UsesModelReaderWriter()
         {
             // Regression test for #58709: for cross-assembly framework result types (e.g. OperationStatusResult,
@@ -376,7 +413,7 @@ namespace Azure.Generator.Management.Tests.Providers
             return method!;
         }
 
-        private static OperationSourceProvider GetOperationSourceProvider()
+        private static OperationSourceProvider GetOperationSourceProvider(bool isDynamicModel = false)
         {
             // Create test data with a long-running operation
             const string TestClientName = "TestClient";
@@ -388,7 +425,8 @@ namespace Azure.Generator.Management.Tests.Providers
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                 ],
-                decorators: []);
+                decorators: [],
+                isDynamicModel: isDynamicModel);
 
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");

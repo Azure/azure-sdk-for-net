@@ -125,6 +125,7 @@ public class BasicPrivateDnsTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' = {
               name: vnetName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -140,7 +141,6 @@ public class BasicPrivateDnsTests
                   }
                 ]
               }
-              location: location
             }
 
             resource privateDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
@@ -151,13 +151,13 @@ public class BasicPrivateDnsTests
             resource privateDnsZoneLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
               name: '${vnet.name}-link'
               location: 'global'
+              parent: privateDnsZone
               properties: {
                 registrationEnabled: vmRegistration
                 virtualNetwork: {
                   id: vnet.id
                 }
               }
-              parent: privateDnsZone
             }
             """);
     }
