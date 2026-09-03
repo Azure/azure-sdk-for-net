@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
@@ -17,9 +19,11 @@ namespace Azure.Provisioning.PrivateDns;
 [CodeGenSuppress("Cname")]
 public partial class PrivateDnsSoaRecord
 {
+    // TypeSpec uses the management-oriented PrivateDns prefix; the provisioning API prefers the
+    // shorter record-kind name, while the released GA name remains as a compatibility alias.
     /// <summary> The SOA record in the record set. </summary>
     [CodeGenMember("PrivateDnsSoaRecord")]
-    public PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo
+    public PrivateDnsSoaRecordInfo SoaRecordInfo
     {
         get => Properties is null ? default : Properties.PrivateDnsSoaRecord;
         set
@@ -30,6 +34,15 @@ public partial class PrivateDnsSoaRecord
             }
             Properties.PrivateDnsSoaRecord = value;
         }
+    }
+
+    /// <summary> The SOA record in the record set. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use SoaRecordInfo instead.")]
+    public PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo
+    {
+        get => SoaRecordInfo;
+        set => SoaRecordInfo = value;
     }
 
     /// <summary>

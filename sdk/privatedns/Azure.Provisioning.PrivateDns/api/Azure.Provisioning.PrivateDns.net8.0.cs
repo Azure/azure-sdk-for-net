@@ -172,7 +172,9 @@ namespace Azure.Provisioning.PrivateDns
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone Parent { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use SoaRecordInfo instead.")]
         public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo { get { throw null; } set { } }
+        public Azure.Provisioning.PrivateDns.PrivateDnsSoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
