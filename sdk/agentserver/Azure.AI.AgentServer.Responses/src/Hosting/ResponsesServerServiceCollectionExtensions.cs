@@ -14,6 +14,7 @@ using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -147,31 +148,35 @@ public static class ResponsesServerServiceCollectionExtensions
         // The Responses layer does not own an event-stream store. SSE events are published onto
         // the Core event-stream primitive (AgentEventStreamRegistry/AgentEventStream) — matching Python,
         // which uses the core EventStream registry directly. Register it once here. The backing is
-        // chosen eagerly: local + ResilientBackground uses a durable file-backed replay so a
+        // chosen from the effective options when the registry is resolved: local +
+        // ResilientBackground uses a durable file-backed replay so a
         // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
         // otherwise an in-memory replay buffer is sufficient. Core's AddAgentEventStreams selects the
         // backing exactly once per process and throws on a second configuring call, so only register
         // when no backing has been chosen yet — a consumer (or test) that registered its own backing
         // first wins, preserving the prior override semantics.
-        var eagerOptions = new ResponsesServerOptions();
-        configure?.Invoke(eagerOptions);
-        var useDurableStreams = eagerOptions.ResilientBackground && !FoundryEnvironment.IsHosted;
-        var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
         if (!services.Any(d => d.ServiceType == typeof(AgentEventStreamRegistry)))
         {
-            services.AddAgentEventStreams(o =>
-            {
-                if (useDurableStreams)
+            services.AddOptions<AgentEventStreamOptions>()
+                .Configure<
+                    IOptions<ResponsesServerOptions>,
+                    IOptions<InMemoryProviderOptions>>(
+                    (streamOptions, responseOptions, providerOptions) =>
                 {
-                    o.UseFileBackedReplay(
-                        storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
-                        ttl: streamTtl);
-                }
-                else
-                {
-                    o.UseInMemoryReplay(ttl: streamTtl);
-                }
-            });
+                    TimeSpan streamTtl = providerOptions.Value.EventStreamTtl;
+                    if (responseOptions.Value.ResilientBackground
+                        && !FoundryEnvironment.IsHosted)
+                    {
+                        streamOptions.UseFileBackedReplay(
+                            storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
+                            ttl: streamTtl);
+                    }
+                    else
+                    {
+                        streamOptions.UseInMemoryReplay(ttl: streamTtl);
+                    }
+                });
+            services.AddAgentEventStreams();
         }
 
         services.AddSingleton<ResponseExecutionTracker>();
@@ -217,7 +222,9 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddResilientMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
             (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct),
-            steerable: eagerOptions.SteerableConversations);
+            isSteerable: () => taskRootProvider.Require()
+                .GetRequiredService<IOptions<ResponsesServerOptions>>()
+                .Value.SteerableConversations);
 
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();

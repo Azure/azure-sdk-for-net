@@ -44,7 +44,7 @@ internal sealed class DefaultResilientTaskBuilder
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         Action<TaskRegistrationOptions>? configure = null)
-        => Add(name, handler, multiTurn: false, steerable: false, configure);
+        => Add(name, handler, multiTurn: false, static () => false, configure);
 
     /// <summary>Registers a multi-turn task (Python <c>@multi_turn_task</c>), optionally steerable.</summary>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
@@ -54,7 +54,18 @@ internal sealed class DefaultResilientTaskBuilder
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
         Action<TaskRegistrationOptions>? configure = null)
-        => Add(name, handler, multiTurn: true, steerable, configure);
+        => Add(name, handler, multiTurn: true, () => steerable, configure);
+
+    /// <summary>Registers a multi-turn task whose steerability is resolved when a run starts.</summary>
+    public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Func<bool> isSteerable,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(isSteerable);
+        return Add(name, handler, multiTurn: true, isSteerable, configure);
+    }
 
     /// <summary>
     /// Registers a one-shot task using a source-generated <see cref="JsonTypeInfo{T}"/> for the
@@ -69,7 +80,7 @@ internal sealed class DefaultResilientTaskBuilder
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(inputTypeInfo);
-        return Add(name, handler, multiTurn: false, steerable: false, configure, inputTypeInfo);
+        return Add(name, handler, multiTurn: false, static () => false, configure, inputTypeInfo);
     }
 
     /// <summary>
@@ -86,14 +97,14 @@ internal sealed class DefaultResilientTaskBuilder
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(inputTypeInfo);
-        return Add(name, handler, multiTurn: true, steerable, configure, inputTypeInfo);
+        return Add(name, handler, multiTurn: true, () => steerable, configure, inputTypeInfo);
     }
 
     private TaskDefinition<TInput, TOutput> Add<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool multiTurn,
-        bool steerable,
+        Func<bool> isSteerable,
         Action<TaskRegistrationOptions>? configure,
         JsonTypeInfo<TInput>? inputTypeInfo = null)
     {
@@ -135,7 +146,7 @@ internal sealed class DefaultResilientTaskBuilder
             typeof(TOutput),
             handler,
             multiTurn,
-            steerable,
+            isSteerable,
             options,
             inputTypeInfo);
 
