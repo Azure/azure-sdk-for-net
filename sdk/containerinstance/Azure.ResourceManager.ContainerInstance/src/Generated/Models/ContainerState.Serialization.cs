@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExitCode))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string state = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             int? exitCode = default;
             DateTimeOffset? finishOn = default;
             string detailStatus = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("exitCode"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             return new ContainerState(
                 state,
-                startOn,
+                startsOn,
                 exitCode,
                 finishOn,
                 detailStatus,
