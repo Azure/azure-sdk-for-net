@@ -26,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<ContainerAppIngressClientCertificateMode> _clientCertificateMode;
         private ContainerAppCorsPolicy _corsPolicy;
         private BicepList<IngressPortMapping> _additionalPortMappings;
+        private BicepValue<IngressTargetPortHttpScheme> _targetPortHttpScheme;
 
         /// <summary> Creates a new ContainerAppIngressConfiguration. </summary>
         public ContainerAppIngressConfiguration()
@@ -222,6 +223,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the TargetPortHttpScheme. </summary>
+        public BicepValue<IngressTargetPortHttpScheme> TargetPortHttpScheme
+        {
+            get
+            {
+                Initialize();
+                return _targetPortHttpScheme;
+            }
+            set
+            {
+                Initialize();
+                _targetPortHttpScheme.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the StickySessionAffinity. </summary>
         public BicepValue<StickySessionAffinity> StickySessionAffinity
         {
@@ -256,6 +272,7 @@ namespace Azure.Provisioning.AppContainers
             _clientCertificateMode = DefineProperty<ContainerAppIngressClientCertificateMode>(nameof(ClientCertificateMode), new string[] { "clientCertificateMode" });
             _corsPolicy = DefineModelProperty<ContainerAppCorsPolicy>(nameof(CorsPolicy), new string[] { "corsPolicy" });
             _additionalPortMappings = DefineListProperty<IngressPortMapping>(nameof(AdditionalPortMappings), new string[] { "additionalPortMappings" });
+            _targetPortHttpScheme = DefineProperty<IngressTargetPortHttpScheme>(nameof(TargetPortHttpScheme), new string[] { "targetPortHttpScheme" });
             DefineAdditionalProperties();
         }
 

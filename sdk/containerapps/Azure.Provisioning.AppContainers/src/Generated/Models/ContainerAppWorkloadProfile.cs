@@ -14,6 +14,7 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppWorkloadProfile : ProvisionableConstruct
     {
         private BicepValue<string> _name;
+        private BicepValue<bool> _enableFips;
         private BicepValue<string> _workloadProfileType;
         private BicepValue<int> _minimumNodeCount;
         private BicepValue<int> _maximumNodeCount;
@@ -35,6 +36,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the EnableFips. </summary>
+        public BicepValue<bool> EnableFips
+        {
+            get
+            {
+                Initialize();
+                return _enableFips;
+            }
+            set
+            {
+                Initialize();
+                _enableFips.Assign(value);
             }
         }
 
@@ -88,6 +104,7 @@ namespace Azure.Provisioning.AppContainers
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _enableFips = DefineProperty<bool>(nameof(EnableFips), new string[] { "enableFips" });
             _workloadProfileType = DefineProperty<string>(nameof(WorkloadProfileType), new string[] { "workloadProfileType" }, isRequired: true);
             _minimumNodeCount = DefineProperty<int>(nameof(MinimumNodeCount), new string[] { "minimumCount" });
             _maximumNodeCount = DefineProperty<int>(nameof(MaximumNodeCount), new string[] { "maximumCount" });

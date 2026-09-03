@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppConnectedEnvironmentDaprComponent. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppConnectedEnvironmentDaprComponent(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion ?? "2026-01-01")
+        public ContainerAppConnectedEnvironmentDaprComponent(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion ?? "2025-10-02-preview")
         {
         }
 
@@ -229,6 +230,23 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the ServiceComponentBind. </summary>
+        public BicepList<DaprComponentServiceBinding> ServiceComponentBind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceComponentBind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DaprComponentProperties();
+                }
+                Properties.ServiceComponentBind = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<DaprComponentProvisioningState> ProvisioningState
         {
@@ -283,8 +301,9 @@ namespace Azure.Provisioning.AppContainers
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-01-01". </summary>
-            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-10-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_10_02_PREVIEW = "2025-10-02-preview";
         }
     }
 }

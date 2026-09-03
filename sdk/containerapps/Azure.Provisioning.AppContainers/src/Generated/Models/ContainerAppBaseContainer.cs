@@ -14,6 +14,7 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppBaseContainer : ProvisionableConstruct
     {
         private BicepValue<string> _image;
+        private BicepValue<ImageType> _imageType;
         private BicepValue<string> _name;
         private BicepList<string> _command;
         private BicepList<string> _args;
@@ -38,6 +39,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _image.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ImageType. </summary>
+        public BicepValue<ImageType> ImageType
+        {
+            get
+            {
+                Initialize();
+                return _imageType;
+            }
+            set
+            {
+                Initialize();
+                _imageType.Assign(value);
             }
         }
 
@@ -136,6 +152,7 @@ namespace Azure.Provisioning.AppContainers
         {
             base.DefineProvisionableProperties();
             _image = DefineProperty<string>(nameof(Image), new string[] { "image" });
+            _imageType = DefineProperty<ImageType>(nameof(ImageType), new string[] { "imageType" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _command = DefineListProperty<string>(nameof(Command), new string[] { "command" });
             _args = DefineListProperty<string>(nameof(Args), new string[] { "args" });

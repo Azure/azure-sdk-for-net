@@ -19,6 +19,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepList<string> _args;
         private BicepList<ContainerAppEnvironmentVariable> _env;
         private SessionContainerResources _resources;
+        private BicepList<SessionProbe> _probes;
 
         /// <summary> Creates a new SessionContainer. </summary>
         public SessionContainer()
@@ -115,6 +116,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the Probes. </summary>
+        public BicepList<SessionProbe> Probes
+        {
+            get
+            {
+                Initialize();
+                return _probes;
+            }
+            set
+            {
+                Initialize();
+                _probes.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SessionContainer. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -125,6 +141,7 @@ namespace Azure.Provisioning.AppContainers
             _args = DefineListProperty<string>(nameof(Args), new string[] { "args" });
             _env = DefineListProperty<ContainerAppEnvironmentVariable>(nameof(Env), new string[] { "env" });
             _resources = DefineModelProperty<SessionContainerResources>(nameof(Resources), new string[] { "resources" });
+            _probes = DefineListProperty<SessionProbe>(nameof(Probes), new string[] { "probes" });
             DefineAdditionalProperties();
         }
 

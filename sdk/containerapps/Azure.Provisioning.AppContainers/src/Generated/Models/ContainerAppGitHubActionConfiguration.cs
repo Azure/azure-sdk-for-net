@@ -16,12 +16,14 @@ namespace Azure.Provisioning.AppContainers
         private ContainerAppRegistryInfo _registryInfo;
         private ContainerAppCredentials _azureCredentials;
         private BicepValue<string> _contextPath;
+        private BicepValue<string> _dockerfilePath;
         private BicepValue<string> _gitHubPersonalAccessToken;
         private BicepValue<string> _image;
         private BicepValue<string> _publishType;
         private BicepValue<string> _os;
         private BicepValue<string> _runtimeStack;
         private BicepValue<string> _runtimeVersion;
+        private BicepList<EnvironmentVariable> _buildEnvironmentVariables;
 
         /// <summary> Creates a new ContainerAppGitHubActionConfiguration. </summary>
         public ContainerAppGitHubActionConfiguration()
@@ -70,6 +72,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _contextPath.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the DockerfilePath. </summary>
+        public BicepValue<string> DockerfilePath
+        {
+            get
+            {
+                Initialize();
+                return _dockerfilePath;
+            }
+            set
+            {
+                Initialize();
+                _dockerfilePath.Assign(value);
             }
         }
 
@@ -163,6 +180,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the BuildEnvironmentVariables. </summary>
+        public BicepList<EnvironmentVariable> BuildEnvironmentVariables
+        {
+            get
+            {
+                Initialize();
+                return _buildEnvironmentVariables;
+            }
+            set
+            {
+                Initialize();
+                _buildEnvironmentVariables.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppGitHubActionConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -170,12 +202,14 @@ namespace Azure.Provisioning.AppContainers
             _registryInfo = DefineModelProperty<ContainerAppRegistryInfo>(nameof(RegistryInfo), new string[] { "registryInfo" });
             _azureCredentials = DefineModelProperty<ContainerAppCredentials>(nameof(AzureCredentials), new string[] { "azureCredentials" });
             _contextPath = DefineProperty<string>(nameof(ContextPath), new string[] { "contextPath" });
+            _dockerfilePath = DefineProperty<string>(nameof(DockerfilePath), new string[] { "dockerfilePath" });
             _gitHubPersonalAccessToken = DefineProperty<string>(nameof(GitHubPersonalAccessToken), new string[] { "githubPersonalAccessToken" });
             _image = DefineProperty<string>(nameof(Image), new string[] { "image" });
             _publishType = DefineProperty<string>(nameof(PublishType), new string[] { "publishType" });
             _os = DefineProperty<string>(nameof(OS), new string[] { "os" });
             _runtimeStack = DefineProperty<string>(nameof(RuntimeStack), new string[] { "runtimeStack" });
             _runtimeVersion = DefineProperty<string>(nameof(RuntimeVersion), new string[] { "runtimeVersion" });
+            _buildEnvironmentVariables = DefineListProperty<EnvironmentVariable>(nameof(BuildEnvironmentVariables), new string[] { "buildEnvironmentVariables" });
             DefineAdditionalProperties();
         }
 

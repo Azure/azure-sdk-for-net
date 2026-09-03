@@ -14,6 +14,7 @@ namespace Azure.Provisioning.AppContainers
     internal partial class RuntimeJava : ProvisionableConstruct
     {
         private BicepValue<bool> _enableMetrics;
+        private ContainerAppRuntimeJavaAgent _javaAgent;
 
         /// <summary> Creates a new RuntimeJava. </summary>
         public RuntimeJava()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the JavaAgent. </summary>
+        public ContainerAppRuntimeJavaAgent JavaAgent
+        {
+            get
+            {
+                Initialize();
+                return _javaAgent;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _javaAgent, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for RuntimeJava. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _enableMetrics = DefineProperty<bool>(nameof(EnableMetrics), new string[] { "enableMetrics" });
+            _javaAgent = DefineModelProperty<ContainerAppRuntimeJavaAgent>(nameof(JavaAgent), new string[] { "javaAgent" });
             DefineAdditionalProperties();
         }
 

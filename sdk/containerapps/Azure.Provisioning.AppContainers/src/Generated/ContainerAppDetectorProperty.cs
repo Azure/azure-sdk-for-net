@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
@@ -33,7 +34,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppDetectorProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/containerApps/detectorProperties", resourceVersion ?? "2026-01-01")
+        public ContainerAppDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/containerApps/detectorProperties", resourceVersion ?? "2025-10-02-preview")
         {
         }
 
@@ -213,6 +214,19 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the DeploymentErrors. </summary>
+        public BicepValue<string> DeploymentErrors
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerAppProperties();
+                }
+                return Properties.DeploymentErrors;
+            }
+        }
+
         /// <summary> Gets or sets the ManagedEnvironmentId. </summary>
         public BicepValue<ResourceIdentifier> ManagedEnvironmentId
         {
@@ -376,6 +390,23 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the PatchingMode. </summary>
+        public BicepValue<PatchingMode> PatchingMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PatchingMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerAppProperties();
+                }
+                Properties.PatchingMode = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppDetectorProperty. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -415,8 +446,9 @@ namespace Azure.Provisioning.AppContainers
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-01-01". </summary>
-            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-10-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_10_02_PREVIEW = "2025-10-02-preview";
         }
     }
 }

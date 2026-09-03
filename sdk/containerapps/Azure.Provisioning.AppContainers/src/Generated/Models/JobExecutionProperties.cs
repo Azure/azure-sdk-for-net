@@ -18,6 +18,9 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _endsOn;
         private ContainerAppJobExecutionTemplate _template;
+        private ExecutionStatus _detailedStatus;
+        private BicepValue<string> _reason;
+        private BicepValue<string> _message;
 
         /// <summary> Creates a new JobExecutionProperties. </summary>
         public JobExecutionProperties()
@@ -64,6 +67,45 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the DetailedStatus. </summary>
+        internal ExecutionStatus DetailedStatus
+        {
+            get
+            {
+                Initialize();
+                return _detailedStatus;
+            }
+        }
+
+        /// <summary> Gets the Reason. </summary>
+        public BicepValue<string> Reason
+        {
+            get
+            {
+                Initialize();
+                return _reason;
+            }
+        }
+
+        /// <summary> Gets the Message. </summary>
+        public BicepValue<string> Message
+        {
+            get
+            {
+                Initialize();
+                return _message;
+            }
+        }
+
+        /// <summary> Gets the Replicas. </summary>
+        public BicepList<ReplicaExecutionStatus> DetailedStatusReplicas
+        {
+            get
+            {
+                return DetailedStatus.Replicas;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for JobExecutionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -72,6 +114,9 @@ namespace Azure.Provisioning.AppContainers
             _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, format: "O");
             _template = DefineModelProperty<ContainerAppJobExecutionTemplate>(nameof(Template), new string[] { "template" });
+            _detailedStatus = DefineModelProperty<ExecutionStatus>(nameof(DetailedStatus), new string[] { "detailedStatus" });
+            _reason = DefineProperty<string>(nameof(Reason), new string[] { "reason" }, isOutput: true);
+            _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

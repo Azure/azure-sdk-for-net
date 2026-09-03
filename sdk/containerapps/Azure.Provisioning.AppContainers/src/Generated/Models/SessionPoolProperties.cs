@@ -24,9 +24,11 @@ namespace Azure.Provisioning.AppContainers
         private DynamicPoolConfiguration _dynamicPoolConfiguration;
         private CustomContainerTemplate _customContainerTemplate;
         private SessionNetworkConfiguration _sessionNetworkConfiguration;
+        private TemplateUpdateStatus _templateUpdateStatus;
         private BicepValue<Uri> _poolManagementEndpoint;
         private BicepValue<SessionPoolProvisioningState> _provisioningState;
         private BicepList<SessionPoolManagedIdentitySetting> _managedIdentitySettings;
+        private McpServerSettings _mcpServerSettings;
 
         /// <summary> Creates a new SessionPoolProperties. </summary>
         public SessionPoolProperties()
@@ -163,6 +165,16 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the TemplateUpdateStatus. </summary>
+        public TemplateUpdateStatus TemplateUpdateStatus
+        {
+            get
+            {
+                Initialize();
+                return _templateUpdateStatus;
+            }
+        }
+
         /// <summary> Gets the PoolManagementEndpoint. </summary>
         public BicepValue<Uri> PoolManagementEndpoint
         {
@@ -195,6 +207,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _managedIdentitySettings.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the McpServerSettings. </summary>
+        public McpServerSettings McpServerSettings
+        {
+            get
+            {
+                Initialize();
+                return _mcpServerSettings;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _mcpServerSettings, value);
             }
         }
 
@@ -245,9 +272,11 @@ namespace Azure.Provisioning.AppContainers
             _dynamicPoolConfiguration = DefineModelProperty<DynamicPoolConfiguration>(nameof(DynamicPoolConfiguration), new string[] { "dynamicPoolConfiguration" });
             _customContainerTemplate = DefineModelProperty<CustomContainerTemplate>(nameof(CustomContainerTemplate), new string[] { "customContainerTemplate" });
             _sessionNetworkConfiguration = DefineModelProperty<SessionNetworkConfiguration>(nameof(SessionNetworkConfiguration), new string[] { "sessionNetworkConfiguration" });
+            _templateUpdateStatus = DefineModelProperty<TemplateUpdateStatus>(nameof(TemplateUpdateStatus), new string[] { "templateUpdateStatus" }, isOutput: true);
             _poolManagementEndpoint = DefineProperty<Uri>(nameof(PoolManagementEndpoint), new string[] { "poolManagementEndpoint" }, isOutput: true);
             _provisioningState = DefineProperty<SessionPoolProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _managedIdentitySettings = DefineListProperty<SessionPoolManagedIdentitySetting>(nameof(ManagedIdentitySettings), new string[] { "managedIdentitySettings" });
+            _mcpServerSettings = DefineModelProperty<McpServerSettings>(nameof(McpServerSettings), new string[] { "mcpServerSettings" });
             DefineAdditionalProperties();
         }
 

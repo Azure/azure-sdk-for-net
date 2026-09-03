@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -22,12 +23,13 @@ namespace Azure.Provisioning.AppContainers
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private JobProperties _properties;
+        private ContainerAppExtendedLocation _extendedLocation;
         private ManagedServiceIdentity _identity;
 
         /// <summary> Creates a new ContainerAppJob. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppJob(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs", resourceVersion ?? "2026-01-01")
+        public ContainerAppJob(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs", resourceVersion ?? "2025-10-02-preview")
         {
         }
 
@@ -111,6 +113,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        public ContainerAppExtendedLocation ExtendedLocation
+        {
+            get
+            {
+                Initialize();
+                return _extendedLocation;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _extendedLocation, value);
+            }
+        }
+
         /// <summary> Gets or sets the Identity. </summary>
         public ManagedServiceIdentity Identity
         {
@@ -136,6 +153,19 @@ namespace Azure.Provisioning.AppContainers
                     Properties = new JobProperties();
                 }
                 return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the RunningState. </summary>
+        public BicepValue<JobRunningState> RunningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                return Properties.RunningState;
             }
         }
 
@@ -243,6 +273,7 @@ namespace Azure.Provisioning.AppContainers
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<JobProperties>(nameof(Properties), new string[] { "properties" });
+            _extendedLocation = DefineModelProperty<ContainerAppExtendedLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }
@@ -268,8 +299,9 @@ namespace Azure.Provisioning.AppContainers
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-01-01". </summary>
-            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-10-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_10_02_PREVIEW = "2025-10-02-preview";
         }
     }
 }

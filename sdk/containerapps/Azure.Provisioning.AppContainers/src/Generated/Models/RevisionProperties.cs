@@ -21,6 +21,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<bool> _isActive;
         private BicepValue<int> _replicas;
         private BicepValue<int> _trafficWeight;
+        private BicepList<string> _labels;
         private BicepValue<string> _provisioningError;
         private BicepValue<ContainerAppRevisionHealthState> _healthState;
         private BicepValue<ContainerAppRevisionProvisioningState> _provisioningState;
@@ -101,6 +102,16 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the Labels. </summary>
+        public BicepList<string> Labels
+        {
+            get
+            {
+                Initialize();
+                return _labels;
+            }
+        }
+
         /// <summary> Gets the ProvisioningError. </summary>
         public BicepValue<string> ProvisioningError
         {
@@ -152,6 +163,7 @@ namespace Azure.Provisioning.AppContainers
             _isActive = DefineProperty<bool>(nameof(IsActive), new string[] { "active" }, isOutput: true);
             _replicas = DefineProperty<int>(nameof(Replicas), new string[] { "replicas" }, isOutput: true);
             _trafficWeight = DefineProperty<int>(nameof(TrafficWeight), new string[] { "trafficWeight" }, isOutput: true);
+            _labels = DefineListProperty<string>(nameof(Labels), new string[] { "labels" }, isOutput: true);
             _provisioningError = DefineProperty<string>(nameof(ProvisioningError), new string[] { "provisioningError" }, isOutput: true);
             _healthState = DefineProperty<ContainerAppRevisionHealthState>(nameof(HealthState), new string[] { "healthState" }, isOutput: true);
             _provisioningState = DefineProperty<ContainerAppRevisionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

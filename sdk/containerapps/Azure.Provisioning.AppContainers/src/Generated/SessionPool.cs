@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -28,7 +29,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new SessionPool. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SessionPool(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/sessionPools", resourceVersion ?? "2026-01-01")
+        public SessionPool(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/sessionPools", resourceVersion ?? "2025-10-02-preview")
         {
         }
 
@@ -242,6 +243,15 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the TemplateUpdateStatus. </summary>
+        public TemplateUpdateStatus TemplateUpdateStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TemplateUpdateStatus;
+            }
+        }
+
         /// <summary> Gets the PoolManagementEndpoint. </summary>
         public BicepValue<Uri> PoolManagementEndpoint
         {
@@ -282,6 +292,23 @@ namespace Azure.Provisioning.AppContainers
                     Properties = new SessionPoolProperties();
                 }
                 Properties.ManagedIdentitySettings = value;
+            }
+        }
+
+        /// <summary> Gets or sets the McpServerSettings. </summary>
+        public McpServerSettings McpServerSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.McpServerSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.McpServerSettings = value;
             }
         }
 
@@ -354,8 +381,9 @@ namespace Azure.Provisioning.AppContainers
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-01-01". </summary>
-            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-10-02-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_10_02_PREVIEW = "2025-10-02-preview";
         }
     }
 }

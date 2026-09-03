@@ -16,6 +16,10 @@ namespace Azure.Provisioning.AppContainers
         CustomContainer = 0,
         /// <summary> PythonLTS. </summary>
         [DataMember(Name = "PythonLTS")]
-        PythonLts = 1
+        PythonLts = 1,
+        /// <summary> Shell. </summary>
+        Shell = 2,
+        /// <summary> NodeLTS. </summary>
+        NodeLTS = 3
     }
 }

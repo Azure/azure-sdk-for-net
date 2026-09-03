@@ -16,6 +16,8 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepValue<ResourceIdentifier> _serviceId;
         private BicepValue<string> _name;
+        private BicepValue<string> _clientType;
+        private BicepDictionary<string> _customizedKeys;
 
         /// <summary> Creates a new ContainerAppServiceBind. </summary>
         public ContainerAppServiceBind()
@@ -52,12 +54,44 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the ClientType. </summary>
+        public BicepValue<string> ClientType
+        {
+            get
+            {
+                Initialize();
+                return _clientType;
+            }
+            set
+            {
+                Initialize();
+                _clientType.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CustomizedKeys. </summary>
+        public BicepDictionary<string> CustomizedKeys
+        {
+            get
+            {
+                Initialize();
+                return _customizedKeys;
+            }
+            set
+            {
+                Initialize();
+                _customizedKeys.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppServiceBind. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _serviceId = DefineProperty<ResourceIdentifier>(nameof(ServiceId), new string[] { "serviceId" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _clientType = DefineProperty<string>(nameof(ClientType), new string[] { "clientType" });
+            _customizedKeys = DefineDictionaryProperty<string>(nameof(CustomizedKeys), new string[] { "customizedKeys" });
             DefineAdditionalProperties();
         }
 

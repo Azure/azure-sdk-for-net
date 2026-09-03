@@ -17,6 +17,8 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Secret. </summary>
         Secret = 2,
         /// <summary> NfsAzureFile. </summary>
-        NfsAzureFile = 3
+        NfsAzureFile = 3,
+        /// <summary> Smb. </summary>
+        Smb = 4
     }
 }

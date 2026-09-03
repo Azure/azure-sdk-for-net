@@ -16,6 +16,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<ConnectedEnvironmentStorageProvisioningState> _provisioningState;
         private BicepValue<string> _deploymentErrors;
         private ContainerAppAzureFileProperties _azureFile;
+        private SmbStorage _smb;
 
         /// <summary> Creates a new ConnectedEnvironmentStorageProperties. </summary>
         public ConnectedEnvironmentStorageProperties()
@@ -57,6 +58,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the Smb. </summary>
+        public SmbStorage Smb
+        {
+            get
+            {
+                Initialize();
+                return _smb;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _smb, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ConnectedEnvironmentStorageProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -64,6 +80,7 @@ namespace Azure.Provisioning.AppContainers
             _provisioningState = DefineProperty<ConnectedEnvironmentStorageProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentErrors = DefineProperty<string>(nameof(DeploymentErrors), new string[] { "deploymentErrors" }, isOutput: true);
             _azureFile = DefineModelProperty<ContainerAppAzureFileProperties>(nameof(AzureFile), new string[] { "azureFile" });
+            _smb = DefineModelProperty<SmbStorage>(nameof(Smb), new string[] { "smb" });
             DefineAdditionalProperties();
         }
 

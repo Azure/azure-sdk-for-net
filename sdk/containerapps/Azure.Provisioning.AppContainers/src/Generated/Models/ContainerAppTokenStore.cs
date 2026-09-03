@@ -84,6 +84,57 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the BlobContainerUri. </summary>
+        public BicepValue<string> BlobContainerUri
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.BlobContainerUri;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.BlobContainerUri = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ClientId. </summary>
+        public BicepValue<string> ClientId
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.ClientId;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.ClientId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
+        public BicepValue<string> ManagedIdentityResourceId
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.ManagedIdentityResourceId;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.ManagedIdentityResourceId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppTokenStore. </summary>
         protected override void DefineProvisionableProperties()
         {

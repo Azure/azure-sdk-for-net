@@ -27,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _thumbprint;
         private BicepValue<bool> _isValid;
         private BicepValue<string> _publicKeyHash;
+        private BicepValue<CertificateType> _certificateType;
 
         /// <summary> Creates a new ContainerAppCertificateProperties. </summary>
         public ContainerAppCertificateProperties()
@@ -178,6 +179,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the CertificateType. </summary>
+        public BicepValue<CertificateType> CertificateType
+        {
+            get
+            {
+                Initialize();
+                return _certificateType;
+            }
+            set
+            {
+                Initialize();
+                _certificateType.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppCertificateProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -195,6 +211,7 @@ namespace Azure.Provisioning.AppContainers
             _thumbprint = DefineProperty<string>(nameof(Thumbprint), new string[] { "thumbprint" }, isOutput: true);
             _isValid = DefineProperty<bool>(nameof(IsValid), new string[] { "valid" }, isOutput: true);
             _publicKeyHash = DefineProperty<string>(nameof(PublicKeyHash), new string[] { "publicKeyHash" }, isOutput: true);
+            _certificateType = DefineProperty<CertificateType>(nameof(CertificateType), new string[] { "certificateType" });
             DefineAdditionalProperties();
         }
 

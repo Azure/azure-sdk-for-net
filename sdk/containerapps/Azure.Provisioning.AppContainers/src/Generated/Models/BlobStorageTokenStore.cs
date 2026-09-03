@@ -14,6 +14,9 @@ namespace Azure.Provisioning.AppContainers
     internal partial class BlobStorageTokenStore : ProvisionableConstruct
     {
         private BicepValue<string> _azureBlobStorageSasUrlSettingName;
+        private BicepValue<string> _blobContainerUri;
+        private BicepValue<string> _clientId;
+        private BicepValue<string> _managedIdentityResourceId;
 
         /// <summary> Creates a new BlobStorageTokenStore. </summary>
         public BlobStorageTokenStore()
@@ -35,11 +38,59 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the BlobContainerUri. </summary>
+        public BicepValue<string> BlobContainerUri
+        {
+            get
+            {
+                Initialize();
+                return _blobContainerUri;
+            }
+            set
+            {
+                Initialize();
+                _blobContainerUri.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ClientId. </summary>
+        public BicepValue<string> ClientId
+        {
+            get
+            {
+                Initialize();
+                return _clientId;
+            }
+            set
+            {
+                Initialize();
+                _clientId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
+        public BicepValue<string> ManagedIdentityResourceId
+        {
+            get
+            {
+                Initialize();
+                return _managedIdentityResourceId;
+            }
+            set
+            {
+                Initialize();
+                _managedIdentityResourceId.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BlobStorageTokenStore. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _azureBlobStorageSasUrlSettingName = DefineProperty<string>(nameof(AzureBlobStorageSasUrlSettingName), new string[] { "sasUrlSettingName" }, isRequired: true);
+            _azureBlobStorageSasUrlSettingName = DefineProperty<string>(nameof(AzureBlobStorageSasUrlSettingName), new string[] { "sasUrlSettingName" });
+            _blobContainerUri = DefineProperty<string>(nameof(BlobContainerUri), new string[] { "blobContainerUri" });
+            _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" });
+            _managedIdentityResourceId = DefineProperty<string>(nameof(ManagedIdentityResourceId), new string[] { "managedIdentityResourceId" });
             DefineAdditionalProperties();
         }
 

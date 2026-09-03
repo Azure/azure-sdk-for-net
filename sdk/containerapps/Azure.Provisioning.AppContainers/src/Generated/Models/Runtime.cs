@@ -14,6 +14,7 @@ namespace Azure.Provisioning.AppContainers
     internal partial class Runtime : ProvisionableConstruct
     {
         private RuntimeJava _java;
+        private RuntimeDotnet _dotnet;
 
         /// <summary> Creates a new Runtime. </summary>
         public Runtime()
@@ -35,6 +36,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the Dotnet. </summary>
+        internal RuntimeDotnet Dotnet
+        {
+            get
+            {
+                Initialize();
+                return _dotnet;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _dotnet, value);
+            }
+        }
+
         /// <summary> Gets or sets the EnableMetrics. </summary>
         public BicepValue<bool> EnableMetrics
         {
@@ -52,11 +68,46 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the JavaAgent. </summary>
+        public ContainerAppRuntimeJavaAgent JavaAgent
+        {
+            get
+            {
+                return Java is null ? default : Java.JavaAgent;
+            }
+            set
+            {
+                if (Java is null)
+                {
+                    Java = new RuntimeJava();
+                }
+                Java.JavaAgent = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AutoConfigureDataProtection. </summary>
+        public BicepValue<bool> DotnetAutoConfigureDataProtection
+        {
+            get
+            {
+                return Dotnet is null ? default : Dotnet.AutoConfigureDataProtection;
+            }
+            set
+            {
+                if (Dotnet is null)
+                {
+                    Dotnet = new RuntimeDotnet();
+                }
+                Dotnet.AutoConfigureDataProtection = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for Runtime. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _java = DefineModelProperty<RuntimeJava>(nameof(Java), new string[] { "java" });
+            _dotnet = DefineModelProperty<RuntimeDotnet>(nameof(Dotnet), new string[] { "dotnet" });
             DefineAdditionalProperties();
         }
 

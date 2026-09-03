@@ -15,6 +15,7 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepValue<string> _customerId;
         private BicepValue<string> _sharedKey;
+        private BicepValue<bool> _useDynamicJsonColumns;
 
         /// <summary> Creates a new ContainerAppLogAnalyticsConfiguration. </summary>
         public ContainerAppLogAnalyticsConfiguration()
@@ -51,12 +52,28 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the UseDynamicJsonColumns. </summary>
+        public BicepValue<bool> UseDynamicJsonColumns
+        {
+            get
+            {
+                Initialize();
+                return _useDynamicJsonColumns;
+            }
+            set
+            {
+                Initialize();
+                _useDynamicJsonColumns.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppLogAnalyticsConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _customerId = DefineProperty<string>(nameof(CustomerId), new string[] { "customerId" });
             _sharedKey = DefineProperty<string>(nameof(SharedKey), new string[] { "sharedKey" });
+            _useDynamicJsonColumns = DefineProperty<bool>(nameof(UseDynamicJsonColumns), new string[] { "dynamicJsonColumns" });
             DefineAdditionalProperties();
         }
 

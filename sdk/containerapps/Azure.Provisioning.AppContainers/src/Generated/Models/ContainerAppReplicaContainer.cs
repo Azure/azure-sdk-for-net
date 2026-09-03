@@ -22,6 +22,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _runningStateDetails;
         private BicepValue<string> _logStreamEndpoint;
         private BicepValue<string> _execEndpoint;
+        private BicepValue<string> _debugEndpoint;
 
         /// <summary> Creates a new ContainerAppReplicaContainer. </summary>
         public ContainerAppReplicaContainer()
@@ -118,6 +119,16 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the DebugEndpoint. </summary>
+        public BicepValue<string> DebugEndpoint
+        {
+            get
+            {
+                Initialize();
+                return _debugEndpoint;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppReplicaContainer. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -131,6 +142,7 @@ namespace Azure.Provisioning.AppContainers
             _runningStateDetails = DefineProperty<string>(nameof(RunningStateDetails), new string[] { "runningStateDetails" }, isOutput: true);
             _logStreamEndpoint = DefineProperty<string>(nameof(LogStreamEndpoint), new string[] { "logStreamEndpoint" }, isOutput: true);
             _execEndpoint = DefineProperty<string>(nameof(ExecEndpoint), new string[] { "execEndpoint" }, isOutput: true);
+            _debugEndpoint = DefineProperty<string>(nameof(DebugEndpoint), new string[] { "debugEndpoint" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

@@ -5,6 +5,7 @@ namespace Azure.Provisioning.AppContainers
         public AppContainerResources() { }
         public Azure.Provisioning.BicepValue<double> Cpu { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EphemeralStorage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<double> Gpu { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Memory { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -26,12 +27,126 @@ namespace Azure.Provisioning.AppContainers
         public static bool operator !=(Azure.Provisioning.AppContainers.AppContainersBuiltInRole left, Azure.Provisioning.AppContainers.AppContainersBuiltInRole right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AppResiliency : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public AppResiliency(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.AppContainers.CircuitBreakerPolicy CircuitBreakerPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.HttpConnectionPool HttpConnectionPool { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.HttpRetryPolicy HttpRetryPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> TcpConnectionPoolMaxConnections { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TcpRetryMaxConnectAttempts { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.TimeoutPolicy TimeoutPolicy { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.AppResiliency FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class BuildConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public BuildConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> BaseOS { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.EnvironmentVariable> EnvironmentVariables { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PlatformVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.PreBuildStep> PreBuildSteps { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum BuilderProvisioningState
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Canceled = 2,
+        Creating = 3,
+        Updating = 4,
+        Deleting = 5,
+    }
+    public partial class BuilderResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BuilderResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerRegistry> ContainerRegistries { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EnvironmentId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.BuilderProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.BuilderResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public enum BuildProvisioningState
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Canceled = 2,
+        Creating = 3,
+        Updating = 4,
+        Deleting = 5,
+    }
+    public partial class BuildResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BuildResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.BuildStatus> BuildStatus { get { throw null; } }
+        public Azure.Provisioning.AppContainers.BuildConfiguration Configuration { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerRegistryWithCustomImage DestinationContainerRegistry { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LogStreamEndpoint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.BuilderResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.BuildProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TokenEndpoint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> UploadEndpoint { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.BuildResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public enum BuildStatus
+    {
+        NotStarted = 0,
+        InProgress = 1,
+        Succeeded = 2,
+        Canceled = 3,
+        Failed = 4,
+    }
+    public enum CertificateType
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ServerSSLCertificate")]
+        ServerSslCertificate = 0,
+        ImagePullTrustedCA = 1,
+    }
+    public partial class CircuitBreakerPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CircuitBreakerPolicy() { }
+        public Azure.Provisioning.BicepValue<int> ConsecutiveErrors { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> IntervalInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxEjectionPercent { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ConnectedEnvironmentStorageProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ConnectedEnvironmentStorageProperties() { }
         public Azure.Provisioning.AppContainers.ContainerAppAzureFileProperties AzureFile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ConnectedEnvironmentStorageProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.AppContainers.SmbStorage Smb { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ConnectedEnvironmentStorageProvisioningState
@@ -47,6 +162,7 @@ namespace Azure.Provisioning.AppContainers
         public ContainerApp(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.AppContainers.ContainerAppConfiguration Configuration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomDomainVerificationId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> EventStreamEndpoint { get { throw null; } }
         public Azure.Provisioning.AppContainers.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -61,6 +177,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedEnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.PatchingMode> PatchingMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppRunningStatus> RunningStatus { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -78,7 +195,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public enum ContainerAppAccessMode
@@ -90,6 +207,7 @@ namespace Azure.Provisioning.AppContainers
     {
         Multiple = 0,
         Single = 1,
+        Labels = 2,
     }
     public partial class ContainerAppAllowedPrincipals : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -136,7 +254,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppAuthPlatform : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -206,6 +324,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepList<string> Command { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppEnvironmentVariable> Env { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Image { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ImageType> ImageType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.AppContainerResources Resources { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppVolumeMount> VolumeMounts { get { throw null; } set { } }
@@ -222,6 +341,7 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppCertificateProperties() { }
         public Azure.Provisioning.AppContainers.ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.CertificateType> CertificateType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
         [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
@@ -259,13 +379,17 @@ namespace Azure.Provisioning.AppContainers
         public ContainerAppConfiguration() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppActiveRevisionsMode> ActiveRevisionsMode { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppDaprConfiguration Dapr { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> DotnetAutoConfigureDataProtection { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableMetrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppIdentitySettings> IdentitySettings { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppIngressConfiguration Ingress { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerAppRuntimeJavaAgent JavaAgent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxInactiveRevisions { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppRegistryCredentials> Registries { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> RevisionTransitionThreshold { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppWritableSecret> Secrets { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TargetLabel { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppConnectedEnvironment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -292,7 +416,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppConnectedEnvironmentCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -314,7 +438,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppConnectedEnvironmentDaprComponent : Azure.Provisioning.Primitives.ProvisionableResource
@@ -332,6 +456,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepList<string> Scopes { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppWritableSecret> Secrets { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecretStoreComponent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.DaprComponentServiceBinding> ServiceComponentBind { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -343,7 +468,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public enum ContainerAppConnectedEnvironmentProvisioningState
@@ -376,7 +501,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppContainer : Azure.Provisioning.AppContainers.ContainerAppBaseContainer
@@ -523,7 +648,7 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppDetector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppDetectorProperty : Azure.Provisioning.Primitives.ProvisionableResource
@@ -531,6 +656,7 @@ namespace Azure.Provisioning.AppContainers
         public ContainerAppDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.AppContainers.ContainerAppConfiguration Configuration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomDomainVerificationId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> EventStreamEndpoint { get { throw null; } }
         public Azure.Provisioning.AppContainers.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -546,6 +672,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
         public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.PatchingMode> PatchingMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppRunningStatus> RunningStatus { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -557,7 +684,7 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppDetectorPropertyRevision : Azure.Provisioning.Primitives.ProvisionableResource
@@ -568,6 +695,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppRevisionHealthState> HealthState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsActive { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> Labels { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastActiveOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningError { get { throw null; } }
@@ -581,7 +709,7 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppDetectorPropertyRevision FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppDiagnosticDataColumn : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -727,7 +855,9 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppGitHubActionConfiguration() { }
         public Azure.Provisioning.AppContainers.ContainerAppCredentials AzureCredentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.EnvironmentVariable> BuildEnvironmentVariables { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ContextPath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DockerfilePath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> GitHubPersonalAccessToken { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Image { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OS { get { throw null; } set { } }
@@ -805,7 +935,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppHttpRouteConfigProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -858,6 +988,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> ContainerApp { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Label { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Revision { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppHttpScaleRule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -935,6 +1066,7 @@ namespace Azure.Provisioning.AppContainers
         [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Use StickySessionAffinity instead.", false)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.StickySessionAffinity> StickySessionsAffinity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TargetPort { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.IngressTargetPortHttpScheme> TargetPortHttpScheme { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppRevisionTrafficWeight> Traffic { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppIngressTransportMethod> Transport { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -969,18 +1101,42 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public enum ContainerAppJavaLoggerLevel
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="off")]
+        Off = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="error")]
+        Error = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="info")]
+        Info = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="debug")]
+        Debug = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="trace")]
+        Trace = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="warn")]
+        Warn = 5,
+    }
+    public partial class ContainerAppJavaLoggerSetting : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerAppJavaLoggerSetting() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppJavaLoggerLevel> Level { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Logger { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerAppJob : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerAppJob(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.AppContainers.ContainerAppJobConfiguration Configuration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventStreamEndpoint { get { throw null; } }
+        public Azure.Provisioning.AppContainers.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> OutboundIPAddresses { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppJobProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.JobRunningState> RunningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppJobTemplate Template { get { throw null; } set { } }
@@ -994,7 +1150,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppJobConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1023,7 +1179,7 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppJobDetector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppJobDetectorProperty : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1032,6 +1188,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ContainerAppJobConfiguration Configuration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventStreamEndpoint { get { throw null; } }
+        public Azure.Provisioning.AppContainers.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -1039,6 +1196,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepList<string> OutboundIPAddresses { get { throw null; } }
         public Azure.Provisioning.AppContainers.ContainerAppJob Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppJobProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.JobRunningState> RunningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppJobTemplate Template { get { throw null; } set { } }
@@ -1048,16 +1206,19 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppJobExecution : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal ContainerAppJobExecution() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ReplicaExecutionStatus> DetailedStatusReplicas { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppJob Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Reason { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.JobExecutionRunningState> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1067,7 +1228,7 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppJobExecutionTemplate : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1137,6 +1298,7 @@ namespace Azure.Provisioning.AppContainers
         public ContainerAppLogAnalyticsConfiguration() { }
         public Azure.Provisioning.BicepValue<string> CustomerId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SharedKey { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseDynamicJsonColumns { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppLogin : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1183,7 +1345,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppManagedCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1204,19 +1366,22 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppManagedEnvironment : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerAppManagedEnvironment(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AppInsightsConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> AvailabilityZones { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprAIConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprAIInstrumentationKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DefaultDomain { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
+        public Azure.Provisioning.AppContainers.DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventStreamEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -1231,9 +1396,11 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.OpenTelemetryConfiguration OpenTelemetryConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerAuthenticationIsMtlsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerTrafficEncryptionIsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrivateLinkDefaultDomain { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppEnvironmentProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StaticIP { get { throw null; } }
@@ -1254,7 +1421,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppManagedEnvironmentCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1277,7 +1444,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppManagedEnvironmentDaprComponent : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1295,6 +1462,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepList<string> Scopes { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppWritableSecret> Secrets { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecretStoreComponent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.DaprComponentServiceBinding> ServiceComponentBind { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1307,7 +1475,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppManagedEnvironmentDetector : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1322,19 +1490,22 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentDetector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppManagedEnvironmentDetectorResourceProperty : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerAppManagedEnvironmentDetectorResourceProperty(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AppInsightsConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> AvailabilityZones { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprAIConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprAIInstrumentationKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DefaultDomain { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DeploymentErrors { get { throw null; } }
+        public Azure.Provisioning.AppContainers.DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventStreamEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -1345,10 +1516,12 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.AppContainers.OpenTelemetryConfiguration OpenTelemetryConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerAuthenticationIsMtlsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerTrafficEncryptionIsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrivateLinkDefaultDomain { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppEnvironmentProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StaticIP { get { throw null; } }
@@ -1363,7 +1536,7 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
@@ -1392,7 +1565,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppNfsAzureFileProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1439,6 +1612,13 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ContainerAppOpenIdConnectConfig OpenIdConnectConfiguration { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ContainerAppOtlpHeader : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerAppOtlpHeader() { }
+        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerAppPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerAppPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1460,7 +1640,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public enum ContainerAppPrivateEndpointConnectionProvisioningState
@@ -1578,13 +1758,14 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppReplica FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class ContainerAppReplicaContainer : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerAppReplicaContainer() { }
         public Azure.Provisioning.BicepValue<string> ContainerId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DebugEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ExecEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsReady { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsStarted { get { throw null; } }
@@ -1609,6 +1790,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppRevisionHealthState> HealthState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsActive { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> Labels { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastActiveOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
@@ -1623,7 +1805,7 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.ContainerAppRevision FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public enum ContainerAppRevisionHealthState
@@ -1656,6 +1838,43 @@ namespace Azure.Provisioning.AppContainers
         Stopped = 2,
         Suspended = 3,
         Ready = 4,
+    }
+    public partial class ContainerAppRuntimeJavaAgent : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerAppRuntimeJavaAgent() { }
+        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppJavaLoggerSetting> LoggingLoggerSettings { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerAppsBuild : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ContainerAppsBuild() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.BuildStatus> BuildStatus { get { throw null; } }
+        public Azure.Provisioning.AppContainers.ContainerAppsBuildConfiguration Configuration { get { throw null; } }
+        public Azure.Provisioning.AppContainers.ContainerRegistryWithCustomImage DestinationContainerRegistry { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LogStreamEndpoint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.BuildProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.ContainerAppsBuild FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class ContainerAppsBuildConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerAppsBuildConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> BaseOS { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Platform { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PlatformVersion { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.PreBuildStep> PreBuildSteps { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerAppScale : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1694,9 +1913,30 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppServiceBind : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerAppServiceBind() { }
+        public Azure.Provisioning.BicepValue<string> ClientType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> CustomizedKeys { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerAppsFunction : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ContainerAppsFunction() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> InvokeUrlTemplate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDisabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Language { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TriggerType { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.ContainerAppsFunction FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
     }
     public partial class ContainerAppSourceControl : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -1719,7 +1959,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public enum ContainerAppSourceControlOperationState
@@ -1729,12 +1969,48 @@ namespace Azure.Provisioning.AppContainers
         Failed = 2,
         Canceled = 3,
     }
+    public partial class ContainerAppsPatch : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ContainerAppsPatch() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.PatchProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.ContainerAppsPatch FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class ContainerAppsRevisionFunction : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ContainerAppsRevisionFunction() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> InvokeUrlTemplate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDisabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Language { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerAppRevision Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TriggerType { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.ContainerAppsRevisionFunction FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
     public enum ContainerAppStorageType
     {
         AzureFile = 0,
         EmptyDir = 1,
         Secret = 2,
         NfsAzureFile = 3,
+        Smb = 4,
     }
     public partial class ContainerAppTcpScaleRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1767,7 +2043,10 @@ namespace Azure.Provisioning.AppContainers
     {
         public ContainerAppTokenStore() { }
         public Azure.Provisioning.BicepValue<string> AzureBlobStorageSasUrlSettingName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> BlobContainerUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<double> TokenRefreshExtensionHours { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1823,6 +2102,7 @@ namespace Azure.Provisioning.AppContainers
     public partial class ContainerAppWorkloadProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerAppWorkloadProfile() { }
+        public Azure.Provisioning.BicepValue<bool> EnableFips { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaximumNodeCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MinimumNodeCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -1838,11 +2118,36 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ContainerExecutionStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerExecutionStatus() { }
+        public Azure.Provisioning.BicepValue<string> AdditionalInformation { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> Code { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistry : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistry() { }
+        public Azure.Provisioning.BicepValue<string> ContainerRegistryServer { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> IdentityResourceId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistryWithCustomImage : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryWithCustomImage() { }
+        public Azure.Provisioning.BicepValue<string> Image { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Server { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum ContainerType
     {
         CustomContainer = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="PythonLTS")]
         PythonLts = 1,
+        Shell = 2,
+        NodeLTS = 3,
     }
     public partial class CustomContainerTemplate : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1870,11 +2175,194 @@ namespace Azure.Provisioning.AppContainers
         InProgress = 3,
         Deleting = 4,
     }
+    public partial class DaprComponentResiliencyPolicy : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DaprComponentResiliencyPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.AppContainers.DaprComponentResiliencyPolicyConfiguration InboundPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.DaprComponentResiliencyPolicyConfiguration OutboundPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentDaprComponent Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.DaprComponentResiliencyPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration() { }
+        public Azure.Provisioning.BicepValue<int> ConsecutiveErrors { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> IntervalInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprComponentResiliencyPolicyConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprComponentResiliencyPolicyConfiguration() { }
+        public Azure.Provisioning.AppContainers.DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration CircuitBreakerPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration HttpRetryPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ResponseTimeoutInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration() { }
+        public Azure.Provisioning.BicepValue<int> InitialDelayInMilliseconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxIntervalInMilliseconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration() { }
+        public Azure.Provisioning.BicepValue<int> MaxRetries { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration RetryBackOff { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprComponentServiceBinding : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprComponentServiceBinding() { }
+        public Azure.Provisioning.AppContainers.DaprServiceBindMetadata Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ServiceId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprServiceBindMetadata : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprServiceBindMetadata() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprSubscription : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DaprSubscription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.AppContainers.DaprSubscriptionBulkSubscribeConfig BulkSubscribe { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DeadLetterTopic { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PubsubName { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.DaprSubscriptionRoutes Routes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Scopes { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Topic { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.DaprSubscription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class DaprSubscriptionBulkSubscribeConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprSubscriptionBulkSubscribeConfig() { }
+        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxAwaitDurationMs { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxMessagesCount { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprSubscriptionRouteRule : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprSubscriptionRouteRule() { }
+        public Azure.Provisioning.BicepValue<string> Match { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DaprSubscriptionRoutes : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DaprSubscriptionRoutes() { }
+        public Azure.Provisioning.BicepValue<string> Default { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.DaprSubscriptionRouteRule> Rules { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DataDogConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DataDogConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Site { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DestinationsConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DestinationsConfiguration() { }
+        public Azure.Provisioning.AppContainers.DataDogConfiguration DataDogConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.OtlpConfiguration> OtlpConfigurations { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum DetectionStatus
+    {
+        Succeeded = 0,
+        RegistryLoginFailed = 1,
+        Failed = 2,
+    }
+    public partial class DiskEncryptionConfigurationKeyVaultConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DiskEncryptionConfigurationKeyVaultConfiguration() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AuthIdentity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyUri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DotNetComponent : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DotNetComponent(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.DotNetComponentType> ComponentType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.DotNetComponentConfigurationProperty> Configurations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.DotNetComponentProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.DotNetComponentServiceBind> ServiceBinds { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.DotNetComponent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class DotNetComponentConfigurationProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DotNetComponentConfigurationProperty() { }
+        public Azure.Provisioning.BicepValue<string> PropertyName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum DotNetComponentProvisioningState
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Canceled = 2,
+        Deleting = 3,
+        InProgress = 4,
+    }
+    public partial class DotNetComponentServiceBind : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DotNetComponentServiceBind() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum DotNetComponentType
+    {
+        AspireDashboard = 0,
+    }
     public partial class EncryptionSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EncryptionSettings() { }
         public Azure.Provisioning.BicepValue<string> ContainerAppAuthEncryptionSecretName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ContainerAppAuthSigningSecretName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class EnvironmentVariable : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public EnvironmentVariable() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class EventTriggerConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1885,6 +2373,47 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ContainerAppJobScale Scale { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class HeaderMatch : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public HeaderMatch() { }
+        public Azure.Provisioning.BicepValue<string> ExactMatch { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Header { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PrefixMatch { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RegexMatch { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SuffixMatch { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class HttpConnectionPool : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public HttpConnectionPool() { }
+        public Azure.Provisioning.BicepValue<int> Http1MaxPendingRequests { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Http2MaxRequests { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class HttpGet : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public HttpGet() { }
+        public Azure.Provisioning.BicepValue<string> FileName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Headers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class HttpRetryPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public HttpRetryPolicy() { }
+        public Azure.Provisioning.BicepList<string> Errors { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.HeaderMatch> Headers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<int> HttpStatusCodes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> InitialDelayInMilliseconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> MaxIntervalInMilliseconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxRetries { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ImageType
+    {
+        CloudBuild = 0,
+        ContainerImage = 1,
+    }
     public partial class IngressPortMapping : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public IngressPortMapping() { }
@@ -1892,6 +2421,13 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<bool> External { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TargetPort { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum IngressTargetPortHttpScheme
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="http")]
+        Http = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="https")]
+        Https = 1,
     }
     public partial class JavaComponent : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -1908,7 +2444,7 @@ namespace Azure.Provisioning.AppContainers
         {
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class JavaComponentConfigurationProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1985,6 +2521,37 @@ namespace Azure.Provisioning.AppContainers
         Unknown = 5,
         Succeeded = 6,
     }
+    public enum JobRunningState
+    {
+        Ready = 0,
+        Progressing = 1,
+        Suspended = 2,
+    }
+    public partial class LabelHistory : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal LabelHistory() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.LabelHistoryRecordItem> LabelHistoryRecords { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppContainers.LabelHistory FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_02_PREVIEW;
+        }
+    }
+    public partial class LabelHistoryRecordItem : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public LabelHistoryRecordItem() { }
+        public Azure.Provisioning.BicepValue<string> Revision { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.Status> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StoppedOn { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class LogicApp : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public LogicApp(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1998,7 +2565,7 @@ namespace Azure.Provisioning.AppContainers
         public static partial class ResourceVersions
         {
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class LogicAppWorkflowEnvelope : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2015,7 +2582,7 @@ namespace Azure.Provisioning.AppContainers
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
     }
     public partial class LogicAppWorkflowEnvelopeProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2107,10 +2674,130 @@ namespace Azure.Provisioning.AppContainers
         Saturday = 5,
         Sunday = 6,
     }
+    public partial class McpServerSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public McpServerSettings() { }
+        public Azure.Provisioning.BicepValue<bool> IsMcpServerApiKeyDisabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsMcpServerEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> McpServerEndpoint { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MetricsConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MetricsConfiguration() { }
+        public Azure.Provisioning.BicepList<string> Destinations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsKedaIncluded { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class NacosComponent : Azure.Provisioning.AppContainers.JavaComponentProperties
+    {
+        public NacosComponent() { }
+        public Azure.Provisioning.BicepValue<string> IngressFqdn { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class OpenTelemetryConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public OpenTelemetryConfiguration() { }
+        public Azure.Provisioning.AppContainers.DestinationsConfiguration DestinationsConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> LogsDestinations { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.MetricsConfiguration MetricsConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.TracesConfiguration TracesConfiguration { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class OtlpConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public OtlpConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> Endpoint { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppOtlpHeader> Headers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsInsecure { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum PatchApplyStatus
+    {
+        NotStarted = 0,
+        RebaseInProgress = 1,
+        CreatingRevision = 2,
+        Succeeded = 3,
+        Canceled = 4,
+        RebaseFailed = 5,
+        RevisionCreationFailed = 6,
+        ImagePushPullFailed = 7,
+        ManuallySkipped = 8,
+    }
+    public partial class PatchDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PatchDetails() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.DetectionStatus> DetectionStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastDetectionOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> NewImageName { get { throw null; } }
+        public Azure.Provisioning.AppContainers.PatchDetailsNewLayer NewLayer { get { throw null; } }
+        public Azure.Provisioning.AppContainers.PatchDetailsOldLayer OldLayer { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.PatchType> PatchType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetContainerName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetImage { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class PatchDetailsNewLayer : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PatchDetailsNewLayer() { }
+        public Azure.Provisioning.BicepValue<string> FrameworkAndVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OSAndVersion { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class PatchDetailsOldLayer : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PatchDetailsOldLayer() { }
+        public Azure.Provisioning.BicepValue<string> FrameworkAndVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OSAndVersion { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum PatchingMode
+    {
+        Automatic = 0,
+        Manual = 1,
+        Disabled = 2,
+    }
+    public partial class PatchProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PatchProperties() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.PatchApplyStatus> PatchApplyStatus { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.PatchDetails> PatchDetails { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetContainerAppId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetEnvironmentId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetRevisionId { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum PatchType
+    {
+        FrameworkSecurity = 0,
+        OSSecurity = 1,
+        FrameworkAndOSSecurity = 2,
+        Other = 3,
+    }
     public enum PoolManagementType
     {
         Manual = 0,
         Dynamic = 1,
+    }
+    public partial class PreBuildStep : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PreBuildStep() { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.HttpGet HttpGet { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Scripts { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ReplicaExecutionStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ReplicaExecutionStatus() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerExecutionStatus> Containers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RevisionRunningState
     {
@@ -2120,6 +2807,16 @@ namespace Azure.Provisioning.AppContainers
         Degraded = 3,
         Failed = 4,
         Unknown = 5,
+    }
+    public partial class ScgRoute : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ScgRoute() { }
+        public Azure.Provisioning.BicepList<string> Filters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> Order { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Predicates { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SecretVolumeItem : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -2136,6 +2833,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppEnvironmentVariable> Env { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Image { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.SessionProbe> Probes { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.SessionContainerResources Resources { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2162,6 +2860,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.SessionPoolManagedIdentitySetting> ManagedIdentitySettings { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.McpServerSettings McpServerSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> NodeCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> PoolManagementEndpoint { get { throw null; } }
@@ -2172,6 +2871,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.SessionNetworkStatus> SessionNetworkStatus { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.TemplateUpdateStatus TemplateUpdateStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppContainers.SessionPool FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -2179,13 +2879,8 @@ namespace Azure.Provisioning.AppContainers
         {
             public static readonly string V2025_01_01;
             public static readonly string V2025_07_01;
-            public static readonly string V2026_01_01;
+            public static readonly string V2025_10_02_PREVIEW;
         }
-    }
-    public enum SessionPoolIdentityLifeCycle
-    {
-        None = 0,
-        Main = 1,
     }
     public partial class SessionPoolLifecycleConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -2204,7 +2899,7 @@ namespace Azure.Provisioning.AppContainers
     {
         public SessionPoolManagedIdentitySetting() { }
         public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.SessionPoolIdentityLifeCycle> Lifecycle { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppIdentitySettingsLifeCycle> Lifecycle { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SessionPoolProvisioningState
@@ -2229,12 +2924,66 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class SessionProbe : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SessionProbe() { }
+        public Azure.Provisioning.BicepValue<int> FailureThreshold { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.SessionProbeHttpGet HttpGet { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> InitialDelaySeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> PeriodSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> SuccessThreshold { get { throw null; } set { } }
+        public Azure.Provisioning.AppContainers.SessionProbeTcpSocket TcpSocket { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> TerminationGracePeriodSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.SessionProbeType> Type { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SessionProbeHttpGet : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SessionProbeHttpGet() { }
+        public Azure.Provisioning.BicepValue<string> Host { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.SessionProbeHttpGetHttpHeadersItem> HttpHeaders { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Port { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppHttpScheme> Scheme { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SessionProbeHttpGetHttpHeadersItem : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SessionProbeHttpGetHttpHeadersItem() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SessionProbeTcpSocket : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SessionProbeTcpSocket() { }
+        public Azure.Provisioning.BicepValue<string> Host { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Port { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum SessionProbeType
+    {
+        Liveness = 0,
+        Startup = 1,
+    }
     public partial class SessionRegistryCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SessionRegistryCredentials() { }
         public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PasswordSecretRef { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Server { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SmbStorage : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SmbStorage() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppAccessMode> AccessMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Domain { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Host { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ShareName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2255,12 +3004,67 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> IngressFqdn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class SpringCloudGatewayComponent : Azure.Provisioning.AppContainers.JavaComponentProperties
+    {
+        public SpringCloudGatewayComponent() { }
+        public Azure.Provisioning.BicepValue<string> IngressFqdn { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ScgRoute> SpringCloudGatewayRoutes { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum Status
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Starting = 2,
+    }
     public enum StickySessionAffinity
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="sticky")]
         Sticky = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="none")]
         None = 1,
+    }
+    public partial class TemplatePoolStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public TemplatePoolStatus() { }
+        public Azure.Provisioning.BicepValue<int> AllocatedCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> CrashCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> ExpectedCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> ImagePullFailCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> PendingCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> ReadyCount { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class TemplateStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public TemplateStatus() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.SessionContainer> Containers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Details { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> IngressTargetPort { get { throw null; } }
+        public Azure.Provisioning.AppContainers.TemplatePoolStatus Status { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class TemplateUpdateStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public TemplateUpdateStatus() { }
+        public Azure.Provisioning.AppContainers.TemplateStatus ActiveTemplate { get { throw null; } }
+        public Azure.Provisioning.AppContainers.TemplateStatus DesiredTemplate { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class TimeoutPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public TimeoutPolicy() { }
+        public Azure.Provisioning.BicepValue<int> ConnectionTimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ResponseTimeoutInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class TracesConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public TracesConfiguration() { }
+        public Azure.Provisioning.BicepList<string> Destinations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsDaprIncluded { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class WorkflowErrorEntity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

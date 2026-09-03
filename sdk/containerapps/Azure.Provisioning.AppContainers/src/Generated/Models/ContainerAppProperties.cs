@@ -18,9 +18,11 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepValue<ContainerAppProvisioningState> _provisioningState;
         private BicepValue<ContainerAppRunningStatus> _runningStatus;
+        private BicepValue<string> _deploymentErrors;
         private BicepValue<ResourceIdentifier> _managedEnvironmentId;
         private BicepValue<ResourceIdentifier> _environmentId;
         private BicepValue<string> _workloadProfileName;
+        private ContainerAppPropertiesPatchingConfiguration _patchingConfiguration;
         private BicepValue<string> _latestRevisionName;
         private BicepValue<string> _latestReadyRevisionName;
         private BicepValue<string> _latestRevisionFqdn;
@@ -52,6 +54,16 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 return _runningStatus;
+            }
+        }
+
+        /// <summary> Gets the DeploymentErrors. </summary>
+        public BicepValue<string> DeploymentErrors
+        {
+            get
+            {
+                Initialize();
+                return _deploymentErrors;
             }
         }
 
@@ -97,6 +109,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _workloadProfileName.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PatchingConfiguration. </summary>
+        internal ContainerAppPropertiesPatchingConfiguration PatchingConfiguration
+        {
+            get
+            {
+                Initialize();
+                return _patchingConfiguration;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _patchingConfiguration, value);
             }
         }
 
@@ -190,15 +217,34 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the PatchingMode. </summary>
+        public BicepValue<PatchingMode> PatchingMode
+        {
+            get
+            {
+                return PatchingConfiguration is null ? default : PatchingConfiguration.PatchingMode;
+            }
+            set
+            {
+                if (PatchingConfiguration is null)
+                {
+                    PatchingConfiguration = new ContainerAppPropertiesPatchingConfiguration();
+                }
+                PatchingConfiguration.PatchingMode = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ContainerAppProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _runningStatus = DefineProperty<ContainerAppRunningStatus>(nameof(RunningStatus), new string[] { "runningStatus" }, isOutput: true);
+            _deploymentErrors = DefineProperty<string>(nameof(DeploymentErrors), new string[] { "deploymentErrors" }, isOutput: true);
             _managedEnvironmentId = DefineProperty<ResourceIdentifier>(nameof(ManagedEnvironmentId), new string[] { "managedEnvironmentId" });
             _environmentId = DefineProperty<ResourceIdentifier>(nameof(EnvironmentId), new string[] { "environmentId" });
             _workloadProfileName = DefineProperty<string>(nameof(WorkloadProfileName), new string[] { "workloadProfileName" });
+            _patchingConfiguration = DefineModelProperty<ContainerAppPropertiesPatchingConfiguration>(nameof(PatchingConfiguration), new string[] { "patchingConfiguration" });
             _latestRevisionName = DefineProperty<string>(nameof(LatestRevisionName), new string[] { "latestRevisionName" }, isOutput: true);
             _latestReadyRevisionName = DefineProperty<string>(nameof(LatestReadyRevisionName), new string[] { "latestReadyRevisionName" }, isOutput: true);
             _latestRevisionFqdn = DefineProperty<string>(nameof(LatestRevisionFqdn), new string[] { "latestRevisionFqdn" }, isOutput: true);

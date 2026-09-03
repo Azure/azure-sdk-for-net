@@ -16,6 +16,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<double> _cpu;
         private BicepValue<string> _memory;
         private BicepValue<string> _ephemeralStorage;
+        private BicepValue<double> _gpu;
 
         /// <summary> Creates a new AppContainerResources. </summary>
         public AppContainerResources()
@@ -62,6 +63,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the Gpu. </summary>
+        public BicepValue<double> Gpu
+        {
+            get
+            {
+                Initialize();
+                return _gpu;
+            }
+            set
+            {
+                Initialize();
+                _gpu.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AppContainerResources. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -69,6 +85,7 @@ namespace Azure.Provisioning.AppContainers
             _cpu = DefineProperty<double>(nameof(Cpu), new string[] { "cpu" });
             _memory = DefineProperty<string>(nameof(Memory), new string[] { "memory" });
             _ephemeralStorage = DefineProperty<string>(nameof(EphemeralStorage), new string[] { "ephemeralStorage" }, isOutput: true);
+            _gpu = DefineProperty<double>(nameof(Gpu), new string[] { "gpu" });
             DefineAdditionalProperties();
         }
 

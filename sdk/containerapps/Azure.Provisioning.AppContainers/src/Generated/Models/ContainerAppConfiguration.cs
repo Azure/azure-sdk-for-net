@@ -15,11 +15,13 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepList<ContainerAppWritableSecret> _secrets;
         private BicepValue<ContainerAppActiveRevisionsMode> _activeRevisionsMode;
+        private BicepValue<string> _targetLabel;
         private ContainerAppIngressConfiguration _ingress;
         private BicepList<ContainerAppRegistryCredentials> _registries;
         private ContainerAppDaprConfiguration _dapr;
         private Runtime _runtime;
         private BicepValue<int> _maxInactiveRevisions;
+        private BicepValue<int> _revisionTransitionThreshold;
         private Service _service;
         private BicepList<ContainerAppIdentitySettings> _identitySettings;
 
@@ -55,6 +57,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _activeRevisionsMode.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the TargetLabel. </summary>
+        public BicepValue<string> TargetLabel
+        {
+            get
+            {
+                Initialize();
+                return _targetLabel;
+            }
+            set
+            {
+                Initialize();
+                _targetLabel.Assign(value);
             }
         }
 
@@ -133,6 +150,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the RevisionTransitionThreshold. </summary>
+        public BicepValue<int> RevisionTransitionThreshold
+        {
+            get
+            {
+                Initialize();
+                return _revisionTransitionThreshold;
+            }
+            set
+            {
+                Initialize();
+                _revisionTransitionThreshold.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Service. </summary>
         internal Service Service
         {
@@ -180,6 +212,40 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the JavaAgent. </summary>
+        public ContainerAppRuntimeJavaAgent JavaAgent
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.JavaAgent;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.JavaAgent = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AutoConfigureDataProtection. </summary>
+        public BicepValue<bool> DotnetAutoConfigureDataProtection
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.DotnetAutoConfigureDataProtection;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.DotnetAutoConfigureDataProtection = value;
+            }
+        }
+
         /// <summary> Gets or sets the Type. </summary>
         public BicepValue<string> ServiceType
         {
@@ -203,11 +269,13 @@ namespace Azure.Provisioning.AppContainers
             base.DefineProvisionableProperties();
             _secrets = DefineListProperty<ContainerAppWritableSecret>(nameof(Secrets), new string[] { "secrets" });
             _activeRevisionsMode = DefineProperty<ContainerAppActiveRevisionsMode>(nameof(ActiveRevisionsMode), new string[] { "activeRevisionsMode" });
+            _targetLabel = DefineProperty<string>(nameof(TargetLabel), new string[] { "targetLabel" });
             _ingress = DefineModelProperty<ContainerAppIngressConfiguration>(nameof(Ingress), new string[] { "ingress" });
             _registries = DefineListProperty<ContainerAppRegistryCredentials>(nameof(Registries), new string[] { "registries" });
             _dapr = DefineModelProperty<ContainerAppDaprConfiguration>(nameof(Dapr), new string[] { "dapr" });
             _runtime = DefineModelProperty<Runtime>(nameof(Runtime), new string[] { "runtime" });
             _maxInactiveRevisions = DefineProperty<int>(nameof(MaxInactiveRevisions), new string[] { "maxInactiveRevisions" });
+            _revisionTransitionThreshold = DefineProperty<int>(nameof(RevisionTransitionThreshold), new string[] { "revisionTransitionThreshold" });
             _service = DefineModelProperty<Service>(nameof(Service), new string[] { "service" });
             _identitySettings = DefineListProperty<ContainerAppIdentitySettings>(nameof(IdentitySettings), new string[] { "identitySettings" });
             DefineAdditionalProperties();

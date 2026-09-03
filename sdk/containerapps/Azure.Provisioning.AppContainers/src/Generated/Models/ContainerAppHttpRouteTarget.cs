@@ -16,6 +16,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _containerApp;
         private BicepValue<string> _revision;
         private BicepValue<string> _label;
+        private BicepValue<int> _weight;
 
         /// <summary> Creates a new ContainerAppHttpRouteTarget. </summary>
         public ContainerAppHttpRouteTarget()
@@ -67,6 +68,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the Weight. </summary>
+        public BicepValue<int> Weight
+        {
+            get
+            {
+                Initialize();
+                return _weight;
+            }
+            set
+            {
+                Initialize();
+                _weight.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppHttpRouteTarget. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -74,6 +90,7 @@ namespace Azure.Provisioning.AppContainers
             _containerApp = DefineProperty<string>(nameof(ContainerApp), new string[] { "containerApp" }, isRequired: true);
             _revision = DefineProperty<string>(nameof(Revision), new string[] { "revision" });
             _label = DefineProperty<string>(nameof(Label), new string[] { "label" });
+            _weight = DefineProperty<int>(nameof(Weight), new string[] { "weight" });
             DefineAdditionalProperties();
         }
 

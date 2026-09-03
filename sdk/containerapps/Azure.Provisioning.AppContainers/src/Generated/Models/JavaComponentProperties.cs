@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers
 {
     /// <summary>
     /// Java Component common properties.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudEurekaComponent"/>, and <see cref="SpringCloudConfigComponent"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SpringCloudGatewayComponent"/>, <see cref="SpringBootAdminComponent"/>, <see cref="NacosComponent"/>, <see cref="SpringCloudEurekaComponent"/>, and <see cref="SpringCloudConfigComponent"/>.
     /// </summary>
     public partial class JavaComponentProperties : ProvisionableConstruct
     {

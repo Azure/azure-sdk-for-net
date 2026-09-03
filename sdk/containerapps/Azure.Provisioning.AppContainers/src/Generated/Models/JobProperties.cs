@@ -14,6 +14,7 @@ namespace Azure.Provisioning.AppContainers
     internal partial class JobProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppJobProvisioningState> _provisioningState;
+        private BicepValue<JobRunningState> _runningState;
         private BicepValue<string> _environmentId;
         private BicepValue<string> _workloadProfileName;
         private ContainerAppJobConfiguration _configuration;
@@ -33,6 +34,16 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets the RunningState. </summary>
+        public BicepValue<JobRunningState> RunningState
+        {
+            get
+            {
+                Initialize();
+                return _runningState;
             }
         }
 
@@ -121,6 +132,7 @@ namespace Azure.Provisioning.AppContainers
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ContainerAppJobProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _runningState = DefineProperty<JobRunningState>(nameof(RunningState), new string[] { "runningState" }, isOutput: true);
             _environmentId = DefineProperty<string>(nameof(EnvironmentId), new string[] { "environmentId" });
             _workloadProfileName = DefineProperty<string>(nameof(WorkloadProfileName), new string[] { "workloadProfileName" });
             _configuration = DefineModelProperty<ContainerAppJobConfiguration>(nameof(Configuration), new string[] { "configuration" });

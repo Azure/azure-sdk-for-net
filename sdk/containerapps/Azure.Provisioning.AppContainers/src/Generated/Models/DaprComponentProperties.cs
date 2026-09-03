@@ -21,6 +21,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _secretStoreComponent;
         private BicepList<ContainerAppDaprMetadata> _metadata;
         private BicepList<string> _scopes;
+        private BicepList<DaprComponentServiceBinding> _serviceComponentBind;
         private BicepValue<DaprComponentProvisioningState> _provisioningState;
         private BicepValue<string> _deploymentErrors;
 
@@ -149,6 +150,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the ServiceComponentBind. </summary>
+        public BicepList<DaprComponentServiceBinding> ServiceComponentBind
+        {
+            get
+            {
+                Initialize();
+                return _serviceComponentBind;
+            }
+            set
+            {
+                Initialize();
+                _serviceComponentBind.Assign(value);
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<DaprComponentProvisioningState> ProvisioningState
         {
@@ -181,6 +197,7 @@ namespace Azure.Provisioning.AppContainers
             _secretStoreComponent = DefineProperty<string>(nameof(SecretStoreComponent), new string[] { "secretStoreComponent" });
             _metadata = DefineListProperty<ContainerAppDaprMetadata>(nameof(Metadata), new string[] { "metadata" });
             _scopes = DefineListProperty<string>(nameof(Scopes), new string[] { "scopes" });
+            _serviceComponentBind = DefineListProperty<DaprComponentServiceBinding>(nameof(ServiceComponentBind), new string[] { "serviceComponentBind" });
             _provisioningState = DefineProperty<DaprComponentProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentErrors = DefineProperty<string>(nameof(DeploymentErrors), new string[] { "deploymentErrors" }, isOutput: true);
             DefineAdditionalProperties();
