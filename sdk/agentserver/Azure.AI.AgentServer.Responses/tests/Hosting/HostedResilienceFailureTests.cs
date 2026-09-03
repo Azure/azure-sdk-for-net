@@ -9,6 +9,7 @@ using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using Azure.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -37,6 +38,25 @@ public class HostedResilienceFailureTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
         FoundryEnvironment.Reload();
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void HostedMode_ComposesWhenCoreCredentialIsRegisteredFirst()
+    {
+        ConfigureHostedEnvironment();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        var credential = new TestCredential();
+        services.AddResilientTasks(credential);
+
+        Assert.DoesNotThrow(() =>
+            services.AddResponsesServer(o => o.ResilientBackground = true));
+
+        using ServiceProvider provider = services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<TokenCredential>(),
+            Is.SameAs(credential));
     }
 
     [Test]
@@ -135,5 +155,19 @@ public class HostedResilienceFailureTests
         {
             throw tie.InnerException;
         }
+    }
+
+    private sealed class TestCredential : TokenCredential
+    {
+        public override AccessToken GetToken(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken)
+            => new("test-token", DateTimeOffset.MaxValue);
+
+        public override ValueTask<AccessToken> GetTokenAsync(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken)
+            => ValueTask.FromResult(
+                new AccessToken("test-token", DateTimeOffset.MaxValue));
     }
 }
