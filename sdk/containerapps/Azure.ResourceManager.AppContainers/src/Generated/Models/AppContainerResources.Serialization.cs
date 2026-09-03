@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("ephemeralStorage"u8);
                 writer.WriteStringValue(EphemeralStorage);
             }
+            if (Optional.IsDefined(Gpu))
+            {
+                writer.WritePropertyName("gpu"u8);
+                writer.WriteNumberValue(Gpu.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             double? cpu = default;
             string memory = default;
             string ephemeralStorage = default;
+            double? gpu = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +162,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ephemeralStorage = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("gpu"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gpu = prop.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppContainerResources(cpu, memory, ephemeralStorage, additionalBinaryDataProperties);
+            return new AppContainerResources(cpu, memory, ephemeralStorage, gpu, additionalBinaryDataProperties);
         }
     }
 }

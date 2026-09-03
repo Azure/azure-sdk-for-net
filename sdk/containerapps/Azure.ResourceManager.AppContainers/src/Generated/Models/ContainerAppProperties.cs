@@ -28,10 +28,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Container App. </param>
         /// <param name="runningStatus"> Running status of the Container App. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment. </param>
         /// <param name="managedEnvironmentId"> Deprecated. Resource ID of the Container App's environment. </param>
         /// <param name="environmentId"> Resource ID of environment. </param>
-        /// <param name="networking"> Networking configuration for the Container App. </param>
         /// <param name="workloadProfileName"> Workload profile name to pin for container app execution. </param>
+        /// <param name="patchingConfiguration"> Container App auto patch configuration. </param>
         /// <param name="latestRevisionName"> Name of the latest revision of the Container App. </param>
         /// <param name="latestReadyRevisionName"> Name of the latest ready revision of the Container App. </param>
         /// <param name="latestRevisionFqdn"> Fully Qualified Domain Name of the latest revision of the Container App. </param>
@@ -41,14 +42,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="outboundIPAddressList"> Outbound IP Addresses for container app. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppProperties(ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, ContainerAppNetworkingConfiguration networking, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppProperties(ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, string deploymentErrors, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, ContainerAppPropertiesPatchingConfiguration patchingConfiguration, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RunningStatus = runningStatus;
+            DeploymentErrors = deploymentErrors;
             ManagedEnvironmentId = managedEnvironmentId;
             EnvironmentId = environmentId;
-            Networking = networking;
             WorkloadProfileName = workloadProfileName;
+            PatchingConfiguration = patchingConfiguration;
             LatestRevisionName = latestRevisionName;
             LatestReadyRevisionName = latestReadyRevisionName;
             LatestRevisionFqdn = latestRevisionFqdn;
@@ -68,6 +70,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("runningStatus")]
         public ContainerAppRunningStatus? RunningStatus { get; }
 
+        /// <summary> Any errors that occurred during deployment. </summary>
+        [WirePath("deploymentErrors")]
+        public string DeploymentErrors { get; }
+
         /// <summary> Deprecated. Resource ID of the Container App's environment. </summary>
         [WirePath("managedEnvironmentId")]
         public ResourceIdentifier ManagedEnvironmentId { get; set; }
@@ -76,13 +82,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("environmentId")]
         public ResourceIdentifier EnvironmentId { get; set; }
 
-        /// <summary> Networking configuration for the Container App. </summary>
-        [WirePath("networking")]
-        internal ContainerAppNetworkingConfiguration Networking { get; set; }
-
         /// <summary> Workload profile name to pin for container app execution. </summary>
         [WirePath("workloadProfileName")]
         public string WorkloadProfileName { get; set; }
+
+        /// <summary> Container App auto patch configuration. </summary>
+        [WirePath("patchingConfiguration")]
+        internal ContainerAppPropertiesPatchingConfiguration PatchingConfiguration { get; set; }
 
         /// <summary> Name of the latest revision of the Container App. </summary>
         [WirePath("latestRevisionName")]
@@ -116,21 +122,21 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("eventStreamEndpoint")]
         public Uri EventStreamEndpoint { get; }
 
-        /// <summary> Resource ID of a subnet used for outbound (egress) traffic from this Container App. Only supported for Container Apps in an Express managed environment. Mutually exclusive with the environment-level VNet configuration and immutable after the Container App is created. </summary>
-        [WirePath("networking.outboundVnetSubnetId")]
-        public string NetworkingOutboundVnetSubnetId
+        /// <summary> Patching mode for the container app. Null or default in this field will be interpreted as Automatic by RP. Automatic mode will automatically apply available patches. Manual mode will require the user to manually apply patches. Disabled mode will stop patch detection and auto patching. </summary>
+        [WirePath("patchingConfiguration.patchingMode")]
+        public PatchingMode? PatchingMode
         {
             get
             {
-                return Networking is null ? default : Networking.OutboundVnetSubnetId;
+                return PatchingConfiguration is null ? default : PatchingConfiguration.PatchingMode;
             }
             set
             {
-                if (Networking is null)
+                if (PatchingConfiguration is null)
                 {
-                    Networking = new ContainerAppNetworkingConfiguration();
+                    PatchingConfiguration = new ContainerAppPropertiesPatchingConfiguration();
                 }
-                Networking.OutboundVnetSubnetId = value;
+                PatchingConfiguration.PatchingMode = value;
             }
         }
     }

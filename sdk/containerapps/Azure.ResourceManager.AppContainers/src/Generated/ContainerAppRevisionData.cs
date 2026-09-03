@@ -118,6 +118,20 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        /// <summary> List of labels assigned to this revision. </summary>
+        [WirePath("properties.labels")]
+        public IReadOnlyList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RevisionProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
         /// <summary> Optional Field - Platform Error Message. </summary>
         [WirePath("properties.provisioningError")]
         public string ProvisioningError

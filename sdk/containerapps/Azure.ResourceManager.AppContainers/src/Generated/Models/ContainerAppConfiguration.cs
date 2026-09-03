@@ -28,23 +28,27 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
         /// <param name="activeRevisionsMode"> Controls how active revisions are handled for the Container app. </param>
+        /// <param name="targetLabel"> Required in labels revisions mode. Label to apply to newly created revision. </param>
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="runtime"> App runtime configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
+        /// <param name="revisionTransitionThreshold"> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </param>
         /// <param name="service"> Container App to be a dev Container App Service. </param>
         /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, string targetLabel, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, int? revisionTransitionThreshold, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
+            TargetLabel = targetLabel;
             Ingress = ingress;
             Registries = registries;
             Dapr = dapr;
             Runtime = runtime;
             MaxInactiveRevisions = maxInactiveRevisions;
+            RevisionTransitionThreshold = revisionTransitionThreshold;
             Service = service;
             IdentitySettings = identitySettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,6 +61,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Controls how active revisions are handled for the Container app. </summary>
         [WirePath("activeRevisionsMode")]
         public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
+
+        /// <summary> Required in labels revisions mode. Label to apply to newly created revision. </summary>
+        [WirePath("targetLabel")]
+        public string TargetLabel { get; set; }
 
         /// <summary> Ingress configurations. </summary>
         [WirePath("ingress")]
@@ -77,6 +85,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
         [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }
+
+        /// <summary> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </summary>
+        [WirePath("revisionTransitionThreshold")]
+        public int? RevisionTransitionThreshold { get; set; }
 
         /// <summary> Container App to be a dev Container App Service. </summary>
         [WirePath("service")]
@@ -101,6 +113,42 @@ namespace Azure.ResourceManager.AppContainers.Models
                     Runtime = new Runtime();
                 }
                 Runtime.EnableMetrics = value;
+            }
+        }
+
+        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+        [WirePath("runtime.java.javaAgent")]
+        public ContainerAppRuntimeJavaAgent JavaAgent
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.JavaAgent;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.JavaAgent = value;
+            }
+        }
+
+        /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
+        [WirePath("runtime.dotnet.autoConfigureDataProtection")]
+        public bool? AutoConfigureDataProtection
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.AutoConfigureDataProtection;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.AutoConfigureDataProtection = value;
             }
         }
 

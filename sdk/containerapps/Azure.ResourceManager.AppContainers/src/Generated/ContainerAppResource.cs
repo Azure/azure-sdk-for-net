@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly ClientDiagnostics _containerAppsClientDiagnostics;
         private readonly ContainerApps _containerAppsRestClient;
-        private readonly ClientDiagnostics _containerAppPrivateLinkResourcesClientDiagnostics;
-        private readonly ContainerAppPrivateLinkResources _containerAppPrivateLinkResourcesRestClient;
         private readonly ContainerAppData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/containerApps";
@@ -55,9 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppApiVersion);
             _containerAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2026-07-01");
-            _containerAppPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppPrivateLinkResourcesRestClient = new ContainerAppPrivateLinkResources(_containerAppPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2026-07-01");
+            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +261,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +320,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +369,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -410,188 +406,6 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets the details of a private link resource supported by a Container App.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateLinkResources/{privateLinkResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateLinkResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The name of the private link associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerAppPrivateLink>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            using DiagnosticScope scope = _containerAppPrivateLinkResourcesClientDiagnostics.CreateScope("ContainerAppResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerAppPrivateLink> response = Response.FromValue(ContainerAppPrivateLink.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the details of a private link resource supported by a Container App.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateLinkResources/{privateLinkResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateLinkResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The name of the private link associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerAppPrivateLink> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            using DiagnosticScope scope = _containerAppPrivateLinkResourcesClientDiagnostics.CreateScope("ContainerAppResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerAppPrivateLink> response = Response.FromValue(ContainerAppPrivateLink.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the private link resources supported by a Container App.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateLinkResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateLinkResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerAppPrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ContainerAppPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
-                _containerAppPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ContainerAppResource.GetAll");
-        }
-
-        /// <summary>
-        /// Lists the private link resources supported by a Container App.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateLinkResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateLinkResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerAppPrivateLink> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ContainerAppPrivateLinkResourcesGetAllCollectionResultOfT(
-                _containerAppPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ContainerAppResource.GetAll");
-        }
-
-        /// <summary>
         /// Get auth token for a container app
         /// <list type="bullet">
         /// <item>
@@ -604,7 +418,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -652,7 +466,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -700,7 +514,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -749,7 +563,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -798,7 +612,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -836,7 +650,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -874,7 +688,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -929,7 +743,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -984,7 +798,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1039,7 +853,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1388,6 +1202,39 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppSourceControls().Get(sourceControlName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerAppsBuilds in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppsBuilds and their operations over a ContainerAppsBuildResource. </returns>
+        public virtual ContainerAppsBuildCollection GetContainerAppsBuilds()
+        {
+            return GetCachedClient(client => new ContainerAppsBuildCollection(client, Id));
+        }
+
+        /// <summary> Get a Container Apps Build resource. </summary>
+        /// <param name="buildName"> Name of the build. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppsBuildResource>> GetContainerAppsBuildAsync(string buildName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
+
+            return await GetContainerAppsBuilds().GetAsync(buildName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Container Apps Build resource. </summary>
+        /// <param name="buildName"> Name of the build. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppsBuildResource> GetContainerAppsBuild(string buildName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
+
+            return GetContainerAppsBuilds().Get(buildName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppsFunctions in the <see cref="ContainerAppResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppsFunctions and their operations over a ContainerAppsFunctionResource. </returns>
         public virtual ContainerAppsFunctionCollection GetContainerAppsFunctions()
@@ -1487,6 +1334,39 @@ namespace Azure.ResourceManager.AppContainers
             return GetLabelHistories().Get(labelName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerAppsPatches in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppsPatches and their operations over a ContainerAppsPatchResource. </returns>
+        public virtual ContainerAppsPatchCollection GetContainerAppsPatches()
+        {
+            return GetCachedClient(client => new ContainerAppsPatchCollection(client, Id));
+        }
+
+        /// <summary> Get details for specific Container Apps Patch by patch name. </summary>
+        /// <param name="patchName"> Name of the Container Apps Patch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="patchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppsPatchResource>> GetContainerAppsPatchAsync(string patchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(patchName, nameof(patchName));
+
+            return await GetContainerAppsPatches().GetAsync(patchName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get details for specific Container Apps Patch by patch name. </summary>
+        /// <param name="patchName"> Name of the Container Apps Patch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="patchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppsPatchResource> GetContainerAppsPatch(string patchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(patchName, nameof(patchName));
+
+            return GetContainerAppsPatches().Get(patchName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of LogicApps in the <see cref="ContainerAppResource"/>. </summary>
         /// <returns> An object representing collection of LogicApps and their operations over a LogicAppResource. </returns>
         public virtual LogicAppCollection GetLogicApps()
@@ -1551,39 +1431,6 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
             return GetContainerAppAuthConfigs().Get(authConfigName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnections in the <see cref="ContainerAppResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnections and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
-        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of a private endpoint connection associated with a Container App. </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the Private Endpoint Connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the details of a private endpoint connection associated with a Container App. </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the Private Endpoint Connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppDetectorPropertyRevisions in the <see cref="ContainerAppResource"/>. </summary>
@@ -1657,6 +1504,39 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             return GetContainerAppDetectors().Get(detectorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AppResiliencies in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of AppResiliencies and their operations over a AppResiliencyResource. </returns>
+        public virtual AppResiliencyCollection GetAppResiliencies()
+        {
+            return GetCachedClient(client => new AppResiliencyCollection(client, Id));
+        }
+
+        /// <summary> Get container app resiliency policy. </summary>
+        /// <param name="name"> Name of the resiliency policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppResiliencyResource>> GetAppResiliencyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetAppResiliencies().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get container app resiliency policy. </summary>
+        /// <param name="name"> Name of the resiliency policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppResiliencyResource> GetAppResiliency(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetAppResiliencies().Get(name, cancellationToken);
         }
     }
 }

@@ -26,16 +26,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="invokeUrlTemplate"> Invoke URL for the function. </param>
         /// <param name="triggerType"> Trigger type of the function. </param>
         /// <param name="language"> Programming language of the function. </param>
-        /// <param name="isDisabled"> Indicates whether the function is disabled. This property is deprecated; use `state` instead. </param>
-        /// <param name="state"> The state of the function. </param>
+        /// <param name="isDisabled"> Indicates whether the function is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppsFunctionProperties(Uri invokeUrlTemplate, string triggerType, string language, bool? isDisabled, ContainerAppsFunctionState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppsFunctionProperties(Uri invokeUrlTemplate, string triggerType, string language, bool? isDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InvokeUrlTemplate = invokeUrlTemplate;
             TriggerType = triggerType;
             Language = language;
             IsDisabled = isDisabled;
-            State = state;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,12 +49,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("language")]
         public string Language { get; }
 
-        /// <summary> Indicates whether the function is disabled. This property is deprecated; use `state` instead. </summary>
+        /// <summary> Indicates whether the function is disabled. </summary>
         [WirePath("isDisabled")]
         public bool? IsDisabled { get; }
-
-        /// <summary> The state of the function. </summary>
-        [WirePath("state")]
-        public ContainerAppsFunctionState? State { get; }
     }
 }

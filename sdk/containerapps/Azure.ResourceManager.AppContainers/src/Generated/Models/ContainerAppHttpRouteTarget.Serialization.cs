@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,6 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string containerApp = default;
             string revision = default;
             string label = default;
+            int? weight = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,12 +160,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     label = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("weight"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    weight = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerAppHttpRouteTarget(containerApp, revision, label, additionalBinaryDataProperties);
+            return new ContainerAppHttpRouteTarget(containerApp, revision, label, weight, additionalBinaryDataProperties);
         }
     }
 }

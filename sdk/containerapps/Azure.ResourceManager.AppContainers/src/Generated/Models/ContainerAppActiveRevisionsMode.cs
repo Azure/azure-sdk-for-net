@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string MultipleValue = "Multiple";
         /// <summary> Single. </summary>
         private const string SingleValue = "Single";
+        /// <summary> Labels. </summary>
+        private const string LabelsValue = "Labels";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppActiveRevisionsMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Single. </summary>
         public static ContainerAppActiveRevisionsMode Single { get; } = new ContainerAppActiveRevisionsMode(SingleValue);
+
+        /// <summary> Labels. </summary>
+        public static ContainerAppActiveRevisionsMode Labels { get; } = new ContainerAppActiveRevisionsMode(LabelsValue);
 
         /// <summary> Determines if two <see cref="ContainerAppActiveRevisionsMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

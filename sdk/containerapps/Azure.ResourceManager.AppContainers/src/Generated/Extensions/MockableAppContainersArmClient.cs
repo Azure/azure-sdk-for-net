@@ -39,24 +39,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new SessionPoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SandboxGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SandboxGroupResource"/> object. </returns>
-        public virtual SandboxGroupResource GetSandboxGroupResource(ResourceIdentifier id)
-        {
-            SandboxGroupResource.ValidateResourceId(id);
-            return new SandboxGroupResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="VnetConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VnetConnectionResource"/> object. </returns>
-        public virtual VnetConnectionResource GetVnetConnectionResource(ResourceIdentifier id)
-        {
-            VnetConnectionResource.ValidateResourceId(id);
-            return new VnetConnectionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ContainerAppSourceControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppSourceControlResource"/> object. </returns>
@@ -73,6 +55,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppResource.ValidateResourceId(id);
             return new ContainerAppResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppsBuildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsBuildResource"/> object. </returns>
+        public virtual ContainerAppsBuildResource GetContainerAppsBuildResource(ResourceIdentifier id)
+        {
+            ContainerAppsBuildResource.ValidateResourceId(id);
+            return new ContainerAppsBuildResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppsFunctionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -100,6 +91,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             LabelHistoryResource.ValidateResourceId(id);
             return new LabelHistoryResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppsPatchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsPatchResource"/> object. </returns>
+        public virtual ContainerAppsPatchResource GetContainerAppsPatchResource(ResourceIdentifier id)
+        {
+            ContainerAppsPatchResource.ValidateResourceId(id);
+            return new ContainerAppsPatchResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -228,6 +228,24 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppAuthConfigResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BuilderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BuilderResource"/> object. </returns>
+        public virtual BuilderResource GetBuilderResource(ResourceIdentifier id)
+        {
+            BuilderResource.ValidateResourceId(id);
+            return new BuilderResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BuildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BuildResource"/> object. </returns>
+        public virtual BuildResource GetBuildResource(ResourceIdentifier id)
+        {
+            BuildResource.ValidateResourceId(id);
+            return new BuildResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource"/> object. </returns>
@@ -291,15 +309,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppManagedCertificateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            ContainerAppPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ContainerAppPrivateEndpointConnectionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="DaprComponentResiliencyPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DaprComponentResiliencyPolicyResource"/> object. </returns>
@@ -307,6 +316,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             DaprComponentResiliencyPolicyResource.ValidateResourceId(id);
             return new DaprComponentResiliencyPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DaprSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DaprSubscriptionResource"/> object. </returns>
+        public virtual DaprSubscriptionResource GetDaprSubscriptionResource(ResourceIdentifier id)
+        {
+            DaprSubscriptionResource.ValidateResourceId(id);
+            return new DaprSubscriptionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppMaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -408,6 +426,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppsRevisionFunctionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AppResiliencyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppResiliencyResource"/> object. </returns>
+        public virtual AppResiliencyResource GetAppResiliencyResource(ResourceIdentifier id)
+        {
+            AppResiliencyResource.ValidateResourceId(id);
+            return new AppResiliencyResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> object. </returns>
@@ -417,13 +444,13 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppConnectedEnvironmentCertificateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ManagedEnvironmentPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedEnvironmentPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ManagedEnvironmentPrivateEndpointConnectionResource GetManagedEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ManagedEnvironmentPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ManagedEnvironmentPrivateEndpointConnectionResource(Client, id);
+            ContainerAppPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ContainerAppPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppHttpRouteConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>

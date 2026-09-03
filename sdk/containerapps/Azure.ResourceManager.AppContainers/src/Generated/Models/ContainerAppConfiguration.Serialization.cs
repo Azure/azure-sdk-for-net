@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
+            if (Optional.IsDefined(TargetLabel))
+            {
+                writer.WritePropertyName("targetLabel"u8);
+                writer.WriteStringValue(TargetLabel);
+            }
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
@@ -118,6 +123,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
+            }
+            if (Optional.IsDefined(RevisionTransitionThreshold))
+            {
+                writer.WritePropertyName("revisionTransitionThreshold"u8);
+                writer.WriteNumberValue(RevisionTransitionThreshold.Value);
             }
             if (Optional.IsDefined(Service))
             {
@@ -178,11 +188,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             IList<ContainerAppWritableSecret> secrets = default;
             ContainerAppActiveRevisionsMode? activeRevisionsMode = default;
+            string targetLabel = default;
             ContainerAppIngressConfiguration ingress = default;
             IList<ContainerAppRegistryCredentials> registries = default;
             ContainerAppDaprConfiguration dapr = default;
             Runtime runtime = default;
             int? maxInactiveRevisions = default;
+            int? revisionTransitionThreshold = default;
             Service service = default;
             IList<ContainerAppIdentitySettings> identitySettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -209,6 +221,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     activeRevisionsMode = new ContainerAppActiveRevisionsMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("targetLabel"u8))
+                {
+                    targetLabel = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ingress"u8))
@@ -261,6 +278,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxInactiveRevisions = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("revisionTransitionThreshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    revisionTransitionThreshold = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("service"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -292,11 +318,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppConfiguration(
                 secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
                 activeRevisionsMode,
+                targetLabel,
                 ingress,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
                 dapr,
                 runtime,
                 maxInactiveRevisions,
+                revisionTransitionThreshold,
                 service,
                 identitySettings ?? new ChangeTrackingList<ContainerAppIdentitySettings>(),
                 additionalBinaryDataProperties);

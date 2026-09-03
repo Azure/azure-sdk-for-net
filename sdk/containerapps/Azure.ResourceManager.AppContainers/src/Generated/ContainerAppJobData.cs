@@ -33,11 +33,13 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Container Apps Job resource specific properties. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, JobProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, JobProperties properties, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            ExtendedLocation = extendedLocation;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,6 +47,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Container Apps Job resource specific properties. </summary>
         [WirePath("properties")]
         internal JobProperties Properties { get; set; }
+
+        /// <summary> The complex type of the extended location. </summary>
+        [WirePath("extendedLocation")]
+        public ContainerAppExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]

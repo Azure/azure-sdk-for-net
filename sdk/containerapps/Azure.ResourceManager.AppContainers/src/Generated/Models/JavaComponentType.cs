@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string SpringCloudEurekaValue = "SpringCloudEureka";
         /// <summary> SpringCloudConfig. </summary>
         private const string SpringCloudConfigValue = "SpringCloudConfig";
+        /// <summary> SpringCloudGateway. </summary>
+        private const string SpringCloudGatewayValue = "SpringCloudGateway";
+        /// <summary> Nacos. </summary>
+        private const string NacosValue = "Nacos";
 
         /// <summary> Initializes a new instance of <see cref="JavaComponentType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +44,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> SpringCloudConfig. </summary>
         public static JavaComponentType SpringCloudConfig { get; } = new JavaComponentType(SpringCloudConfigValue);
+
+        /// <summary> SpringCloudGateway. </summary>
+        public static JavaComponentType SpringCloudGateway { get; } = new JavaComponentType(SpringCloudGatewayValue);
+
+        /// <summary> Nacos. </summary>
+        public static JavaComponentType Nacos { get; } = new JavaComponentType(NacosValue);
 
         /// <summary> Determines if two <see cref="JavaComponentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -85,6 +85,27 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(ClientType))
+            {
+                writer.WritePropertyName("clientType"u8);
+                writer.WriteStringValue(ClientType);
+            }
+            if (Optional.IsCollectionDefined(CustomizedKeys))
+            {
+                writer.WritePropertyName("customizedKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomizedKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,6 +150,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             ResourceIdentifier serviceId = default;
             string name = default;
+            string clientType = default;
+            IDictionary<string, string> customizedKeys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,12 +169,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("clientType"u8))
+                {
+                    clientType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("customizedKeys"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    customizedKeys = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerAppServiceBind(serviceId, name, additionalBinaryDataProperties);
+            return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

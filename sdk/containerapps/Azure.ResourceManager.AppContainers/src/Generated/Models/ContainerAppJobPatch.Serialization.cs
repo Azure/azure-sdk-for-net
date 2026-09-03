@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -155,12 +160,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
+            ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             ContainerAppJobPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -205,7 +220,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerAppJobPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new ContainerAppJobPatch(extendedLocation, identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

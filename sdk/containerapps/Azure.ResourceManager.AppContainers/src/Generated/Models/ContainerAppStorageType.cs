@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string SecretValue = "Secret";
         /// <summary> NfsAzureFile. </summary>
         private const string NfsAzureFileValue = "NfsAzureFile";
+        /// <summary> Smb. </summary>
+        private const string SmbValue = "Smb";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppStorageType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> NfsAzureFile. </summary>
         public static ContainerAppStorageType NfsAzureFile { get; } = new ContainerAppStorageType(NfsAzureFileValue);
+
+        /// <summary> Smb. </summary>
+        public static ContainerAppStorageType Smb { get; } = new ContainerAppStorageType(SmbValue);
 
         /// <summary> Determines if two <see cref="ContainerAppStorageType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

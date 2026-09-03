@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("java"u8);
                 writer.WriteObjectValue(Java, options);
             }
+            if (Optional.IsDefined(Dotnet))
+            {
+                writer.WritePropertyName("dotnet"u8);
+                writer.WriteObjectValue(Dotnet, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             RuntimeJava java = default;
+            RuntimeDotnet dotnet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     java = RuntimeJava.DeserializeRuntimeJava(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("dotnet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dotnet = RuntimeDotnet.DeserializeRuntimeDotnet(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Runtime(java, additionalBinaryDataProperties);
+            return new Runtime(java, dotnet, additionalBinaryDataProperties);
         }
     }
 }

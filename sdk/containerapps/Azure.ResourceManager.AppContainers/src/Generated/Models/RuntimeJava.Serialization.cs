@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("enableMetrics"u8);
                 writer.WriteBooleanValue(EnableMetrics.Value);
             }
+            if (Optional.IsDefined(JavaAgent))
+            {
+                writer.WritePropertyName("javaAgent"u8);
+                writer.WriteObjectValue(JavaAgent, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             bool? enableMetrics = default;
+            ContainerAppRuntimeJavaAgent javaAgent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enableMetrics = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("javaAgent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    javaAgent = ContainerAppRuntimeJavaAgent.DeserializeContainerAppRuntimeJavaAgent(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuntimeJava(enableMetrics, additionalBinaryDataProperties);
+            return new RuntimeJava(enableMetrics, javaAgent, additionalBinaryDataProperties);
         }
     }
 }

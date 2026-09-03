@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppBaseContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
+        /// <param name="imageType"> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
         /// <param name="args"> Container start command arguments. </param>
@@ -35,9 +36,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="volumeMounts"> Container volume mounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppBaseContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppBaseContainer(string image, ImageType? imageType, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
+            ImageType = imageType;
             Name = name;
             Command = command;
             Args = args;
@@ -50,6 +52,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Container image tag. </summary>
         [WirePath("image")]
         public string Image { get; set; }
+
+        /// <summary> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </summary>
+        [WirePath("imageType")]
+        public ImageType? ImageType { get; set; }
 
         /// <summary> Custom container name. </summary>
         [WirePath("name")]

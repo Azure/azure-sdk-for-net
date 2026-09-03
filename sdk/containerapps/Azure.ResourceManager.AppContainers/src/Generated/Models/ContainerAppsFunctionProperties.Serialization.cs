@@ -94,11 +94,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,7 +140,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             string triggerType = default;
             string language = default;
             bool? isDisabled = default;
-            ContainerAppsFunctionState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,27 +171,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     isDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("state"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new ContainerAppsFunctionState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerAppsFunctionProperties(
-                invokeUrlTemplate,
-                triggerType,
-                language,
-                isDisabled,
-                state,
-                additionalBinaryDataProperties);
+            return new ContainerAppsFunctionProperties(invokeUrlTemplate, triggerType, language, isDisabled, additionalBinaryDataProperties);
         }
     }
 }

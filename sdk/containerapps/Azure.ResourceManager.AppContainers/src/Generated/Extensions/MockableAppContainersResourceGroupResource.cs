@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,71 +94,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
             return GetSessionPools().Get(sessionPoolName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SandboxGroups in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SandboxGroups and their operations over a SandboxGroupResource. </returns>
-        public virtual SandboxGroupCollection GetSandboxGroups()
-        {
-            return GetCachedClient(client => new SandboxGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the properties of a SandboxGroup.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SandboxGroups_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sandboxGroupName"> The name of the SandboxGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sandboxGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SandboxGroupResource>> GetSandboxGroupAsync(string sandboxGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
-
-            return await GetSandboxGroups().GetAsync(sandboxGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the properties of a SandboxGroup.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SandboxGroups_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sandboxGroupName"> The name of the SandboxGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sandboxGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SandboxGroupResource> GetSandboxGroup(string sandboxGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
-
-            return GetSandboxGroups().Get(sandboxGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerApps in the <see cref="ResourceGroupResource"/>. </summary>
@@ -181,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +159,71 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
             return GetContainerApps().Get(containerAppName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Builders in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Builders and their operations over a BuilderResource. </returns>
+        public virtual BuilderCollection GetBuilders()
+        {
+            return GetCachedClient(client => new BuilderCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a BuilderResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Builders_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="builderName"> The name of the builder. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BuilderResource>> GetBuilderAsync(string builderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+
+            return await GetBuilders().GetAsync(builderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BuilderResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Builders_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="builderName"> The name of the builder. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BuilderResource> GetBuilder(string builderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+
+            return GetBuilders().Get(builderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppConnectedEnvironments in the <see cref="ResourceGroupResource"/>. </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

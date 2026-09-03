@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="containerApp"> Container App Name to route requests to. </param>
         /// <param name="revision"> Revision to route requests to. </param>
         /// <param name="label"> Label to route requests to. </param>
+        /// <param name="weight"> Weighted routing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppHttpRouteTarget(string containerApp, string revision, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppHttpRouteTarget(string containerApp, string revision, string label, int? weight, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerApp = containerApp;
             Revision = revision;
             Label = label;
+            Weight = weight;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,5 +53,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Label to route requests to. </summary>
         [WirePath("label")]
         public string Label { get; set; }
+
+        /// <summary> Weighted routing. </summary>
+        [WirePath("weight")]
+        public int? Weight { get; set; }
     }
 }

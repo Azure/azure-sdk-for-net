@@ -173,6 +173,20 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        /// <summary> List of container app services that are bound to the Dapr component. </summary>
+        [WirePath("properties.serviceComponentBind")]
+        public IList<DaprComponentServiceBinding> ServiceComponentBind
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DaprComponentProperties();
+                }
+                return Properties.ServiceComponentBind;
+            }
+        }
+
         /// <summary> Provisioning state of the Connected Environment Dapr Component. </summary>
         [WirePath("properties.provisioningState")]
         public DaprComponentProvisioningState? ProvisioningState

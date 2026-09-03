@@ -28,16 +28,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
         /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if not set. </param>
         /// <param name="pollingInterval"> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </param>
-        /// <param name="allowScalingRuleOverride"> Optional. Whether custom scale rules can override the automatic scale rules. This property is only applicable to Function Apps. </param>
         /// <param name="rules"> Scaling rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppScale(int? minReplicas, int? maxReplicas, int? cooldownPeriod, int? pollingInterval, bool? allowScalingRuleOverride, IList<ContainerAppScaleRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppScale(int? minReplicas, int? maxReplicas, int? cooldownPeriod, int? pollingInterval, IList<ContainerAppScaleRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinReplicas = minReplicas;
             MaxReplicas = maxReplicas;
             CooldownPeriod = cooldownPeriod;
             PollingInterval = pollingInterval;
-            AllowScalingRuleOverride = allowScalingRuleOverride;
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,10 +55,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </summary>
         [WirePath("pollingInterval")]
         public int? PollingInterval { get; set; }
-
-        /// <summary> Optional. Whether custom scale rules can override the automatic scale rules. This property is only applicable to Function Apps. </summary>
-        [WirePath("allowScalingRuleOverride")]
-        public bool? AllowScalingRuleOverride { get; set; }
 
         /// <summary> Scaling rules. </summary>
         [WirePath("rules")]

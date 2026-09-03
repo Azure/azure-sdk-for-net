@@ -154,6 +154,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("publicKeyHash"u8);
                 writer.WriteStringValue(PublicKeyHash);
             }
+            if (Optional.IsDefined(CertificateType))
+            {
+                writer.WritePropertyName("certificateType"u8);
+                writer.WriteStringValue(CertificateType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -209,6 +214,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string thumbprint = default;
             bool? isValid = default;
             string publicKeyHash = default;
+            CertificateType? certificateType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -317,6 +323,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     publicKeyHash = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("certificateType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateType = new CertificateType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -336,6 +351,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 thumbprint,
                 isValid,
                 publicKeyHash,
+                certificateType,
                 additionalBinaryDataProperties);
         }
     }

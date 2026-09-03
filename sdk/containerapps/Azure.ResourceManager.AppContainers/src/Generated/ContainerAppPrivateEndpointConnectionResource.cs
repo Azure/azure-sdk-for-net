@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing a ContainerAppPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppPrivateEndpointConnections method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetContainerAppPrivateEndpointConnections method.
     /// </summary>
     public partial class ContainerAppPrivateEndpointConnectionResource : ArmResource
     {
-        private readonly ClientDiagnostics _containerAppPrivateEndpointConnectionsClientDiagnostics;
-        private readonly ContainerAppPrivateEndpointConnections _containerAppPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics;
+        private readonly ManagedEnvironmentPrivateEndpointConnections _managedEnvironmentPrivateEndpointConnectionsRestClient;
         private readonly ContainerAppPrivateEndpointConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/privateEndpointConnections";
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/privateEndpointConnections";
 
         /// <summary> Initializes a new instance of ContainerAppPrivateEndpointConnectionResource for mocking. </summary>
         protected ContainerAppPrivateEndpointConnectionResource()
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string containerAppPrivateEndpointConnectionApiVersion);
-            _containerAppPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppPrivateEndpointConnectionsRestClient = new ContainerAppPrivateEndpointConnections(_containerAppPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppPrivateEndpointConnectionApiVersion ?? "2026-07-01");
+            _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _managedEnvironmentPrivateEndpointConnectionsRestClient = new ManagedEnvironmentPrivateEndpointConnections(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppPrivateEndpointConnectionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="environmentName"> The containerAppName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
         /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string privateEndpointConnectionName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets the details of a private endpoint connection associated with a Container App.
+        /// Get a private endpoint connection for a given managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateEndpointConnections_Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppPrivateEndpointConnectionData> response = Response.FromValue(ContainerAppPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -140,19 +140,19 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets the details of a private endpoint connection associated with a Container App.
+        /// Get a private endpoint connection for a given managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateEndpointConnections_Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppPrivateEndpointConnectionData> response = Response.FromValue(ContainerAppPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Deletes the specified private endpoint connection associated with a Container App.
+        /// Delete a private endpoint connection for a given managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateEndpointConnections_Delete. </description>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AppContainersArmOperation operation = new AppContainersArmOperation(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -237,19 +237,19 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Deletes the specified private endpoint connection associated with a Container App.
+        /// Delete a private endpoint connection for a given managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateEndpointConnections_Delete. </description>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AppContainersArmOperation operation = new AppContainersArmOperation(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -290,15 +290,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateEndpointConnections_CreateOrUpdate. </description>
+        /// <description> PrivateEndpointConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource> operation = new AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource>(
                     new ContainerAppPrivateEndpointConnectionResourceOperationSource(Client),
-                    _containerAppPrivateEndpointConnectionsClientDiagnostics,
+                    _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -349,15 +349,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppPrivateEndpointConnections_CreateOrUpdate. </description>
+        /// <description> PrivateEndpointConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerAppPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _managedEnvironmentPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource> operation = new AppContainersArmOperation<ContainerAppPrivateEndpointConnectionResource>(
                     new ContainerAppPrivateEndpointConnectionResourceOperationSource(Client),
-                    _containerAppPrivateEndpointConnectionsClientDiagnostics,
+                    _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

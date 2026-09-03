@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string CustomContainerValue = "CustomContainer";
         /// <summary> PythonLTS. </summary>
         private const string PythonLtsValue = "PythonLTS";
+        /// <summary> Shell. </summary>
+        private const string ShellValue = "Shell";
+        /// <summary> NodeLTS. </summary>
+        private const string NodeLTSValue = "NodeLTS";
 
         /// <summary> Initializes a new instance of <see cref="ContainerType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +39,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> PythonLTS. </summary>
         public static ContainerType PythonLts { get; } = new ContainerType(PythonLtsValue);
+
+        /// <summary> Shell. </summary>
+        public static ContainerType Shell { get; } = new ContainerType(ShellValue);
+
+        /// <summary> NodeLTS. </summary>
+        public static ContainerType NodeLTS { get; } = new ContainerType(NodeLTSValue);
 
         /// <summary> Determines if two <see cref="ContainerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
-            uri.AppendPath("/labelHistories/", false);
+            uri.AppendPath("/labelHistory/", false);
             uri.AppendPath(labelName, true);
             if (_apiVersion != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
-            uri.AppendPath("/labelHistories/", false);
+            uri.AppendPath("/labelHistory/", false);
             uri.AppendPath(labelName, true);
             if (_apiVersion != null)
             {

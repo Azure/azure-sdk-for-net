@@ -71,23 +71,13 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Indicates whether the function is disabled. This property is deprecated; use `state` instead. </summary>
+        /// <summary> Indicates whether the function is disabled. </summary>
         [WirePath("properties.isDisabled")]
         public bool? IsDisabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsDisabled;
-            }
-        }
-
-        /// <summary> The state of the function. </summary>
-        [WirePath("properties.state")]
-        public ContainerAppsFunctionState? State
-        {
-            get
-            {
-                return Properties is null ? default : Properties.State;
             }
         }
     }
