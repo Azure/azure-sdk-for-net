@@ -6,6 +6,16 @@
 
 ### Breaking Changes
 
+- Removed preview-only API surface that is not modelled in the `2026-09-23` stable API version. All of the
+  following shipped only in `1.4.0-beta.1` and were never part of a stable release:
+  - Removed `CommunicationIdentityClient.GetUserDetail` and `GetUserDetailAsync`.
+  - Removed the `Azure.Communication.Identity.Models.CommunicationUserDetail` type and the corresponding
+    `CommunicationIdentityModelFactory.CommunicationUserDetail` factory method.
+  - Removed the `customId` overloads of `CreateUser`, `CreateUserAsync`, `CreateUserAndToken` and
+    `CreateUserAndTokenAsync`. The overloads without `customId` are unchanged.
+- Replaced `ServiceVersion.V2025_03_02_PREVIEW` with `ServiceVersion.V2026_09_23`, which is now the default
+  API version.
+
 ### Bugs Fixed
 
 ### Other Changes
