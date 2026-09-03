@@ -200,13 +200,13 @@ function Invoke-AutoReleaseResolution {
         $matchedArtifacts += $artifact
 
         # Update release pending status and release pipeline URL in the release plan for this package.
-        # release status is updated as "Released" when the package has been successfully released; here we are marking it as "Approval Pending" to indicate that the release is awaiting approval.
+        # release status is updated as "Released" when the package has been successfully released; here we are marking it as "Release In Progress" to indicate that the release is awaiting approval.
         try
         {
           if($AzsdkExePath)
           {
             $sdkPullRequestUrl = $pr.html_url
-            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Approval Pending", "--sdk-pull-request", $sdkPullRequestUrl)
+            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $sdkPullRequestUrl)
             if ($PipelineUrl)
             {
                 $cliArgs += @("--release-pipeline", $PipelineUrl)
