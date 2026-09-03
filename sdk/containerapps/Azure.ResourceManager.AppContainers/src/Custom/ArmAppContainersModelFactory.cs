@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         // The generated affinity type changed, so preserve the shipped model-factory overload and convert to the new type.
-#pragma warning disable CS0618 // Affinity is intentionally used by this obsolete compatibility overload.
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppIngressConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsoleted and will be removed in a future version. Use the overload accepting StickySessionAffinity instead.", false)]
@@ -109,6 +108,5 @@ namespace Azure.ResourceManager.AppContainers.Models
                 additionalPortMappings: default,
                 targetPortHttpScheme: default);
         }
-#pragma warning restore CS0618
     }
 }

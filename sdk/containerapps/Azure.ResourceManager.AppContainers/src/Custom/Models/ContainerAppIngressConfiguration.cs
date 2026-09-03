@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppIngressConfiguration
     {
         // The affinity type now has a service-specific name, so preserve the shipped property with conversion to the generated property.
-#pragma warning disable CS0618 // Affinity is intentionally used by this obsolete compatibility property.
         /// <summary> Sticky Session Affinity. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version. Use StickySessionAffinity instead.", false)]
@@ -22,6 +21,5 @@ namespace Azure.ResourceManager.AppContainers.Models
                 ? new StickySessionAffinity(value.Value.ToString())
                 : null;
         }
-#pragma warning restore CS0618
     }
 }
