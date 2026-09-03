@@ -50,5 +50,5 @@
 
 	// gh-aw compiles agentic workflow Markdown files into their generated .lock.yml files.
 	// Keep the install idempotent so rebuilding the container does not report a false failure.
-	"postCreateCommand": "gh extension list | grep -q 'github/gh-aw' || gh extension install github/gh-aw || echo 'gh-aw installation failed; run gh extension install github/gh-aw manually'"
+	"postCreateCommand": "gh extension install github/gh-aw --pin v0.87.1 --force || echo 'gh-aw installation failed; run gh extension install github/gh-aw --pin v0.87.1 manually'"
 }
