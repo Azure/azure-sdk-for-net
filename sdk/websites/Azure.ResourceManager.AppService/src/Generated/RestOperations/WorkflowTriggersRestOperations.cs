@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetCallbackUrlRequest(Guid subscriptionId, string resourceGroupName, string name, string workflowName, string triggerName, RequestContext context)
+        internal HttpMessage CreateGetCallbackUriRequest(Guid subscriptionId, string resourceGroupName, string name, string workflowName, string triggerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -14,26 +15,42 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class UserAssignedIdentityAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
-        public UserAssignedIdentityAuthInfo()
+        public UserAssignedIdentityAuthInfo() : base(LinkerAuthType.UserAssignedIdentity)
         {
-            AuthType = LinkerAuthType.UserAssignedIdentity;
+            Roles = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="userName"> Username created in the database which is mapped to a user in AAD. </param>
         /// <param name="clientId"> Client Id for userAssignedIdentity. </param>
         /// <param name="subscriptionId"> Subscription id for userAssignedIdentity. </param>
-        internal UserAssignedIdentityAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, string subscriptionId) : base(authType, serializedAdditionalRawData)
+        /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
+        /// <param name="roles"> Optional, this value specifies the Azure role to be assigned. </param>
+        internal UserAssignedIdentityAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string userName, string clientId, string subscriptionId, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, additionalBinaryDataProperties)
         {
+            UserName = userName;
             ClientId = clientId;
             SubscriptionId = subscriptionId;
-            AuthType = authType;
+            DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
+            Roles = roles;
         }
+
+        /// <summary> Username created in the database which is mapped to a user in AAD. </summary>
+        public string UserName { get; set; }
 
         /// <summary> Client Id for userAssignedIdentity. </summary>
         public string ClientId { get; set; }
+
         /// <summary> Subscription id for userAssignedIdentity. </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+
+        /// <summary> Optional, this value specifies the Azure role to be assigned. </summary>
+        public IList<string> Roles { get; }
     }
 }

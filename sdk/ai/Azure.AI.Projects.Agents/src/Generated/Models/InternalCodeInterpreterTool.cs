@@ -14,12 +14,14 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
         public InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
         {
+            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="allowedCallers"></param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
@@ -29,13 +31,17 @@ namespace OpenAI
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
+        internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CallableToolAllowedCaller> allowedCallers, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
         {
+            AllowedCallers = allowedCallers;
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             Container = container;
         }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
-            DbSystemUpdateProperties properties = default;
+            DBSystemUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    properties = DbSystemUpdateProperties.DeserializeDbSystemUpdateProperties(prop.Value, options);
+                    properties = DBSystemUpdateProperties.DeserializeDBSystemUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             return message;
         }
 
-        internal HttpMessage CreateGetBuildSourceUploadUrlRequest(Guid subscriptionId, string resourceGroupName, string registryName, RequestContext context)
+        internal HttpMessage CreateGetBuildSourceUploadUriRequest(Guid subscriptionId, string resourceGroupName, string registryName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

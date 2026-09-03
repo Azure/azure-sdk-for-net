@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv6Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(Ipv6Address);
+                writer.WriteStringValue(IPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {

@@ -60,6 +60,31 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(Wrap(member));
         }
 
+        [TestCase("public System.ClientModel.AsyncStreamingClientResult<int> FooAsync() { return default; }")]
+        [TestCase("public Task<System.ClientModel.AsyncStreamingClientResult<int>> FooAsync() { return default; }")]
+        public async Task AZC0015NotProducedForAsyncStreamingClientResult(string member)
+        {
+            string code = $@"
+using System.Threading.Tasks;
+
+namespace System.ClientModel
+{{
+    public sealed class AsyncStreamingClientResult<T>
+    {{
+    }}
+}}
+
+namespace RandomNamespace
+{{
+    public class SomeClient
+    {{
+        {member}
+    }}
+}}";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
         // A public client nested in a non-public type is not publicly accessible, so the
         // return-type rule should not analyze it.
         [Test]

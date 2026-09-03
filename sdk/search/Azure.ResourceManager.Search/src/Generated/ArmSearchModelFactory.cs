@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProperties SearchServiceNetworkSecurityPerimeterConfigurationProperties(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default, SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter = default, SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation = default, SearchNetworkSecurityProfile profile = default)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
         public static SearchServiceNetworkSecurityPerimeterProvisioningIssue SearchServiceNetworkSecurityPerimeterProvisioningIssue(string name = default, SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties properties = default)
         {
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterAccessRule"/> instance for mocking. </returns>
         public static SearchServiceNetworkSecurityPerimeterAccessRule SearchServiceNetworkSecurityPerimeterAccessRule(string name = default, SearchServiceNetworkSecurityPerimeterAccessRuleProperties properties = default)
         {
             return new SearchServiceNetworkSecurityPerimeterAccessRule(name, properties, default);
         }
 
-        /// <param name="direction"></param>
+        /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <param name="name"> Name of the resource association. </param>
-        /// <param name="accessMode"></param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterResourceAssociation"/> instance for mocking. </returns>
         public static SearchServiceNetworkSecurityPerimeterResourceAssociation SearchServiceNetworkSecurityPerimeterResourceAssociation(string name = default, SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default)
         {

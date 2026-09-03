@@ -495,7 +495,7 @@ namespace Azure.Provisioning.Compute
             _orchestrationMode = DefineProperty<OrchestrationMode>(nameof(OrchestrationMode), new string[] { "orchestrationMode" });
             _spotRestorePolicy = DefineModelProperty<SpotRestorePolicy>(nameof(SpotRestorePolicy), new string[] { "spotRestorePolicy" });
             _priorityMixPolicy = DefineModelProperty<VirtualMachineScaleSetPriorityMixPolicy>(nameof(PriorityMixPolicy), new string[] { "priorityMixPolicy" });
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             _isMaximumCapacityConstrained = DefineProperty<bool>(nameof(IsMaximumCapacityConstrained), new string[] { "constrainedMaximumCapacity" });
             _resiliencyPolicy = DefineModelProperty<ResiliencyPolicy>(nameof(ResiliencyPolicy), new string[] { "resiliencyPolicy" });
             _zonalPlatformFaultDomainAlignMode = DefineProperty<ZonalPlatformFaultDomainAlignMode>(nameof(ZonalPlatformFaultDomainAlignMode), new string[] { "zonalPlatformFaultDomainAlignMode" });

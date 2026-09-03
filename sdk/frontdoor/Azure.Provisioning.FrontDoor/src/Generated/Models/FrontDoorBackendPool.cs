@@ -7,17 +7,15 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> A backend pool is a collection of backends that can be routed to. </summary>
-    public partial class FrontDoorBackendPool : ProvisionableConstruct
+    public partial class FrontDoorBackendPool : FrontDoorSubResource
     {
         private BackendPoolProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<string> _type;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new FrontDoorBackendPool. </summary>
         public FrontDoorBackendPool()
@@ -61,34 +59,6 @@ namespace Azure.Provisioning.FrontDoor
             {
                 Initialize();
                 return _type;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackendPoolProperties();
-                }
-                return Properties.ResourceState;
             }
         }
 
@@ -143,6 +113,19 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FrontDoorBackendPool. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -150,7 +133,6 @@ namespace Azure.Provisioning.FrontDoor
             _properties = DefineModelProperty<BackendPoolProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 

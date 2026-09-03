@@ -21,6 +21,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningTargetUtilizationScaleSettings. </summary>
         public MachineLearningTargetUtilizationScaleSettings()
         {
+            ScaleType.Assign(MachineLearning.ScaleType.TargetUtilization);
         }
 
         /// <summary> Gets or sets the MaxInstances. </summary>
@@ -87,10 +88,9 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("scaleType", new string[] { "scaleType" }, defaultValue: "TargetUtilization");
             _maxInstances = DefineProperty<int>(nameof(MaxInstances), new string[] { "maxInstances" });
             _minInstances = DefineProperty<int>(nameof(MinInstances), new string[] { "minInstances" });
-            _pollingInterval = DefineProperty<TimeSpan>(nameof(PollingInterval), new string[] { "pollingInterval" });
+            _pollingInterval = DefineProperty<TimeSpan>(nameof(PollingInterval), new string[] { "pollingInterval" }, format: "P");
             _targetUtilizationPercentage = DefineProperty<int>(nameof(TargetUtilizationPercentage), new string[] { "targetUtilizationPercentage" });
             DefineAdditionalProperties();
         }

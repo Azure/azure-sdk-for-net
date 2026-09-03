@@ -14,7 +14,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Base type for STAC items and collections with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionResource"/> and <see cref="StacItemResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollection"/> and <see cref="StacItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStacItemOrStacItemCollection))]
     public abstract partial class StacItemOrStacItemCollection : IJsonModel<StacItemOrStacItemCollection>
@@ -92,8 +92,8 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 throw new FormatException($"The model {nameof(StacItemOrStacItemCollection)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("Kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(StacVersion))
             {
                 writer.WritePropertyName("stac_version"u8);
@@ -181,14 +181,14 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("Kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "FeatureCollection":
-                        return StacItemCollectionResource.DeserializeStacItemCollectionResource(element, options);
+                        return StacItemCollection.DeserializeStacItemCollection(element, options);
                     case "Feature":
-                        return StacItemResource.DeserializeStacItemResource(element, options);
+                        return StacItem.DeserializeStacItem(element, options);
                 }
             }
             return UnknownStacItemOrStacItemCollection.DeserializeUnknownStacItemOrStacItemCollection(element, options);

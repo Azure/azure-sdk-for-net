@@ -7,15 +7,14 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for a job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
     /// </summary>
-    public partial class MachineLearningJobProperties : ProvisionableConstruct
+    public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         private BicepValue<ResourceIdentifier> _componentId;
         private BicepValue<ResourceIdentifier> _computeId;
@@ -23,12 +22,10 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _experimentName;
         private MachineLearningIdentityConfiguration _identity;
         private BicepValue<bool> _isArchived;
+        private BicepValue<JobType> _jobType;
         private NotificationSetting _notificationSetting;
         private BicepDictionary<MachineLearningJobService> _services;
         private BicepValue<MachineLearningJobStatus> _status;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _properties;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new MachineLearningJobProperties. </summary>
         public MachineLearningJobProperties()
@@ -125,6 +122,16 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Specifies the type of job. </summary>
+        internal BicepValue<JobType> JobType
+        {
+            get
+            {
+                Initialize();
+                return _jobType;
+            }
+        }
+
         /// <summary> Gets or sets the NotificationSetting. </summary>
         public NotificationSetting NotificationSetting
         {
@@ -165,51 +172,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningJobProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -220,12 +182,10 @@ namespace Azure.Provisioning.MachineLearning
             _experimentName = DefineProperty<string>(nameof(ExperimentName), new string[] { "experimentName" });
             _identity = DefineModelProperty<MachineLearningIdentityConfiguration>(nameof(Identity), new string[] { "identity" });
             _isArchived = DefineProperty<bool>(nameof(IsArchived), new string[] { "isArchived" });
+            _jobType = DefineProperty<JobType>(nameof(JobType), new string[] { "jobType" }, isRequired: true);
             _notificationSetting = DefineModelProperty<NotificationSetting>(nameof(NotificationSetting), new string[] { "notificationSetting" });
             _services = DefineDictionaryProperty<MachineLearningJobService>(nameof(Services), new string[] { "services" });
             _status = DefineProperty<MachineLearningJobStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

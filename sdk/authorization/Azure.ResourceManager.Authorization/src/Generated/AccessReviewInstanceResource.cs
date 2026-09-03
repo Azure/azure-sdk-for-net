@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Authorization
             };
             return new AccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT(
                 _accessReviewInstanceContactedReviewersRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 context,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Authorization
             };
             return new AccessReviewInstanceContactedReviewersGetAllCollectionResultOfT(
                 _accessReviewInstanceContactedReviewersRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 context,
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Authorization
             };
             return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewInstanceDecisionsGetAllAsyncCollectionResultOfT(
                 _accessReviewInstanceDecisionsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 filter,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Authorization
             };
             return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewInstanceDecisionsGetAllCollectionResultOfT(
                 _accessReviewInstanceDecisionsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 filter,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateApplyDecisionsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateApplyDecisionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateApplyDecisionsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateApplyDecisionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateResetDecisionsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateResetDecisionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateResetDecisionsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateResetDecisionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateSendRemindersRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateSendRemindersRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateSendRemindersRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateSendRemindersRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateStopRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceRestClient.CreateStopRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _accessReviewInstanceRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

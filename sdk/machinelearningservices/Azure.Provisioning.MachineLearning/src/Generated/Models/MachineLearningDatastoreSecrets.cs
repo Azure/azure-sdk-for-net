@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for datastore secrets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreSecrets"/>, <see cref="MachineLearningCertificateDatastoreSecrets"/>, <see cref="MachineLearningSasDatastoreSecrets"/>, and <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreSecrets"/>, <see cref="MachineLearningCertificateDatastoreSecrets"/>, <see cref="MachineLearningSasDatastoreSecrets"/>, and <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>.
     /// </summary>
-    internal partial class MachineLearningDatastoreSecrets : ProvisionableConstruct
+    public partial class MachineLearningDatastoreSecrets : ProvisionableConstruct
     {
+        private BicepValue<SecretsType> _secretsType;
+
         /// <summary> Creates a new MachineLearningDatastoreSecrets. </summary>
         public MachineLearningDatastoreSecrets()
         {
+        }
+
+        /// <summary> [Required] Credential type used to authentication with storage. </summary>
+        internal BicepValue<SecretsType> SecretsType
+        {
+            get
+            {
+                Initialize();
+                return _secretsType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningDatastoreSecrets. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _secretsType = DefineProperty<SecretsType>(nameof(SecretsType), new string[] { "secretsType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

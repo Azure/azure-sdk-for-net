@@ -14,10 +14,11 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Machine Learning compute object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningVirtualMachineCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, and <see cref="MachineLearningSynapseSpark"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningVirtualMachineCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, and <see cref="MachineLearningSynapseSpark"/>.
     /// </summary>
     public partial class MachineLearningComputeProperties : ProvisionableConstruct
     {
+        private BicepValue<ComputeType> _computeType;
         private BicepValue<string> _computeLocation;
         private BicepValue<MachineLearningProvisioningState> _provisioningState;
         private BicepValue<string> _description;
@@ -31,6 +32,16 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningComputeProperties. </summary>
         public MachineLearningComputeProperties()
         {
+        }
+
+        /// <summary> The type of compute. </summary>
+        internal BicepValue<ComputeType> ComputeType
+        {
+            get
+            {
+                Initialize();
+                return _computeType;
+            }
         }
 
         /// <summary> Gets or sets the ComputeLocation. </summary>
@@ -147,11 +158,12 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _computeType = DefineProperty<ComputeType>(nameof(ComputeType), new string[] { "computeType" }, isRequired: true);
             _computeLocation = DefineProperty<string>(nameof(ComputeLocation), new string[] { "computeLocation" });
             _provisioningState = DefineProperty<MachineLearningProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true);
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedOn" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedOn" }, isOutput: true, format: "O");
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _provisioningErrors = DefineListProperty<MachineLearningError>(nameof(ProvisioningErrors), new string[] { "provisioningErrors" }, isOutput: true);
             _isAttachedCompute = DefineProperty<bool>(nameof(IsAttachedCompute), new string[] { "isAttachedCompute" }, isOutput: true);

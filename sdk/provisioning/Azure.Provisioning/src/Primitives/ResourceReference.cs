@@ -15,6 +15,9 @@ public class ResourceReference<T>(BicepValue<string> reference) where T : Provis
     private readonly BicepValue<string> _reference = reference;
     private T? _value;
 
+    /// <summary>
+    /// Gets or sets the referenced resource.
+    /// </summary>
     public T? Value
     {
         get => _value;

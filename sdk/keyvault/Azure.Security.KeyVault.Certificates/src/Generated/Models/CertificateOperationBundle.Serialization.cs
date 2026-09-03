@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             if (Optional.IsDefined(Csr))
             {
                 writer.WritePropertyName("csr"u8);
-                writer.WriteBase64StringValue(Csr.ToArray(), "D");
+                writer.WriteBase64StringValue(Csr, "D");
             }
             if (Optional.IsDefined(CancellationRequested))
             {

@@ -5195,10 +5195,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="certPassword"> The certificate password. </param>
         /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
+        /// <param name="certPassword"> The certificate password. </param>
         /// <returns> A new <see cref="Models.TdeCertificate"/> instance for mocking. </returns>
-        public static TdeCertificate TdeCertificate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certPassword = default, string privateBlob = default)
+        public static TdeCertificate TdeCertificate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string privateBlob = default, string certPassword = default)
         {
             return new TdeCertificate(
                 id,
@@ -6309,8 +6309,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
-        /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
         /// <param name="supportedMemoryLimitsInMB"> Memory limit MB ranges. </param>
+        /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
         /// <param name="includedMaxSize"> Included size. </param>
         /// <param name="supportedStorageSizes"> Storage size ranges. </param>
         /// <param name="includedStorageIOps"> Included storage IOps. </param>
@@ -6327,7 +6327,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceVcoresCapability"/> instance for mocking. </returns>
-        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = default, int? value = default, MaxLimitRangeCapability supportedMemorySizesInGB = default, MaxLimitRangeCapability supportedMemoryLimitsInMB = default, MaxSizeCapability includedMaxSize = default, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = default, long? includedStorageIOps = default, MaxLimitRangeCapability supportedStorageIOps = default, double? iopsMinValueOverrideFactorPerSelectedStorageGB = default, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = default, long? includedStorageThroughputMBps = default, MaxLimitRangeCapability supportedStorageThroughputMBps = default, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = default, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = default, bool? isInstancePoolSupported = default, bool? isStandaloneSupported = default, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default, SqlCapabilityStatus? status = default, string reason = default)
+        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = default, int? value = default, MaxLimitRangeCapability supportedMemoryLimitsInMB = default, MaxLimitRangeCapability supportedMemorySizesInGB = default, MaxSizeCapability includedMaxSize = default, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = default, long? includedStorageIOps = default, MaxLimitRangeCapability supportedStorageIOps = default, double? iopsMinValueOverrideFactorPerSelectedStorageGB = default, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = default, long? includedStorageThroughputMBps = default, MaxLimitRangeCapability supportedStorageThroughputMBps = default, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = default, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = default, bool? isInstancePoolSupported = default, bool? isStandaloneSupported = default, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default, SqlCapabilityStatus? status = default, string reason = default)
         {
             supportedStorageSizes ??= new ChangeTrackingList<MaxSizeRangeCapability>();
             supportedMaintenanceConfigurations ??= new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>();

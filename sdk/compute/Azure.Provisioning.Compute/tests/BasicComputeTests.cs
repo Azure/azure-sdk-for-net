@@ -77,8 +77,8 @@ public class BasicComputeTests
               name: availabilitySetName
               location: location
               properties: {
-                platformUpdateDomainCount: updateDomainCount
                 platformFaultDomainCount: faultDomainCount
+                platformUpdateDomainCount: updateDomainCount
               }
               sku: {
                 name: 'Aligned'
@@ -246,6 +246,7 @@ public class BasicComputeTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
               name: take('vnet-${uniqueString(resourceGroup().id)}', 64)
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -261,7 +262,6 @@ public class BasicComputeTests
                   }
                 ]
               }
-              location: location
             }
 
             resource nic 'Microsoft.Network/networkInterfaces@2025-05-01' = {
@@ -276,10 +276,22 @@ public class BasicComputeTests
                 hardwareProfile: {
                   vmSize: vmSize
                 }
+                networkProfile: {
+                  networkInterfaces: [
+                    {
+                      id: nic.id
+                    }
+                  ]
+                }
+                osProfile: {
+                  adminPassword: adminPassword
+                  adminUsername: adminUsername
+                  computerName: 'myVM'
+                }
                 storageProfile: {
                   imageReference: {
-                    publisher: 'MicrosoftWindowsServer'
                     offer: 'WindowsServer'
+                    publisher: 'MicrosoftWindowsServer'
                     sku: '2022-datacenter-azure-edition'
                     version: 'latest'
                   }
@@ -289,18 +301,6 @@ public class BasicComputeTests
                       storageAccountType: 'Standard_LRS'
                     }
                   }
-                }
-                osProfile: {
-                  computerName: 'myVM'
-                  adminUsername: adminUsername
-                  adminPassword: adminPassword
-                }
-                networkProfile: {
-                  networkInterfaces: [
-                    {
-                      id: nic.id
-                    }
-                  ]
                 }
               }
             }

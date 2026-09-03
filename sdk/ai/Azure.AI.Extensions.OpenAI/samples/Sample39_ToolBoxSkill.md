@@ -10,108 +10,98 @@
 
 The skills in toolboxes are only supported in Hosted Agents. `Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object; however, the hosted object represents the running container, which exposes the OpenAI-compatible API.
 1. Create a folder containing agent code and dependencies. In our example, it should be located in the `Assets/AgentsCodeToolbox` folder next to the sample itself (this folder is not provided).
-2. Create the file `main.py` containing the logic for the hosted Agent.
+2. Create a project and add dependencies.
 
-```python
-import asyncio
-import os
-from collections.abc import AsyncGenerator
-
-from agent_framework import Agent, AgentSession
-from agent_framework_foundry import FoundryChatClient
-from agent_framework_foundry_hosting import ResponsesHostServer, FoundryToolbox
-from azure.ai.agentserver.invocations import InvocationAgentServerHost
-from azure.identity import DefaultAzureCredential
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response, StreamingResponse
-
-DEFAULT_TOOLBOX_SCOPE = "https://ai.azure.com/.default"
-
-# Read in the environment variables
-TOOLBOX_NAME = os.environ["TOOLBOX_NAME"]
-FOUNDRY_PROJECT_ENDPOINT = os.environ["FOUNDRY_PROJECT_ENDPOINT"]
-FOUNDRY_MODEL_NAME = os.environ["FOUNDRY_MODEL_NAME"]
-AGENT_NAME = os.environ["AGENT_NAME"]
-####
-
-
-class MultiProtocolHost(ResponsesHostServer, InvocationAgentServerHost):
-    def __init__(self, agent: Agent, **kwargs) -> None:
-        super().__init__(agent, **kwargs)
-        self._invocation_sessions: dict[str, AgentSession] = {}
-        self.invoke_handler(self._handle_invoke)
-
-    async def _handle_invoke(self, request: Request) -> Response:
-        data = await request.json()
-        session_id: str = request.state.session_id
-        stream = data.get("stream", False)
-        user_message = data.get("message") or data.get("input")
-        if user_message is None:
-            error = "Missing 'message' in request"
-            if stream:
-                return StreamingResponse(content=error, status_code=400)
-            return Response(content=error, status_code=400)
-
-        await self._ensure_agent_ready()
-        session = self._invocation_sessions.setdefault(
-            session_id,
-            AgentSession(session_id=session_id),
-        )
-
-        if stream:
-
-            async def stream_response() -> AsyncGenerator[str]:
-                async for update in self._agent.run(user_message, session=session, stream=True):
-                    if update.text:
-                        yield update.text
-
-            return StreamingResponse(
-                stream_response(),
-                media_type="text/event-stream",
-                headers={"Cache-Control": "no-cache", "Connection": "keep-alive"},
-            )
-
-        response = await self._agent.run([user_message], session=session, stream=False)
-        return JSONResponse({"response": response.text, "session_id": session_id})
-
-
-async def main() -> None:
-    credential = DefaultAzureCredential()
-    toolbox = FoundryToolbox(
-        credential,
-        load_prompts=True,
-        load_tools=False,
-    )
-    toolbox._header_provider = lambda _: {
-        "x-aml-agent-name": AGENT_NAME,
-        "Foundry-Features": "Toolboxes=V1Preview,Skills=V1Preview"}
-    client = FoundryChatClient(
-        project_endpoint=FOUNDRY_PROJECT_ENDPOINT,
-        model=FOUNDRY_MODEL_NAME,
-        credential=credential,
-    )
-    agent = Agent(
-        client=client,
-        instructions="You are a helpful assistant.",
-        tools=toolbox,
-        context_providers=[toolbox.as_skills_provider()],
-        default_options={"store": False},
-    )
-    server = MultiProtocolHost(agent)
-    await server.run_async()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+```bash
+dotnet new console --name ToolboxSkillAgent --output ToolboxSkillAgent
+dotnet add package Azure.AI.Projects --prerelease
+dotnet add package Microsoft.Agents.AI.Foundry --prerelease
+dotnet add package Microsoft.Agents.AI.Foundry.Hosting --prerelease
+dotnet add package Microsoft.Agents.AI.Mcp --prerelease
 ```
 
-3. Create the `requirements.txt` in the `Assets/AgentsCodeToolbox` folder with the following contents.
+2. Populate the code in Program.cs
 
+```C#
+using Azure.AI.Projects;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Agents.AI;
+using Microsoft.Agents.AI.Foundry.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.AI;
+using ModelContextProtocol.Client;
+using System.Net.Http.Headers;
+
+// Read in the environment variables
+string TOOLBOX_NAME = System.Environment.GetEnvironmentVariable(nameof(TOOLBOX_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(TOOLBOX_NAME)}");
+string FOUNDRY_PROJECT_ENDPOINT = System.Environment.GetEnvironmentVariable(nameof(FOUNDRY_PROJECT_ENDPOINT)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(FOUNDRY_PROJECT_ENDPOINT)}");
+string FOUNDRY_MODEL_NAME = System.Environment.GetEnvironmentVariable(nameof(FOUNDRY_MODEL_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(FOUNDRY_MODEL_NAME)}");
+string AGENT_NAME = System.Environment.GetEnvironmentVariable(nameof(AGENT_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(AGENT_NAME)}");
+//
+DefaultAzureCredential credential = new();
+using var httpClient = new HttpClient(new BearerTokenHandler(credential, "https://ai.azure.com/.default") { CheckCertificateRevocationList = true });
+await using var mcpClient = await McpClient.CreateAsync(
+    new HttpClientTransport(
+        new HttpClientTransportOptions
+        {
+            Endpoint = new Uri($"{FOUNDRY_PROJECT_ENDPOINT.TrimEnd('/')}/toolboxes/{TOOLBOX_NAME}/mcp?api-version=v1"),
+            Name = TOOLBOX_NAME,
+            TransportMode = HttpTransportMode.StreamableHttp,
+            AdditionalHeaders = new Dictionary<string, string>
+            {
+                ["Foundry-Features"] = "Toolboxes=V1Preview",
+            },
+        },
+        httpClient));
+AgentSkillsProvider skillProvider = new AgentSkillsProviderBuilder()
+    .UseMcpSkills(mcpClient)
+    .Build();
+AIAgent agent = new AIProjectClient(endpoint: new(FOUNDRY_PROJECT_ENDPOINT), credential)
+    .AsAIAgent(new ChatClientAgentOptions()
+    {
+        ChatOptions = new ChatOptions()
+        {
+            ModelId = FOUNDRY_MODEL_NAME,
+            Instructions = "You are a helpful assistant.",
+        },
+        AIContextProviders = [
+            skillProvider
+        ],
+        Name = AGENT_NAME,
+        Description = "Agent with Skill in the Toolbox."
+    });
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.AddFoundryResponses(agent);
+var app = builder.Build();
+app.MapFoundryResponses();
+app.Run();
+
+
+// ---------------------------------------------------------------------------
+// HttpClientHandler: attaches a fresh Foundry bearer token to every request
+// ---------------------------------------------------------------------------
+internal sealed class BearerTokenHandler(TokenCredential credential, string scope) : HttpClientHandler
+{
+    private readonly TokenRequestContext _tokenContext = new([scope]);
+
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        AccessToken token = await credential.GetTokenAsync(this._tokenContext, cancellationToken).ConfigureAwait(false);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+        return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+    }
+}
 ```
-agent-framework-foundry
-agent-framework-foundry-hosting>=1.0.0a260630
-azure-identity>=1.25.0
+
+3. Compile the application.
+
+```bash
+dotnet publish
 ```
+
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+4. Copy the contents of `publish` folder to `Assets/AgentsCodeToolbox`.
 
 # Run the sample
 
@@ -190,6 +180,7 @@ protected static string GetDirectory(string path, [CallerFilePath] string pth = 
 ```
 
 4. For brevity, we will create a method that returns the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access the toolbox from the Hosted Agent.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCodeToolbox` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 ```C# Snippet:Sample_CodeAgentMetadata_ToolBoxSkill
 private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAgentName, string toolboxName, string foundryProjectEndpoint, string modelDeploymentName)
@@ -201,15 +192,16 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAg
     {
         Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0") },
         CodeConfiguration = new(
-            runtime: "python_3_14",
-            entryPoint: ["python", "main.py"],
-            dependencyResolution: CodeDependencyResolution.RemoteBuild
+            runtime: "dotnet_10",
+            entryPoint: ["dotnet", "ToolboxSkillAgent.dll"],
+            dependencyResolution: CodeDependencyResolution.Bundled
         ),
         EnvironmentVariables = {
             { "AGENT_NAME", middlewareAgentName},
             { "TOOLBOX_NAME", toolboxName},
             { "FOUNDRY_PROJECT_ENDPOINT", foundryProjectEndpoint},
             { "FOUNDRY_MODEL_NAME", modelDeploymentName },
+            { "ASPNETCORE_URLS", "http://+:8088"},
         }
     };
     AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -276,6 +268,7 @@ Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.Cl
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Sync
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+
 CreateResponseOptions nextResponseOptions = new()
 {
     InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }

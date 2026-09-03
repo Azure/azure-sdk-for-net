@@ -20,6 +20,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningSweepJobLimits. </summary>
         public MachineLearningSweepJobLimits()
         {
+            JobLimitsType.Assign(MachineLearning.JobLimitsType.Sweep);
         }
 
         /// <summary> Gets or sets the MaxConcurrentTrials. </summary>
@@ -71,10 +72,9 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobLimitsType", new string[] { "jobLimitsType" }, defaultValue: "Sweep");
             _maxConcurrentTrials = DefineProperty<int>(nameof(MaxConcurrentTrials), new string[] { "maxConcurrentTrials" });
             _maxTotalTrials = DefineProperty<int>(nameof(MaxTotalTrials), new string[] { "maxTotalTrials" });
-            _trialTimeout = DefineProperty<TimeSpan>(nameof(TrialTimeout), new string[] { "trialTimeout" });
+            _trialTimeout = DefineProperty<TimeSpan>(nameof(TrialTimeout), new string[] { "trialTimeout" }, format: "P");
             DefineAdditionalProperties();
         }
 

@@ -141,12 +141,7 @@ namespace Azure.Generator.Provisioning
 
             var providers = new List<TypeProvider>();
 
-            // Add resource providers and mark them to survive post-processing.
-            foreach (var resource in Resources)
-            {
-                providers.Add(resource);
-                ProvisioningGenerator.Instance.AddTypeToKeep(resource);
-            }
+            providers.AddRange(Resources);
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
             if (BuiltInRole != null)
@@ -174,12 +169,6 @@ namespace Azure.Generator.Provisioning
                 if (model is not null)
                 {
                     providers.Add(model);
-                    // CreateModel can still return a resource provider here for discriminator-derived
-                    // models whose base chain is a resource, and those providers must also be kept.
-                    if (model is ProvisioningResourceProvider resource)
-                    {
-                        ProvisioningGenerator.Instance.AddTypeToKeep(resource);
-                    }
                 }
             }
 

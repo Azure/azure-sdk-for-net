@@ -21,6 +21,7 @@ namespace Azure.Provisioning.FrontDoor
         /// <summary> Creates a new ForwardingConfiguration. </summary>
         public ForwardingConfiguration()
         {
+            OdataType.Assign("#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration");
         }
 
         /// <summary> Gets or sets the CustomForwardingPath. </summary>
@@ -104,7 +105,6 @@ namespace Azure.Provisioning.FrontDoor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("@odata.type", new string[] { "@odata.type" }, defaultValue: "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration");
             _customForwardingPath = DefineProperty<string>(nameof(CustomForwardingPath), new string[] { "customForwardingPath" });
             _forwardingProtocol = DefineProperty<FrontDoorForwardingProtocol>(nameof(ForwardingProtocol), new string[] { "forwardingProtocol" });
             _cacheConfiguration = DefineModelProperty<FrontDoorCacheConfiguration>(nameof(CacheConfiguration), new string[] { "cacheConfiguration" });
