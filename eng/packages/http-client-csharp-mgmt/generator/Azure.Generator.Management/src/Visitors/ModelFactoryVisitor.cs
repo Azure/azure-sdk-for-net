@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -70,6 +71,7 @@ namespace Azure.Generator.Management.Visitors
                 var returnType = previousMethod.Signature.ReturnType;
                 if (returnType is null
                     || KnownManagementTypes.IsKnownManagementType(returnType)
+                    || IsRemovalAcceptedInBaseline(modelFactory, previousMethod.Signature)
                     || updatedMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || !ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
@@ -79,6 +81,32 @@ namespace Azure.Generator.Management.Visitors
 
                 updatedMethods.Add(restoredMethod);
             }
+        }
+
+        /// <summary>
+        /// Determines whether a previously shipped model factory overload must stay removed. An overload is left out
+        /// when the ApiCompat baseline records its removal, or when its return type or any parameter type refers to a
+        /// type whose removal the baseline already accepted. Without the second check the generator would resurrect an
+        /// overload whose signature names a type that is no longer generated, producing code that does not compile.
+        /// </summary>
+        private static bool IsRemovalAcceptedInBaseline(ModelFactoryProvider modelFactory, MethodSignature previousSignature)
+        {
+            var baseline = CodeModelGenerator.Instance.SourceInputModel?.ApiCompatBaseline;
+            if (baseline is null || baseline.IsEmpty)
+            {
+                return false;
+            }
+
+            if (baseline.IsMethodRemovalSuppressed(
+                    modelFactory.Type.FullyQualifiedName,
+                    previousSignature.Name,
+                    [.. previousSignature.Parameters.Select(parameter => parameter.Type)]))
+            {
+                return true;
+            }
+
+            return baseline.ReferencesSuppressedType(previousSignature.ReturnType)
+                || previousSignature.Parameters.Any(parameter => baseline.ReferencesSuppressedType(parameter.Type));
         }
 
         private bool IsModelType(CSharpType type) => ContainsModelType(ModelTypes, type.WithNullable(false));
