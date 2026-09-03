@@ -11,7 +11,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> AADIP (Azure Active Directory Identity Protection) data connector properties. </summary>
     internal partial class AadDataConnectorProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

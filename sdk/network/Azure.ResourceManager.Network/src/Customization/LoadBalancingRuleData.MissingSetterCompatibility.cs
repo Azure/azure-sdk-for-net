@@ -16,5 +16,16 @@ namespace Azure.ResourceManager.Network
             get => _properties;
             set => _properties = value;
         }
+
+        // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/pull/62632 is available in the generator.
+        /// <summary> Gets the additional properties. </summary>
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties
+        {
+            get
+            {
+                Properties ??= new Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties(default, default);
+                return Properties.AdditionalProperties;
+            }
+        }
     }
 }

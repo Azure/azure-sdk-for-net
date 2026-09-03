@@ -176,22 +176,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The number of compute servers for the DB system. </summary>
         public int? ComputeCount { get; set; }
-
-        /// <summary> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </summary>
-        public StorageManagementType? DBSystemOptionsStorageManagement
-        {
-            get
-            {
-                return DBSystemOptions is null ? default : DBSystemOptions.StorageManagement;
-            }
-            set
-            {
-                if (DBSystemOptions is null)
-                {
-                    DBSystemOptions = new OracleDBSystemOptions();
-                }
-                DBSystemOptions.StorageManagement = value;
-            }
-        }
     }
 }

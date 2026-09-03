@@ -2610,27 +2610,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAadDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsAadDataConnector SecurityInsightsAadDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes = default)
-        {
-            return new SecurityInsightsAadDataConnector(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                eTag,
-                default,
-                tenantId is null && dataTypes is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), dataTypes, default));
-        }
-
         /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsAlertsDataTypeOfDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsAlertsDataTypeOfDataConnector SecurityInsightsAlertsDataTypeOfDataConnector(SecurityInsightsDataTypeConnectionState alertsState = default)
@@ -2727,27 +2706,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static MtpDataConnectorDataTypes MtpDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState incidentsState = default, SecurityInsightsDataTypeConnectionState? alertsState = default)
         {
             return new MtpDataConnectorDataTypes(new MtpDataConnectorDataTypesIncidents(incidentsState, default), alertsState is null ? default : new MtpDataConnectorDataTypesAlerts(alertsState.GetValueOrDefault(), default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAatpDataConnector"/> instance for mocking. </returns>
-        public static SecurityInsightsAatpDataConnector SecurityInsightsAatpDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes = default)
-        {
-            return new SecurityInsightsAatpDataConnector(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                eTag,
-                default,
-                tenantId is null && dataTypes is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), dataTypes, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3379,27 +3337,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 eTag,
                 default,
                 tenantId is null && dataTypes is null ? default : new OfficeIrmDataConnectorProperties(tenantId.GetValueOrDefault(), dataTypes, default));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.MdatpDataConnector"/> instance for mocking. </returns>
-        public static MdatpDataConnector MdatpDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes = default)
-        {
-            return new MdatpDataConnector(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                eTag,
-                default,
-                tenantId is null && dataTypes is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), dataTypes, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

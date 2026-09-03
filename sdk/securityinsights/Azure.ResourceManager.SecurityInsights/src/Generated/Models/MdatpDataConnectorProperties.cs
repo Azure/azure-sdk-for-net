@@ -11,7 +11,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> MDATP (Microsoft Defender Advanced Threat Protection) data connector properties. </summary>
     internal partial class MdatpDataConnectorProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
