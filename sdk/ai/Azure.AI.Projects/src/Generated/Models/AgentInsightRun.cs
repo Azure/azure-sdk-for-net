@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A long-running run that analyzes one agent's traces and updates that agent's insights. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

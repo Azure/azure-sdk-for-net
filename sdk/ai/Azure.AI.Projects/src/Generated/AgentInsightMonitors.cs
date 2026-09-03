@@ -42,86 +42,6 @@ namespace Azure.AI.Projects
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] List Agent Insights monitors, optionally filtered by agent name.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
-        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
-        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
-        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="agentName"> Filter monitors by agent name. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual CollectionResult GetAll(string foundryFeatures, string after, string before, int? limit, string order, string agentName, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetAll");
-            scope.Start();
-            try
-            {
-                return new AgentInsightMonitorsGetAllCollectionResult(
-                    this,
-                    foundryFeatures,
-                    after,
-                    before,
-                    limit,
-                    order,
-                    agentName,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] List Agent Insights monitors, optionally filtered by agent name.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
-        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
-        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
-        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="agentName"> Filter monitors by agent name. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncCollectionResult GetAllAsync(string foundryFeatures, string after, string before, int? limit, string order, string agentName, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetAll");
-            scope.Start();
-            try
-            {
-                return new AgentInsightMonitorsGetAllAsyncCollectionResult(
-                    this,
-                    foundryFeatures,
-                    after,
-                    before,
-                    limit,
-                    order,
-                    agentName,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// [Protocol Method] Create an Agent Insights monitor for an agent.
         /// <list type="bullet">
         /// <item>
@@ -130,17 +50,19 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual ClientResult Create(BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Create");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, options);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateRequest(content, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -159,17 +81,19 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateAsync(BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Create");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, options);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateRequest(content, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -177,6 +101,32 @@ namespace Azure.AI.Projects
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Create an Agent Insights monitor for an agent. </summary>
+        /// <param name="monitor"> The monitor to create. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitor"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<AgentInsightMonitor> Create(AgentInsightMonitorCreate monitor, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(monitor, nameof(monitor));
+
+            ClientResult result = Create(monitor, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
+        }
+
+        /// <summary> Create an Agent Insights monitor for an agent. </summary>
+        /// <param name="monitor"> The monitor to create. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitor"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<AgentInsightMonitor>> CreateAsync(AgentInsightMonitorCreate monitor, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(monitor, nameof(monitor));
+
+            ClientResult result = await CreateAsync(monitor, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -188,17 +138,20 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Get(string monitorId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Get(string monitorId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Get");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetRequest(monitorId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                using PipelineMessage message = CreateGetRequest(monitorId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -217,17 +170,20 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetAsync(string monitorId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string monitorId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Get");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetRequest(monitorId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                using PipelineMessage message = CreateGetRequest(monitorId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -235,6 +191,34 @@ namespace Azure.AI.Projects
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Get an Agent Insights monitor. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<AgentInsightMonitor> Get(string monitorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            ClientResult result = Get(monitorId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
+        }
+
+        /// <summary> Get an Agent Insights monitor. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<AgentInsightMonitor>> GetAsync(string monitorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            ClientResult result = await GetAsync(monitorId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,17 +230,20 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Delete(string monitorId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Delete(string monitorId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Delete");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteRequest(monitorId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                using PipelineMessage message = CreateDeleteRequest(monitorId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -275,18 +262,81 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteAsync(string monitorId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteAsync(string monitorId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Delete");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteRequest(monitorId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                using PipelineMessage message = CreateDeleteRequest(monitorId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete an Agent Insights monitor and all of its runs, insights, and state. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult Delete(string monitorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            return Delete(monitorId, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary> Delete an Agent Insights monitor and all of its runs, insights, and state. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult> DeleteAsync(string monitorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            return await DeleteAsync(monitorId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update an Agent Insights monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult Update(string monitorId, BinaryContent content, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Update");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateUpdateRequest(monitorId, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
             {
@@ -305,47 +355,21 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Update(string monitorId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateAsync(string monitorId, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Update");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUpdateRequest(monitorId, content, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNull(content, nameof(content));
 
-        /// <summary>
-        /// [Protocol Method] Update an Agent Insights monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UpdateAsync(string monitorId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Update");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateUpdateRequest(monitorId, content, foundryFeatures, options);
+                using PipelineMessage message = CreateUpdateRequest(monitorId, content, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -364,17 +388,20 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Reset(string monitorId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult Reset(string monitorId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Reset");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateResetRequest(monitorId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                using PipelineMessage message = CreateResetRequest(monitorId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -393,17 +420,20 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> ResetAsync(string monitorId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> ResetAsync(string monitorId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.Reset");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateResetRequest(monitorId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+                using PipelineMessage message = CreateResetRequest(monitorId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -415,39 +445,50 @@ namespace Azure.AI.Projects
 
         /// <summary> Reset an Agent Insights monitor's overview, checkpoint, and active insight state. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult Reset(string monitorId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult Reset(string monitorId, CancellationToken cancellationToken = default)
         {
-            return Reset(monitorId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            return Reset(monitorId, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Reset an Agent Insights monitor's overview, checkpoint, and active insight state. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> ResetAsync(string monitorId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> ResetAsync(string monitorId, CancellationToken cancellationToken = default)
         {
-            return await ResetAsync(monitorId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            return await ResetAsync(monitorId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary> Start an Agent Insights run for a monitor. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         [Experimental("SCME0006")]
-        internal virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, BinaryContent content, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.CreateRun");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateRunRequest(monitorId, content, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateRunRequest(monitorId, content, operationId, options);
                 return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
             }
             catch (Exception e)
@@ -461,17 +502,22 @@ namespace Azure.AI.Projects
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, BinaryContent content, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.CreateRun");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateRunRequest(monitorId, content, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateRunRequest(monitorId, content, operationId, options);
                 return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -481,92 +527,40 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] List Agent Insights runs for a monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Start an Agent Insights run for a monitor. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
-        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
-        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
-        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="status"> Filter runs by status. </param>
-        /// <param name="trigger"> Filter runs by trigger. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual CollectionResult GetRuns(string monitorId, string foundryFeatures, string after, string before, int? limit, string order, string status, string trigger, RequestOptions options)
+        /// <param name="run"> Run inputs. Send an empty object to use the default 168-hour lookback window. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="run"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, AgentInsightRunCreate run, string operationId = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetRuns");
-            scope.Start();
-            try
-            {
-                return new AgentInsightMonitorsGetRunsCollectionResult(
-                    this,
-                    monitorId,
-                    foundryFeatures,
-                    after,
-                    before,
-                    limit,
-                    order,
-                    status,
-                    trigger,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNull(run, nameof(run));
+
+            OperationResult result = CreateRun(waitUntilCompleted, monitorId, run, operationId, cancellationToken.ToRequestOptions());
+            return result;
         }
 
-        /// <summary>
-        /// [Protocol Method] List Agent Insights runs for a monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Start an Agent Insights run for a monitor. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
-        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
-        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
-        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="status"> Filter runs by status. </param>
-        /// <param name="trigger"> Filter runs by trigger. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncCollectionResult GetRunsAsync(string monitorId, string foundryFeatures, string after, string before, int? limit, string order, string status, string trigger, RequestOptions options)
+        /// <param name="run"> Run inputs. Send an empty object to use the default 168-hour lookback window. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="run"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, AgentInsightRunCreate run, string operationId = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetRuns");
-            scope.Start();
-            try
-            {
-                return new AgentInsightMonitorsGetRunsAsyncCollectionResult(
-                    this,
-                    monitorId,
-                    foundryFeatures,
-                    after,
-                    before,
-                    limit,
-                    order,
-                    status,
-                    trigger,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNull(run, nameof(run));
+
+            OperationResult result = await CreateRunAsync(waitUntilCompleted, monitorId, run, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
         }
 
         /// <summary>
@@ -579,17 +573,21 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="runId"> The identifier of the run. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetRun(string monitorId, string runId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult GetRun(string monitorId, string runId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetRun");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetRunRequest(monitorId, runId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+                using PipelineMessage message = CreateGetRunRequest(monitorId, runId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -609,17 +607,21 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="runId"> The identifier of the run. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetRunAsync(string monitorId, string runId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> GetRunAsync(string monitorId, string runId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetRun");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetRunRequest(monitorId, runId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+                using PipelineMessage message = CreateGetRunRequest(monitorId, runId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -627,6 +629,38 @@ namespace Azure.AI.Projects
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Get an Agent Insights run. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="runId"> The identifier of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<AgentInsightRun> GetRun(string monitorId, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            ClientResult result = GetRun(monitorId, runId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentInsightRun)result, result.GetRawResponse());
+        }
+
+        /// <summary> Get an Agent Insights run. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="runId"> The identifier of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<AgentInsightRun>> GetRunAsync(string monitorId, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            ClientResult result = await GetRunAsync(monitorId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentInsightRun)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -639,17 +673,21 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="runId"> The identifier of the run. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CancelRun(string monitorId, string runId, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult CancelRun(string monitorId, string runId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.CancelRun");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCancelRunRequest(monitorId, runId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+                using PipelineMessage message = CreateCancelRunRequest(monitorId, runId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -669,17 +707,21 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="runId"> The identifier of the run. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CancelRunAsync(string monitorId, string runId, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> CancelRunAsync(string monitorId, string runId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.CancelRun");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCancelRunRequest(monitorId, runId, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+                using PipelineMessage message = CreateCancelRunRequest(monitorId, runId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -689,100 +731,36 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] List current insights for an Agent Insights monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Cancel an Agent Insights run. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
-        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
-        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
-        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="category"> Filter insights by category. </param>
-        /// <param name="severity"> Filter insights by severity. </param>
-        /// <param name="status"> Filter insights by lifecycle status. </param>
-        /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="runId"> The identifier of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual CollectionResult GetInsights(string monitorId, string foundryFeatures, string after, string before, int? limit, string order, string category, string severity, string status, bool? includeDetails, RequestOptions options)
+        public virtual ClientResult<AgentInsightRun> CancelRun(string monitorId, string runId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsights");
-            scope.Start();
-            try
-            {
-                return new AgentInsightMonitorsGetInsightsCollectionResult(
-                    this,
-                    monitorId,
-                    foundryFeatures,
-                    after,
-                    before,
-                    limit,
-                    order,
-                    category,
-                    severity,
-                    status,
-                    includeDetails,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            ClientResult result = CancelRun(monitorId, runId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentInsightRun)result, result.GetRawResponse());
         }
 
-        /// <summary>
-        /// [Protocol Method] List current insights for an Agent Insights monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Cancel an Agent Insights run. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
-        /// <param name="before"> A cursor that identifies the first item in the next page. </param>
-        /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
-        /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="category"> Filter insights by category. </param>
-        /// <param name="severity"> Filter insights by severity. </param>
-        /// <param name="status"> Filter insights by lifecycle status. </param>
-        /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="runId"> The identifier of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncCollectionResult GetInsightsAsync(string monitorId, string foundryFeatures, string after, string before, int? limit, string order, string category, string severity, string status, bool? includeDetails, RequestOptions options)
+        public virtual async Task<ClientResult<AgentInsightRun>> CancelRunAsync(string monitorId, string runId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsights");
-            scope.Start();
-            try
-            {
-                return new AgentInsightMonitorsGetInsightsAsyncCollectionResult(
-                    this,
-                    monitorId,
-                    foundryFeatures,
-                    after,
-                    before,
-                    limit,
-                    order,
-                    category,
-                    severity,
-                    status,
-                    includeDetails,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            ClientResult result = await CancelRunAsync(monitorId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentInsightRun)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -795,18 +773,22 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="insightId"> The identifier of the insight. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetInsight(string monitorId, string insightId, string foundryFeatures, bool? includeDetails, RequestOptions options)
+        public virtual ClientResult GetInsight(string monitorId, string insightId, bool? includeDetails, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsight");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetInsightRequest(monitorId, insightId, foundryFeatures, includeDetails, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+                using PipelineMessage message = CreateGetInsightRequest(monitorId, insightId, includeDetails, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -826,18 +808,22 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="insightId"> The identifier of the insight. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetInsightAsync(string monitorId, string insightId, string foundryFeatures, bool? includeDetails, RequestOptions options)
+        public virtual async Task<ClientResult> GetInsightAsync(string monitorId, string insightId, bool? includeDetails, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsight");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetInsightRequest(monitorId, insightId, foundryFeatures, includeDetails, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+                using PipelineMessage message = CreateGetInsightRequest(monitorId, insightId, includeDetails, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -845,6 +831,40 @@ namespace Azure.AI.Projects
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Get a full insight for an Agent Insights monitor. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="insightId"> The identifier of the insight. </param>
+        /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<AgentInsight> GetInsight(string monitorId, string insightId, bool? includeDetails = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+            ClientResult result = GetInsight(monitorId, insightId, includeDetails, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentInsight)result, result.GetRawResponse());
+        }
+
+        /// <summary> Get a full insight for an Agent Insights monitor. </summary>
+        /// <param name="monitorId"> The identifier of the monitor. </param>
+        /// <param name="insightId"> The identifier of the insight. </param>
+        /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<AgentInsight>> GetInsightAsync(string monitorId, string insightId, bool? includeDetails = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+            ClientResult result = await GetInsightAsync(monitorId, insightId, includeDetails, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentInsight)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -858,17 +878,22 @@ namespace Azure.AI.Projects
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="insightId"> The identifier of the insight. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/>, <paramref name="insightId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult UpdateInsight(string monitorId, string insightId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual ClientResult UpdateInsight(string monitorId, string insightId, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.UpdateInsight");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUpdateInsightRequest(monitorId, insightId, content, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateUpdateInsightRequest(monitorId, insightId, content, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -889,17 +914,22 @@ namespace Azure.AI.Projects
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="insightId"> The identifier of the insight. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/>, <paramref name="insightId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UpdateInsightAsync(string monitorId, string insightId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateInsightAsync(string monitorId, string insightId, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentInsightMonitors.UpdateInsight");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUpdateInsightRequest(monitorId, insightId, content, foundryFeatures, options);
+                Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+                Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateUpdateInsightRequest(monitorId, insightId, content, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)

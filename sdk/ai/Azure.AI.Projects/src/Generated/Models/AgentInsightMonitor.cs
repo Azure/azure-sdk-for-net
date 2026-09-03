@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A per-agent Agent Insights monitor that owns configuration, runs, and discovered insights. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightMonitor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -231,6 +231,8 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.PromotionInfo is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
+    [ModelReaderWriterBuildable(typeof(RaiInvocationModeration))]
+    [ModelReaderWriterBuildable(typeof(RaiSseTextSelector))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReminderPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
@@ -261,6 +263,7 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillVersionDeletionResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SpecificApplyPatchParam))]
     [ModelReaderWriterBuildable(typeof(SpecificFunctionShellParam))]
+    [ModelReaderWriterBuildable(typeof(SpecificProgrammaticToolCallingParam))]
     [ModelReaderWriterBuildable(typeof(StructuredInputDefinition))]
     [ModelReaderWriterBuildable(typeof(StructuredOutputDefinition))]
     [ModelReaderWriterBuildable(typeof(TelemetryConfig))]

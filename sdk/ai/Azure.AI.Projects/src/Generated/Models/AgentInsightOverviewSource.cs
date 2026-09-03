@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Identifies where an Agent Insights overview came from. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct AgentInsightOverviewSource : IEquatable<AgentInsightOverviewSource>
     {
         private readonly string _value;
