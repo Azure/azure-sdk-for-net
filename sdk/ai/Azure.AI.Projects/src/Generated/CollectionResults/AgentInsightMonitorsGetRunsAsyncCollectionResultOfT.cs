@@ -6,15 +6,16 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class AgentInsightMonitorsGetRunsAsyncCollectionResultOfT : AsyncCollectionResult<AgentInsightRun>
     {
         private readonly AgentInsightMonitors _client;
         private readonly string _monitorId;
-        private readonly string _foundryFeatures;
         private readonly string _after;
         private readonly string _before;
         private readonly int? _limit;
@@ -26,7 +27,6 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AgentInsightMonitorsGetRunsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentInsightMonitors client used to send requests. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
         /// <param name="before"> A cursor that identifies the first item in the next page. </param>
         /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
@@ -34,11 +34,10 @@ namespace Azure.AI.Projects
         /// <param name="status"> Filter runs by status. </param>
         /// <param name="trigger"> Filter runs by trigger. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentInsightMonitorsGetRunsAsyncCollectionResultOfT(AgentInsightMonitors client, string monitorId, string foundryFeatures, string after, string before, int? limit, string order, string status, string trigger, RequestOptions options)
+        public AgentInsightMonitorsGetRunsAsyncCollectionResultOfT(AgentInsightMonitors client, string monitorId, string after, string before, int? limit, string order, string status, string trigger, RequestOptions options)
         {
             _client = client;
             _monitorId = monitorId;
-            _foundryFeatures = foundryFeatures;
             _after = after;
             _before = before;
             _limit = limit;
@@ -52,7 +51,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRunsRequest(_monitorId, _foundryFeatures, _after, _before, _limit, _order, _status, _trigger, _options);
+            PipelineMessage message = _client.CreateGetRunsRequest(_monitorId, _after, _before, _limit, _order, _status, _trigger, _options);
             string nextToken = null;
             while (true)
             {
@@ -64,7 +63,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateGetRunsRequest(_monitorId, _foundryFeatures, nextToken, _before, _limit, _order, _status, _trigger, _options);
+                message = _client.CreateGetRunsRequest(_monitorId, nextToken, _before, _limit, _order, _status, _trigger, _options);
             }
         }
 
