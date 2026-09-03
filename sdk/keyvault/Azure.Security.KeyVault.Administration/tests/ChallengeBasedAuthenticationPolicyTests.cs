@@ -91,6 +91,91 @@ namespace Azure.Security.KeyVault.Tests
             Assert.That(ex.Message, Is.EqualTo("The challenge contains invalid scope 'invalid-uri/.default'."));
         }
 
+        // Regression test: a single ChallengeBasedAuthenticationPolicy instance must not reuse a challenge
+        // (or the token acquired for its scope and tenant) that was cached for one endpoint on a request to a
+        // different endpoint. Before the fix, the pre-challenge fast path reused the first endpoint's sticky
+        // challenge, attaching the first vault's token to a request bound for the second. The base fixture runs
+        // this test for both the sync and async pipelines.
+        [Test]
+        public async Task DoesNotReuseTokenAcrossAuthorities()
+        {
+            const string hostA = "a.vault.azure.net";
+            const string hostB = "b.vault.azure.net";
+            const string tenantA = "11111111-1111-1111-1111-111111111111";
+            const string tenantB = "22222222-2222-2222-2222-222222222222";
+            string tokenA = Base64(tenantA);
+            string tokenB = Base64(tenantB);
+
+            List<string> authHeadersSentToHostB = new();
+
+            static MockResponse Challenge(string tenant)
+            {
+                MockResponse response = new(401);
+                response.AddHeader(new HttpHeader("WWW-Authenticate", @$"Bearer authorization=""https://login.windows.net/{tenant}"", resource=""https://vault.azure.net"""));
+                return response;
+            }
+
+            MockTransport transport = new(request =>
+            {
+                string auth = request.Headers.TryGetValue("Authorization", out string value) ? value : null;
+                switch (request.Uri.Host)
+                {
+                    case hostA:
+                        return auth == $"Bearer {tokenA}" ? new MockResponse(200) : Challenge(tenantA);
+
+                    case hostB:
+                        if (auth != null)
+                        {
+                            authHeadersSentToHostB.Add(auth);
+                        }
+                        return auth == $"Bearer {tokenB}" ? new MockResponse(200) : Challenge(tenantB);
+
+                    default:
+                        throw new AssertionException($"Unexpected request: {request}");
+                }
+            });
+
+            // The credential honors the tenant from the challenge and mints a token unique to that tenant.
+            CallbackTokenCredential credential = new((requestContext, _) =>
+                new AccessToken(Base64(requestContext.TenantId), DateTimeOffset.UtcNow.AddHours(1)));
+
+            // A single policy instance is reused for both endpoints.
+            ChallengeBasedAuthenticationPolicy policy = new(credential, disableChallengeResourceVerification: false);
+
+            Response responseA = await SendGetRequest(transport, policy, uri: new Uri($"https://{hostA}"));
+            Assert.That(responseA.Status, Is.EqualTo(200));
+
+            Response responseB = await SendGetRequest(transport, policy, uri: new Uri($"https://{hostB}"));
+            Assert.That(responseB.Status, Is.EqualTo(200));
+
+            CollectionAssert.DoesNotContain(
+                authHeadersSentToHostB,
+                $"Bearer {tokenA}",
+                "The first endpoint's token was reused on a request to a different endpoint.");
+            CollectionAssert.Contains(
+                authHeadersSentToHostB,
+                $"Bearer {tokenB}",
+                "The second endpoint was never authenticated with its own token.");
+        }
+
+        private static string Base64(string value) => Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
+
+        private class CallbackTokenCredential : TokenCredential
+        {
+            private readonly Func<TokenRequestContext, CancellationToken, AccessToken> _callback;
+
+            public CallbackTokenCredential(Func<TokenRequestContext, CancellationToken, AccessToken> callback)
+            {
+                _callback = callback;
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => _callback(requestContext, cancellationToken);
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new ValueTask<AccessToken>(_callback(requestContext, cancellationToken));
+        }
+
         public class MockCredentialThrowsWithNoScopes : TokenCredential
         {
             public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
