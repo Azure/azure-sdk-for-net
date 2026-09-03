@@ -91,6 +91,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(AllowedSubjects))
+            {
+                writer.WritePropertyName("allowedSubjects"u8);
+                writer.WriteStartArray();
+                foreach (ManagedClusterIdentityBindingAllowedSubject item in AllowedSubjects)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,6 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IdentityBindingManagedIdentityProfile managedIdentity = default;
             IdentityBindingOidcIssuerProfile oidcIssuer = default;
             ManagedClusterIdentityBindingProvisioningState? provisioningState = default;
+            IList<ManagedClusterIdentityBindingAllowedSubject> allowedSubjects = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,12 +173,26 @@ namespace Azure.ResourceManager.ContainerService.Models
                     provisioningState = new ManagedClusterIdentityBindingProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("allowedSubjects"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ManagedClusterIdentityBindingAllowedSubject> array = new List<ManagedClusterIdentityBindingAllowedSubject>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedClusterIdentityBindingAllowedSubject.DeserializeManagedClusterIdentityBindingAllowedSubject(item, options));
+                    }
+                    allowedSubjects = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuer, provisioningState, additionalBinaryDataProperties);
+            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuer, provisioningState, allowedSubjects ?? new ChangeTrackingList<ManagedClusterIdentityBindingAllowedSubject>(), additionalBinaryDataProperties);
         }
     }
 }
