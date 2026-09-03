@@ -170,23 +170,6 @@ namespace Azure.Provisioning.PrivateDns
             }
         }
 
-        /// <summary> Gets or sets the PrivateDnsMXRecords. </summary>
-        public BicepList<PrivateDnsMXRecordInfo> PrivateDnsMXRecords
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateDnsMXRecords;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateDnsRecordSetProperties();
-                }
-                Properties.PrivateDnsMXRecords = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for PrivateDnsMXRecord. </summary>
         protected override void DefineProvisionableProperties()
         {
