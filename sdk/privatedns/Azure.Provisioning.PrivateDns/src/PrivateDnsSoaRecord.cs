@@ -3,16 +3,10 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
 
-/// <summary>
-/// PrivateDnsSoaRecord.
-/// </summary>
 // The shared properties model includes every record kind; expose only the SOA record on this resource.
 [CodeGenSuppress("PrivateDnsARecords")]
 [CodeGenSuppress("PrivateDnsAaaaRecords")]
@@ -21,110 +15,21 @@ namespace Azure.Provisioning.PrivateDns;
 [CodeGenSuppress("PrivateDnsSrvRecords")]
 [CodeGenSuppress("PrivateDnsTxtRecords")]
 [CodeGenSuppress("Cname")]
-public partial class PrivateDnsSoaRecord : ProvisionableResource
+public partial class PrivateDnsSoaRecord
 {
-    /// <summary>
-    /// Gets or sets the Name.
-    /// </summary>
-    public BicepValue<string> Name
-    {
-        get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
-    }
-    private BicepValue<string>? _name;
-
-    /// <summary>
-    /// Gets the Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> Id
-    {
-        get { Initialize(); return _id!; }
-    }
-    private BicepValue<ResourceIdentifier>? _id;
-
-    /// <summary>
-    /// The ETag of the record set.
-    /// </summary>
-    public BicepValue<ETag> ETag
-    {
-        get { Initialize(); return _eTag!; }
-        set { Initialize(); _eTag!.Assign(value); }
-    }
-    private BicepValue<ETag>? _eTag;
-
-    /// <summary> The metadata attached to the record set. </summary>
-    public BicepDictionary<string> Metadata
-    {
-        get { Initialize(); return _metadata!; }
-        set { Initialize(); _metadata!.Assign(value); }
-    }
-    private BicepDictionary<string>? _metadata;
-
-    /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-    public BicepValue<long> TtlInSeconds
-    {
-        get { Initialize(); return _ttlInSeconds!; }
-        set { Initialize(); _ttlInSeconds!.Assign(value); }
-    }
-    private BicepValue<long>? _ttlInSeconds;
-
     /// <summary> The SOA record in the record set. </summary>
     [CodeGenMember("PrivateDnsSoaRecord")]
     public PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo
     {
-        get { Initialize(); return _privateDnsSoaRecordInfo!; }
-        set { Initialize(); AssignOrReplace(ref _privateDnsSoaRecordInfo, value); }
-    }
-    private PrivateDnsSoaRecordInfo? _privateDnsSoaRecordInfo;
-
-    /// <summary>
-    /// Gets the SystemData.
-    /// </summary>
-    public SystemData SystemData
-    {
-        get { Initialize(); return _systemData!; }
-    }
-    private SystemData? _systemData;
-
-    /// <summary>
-    /// Gets or sets a reference to the parent PrivateDnsZone.
-    /// </summary>
-    public PrivateDnsZone? Parent
-    {
-        get { Initialize(); return _parent!.Value; }
-        set { Initialize(); _parent!.Value = value; }
-    }
-    private ResourceReference<PrivateDnsZone>? _parent;
-
-    /// <summary>
-    /// Creates a new PrivateDnsSoaRecord.
-    /// </summary>
-    /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the PrivateDnsSoaRecord resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
-    /// </param>
-    /// <param name="resourceVersion">Version of the PrivateDnsSoaRecord.</param>
-    public PrivateDnsSoaRecord(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/privateDnsZones/SOA", resourceVersion ?? "2024-06-01")
-    {
-    }
-
-    /// <summary>
-    /// Define all the provisionable properties of PrivateDnsSoaRecord.
-    /// </summary>
-    protected override void DefineProvisionableProperties()
-    {
-        base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
-        _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
-        _ttlInSeconds = DefineProperty<long>("TtlInSeconds", ["properties", "ttl"]);
-        _privateDnsSoaRecordInfo = DefineModelProperty<PrivateDnsSoaRecordInfo>("PrivateDnsSoaRecordInfo", ["properties", "soaRecord"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<PrivateDnsZone>("Parent", ["parent"], isRequired: true);
+        get => Properties is null ? default : Properties.PrivateDnsSoaRecord;
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new PrivateDnsRecordSetProperties();
+            }
+            Properties.PrivateDnsSoaRecord = value;
+        }
     }
 
     /// <summary>
@@ -147,18 +52,4 @@ public partial class PrivateDnsSoaRecord : ProvisionableResource
         /// </summary>
         public static readonly string V2018_09_01 = "2018-09-01";
     }
-
-    /// <summary>
-    /// Creates a reference to an existing PrivateDnsSoaRecord.
-    /// </summary>
-    /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the PrivateDnsSoaRecord resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
-    /// </param>
-    /// <param name="resourceVersion">Version of the PrivateDnsSoaRecord.</param>
-    /// <returns>The existing PrivateDnsSoaRecord resource.</returns>
-    public static PrivateDnsSoaRecord FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
-        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
