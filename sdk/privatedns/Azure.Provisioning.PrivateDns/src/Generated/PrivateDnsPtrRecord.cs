@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.PrivateDns
 {
     /// <summary> Describes a DNS record set (a collection of DNS records with the same name and type) in a Private DNS zone. </summary>
     public partial class PrivateDnsPtrRecord : ProvisionableResource
     {
+        private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
+        private SystemData _systemData;
         private PrivateDnsRecordSetProperties _properties;
+        private BicepValue<ETag> _eTag;
+        private ResourceReference<PrivateDnsZone> _parent;
+
+        /// <summary> Creates a new PrivateDnsPtrRecord. </summary>
+        /// <param name="bicepIdentifier"> The bicep identifier name. </param>
+        /// <param name="resourceVersion"> The resource API version. </param>
+        public PrivateDnsPtrRecord(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/privateDnsZones/PTR", resourceVersion ?? "2024-06-01")
+        {
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
 
         /// <summary> Gets or sets the Properties. </summary>
         internal PrivateDnsRecordSetProperties Properties
@@ -27,6 +77,70 @@ namespace Azure.Provisioning.PrivateDns
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the ETag. </summary>
+        public BicepValue<ETag> ETag
+        {
+            get
+            {
+                Initialize();
+                return _eTag;
+            }
+            set
+            {
+                Initialize();
+                _eTag.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public PrivateDnsZone Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Metadata. </summary>
+        public BicepDictionary<string> Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsRecordSetProperties();
+                }
+                Properties.Metadata = value;
+            }
+        }
+
+        /// <summary> Gets or sets the TtlInSeconds. </summary>
+        public BicepValue<long> TtlInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TtlInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsRecordSetProperties();
+                }
+                Properties.TtlInSeconds = value;
             }
         }
 
@@ -54,6 +168,46 @@ namespace Azure.Provisioning.PrivateDns
                 }
                 return Properties.IsAutoRegistered;
             }
+        }
+
+        /// <summary> Gets or sets the PrivateDnsPtrRecords. </summary>
+        public BicepList<PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateDnsPtrRecords;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsRecordSetProperties();
+                }
+                Properties.PrivateDnsPtrRecords = value;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for PrivateDnsPtrRecord. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<PrivateDnsRecordSetProperties>(nameof(Properties), new string[] { "properties" });
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
+            _parent = DefineResource<PrivateDnsZone>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            DefineAdditionalProperties();
+        }
+
+        /// <summary> Creates a reference to an existing PrivateDnsPtrRecord. </summary>
+        /// <param name="bicepIdentifier"> The bicep identifier name. </param>
+        /// <param name="resourceVersion"> The resource API version. </param>
+        public static PrivateDnsPtrRecord FromExisting(string bicepIdentifier, string resourceVersion = null)
+        {
+            PrivateDnsPtrRecord result = new PrivateDnsPtrRecord(bicepIdentifier, resourceVersion);
+            result.IsExistingResource = true;
+            return result;
         }
 
         /// <summary> Define additional provisionable properties for PrivateDnsPtrRecord that are not part of the generated code. </summary>
