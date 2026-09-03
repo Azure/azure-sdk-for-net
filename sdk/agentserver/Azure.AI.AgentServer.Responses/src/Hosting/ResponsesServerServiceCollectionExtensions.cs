@@ -83,8 +83,6 @@ public static class ResponsesServerServiceCollectionExtensions
         // SSE streaming is composed on the Core event-stream primitive (registered via
         // AddAgentEventStreams below), not a pluggable Responses stream provider.
 
-        TokenCredential? resilientTaskCredential = null;
-
         // Auto-detect hosted environment: when FoundryEnvironment.IsHosted is true,
         // meaning the .NET hosting environment is not Development and
         // FOUNDRY_PROJECT_ENDPOINT, FOUNDRY_AGENT_NAME, and FOUNDRY_AGENT_VERSION are all configured,
@@ -92,12 +90,10 @@ public static class ResponsesServerServiceCollectionExtensions
         if (FoundryEnvironment.IsHosted)
         {
             // Response storage and resilient task storage must authenticate with the SAME identity.
-            // Core's AddResilientTasks captures the credential instance directly (it does not resolve
-            // TokenCredential from DI), so reuse a consumer-registered credential instance when present
-            // — the same one TryAddSingleton keeps for response storage — and only fall back to
-            // DefaultAzureCredential when the consumer has not registered one.
-            resilientTaskCredential = FindRegisteredCredentialInstance(services) ?? new DefaultAzureCredential();
-            services.TryAddSingleton<TokenCredential>(_ => resilientTaskCredential);
+            // Register a default only when the consumer has not supplied one. Both the response
+            // pipeline and Core hosted task store resolve the final TokenCredential from the built
+            // provider, so instance/factory registrations before or after this call compose equally.
+            services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
 
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
@@ -208,14 +204,6 @@ public static class ResponsesServerServiceCollectionExtensions
             return taskRootProvider;
         });
 
-        if (resilientTaskCredential is not null)
-        {
-            // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
-            // services on first use. Hosted composition attaches its credential to that shared
-            // environment whether consumer tasks were registered before or after this call.
-            services.AddResilientTasks(resilientTaskCredential);
-        }
-
         services.AddResilientTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.OneShotTaskName,
             (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct));
@@ -269,24 +257,5 @@ public static class ResponsesServerServiceCollectionExtensions
         }
 
         return new Uri(uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
-    }
-
-    // Returns a TokenCredential that a consumer has already registered as a concrete instance, so it
-    // can be shared with both response storage (via DI) and resilient task storage (passed directly to
-    // Core's AddResilientTasks). A factory-registered credential cannot be resolved before the provider
-    // is built, so this returns null in that case and the caller falls back to DefaultAzureCredential.
-    private static TokenCredential? FindRegisteredCredentialInstance(IServiceCollection services)
-    {
-        for (int i = 0; i < services.Count; i++)
-        {
-            ServiceDescriptor descriptor = services[i];
-            if (descriptor.ServiceType == typeof(TokenCredential)
-                && descriptor.ImplementationInstance is TokenCredential credential)
-            {
-                return credential;
-            }
-        }
-
-        return null;
     }
 }

@@ -6,10 +6,14 @@ using System.Linq;
 using System.Reflection;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
+using Azure.AI.AgentServer.Core.Tasks.Providers.Hosted;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -41,22 +45,44 @@ public class HostedResilienceFailureTests
     }
 
     [Test]
+    [TestCase(true)]
+    [TestCase(false)]
     [NonParallelizable]
-    public void HostedMode_ComposesWhenCoreCredentialIsRegisteredFirst()
+    public void HostedMode_UsesEffectiveFactoryCredentialForResponsesAndTasks(
+        bool credentialRegisteredFirst)
     {
         ConfigureHostedEnvironment();
         var services = new ServiceCollection();
         services.AddLogging();
         var credential = new TestCredential();
-        services.AddResilientTasks(credential);
 
-        Assert.DoesNotThrow(() =>
-            services.AddResponsesServer(o => o.ResilientBackground = true));
+        void AddCredential() =>
+            services.AddSingleton<TokenCredential>(_ => credential);
+        void AddResponses() =>
+            services.AddResponsesServer(o => o.ResilientBackground = true);
+
+        if (credentialRegisteredFirst)
+        {
+            AddCredential();
+            AddResponses();
+        }
+        else
+        {
+            AddResponses();
+            AddCredential();
+        }
 
         using ServiceProvider provider = services.BuildServiceProvider();
         Assert.That(
             provider.GetRequiredService<TokenCredential>(),
             Is.SameAs(credential));
+        Assert.That(
+            provider.GetRequiredService<ITaskStore>(),
+            Is.InstanceOf<HostedTaskStore>());
+        Assert.That(
+            provider.GetRequiredService<TaskHostEnvironment>().Credential,
+            Is.SameAs(credential));
+        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
     }
 
     [Test]

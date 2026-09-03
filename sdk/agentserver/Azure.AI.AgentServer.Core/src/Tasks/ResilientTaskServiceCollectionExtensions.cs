@@ -23,9 +23,9 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// Registration entry points for the resilient-tasks feature. There is no global
 /// configuration object: backend selection (local/hosted), lease durations, and
 /// retry/timeout defaults are not developer-configurable (Python parity). The
-/// optional <see cref="TokenCredential"/> on <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/>
-/// is the only knob; it is required when running against hosted task storage and
-/// ignored by the local file-backed store.
+/// hosted credential can be supplied to
+/// <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/> or registered
+/// as a <see cref="TokenCredential"/> service; it is ignored by the local file-backed store.
 /// </summary>
 public static class ResilientTaskServiceCollectionExtensions
 {
@@ -34,7 +34,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// Calling <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> directly also performs this
     /// setup on first use, so this method only needs to be called explicitly to supply a hosted
     /// credential. The credential may be supplied before or after task registrations while composing
-    /// the service collection; the first non-null credential wins.
+    /// the service collection. A <see cref="TokenCredential"/> registered directly in the service
+    /// collection is also supported; when both forms are used they must resolve to the same instance.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
@@ -296,14 +297,20 @@ public static class ResilientTaskServiceCollectionExtensions
             return TaskStoreSelector.Create(hostedFactory: () =>
             {
                 var env = sp.GetRequiredService<TaskHostEnvironment>();
-                var cred = env.Credential;
+                TokenCredential? cred =
+                    sp.GetService<TokenCredential>() ?? env.Credential;
                 if (cred is null)
                 {
                     throw new InvalidOperationException(
                         "A TokenCredential is required for hosted task storage. Call " +
-                        "AddResilientTasks(credential) while composing services when running in a hosted " +
-                        "environment.");
+                        "AddResilientTasks(credential) or register TokenCredential while composing " +
+                        "services when running in a hosted environment.");
                 }
+
+                // Publish the provider's effective credential onto the shared environment holder.
+                // This detects any explicit Core credential/DI credential mismatch and guarantees
+                // all task-store resolutions use the same identity as cooperating protocol clients.
+                env.AttachCredential(cred);
 
                 var endpoint = FoundryEnvironment.ProjectEndpoint;
                 if (string.IsNullOrWhiteSpace(endpoint))

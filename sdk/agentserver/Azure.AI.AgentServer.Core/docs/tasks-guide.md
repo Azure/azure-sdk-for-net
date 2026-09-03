@@ -517,9 +517,9 @@ TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
 
 `AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks
 services on first use, so `AddResilientTasks()` is optional — call it explicitly only
-when you need to supply a `credential`. It may be called before or after task
-registrations while the service collection is being composed; the first non-null
-credential wins, and a later conflicting credential is rejected. `credential` is
+when you need to supply a `credential`, or register a `TokenCredential` directly in the
+service collection. Either form may be configured before or after task registrations.
+When both are used, they must resolve to the same credential instance. A credential is
 required when the host is running in Foundry hosted mode and the framework selects
 hosted task storage; local development uses the file-backed store and does not require
 one.
