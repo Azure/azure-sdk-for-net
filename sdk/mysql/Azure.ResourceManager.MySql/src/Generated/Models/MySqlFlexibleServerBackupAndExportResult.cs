@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="status"> The operation status. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
+        /// <param name="startsOn"> Start time. </param>
+        /// <param name="endsOn"> End time. </param>
         /// <param name="percentComplete"> Operation progress (0-100). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupAndExportResponseProperties properties, ResponseError error, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupAndExportResponseProperties properties, ResponseError error, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, double? percentComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Error = error;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             PercentComplete = percentComplete;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; set; }
 
         /// <summary> Start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Operation progress (0-100). </summary>
         public double? PercentComplete { get; set; }
