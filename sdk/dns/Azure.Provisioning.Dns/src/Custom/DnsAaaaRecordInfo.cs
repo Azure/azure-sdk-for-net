@@ -3,33 +3,21 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Net;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Dns;
 
 public partial class DnsAaaaRecordInfo
 {
-    private BicepValue<IPAddress> _ipv6Address;
-
+    // IPv6Address follows the preferred .NET acronym casing; retain the released Ipv6Address member for source and binary compatibility.
     /// <summary> The IPv6 address of this AAAA record. </summary>
-    [CodeGenMember("IPv6Address")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use IPv6Address instead.")]
     public BicepValue<IPAddress> Ipv6Address
     {
-        get
-        {
-            Initialize();
-            return _ipv6Address;
-        }
-        set
-        {
-            Initialize();
-            _ipv6Address.Assign(value);
-        }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _ipv6Address = DefineProperty<IPAddress>(nameof(Ipv6Address), ["ipv6Address"], isRequired: true);
+        get => IPv6Address;
+        set => IPv6Address = value;
     }
 }

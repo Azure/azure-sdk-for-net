@@ -3,33 +3,21 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Net;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Dns;
 
 public partial class DnsARecordInfo
 {
-    private BicepValue<IPAddress> _ipv4Address;
-
+    // IPv4Address follows the preferred .NET acronym casing; retain the released Ipv4Address member for source and binary compatibility.
     /// <summary> The IPv4 address of this A record. </summary>
-    [CodeGenMember("IPv4Address")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use IPv4Address instead.")]
     public BicepValue<IPAddress> Ipv4Address
     {
-        get
-        {
-            Initialize();
-            return _ipv4Address;
-        }
-        set
-        {
-            Initialize();
-            _ipv4Address.Assign(value);
-        }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _ipv4Address = DefineProperty<IPAddress>(nameof(Ipv4Address), ["ipv4Address"], isRequired: true);
+        get => IPv4Address;
+        set => IPv4Address = value;
     }
 }

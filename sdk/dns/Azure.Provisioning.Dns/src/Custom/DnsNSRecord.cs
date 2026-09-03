@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Dns;
@@ -24,7 +26,7 @@ public partial class DnsNSRecord
 {
     /// <summary> The NS record data in the record set. </summary>
     [CodeGenMember("DnsNSRecords")]
-    public BicepList<DnsNSRecordInfo> NSRecords
+    public BicepList<DnsNSRecordInfo> NsRecords
     {
         get => Properties is null ? default : Properties.DnsNSRecords;
         set
@@ -35,6 +37,16 @@ public partial class DnsNSRecord
             }
             Properties.DnsNSRecords = value;
         }
+    }
+
+    // NsRecords follows the preferred .NET acronym casing; retain the released NSRecords member for source and binary compatibility.
+    /// <summary> The NS record data in the record set. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use NsRecords instead.")]
+    public BicepList<DnsNSRecordInfo> NSRecords
+    {
+        get => NsRecords;
+        set => NsRecords = value;
     }
 
     /// <summary> Supported DnsNSRecord resource versions. </summary>

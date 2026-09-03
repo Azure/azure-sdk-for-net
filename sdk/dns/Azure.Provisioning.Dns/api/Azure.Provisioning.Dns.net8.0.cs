@@ -38,7 +38,9 @@ namespace Azure.Provisioning.Dns
     public partial class DnsAaaaRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DnsAaaaRecordInfo() { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use IPv6Address instead.")]
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv6Address { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv6Address { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DnsARecord : Azure.Provisioning.Primitives.ProvisionableResource
@@ -71,7 +73,9 @@ namespace Azure.Provisioning.Dns
     public partial class DnsARecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DnsARecordInfo() { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use IPv4Address instead.")]
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv4Address { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv4Address { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DnsCaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
@@ -250,6 +254,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNSRecordInfo> NsRecords { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use NsRecords instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNSRecordInfo> NSRecords { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
@@ -347,7 +353,9 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use SoaRecordInfo instead.")]
         public Azure.Provisioning.Dns.DnsSoaRecordInfo SoaRecord { get { throw null; } set { } }
+        public Azure.Provisioning.Dns.DnsSoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }

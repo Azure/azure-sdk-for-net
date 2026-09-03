@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Dns;
@@ -24,7 +26,7 @@ public partial class DnsSoaRecord
 {
     /// <summary> The SOA record data in the record set. </summary>
     [CodeGenMember("DnsSoaRecord")]
-    public DnsSoaRecordInfo SoaRecord
+    public DnsSoaRecordInfo SoaRecordInfo
     {
         get => Properties is null ? default : Properties.DnsSoaRecord;
         set
@@ -35,6 +37,16 @@ public partial class DnsSoaRecord
             }
             Properties.DnsSoaRecord = value;
         }
+    }
+
+    // SoaRecordInfo identifies the model type; retain the released SoaRecord member for source and binary compatibility.
+    /// <summary> The SOA record data in the record set. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use SoaRecordInfo instead.")]
+    public DnsSoaRecordInfo SoaRecord
+    {
+        get => SoaRecordInfo;
+        set => SoaRecordInfo = value;
     }
 
     /// <summary> Supported DnsSoaRecord resource versions. </summary>

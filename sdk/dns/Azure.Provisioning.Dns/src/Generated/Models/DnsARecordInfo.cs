@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
@@ -12,15 +14,33 @@ namespace Azure.Provisioning.Dns
     /// <summary> An A record. </summary>
     public partial class DnsARecordInfo : ProvisionableConstruct
     {
+        private BicepValue<IPAddress> _ipv4Address;
+
         /// <summary> Creates a new DnsARecordInfo. </summary>
         public DnsARecordInfo()
         {
+        }
+
+        /// <summary> Gets or sets the IPv4Address. </summary>
+        public BicepValue<IPAddress> IPv4Address
+        {
+            get
+            {
+                Initialize();
+                return _ipv4Address;
+            }
+            set
+            {
+                Initialize();
+                _ipv4Address.Assign(value);
+            }
         }
 
         /// <summary> Define all the provisionable properties for DnsARecordInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _ipv4Address = DefineProperty<IPAddress>(nameof(IPv4Address), new string[] { "ipv4Address" });
             DefineAdditionalProperties();
         }
 
