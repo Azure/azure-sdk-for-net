@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class SandboxGroupsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<SandboxGroupData>
+    internal partial class SandboxGroupsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ContainerGroupSandboxData>
     {
         private readonly SandboxGroups _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SandboxGroupsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SandboxGroupData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerGroupSandboxData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 SandboxGroupListResult result = SandboxGroupListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SandboxGroupData>.FromValues((IReadOnlyList<SandboxGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerGroupSandboxData>.FromValues((IReadOnlyList<ContainerGroupSandboxData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

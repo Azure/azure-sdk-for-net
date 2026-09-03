@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary></summary>
-    internal partial class SandboxGroupResourceOperationSource : IOperationSource<SandboxGroupResource>
+    internal partial class ContainerGroupSandboxResourceOperationSource : IOperationSource<ContainerGroupSandboxResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SandboxGroupResourceOperationSource(ArmClient client)
+        internal ContainerGroupSandboxResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SandboxGroupResource IOperationSource<SandboxGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerGroupSandboxResource IOperationSource<ContainerGroupSandboxResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SandboxGroupData data = SandboxGroupData.DeserializeSandboxGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SandboxGroupResource(_client, data);
+            ContainerGroupSandboxData data = ContainerGroupSandboxData.DeserializeContainerGroupSandboxData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerGroupSandboxResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SandboxGroupResource> IOperationSource<SandboxGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerGroupSandboxResource> IOperationSource<ContainerGroupSandboxResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SandboxGroupData data = SandboxGroupData.DeserializeSandboxGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SandboxGroupResource(_client, data);
+            ContainerGroupSandboxData data = ContainerGroupSandboxData.DeserializeContainerGroupSandboxData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerGroupSandboxResource(_client, data);
         }
     }
 }

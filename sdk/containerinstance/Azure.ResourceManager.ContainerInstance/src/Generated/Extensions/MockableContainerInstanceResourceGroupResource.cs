@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return GetContainerGroupProfiles().Get(containerGroupProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SandboxGroups in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SandboxGroups and their operations over a SandboxGroupResource. </returns>
-        public virtual SandboxGroupCollection GetSandboxGroups()
+        /// <summary> Gets a collection of ContainerGroupSandboxes in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerGroupSandboxes and their operations over a ContainerGroupSandboxResource. </returns>
+        public virtual ContainerGroupSandboxCollection GetContainerGroupSandboxes()
         {
-            return GetCachedClient(client => new SandboxGroupCollection(client, Id));
+            return GetCachedClient(client => new ContainerGroupSandboxCollection(client, Id));
         }
 
         /// <summary>
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SandboxGroupResource>> GetSandboxGroupAsync(string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupSandboxResource>> GetContainerGroupSandboxAsync(string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
-            return await GetSandboxGroups().GetAsync(sandboxGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerGroupSandboxes().GetAsync(sandboxGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,11 +284,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SandboxGroupResource> GetSandboxGroup(string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupSandboxResource> GetContainerGroupSandbox(string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
-            return GetSandboxGroups().Get(sandboxGroupName, cancellationToken);
+            return GetContainerGroupSandboxes().Get(sandboxGroupName, cancellationToken);
         }
     }
 }

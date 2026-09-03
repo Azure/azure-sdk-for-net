@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return new ContainerGroupProfileResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SandboxGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerGroupSandboxResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SandboxGroupResource"/> object. </returns>
-        public virtual SandboxGroupResource GetSandboxGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerGroupSandboxResource"/> object. </returns>
+        public virtual ContainerGroupSandboxResource GetContainerGroupSandboxResource(ResourceIdentifier id)
         {
-            SandboxGroupResource.ValidateResourceId(id);
-            return new SandboxGroupResource(Client, id);
+            ContainerGroupSandboxResource.ValidateResourceId(id);
+            return new ContainerGroupSandboxResource(Client, id);
         }
 
         /// <summary>

@@ -11,28 +11,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The result of getting an access token for a SandboxGroup. </summary>
-    public partial class SandboxGroupAccessToken
+    public partial class ContainerSandboxGroupAccessToken
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SandboxGroupAccessToken"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupAccessToken"/>. </summary>
         /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
         /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
         /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
-        internal SandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfter)
+        internal ContainerSandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfter)
         {
             Endpoint = endpoint;
             AccessToken = accessToken;
             NotAfter = notAfter;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SandboxGroupAccessToken"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupAccessToken"/>. </summary>
         /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
         /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
         /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             AccessToken = accessToken;

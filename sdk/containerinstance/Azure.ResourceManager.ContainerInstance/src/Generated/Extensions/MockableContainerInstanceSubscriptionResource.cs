@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SandboxGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SandboxGroupResource> GetSandboxGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupSandboxResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerGroupSandboxResource> GetContainerGroupSandboxesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupsGetBySubscriptionAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetBySubscriptionAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SandboxGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SandboxGroupResource> GetSandboxGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupSandboxResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerGroupSandboxResource> GetContainerGroupSandboxes(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupsGetBySubscriptionCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
+            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetBySubscriptionCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>

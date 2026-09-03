@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
-        /// <param name="secret"> The secret volume. </param>
-        /// <param name="secretReference"> The secret reference volume. </param>
+        /// <param name="secret"> Defines files for a secret volume. Dictionary keys are file names and values are Base64-encoded secret data used as file contents. The values are sensitive, and the service does not return the contents of this property in GET responses. </param>
+        /// <param name="secretReference"> Defines files for a secret reference volume. Dictionary keys are file names and values identify entries in the container group's secretReferences collection. This property contains reference names rather than secret values. </param>
         /// <param name="gitRepo"> The git repo volume. </param>
         /// <returns> A new <see cref="Models.ContainerVolume"/> instance for mocking. </returns>
         public static ContainerVolume ContainerVolume(string name = default, ContainerInstanceAzureFileVolume azureFile = default, BinaryData emptyDir = default, IDictionary<string, string> secret = default, IDictionary<string, string> secretReference = default, ContainerInstanceGitRepoVolume gitRepo = default)
@@ -840,12 +840,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ContainerInstance.SandboxGroupData"/> instance for mocking. </returns>
-        public static SandboxGroupData SandboxGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SandboxGroupProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="ContainerInstance.ContainerGroupSandboxData"/> instance for mocking. </returns>
+        public static ContainerGroupSandboxData ContainerGroupSandboxData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupSandboxProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SandboxGroupData(
+            return new ContainerGroupSandboxData(
                 id,
                 name,
                 resourceType,
@@ -860,36 +860,36 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="networkSubnets"> The list of subnets associated with the SandboxGroup. </param>
         /// <param name="managementResourceGroupId"> The ARM resource ID of the management resource group associated with this SandboxGroup. </param>
-        /// <returns> A new <see cref="Models.SandboxGroupProperties"/> instance for mocking. </returns>
-        public static SandboxGroupProperties SandboxGroupProperties(SandboxGroupProvisioningState? provisioningState = default, IEnumerable<SubnetReference> networkSubnets = default, ResourceIdentifier managementResourceGroupId = default)
+        /// <returns> A new <see cref="Models.ContainerGroupSandboxProperties"/> instance for mocking. </returns>
+        public static ContainerGroupSandboxProperties ContainerGroupSandboxProperties(ContainerGroupSandboxProvisioningState? provisioningState = default, IEnumerable<ContainerSandboxGroupSubnetReference> networkSubnets = default, ResourceIdentifier managementResourceGroupId = default)
         {
-            return new SandboxGroupProperties(provisioningState, networkSubnets is null ? default : new SandboxGroupNetworkProfile((networkSubnets ?? new ChangeTrackingList<SubnetReference>()).ToList(), default), managementResourceGroupId, default);
+            return new ContainerGroupSandboxProperties(provisioningState, networkSubnets is null ? default : new SandboxGroupNetworkProfile((networkSubnets ?? new ChangeTrackingList<ContainerSandboxGroupSubnetReference>()).ToList(), default), managementResourceGroupId, default);
         }
 
         /// <param name="id"> The ARM resource ID of the subnet. The caller must have `Microsoft.Network/virtualNetworks/subnets/join/action` permission on this subnet (enforced via a linked access check at create/update time). </param>
-        /// <returns> A new <see cref="Models.SubnetReference"/> instance for mocking. </returns>
-        public static SubnetReference SubnetReference(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.ContainerSandboxGroupSubnetReference"/> instance for mocking. </returns>
+        public static ContainerSandboxGroupSubnetReference ContainerSandboxGroupSubnetReference(ResourceIdentifier id = default)
         {
-            return new SubnetReference(id, default);
+            return new ContainerSandboxGroupSubnetReference(id, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SandboxGroupPatch"/> instance for mocking. </returns>
-        public static SandboxGroupPatch SandboxGroupPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.ContainerSandboxGroupPatch"/> instance for mocking. </returns>
+        public static ContainerSandboxGroupPatch ContainerSandboxGroupPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SandboxGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new ContainerSandboxGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
         /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
         /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
-        /// <returns> A new <see cref="Models.SandboxGroupAccessToken"/> instance for mocking. </returns>
-        public static SandboxGroupAccessToken SandboxGroupAccessToken(Uri endpoint = default, string accessToken = default, DateTimeOffset notAfter = default)
+        /// <returns> A new <see cref="Models.ContainerSandboxGroupAccessToken"/> instance for mocking. </returns>
+        public static ContainerSandboxGroupAccessToken ContainerSandboxGroupAccessToken(Uri endpoint = default, string accessToken = default, DateTimeOffset notAfter = default)
         {
-            return new SandboxGroupAccessToken(endpoint, accessToken, notAfter, default);
+            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfter, default);
         }
 
         /// <param name="content"> The content of the log. </param>

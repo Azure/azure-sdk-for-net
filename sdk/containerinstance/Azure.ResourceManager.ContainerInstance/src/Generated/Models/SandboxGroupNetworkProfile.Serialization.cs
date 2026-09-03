@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
-                foreach (SubnetReference item in Subnets)
+                foreach (ContainerSandboxGroupSubnetReference item in Subnets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IList<SubnetReference> subnets = default;
+            IList<ContainerSandboxGroupSubnetReference> subnets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<SubnetReference> array = new List<SubnetReference>();
+                    List<ContainerSandboxGroupSubnetReference> array = new List<ContainerSandboxGroupSubnetReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubnetReference.DeserializeSubnetReference(item, options));
+                        array.Add(ContainerSandboxGroupSubnetReference.DeserializeContainerSandboxGroupSubnetReference(item, options));
                     }
                     subnets = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SandboxGroupNetworkProfile(subnets ?? new ChangeTrackingList<SubnetReference>(), additionalBinaryDataProperties);
+            return new SandboxGroupNetworkProfile(subnets ?? new ChangeTrackingList<ContainerSandboxGroupSubnetReference>(), additionalBinaryDataProperties);
         }
     }
 }

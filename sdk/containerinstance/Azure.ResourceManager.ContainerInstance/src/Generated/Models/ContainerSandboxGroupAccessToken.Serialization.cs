@@ -15,63 +15,63 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The result of getting an access token for a SandboxGroup. </summary>
-    public partial class SandboxGroupAccessToken : IJsonModel<SandboxGroupAccessToken>
+    public partial class ContainerSandboxGroupAccessToken : IJsonModel<ContainerSandboxGroupAccessToken>
     {
-        /// <summary> Initializes a new instance of <see cref="SandboxGroupAccessToken"/> for deserialization. </summary>
-        internal SandboxGroupAccessToken()
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupAccessToken"/> for deserialization. </summary>
+        internal ContainerSandboxGroupAccessToken()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SandboxGroupAccessToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerSandboxGroupAccessToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSandboxGroupAccessToken(document.RootElement, options);
+                        return DeserializeContainerSandboxGroupAccessToken(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SandboxGroupAccessToken)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSandboxGroupAccessToken)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SandboxGroupAccessToken)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSandboxGroupAccessToken)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SandboxGroupAccessToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerSandboxGroupAccessToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SandboxGroupAccessToken IPersistableModel<SandboxGroupAccessToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerSandboxGroupAccessToken IPersistableModel<ContainerSandboxGroupAccessToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SandboxGroupAccessToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerSandboxGroupAccessToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SandboxGroupAccessToken"/> from. </param>
-        internal static SandboxGroupAccessToken FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerSandboxGroupAccessToken"/> from. </param>
+        internal static ContainerSandboxGroupAccessToken FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSandboxGroupAccessToken(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeContainerSandboxGroupAccessToken(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SandboxGroupAccessToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerSandboxGroupAccessToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SandboxGroupAccessToken)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSandboxGroupAccessToken)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint.AbsoluteUri);
@@ -112,24 +112,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SandboxGroupAccessToken IJsonModel<SandboxGroupAccessToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerSandboxGroupAccessToken IJsonModel<ContainerSandboxGroupAccessToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SandboxGroupAccessToken JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerSandboxGroupAccessToken JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSandboxGroupAccessToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SandboxGroupAccessToken)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSandboxGroupAccessToken)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSandboxGroupAccessToken(document.RootElement, options);
+            return DeserializeContainerSandboxGroupAccessToken(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SandboxGroupAccessToken DeserializeSandboxGroupAccessToken(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerSandboxGroupAccessToken DeserializeContainerSandboxGroupAccessToken(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SandboxGroupAccessToken(endpoint, accessToken, notAfter, additionalBinaryDataProperties);
+            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfter, additionalBinaryDataProperties);
         }
     }
 }

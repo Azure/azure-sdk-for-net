@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SandboxGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerGroupSandboxResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceArmClient.GetSandboxGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceArmClient.GetContainerGroupSandboxResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SandboxGroupResource"/> object. </returns>
-        public static SandboxGroupResource GetSandboxGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerGroupSandboxResource"/> object. </returns>
+        public static ContainerGroupSandboxResource GetContainerGroupSandboxResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerInstanceArmClient(client).GetSandboxGroupResource(id);
+            return GetMockableContainerInstanceArmClient(client).GetContainerGroupSandboxResource(id);
         }
 
         /// <summary>
@@ -332,27 +332,27 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets a collection of SandboxGroups in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerGroupSandboxes in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetSandboxGroups()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupSandboxes()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SandboxGroups and their operations over a SandboxGroupResource. </returns>
-        public static SandboxGroupCollection GetSandboxGroups(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerGroupSandboxes and their operations over a ContainerGroupSandboxResource. </returns>
+        public static ContainerGroupSandboxCollection GetContainerGroupSandboxes(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetSandboxGroups();
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupSandboxes();
         }
 
         /// <summary>
         /// Get a SandboxGroup
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetSandboxGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupSandboxAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -360,18 +360,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SandboxGroupResource>> GetSandboxGroupAsync(this ResourceGroupResource resourceGroupResource, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerGroupSandboxResource>> GetContainerGroupSandboxAsync(this ResourceGroupResource resourceGroupResource, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetSandboxGroupAsync(sandboxGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupSandboxAsync(sandboxGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a SandboxGroup
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetSandboxGroup(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupSandbox(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SandboxGroupResource> GetSandboxGroup(this ResourceGroupResource resourceGroupResource, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public static Response<ContainerGroupSandboxResource> GetContainerGroupSandbox(this ResourceGroupResource resourceGroupResource, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetSandboxGroup(sandboxGroupName, cancellationToken);
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupSandbox(sandboxGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -498,36 +498,36 @@ namespace Azure.ResourceManager.ContainerInstance
         /// List SandboxGroup resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetSandboxGroupsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SandboxGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SandboxGroupResource> GetSandboxGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupSandboxResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerGroupSandboxResource> GetContainerGroupSandboxesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetSandboxGroupsAsync(cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetContainerGroupSandboxesAsync(cancellationToken);
         }
 
         /// <summary>
         /// List SandboxGroup resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetSandboxGroups(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SandboxGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SandboxGroupResource> GetSandboxGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupSandboxResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerGroupSandboxResource> GetContainerGroupSandboxes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetSandboxGroups(cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetContainerGroupSandboxes(cancellationToken);
         }
 
         /// <summary>

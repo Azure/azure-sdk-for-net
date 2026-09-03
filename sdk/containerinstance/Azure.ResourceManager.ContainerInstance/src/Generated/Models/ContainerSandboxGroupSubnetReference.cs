@@ -13,25 +13,25 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A reference to a subnet resource. </summary>
-    public partial class SubnetReference
+    public partial class ContainerSandboxGroupSubnetReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubnetReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupSubnetReference"/>. </summary>
         /// <param name="id"> The ARM resource ID of the subnet. The caller must have `Microsoft.Network/virtualNetworks/subnets/join/action` permission on this subnet (enforced via a linked access check at create/update time). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public SubnetReference(ResourceIdentifier id)
+        public ContainerSandboxGroupSubnetReference(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubnetReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupSubnetReference"/>. </summary>
         /// <param name="id"> The ARM resource ID of the subnet. The caller must have `Microsoft.Network/virtualNetworks/subnets/join/action` permission on this subnet (enforced via a linked access check at create/update time). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSandboxGroupSubnetReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

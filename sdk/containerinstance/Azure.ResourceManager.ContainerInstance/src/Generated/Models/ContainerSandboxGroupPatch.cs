@@ -13,22 +13,22 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The type used for updating a SandboxGroup resource. </summary>
-    public partial class SandboxGroupPatch
+    public partial class ContainerSandboxGroupPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SandboxGroupPatch"/>. </summary>
-        public SandboxGroupPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupPatch"/>. </summary>
+        public ContainerSandboxGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SandboxGroupPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxGroupPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSandboxGroupPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;

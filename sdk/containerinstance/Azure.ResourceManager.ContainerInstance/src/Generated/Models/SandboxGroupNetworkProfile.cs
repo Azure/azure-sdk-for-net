@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="SandboxGroupNetworkProfile"/>. </summary>
         public SandboxGroupNetworkProfile()
         {
-            Subnets = new ChangeTrackingList<SubnetReference>();
+            Subnets = new ChangeTrackingList<ContainerSandboxGroupSubnetReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SandboxGroupNetworkProfile"/>. </summary>
         /// <param name="subnets"> The list of subnets associated with the SandboxGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxGroupNetworkProfile(IList<SubnetReference> subnets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SandboxGroupNetworkProfile(IList<ContainerSandboxGroupSubnetReference> subnets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnets = subnets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of subnets associated with the SandboxGroup. </summary>
-        public IList<SubnetReference> Subnets { get; } = new ChangeTrackingList<SubnetReference>();
+        public IList<ContainerSandboxGroupSubnetReference> Subnets { get; } = new ChangeTrackingList<ContainerSandboxGroupSubnetReference>();
     }
 }

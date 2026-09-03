@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The provisioning state of a SandboxGroup resource. </summary>
-    public readonly partial struct SandboxGroupProvisioningState : IEquatable<SandboxGroupProvisioningState>
+    public readonly partial struct ContainerGroupSandboxProvisioningState : IEquatable<ContainerGroupSandboxProvisioningState>
     {
         private readonly string _value;
         /// <summary> Resource has been created. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The resource provisioning request was accepted but not yet started. </summary>
         private const string AcceptedValue = "Accepted";
 
-        /// <summary> Initializes a new instance of <see cref="SandboxGroupProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupSandboxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SandboxGroupProvisioningState(string value)
+        public ContainerGroupSandboxProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Resource has been created. </summary>
-        public static SandboxGroupProvisioningState Succeeded { get; } = new SandboxGroupProvisioningState(SucceededValue);
+        public static ContainerGroupSandboxProvisioningState Succeeded { get; } = new ContainerGroupSandboxProvisioningState(SucceededValue);
 
         /// <summary> Resource creation failed. </summary>
-        public static SandboxGroupProvisioningState Failed { get; } = new SandboxGroupProvisioningState(FailedValue);
+        public static ContainerGroupSandboxProvisioningState Failed { get; } = new ContainerGroupSandboxProvisioningState(FailedValue);
 
         /// <summary> Resource creation was canceled. </summary>
-        public static SandboxGroupProvisioningState Canceled { get; } = new SandboxGroupProvisioningState(CanceledValue);
+        public static ContainerGroupSandboxProvisioningState Canceled { get; } = new ContainerGroupSandboxProvisioningState(CanceledValue);
 
         /// <summary> The resource is being updated. </summary>
-        public static SandboxGroupProvisioningState Updating { get; } = new SandboxGroupProvisioningState(UpdatingValue);
+        public static ContainerGroupSandboxProvisioningState Updating { get; } = new ContainerGroupSandboxProvisioningState(UpdatingValue);
 
         /// <summary> The resource is being deleted. </summary>
-        public static SandboxGroupProvisioningState Deleting { get; } = new SandboxGroupProvisioningState(DeletingValue);
+        public static ContainerGroupSandboxProvisioningState Deleting { get; } = new ContainerGroupSandboxProvisioningState(DeletingValue);
 
         /// <summary> The resource provisioning request was accepted but not yet started. </summary>
-        public static SandboxGroupProvisioningState Accepted { get; } = new SandboxGroupProvisioningState(AcceptedValue);
+        public static ContainerGroupSandboxProvisioningState Accepted { get; } = new ContainerGroupSandboxProvisioningState(AcceptedValue);
 
-        /// <summary> Determines if two <see cref="SandboxGroupProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerGroupSandboxProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SandboxGroupProvisioningState left, SandboxGroupProvisioningState right) => left.Equals(right);
+        public static bool operator ==(ContainerGroupSandboxProvisioningState left, ContainerGroupSandboxProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SandboxGroupProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerGroupSandboxProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SandboxGroupProvisioningState left, SandboxGroupProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(ContainerGroupSandboxProvisioningState left, ContainerGroupSandboxProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SandboxGroupProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerGroupSandboxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SandboxGroupProvisioningState(string value) => new SandboxGroupProvisioningState(value);
+        public static implicit operator ContainerGroupSandboxProvisioningState(string value) => new ContainerGroupSandboxProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="SandboxGroupProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerGroupSandboxProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SandboxGroupProvisioningState?(string value) => value == null ? null : new SandboxGroupProvisioningState(value);
+        public static implicit operator ContainerGroupSandboxProvisioningState?(string value) => value == null ? null : new ContainerGroupSandboxProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SandboxGroupProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerGroupSandboxProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SandboxGroupProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerGroupSandboxProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
