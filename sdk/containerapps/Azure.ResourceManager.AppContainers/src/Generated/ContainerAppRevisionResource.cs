@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppRevisionApiVersion);
             _containerAppRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppRevisionsRestClient = new ContainerAppRevisions(_containerAppRevisionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
+            _containerAppRevisionsRestClient = new ContainerAppRevisions(_containerAppRevisionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionApiVersion ?? "2026-07-01");
             _functionsExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _functionsExtensionRestClient = new FunctionsExtension(_functionsExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
+            _functionsExtensionRestClient = new FunctionsExtension(_functionsExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new ContainerAppsRevisionFunctionCollection(client, Id));
         }
 
-        /// <summary> Get a specific function of a Container App Revision. </summary>
+        /// <summary> Gets the details of a specific function in a Container App revision. </summary>
         /// <param name="functionName"> Name of the Function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetContainerAppsRevisionFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a specific function of a Container App Revision. </summary>
+        /// <summary> Gets the details of a specific function in a Container App revision. </summary>
         /// <param name="functionName"> Name of the Function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>

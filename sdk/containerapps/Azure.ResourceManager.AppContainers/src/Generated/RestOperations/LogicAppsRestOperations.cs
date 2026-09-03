@@ -90,7 +90,10 @@ namespace Azure.ResourceManager.AppContainers
             request.Uri = uri;
             request.Method = RequestMethod.Put;
             _userAgent.Apply(message);
-            request.Headers.SetValue("Content-Type", "application/json");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
@@ -120,36 +123,6 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        internal HttpMessage CreateDeployWorkflowArtifactsRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
-            uri.AppendPath(containerAppName, true);
-            uri.AppendPath("/providers/Microsoft.App/logicApps/", false);
-            uri.AppendPath(logicAppName, true);
-            uri.AppendPath("/deployWorkflowArtifacts", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateGetWorkflowsConnectionsRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -172,34 +145,6 @@ namespace Azure.ResourceManager.AppContainers
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateInvokeRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, string xMsLogicAppsProxyPath, string xMsLogicAppsProxyMethod, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
-            uri.AppendPath(containerAppName, true);
-            uri.AppendPath("/providers/Microsoft.App/logicApps/", false);
-            uri.AppendPath(logicAppName, true);
-            uri.AppendPath("/invoke", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("x-ms-logicApps-proxy-path", xMsLogicAppsProxyPath);
-            request.Headers.SetValue("x-ms-logicApps-proxy-method", xMsLogicAppsProxyMethod);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

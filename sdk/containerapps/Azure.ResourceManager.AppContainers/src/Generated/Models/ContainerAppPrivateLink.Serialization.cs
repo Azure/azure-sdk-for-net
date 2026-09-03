@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
@@ -58,6 +59,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContainerAppPrivateLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerAppPrivateLink"/> from. </param>
+        internal static ContainerAppPrivateLink FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContainerAppPrivateLink(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

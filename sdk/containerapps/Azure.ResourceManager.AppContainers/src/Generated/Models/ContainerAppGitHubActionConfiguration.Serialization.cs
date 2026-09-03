@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(DockerfilePath))
-            {
-                writer.WritePropertyName("dockerfilePath"u8);
-                writer.WriteStringValue(DockerfilePath);
-            }
             if (Optional.IsDefined(GitHubPersonalAccessToken))
             {
                 writer.WritePropertyName("githubPersonalAccessToken"u8);
@@ -123,16 +118,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
-            }
-            if (Optional.IsCollectionDefined(BuildEnvironmentVariables))
-            {
-                writer.WritePropertyName("buildEnvironmentVariables"u8);
-                writer.WriteStartArray();
-                foreach (EnvironmentVariable item in BuildEnvironmentVariables)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -179,14 +164,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppRegistryInfo registryInfo = default;
             ContainerAppCredentials azureCredentials = default;
             string contextPath = default;
-            string dockerfilePath = default;
             string gitHubPersonalAccessToken = default;
             string image = default;
             string publishType = default;
             string os = default;
             string runtimeStack = default;
             string runtimeVersion = default;
-            IList<EnvironmentVariable> buildEnvironmentVariables = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,11 +194,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (prop.NameEquals("contextPath"u8))
                 {
                     contextPath = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("dockerfilePath"u8))
-                {
-                    dockerfilePath = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("githubPersonalAccessToken"u8))
@@ -248,20 +226,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     runtimeVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("buildEnvironmentVariables"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
-                    }
-                    buildEnvironmentVariables = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -271,14 +235,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 registryInfo,
                 azureCredentials,
                 contextPath,
-                dockerfilePath,
                 gitHubPersonalAccessToken,
                 image,
                 publishType,
                 os,
                 runtimeStack,
                 runtimeVersion,
-                buildEnvironmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
                 additionalBinaryDataProperties);
         }
     }
