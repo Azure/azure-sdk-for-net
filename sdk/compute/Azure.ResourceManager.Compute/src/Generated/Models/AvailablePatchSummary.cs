@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="rebootPending"> The overall reboot status of the VM. It will be true when partially installed patches require a reboot to complete installation but the reboot has not yet occurred. </param>
         /// <param name="criticalAndSecurityPatchCount"> The number of critical or security patches that have been detected as available and not yet installed. </param>
         /// <param name="otherPatchCount"> The number of all available patches excluding critical and security. </param>
-        /// <param name="startOn"> The UTC timestamp when the operation began. </param>
+        /// <param name="startsOn"> The UTC timestamp when the operation began. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailablePatchSummary(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailablePatchSummary(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startsOn, DateTimeOffset? lastModifiedOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             AssessmentActivityId = assessmentActivityId;
             RebootPending = rebootPending;
             CriticalAndSecurityPatchCount = criticalAndSecurityPatchCount;
             OtherPatchCount = otherPatchCount;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastModifiedOn = lastModifiedOn;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? OtherPatchCount { get; }
 
         /// <summary> The UTC timestamp when the operation began. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC timestamp when the operation began. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
