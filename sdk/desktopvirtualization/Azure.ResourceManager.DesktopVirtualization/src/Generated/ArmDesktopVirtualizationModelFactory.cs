@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDesktopVirtualizationModelFactory
     {
+        /// <summary> Schema for App Attach Package properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for App Attach Package properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the App Attach Package. </param>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for Import Package Information properties. </summary>
         /// <param name="packageAlias"> Alias of App Attach Package. Assigned at import time. </param>
         /// <param name="imagePath"> VHD/CIM image path on Network Share. </param>
         /// <param name="packageName"> Package Name from appxmanifest.xml. </param>
@@ -111,6 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for MSIX Package Dependencies properties. </summary>
         /// <param name="dependencyName"> Name of package dependency. </param>
         /// <param name="publisher"> Name of dependency publisher. </param>
         /// <param name="minVersion"> Dependency version required. </param>
@@ -120,6 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new MsixPackageDependencies(dependencyName, publisher, minVersion, default);
         }
 
+        /// <summary> Schema for MSIX Package Application properties. </summary>
         /// <param name="appId"> Package Application Id, found in appxmanifest.xml. </param>
         /// <param name="description"> Description of Package Application. </param>
         /// <param name="appUserModelId"> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </param>
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for updatable App Attach Package properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -162,6 +168,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for patchable fields on an App Attach Package. </summary>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
         /// <param name="keyVaultUri"> URL path to certificate name located in keyVault. </param>
@@ -232,7 +239,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
         public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
@@ -266,6 +272,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> The resource model definition representing SKU. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
@@ -306,6 +313,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Information to import app attach package. </summary>
         /// <param name="path"> URI to Image. </param>
         /// <param name="packageArchitecture"> Possible device architectures that an app attach package can be configured for. </param>
         /// <returns> A new <see cref="Models.ImportPackageInfoContent"/> instance for mocking. </returns>
@@ -314,6 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ImportPackageInfoContent(path, packageArchitecture, default);
         }
 
+        /// <summary> Represents URI referring to MSIX Image. </summary>
         /// <param name="uri"> URI to Image. </param>
         /// <returns> A new <see cref="Models.MsixImageUri"/> instance for mocking. </returns>
         public static MsixImageUri MsixImageUri(Uri uri = default)
@@ -488,15 +497,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <summary> Represents a RegistrationInfo definition. </summary>
+        /// <param name="expiresOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <returns> A new <see cref="Models.HostPoolRegistrationInfo"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expireOn = default, string token = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
+        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expiresOn = default, string token = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
         {
-            return new HostPoolRegistrationInfo(expireOn, token, registrationTokenOperation, default);
+            return new HostPoolRegistrationInfo(expiresOn, token, registrationTokenOperation, default);
         }
 
+        /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
         /// <param name="updateType"> The type of maintenance for session host components. </param>
         /// <param name="doesUseSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
         /// <param name="maintenanceWindowTimeZone"> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </param>
@@ -509,6 +520,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostAgentUpdateProperties(updateType, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, (maintenanceWindows ?? new ChangeTrackingList<SessionHostMaintenanceWindowProperties>()).ToList(), default);
         }
 
+        /// <summary> Maintenance window starting hour and day of week. </summary>
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         /// <returns> A new <see cref="Models.SessionHostMaintenanceWindowProperties"/> instance for mocking. </returns>
@@ -537,6 +549,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -617,14 +630,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <summary> Represents a RegistrationInfo definition. </summary>
+        /// <param name="expiresOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <returns> A new <see cref="Models.HostPoolRegistrationInfoPatch"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
+        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expiresOn = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
         {
-            return new HostPoolRegistrationInfoPatch(expireOn, registrationTokenOperation, default);
+            return new HostPoolRegistrationInfoPatch(expiresOn, registrationTokenOperation, default);
         }
 
+        /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
         /// <param name="updateType"> The type of maintenance for session host components. </param>
         /// <param name="doesUseSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
         /// <param name="maintenanceWindowTimeZone"> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </param>
@@ -637,6 +652,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostAgentUpdatePatchProperties(updateType, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, (maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowPatchProperties>()).ToList(), default);
         }
 
+        /// <summary> Maintenance window starting hour and day of week. </summary>
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         /// <returns> A new <see cref="Models.MaintenanceWindowPatchProperties"/> instance for mocking. </returns>
@@ -645,12 +661,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new MaintenanceWindowPatchProperties(hour, dayOfWeek, default);
         }
 
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <summary> Represents a Minimal set of properties for RegistrationToken definition. </summary>
+        /// <param name="expiresOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationRegistrationTokenMinimal"/> instance for mocking. </returns>
-        public static DesktopVirtualizationRegistrationTokenMinimal DesktopVirtualizationRegistrationTokenMinimal(DateTimeOffset? expireOn = default, string token = default)
+        public static DesktopVirtualizationRegistrationTokenMinimal DesktopVirtualizationRegistrationTokenMinimal(DateTimeOffset? expiresOn = default, string token = default)
         {
-            return new DesktopVirtualizationRegistrationTokenMinimal(expireOn, token, default);
+            return new DesktopVirtualizationRegistrationTokenMinimal(expiresOn, token, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -673,7 +690,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanData"/> instance for mocking. </returns>
         public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, string timeZone = default, ScalingHostPoolType? scalingHostPoolType = default, string exclusionTag = default, IEnumerable<ScalingSchedule> schedules = default, IEnumerable<ScalingHostPoolReference> hostPoolReferences = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
@@ -705,6 +721,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> A ScalingPlanPooledSchedule. </summary>
         /// <param name="name"> Name of the ScalingPlanPooledSchedule. </param>
         /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
         /// <param name="scalingMethod"> The desired scaling method to be used to scale the hosts in the assigned host pool. </param>
@@ -754,6 +771,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
         /// <param name="rampUpMaximumHostPoolSize"> Maximum number of session hosts that may be created by the Scaling Service. This requires the assigned hostpool to have a session host config property. </param>
         /// <param name="rampUpMinimumHostPoolSize"> Minimum number of session hosts that will be be created by the Scaling Service. Scaling will not delete any hosts when this limit is met. This requires the assigned hostpool to have a session host config property. </param>
         /// <param name="rampDownMaximumHostPoolSize"> Maximum number of session hosts that may be created by the Scaling Service. This requires the assigned hostpool to have a session host config property. </param>
@@ -764,6 +782,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationCreateDeleteProperties(rampUpMaximumHostPoolSize, rampUpMinimumHostPoolSize, rampDownMaximumHostPoolSize, rampDownMinimumHostPoolSize, default);
         }
 
+        /// <summary> The time for a scaling action to occur. </summary>
         /// <param name="hour"> The hour. </param>
         /// <param name="minute"> The minute. </param>
         /// <returns> A new <see cref="Models.ScalingActionTime"/> instance for mocking. </returns>
@@ -772,6 +791,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingActionTime(hour, minute, default);
         }
 
+        /// <summary> Scaling plan reference to hostpool. </summary>
         /// <param name="hostPoolId"> Arm path of referenced hostpool. </param>
         /// <param name="isScalingPlanEnabled"> Is the scaling plan enabled for this hostpool. </param>
         /// <returns> A new <see cref="Models.ScalingHostPoolReference"/> instance for mocking. </returns>
@@ -899,6 +919,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> The report for session host information. </summary>
         /// <param name="healthCheckName"> Represents the name of the health check operation performed. </param>
         /// <param name="healthCheckResult"> Represents the Health state of the health check we performed. </param>
         /// <param name="additionalFailureDetails"> Additional detailed information on the failure. </param>
@@ -908,6 +929,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostHealthCheckReport(healthCheckName, healthCheckResult, additionalFailureDetails, default);
         }
 
+        /// <summary> Contains details on the failure. </summary>
         /// <param name="message"> Failure message: hints on what is wrong and how to recover. </param>
         /// <param name="errorCode"> Error code corresponding for the failure. </param>
         /// <param name="lastHealthCheckOn"> The timestamp of the last update. </param>
@@ -936,11 +958,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expirationOn"> Expiration time of the registration token in UTC. </param>
+        /// <summary> Request body for listing scoped registration tokens for a session host. </summary>
+        /// <param name="expiresOn"> Expiration time of the registration token in UTC. </param>
         /// <returns> A new <see cref="Models.ScopedRegistrationTokenContent"/> instance for mocking. </returns>
-        public static ScopedRegistrationTokenContent ScopedRegistrationTokenContent(DateTimeOffset expirationOn = default)
+        public static ScopedRegistrationTokenContent ScopedRegistrationTokenContent(DateTimeOffset expiresOn = default)
         {
-            return new ScopedRegistrationTokenContent(expirationOn, default);
+            return new ScopedRegistrationTokenContent(expiresOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -972,6 +995,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Represents message sent to a UserSession. </summary>
         /// <param name="messageTitle"> Title of message. </param>
         /// <param name="messageBody"> Body of message. </param>
         /// <returns> A new <see cref="Models.UserSessionMessage"/> instance for mocking. </returns>
@@ -1253,6 +1277,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for ActiveSessionHostConfiguration properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1270,6 +1295,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Represents a ActiveSessionHostConfiguration definition. This has all of the sessionHostConfiguration properties except provisioningState. </summary>
         /// <param name="version"> The timestamp of the last update. </param>
         /// <param name="friendlyName"> Friendly name to describe this version of the SessionHostConfiguration. </param>
         /// <param name="vmTags"> Hashtable that lists key/value pair tags to apply to the VMs. </param>
@@ -1312,6 +1338,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Network information. </summary>
         /// <param name="subnetId"> The resource ID of the subnet. </param>
         /// <param name="securityGroupId"> The resource ID of the security group. Any allowable/open ports should be specified in the Network Security Group(NSG). </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationNetworkInfoProperties"/> instance for mocking. </returns>
@@ -1328,6 +1355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationDiskInfoProperties(managedDiskType is null ? default : new ManagedDiskProperties(managedDiskType, default), diffDiskSettings, default);
         }
 
+        /// <summary> Specifies the ephemeral disk settings for the operating system disk used by the virtual machine. </summary>
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement"> Gets or sets specifies the ephemeral disk placement for operating system disk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Possible values include: 'CacheDisk', 'ResourceDisk'. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationDiffDiskProperties"/> instance for mocking. </returns>
@@ -1345,6 +1373,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationImageInfoProperties(imageType, marketplaceInfo, customInfoResourceId is null ? default : new CustomInfoProperties(customInfoResourceId, default), default);
         }
 
+        /// <summary> Marketplace image information. </summary>
         /// <param name="offer"> The offer of the image. </param>
         /// <param name="publisher"> The publisher of the image. </param>
         /// <param name="sku"> The SKU of the image. </param>
@@ -1364,6 +1393,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationDomainInfoProperties(joinType, activeDirectoryInfo, azureActiveDirectoryInfoMdmProviderGuid is null ? default : new AzureActiveDirectoryInfoProperties(azureActiveDirectoryInfoMdmProviderGuid, default), default);
         }
 
+        /// <summary> Active directory info. Only one should be populated based on the join type. </summary>
         /// <param name="domainCredentials"> Credentials needed to create the virtual machine. </param>
         /// <param name="ouPath"> The organizational unit(OU) path. </param>
         /// <param name="domainName"> The domain a virtual machine connected to a hostpool will join. </param>
@@ -1373,6 +1403,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationActiveDirectoryInfoProperties(domainCredentials, ouPath, domainName, default);
         }
 
+        /// <summary> Credentials kept in the keyvault. </summary>
         /// <param name="usernameKeyVaultSecretUri"> The uri to access the secret that the username is stored in. </param>
         /// <param name="passwordKeyVaultSecretUri"> The uri to access the secret that the password is stored in. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationKeyVaultCredentialsProperties"/> instance for mocking. </returns>
@@ -1381,6 +1412,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationKeyVaultCredentialsProperties(usernameKeyVaultSecretUri, passwordKeyVaultSecretUri, default);
         }
 
+        /// <summary> Security Information. </summary>
         /// <param name="type"> The security type used by virtual machine in hostpool session host. Default is Standard. </param>
         /// <param name="isSecureBootEnabled"> Whether to use secureBoot on the virtual machine. </param>
         /// <param name="isVTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
@@ -1390,6 +1422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationSecurityInfoProperties(@type, isSecureBootEnabled, isVTpmEnabled, default);
         }
 
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationBootDiagnosticsInfoProperties"/> instance for mocking. </returns>
@@ -1398,6 +1431,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationBootDiagnosticsInfoProperties(isEnabled, storageUri, default);
         }
 
+        /// <summary> Object containing the definition for properties to be used for a sessionHostUpdate operation. </summary>
         /// <param name="scheduledOn"> The timestamp that the update validation is scheduled for. If none is provided, the update will be executed immediately. </param>
         /// <param name="scheduledDateTimeZone"> The timeZone as defined in https://docs.microsoft.com/dotnet/api/system.timezoneinfo.findsystemtimezonebyid. </param>
         /// <param name="update"> settings for management information for the hostpool update operation. If none is provided the update will use the settings saved in the sessionHostManagement object. </param>
@@ -1407,6 +1441,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationUpdateSessionHostsContent(scheduledOn, scheduledDateTimeZone, update, default);
         }
 
+        /// <summary> The configurations of a hostpool update. </summary>
         /// <param name="shouldDeleteOriginalVm"> Whether not to save original disk. False by default. </param>
         /// <param name="maxVmsRemoved"> The maximum number of virtual machines to be removed during hostpool update. </param>
         /// <param name="logOffDelayMinutes"> Grace period before logging off users in minutes. </param>
@@ -1417,6 +1452,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolUpdateConfigurationPatchProperties(shouldDeleteOriginalVm, maxVmsRemoved, logOffDelayMinutes, logOffMessage, default);
         }
 
+        /// <summary> Object containing control action for hostpool update. </summary>
         /// <param name="action"> Action types for controlling hostpool update. </param>
         /// <param name="cancelMessage"> The cancel message sent to the user on the session host. This is can only be specified if the action is 'Cancel'. </param>
         /// <returns> A new <see cref="Models.HostPoolUpdateControlContent"/> instance for mocking. </returns>
@@ -1425,6 +1461,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolUpdateControlContent(action, cancelMessage, default);
         }
 
+        /// <summary> Object containing control action for hostpool provisioning. </summary>
         /// <param name="action"> Action types for controlling hostpool update. </param>
         /// <param name="cancelMessage"> The cancel message sent to the user on the session host. </param>
         /// <returns> A new <see cref="Models.HostPoolProvisioningControlContent"/> instance for mocking. </returns>
@@ -1433,6 +1470,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolProvisioningControlContent(action, cancelMessage, default);
         }
 
+        /// <summary> Schema for SessionHostManagement properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1450,6 +1488,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Session Host Managements of HostPool. </summary>
         /// <param name="scheduledDateTimeZone"> Time zone for sessionHostManagement operations as defined in https://docs.microsoft.com/dotnet/api/system.timezoneinfo.findsystemtimezonebyid. Must be set if useLocalTime is true. </param>
         /// <param name="update"> Parameters for a hostpool update. </param>
         /// <param name="provisioning"> Parameters that apply when session hosts are provisioned. </param>
@@ -1460,6 +1499,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementProperties(scheduledDateTimeZone, update, provisioning, failedSessionHostCleanupPolicy, default);
         }
 
+        /// <summary> The configurations of a hostpool update. </summary>
         /// <param name="shouldDeleteOriginalVm"> Whether not to save original disk. False by default. </param>
         /// <param name="maxVmsRemoved"> The maximum number of virtual machines to be removed during hostpool update. </param>
         /// <param name="logOffDelayMinutes"> Grace period before logging off users in minutes. </param>
@@ -1470,6 +1510,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolUpdateConfigurationProperties(shouldDeleteOriginalVm, maxVmsRemoved, logOffDelayMinutes, logOffMessage, default);
         }
 
+        /// <summary> The configuration for session host provisioning operations. </summary>
         /// <param name="isDrainModeEnabled"> Whether the session host should be set in drain mode following provisioning. </param>
         /// <param name="instanceCount"> The number of session hosts to exist in the Host Pool. </param>
         /// <param name="canaryPolicy"> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </param>
@@ -1479,6 +1520,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostProvisioningConfigurationProperties(isDrainModeEnabled, instanceCount, canaryPolicy, default);
         }
 
+        /// <summary> SessionHostManagement properties that can be patched. </summary>
         /// <param name="properties"> Detailed properties for SessionHostManagement. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementPatch"/> instance for mocking. </returns>
         public static SessionHostManagementPatch SessionHostManagementPatch(SessionHostManagementPatchProperties properties = default)
@@ -1486,6 +1528,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementPatch(properties, default);
         }
 
+        /// <summary> Represents a SessionHostManagementPatch definition. </summary>
         /// <param name="scheduledDateTimeZone"> Time zone for sessionHostManagement operations as defined in https://docs.microsoft.com/dotnet/api/system.timezoneinfo.findsystemtimezonebyid. Must be set if useLocalTime is true. </param>
         /// <param name="update"> Parameters for a hostpool update. </param>
         /// <param name="provisioning"> Parameters that apply when session hosts are provisioned. </param>
@@ -1496,6 +1539,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementPatchProperties(scheduledDateTimeZone, update, provisioning, failedSessionHostCleanupPolicy, default);
         }
 
+        /// <summary> The configuration for session host provisioning operations. </summary>
         /// <param name="isDrainModeEnabled"> Whether the session host should be set in drain mode following provisioning. </param>
         /// <param name="instanceCount"> The number of session hosts to exist in the Host Pool. </param>
         /// <param name="canaryPolicy"> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </param>
@@ -1505,6 +1549,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostProvisioningConfigurationPatchProperties(isDrainModeEnabled, instanceCount, canaryPolicy, default);
         }
 
+        /// <summary> Schema for SessionHostConfiguration properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1522,6 +1567,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Session host configurations of HostPool. </summary>
         /// <param name="version"> The timestamp of the last update. </param>
         /// <param name="friendlyName"> Friendly name to describe this version of the SessionHostConfiguration. </param>
         /// <param name="provisioningState"> Provisioning state of the Session Host Configuration. </param>
@@ -1566,6 +1612,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> SessionHostConfiguration properties that can be patched. </summary>
         /// <param name="properties"> Detailed properties for SessionHostConfiguration. </param>
         /// <returns> A new <see cref="Models.SessionHostConfigurationPatch"/> instance for mocking. </returns>
         public static SessionHostConfigurationPatch SessionHostConfigurationPatch(SessionHostConfigurationPatchProperties properties = default)
@@ -1613,6 +1660,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Network information. </summary>
         /// <param name="subnetId"> The resource ID of the subnet. </param>
         /// <param name="securityGroupId"> The resource ID of the security group. Any allowable/open ports should be specified in the Network Security Group(NSG). </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationNetworkInfoPatchProperties"/> instance for mocking. </returns>
@@ -1630,6 +1678,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationImageInfoPatchProperties(imageType, marketplaceInfo, customInfoResourceId is null ? default : new CustomInfoPatchProperties(customInfoResourceId, default), default);
         }
 
+        /// <summary> Marketplace image information. </summary>
         /// <param name="offer"> The offer of the image. </param>
         /// <param name="publisher"> The publisher of the image. </param>
         /// <param name="sku"> The SKU of the image. </param>
@@ -1640,6 +1689,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationMarketplaceInfoPatchProperties(offer, publisher, sku, exactVersion, default);
         }
 
+        /// <summary> Credentials kept in the keyvault. </summary>
         /// <param name="usernameKeyVaultSecretUri"> The uri to access the secret that the username is stored in. </param>
         /// <param name="passwordKeyVaultSecretUri"> The uri to access the secret that the password is stored in. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationKeyVaultCredentialsPatchProperties"/> instance for mocking. </returns>
@@ -1648,6 +1698,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationKeyVaultCredentialsPatchProperties(usernameKeyVaultSecretUri, passwordKeyVaultSecretUri, default);
         }
 
+        /// <summary> Security Information. </summary>
         /// <param name="type"> The security type used by virtual machine in hostpool session host. Default is Standard. </param>
         /// <param name="isSecureBootEnabled"> Whether to use secureBoot on the virtual machine. </param>
         /// <param name="isVTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
@@ -1657,6 +1708,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationSecurityInfoPatchProperties(@type, isSecureBootEnabled, isVTpmEnabled, default);
         }
 
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationBootDiagnosticsInfoPatchProperties"/> instance for mocking. </returns>
@@ -1665,29 +1717,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new DesktopVirtualizationBootDiagnosticsInfoPatchProperties(isEnabled, storageUri, default);
         }
 
+        /// <summary> Schema for SessionHostManagementUpdateStatus properties. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="status"> Operation status. Current defined values are &lt; Error | Scheduled | UpdatingSessionHosts | ValidatingSessionHostUpdate | Paused | Pausing | Cancelling &gt; | Succeeded | Failed | Canceled. </param>
         /// <param name="properties"> Properties bag for sessionHostManagement Update Statuses. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementUpdateStatus"/> instance for mocking. </returns>
-        public static SessionHostManagementUpdateStatus SessionHostManagementUpdateStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResponseError error = default, SessionHostManagementUpdateOperationStatus status = default, SessionHostManagementUpdateStatusProperties properties = default)
+        public static SessionHostManagementUpdateStatus SessionHostManagementUpdateStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResponseError error = default, SessionHostManagementUpdateOperationStatus status = default, SessionHostManagementUpdateStatusProperties properties = default)
         {
             return new SessionHostManagementUpdateStatus(
                 id,
                 name,
                 percentComplete,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 error,
                 status,
                 properties,
                 default);
         }
 
+        /// <summary> The current status of the session host update async operation. </summary>
         /// <param name="correlationId"> The correlation Id for Log Analytics.. </param>
         /// <param name="progress"> Progress information on the sessionHostManagement operation. </param>
         /// <param name="scheduledOn"> The timestamp that the update is scheduled for. </param>
@@ -1698,16 +1752,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementUpdateStatusProperties(correlationId, progress, scheduledOn, sessionHostManagement, default);
         }
 
-        /// <param name="executionStartOn"> Time that the sessionHostManagement operation was created. </param>
+        /// <summary> SessionHostManagement Operation Progress information. </summary>
+        /// <param name="executionStartsOn"> Time that the sessionHostManagement operation was created. </param>
         /// <param name="totalSessionHosts"> The number of sessionHosts to be started in the sessionHostManagement operation. </param>
         /// <param name="sessionHostsInProgress"> The number of sessionHosts in progress in the sessionHostManagement operation. </param>
         /// <param name="sessionHostsCompleted"> The number of sessionHosts completed in the sessionHostManagement operation. </param>
         /// <param name="sessionHostsRollbackFailed"> The number of sessionHosts rollback failed in the sessionHostManagement operation. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementOperationProgress"/> instance for mocking. </returns>
-        public static SessionHostManagementOperationProgress SessionHostManagementOperationProgress(DateTimeOffset? executionStartOn = default, int? totalSessionHosts = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? sessionHostsRollbackFailed = default)
+        public static SessionHostManagementOperationProgress SessionHostManagementOperationProgress(DateTimeOffset? executionStartsOn = default, int? totalSessionHosts = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? sessionHostsRollbackFailed = default)
         {
             return new SessionHostManagementOperationProgress(
-                executionStartOn,
+                executionStartsOn,
                 totalSessionHosts,
                 sessionHostsInProgress,
                 sessionHostsCompleted,
@@ -1715,29 +1770,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Schema for SessionHostManagementUpdateStatus properties. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="properties"> The custom properties of the SessionHost Provisioning Status. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementProvisioningStatus"/> instance for mocking. </returns>
-        public static SessionHostManagementProvisioningStatus SessionHostManagementProvisioningStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResponseError error = default, SessionHostManagementProvisioningOperationStatus status = default, SessionHostManagementProvisioningStatusProperties properties = default)
+        public static SessionHostManagementProvisioningStatus SessionHostManagementProvisioningStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResponseError error = default, SessionHostManagementProvisioningOperationStatus status = default, SessionHostManagementProvisioningStatusProperties properties = default)
         {
             return new SessionHostManagementProvisioningStatus(
                 id,
                 name,
                 percentComplete,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 error,
                 status,
                 properties,
                 default);
         }
 
+        /// <summary> Properties bag for sessionHostManagement Provisioning Statuses. </summary>
         /// <param name="correlationId"> The correlation Id for Log Analytics. </param>
         /// <param name="progress"> Progress information on the sessionHostManagement operation. </param>
         /// <param name="scheduledOn"> The timestamp that the update is scheduled for. </param>
@@ -1748,16 +1805,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementProvisioningStatusProperties(correlationId, progress, scheduledOn, sessionHostManagement, default);
         }
 
-        /// <param name="executionStartOn"> Time that the sessionHostManagement operation was created. </param>
+        /// <summary> SessionHostManagement Provisioning Operation Progress information. </summary>
+        /// <param name="executionStartsOn"> Time that the sessionHostManagement operation was created. </param>
         /// <param name="sessionHostsInProgress"> The number of sessionHosts in progress in the sessionHostManagement provisioning operation. </param>
         /// <param name="sessionHostsCompleted"> The number of sessionHosts completed in the sessionHostManagement provisioning operation. </param>
         /// <param name="finalSessionHostsCount"> The final instance count of the host pool for this provisioning operation. </param>
         /// <param name="initialSessionHostsCount"> The initial instance count of the host pool for this provisioning operation. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementProvisioningOperationProgress"/> instance for mocking. </returns>
-        public static SessionHostManagementProvisioningOperationProgress SessionHostManagementProvisioningOperationProgress(DateTimeOffset? executionStartOn = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? finalSessionHostsCount = default, int? initialSessionHostsCount = default)
+        public static SessionHostManagementProvisioningOperationProgress SessionHostManagementProvisioningOperationProgress(DateTimeOffset? executionStartsOn = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? finalSessionHostsCount = default, int? initialSessionHostsCount = default)
         {
             return new SessionHostManagementProvisioningOperationProgress(
-                executionStartOn,
+                executionStartsOn,
                 sessionHostsInProgress,
                 sessionHostsCompleted,
                 finalSessionHostsCount,
@@ -1765,13 +1823,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a Workspace definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of Workspace. (internal use). </param>
         /// <param name="description"> Description of Workspace. </param>
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
@@ -1780,11 +1838,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="publicNetworkAccess"> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, IEnumerable<string> applicationGroupReferences = default, bool? isCloudPCResource = default, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
@@ -1816,13 +1874,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The private endpoint connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/> instance for mocking. </returns>
@@ -1838,13 +1896,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The Private Endpoint Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/> instance for mocking. </returns>
@@ -1860,13 +1918,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.ScalingPlanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a scaling plan definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of scaling plan. (internal use). </param>
         /// <param name="description"> Description of scaling plan. </param>
         /// <param name="friendlyName"> User friendly name of scaling plan. </param>
@@ -1876,11 +1934,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="schedules"> List of ScalingPlanPooledSchedule definitions. </param>
         /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, string timeZone = default, ScalingHostPoolType? scalingHostPoolType = default, string exclusionTag = default, IEnumerable<ScalingSchedule> schedules = default, IEnumerable<ScalingHostPoolReference> hostPoolReferences = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
@@ -1911,11 +1969,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.ScalingPlanPooledScheduleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Represents a ScalingPlanPooledSchedule definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
         /// <param name="rampUpStartTime"> Starting time for ramp up period. </param>
         /// <param name="rampUpLoadBalancingAlgorithm"> Load balancing algorithm for ramp up period. </param>
@@ -1967,11 +2025,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ScalingPlanPooledSchedulePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> ScalingPlanPooledSchedule properties that can be patched. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
         /// <param name="rampUpStartTime"> Starting time for ramp up period. </param>
         /// <param name="rampUpLoadBalancingAlgorithm"> Load balancing algorithm for ramp up period. </param>
@@ -2023,13 +2081,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.VirtualApplicationGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a ApplicationGroup definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of ApplicationGroup. (internal use). </param>
         /// <param name="description"> Description of ApplicationGroup. </param>
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
@@ -2039,11 +2097,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
@@ -2076,13 +2134,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.HostPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a HostPool definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of HostPool. (internal use). </param>
         /// <param name="friendlyName"> Friendly name of HostPool. </param>
         /// <param name="description"> Description of HostPool. </param>
@@ -2108,11 +2166,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, ResourceIdentifier managedBy = default, string kind = default, ETag? etag = default, ManagedServiceIdentity identity = default, DesktopVirtualizationSku sku = default, ArmPlan plan = default)
@@ -2168,11 +2226,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HostPoolPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> HostPool properties that can be patched. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="friendlyName"> Friendly name of HostPool. </param>
         /// <param name="description"> Description of HostPool. </param>
@@ -2232,11 +2290,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.SessionHostData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Represents a SessionHost definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="objectId"> ObjectId of SessionHost. (internal use). </param>
         /// <param name="lastHeartBeatOn"> Last heart beat from SessionHost. </param>
         /// <param name="sessions"> Number of sessions on SessionHost. </param>
@@ -2290,7 +2348,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppAttachPackageProperties"/>. </summary>
+        /// <summary> Schema for App Attach Package properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the App Attach Package. </param>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
         /// <param name="hostPoolReferences"> List of Hostpool resource Ids. </param>
@@ -2313,11 +2371,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppAttachPackagePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Schema for updatable App Attach Package properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Detailed properties for App Attach Package. </param>
         /// <returns> A new <see cref="Models.AppAttachPackagePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2333,12 +2391,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a HostPool definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of HostPool. (internal use). </param>
         /// <param name="friendlyName"> Friendly name of HostPool. </param>
         /// <param name="description"> Description of HostPool. </param>
@@ -2362,10 +2421,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolData HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IEnumerable<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, SessionHostAgentUpdateProperties agentUpdate, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
@@ -2420,11 +2480,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of HostPoolPatch. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> HostPool properties that can be patched. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="friendlyName"> Friendly name of HostPool. </param>
         /// <param name="description"> Description of HostPool. </param>
@@ -2443,6 +2503,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
+        /// <returns> A new <see cref="Models.HostPoolPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolPatch HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate)
         {
@@ -2482,13 +2543,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a ApplicationGroup definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of ApplicationGroup. (internal use). </param>
         /// <param name="description"> Description of ApplicationGroup. </param>
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
@@ -2498,10 +2559,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
@@ -2533,14 +2595,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupPatch. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> ApplicationGroup properties that can be patched. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="description"> Description of ApplicationGroup. </param>
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
+        /// <returns> A new <see cref="Models.VirtualApplicationGroupPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualApplicationGroupPatch VirtualApplicationGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string description, string friendlyName)
         {
@@ -2554,13 +2617,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a Workspace definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of Workspace. (internal use). </param>
         /// <param name="description"> Description of Workspace. </param>
         /// <param name="friendlyName"> Friendly name of Workspace. </param>
@@ -2568,10 +2631,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="DesktopVirtualization.VirtualWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IEnumerable<string> applicationGroupReferences, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
         {
@@ -2602,13 +2666,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of HostPoolData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a HostPool definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="objectId"> ObjectId of HostPool. (internal use). </param>
         /// <param name="friendlyName"> Friendly name of HostPool. </param>
         /// <param name="description"> Description of HostPool. </param>
@@ -2634,10 +2698,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified resource. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Gets or sets the plan. </param>
+        /// <param name="etag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostPoolData HostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IEnumerable<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
@@ -2693,11 +2757,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Represents the definition of contents retrieved after expanding the MSIX Image. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="packageAlias"> Alias of MSIX Package. </param>
         /// <param name="imagePath"> VHD/CIM image path on Network Share. </param>
         /// <param name="packageName"> Package Name from appxmanifest.xml. </param>
@@ -2708,7 +2772,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isRegularRegistration"> Specifies how to register Package in feed. </param>
         /// <param name="isActive"> Make this version of the package the active one across the hostpool. </param>
         /// <param name="packageDependencies"> List of package dependencies. </param>
-        /// <param name="version"> Package Version found in the appxmanifest.xml. </param>
+        /// <param name="version"> Package version found in the appxmanifest.xml. </param>
         /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <returns> A new <see cref="Models.ExpandMsixImage"/> instance for mocking. </returns>

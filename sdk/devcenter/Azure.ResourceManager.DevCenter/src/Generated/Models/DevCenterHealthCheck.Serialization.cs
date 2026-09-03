@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorType))
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             DevCenterHealthCheckStatus? status = default;
             string displayName = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string errorType = default;
             string recommendedAction = default;
             string additionalDetails = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorType"u8))
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterHealthCheck(
                 status,
                 displayName,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 errorType,
                 recommendedAction,
                 additionalDetails,

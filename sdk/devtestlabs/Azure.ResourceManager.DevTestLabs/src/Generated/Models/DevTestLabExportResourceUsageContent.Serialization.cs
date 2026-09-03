@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("blobStorageAbsoluteSasUri"u8);
                 writer.WriteStringValue(BlobStorageAbsoluteSasUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(UsageStartOn))
+            if (Optional.IsDefined(UsageStartsOn))
             {
                 writer.WritePropertyName("usageStartDate"u8);
-                writer.WriteStringValue(UsageStartOn.Value, "O");
+                writer.WriteStringValue(UsageStartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             Uri blobStorageAbsoluteSasUri = default;
-            DateTimeOffset? usageStartOn = default;
+            DateTimeOffset? usageStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    usageStartOn = prop.Value.GetDateTimeOffset("O");
+                    usageStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri, usageStartOn, additionalBinaryDataProperties);
+            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri, usageStartsOn, additionalBinaryDataProperties);
         }
     }
 }
