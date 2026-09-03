@@ -93,13 +93,14 @@ namespace Azure.Identity
             }
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(capabilities.Source.ToString(), _options.ManagedIdentityId.ToString());
+            bool isKeyGuardAvailable = capabilities.MaxSupportedBindingStrength >= MtlsBindingStrength.KeyGuard;
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
 #pragma warning disable CS0618 // DefaultToImds is obsolete but still returned by the sync GetManagedIdentitySource path
             if ((capabilities.Source == MSAL.ManagedIdentitySource.DefaultToImds || capabilities.Source == MSAL.ManagedIdentitySource.Imds) && _isChainedCredential && !_probeRequestSent)
 #pragma warning restore CS0618
             {
-                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
                 _probeRequestSent = true;
                 return probedFlowTokenResult;
             }
@@ -120,7 +121,6 @@ namespace Azure.Identity
             try
             {
                 // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
-                bool isKeyGuardAvailable = capabilities.MaxSupportedBindingStrength >= MtlsBindingStrength.KeyGuard;
                 result = async ?
                     await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false) :
                     _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, isKeyGuardAvailable, cancellationToken);
@@ -143,9 +143,14 @@ namespace Azure.Identity
             return result.ToAccessToken();
         }
 
-        public virtual async ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context,
+        public virtual async ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context, bool isKeyGuardAvailable,
             CancellationToken cancellationToken)
         {
+            if (_identitySource.Value is ImdsManagedIdentityProbeSource imdsSource)
+            {
+                return await imdsSource.AuthenticateAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
+            }
+
             return await _identitySource.Value.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
         }
 
@@ -153,7 +158,7 @@ namespace Azure.Identity
         {
             TokenRequestContext requestContext = new TokenRequestContext(parameters.Scopes.ToArray(), claims: parameters.Claims);
 
-            AccessToken token = await AuthenticateCoreAsync(true, requestContext, parameters.CancellationToken).ConfigureAwait(false);
+            AccessToken token = await AuthenticateCoreAsync(true, requestContext, false, parameters.CancellationToken).ConfigureAwait(false);
 
             var resfreshOn = ManagedIdentitySource.InferManagedIdentityRefreshInValue(token.ExpiresOn);
             long? refreshInSeconds = resfreshOn switch

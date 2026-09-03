@@ -419,9 +419,47 @@ namespace Azure.Core.Tests.Identity
             AccessToken token = await credential.GetTokenAsync(context, default);
 
             Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.IsFalse(mockMsal.FirstEnableMtlsPopForClientCreation);
             Assert.IsFalse(mockMsal.LastEnableMtlsPopForClientCreation);
             Assert.IsTrue(mockTransport.Requests.Any(request =>
                 request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint)));
+        }
+
+        [Test]
+        public async Task ChainedImdsRequestPreservesKeyGuardCapabilityAfterProbe()
+        {
+            using var environment = new TestEnvVar(new()
+            {
+                { "MSI_ENDPOINT", null },
+                { "MSI_SECRET", null },
+                { "IDENTITY_ENDPOINT", null },
+                { "IDENTITY_HEADER", null },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+            });
+            var mockTransport = new MockImdsManagedIdentityTransport(CreateSuccessResponse(ExpectedToken));
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = mockTransport, IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds,
+                            MtlsBindingStrength.KeyGuard);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                        AuthenticationResultFactory.Create(ExpectedToken);
+                    mock.OverrideAttestationSupport = true;
+                    mock.AttestationSupport = builder => builder;
+                });
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            AccessToken token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.IsTrue(mockMsal.FirstEnableMtlsPopForClientCreation);
+            Assert.IsTrue(mockMsal.LastIsTokenBindingAvailable);
         }
 
         [Test]

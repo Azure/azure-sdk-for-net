@@ -19,6 +19,7 @@ namespace Azure.Core.Tests.Identity.Mock
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
         public bool? LastIsTokenBindingAvailable { get; private set; }
+        public bool? FirstEnableMtlsPopForClientCreation { get; private set; }
         public bool? LastEnableMtlsPopForClientCreation { get; private set; }
         public bool OverrideAttestationSupport { get; set; }
         public Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> AttestationSupport { get; set; }
@@ -48,6 +49,7 @@ namespace Azure.Core.Tests.Identity.Mock
 
         protected override ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool enableMtlsPop, CancellationToken cancellationToken)
         {
+            FirstEnableMtlsPopForClientCreation ??= enableMtlsPop;
             LastEnableMtlsPopForClientCreation = enableMtlsPop;
 
             if (ClientAppFactory == null)
@@ -83,7 +85,10 @@ namespace Azure.Core.Tests.Identity.Mock
             return base.AcquireTokenForManagedIdentityAsyncCore(async, requestContext, isTokenBindingAvailable, cancellationToken);
         }
 
-        public override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        protected override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFromClientAsync(
+            IManagedIdentityApplication client,
+            TokenRequestContext context,
+            CancellationToken cancellationToken)
         {
             if (GetManagedIdentityCapabilitiesFactory != null)
             {
@@ -101,8 +106,8 @@ namespace Azure.Core.Tests.Identity.Mock
             return new ValueTask<ManagedIdentityCapabilities>(CreateManagedIdentityCapabilities(_detectedSource));
         }
 
-        protected override Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> GetAttestationSupport() =>
-            OverrideAttestationSupport ? AttestationSupport : base.GetAttestationSupport();
+        protected override Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> ResolveAttestationSupport() =>
+            OverrideAttestationSupport ? AttestationSupport : base.ResolveAttestationSupport();
 
         /// <summary>
         /// Builds a <see cref="ManagedIdentityCapabilities"/> reporting the given <paramref name="source"/>.
