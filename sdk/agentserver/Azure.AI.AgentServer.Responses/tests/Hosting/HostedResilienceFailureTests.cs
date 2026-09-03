@@ -51,7 +51,9 @@ public class HostedResilienceFailureTests
         services.AddResilientTasks(credential);
 
         Assert.DoesNotThrow(() =>
-            services.AddResponsesServer(o => o.ResilientBackground = true));
+            services.AddResponsesServerCore(
+                o => o.ResilientBackground = true,
+                CreateHostedStorage(credential)));
 
         using ServiceProvider provider = services.BuildServiceProvider();
         Assert.That(
@@ -138,14 +140,15 @@ public class HostedResilienceFailureTests
         return services.BuildServiceProvider();
     }
 
-    private static ResponsesHostedStorage CreateHostedStorage()
+    private static ResponsesHostedStorage CreateHostedStorage(
+        TokenCredential? credential = null)
     {
         var projectEndpoint = new Uri("https://example.com/project");
         var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
             projectEndpoint,
             isDevelopment: false);
         return new ResponsesHostedStorage(
-            new FakeTokenCredential(),
+            credential ?? new FakeTokenCredential(),
             projectEndpoint,
             storageBaseUri);
     }
