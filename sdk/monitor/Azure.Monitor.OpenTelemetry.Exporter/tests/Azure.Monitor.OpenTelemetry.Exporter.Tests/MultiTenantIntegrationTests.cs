@@ -61,6 +61,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-east", ingestion.RequestTo(EastUs).Body, StringComparison.Ordinal);
             Assert.DoesNotContain("ikey-west", ingestion.RequestTo(EastUs).Body, StringComparison.Ordinal);
             Assert.DoesNotContain("ikey-north", ingestion.RequestTo(EastUs).Body, StringComparison.Ordinal);
+
+            Assert.Contains("ikey-west", ingestion.RequestTo(WestUs).Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("ikey-east", ingestion.RequestTo(WestUs).Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("ikey-north", ingestion.RequestTo(WestUs).Body, StringComparison.Ordinal);
+
+            Assert.Contains("ikey-north", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("ikey-east", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("ikey-west", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
         }
 
         [Fact]
@@ -75,6 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateActivity("ikey-c", EastUs)));
 
             var request = Assert.Single(ingestion.Requests);
+            Assert.Equal(EastUs + "v2.1/track", request.Uri);
             Assert.Contains("ikey-a", request.Body, StringComparison.Ordinal);
             Assert.Contains("ikey-b", request.Body, StringComparison.Ordinal);
             Assert.Contains("ikey-c", request.Body, StringComparison.Ordinal);
@@ -95,8 +104,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(ExportResult.Failure, result);
             Assert.Equal(3, ingestion.Requests.Count);
-            Assert.NotNull(ingestion.RequestTo(EastUs));
-            Assert.NotNull(ingestion.RequestTo(NorthEurope));
+
+            // The healthy stamps must still receive their own tenants' telemetry, not just a request.
+            Assert.Contains("ikey-east", ingestion.RequestTo(EastUs).Body, StringComparison.Ordinal);
+            Assert.Contains("ikey-north", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
+            Assert.Contains("ikey-west", ingestion.RequestTo(WestUs).Body, StringComparison.Ordinal);
         }
 
         /// <summary>

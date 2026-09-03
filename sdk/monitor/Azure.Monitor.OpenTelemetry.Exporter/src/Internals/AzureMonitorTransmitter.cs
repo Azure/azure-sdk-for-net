@@ -49,6 +49,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
+            : this(options, platform, MultiTenantConfig.Enabled)
+        {
+        }
+
+        /// <remarks>
+        /// The gate is a parameter so a test can exercise the routed path without mutating
+        /// process-wide state, matching <see cref="AzureMonitorTraceExporter"/>.
+        /// </remarks>
+        internal AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform, bool multiTenantEnabled)
         {
             if (options == null)
             {
@@ -77,9 +86,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // Partitions live in a sibling directory, never under storageDirectory: the blob
             // provider's size tracker sums subdirectories recursively, so nesting them would let a
             // tenant backlog exhaust the host's own storage quota.
-            if (MultiTenantConfig.Enabled && storageDirectory != null)
+            if (multiTenantEnabled && storageDirectory != null)
             {
-                _multiTenantStorage = new MultiTenantStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, storageDirectory + MultiTenantStorage.RootDirectorySuffix, StorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
+                _multiTenantStorage = new MultiTenantStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, storageDirectory + MultiTenantStorage.RootDirectorySuffix, MultiTenantStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
             }
         }
 
@@ -220,19 +229,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var existing = _inFlightDrain;
                 if (existing != null && !existing.IsCompleted)
                 {
-                    // Each signal shuts down separately but shares this transmitter. Replacing a
-                    // running drain with a fresh task would hand Dispose a no-op to wait on and let
-                    // teardown proceed underneath the real one.
-                    drain = existing;
+                    // Each signal shuts down separately but shares this transmitter, and the later
+                    // one may have created storage partitions the earlier composite never saw. Every
+                    // handler returns its in-flight drain, so recomposing picks those up without
+                    // abandoning work already underway.
                     waitMilliseconds = GetRemainingDrainWait();
                 }
                 else
                 {
                     _drainWaitMilliseconds = waitMilliseconds;
                     _drainStarted = Stopwatch.StartNew();
-                    drain = DrainAllAsync(handler);
-                    _inFlightDrain = drain;
                 }
+
+                drain = DrainAllAsync(handler);
+                _inFlightDrain = drain;
             }
 
             WaitForDrain(drain, waitMilliseconds);
@@ -378,10 +388,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
+            Uri? trackUri = null;
 
             try
             {
-                var trackUri = ApplicationInsightsRestClient.CreateTrackUri(group.IngestionEndpoint);
+                trackUri = ApplicationInsightsRestClient.CreateTrackUri(group.IngestionEndpoint);
 
                 var stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
@@ -432,9 +443,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                // Attributed to the routed host, not the exporter's own, which is what a null host
-                // would fall back to.
-                networkSdkStats?.TrackException(new Uri(group.IngestionEndpoint).Host, exceptionType: ex.GetType().FullName);
+                // Null when the destination could not even be constructed. Building a Uri here would
+                // throw a second time, out of the catch, abandoning the remaining endpoint groups.
+                networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
 
                 return storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
@@ -445,7 +456,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             try
             {
-                var result = storage.BlobProvider.SaveTelemetryWithEviction(HttpPipelineHelper.GetSerializedContent(group.TelemetryItems), storage.Directory, StorageMaxSizeBytes);
+                var result = _multiTenantStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
 
                 if (result != ExportResult.Success)
                 {

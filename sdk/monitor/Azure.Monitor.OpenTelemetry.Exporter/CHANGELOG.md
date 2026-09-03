@@ -6,6 +6,9 @@
 - Add support for project id attributes propagation
   ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
 
+- Added multi-tenant support for traces, off by default and enabled with the `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch. When enabled, an Activity carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; Activities without both attributes are dropped. Live Metrics is disabled while the switch is on.
+  ([#TBD](https://github.com/Azure/azure-sdk-for-net/pull/TBD))
+
 - Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; the telemetry is now durable before exit, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
   ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 
@@ -16,7 +19,11 @@
 
 ### Bugs Fixed
 
+- The ingestion redirect cache is now keyed by the endpoint it was issued for. A redirect returned by one ingestion endpoint could previously be applied to a request bound for another.
+  ([#TBD](https://github.com/Azure/azure-sdk-for-net/pull/TBD))
+
 - Telemetry left in offline storage by a process that exited during a transmission is no longer stranded permanently. A leased blob is renamed so that it matches neither the storage provider's blob enumeration nor its retention sweep, and the provider only reclaims those leases on a two minute maintenance timer that a short-lived process never reaches. Expired leases are now reclaimed when storage is drained.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
   ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 
 - Offline storage is now drained shortly after startup rather than only after the process has been running for two minutes, so telemetry persisted by a previous run is uploaded even when no single run is long-lived.

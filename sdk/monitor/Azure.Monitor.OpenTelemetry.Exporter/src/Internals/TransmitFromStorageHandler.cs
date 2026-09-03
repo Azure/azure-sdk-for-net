@@ -68,7 +68,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly System.Timers.Timer _transmitFromStorageTimer;
         private readonly bool _isAadEnabled;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
+
+        /// <summary>
+        /// Host for failures that never produced a request. Null for the single-tenant handler, where
+        /// the stats manager falls back to the exporter's configured endpoint; a routed partition has
+        /// no such fallback and must name its own.
+        /// </summary>
+        private readonly string? _statsHost;
         private readonly string? _storageDirectory;
+        private TaskCompletionSource<bool>? _inFlightDrain;
         private int _drainInProgress;
         private bool _disposed;
 
@@ -81,6 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
             _networkSdkStatsManager = networkSdkStatsManager;
+            _statsHost = trackUri?.Host;
             _storageDirectory = storageDirectory;
             _transmitFromStorageTimer = new System.Timers.Timer();
             _transmitFromStorageTimer.Elapsed += TransmitFromStorage;
@@ -112,7 +121,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e) => Drain();
 
-        internal Task DrainAsync() => DisableShutdownDrainForTesting ? Task.CompletedTask : Task.Run(Drain);
+        /// <remarks>
+        /// Returns the drain already running, if there is one. Starting a fresh task would hand the
+        /// caller something that completes immediately while the real upload is still in flight, and
+        /// shutdown would tear the pipeline down underneath it. The eager drain scheduled when a
+        /// storage partition is created makes that collision routine rather than rare.
+        /// </remarks>
+        internal Task DrainAsync()
+        {
+            if (DisableShutdownDrainForTesting)
+            {
+                return Task.CompletedTask;
+            }
+
+            return Volatile.Read(ref _inFlightDrain)?.Task ?? Task.Run(Drain);
+        }
 
         internal void Drain()
         {
@@ -120,6 +143,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 return;
             }
+
+            var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            Volatile.Write(ref _inFlightDrain, completion);
 
             try
             {
@@ -133,12 +159,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                _networkSdkStatsManager?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
+                _networkSdkStatsManager?.TrackException(_statsHost, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
             }
             finally
             {
+                Volatile.Write(ref _inFlightDrain, null);
                 Interlocked.Exchange(ref _drainInProgress, 0);
+                completion.TrySetResult(true);
             }
         }
 

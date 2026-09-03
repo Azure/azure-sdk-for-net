@@ -106,6 +106,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             // host spellings and would split one region into several POSTs.
             var normalized = string.Concat(uri.Scheme, "://", canonicalHost, port, uri.AbsolutePath.TrimEnd('/'), "/");
 
+            // Everything downstream turns this key back into a Uri, so a key that cannot be parsed
+            // would fail far from here, after validation has already accepted the endpoint.
+            if (!Uri.TryCreate(normalized, UriKind.Absolute, out _))
+            {
+                return null;
+            }
+
             if (Volatile.Read(ref s_cachedEndpointCount) < MaxCachedEndpoints
                 && s_normalizedEndpoints.TryAdd(rawEndpoint, normalized))
             {
@@ -116,14 +123,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         }
 
         /// <remarks>
-        /// <see cref="Uri.IdnHost"/> throws for a malformed <c>xn--</c> label. A host that cannot be
-        /// canonicalized cannot be grouped consistently, so it is rejected.
+        /// <see cref="Uri.IdnHost"/> throws for a malformed <c>xn--</c> label, and strips the brackets
+        /// from an IPv6 literal, which would produce a host that cannot be parsed back into a
+        /// <see cref="Uri"/>. A host that cannot be canonicalized cannot be grouped consistently, so
+        /// it is rejected.
         /// </remarks>
         private static bool TryGetCanonicalHost(Uri uri, out string canonicalHost)
         {
             try
             {
-                canonicalHost = uri.IdnHost.TrimEnd('.').ToLowerInvariant();
+                canonicalHost = uri.HostNameType == UriHostNameType.IPv6
+                    ? uri.Host
+                    : uri.IdnHost.TrimEnd('.').ToLowerInvariant();
             }
             catch (UriFormatException)
             {

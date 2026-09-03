@@ -385,6 +385,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             Assert.False(MultiTenantConfig.Enabled);
 
+            // The documented opt-in; a typo here silently disables the feature for everyone.
+            Assert.Equal("Azure.Monitor.OpenTelemetry.EnableMultiTenantExport", MultiTenantConfig.EnableMultiTenantExportSwitchName);
+
             var transmitter = new MockTransmitter(new List<TelemetryItem>());
             using var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), transmitter);
 
@@ -483,6 +486,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .GetValue(exporter);
 
             Assert.Null(routeBatch);
+        }
+
+        /// <summary>
+        /// Everything downstream turns the grouping key back into a <see cref="Uri"/>. IdnHost strips
+        /// the brackets from an IPv6 literal, so a naive rebuild produces a key that cannot be parsed.
+        /// </summary>
+        [Theory]
+        [InlineData("https://[::1]/", "https://[::1]/")]
+        [InlineData("https://[2001:db8::1]/", "https://[2001:db8::1]/")]
+        [InlineData("https://[2001:db8::1]:8443/", "https://[2001:db8::1]:8443/")]
+        public void IPv6EndpointsProduceAParseableKey(string ingestionEndpoint, string expected)
+        {
+            var normalized = TenantRouting.NormalizeEndpoint(ingestionEndpoint);
+
+            Assert.Equal(expected, normalized);
+            Assert.Equal(expected, new Uri(normalized!).AbsoluteUri);
+        }
+
+        /// <summary>
+        /// A key that cannot round-trip would fail long after validation accepted the endpoint, in
+        /// code that assumes it already parses.
+        /// </summary>
+        [Fact]
+        public void EveryAcceptedEndpointKeyRoundTripsThroughUri()
+        {
+            var endpoints = new[]
+            {
+                EastUs,
+                "https://[::1]/",
+                "https://gateway.example:8443/ingest",
+                "https://eastus-1.in.applicationinsights.azure\u3002com/",
+                "https://eastus-1.in.applicationinsights.azure.com./",
+            };
+
+            foreach (var endpoint in endpoints)
+            {
+                var normalized = TenantRouting.NormalizeEndpoint(endpoint);
+
+                Assert.NotNull(normalized);
+                Assert.True(Uri.TryCreate(normalized, UriKind.Absolute, out _), $"'{normalized}' from '{endpoint}' is not a parseable Uri");
+            }
         }
 
         private static EndpointRouteBatch Convert(params Activity[] activities)

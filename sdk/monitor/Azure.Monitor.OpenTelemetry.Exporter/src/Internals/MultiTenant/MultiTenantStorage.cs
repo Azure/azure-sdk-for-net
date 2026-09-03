@@ -4,10 +4,15 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
 using OpenTelemetry.PersistentStorage.FileSystem;
 
@@ -36,6 +41,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// </summary>
         internal const int MaxEndpointPartitions = 64;
 
+        /// <summary>
+        /// One budget for every tenant combined, not per endpoint. A per-folder cap would multiply
+        /// by the partition count and put the process's disk footprint at the mercy of how many
+        /// regions it happens to route to.
+        /// </summary>
+        internal const long TotalStorageMaxSizeBytes = 104857600;
+
+        /// <summary>
+        /// How many blobs one write may consider evicting. Sized well above the largest batch the
+        /// drain will re-persist, so a legitimate write is not refused for want of candidates.
+        /// </summary>
+        private const int MaxBlobsToEvict = 256;
+
+        /// <summary>
+        /// How stale the running size may get before it is re-derived from disk. Throttled for the
+        /// whole store rather than per endpoint, so a fan-out across failing endpoints costs one
+        /// walk instead of one each.
+        /// </summary>
+        private const long RecountIntervalMilliseconds = 30000;
+
         private readonly ConcurrentDictionary<string, EndpointStorage> _partitions = new(StringComparer.Ordinal);
         private readonly ApplicationInsightsRestClient _restClient;
         private readonly ConnectionVars _connectionVars;
@@ -44,6 +69,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private readonly long _maxSizeBytes;
         private readonly bool _isAadEnabled;
         private readonly object _createLock = new();
+        private readonly Stopwatch _clock = Stopwatch.StartNew();
+        private long _currentSizeBytes;
+        private long _lastRecountMilliseconds;
         private bool _disposed;
 
         internal MultiTenantStorage(
@@ -60,9 +88,298 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             _rootDirectory = rootDirectory;
             _maxSizeBytes = maxSizeBytes;
             _networkSdkStatsManager = networkSdkStatsManager;
+
+            // A failure here only means the running total starts low; writes add to it and the next
+            // successful recount corrects it.
+            _currentSizeBytes = TryCalculateRootSize(out var size) ? size : 0;
         }
 
         internal IEnumerable<EndpointStorage> Partitions => _partitions.Values;
+
+        internal ExportResult SaveTelemetry(EndpointStorage storage, byte[] content)
+            => storage.BlobProvider.SaveTelemetry(content);
+
+        /// <summary>
+        /// Writes to the endpoint's partition, evicting oldest-first across every partition when the
+        /// write does not fit.
+        /// </summary>
+        /// <remarks>
+        /// Eviction only runs when the shared budget is what is in the way, and only after the
+        /// candidates have been shown to cover the shortfall. A write can also fail for reasons
+        /// eviction cannot help with - a removed directory, a full disk, a denied ACL - and deleting
+        /// the backlog for those destroys other tenants' telemetry without saving this batch.
+        /// </remarks>
+        internal bool TryCreateBlobWithinBudget(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
+        {
+            blob = null;
+
+            // No amount of eviction makes room for a payload larger than the whole budget.
+            if (buffer.Length > _maxSizeBytes)
+            {
+                return false;
+            }
+
+            if (HasRoomFor(buffer.Length))
+            {
+                return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+            }
+
+            var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
+            var candidates = SelectOldest(MaxBlobsToEvict);
+
+            long evictable = 0;
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                evictable += FileLength(candidates[i].Path);
+            }
+
+            // Deleting everything on offer would still leave the write refused, so delete nothing.
+            if (evictable < shortfall)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < candidates.Count && !HasRoomFor(buffer.Length); i++)
+            {
+                TryEvict(candidates[i]);
+            }
+
+            return HasRoomFor(buffer.Length) && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+        }
+
+        private bool TryCreateBlob(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
+        {
+            var created = leasePeriodMilliseconds > 0
+                ? inner.TryCreateBlob(buffer, leasePeriodMilliseconds, out blob)
+                : inner.TryCreateBlob(buffer, out blob);
+
+            if (created)
+            {
+                Interlocked.Add(ref _currentSizeBytes, buffer.Length);
+            }
+
+            return created;
+        }
+
+        private bool HasRoomFor(long length)
+        {
+            RecountIfStale();
+
+            return Interlocked.Read(ref _currentSizeBytes) + length <= _maxSizeBytes;
+        }
+
+        /// <summary>
+        /// Re-derives the running total from disk at most once per <see cref="RecountIntervalMilliseconds"/>.
+        /// </summary>
+        /// <remarks>
+        /// The total drifts between recounts: retention deletes bypass it, drains remove blobs, and
+        /// another process may share the root. That is the same tolerance <c>DirectorySizeTracker</c>
+        /// documents for itself - a false positive costs one refused write that is retried, a false
+        /// negative costs one blob of overshoot. Re-deriving is what keeps the drift bounded, and it
+        /// is why a failed measurement is no longer a permanent bypass of the cap.
+        /// </remarks>
+        private void RecountIfStale()
+        {
+            var now = _clock.ElapsedMilliseconds;
+            var last = Interlocked.Read(ref _lastRecountMilliseconds);
+
+            if (now - last < RecountIntervalMilliseconds)
+            {
+                return;
+            }
+
+            if (Interlocked.CompareExchange(ref _lastRecountMilliseconds, now, last) != last)
+            {
+                return;
+            }
+
+            if (TryCalculateRootSize(out var size))
+            {
+                Interlocked.Exchange(ref _currentSizeBytes, size);
+            }
+        }
+
+        private bool TryCalculateRootSize(out long size)
+        {
+            size = 0;
+
+            try
+            {
+                if (!Directory.Exists(_rootDirectory))
+                {
+                    return true;
+                }
+
+                // Only blobs: a leased or half-written file is named .lock or .tmp, which eviction
+                // cannot select. Counting bytes that cannot be reclaimed is what let a restart pin
+                // the budget at zero headroom.
+                foreach (var file in Directory.EnumerateFiles(_rootDirectory, "*.blob", SearchOption.AllDirectories))
+                {
+                    size += new FileInfo(file).Length;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                // Keep whatever total we already had rather than replacing it with a guess.
+                return false;
+            }
+        }
+
+        private static long FileLength(string path)
+        {
+            try
+            {
+                var info = new FileInfo(path);
+
+                return info.Exists ? info.Length : 0;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// The globally oldest blobs across the whole root, in ascending age order.
+        /// </summary>
+        /// <remarks>
+        /// Blob names are timestamp-prefixed and sort lexicographically, so oldest-first is a
+        /// comparison on the file name and works across directories. Oldest-first is the half of an
+        /// existing policy that was never implemented: the drain sends newest-first, which leaves the
+        /// tail of a backlog to be reclaimed here or by the ingestion age limit.
+        /// <para/>
+        /// Directories with no open partition are included. Restricting eviction to partitions routed
+        /// in this process meant a restart could leave the root over budget with nothing it was
+        /// allowed to delete, so it deleted the telemetry the current run had just written instead.
+        /// Those directories have no provider and therefore no size tracker to desynchronize, which
+        /// is why deleting the file directly is correct for them and not for the rest.
+        /// </remarks>
+        private List<EvictionCandidate> SelectOldest(int count)
+        {
+            var candidates = new List<EvictionCandidate>(count);
+            var openDirectoryNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var partition in _partitions.Values)
+            {
+                openDirectoryNames.Add(Path.GetFileName(partition.Directory));
+
+                try
+                {
+                    foreach (var blob in partition.Inner.GetBlobs())
+                    {
+                        if (blob is FileBlob fileBlob)
+                        {
+                            Offer(candidates, count, new EvictionCandidate(Path.GetFileName(fileBlob.FullPath), fileBlob, fileBlob.FullPath));
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // Selection is best effort; a partition that cannot be enumerated is skipped and
+                    // the shortfall check below decides whether the write can proceed.
+                }
+            }
+
+            try
+            {
+                if (Directory.Exists(_rootDirectory))
+                {
+                    foreach (var directory in Directory.EnumerateDirectories(_rootDirectory))
+                    {
+                        if (openDirectoryNames.Contains(Path.GetFileName(directory)))
+                        {
+                            continue;
+                        }
+
+                        foreach (var file in Directory.EnumerateFiles(directory, "*.blob", SearchOption.AllDirectories))
+                        {
+                            Offer(candidates, count, new EvictionCandidate(Path.GetFileName(file), blob: null, file));
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // As above: an unreadable root yields fewer candidates, not a forced eviction.
+            }
+
+            return candidates;
+        }
+
+        /// <summary>
+        /// Keeps the list to the oldest <paramref name="count"/> entries, ascending. Bounded so a
+        /// full root does not materialize thousands of entries to discard all but a few.
+        /// </summary>
+        private static void Offer(List<EvictionCandidate> candidates, int count, EvictionCandidate candidate)
+        {
+            if (candidates.Count == count && string.CompareOrdinal(candidate.Name, candidates[count - 1].Name) >= 0)
+            {
+                return;
+            }
+
+            var index = candidates.Count;
+            while (index > 0 && string.CompareOrdinal(candidate.Name, candidates[index - 1].Name) < 0)
+            {
+                index--;
+            }
+
+            candidates.Insert(index, candidate);
+
+            if (candidates.Count > count)
+            {
+                candidates.RemoveAt(candidates.Count - 1);
+            }
+        }
+
+        private bool TryEvict(EvictionCandidate candidate)
+        {
+            // Measured before deletion because the length is unreadable afterwards.
+            var length = FileLength(candidate.Path);
+
+            if (candidate.Blob != null)
+            {
+                // Goes through the blob so the owning provider's size tracker is decremented too.
+                if (!candidate.Blob.TryDelete())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                try
+                {
+                    File.Delete(candidate.Path);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            Interlocked.Add(ref _currentSizeBytes, -length);
+
+            return true;
+        }
+
+        private readonly struct EvictionCandidate
+        {
+            internal EvictionCandidate(string name, PersistentBlob? blob, string path)
+            {
+                Name = name;
+                Blob = blob;
+                Path = path;
+            }
+
+            /// <summary>File name only: the timestamp prefix orders blobs across directories.</summary>
+            internal string Name { get; }
+
+            /// <summary>Set only when an open partition owns the blob.</summary>
+            internal PersistentBlob? Blob { get; }
+
+            internal string Path { get; }
+        }
 
         /// <summary>
         /// Returns the partition for an endpoint, creating it on first use. Returns
@@ -96,12 +413,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 try
                 {
                     var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(ingestionEndpoint));
-                    var blobProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
+
+                    // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
+                    // the only handle handed out, because this cap cannot see across partitions.
+                    var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
+                    var blobProvider = new BudgetedBlobProvider(this, innerProvider);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
                     var transmissionStateManager = new TransmissionStateManager();
 
                     var created = new EndpointStorage(
                         directory,
+                        innerProvider,
                         blobProvider,
                         transmissionStateManager,
                         new TransmitFromStorageHandler(_restClient, blobProvider, transmissionStateManager, _connectionVars, _isAadEnabled, _networkSdkStatsManager, directory, trackUri));
@@ -145,17 +467,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         {
             internal EndpointStorage(
                 string directory,
+                FileBlobProvider inner,
                 PersistentBlobProvider blobProvider,
                 TransmissionStateManager transmissionStateManager,
                 TransmitFromStorageHandler transmitFromStorageHandler)
             {
                 Directory = directory;
+                Inner = inner;
                 BlobProvider = blobProvider;
                 TransmissionStateManager = transmissionStateManager;
                 TransmitFromStorageHandler = transmitFromStorageHandler;
             }
 
             internal string Directory { get; }
+
+            /// <summary>Eviction only, so that deletes reach the provider's own size tracker.</summary>
+            internal FileBlobProvider Inner { get; }
 
             internal PersistentBlobProvider BlobProvider { get; }
 
@@ -167,7 +494,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             {
                 TransmitFromStorageHandler.Dispose();
                 TransmissionStateManager.Dispose();
-                (BlobProvider as FileBlobProvider)?.Dispose();
+                Inner.Dispose();
             }
         }
     }
