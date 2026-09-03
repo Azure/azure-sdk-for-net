@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Avs.Models
         private const string QuotaExhaustedValue = "QuotaExhausted";
         /// <summary> Holidays. </summary>
         private const string HolidayValue = "Holiday";
+        /// <summary> Constraint due to overlapping maintenance. </summary>
+        private const string OverlappingMaintenanceValue = "OverlappingMaintenance";
 
         /// <summary> Initializes a new instance of <see cref="BlockedDatesConstraintCategory"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Holidays. </summary>
         public static BlockedDatesConstraintCategory Holiday { get; } = new BlockedDatesConstraintCategory(HolidayValue);
+
+        /// <summary> Constraint due to overlapping maintenance. </summary>
+        public static BlockedDatesConstraintCategory OverlappingMaintenance { get; } = new BlockedDatesConstraintCategory(OverlappingMaintenanceValue);
 
         /// <summary> Determines if two <see cref="BlockedDatesConstraintCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
