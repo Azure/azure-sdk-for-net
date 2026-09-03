@@ -7,12 +7,14 @@ using Azure.AI.AgentServer.Core.Tasks;
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
 /// <summary>
-/// An immutable descriptor of a registered task: its name, input/output types,
-/// the handler delegate, whether it is multi-turn/steerable, and its per-task
-/// options. The wire <c>source.name</c> routes back to the registration by name.
+/// A descriptor of a registered task: its name, input/output types, handler,
+/// multi-turn behavior, steerability resolver, and per-task options. The wire
+/// <c>source.name</c> routes back to the registration by name.
 /// </summary>
 internal sealed class TaskRegistration
 {
+    private readonly Func<bool> _isSteerable;
+
     public TaskRegistration(
         string name,
         Type inputType,
@@ -20,7 +22,7 @@ internal sealed class TaskRegistration
         Delegate handler,
         bool requiresServiceScope,
         bool multiTurn,
-        bool steerable,
+        Func<bool> isSteerable,
         TaskRegistrationOptions? options,
         System.Text.Json.Serialization.Metadata.JsonTypeInfo? inputTypeInfo = null)
     {
@@ -30,7 +32,8 @@ internal sealed class TaskRegistration
         Handler = handler;
         RequiresServiceScope = requiresServiceScope;
         MultiTurn = multiTurn;
-        Steerable = steerable;
+        _isSteerable = isSteerable
+            ?? throw new ArgumentNullException(nameof(isSteerable));
         Options = options;
         InputTypeInfo = inputTypeInfo;
     }
@@ -57,7 +60,7 @@ internal sealed class TaskRegistration
     public bool MultiTurn { get; }
 
     /// <summary>Whether the multi-turn task accepts steering input.</summary>
-    public bool Steerable { get; }
+    public bool Steerable => _isSteerable();
 
     /// <summary>The per-task registration options, if any.</summary>
     public TaskRegistrationOptions? Options { get; }

@@ -36,6 +36,7 @@ public sealed class SteeringNudgeRaceTests
             .MakeGenericType(typeof(string));
         object activeRun = Activator.CreateInstance(
             activeRunType,
+            "task-name",
             runState,
             (Action<Exception>)(_ => { }))!;
 

@@ -16,7 +16,7 @@ internal enum AgentEventStreamRegistrationPriority
 internal sealed record AgentEventStreamRegistrationRequest(
     string Source,
     AgentEventStreamRegistrationPriority Priority,
-    Func<AgentEventStreamConfiguration?> ConfigurationFactory);
+    Func<IServiceProvider, AgentEventStreamConfiguration?> ConfigurationFactory);
 
 internal sealed class AgentEventStreamRegistrationState
 {
@@ -24,7 +24,7 @@ internal sealed class AgentEventStreamRegistrationState
 
     public void Add(AgentEventStreamRegistrationRequest request) => _requests.Add(request);
 
-    public AgentEventStreamOptions ResolveOptions()
+    public AgentEventStreamOptions ResolveOptions(IServiceProvider serviceProvider)
     {
         if (_requests.Count == 0)
         {
@@ -35,7 +35,7 @@ internal sealed class AgentEventStreamRegistrationState
             .Select(request => new MaterializedRequest(
                 request.Source,
                 request.Priority,
-                request.ConfigurationFactory()))
+                request.ConfigurationFactory(serviceProvider)))
             .Where(request => request.Configuration is not null)
             .ToArray();
         if (materialized.Length == 0)
