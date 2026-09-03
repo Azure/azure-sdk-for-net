@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Discovery.Models
     public static partial class ArmDiscoveryModelFactory
     {
 
+        /// <summary> Bookshelf tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Key Vault Properties with clientId selection. </summary>
         /// <param name="keyVaultUri"> The Key Vault URI. </param>
         /// <param name="keyName"> The Key Name in Key Vault. </param>
         /// <param name="keyVersion"> The Key Version in Key Vault. </param>
@@ -85,6 +87,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new BookshelfKeyVaultProperties(keyVaultUri, keyName, keyVersion, identityClientId, default);
         }
 
+        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -114,6 +117,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -123,6 +127,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
         /// <returns> A new <see cref="Models.DiscoveryMoboBrokerResource"/> instance for mocking. </returns>
         public static DiscoveryMoboBrokerResource DiscoveryMoboBrokerResource(ResourceIdentifier id = default)
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryMoboBrokerResource(id, default);
         }
 
+        /// <summary> The Private Endpoint Connection resource for Bookshelf. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -147,6 +153,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> A private link resource for Bookshelf. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -164,6 +171,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
@@ -176,6 +184,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Tool tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -199,6 +208,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Discovery Tool list item properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="version"> The version of a resource definition. </param>
         /// <param name="environmentVariables"> Environment variables to make available. </param>
@@ -212,6 +222,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }
 
+        /// <summary> Project tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -247,6 +258,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryProjectProperties(provisioningState, foundryProjectEndpoint, (storageContainerIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), behaviorPreferences is null ? default : new ProjectSettings(behaviorPreferences, default), default);
         }
 
+        /// <summary> Workspace tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -310,6 +322,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> For user assigned identity resource property. </summary>
         /// <param name="id"> The resource ID of the user assigned identity. </param>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
@@ -319,6 +332,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryManagedIdentityReference(id, principalId, clientId, default);
         }
 
+        /// <summary> For Key Vault Key references. </summary>
         /// <param name="keyVaultUri"> The Key Vault URI. </param>
         /// <param name="keyName"> The Key Name in Key Vault. </param>
         /// <param name="keyVersion"> The Key Version in Key Vault. </param>
@@ -328,6 +342,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryKeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
         }
 
+        /// <summary> The Private Endpoint Connection resource for Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -345,6 +360,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Represents a deployment that ties a specific model family to a user defined deployment name used when invoking the chat model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -368,6 +384,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Defines a deployment binding a specific model family to a user-defined deployment name for chat inference. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="modelFormat"> Model format as published by the provider. Verify supported formats per region using the Model Catalog API. </param>
         /// <param name="modelName"> Canonical provider model name available in the selected region. Verify supported values per region using the Model Catalog API. </param>
@@ -387,6 +404,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> A private link resource for Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -404,6 +422,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> NodePool tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -427,6 +446,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> NodePool properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="subnetId"> The node pool subnet. </param>
         /// <param name="vmSize"> The size of the underlying Azure VM. </param>
@@ -452,6 +472,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Supercomputer tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -516,6 +537,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Dictionary of identity properties for the Supercomputer. </summary>
         /// <param name="clusterIdentity"> Cluster identity ID. </param>
         /// <param name="kubeletIdentity">
         /// Kubelet identity ID used by the supercomputer.
@@ -531,6 +553,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoverySupercomputerIdentities(clusterIdentity, kubeletIdentity, workloadIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
         }
 
+        /// <summary> Managed service identity (either system assigned, or none). </summary>
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
@@ -540,6 +563,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoverySystemAssignedServiceIdentity(principalId, tenantId, @type, default);
         }
 
+        /// <summary> Storage Asset tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -563,6 +587,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Storage Asset properties. </summary>
         /// <param name="description"> The description. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="path"> The path to the data within its parent container. This should be relative to the root of the parent container. </param>
@@ -572,6 +597,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryStorageAssetProperties(description, provisioningState, path, default);
         }
 
+        /// <summary> Storage Container tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -595,6 +621,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
+        /// <summary> Storage Container properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="storageStore"> Storage store properties. </param>
         /// <returns> A new <see cref="Models.DiscoveryStorageContainerProperties"/> instance for mocking. </returns>
@@ -603,6 +630,10 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryStorageContainerProperties(provisioningState, storageStore, default);
         }
 
+        /// <summary>
+        /// An abstract representation of storage store kind.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureStorageBlobStore"/> and <see cref="Models.AzureNetAppFilesStore"/>.
+        /// </summary>
         /// <param name="kind"> The storage store kind. </param>
         /// <returns> A new <see cref="Models.DiscoveryStorageStore"/> instance for mocking. </returns>
         public static DiscoveryStorageStore DiscoveryStorageStore(string kind = default)
@@ -610,6 +641,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new UnknownDiscoveryStorageStore(default, default);
         }
 
+        /// <summary> The Azure storage blob properties. </summary>
         /// <param name="mountProtocol"> The protocol to use for mounting the storage store. </param>
         /// <param name="storageAccountId"> The associated Azure Storage Account ID. </param>
         /// <returns> A new <see cref="Models.AzureStorageBlobStore"/> instance for mocking. </returns>
@@ -618,6 +650,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new AzureStorageBlobStore(default, default, mountProtocol, storageAccountId);
         }
 
+        /// <summary> The Azure NetApp Files properties. </summary>
         /// <param name="mountProtocol"> The protocol to use for mounting the storage store. </param>
         /// <param name="netAppVolumeId"> The associated Azure NetApp Files volume ID. </param>
         /// <returns> A new <see cref="Models.AzureNetAppFilesStore"/> instance for mocking. </returns>

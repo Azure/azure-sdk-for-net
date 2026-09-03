@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("addressDetails"u8);
                 writer.WriteObjectValue(AddressDetails, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             writer.WritePropertyName("orderId"u8);
             writer.WriteStringValue(OrderId);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             EdgeOrderItemDetails orderItemDetails = default;
             EdgeOrderItemAddressDetails addressDetails = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             ResourceIdentifier orderId = default;
             EdgeOrderProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("orderId"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new OrderItemProperties(
                 orderItemDetails,
                 addressDetails,
-                startOn,
+                startsOn,
                 orderId,
                 provisioningState,
                 additionalBinaryDataProperties);
