@@ -38,7 +38,7 @@ public partial class PrivateDnsARecord
 
     /// <summary> Gets or sets the A records in the record set. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("Use ARecords instead.")]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use ARecords instead.")]
     public BicepList<PrivateDnsARecordInfo> PrivateDnsARecords
     {
         get => ARecords;
