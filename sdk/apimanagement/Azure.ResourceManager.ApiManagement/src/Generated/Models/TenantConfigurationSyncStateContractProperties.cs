@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isSynced"> value indicating if last synchronization was later than the configuration change. </param>
         /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
         /// <param name="syncOn"> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="configurationChangeOn"> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="configurationChangedOn"> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantConfigurationSyncStateContractProperties(string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantConfigurationSyncStateContractProperties(string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangedOn, string lastOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Branch = branch;
             CommitId = commitId;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IsSynced = isSynced;
             IsGitEnabled = isGitEnabled;
             SyncOn = syncOn;
-            ConfigurationChangeOn = configurationChangeOn;
+            ConfigurationChangedOn = configurationChangedOn;
             LastOperationId = lastOperationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("configurationChangeDate")]
-        public DateTimeOffset? ConfigurationChangeOn { get; set; }
+        public DateTimeOffset? ConfigurationChangedOn { get; set; }
 
         /// <summary> Most recent tenant configuration operation identifier. </summary>
         [WirePath("lastOperationId")]

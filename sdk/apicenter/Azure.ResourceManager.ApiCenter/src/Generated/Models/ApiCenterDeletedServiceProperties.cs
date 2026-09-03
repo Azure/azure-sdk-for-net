@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterDeletedServiceProperties"/>. </summary>
         /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="softDeletionOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="softDeletedOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn, DateTimeOffset? softDeletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn, DateTimeOffset? softDeletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledPurgeOn = scheduledPurgeOn;
-            SoftDeletionOn = softDeletionOn;
+            SoftDeletedOn = softDeletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public DateTimeOffset? ScheduledPurgeOn { get; }
 
         /// <summary> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
-        public DateTimeOffset? SoftDeletionOn { get; }
+        public DateTimeOffset? SoftDeletedOn { get; }
     }
 }
