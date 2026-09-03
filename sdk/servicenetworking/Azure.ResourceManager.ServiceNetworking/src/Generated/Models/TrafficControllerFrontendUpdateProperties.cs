@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The updatable properties of the Frontend. </summary>
-    public partial class FrontendUpdateProperties
+    public partial class TrafficControllerFrontendUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontendUpdateProperties"/>. </summary>
-        public FrontendUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerFrontendUpdateProperties"/>. </summary>
+        public TrafficControllerFrontendUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontendUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerFrontendUpdateProperties"/>. </summary>
         /// <param name="publicNetworkAccess"> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </param>
         /// <param name="association"> Reference to an Association resource that contains the subnet where the private frontend should be deployed. </param>
         /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendUpdateProperties(TrafficControllerPublicNetworkAccess? publicNetworkAccess, FrontendAssociation association, SecurityPolicyConfigurations securityPolicyConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficControllerFrontendUpdateProperties(TrafficControllerPublicNetworkAccess? publicNetworkAccess, FrontendAssociation association, SecurityPolicyConfigurations securityPolicyConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             Association = association;

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.TrafficControllerFrontendPatch"/> instance for mocking. </returns>
-        public static TrafficControllerFrontendPatch TrafficControllerFrontendPatch(IDictionary<string, string> tags = default, FrontendUpdateProperties properties = default)
+        public static TrafficControllerFrontendPatch TrafficControllerFrontendPatch(IDictionary<string, string> tags = default, TrafficControllerFrontendUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="publicNetworkAccess"> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </param>
         /// <param name="associationId"> Resource ID of the Association. </param>
         /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
-        /// <returns> A new <see cref="Models.FrontendUpdateProperties"/> instance for mocking. </returns>
-        public static FrontendUpdateProperties FrontendUpdateProperties(TrafficControllerPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier associationId = default, SecurityPolicyConfigurations securityPolicyConfigurations = default)
+        /// <returns> A new <see cref="Models.TrafficControllerFrontendUpdateProperties"/> instance for mocking. </returns>
+        public static TrafficControllerFrontendUpdateProperties TrafficControllerFrontendUpdateProperties(TrafficControllerPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier associationId = default, SecurityPolicyConfigurations securityPolicyConfigurations = default)
         {
-            return new FrontendUpdateProperties(publicNetworkAccess, associationId is null ? default : new FrontendAssociation(associationId, default), securityPolicyConfigurations, default);
+            return new TrafficControllerFrontendUpdateProperties(publicNetworkAccess, associationId is null ? default : new FrontendAssociation(associationId, default), securityPolicyConfigurations, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

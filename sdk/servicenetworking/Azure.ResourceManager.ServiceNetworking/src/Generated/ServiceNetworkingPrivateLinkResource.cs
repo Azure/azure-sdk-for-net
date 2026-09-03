@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a PrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource"/> using the GetPrivateLinkResources method.
+    /// A class representing a ServiceNetworkingPrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceNetworkingPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource"/> using the GetServiceNetworkingPrivateLinkResources method.
     /// </summary>
-    public partial class PrivateLinkResource : ArmResource
+    public partial class ServiceNetworkingPrivateLinkResource : ArmResource
     {
         private readonly ClientDiagnostics _privateLinkResourcesInterfaceClientDiagnostics;
         private readonly PrivateLinkResourcesInterface _privateLinkResourcesInterfaceRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers/privateLinkResources";
 
-        /// <summary> Initializes a new instance of PrivateLinkResource for mocking. </summary>
-        protected PrivateLinkResource()
+        /// <summary> Initializes a new instance of ServiceNetworkingPrivateLinkResource for mocking. </summary>
+        protected ServiceNetworkingPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, ServiceNetworkingPrivateLinkResourceData data) : this(client, data.Id)
+        internal ServiceNetworkingPrivateLinkResource(ArmClient client, ServiceNetworkingPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceNetworkingPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceNetworkingPrivateLinkResourceApiVersion);
             _privateLinkResourcesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesInterfaceRestClient = new PrivateLinkResourcesInterface(_privateLinkResourcesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion ?? "2026-03-01");
+            _privateLinkResourcesInterfaceRestClient = new PrivateLinkResourcesInterface(_privateLinkResourcesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceNetworkingPrivateLinkResourceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkResource"/>. </description>
+        /// <description> <see cref="ServiceNetworkingPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNetworkingPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkResource"/>. </description>
+        /// <description> <see cref="ServiceNetworkingPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ServiceNetworkingPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

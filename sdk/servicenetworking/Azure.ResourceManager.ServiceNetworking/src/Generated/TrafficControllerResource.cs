@@ -764,11 +764,11 @@ namespace Azure.ResourceManager.ServiceNetworking
             return GetApplicationGatewayForContainersSecurityPolicies().Get(securityPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="TrafficControllerResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of ServiceNetworkingPrivateEndpointConnections in the <see cref="TrafficControllerResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceNetworkingPrivateEndpointConnections and their operations over a ServiceNetworkingPrivateEndpointConnectionResource. </returns>
+        public virtual ServiceNetworkingPrivateEndpointConnectionCollection GetServiceNetworkingPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new ServiceNetworkingPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a PrivateEndpointConnection. </summary>
@@ -777,11 +777,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNetworkingPrivateEndpointConnectionResource>> GetServiceNetworkingPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceNetworkingPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a PrivateEndpointConnection. </summary>
@@ -790,31 +790,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceNetworkingPrivateEndpointConnectionResource> GetServiceNetworkingPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetServiceNetworkingPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the <see cref="TrafficControllerResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of ServiceNetworkingPrivateLinkResources in the <see cref="TrafficControllerResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceNetworkingPrivateLinkResources and their operations over a ServiceNetworkingPrivateLinkResource. </returns>
+        public virtual ServiceNetworkingPrivateLinkResourceCollection GetServiceNetworkingPrivateLinkResources()
         {
-            return GetCachedClient(client => new PrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary> Get a PrivateLinkResource. </summary>
-        /// <param name="privateLinkResourceName"> Private Link Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            return await GetPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceNetworkingPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary> Get a PrivateLinkResource. </summary>
@@ -823,11 +810,24 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNetworkingPrivateLinkResource>> GetServiceNetworkingPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            return GetPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+            return await GetServiceNetworkingPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PrivateLinkResource. </summary>
+        /// <param name="privateLinkResourceName"> Private Link Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceNetworkingPrivateLinkResource> GetServiceNetworkingPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetServiceNetworkingPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
     }
 }

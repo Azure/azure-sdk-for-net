@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
             return new TrafficControllerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ServiceNetworkingPrivateEndpointConnectionResource GetServiceNetworkingPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            ServiceNetworkingPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ServiceNetworkingPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceNetworkingPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceNetworkingPrivateLinkResource"/> object. </returns>
+        public virtual ServiceNetworkingPrivateLinkResource GetServiceNetworkingPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            ServiceNetworkingPrivateLinkResource.ValidateResourceId(id);
+            return new ServiceNetworkingPrivateLinkResource(Client, id);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary></summary>
-    public partial class PrivateLinkResource : IJsonModel<ServiceNetworkingPrivateLinkResourceData>
+    public partial class ServiceNetworkingPrivateLinkResource : IJsonModel<ServiceNetworkingPrivateLinkResourceData>
     {
         private static IJsonModel<ServiceNetworkingPrivateLinkResourceData> s_dataDeserializationInstance;
 

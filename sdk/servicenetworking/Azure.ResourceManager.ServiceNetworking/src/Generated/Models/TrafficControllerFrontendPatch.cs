@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerFrontendPatch(IDictionary<string, string> tags, FrontendUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficControllerFrontendPatch(IDictionary<string, string> tags, TrafficControllerFrontendUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FrontendUpdateProperties Properties { get; set; }
+        public TrafficControllerFrontendUpdateProperties Properties { get; set; }
     }
 }

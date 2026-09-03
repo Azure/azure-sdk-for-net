@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="PrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
-    /// To get a <see cref="PrivateEndpointConnectionCollection"/> instance call the GetPrivateEndpointConnections method from an instance of <see cref="TrafficControllerResource"/>.
+    /// A class representing a collection of <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
+    /// To get a <see cref="ServiceNetworkingPrivateEndpointConnectionCollection"/> instance call the GetServiceNetworkingPrivateEndpointConnections method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
-    public partial class PrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PrivateEndpointConnectionResource>, IAsyncEnumerable<PrivateEndpointConnectionResource>
+    public partial class ServiceNetworkingPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ServiceNetworkingPrivateEndpointConnectionResource>, IAsyncEnumerable<ServiceNetworkingPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsInterfaceClientDiagnostics;
         private readonly PrivateEndpointConnectionsInterface _privateEndpointConnectionsInterfaceRestClient;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection for mocking. </summary>
-        protected PrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of ServiceNetworkingPrivateEndpointConnectionCollection for mocking. </summary>
+        protected ServiceNetworkingPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceNetworkingPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsInterfaceRestClient = new PrivateEndpointConnectionsInterface(_privateEndpointConnectionsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointConnectionApiVersion ?? "2026-03-01");
+            TryGetApiVersion(ServiceNetworkingPrivateEndpointConnectionResource.ResourceType, out string serviceNetworkingPrivateEndpointConnectionApiVersion);
+            _privateEndpointConnectionsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ServiceNetworkingPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsInterfaceRestClient = new PrivateEndpointConnectionsInterface(_privateEndpointConnectionsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceNetworkingPrivateEndpointConnectionApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, ServiceNetworkingPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceNetworkingPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, ServiceNetworkingPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                 };
                 HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, ServiceNetworkingPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceNetworkingArmOperation<PrivateEndpointConnectionResource> operation = new ServiceNetworkingArmOperation<PrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionResourceOperationSource(Client),
+                ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource> operation = new ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource>(
+                    new ServiceNetworkingPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, ServiceNetworkingPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceNetworkingPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, ServiceNetworkingPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                 };
                 HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, ServiceNetworkingPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ServiceNetworkingArmOperation<PrivateEndpointConnectionResource> operation = new ServiceNetworkingArmOperation<PrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionResourceOperationSource(Client),
+                ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource> operation = new ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource>(
+                    new ServiceNetworkingPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNetworkingPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceNetworkingPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceNetworkingPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new PrivateEndpointConnectionsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, ServiceNetworkingPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
                 _privateEndpointConnectionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "PrivateEndpointConnectionCollection.GetAll"), data => new PrivateEndpointConnectionResource(Client, data));
+                "ServiceNetworkingPrivateEndpointConnectionCollection.GetAll"), data => new ServiceNetworkingPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceNetworkingPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceNetworkingPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new PrivateEndpointConnectionsInterfaceGetByTrafficControllerCollectionResultOfT(
+            return new PageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, ServiceNetworkingPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsInterfaceGetByTrafficControllerCollectionResultOfT(
                 _privateEndpointConnectionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "PrivateEndpointConnectionCollection.GetAll"), data => new PrivateEndpointConnectionResource(Client, data));
+                "ServiceNetworkingPrivateEndpointConnectionCollection.GetAll"), data => new ServiceNetworkingPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceNetworkingPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -500,9 +500,9 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceNetworkingPrivateEndpointConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceNetworkingPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -561,9 +561,9 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceNetworkingPrivateEndpointConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        IEnumerator<PrivateEndpointConnectionResource> IEnumerable<PrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<ServiceNetworkingPrivateEndpointConnectionResource> IEnumerable<ServiceNetworkingPrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PrivateEndpointConnectionResource> IAsyncEnumerable<PrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceNetworkingPrivateEndpointConnectionResource> IAsyncEnumerable<ServiceNetworkingPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

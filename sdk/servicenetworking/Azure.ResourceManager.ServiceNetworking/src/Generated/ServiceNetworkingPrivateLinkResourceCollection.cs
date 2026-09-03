@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateLinkResource"/> and their operations.
-    /// Each <see cref="PrivateLinkResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
-    /// To get a <see cref="PrivateLinkResourceCollection"/> instance call the GetPrivateLinkResources method from an instance of <see cref="TrafficControllerResource"/>.
+    /// A class representing a collection of <see cref="ServiceNetworkingPrivateLinkResource"/> and their operations.
+    /// Each <see cref="ServiceNetworkingPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
+    /// To get a <see cref="ServiceNetworkingPrivateLinkResourceCollection"/> instance call the GetServiceNetworkingPrivateLinkResources method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
-    public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
+    public partial class ServiceNetworkingPrivateLinkResourceCollection : ArmCollection, IEnumerable<ServiceNetworkingPrivateLinkResource>, IAsyncEnumerable<ServiceNetworkingPrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesInterfaceClientDiagnostics;
         private readonly PrivateLinkResourcesInterface _privateLinkResourcesInterfaceRestClient;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceCollection for mocking. </summary>
-        protected PrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of ServiceNetworkingPrivateLinkResourceCollection for mocking. </summary>
+        protected ServiceNetworkingPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceNetworkingPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
-            _privateLinkResourcesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesInterfaceRestClient = new PrivateLinkResourcesInterface(_privateLinkResourcesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion ?? "2026-03-01");
+            TryGetApiVersion(ServiceNetworkingPrivateLinkResource.ResourceType, out string serviceNetworkingPrivateLinkResourceApiVersion);
+            _privateLinkResourcesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ServiceNetworkingPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesInterfaceRestClient = new PrivateLinkResourcesInterface(_privateLinkResourcesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceNetworkingPrivateLinkResourceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNetworkingPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceNetworkingPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceNetworkingPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceNetworkingPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceNetworkingPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceNetworkingPrivateLinkResourceData, ServiceNetworkingPrivateLinkResource>(new PrivateLinkResourcesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
                 _privateLinkResourcesInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+                "ServiceNetworkingPrivateLinkResourceCollection.GetAll"), data => new ServiceNetworkingPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -204,20 +204,20 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceNetworkingPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceNetworkingPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceNetworkingPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesInterfaceGetByTrafficControllerCollectionResultOfT(
+            return new PageableWrapper<ServiceNetworkingPrivateLinkResourceData, ServiceNetworkingPrivateLinkResource>(new PrivateLinkResourcesInterfaceGetByTrafficControllerCollectionResultOfT(
                 _privateLinkResourcesInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+                "ServiceNetworkingPrivateLinkResourceCollection.GetAll"), data => new ServiceNetworkingPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceNetworkingPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceNetworkingPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceNetworkingPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesInterfaceClientDiagnostics.CreateScope("ServiceNetworkingPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -445,9 +445,9 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceNetworkingPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceNetworkingPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
+        IEnumerator<ServiceNetworkingPrivateLinkResource> IEnumerable<ServiceNetworkingPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceNetworkingPrivateLinkResource> IAsyncEnumerable<ServiceNetworkingPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
