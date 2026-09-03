@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
@@ -17,6 +19,32 @@ namespace Azure.Provisioning.PrivateDns;
 [CodeGenSuppress("Cname")]
 public partial class PrivateDnsAaaaRecord
 {
+    // TypeSpec uses the management-oriented PrivateDns prefix; the provisioning API prefers the
+    // shorter record-kind name, while the released GA name remains as a compatibility alias.
+    /// <summary> Gets or sets the AAAA records in the record set. </summary>
+    [CodeGenMember("PrivateDnsAaaaRecords")]
+    public BicepList<PrivateDnsAaaaRecordInfo> AaaaRecords
+    {
+        get => Properties is null ? default : Properties.PrivateDnsAaaaRecords;
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new PrivateDnsRecordSetProperties();
+            }
+            Properties.PrivateDnsAaaaRecords = value;
+        }
+    }
+
+    /// <summary> Gets or sets the AAAA records in the record set. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("Use AaaaRecords instead.")]
+    public BicepList<PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords
+    {
+        get => AaaaRecords;
+        set => AaaaRecords = value;
+    }
+
     /// <summary>
     /// Supported PrivateDnsAaaaRecord resource versions.
     /// </summary>

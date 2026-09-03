@@ -3,6 +3,7 @@ namespace Azure.Provisioning.PrivateDns
     public partial class PrivateDnsAaaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PrivateDnsAaaaRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> AaaaRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -10,6 +11,7 @@ namespace Azure.Provisioning.PrivateDns
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone Parent { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use AaaaRecords instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsAaaaRecordInfo> PrivateDnsAaaaRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
