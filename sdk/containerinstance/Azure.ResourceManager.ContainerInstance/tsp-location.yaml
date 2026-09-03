@@ -1,5 +1,5 @@
 directory: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/ContainerInstance
-commit: 04d4a73cf90f8e1be80ffc0ca7621094d3d0954b
+commit: bd1b7c9a8770fe028e51f398541354626faed86f
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

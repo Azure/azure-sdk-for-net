@@ -548,13 +548,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default)
+        /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
+        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new Resource(
+            return new ContainerGroupPatch(
                 id,
                 name,
                 resourceType,
