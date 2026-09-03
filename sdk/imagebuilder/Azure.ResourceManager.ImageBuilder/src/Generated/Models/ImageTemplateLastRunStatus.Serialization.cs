@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 throw new FormatException($"The model {nameof(ImageTemplateLastRunStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(RunState))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             ImageTemplateRunState? runState = default;
             ImageTemplateRunSubState? runSubState = default;
             string message = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("runState"u8))
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
             }
             return new ImageTemplateLastRunStatus(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 runState,
                 runSubState,
                 message,

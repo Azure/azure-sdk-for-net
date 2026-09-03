@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             writer.WritePropertyName("impactedResourceId"u8);
             writer.WriteStringValue(ImpactedResourceId);
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             writer.WritePropertyName("impactId"u8);
             writer.WriteStringValue(ImpactId);
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 return null;
             }
             ResourceIdentifier impactedResourceId = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
             ResourceIdentifier impactId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("impactId"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImpactDetails(impactedResourceId, startOn, endOn, impactId, additionalBinaryDataProperties);
+            return new ImpactDetails(impactedResourceId, startsOn, endsOn, impactId, additionalBinaryDataProperties);
         }
     }
 }
