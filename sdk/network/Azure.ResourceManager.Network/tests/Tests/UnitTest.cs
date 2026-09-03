@@ -4,7 +4,9 @@
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -39,6 +41,41 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("920130", data.Rules[3]); // Originally number
             Assert.AreEqual("920140", data.Rules[4]); // Originally string
             Assert.AreEqual("920150", data.Rules[5]); // Originally number
+        }
+
+        [Test]
+        public void DeserializePublicIPPrefixDataPreservesPublicIPAddresses()
+        {
+            using var jsonContent = JsonDocument.Parse("{\"properties\":{\"publicIPAddresses\":[{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/publicIPAddresses/pip1\"},{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/publicIPAddresses/pip2\"}]}}");
+
+            var data = PublicIPPrefixData.DeserializePublicIPPrefixData(jsonContent.RootElement, ModelReaderWriterOptions.Json);
+
+            Assert.That(data.PublicIPAddresses, Has.Count.EqualTo(2));
+            Assert.That(data.PublicIPAddresses[0].Id.Name, Is.EqualTo("pip1"));
+            Assert.That(data.PublicIPAddresses[1].Id.Name, Is.EqualTo("pip2"));
+        }
+
+        [Test]
+        public void PublicIPPrefixDataFactoryPreservesPublicIPAddresses()
+        {
+            var publicIPAddresses = new[]
+            {
+                new TestSubResource(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/publicIPAddresses/pip1")),
+                new TestSubResource(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/publicIPAddresses/pip2"))
+            };
+
+            var data = ArmNetworkModelFactory.PublicIPPrefixData(resourceType: default, publicIPAddresses: publicIPAddresses);
+
+            Assert.That(data.PublicIPAddresses, Has.Count.EqualTo(2));
+            Assert.That(data.PublicIPAddresses[0].Id, Is.EqualTo(publicIPAddresses[0].Id));
+            Assert.That(data.PublicIPAddresses[1].Id, Is.EqualTo(publicIPAddresses[1].Id));
+        }
+
+        private sealed class TestSubResource : SubResource
+        {
+            public TestSubResource(ResourceIdentifier id) : base(id)
+            {
+            }
         }
     }
 }
