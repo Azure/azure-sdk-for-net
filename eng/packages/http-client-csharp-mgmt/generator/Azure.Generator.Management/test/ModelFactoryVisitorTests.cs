@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.SourceInput;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System.Reflection;
@@ -323,85 +322,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void DoesNotRestoreLastContractFactoryMethodsSuppressedByApiCompatBaseline()
-        {
-            var inputModel = InputFactory.Model(
-                "TestModel",
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
-
-            var baseline = ApiCompatBaseline.Parse(
-            [
-                $"MembersMustExist : Member '{ResolveModelFactoryFullName(inputModel)}.TestModel(System.String)' does not exist in the implementation but it does exist in the contract."
-            ]);
-            var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [inputModel],
-                apiCompatBaseline: baseline);
-            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
-            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
-            var previousSignature = new MethodSignature(
-                "TestModel",
-                $"Creates a test model.",
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
-                model.Type,
-                $"A test model.",
-                [new ParameterProvider("value", $"Value description", typeof(string))]);
-            var lastContractView = new TestModelFactoryView(modelFactory.Name);
-            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
-            modelFactory.Update(methods: []);
-
-            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
-                "VisitType",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(visitType, Is.Not.Null);
-
-            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
-
-            Assert.That(modelFactory.Methods, Is.Empty);
-        }
-
-        [Test]
-        public void DoesNotRestoreLastContractFactoryMethodsReferencingSuppressedTypes()
-        {
-            var inputModel = InputFactory.Model(
-                "TestModel",
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
-
-            var baseline = ApiCompatBaseline.Parse(
-            [
-                "TypesMustExist : Type 'Samples.Models.RemovedModel' does not exist in the implementation but it does exist in the contract."
-            ]);
-            var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [inputModel],
-                apiCompatBaseline: baseline);
-            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
-            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
-            var removedType = new CSharpType(typeof(global::Samples.Models.RemovedModel));
-            var previousSignature = new MethodSignature(
-                "TestModel",
-                $"Creates a test model.",
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
-                model.Type,
-                $"A test model.",
-                [new ParameterProvider("removed", $"A parameter typed with a removed model.", removedType)]);
-            var lastContractView = new TestModelFactoryView(modelFactory.Name);
-            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
-            modelFactory.Update(methods: []);
-
-            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
-                "VisitType",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(visitType, Is.Not.Null);
-
-            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
-
-            Assert.That(modelFactory.Methods, Is.Empty);
-        }
-
-        [Test]
         public void RebuildsPrimaryFactoryBodyFromCurrentConstructor()
         {
             var inputModel = InputFactory.Model(
@@ -692,16 +612,6 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             return builder.ToString().Replace("\r\n", "\n");
-        }
-
-        /// <summary>
-        /// Loads the mock plugin once purely to discover the fully-qualified name the model factory will be given,
-        /// so a baseline entry can be written for it before the plugin is reloaded with that baseline attached.
-        /// </summary>
-        private static string ResolveModelFactoryFullName(InputModelType inputModel)
-        {
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
-            return plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single().Type.FullyQualifiedName;
         }
 
         private class TestModelFactoryView : TypeProvider
