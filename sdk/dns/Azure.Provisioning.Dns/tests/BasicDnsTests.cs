@@ -119,7 +119,7 @@ public class BasicDnsTests
                 };
                 infra.Add(cnameRecord);
 
-                DnsARecord dnsRecordA = new("dnsRecordA")
+                DnsARecord dnsRecordA = new("dnsRecordA", DnsARecord.ResourceVersions.V2018_05_01)
                 {
                     Parent = zone,
                     Name = "privatev4",
