@@ -6,10 +6,14 @@ using System.Linq;
 using System.Reflection;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
+using Azure.AI.AgentServer.Core.Tasks.Providers.Hosted;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -59,6 +63,13 @@ public class HostedResilienceFailureTests
         Assert.That(
             provider.GetRequiredService<TokenCredential>(),
             Is.SameAs(credential));
+        Assert.That(
+            provider.GetRequiredService<ITaskStore>(),
+            Is.InstanceOf<HostedTaskStore>());
+        Assert.That(
+            provider.GetRequiredService<TaskHostEnvironment>().Credential,
+            Is.SameAs(credential));
+        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
     }
 
     [Test]
