@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ConsoleProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

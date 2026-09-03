@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetProperties"/>. </summary>
         /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
+        /// <param name="expiresOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
         /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
         /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureGroupId"/>, <paramref name="jumpHostsAllowed"/> or <paramref name="userList"/> is null. </exception>
-        public BareMetalMachineKeySetProperties(string azureGroupId, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
+        public BareMetalMachineKeySetProperties(string azureGroupId, DateTimeOffset expiresOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
         {
             Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
             Argument.AssertNotNull(jumpHostsAllowed, nameof(jumpHostsAllowed));
             Argument.AssertNotNull(userList, nameof(userList));
 
             AzureGroupId = azureGroupId;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             JumpHostsAllowed = jumpHostsAllowed.ToList();
             PrivilegeLevel = privilegeLevel;
             UserList = userList.ToList();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetProperties"/>. </summary>
         /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
+        /// <param name="expiresOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
         /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
         /// <param name="osGroupName"> The name of the group that users will be assigned to on the operating system of the machines. </param>
         /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="userListStatus"> The status evaluation of each user. </param>
         /// <param name="provisioningState"> The provisioning state of the bare metal machine key set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineKeySetProperties(string azureGroupId, DateTimeOffset expireOn, IList<IPAddress> jumpHostsAllowed, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, string privilegeLevelName, IList<KeySetUser> userList, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset? lastValidatedOn, IReadOnlyList<KeySetUserStatus> userListStatus, BareMetalMachineKeySetProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BareMetalMachineKeySetProperties(string azureGroupId, DateTimeOffset expiresOn, IList<IPAddress> jumpHostsAllowed, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, string privilegeLevelName, IList<KeySetUser> userList, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset? lastValidatedOn, IReadOnlyList<KeySetUserStatus> userListStatus, BareMetalMachineKeySetProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureGroupId = azureGroupId;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             JumpHostsAllowed = jumpHostsAllowed;
             OSGroupName = osGroupName;
             PrivilegeLevel = privilegeLevel;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string AzureGroupId { get; set; }
 
         /// <summary> The date and time after which the users in this key set will be removed from the bare metal machines. </summary>
-        public DateTimeOffset ExpireOn { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </summary>
         public IList<IPAddress> JumpHostsAllowed { get; } = new ChangeTrackingList<IPAddress>();

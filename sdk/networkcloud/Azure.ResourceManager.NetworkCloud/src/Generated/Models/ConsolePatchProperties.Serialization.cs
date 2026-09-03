@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(SshPublicKey))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ConsoleEnabled? enabled = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sshPublicKey"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConsolePatchProperties(enabled, expireOn, sshPublicKey, additionalBinaryDataProperties);
+            return new ConsolePatchProperties(enabled, expiresOn, sshPublicKey, additionalBinaryDataProperties);
         }
     }
 }
