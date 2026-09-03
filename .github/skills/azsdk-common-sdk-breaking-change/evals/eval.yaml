@@ -2,7 +2,7 @@ name: azsdk-common-sdk-breaking-change-eval
 description: tests for the azsdk-common-sdk-breaking-change skill
 type: capability
 
-environment: azsdk-mcp-mock
+environment: azsdk-mcp
 
 tags:
   area: azsdk-common-sdk-breaking-change
@@ -11,7 +11,7 @@ tags:
 defaults:
   runs: 1
   timeout: "90s"
-  model: claude-opus-4.6
+  model: gpt-5.6-sol
   executor: copilot-sdk
 
 scoring:
@@ -23,6 +23,11 @@ stimuli:
     environment:
       commands:
         - git clone --filter=blob:none --sparse https://github.com/Azure/azure-sdk-for-go.git && cd azure-sdk-for-go && git sparse-checkout set eng documentation sdk/resourcemanager/webpubsub/armwebpubsub
+        - git clone --filter=blob:none --sparse https://github.com/Azure/azure-rest-api-specs.git && cd azure-rest-api-specs && git sparse-checkout set specification/webpubsub/resource-manager/Microsoft.SignalRService/SignalRService
+        - node -e "require('fs').copyFileSync('models.tsp', 'azure-rest-api-specs/specification/webpubsub/resource-manager/Microsoft.SignalRService/SignalRService/models.tsp')"
+      files:
+        - src: ../fixtures/detect-sdk-breaking-changes-for-service-001/models.tsp
+          dest: models.tsp
     graders:
       - type: skill-invocation
         config:
