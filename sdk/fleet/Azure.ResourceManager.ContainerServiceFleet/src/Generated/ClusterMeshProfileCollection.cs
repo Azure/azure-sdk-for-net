@@ -99,7 +99,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.OriginalUri);
+                    OperationFinalStateVia.OriginalUri,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -158,7 +159,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.OriginalUri);
+                    OperationFinalStateVia.OriginalUri,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
