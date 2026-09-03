@@ -30,9 +30,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionPolicy"> The resource id of the ConnectionPolicy associated with this HubVirtualNetworkConnection. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="enableOnlyIPv6Peering"> Enable Only IPv6 Peering for this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HubVirtualNetworkConnectionProperties(NetworkSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, NetworkSubResource connectionPolicy, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HubVirtualNetworkConnectionProperties(NetworkSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, NetworkSubResource connectionPolicy, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RemoteVirtualNetwork = remoteVirtualNetwork;
             AllowHubToRemoteVnetTransit = allowHubToRemoteVnetTransit;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionPolicy = connectionPolicy;
             EnableInternetSecurity = enableInternetSecurity;
             RoutingConfiguration = routingConfiguration;
+            EnableOnlyIPv6Peering = enableOnlyIPv6Peering;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -67,6 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("routingConfiguration")]
         public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+
+        /// <summary> Enable Only IPv6 Peering for this connection. </summary>
+        [WirePath("enableOnlyIpv6Peering")]
+        public EnableOnlyIPv6PeeringState? EnableOnlyIPv6Peering { get; set; }
 
         /// <summary> The provisioning state of the hub virtual network connection resource. </summary>
         [WirePath("provisioningState")]

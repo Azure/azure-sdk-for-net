@@ -80,20 +80,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (Optional.IsDefined(AssetVersion))
-            {
-                writer.WritePropertyName("assetVersion"u8);
-                writer.WriteStringValue(AssetVersion);
-            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
-            }
-            if (Optional.IsDefined(PathOnCompute))
-            {
-                writer.WritePropertyName("pathOnCompute"u8);
-                writer.WriteStringValue(PathOnCompute);
             }
             if (Optional.IsDefined(Uri))
             {
@@ -131,9 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobOutputType jobOutputType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string assetName = default;
-            string assetVersion = default;
             MachineLearningOutputDeliveryMode? mode = default;
-            string pathOnCompute = default;
             Uri uri = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,16 +150,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     assetName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("assetVersion"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        assetVersion = null;
-                        continue;
-                    }
-                    assetVersion = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -179,16 +157,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     mode = new MachineLearningOutputDeliveryMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("pathOnCompute"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        pathOnCompute = null;
-                        continue;
-                    }
-                    pathOnCompute = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("uri"u8))
@@ -210,9 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 jobOutputType,
                 additionalBinaryDataProperties,
                 assetName,
-                assetVersion,
                 mode,
-                pathOnCompute,
                 uri);
         }
     }

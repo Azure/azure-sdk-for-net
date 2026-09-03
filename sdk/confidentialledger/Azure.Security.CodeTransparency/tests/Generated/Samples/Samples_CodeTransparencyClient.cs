@@ -151,7 +151,7 @@ namespace Azure.Security.CodeTransparency.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetOperation("2.131");
+            NullableResponse<BinaryData> response = client.GetOperation("2.131");
         }
 
         [Test]
@@ -162,7 +162,7 @@ namespace Azure.Security.CodeTransparency.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetOperationAsync("2.131");
+            NullableResponse<BinaryData> response = await client.GetOperationAsync("2.131");
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace Azure.Security.CodeTransparency.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetEntry("2.131");
+            NullableResponse<BinaryData> response = client.GetEntry("2.131");
         }
 
         [Test]
@@ -212,7 +212,7 @@ namespace Azure.Security.CodeTransparency.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetEntryAsync("2.131");
+            NullableResponse<BinaryData> response = await client.GetEntryAsync("2.131");
         }
 
         [Test]

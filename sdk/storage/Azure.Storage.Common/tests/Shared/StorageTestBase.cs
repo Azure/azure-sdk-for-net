@@ -69,6 +69,17 @@ namespace Azure.Storage.Test.Shared
                 Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
                 GroupForReplace = "date"
             });
+            // strip and ignore quotes from ETag values
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("If-Match")
+            {
+                Regex = "\"(.+)\"",
+                Value = "$1",
+            });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("If-None-Match")
+            {
+                Regex = "\"(.+)\"",
+                Value = "$1",
+            });
 
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET

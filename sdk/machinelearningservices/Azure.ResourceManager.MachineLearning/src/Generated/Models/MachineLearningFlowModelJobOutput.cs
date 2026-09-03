@@ -24,16 +24,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="assetName"> Output Asset Name. </param>
-        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
-        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningFlowModelJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string assetName, string assetVersion, MachineLearningOutputDeliveryMode? mode, string pathOnCompute, Uri uri) : base(description, jobOutputType, additionalBinaryDataProperties)
+        internal MachineLearningFlowModelJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string assetName, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType, additionalBinaryDataProperties)
         {
             AssetName = assetName;
-            AssetVersion = assetVersion;
             Mode = mode;
-            PathOnCompute = pathOnCompute;
             Uri = uri;
         }
 
@@ -41,17 +37,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("assetName")]
         public string AssetName { get; set; }
 
-        /// <summary> Output Asset Version. </summary>
-        [WirePath("assetVersion")]
-        public string AssetVersion { get; set; }
-
         /// <summary> Output data delivery mode enums. </summary>
         [WirePath("mode")]
         public MachineLearningOutputDeliveryMode? Mode { get; set; }
-
-        /// <summary> Output Asset Delivery Path. </summary>
-        [WirePath("pathOnCompute")]
-        public string PathOnCompute { get; set; }
 
         /// <summary> Output Asset URI. </summary>
         [WirePath("uri")]

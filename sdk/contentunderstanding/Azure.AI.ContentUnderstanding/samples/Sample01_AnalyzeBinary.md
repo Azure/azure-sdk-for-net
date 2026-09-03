@@ -8,7 +8,7 @@ One of the key values of Content Understanding is taking a content file and extr
 
 ## Using results with LLMs
 
-The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. To make this even easier, the SDK provides a convenient `.ToLlmInput()` helper that converts an `AnalysisResult` into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for injection into LLM prompts, vector databases, or agentic tool outputs. For advanced usage (output options, content ranges, video/audio, metadata), see [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+The markdown returned by Content Understanding can be directly consumed by large language models (LLMs) for summarization, question answering, and other generative AI tasks. To make this even easier, the SDK provides a convenient `.ToLlmInput()` helper that converts an `AnalysisResult` into a single text block with YAML front matter (content type, page numbers, extracted fields) followed by the markdown body — ready for injection into LLM prompts, vector databases, or agentic tool outputs. For advanced usage (output options, content ranges, video/audio, metadata), see [ToLlmInput sample][sample-advanced-to-llm-input].
 
 This sample focuses on **document analysis**. For prebuilt RAG analyzers covering images, audio, and video, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
@@ -51,7 +51,7 @@ The `prebuilt-documentSearch` analyzer transforms unstructured documents into st
 
 To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The returned value is an `AnalysisResult` object containing data about the submitted document. Since we're analyzing a document, we'll pass the analyzer ID `prebuilt-documentSearch` to the method.
 
-> **Note:** Content Understanding operations are asynchronous long-running operations. The SDK handles polling automatically when using `WaitUntil.Completed`.
+By default, `AnalyzeBinaryAsync` uses a **long-running operation (LRO)** and `WaitUntil.Completed` polls until the result is ready. For the binary inline alternative and guidance on choosing between the patterns, see [Sample 19][sample19-inline].
 
 Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more. For a complete list of supported file types and limits, see [Service limits][cu-service-limits].
 
@@ -69,9 +69,26 @@ Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
 AnalysisResult result = operation.Value;
 ```
 
+## Example with AnalyzeBinaryOptions
+
+Use the options bag when you need `ContentRange`, `ProcessingLocation`, or other binary request settings together:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithOptionsAsync
+// Use AnalyzeBinaryOptions when you need ContentRange, ProcessingLocation, or other binary options.
+Operation<AnalysisResult> optionsOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    new AnalyzeBinaryOptions("prebuilt-documentSearch", binaryData)
+    {
+        ContentRange = ContentRange.PagesFrom(3),
+        ProcessingLocation = ProcessingLocation.Geography
+    });
+
+AnalysisResult optionsResult = optionsOperation.Value;
+```
+
 ## Analyze specific pages with ContentRange
 
-You can restrict analysis to specific pages by passing a `ContentRange` to the `contentRange` parameter. The `ContentRange` struct provides typed factory methods for documents:
+You can restrict analysis to specific pages by passing `ContentRange` to `AnalyzeBinaryAsync`. The `ContentRange` struct provides typed factory methods for documents:
 
 - `ContentRange.Page(1)` — single page
 - `ContentRange.Pages(1, 3)` — page range
@@ -201,7 +218,7 @@ string llmText = result.ToLlmInput();
 Console.WriteLine(llmText);
 ```
 
-For advanced usage (output options, content ranges, video/audio, metadata), see the [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+For advanced usage (output options, content ranges, video/audio, metadata), see the [ToLlmInput sample][sample-advanced-to-llm-input].
 
 ## Next steps
 
@@ -222,6 +239,7 @@ For advanced usage (output options, content ranges, video/audio, metadata), see 
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample02-analyze-url]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [sample10]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md
+[sample19-inline]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample19_AnalyzeBinaryInline.md
 [cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
 [cu-whats-new]: https://learn.microsoft.com/azure/ai-services/content-understanding/whats-new
 [cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview

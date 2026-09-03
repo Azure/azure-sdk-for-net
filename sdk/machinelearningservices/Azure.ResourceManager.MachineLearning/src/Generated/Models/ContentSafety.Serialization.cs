@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ContentSafety. </summary>
-    public partial class ContentSafety : IJsonModel<ContentSafety>
+    internal partial class ContentSafety : IJsonModel<ContentSafety>
     {
         /// <summary> Initializes a new instance of <see cref="ContentSafety"/> for deserialization. </summary>
         internal ContentSafety()
@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ContentSafety)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ContentSafetyLevel))
-            {
-                writer.WritePropertyName("contentSafetyLevel"u8);
-                writer.WriteStringValue(ContentSafetyLevel.Value.ToString());
-            }
             writer.WritePropertyName("contentSafetyStatus"u8);
             writer.WriteStringValue(ContentSafetyStatus.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -128,20 +123,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ContentSafetyLevel? contentSafetyLevel = default;
             ContentSafetyStatus contentSafetyStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("contentSafetyLevel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    contentSafetyLevel = new ContentSafetyLevel(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("contentSafetyStatus"u8))
                 {
                     contentSafetyStatus = new ContentSafetyStatus(prop.Value.GetString());
@@ -152,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContentSafety(contentSafetyLevel, contentSafetyStatus, additionalBinaryDataProperties);
+            return new ContentSafety(contentSafetyStatus, additionalBinaryDataProperties);
         }
     }
 }

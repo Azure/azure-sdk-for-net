@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -47,8 +48,30 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> LDAP configuration. </summary>
         public LdapConfiguration LdapConfiguration
         {
-            get => _ldapConfiguration;
-            set => _ldapConfiguration = value;
+            get
+            {
+                if (_ldapConfiguration is null && Properties?.LdapConfiguration is not null)
+                {
+                    BinaryData data = ModelReaderWriter.Write(Properties.LdapConfiguration, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    _ldapConfiguration = ModelReaderWriter.Read<LdapConfiguration>(data, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                }
+                return _ldapConfiguration;
+            }
+            set
+            {
+                _ldapConfiguration = value;
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                if (value is null)
+                {
+                    Properties.LdapConfiguration = null;
+                    return;
+                }
+                BinaryData data = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                Properties.LdapConfiguration = ModelReaderWriter.Read<LdapConfigurationPatch>(data, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+            }
         }
     }
 }

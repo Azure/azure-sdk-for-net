@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <returns> A new <see cref="SecretsStoreExtension.KeyVaultSecretProviderClassData"/> instance for mocking. </returns>
         public static KeyVaultSecretProviderClassData KeyVaultSecretProviderClassData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KeyVaultSecretProviderClassProperties properties = default, ExtendedLocation extendedLocation = default)
         {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <returns> A new <see cref="SecretsStoreExtension.SecretSyncData"/> instance for mocking. </returns>
         public static SecretSyncData SecretSyncData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecretSyncProperties properties = default, ExtendedLocation extendedLocation = default)
         {

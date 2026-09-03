@@ -1,5 +1,5 @@
 directory: specification/machinelearningservices/MachineLearningServices.Management
-commit: b0960d698bb7ffb0af337e13c3bdf5b9e840b513
+commit: 8e7629b57386cdb58cc144f1c69313850f2b4d7d
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

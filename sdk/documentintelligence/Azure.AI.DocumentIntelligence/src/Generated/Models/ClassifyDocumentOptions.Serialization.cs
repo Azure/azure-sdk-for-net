@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(BytesSource))
             {
                 writer.WritePropertyName("base64Source"u8);
-                writer.WriteBase64StringValue(BytesSource.ToArray(), "D");
+                writer.WriteBase64StringValue(BytesSource, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

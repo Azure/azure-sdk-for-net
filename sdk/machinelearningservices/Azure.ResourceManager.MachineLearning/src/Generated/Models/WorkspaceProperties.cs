@@ -22,42 +22,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public WorkspaceProperties()
         {
             AssociatedWorkspaces = new ChangeTrackingList<string>();
-            ContainerRegistries = new ChangeTrackingList<string>();
-            ExistingWorkspaces = new ChangeTrackingList<string>();
-            IpAllowlist = new ChangeTrackingList<string>();
-            KeyVaults = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
-            StorageAccounts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceProperties"/>. </summary>
-        /// <param name="agentsEndpointUri"> The URI of agents endpoint associated with this workspace. </param>
         /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
-        /// <param name="allowRoleAssignmentOnRG"> The flag to indicate whether we will do role assignment for the workspace MSI on resource group level. </param>
         /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
         /// <param name="associatedWorkspaces"></param>
-        /// <param name="containerRegistries"></param>
         /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
         /// <param name="description"> The description of this workspace. </param>
         /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
         /// <param name="enableDataIsolation"></param>
         /// <param name="enableServiceSideCMKEncryption"></param>
-        /// <param name="enableSimplifiedCmk"> Flag to tell if simplified CMK should be enabled for this workspace. </param>
-        /// <param name="enableSoftwareBillOfMaterials"> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </param>
         /// <param name="encryption"></param>
-        /// <param name="existingWorkspaces"></param>
         /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
         /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
         /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
         /// <param name="hubResourceId"></param>
         /// <param name="imageBuildCompute"> The compute name for image build. </param>
-        /// <param name="ipAllowlist"> The list of IPv4  addresses that are allowed to access the workspace. </param>
         /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="keyVaults"></param>
         /// <param name="managedNetwork"></param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        /// <param name="networkAcls"> A set of rules governing the network accessibility of the workspace. </param>
         /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
         /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
@@ -69,9 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
         /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
-        /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
         /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="storageAccounts"></param>
         /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
@@ -79,34 +63,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(Uri agentsEndpointUri, bool? allowPublicAccessWhenBehindVnet, bool? allowRoleAssignmentOnRG, string applicationInsights, IList<string> associatedWorkspaces, IList<string> containerRegistries, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, bool? enableServiceSideCMKEncryption, bool? enableSimplifiedCmk, bool? enableSoftwareBillOfMaterials, EncryptionProperty encryption, IList<string> existingWorkspaces, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, ResourceIdentifier hubResourceId, string imageBuildCompute, IList<string> ipAllowlist, string keyVault, IList<string> keyVaults, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, NetworkAcls networkAcls, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, bool? isProvisionNetworkNow, MachineLearningProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, int? softDeleteRetentionInDays, string storageAccount, IList<string> storageAccounts, bool? isStorageHnsEnabled, SystemDatastoresAuthMode? systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(bool? allowPublicAccessWhenBehindVnet, string applicationInsights, IList<string> associatedWorkspaces, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, bool? enableServiceSideCMKEncryption, EncryptionProperty encryption, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, ResourceIdentifier hubResourceId, string imageBuildCompute, string keyVault, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, bool? isProvisionNetworkNow, MachineLearningProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, string storageAccount, bool? isStorageHnsEnabled, SystemDatastoresAuthMode? systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AgentsEndpointUri = agentsEndpointUri;
             AllowPublicAccessWhenBehindVnet = allowPublicAccessWhenBehindVnet;
-            AllowRoleAssignmentOnRG = allowRoleAssignmentOnRG;
             ApplicationInsights = applicationInsights;
             AssociatedWorkspaces = associatedWorkspaces;
-            ContainerRegistries = containerRegistries;
             ContainerRegistry = containerRegistry;
             Description = description;
             DiscoveryUri = discoveryUri;
             EnableDataIsolation = enableDataIsolation;
             EnableServiceSideCMKEncryption = enableServiceSideCMKEncryption;
-            EnableSimplifiedCmk = enableSimplifiedCmk;
-            EnableSoftwareBillOfMaterials = enableSoftwareBillOfMaterials;
             Encryption = encryption;
-            ExistingWorkspaces = existingWorkspaces;
             FeatureStoreSettings = featureStoreSettings;
             FriendlyName = friendlyName;
             IsHbiWorkspace = isHbiWorkspace;
             HubResourceId = hubResourceId;
             ImageBuildCompute = imageBuildCompute;
-            IpAllowlist = ipAllowlist;
             KeyVault = keyVault;
-            KeyVaults = keyVaults;
             ManagedNetwork = managedNetwork;
             MlFlowTrackingUri = mlFlowTrackingUri;
-            NetworkAcls = networkAcls;
             NotebookInfo = notebookInfo;
             PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -118,9 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
             ServiceProvisionedResourceGroup = serviceProvisionedResourceGroup;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
-            SoftDeleteRetentionInDays = softDeleteRetentionInDays;
             StorageAccount = storageAccount;
-            StorageAccounts = storageAccounts;
             IsStorageHnsEnabled = isStorageHnsEnabled;
             SystemDatastoresAuthMode = systemDatastoresAuthMode;
             TenantId = tenantId;
@@ -130,17 +103,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The URI of agents endpoint associated with this workspace. </summary>
-        [WirePath("agentsEndpointUri")]
-        public Uri AgentsEndpointUri { get; }
-
         /// <summary> The flag to indicate whether to allow public access when behind VNet. </summary>
         [WirePath("allowPublicAccessWhenBehindVnet")]
         public bool? AllowPublicAccessWhenBehindVnet { get; set; }
-
-        /// <summary> The flag to indicate whether we will do role assignment for the workspace MSI on resource group level. </summary>
-        [WirePath("allowRoleAssignmentOnRG")]
-        public bool? AllowRoleAssignmentOnRG { get; set; }
 
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
         [WirePath("applicationInsights")]
@@ -149,10 +114,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the AssociatedWorkspaces. </summary>
         [WirePath("associatedWorkspaces")]
         public IList<string> AssociatedWorkspaces { get; } = new ChangeTrackingList<string>();
-
-        /// <summary> Gets the ContainerRegistries. </summary>
-        [WirePath("containerRegistries")]
-        public IList<string> ContainerRegistries { get; } = new ChangeTrackingList<string>();
 
         /// <summary> ARM id of the container registry associated with this workspace. </summary>
         [WirePath("containerRegistry")]
@@ -174,21 +135,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("enableServiceSideCMKEncryption")]
         public bool? EnableServiceSideCMKEncryption { get; set; }
 
-        /// <summary> Flag to tell if simplified CMK should be enabled for this workspace. </summary>
-        [WirePath("enableSimplifiedCmk")]
-        public bool? EnableSimplifiedCmk { get; set; }
-
-        /// <summary> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </summary>
-        [WirePath("enableSoftwareBillOfMaterials")]
-        public bool? EnableSoftwareBillOfMaterials { get; set; }
-
         /// <summary> Gets or sets the Encryption. </summary>
         [WirePath("encryption")]
         public EncryptionProperty Encryption { get; set; }
-
-        /// <summary> Gets the ExistingWorkspaces. </summary>
-        [WirePath("existingWorkspaces")]
-        public IList<string> ExistingWorkspaces { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Settings for feature store type workspace. </summary>
         [WirePath("featureStoreSettings")]
@@ -210,17 +159,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("imageBuildCompute")]
         public string ImageBuildCompute { get; set; }
 
-        /// <summary> The list of IPv4  addresses that are allowed to access the workspace. </summary>
-        [WirePath("ipAllowlist")]
-        public IList<string> IpAllowlist { get; } = new ChangeTrackingList<string>();
-
         /// <summary> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         [WirePath("keyVault")]
         public string KeyVault { get; set; }
-
-        /// <summary> Gets the KeyVaults. </summary>
-        [WirePath("keyVaults")]
-        public IList<string> KeyVaults { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets or sets the ManagedNetwork. </summary>
         [WirePath("managedNetwork")]
@@ -229,10 +170,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>
         [WirePath("mlFlowTrackingUri")]
         public Uri MlFlowTrackingUri { get; }
-
-        /// <summary> A set of rules governing the network accessibility of the workspace. </summary>
-        [WirePath("networkAcls")]
-        public NetworkAcls NetworkAcls { get; set; }
 
         /// <summary> The notebook info of Azure ML workspace. </summary>
         [WirePath("notebookInfo")]
@@ -278,17 +215,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("sharedPrivateLinkResources")]
         public IList<MachineLearningSharedPrivateLinkResource> SharedPrivateLinkResources { get; } = new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
 
-        /// <summary> Retention time in days after workspace get soft deleted. </summary>
-        [WirePath("softDeleteRetentionInDays")]
-        public int? SoftDeleteRetentionInDays { get; set; }
-
         /// <summary> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         [WirePath("storageAccount")]
         public string StorageAccount { get; set; }
-
-        /// <summary> Gets the StorageAccounts. </summary>
-        [WirePath("storageAccounts")]
-        public IList<string> StorageAccounts { get; } = new ChangeTrackingList<string>();
 
         /// <summary> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </summary>
         [WirePath("storageHnsEnabled")]
@@ -316,11 +245,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
+        public int? ServiceManagedResourcesCosmosDBCollectionsThroughput
         {
             get
             {
-                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
+                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput;
             }
             set
             {
@@ -328,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
                 }
-                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
+                ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput = value;
             }
         }
     }

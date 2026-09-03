@@ -298,6 +298,7 @@
       "$id": "35",
       "kind": "model",
       "name": "LinkResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.link.Response.anonymous",
       "usage": "Output,Json",
@@ -313,6 +314,7 @@
           "$id": "36",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$id": "37",
@@ -322,6 +324,7 @@
               "$id": "38",
               "kind": "model",
               "name": "Pet",
+              "apiVersions": [],
               "namespace": "Payload.Pageable",
               "crossLanguageDefinitionId": "Payload.Pageable.Pet",
               "usage": "Output,Json",
@@ -337,6 +340,7 @@
                   "$id": "39",
                   "kind": "property",
                   "name": "id",
+                  "apiVersions": [],
                   "serializedName": "id",
                   "type": {
                     "$id": "40",
@@ -363,6 +367,7 @@
                   "$id": "41",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [],
                   "serializedName": "name",
                   "type": {
                     "$id": "42",
@@ -408,6 +413,7 @@
           "$id": "43",
           "kind": "property",
           "name": "next",
+          "apiVersions": [],
           "serializedName": "next",
           "type": {
             "$id": "44",
@@ -439,6 +445,7 @@
       "$id": "45",
       "kind": "model",
       "name": "LinkStringResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.linkString.Response.anonymous",
       "usage": "Output,Json",
@@ -454,6 +461,7 @@
           "$id": "46",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -476,6 +484,7 @@
           "$id": "47",
           "kind": "property",
           "name": "next",
+          "apiVersions": [],
           "serializedName": "next",
           "type": {
             "$id": "48",
@@ -504,6 +513,7 @@
       "$id": "49",
       "kind": "model",
       "name": "NestedLinkResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.Response.anonymous",
       "usage": "Output,Json",
@@ -519,11 +529,13 @@
           "$id": "50",
           "kind": "property",
           "name": "nestedItems",
+          "apiVersions": [],
           "serializedName": "nestedItems",
           "type": {
             "$id": "51",
             "kind": "model",
             "name": "NestedLinkResponseNestedItems",
+            "apiVersions": [],
             "namespace": "Payload.Pageable.ServerDrivenPagination",
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.Response.nestedItems.anonymous",
             "usage": "Output,Json",
@@ -539,6 +551,7 @@
                 "$id": "52",
                 "kind": "property",
                 "name": "pets",
+                "apiVersions": [],
                 "serializedName": "pets",
                 "type": {
                   "$ref": "37"
@@ -577,11 +590,13 @@
           "$id": "53",
           "kind": "property",
           "name": "nestedNext",
+          "apiVersions": [],
           "serializedName": "nestedNext",
           "type": {
             "$id": "54",
             "kind": "model",
             "name": "NestedLinkResponseNestedNext",
+            "apiVersions": [],
             "namespace": "Payload.Pageable.ServerDrivenPagination",
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.Response.nestedNext.anonymous",
             "usage": "Output,Json",
@@ -597,6 +612,7 @@
                 "$id": "55",
                 "kind": "property",
                 "name": "next",
+                "apiVersions": [],
                 "serializedName": "next",
                 "type": {
                   "$id": "56",
@@ -647,6 +663,7 @@
       "$id": "57",
       "kind": "model",
       "name": "ListWithoutContinuationResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.PageSize",
       "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithoutContinuation.Response.anonymous",
       "usage": "Output,Json",
@@ -662,6 +679,7 @@
           "$id": "58",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -686,6 +704,7 @@
       "$id": "59",
       "kind": "model",
       "name": "ListWithPageSizeResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.PageSize",
       "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithPageSize.Response.anonymous",
       "usage": "Output,Json",
@@ -701,6 +720,7 @@
           "$id": "60",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -725,6 +745,7 @@
       "$id": "61",
       "kind": "model",
       "name": "XmlPetListResult",
+      "apiVersions": [],
       "namespace": "Payload.Pageable",
       "crossLanguageDefinitionId": "Payload.Pageable.XmlPetListResult",
       "usage": "Output,Xml",
@@ -750,6 +771,7 @@
           "$id": "62",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "Pets",
           "type": {
             "$id": "63",
@@ -759,6 +781,7 @@
               "$id": "64",
               "kind": "model",
               "name": "XmlPet",
+              "apiVersions": [],
               "namespace": "Payload.Pageable",
               "crossLanguageDefinitionId": "Payload.Pageable.XmlPet",
               "usage": "Output,Xml",
@@ -784,6 +807,7 @@
                   "$id": "65",
                   "kind": "property",
                   "name": "id",
+                  "apiVersions": [],
                   "serializedName": "Id",
                   "type": {
                     "$id": "66",
@@ -819,6 +843,7 @@
                   "$id": "67",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [],
                   "serializedName": "Name",
                   "type": {
                     "$id": "68",
@@ -883,6 +908,7 @@
           "$id": "69",
           "kind": "property",
           "name": "nextMarker",
+          "apiVersions": [],
           "serializedName": "NextMarker",
           "type": {
             "$id": "70",
@@ -923,6 +949,7 @@
       "$id": "71",
       "kind": "model",
       "name": "XmlPetListResultWithNextLink",
+      "apiVersions": [],
       "namespace": "Payload.Pageable",
       "crossLanguageDefinitionId": "Payload.Pageable.XmlPetListResultWithNextLink",
       "usage": "Output,Xml",
@@ -948,6 +975,7 @@
           "$id": "72",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "Pets",
           "type": {
             "$ref": "63"
@@ -980,6 +1008,7 @@
           "$id": "73",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "NextLink",
           "type": {
             "$id": "74",
@@ -1017,6 +1046,7 @@
       "$id": "75",
       "kind": "model",
       "name": "Filter",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.Filter",
       "usage": "Input,Json",
@@ -1032,6 +1062,7 @@
           "$id": "76",
           "kind": "property",
           "name": "filter",
+          "apiVersions": [],
           "serializedName": "filter",
           "type": {
             "$id": "77",
@@ -1060,6 +1091,7 @@
       "$id": "78",
       "kind": "model",
       "name": "PostResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.Response.anonymous",
       "usage": "Output,Json",
@@ -1075,6 +1107,7 @@
           "$id": "79",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -1097,6 +1130,7 @@
           "$id": "80",
           "kind": "property",
           "name": "next",
+          "apiVersions": [],
           "serializedName": "next",
           "type": {
             "$id": "81",
@@ -1125,6 +1159,7 @@
       "$id": "82",
       "kind": "model",
       "name": "RequestQueryResponseBodyResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.Response.anonymous",
       "usage": "Output,Json",
@@ -1140,6 +1175,7 @@
           "$id": "83",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -1162,6 +1198,7 @@
           "$id": "84",
           "kind": "property",
           "name": "nextToken",
+          "apiVersions": [],
           "serializedName": "nextToken",
           "type": {
             "$id": "85",
@@ -1190,6 +1227,7 @@
       "$id": "86",
       "kind": "model",
       "name": "RequestHeaderResponseBodyResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.Response.anonymous",
       "usage": "Output,Json",
@@ -1205,6 +1243,7 @@
           "$id": "87",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -1227,6 +1266,7 @@
           "$id": "88",
           "kind": "property",
           "name": "nextToken",
+          "apiVersions": [],
           "serializedName": "nextToken",
           "type": {
             "$id": "89",
@@ -1255,6 +1295,7 @@
       "$id": "90",
       "kind": "model",
       "name": "RequestQueryResponseHeaderResponse",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.Response.anonymous",
       "usage": "Output,Json",
@@ -1270,6 +1311,7 @@
           "$id": "91",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -1294,6 +1336,7 @@
       "$id": "92",
       "kind": "model",
       "name": "RequestHeaderResponseHeaderResponse",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.Response.anonymous",
       "usage": "Output,Json",
@@ -1309,6 +1352,7 @@
           "$id": "93",
           "kind": "property",
           "name": "pets",
+          "apiVersions": [],
           "serializedName": "pets",
           "type": {
             "$ref": "37"
@@ -1333,6 +1377,7 @@
       "$id": "94",
       "kind": "model",
       "name": "RequestQueryNestedResponseBodyResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.Response.anonymous",
       "usage": "Output,Json",
@@ -1348,11 +1393,13 @@
           "$id": "95",
           "kind": "property",
           "name": "nestedItems",
+          "apiVersions": [],
           "serializedName": "nestedItems",
           "type": {
             "$id": "96",
             "kind": "model",
             "name": "RequestQueryNestedResponseBodyResponseNestedItems",
+            "apiVersions": [],
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.Response.nestedItems.anonymous",
             "usage": "Output,Json",
@@ -1368,6 +1415,7 @@
                 "$id": "97",
                 "kind": "property",
                 "name": "pets",
+                "apiVersions": [],
                 "serializedName": "pets",
                 "type": {
                   "$ref": "37"
@@ -1406,11 +1454,13 @@
           "$id": "98",
           "kind": "property",
           "name": "nestedNext",
+          "apiVersions": [],
           "serializedName": "nestedNext",
           "type": {
             "$id": "99",
             "kind": "model",
             "name": "RequestQueryNestedResponseBodyResponseNestedNext",
+            "apiVersions": [],
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.Response.nestedNext.anonymous",
             "usage": "Output,Json",
@@ -1426,6 +1476,7 @@
                 "$id": "100",
                 "kind": "property",
                 "name": "nextToken",
+                "apiVersions": [],
                 "serializedName": "nextToken",
                 "type": {
                   "$id": "101",
@@ -1476,6 +1527,7 @@
       "$id": "102",
       "kind": "model",
       "name": "RequestHeaderNestedResponseBodyResponse",
+      "apiVersions": [],
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
       "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.Response.anonymous",
       "usage": "Output,Json",
@@ -1491,11 +1543,13 @@
           "$id": "103",
           "kind": "property",
           "name": "nestedItems",
+          "apiVersions": [],
           "serializedName": "nestedItems",
           "type": {
             "$id": "104",
             "kind": "model",
             "name": "RequestHeaderNestedResponseBodyResponseNestedItems",
+            "apiVersions": [],
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.Response.nestedItems.anonymous",
             "usage": "Output,Json",
@@ -1511,6 +1565,7 @@
                 "$id": "105",
                 "kind": "property",
                 "name": "pets",
+                "apiVersions": [],
                 "serializedName": "pets",
                 "type": {
                   "$ref": "37"
@@ -1549,11 +1604,13 @@
           "$id": "106",
           "kind": "property",
           "name": "nestedNext",
+          "apiVersions": [],
           "serializedName": "nestedNext",
           "type": {
             "$id": "107",
             "kind": "model",
             "name": "RequestHeaderNestedResponseBodyResponseNestedNext",
+            "apiVersions": [],
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.Response.nestedNext.anonymous",
             "usage": "Output,Json",
@@ -1569,6 +1626,7 @@
                 "$id": "108",
                 "kind": "property",
                 "name": "nextToken",
+                "apiVersions": [],
                 "serializedName": "nextToken",
                 "type": {
                   "$id": "109",

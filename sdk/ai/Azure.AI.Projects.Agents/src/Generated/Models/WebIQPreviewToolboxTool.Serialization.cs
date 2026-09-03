@@ -83,11 +83,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_label"u8);
                 writer.WriteStringValue(ServerLabel);
             }
-            if (Optional.IsDefined(ServerUri))
-            {
-                writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUri.AbsoluteUri);
-            }
             if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
@@ -134,7 +129,6 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string projectConnectionId = default;
             string serverLabel = default;
-            Uri serverUri = default;
             BinaryData requireApproval = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,15 +171,6 @@ namespace Azure.AI.Projects.Agents
                     serverLabel = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("server_url"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
                 if (prop.NameEquals("require_approval"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -209,7 +194,6 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 projectConnectionId,
                 serverLabel,
-                serverUri,
                 requireApproval);
         }
     }

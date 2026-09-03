@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -11,6 +12,27 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal static class ResponseMutations
 {
+    /// <summary>
+    /// Serializes a response snapshot to its canonical durable JSON bytes for checkpoint
+    /// deduplication (FR-030/FR-037). The same serialization is recorded on every durable write
+    /// (<c>response.created</c>, each successful <c>Checkpoint()</c>, and the terminal write) so a
+    /// subsequent checkpoint whose snapshot is byte-identical to the last persisted one is skipped.
+    /// Returns <c>null</c> if the snapshot cannot be serialized (treated as "no recorded snapshot").
+    /// </summary>
+    internal static byte[]? SerializeSnapshotForDedup(Models.ResponseObject snapshot)
+    {
+        try
+        {
+            return ModelReaderWriter.Write(
+                snapshot, ModelReaderWriterOptions.Json,
+                AzureAIAgentServerResponsesContext.Default).ToArray();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
     /// Sets <c>CompletedAt</c> and <c>Usage</c> (if provided).
@@ -40,6 +62,47 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
+    }
+
+    /// <summary>
+    /// Transitions the response to <see cref="ResponseStatus.Failed"/> with the given code and
+    /// message, attaching an <c>additionalInfo.shutdown_reason</c> diagnostic property to the error
+    /// object when <paramref name="shutdownReason"/> is provided. Used exclusively for
+    /// shutdown-driven mark-failed transitions (Row 2/3 Path B <c>grace_exhausted</c> in-process, and
+    /// Path C <c>crash_recovery</c> next-lifetime recovery) so the emitted error JSON carries
+    /// <c>"shutdown_reason": "&lt;value&gt;"</c> for diagnostics, mirroring Python's
+    /// <c>additionalInfo.shutdown_reason</c>. Ordinary handler failures pass <see langword="null"/>
+    /// and are not tagged.
+    /// </summary>
+    internal static void SetFailed(
+        this Models.ResponseObject response,
+        ResponseErrorCode code,
+        string message,
+        string? shutdownReason,
+        ResponseUsage? usage = null)
+    {
+        response.Status = ResponseStatus.Failed;
+        response.Error = CreateError(code, message, shutdownReason);
+
+        if (usage is not null)
+        {
+            response.Usage = usage;
+        }
+    }
+
+    private static Models.ResponseErrorInfo CreateError(ResponseErrorCode code, string message, string? shutdownReason)
+    {
+        if (string.IsNullOrEmpty(shutdownReason))
+        {
+            return new Models.ResponseErrorInfo(code, message);
+        }
+
+        var additionalProperties = new ChangeTrackingDictionary<string, BinaryData>
+        {
+            ["shutdown_reason"] = BinaryData.FromObjectAsJson(shutdownReason),
+        };
+
+        return new Models.ResponseErrorInfo(code, message, additionalProperties);
     }
 
     /// <summary>

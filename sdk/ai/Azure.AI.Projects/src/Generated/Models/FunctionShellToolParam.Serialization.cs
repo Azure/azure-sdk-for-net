@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -76,6 +77,16 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment, options);
             }
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (InternalCallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -127,6 +138,7 @@ namespace Azure.AI.Projects
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FunctionShellToolParamEnvironment environment = default;
+            IList<InternalCallableToolAllowedCaller> allowedCallers = default;
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
@@ -145,6 +157,20 @@ namespace Azure.AI.Projects
                         continue;
                     }
                     environment = FunctionShellToolParamEnvironment.DeserializeFunctionShellToolParamEnvironment(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalCallableToolAllowedCaller> array = new List<InternalCallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new InternalCallableToolAllowedCaller(item.GetString()));
+                    }
+                    allowedCallers = array;
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -180,6 +206,7 @@ namespace Azure.AI.Projects
                 @type,
                 additionalBinaryDataProperties,
                 environment,
+                allowedCallers ?? new ChangeTrackingList<InternalCallableToolAllowedCaller>(),
                 name,
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());

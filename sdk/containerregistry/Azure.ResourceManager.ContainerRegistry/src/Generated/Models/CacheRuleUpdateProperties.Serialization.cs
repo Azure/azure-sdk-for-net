@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("credentialSetResourceId"u8);
                 writer.WriteStringValue(CredentialSetResourceId);
             }
+            if (Optional.IsDefined(AdditionalAuthenticationProperties))
+            {
+                writer.WritePropertyName("additionalAuthenticationProperties"u8);
+                writer.WriteObjectValue(AdditionalAuthenticationProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ResourceIdentifier credentialSetResourceId = default;
+            ContainerRegistryCacheAuthentication additionalAuthenticationProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,12 +141,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     credentialSetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("additionalAuthenticationProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalAuthenticationProperties = ContainerRegistryCacheAuthentication.DeserializeContainerRegistryCacheAuthentication(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CacheRuleUpdateProperties(credentialSetResourceId, additionalBinaryDataProperties);
+            return new CacheRuleUpdateProperties(credentialSetResourceId, additionalAuthenticationProperties, additionalBinaryDataProperties);
         }
     }
 }

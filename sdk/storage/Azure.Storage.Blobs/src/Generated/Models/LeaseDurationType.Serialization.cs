@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class LeaseDurationTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LeaseDurationType value) => value switch
         {
             LeaseDurationType.Infinite => "infinite",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseDurationType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static LeaseDurationType ToLeaseDurationType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "infinite")) return LeaseDurationType.Infinite;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fixed")) return LeaseDurationType.Fixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "infinite"))
+            {
+                return LeaseDurationType.Infinite;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fixed"))
+            {
+                return LeaseDurationType.Fixed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseDurationType value.");
         }
     }

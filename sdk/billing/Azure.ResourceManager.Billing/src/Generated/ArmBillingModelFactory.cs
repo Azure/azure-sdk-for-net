@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Models;
@@ -214,37 +213,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="tenantId"> The tenant id of the principal who has interacted with a billing entity. </param>
         /// <param name="objectId"> The object id of the principal who has interacted with a billing entity. </param>
         /// <param name="upn"> The user principal name of the principal who has interacted with a billing entity. </param>
-        /// <returns> A new <see cref="Models.BillingRequestPropertiesReviewedBy"/> instance for mocking. </returns>
-        public static BillingRequestPropertiesReviewedBy BillingRequestPropertiesReviewedBy(Guid? tenantId = default, string objectId = default, string upn = default)
-        {
-            return new BillingRequestPropertiesReviewedBy(tenantId, objectId, upn, default);
-        }
-
-        /// <param name="tenantId"> The tenant id of the principal who has interacted with a billing entity. </param>
-        /// <param name="objectId"> The object id of the principal who has interacted with a billing entity. </param>
-        /// <param name="upn"> The user principal name of the principal who has interacted with a billing entity. </param>
         /// <returns> A new <see cref="Models.BillingPrincipal"/> instance for mocking. </returns>
         public static BillingPrincipal BillingPrincipal(Guid? tenantId = default, string objectId = default, string upn = default)
         {
             return new BillingPrincipal(tenantId, objectId, upn, default);
-        }
-
-        /// <param name="tenantId"> The tenant id of the principal who has interacted with a billing entity. </param>
-        /// <param name="objectId"> The object id of the principal who has interacted with a billing entity. </param>
-        /// <param name="upn"> The user principal name of the principal who has interacted with a billing entity. </param>
-        /// <returns> A new <see cref="Models.BillingRequestPropertiesCreatedBy"/> instance for mocking. </returns>
-        public static BillingRequestPropertiesCreatedBy BillingRequestPropertiesCreatedBy(Guid? tenantId = default, string objectId = default, string upn = default)
-        {
-            return new BillingRequestPropertiesCreatedBy(tenantId, objectId, upn, default);
-        }
-
-        /// <param name="tenantId"> The tenant id of the principal who has interacted with a billing entity. </param>
-        /// <param name="objectId"> The object id of the principal who has interacted with a billing entity. </param>
-        /// <param name="upn"> The user principal name of the principal who has interacted with a billing entity. </param>
-        /// <returns> A new <see cref="Models.BillingRequestPropertiesLastUpdatedBy"/> instance for mocking. </returns>
-        public static BillingRequestPropertiesLastUpdatedBy BillingRequestPropertiesLastUpdatedBy(Guid? tenantId = default, string objectId = default, string upn = default)
-        {
-            return new BillingRequestPropertiesLastUpdatedBy(tenantId, objectId, upn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -437,42 +409,10 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="currency"> The currency for the amount value. </param>
         /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesAmountDue"/> instance for mocking. </returns>
-        public static InvoicePropertiesAmountDue InvoicePropertiesAmountDue(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesAmountDue(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
         /// <returns> A new <see cref="Models.BillingAmount"/> instance for mocking. </returns>
         public static BillingAmount BillingAmount(string currency = default, float? value = default)
         {
             return new BillingAmount(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesAzurePrepaymentApplied"/> instance for mocking. </returns>
-        public static InvoicePropertiesAzurePrepaymentApplied InvoicePropertiesAzurePrepaymentApplied(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesAzurePrepaymentApplied(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesBilledAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesBilledAmount InvoicePropertiesBilledAmount(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesBilledAmount(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesCreditAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesCreditAmount InvoicePropertiesCreditAmount(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesCreditAmount(currency, value, default);
         }
 
         /// <param name="documentNumbers"> The document numbers for the invoice document. </param>
@@ -504,14 +444,6 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingInvoiceFailedPayment(@on, failedPaymentReason, default);
         }
 
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesFreeAzureCreditApplied"/> instance for mocking. </returns>
-        public static InvoicePropertiesFreeAzureCreditApplied InvoicePropertiesFreeAzureCreditApplied(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesFreeAzureCreditApplied(currency, value, default);
-        }
-
         /// <param name="amount"> The paid amount. </param>
         /// <param name="madeOn"> The date when the payment was made. </param>
         /// <param name="paymentMethodId"> The ID that uniquely identifies the payment method used for the invoice. </param>
@@ -531,23 +463,6 @@ namespace Azure.ResourceManager.Billing.Models
                 default);
         }
 
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.PaymentAmount"/> instance for mocking. </returns>
-        public static PaymentAmount PaymentAmount(string currency = default, float? value = default)
-        {
-            return new PaymentAmount(currency, value, default);
-        }
-
-        /// <param name="invoiceDocumentId"> The ID of invoice. </param>
-        /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
-        /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesRebillDetails"/> instance for mocking. </returns>
-        public static InvoicePropertiesRebillDetails InvoicePropertiesRebillDetails(ResourceIdentifier invoiceDocumentId = default, ResourceIdentifier creditNoteDocumentId = default, RebillDetails rebillDetailsValue = default)
-        {
-            return new InvoicePropertiesRebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, default);
-        }
-
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
         /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
@@ -555,57 +470,6 @@ namespace Azure.ResourceManager.Billing.Models
         public static RebillDetails RebillDetails(ResourceIdentifier invoiceDocumentId = default, ResourceIdentifier creditNoteDocumentId = default, RebillDetails rebillDetailsValue = default)
         {
             return new RebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesSubTotal"/> instance for mocking. </returns>
-        public static InvoicePropertiesSubTotal InvoicePropertiesSubTotal(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesSubTotal(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesTaxAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesTaxAmount InvoicePropertiesTaxAmount(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesTaxAmount(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesTotalAmount"/> instance for mocking. </returns>
-        public static InvoicePropertiesTotalAmount InvoicePropertiesTotalAmount(string currency = default, float? value = default)
-        {
-            return new InvoicePropertiesTotalAmount(currency, value, default);
-        }
-
-        /// <param name="requestedOn"> Date when the refund was requested. </param>
-        /// <param name="approvedOn"> Date when the refund was approved. </param>
-        /// <param name="completedOn"> Date when the refund was completed. </param>
-        /// <param name="amountRequested"> The amount of refund requested. </param>
-        /// <param name="amountRefunded"> The amount refunded. </param>
-        /// <param name="rebillInvoiceId"> The invoice ID of the rebill invoice for a refund. </param>
-        /// <param name="transactionCount"> The number of transactions refunded. </param>
-        /// <param name="refundStatus"> The status of refund request. </param>
-        /// <param name="refundOperationId"> The ID of refund operation. </param>
-        /// <param name="refundReason"> The reason for refund. </param>
-        /// <returns> A new <see cref="Models.InvoicePropertiesRefundDetails"/> instance for mocking. </returns>
-        public static InvoicePropertiesRefundDetails InvoicePropertiesRefundDetails(DateTimeOffset? requestedOn = default, DateTimeOffset? approvedOn = default, DateTimeOffset? completedOn = default, BillingAmount amountRequested = default, BillingAmount amountRefunded = default, ResourceIdentifier rebillInvoiceId = default, int? transactionCount = default, RefundStatus? refundStatus = default, string refundOperationId = default, RefundReasonCode? refundReason = default)
-        {
-            return new InvoicePropertiesRefundDetails(
-                requestedOn,
-                approvedOn,
-                completedOn,
-                amountRequested,
-                amountRefunded,
-                rebillInvoiceId,
-                transactionCount,
-                refundStatus,
-                refundOperationId,
-                refundReason,
-                default);
         }
 
         /// <param name="requestedOn"> Date when the refund was requested. </param>
@@ -633,22 +497,6 @@ namespace Azure.ResourceManager.Billing.Models
                 refundOperationId,
                 refundReason,
                 default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundDetailsSummaryAmountRequested"/> instance for mocking. </returns>
-        public static RefundDetailsSummaryAmountRequested RefundDetailsSummaryAmountRequested(string currency = default, float? value = default)
-        {
-            return new RefundDetailsSummaryAmountRequested(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundDetailsSummaryAmountRefunded"/> instance for mocking. </returns>
-        public static RefundDetailsSummaryAmountRefunded RefundDetailsSummaryAmountRefunded(string currency = default, float? value = default)
-        {
-            return new RefundDetailsSummaryAmountRefunded(currency, value, default);
         }
 
         /// <param name="expireOn"> The time in UTC when the download URL will expire. </param>
@@ -989,43 +837,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="markupStatus"> Markup status of enrollment, applicable only for indirect enrollments. </param>
         /// <param name="indirectRelationshipInfo"> The properties of an enrollment which are applicable only for indirect enrollments. </param>
         /// <param name="invoiceRecipient"> The contact who receives invoices of the enrollment. </param>
-        /// <returns> A new <see cref="Models.BillingAccountPropertiesEnrollmentDetails"/> instance for mocking. </returns>
-        public static BillingAccountPropertiesEnrollmentDetails BillingAccountPropertiesEnrollmentDetails(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string currency = default, string channel = default, string language = default, string countryCode = default, string billingCycle = default, ExtendedTermOption? extendedTermOption = default, BillingEnrollmentSupportLevel? supportLevel = default, string supportCoverage = default, string cloud = default, string poNumber = default, EnrollmentMarkupStatus? markupStatus = default, IndirectRelationshipInfo indirectRelationshipInfo = default, string invoiceRecipient = default)
-        {
-            return new BillingAccountPropertiesEnrollmentDetails(
-                startOn,
-                endOn,
-                currency,
-                channel,
-                language,
-                countryCode,
-                billingCycle,
-                extendedTermOption,
-                supportLevel,
-                supportCoverage,
-                cloud,
-                poNumber,
-                markupStatus,
-                indirectRelationshipInfo,
-                invoiceRecipient,
-                default);
-        }
-
-        /// <param name="startOn"> The start date of the enrollment. </param>
-        /// <param name="endOn"> The end date of the enrollment. </param>
-        /// <param name="currency"> The billing currency for the enrollment. </param>
-        /// <param name="channel"> The channel type of the enrollment. </param>
-        /// <param name="language"> The language for the enrollment. </param>
-        /// <param name="countryCode"> The country code of the enrollment. </param>
-        /// <param name="billingCycle"> The billing cycle for the enrollment. </param>
-        /// <param name="extendedTermOption"> The billing account extension opted by the company. </param>
-        /// <param name="supportLevel"> The support level offer associated with an enrollment. </param>
-        /// <param name="supportCoverage"> The support coverage period for the enrollment. </param>
-        /// <param name="cloud"> The cloud of the enrollment. </param>
-        /// <param name="poNumber"> The purchase order number of the enrollment. </param>
-        /// <param name="markupStatus"> Markup status of enrollment, applicable only for indirect enrollments. </param>
-        /// <param name="indirectRelationshipInfo"> The properties of an enrollment which are applicable only for indirect enrollments. </param>
-        /// <param name="invoiceRecipient"> The contact who receives invoices of the enrollment. </param>
         /// <returns> A new <see cref="Models.BillingAccountEnrollmentDetails"/> instance for mocking. </returns>
         public static BillingAccountEnrollmentDetails BillingAccountEnrollmentDetails(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string currency = default, string channel = default, string language = default, string countryCode = default, string billingCycle = default, ExtendedTermOption? extendedTermOption = default, BillingEnrollmentSupportLevel? supportLevel = default, string supportCoverage = default, string cloud = default, string poNumber = default, EnrollmentMarkupStatus? markupStatus = default, IndirectRelationshipInfo indirectRelationshipInfo = default, string invoiceRecipient = default)
         {
@@ -1051,56 +862,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingAccountName"> The billing account name of the partner or the customer for an indirect motion. </param>
         /// <param name="billingProfileName"> The billing profile name of the partner or the customer for an indirect motion. </param>
         /// <param name="displayName"> The display name of the partner or customer for an indirect motion. </param>
-        /// <returns> A new <see cref="Models.EnrollmentDetailsIndirectRelationshipInfo"/> instance for mocking. </returns>
-        public static EnrollmentDetailsIndirectRelationshipInfo EnrollmentDetailsIndirectRelationshipInfo(string billingAccountName = default, string billingProfileName = default, string displayName = default)
-        {
-            return new EnrollmentDetailsIndirectRelationshipInfo(billingAccountName, billingProfileName, displayName, default);
-        }
-
-        /// <param name="billingAccountName"> The billing account name of the partner or the customer for an indirect motion. </param>
-        /// <param name="billingProfileName"> The billing profile name of the partner or the customer for an indirect motion. </param>
-        /// <param name="displayName"> The display name of the partner or customer for an indirect motion. </param>
         /// <returns> A new <see cref="Models.IndirectRelationshipInfo"/> instance for mocking. </returns>
         public static IndirectRelationshipInfo IndirectRelationshipInfo(string billingAccountName = default, string billingProfileName = default, string displayName = default)
         {
             return new IndirectRelationshipInfo(billingAccountName, billingProfileName, displayName, default);
-        }
-
-        /// <param name="addressLine1"> Address line 1. </param>
-        /// <param name="addressLine2"> Address line 2. </param>
-        /// <param name="addressLine3"> Address line 3. </param>
-        /// <param name="city"> Address city. </param>
-        /// <param name="companyName"> Company name. Optional for MCA Individual (Pay-as-you-go). </param>
-        /// <param name="country"> Country code uses ISO 3166-1 Alpha-2 format. </param>
-        /// <param name="district"> Address district. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="firstName"> First name. Optional for MCA Enterprise. </param>
-        /// <param name="lastName"> Last name. Optional for MCA Enterprise. </param>
-        /// <param name="middleName"> Middle name. </param>
-        /// <param name="phoneNumber"> Phone number. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="region"> Address region. </param>
-        /// <param name="isValidAddress"> Indicates if the address is incomplete. </param>
-        /// <returns> A new <see cref="Models.BillingAccountPropertiesSoldTo"/> instance for mocking. </returns>
-        public static BillingAccountPropertiesSoldTo BillingAccountPropertiesSoldTo(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string companyName = default, string country = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default, bool? isValidAddress = default)
-        {
-            return new BillingAccountPropertiesSoldTo(
-                addressLine1,
-                addressLine2,
-                addressLine3,
-                city,
-                companyName,
-                country,
-                district,
-                email,
-                firstName,
-                lastName,
-                middleName,
-                phoneNumber,
-                postalCode,
-                region,
-                isValidAddress,
-                default);
         }
 
         /// <param name="addressLine1"> Address line 1. </param>
@@ -1138,17 +903,6 @@ namespace Azure.ResourceManager.Billing.Models
                 region,
                 isValidAddress,
                 default);
-        }
-
-        /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
-        /// <param name="isRequired"> Identifies if the registration number is required for the billing account. </param>
-        /// <param name="registrationNumberType"> The types of registration number allowed based on the country of the billing account. </param>
-        /// <returns> A new <see cref="Models.BillingAccountPropertiesRegistrationNumber"/> instance for mocking. </returns>
-        public static BillingAccountPropertiesRegistrationNumber BillingAccountPropertiesRegistrationNumber(string id = default, bool? isRequired = default, IEnumerable<string> registrationNumberType = default)
-        {
-            registrationNumberType ??= new ChangeTrackingList<string>();
-
-            return new BillingAccountPropertiesRegistrationNumber(id, isRequired, (registrationNumberType ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
@@ -1374,14 +1128,6 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingAvailableBalanceProperties(amount, (paymentsOnAccount ?? new ChangeTrackingList<BillingPaymentOnAccount>()).ToList(), totalPaymentsOnAccount, default);
         }
 
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.AvailableBalancePropertiesAmount"/> instance for mocking. </returns>
-        public static AvailableBalancePropertiesAmount AvailableBalancePropertiesAmount(string currency = default, float? value = default)
-        {
-            return new AvailableBalancePropertiesAmount(currency, value, default);
-        }
-
         /// <param name="amount"> Payment on Account amount. </param>
         /// <param name="billingProfileId"> The ID of the billing profile for the payments on account. </param>
         /// <param name="billingProfileDisplayName"> The name of the billing profile for the payments on account. </param>
@@ -1401,22 +1147,6 @@ namespace Azure.ResourceManager.Billing.Models
                 @on,
                 paymentMethodType,
                 default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.PaymentOnAccountAmount"/> instance for mocking. </returns>
-        public static PaymentOnAccountAmount PaymentOnAccountAmount(string currency = default, float? value = default)
-        {
-            return new PaymentOnAccountAmount(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.AvailableBalancePropertiesTotalPaymentsOnAccount"/> instance for mocking. </returns>
-        public static AvailableBalancePropertiesTotalPaymentsOnAccount AvailableBalancePropertiesTotalPaymentsOnAccount(string currency = default, float? value = default)
-        {
-            return new AvailableBalancePropertiesTotalPaymentsOnAccount(currency, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1491,22 +1221,6 @@ namespace Azure.ResourceManager.Billing.Models
                 default);
         }
 
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.ProductPropertiesLastCharge"/> instance for mocking. </returns>
-        public static ProductPropertiesLastCharge ProductPropertiesLastCharge(string currency = default, float? value = default)
-        {
-            return new ProductPropertiesLastCharge(currency, value, default);
-        }
-
-        /// <param name="resellerId"> The MPN ID of the reseller. </param>
-        /// <param name="description"> The name of the reseller. </param>
-        /// <returns> A new <see cref="Models.ProductPropertiesReseller"/> instance for mocking. </returns>
-        public static ProductPropertiesReseller ProductPropertiesReseller(string resellerId = default, string description = default)
-        {
-            return new ProductPropertiesReseller(resellerId, description, default);
-        }
-
         /// <param name="resellerId"> The MPN ID of the reseller. </param>
         /// <param name="description"> The name of the reseller. </param>
         /// <returns> A new <see cref="Models.CreatedSubscriptionReseller"/> instance for mocking. </returns>
@@ -1549,15 +1263,6 @@ namespace Azure.ResourceManager.Billing.Models
         public static MoveProductEligibilityResult MoveProductEligibilityResult(bool? isMoveEligible = default, MoveProductErrorDetails errorDetails = default)
         {
             return new MoveProductEligibilityResult(isMoveEligible, errorDetails, default);
-        }
-
-        /// <param name="code"> Error code for the product transfer validation. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="details"> Error details of the transfer eligibility validation. </param>
-        /// <returns> A new <see cref="Models.MoveProductEligibilityResultErrorDetails"/> instance for mocking. </returns>
-        public static MoveProductEligibilityResultErrorDetails MoveProductEligibilityResultErrorDetails(MoveValidationErrorCode? code = default, string message = default, string details = default)
-        {
-            return new MoveProductEligibilityResultErrorDetails(code, message, details, default);
         }
 
         /// <param name="code"> Error code for the product transfer validation. </param>
@@ -1650,126 +1355,6 @@ namespace Azure.ResourceManager.Billing.Models
                 default);
         }
 
-        /// <param name="addressLine1"> Address line 1. </param>
-        /// <param name="addressLine2"> Address line 2. </param>
-        /// <param name="addressLine3"> Address line 3. </param>
-        /// <param name="city"> Address city. </param>
-        /// <param name="companyName"> Company name. Optional for MCA Individual (Pay-as-you-go). </param>
-        /// <param name="country"> Country code uses ISO 3166-1 Alpha-2 format. </param>
-        /// <param name="district"> Address district. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="firstName"> First name. Optional for MCA Enterprise. </param>
-        /// <param name="lastName"> Last name. Optional for MCA Enterprise. </param>
-        /// <param name="middleName"> Middle name. </param>
-        /// <param name="phoneNumber"> Phone number. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="region"> Address region. </param>
-        /// <param name="isValidAddress"> Indicates if the address is incomplete. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePropertiesBillTo"/> instance for mocking. </returns>
-        public static BillingProfilePropertiesBillTo BillingProfilePropertiesBillTo(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string companyName = default, string country = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default, bool? isValidAddress = default)
-        {
-            return new BillingProfilePropertiesBillTo(
-                addressLine1,
-                addressLine2,
-                addressLine3,
-                city,
-                companyName,
-                country,
-                district,
-                email,
-                firstName,
-                lastName,
-                middleName,
-                phoneNumber,
-                postalCode,
-                region,
-                isValidAddress,
-                default);
-        }
-
-        /// <param name="billingAccountName"> The billing account name of the partner or the customer for an indirect motion. </param>
-        /// <param name="billingProfileName"> The billing profile name of the partner or the customer for an indirect motion. </param>
-        /// <param name="displayName"> The display name of the partner or customer for an indirect motion. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePropertiesIndirectRelationshipInfo"/> instance for mocking. </returns>
-        public static BillingProfilePropertiesIndirectRelationshipInfo BillingProfilePropertiesIndirectRelationshipInfo(string billingAccountName = default, string billingProfileName = default, string displayName = default)
-        {
-            return new BillingProfilePropertiesIndirectRelationshipInfo(billingAccountName, billingProfileName, displayName, default);
-        }
-
-        /// <param name="addressLine1"> Address line 1. </param>
-        /// <param name="addressLine2"> Address line 2. </param>
-        /// <param name="addressLine3"> Address line 3. </param>
-        /// <param name="city"> Address city. </param>
-        /// <param name="companyName"> Company name. Optional for MCA Individual (Pay-as-you-go). </param>
-        /// <param name="country"> Country code uses ISO 3166-1 Alpha-2 format. </param>
-        /// <param name="district"> Address district. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="firstName"> First name. Optional for MCA Enterprise. </param>
-        /// <param name="lastName"> Last name. Optional for MCA Enterprise. </param>
-        /// <param name="middleName"> Middle name. </param>
-        /// <param name="phoneNumber"> Phone number. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="region"> Address region. </param>
-        /// <param name="isValidAddress"> Indicates if the address is incomplete. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePropertiesShipTo"/> instance for mocking. </returns>
-        public static BillingProfilePropertiesShipTo BillingProfilePropertiesShipTo(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string companyName = default, string country = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default, bool? isValidAddress = default)
-        {
-            return new BillingProfilePropertiesShipTo(
-                addressLine1,
-                addressLine2,
-                addressLine3,
-                city,
-                companyName,
-                country,
-                district,
-                email,
-                firstName,
-                lastName,
-                middleName,
-                phoneNumber,
-                postalCode,
-                region,
-                isValidAddress,
-                default);
-        }
-
-        /// <param name="addressLine1"> Address line 1. </param>
-        /// <param name="addressLine2"> Address line 2. </param>
-        /// <param name="addressLine3"> Address line 3. </param>
-        /// <param name="city"> Address city. </param>
-        /// <param name="companyName"> Company name. Optional for MCA Individual (Pay-as-you-go). </param>
-        /// <param name="country"> Country code uses ISO 3166-1 Alpha-2 format. </param>
-        /// <param name="district"> Address district. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="firstName"> First name. Optional for MCA Enterprise. </param>
-        /// <param name="lastName"> Last name. Optional for MCA Enterprise. </param>
-        /// <param name="middleName"> Middle name. </param>
-        /// <param name="phoneNumber"> Phone number. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="region"> Address region. </param>
-        /// <param name="isValidAddress"> Indicates if the address is incomplete. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePropertiesSoldTo"/> instance for mocking. </returns>
-        public static BillingProfilePropertiesSoldTo BillingProfilePropertiesSoldTo(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string companyName = default, string country = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default, bool? isValidAddress = default)
-        {
-            return new BillingProfilePropertiesSoldTo(
-                addressLine1,
-                addressLine2,
-                addressLine3,
-                city,
-                companyName,
-                country,
-                district,
-                email,
-                firstName,
-                lastName,
-                middleName,
-                phoneNumber,
-                postalCode,
-                region,
-                isValidAddress,
-                default);
-        }
-
         /// <param name="amount"> The initial amount for the billing profile. </param>
         /// <param name="currency"> The currency in which the charges for the billing profile are billed. </param>
         /// <param name="startOn"> The date when this spending limit goes into effect. </param>
@@ -1787,16 +1372,6 @@ namespace Azure.ResourceManager.Billing.Models
                 limitType,
                 status,
                 default);
-        }
-
-        /// <param name="term"> Represents duration in netXX format. Always in days. </param>
-        /// <param name="startOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
-        /// <param name="endOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
-        /// <param name="isDefault"> Indicates payment term is the standard payment term. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePropertiesCurrentPaymentTerm"/> instance for mocking. </returns>
-        public static BillingProfilePropertiesCurrentPaymentTerm BillingProfilePropertiesCurrentPaymentTerm(string term = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, bool? isDefault = default)
-        {
-            return new BillingProfilePropertiesCurrentPaymentTerm(term, startOn, endOn, isDefault, default);
         }
 
         /// <param name="eligibilityStatus"> Status describing if billing profile is eligible to be deleted. </param>
@@ -2231,15 +1806,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="authenticationType"> The state showing the enrollment auth level. </param>
         /// <param name="accountOwnerViewCharges"> The policy that controls whether account owner can view charges. </param>
         /// <param name="departmentAdminViewCharges"> The policy that controls whether department admin can view charges. </param>
-        /// <returns> A new <see cref="Models.BillingProfilePolicyPropertiesEnterpriseAgreementPolicies"/> instance for mocking. </returns>
-        public static BillingProfilePolicyPropertiesEnterpriseAgreementPolicies BillingProfilePolicyPropertiesEnterpriseAgreementPolicies(EnrollmentAuthLevelState? authenticationType = default, EnrollmentAccountOwnerViewCharge? accountOwnerViewCharges = default, EnrollmentDepartmentAdminViewCharge? departmentAdminViewCharges = default)
-        {
-            return new BillingProfilePolicyPropertiesEnterpriseAgreementPolicies(authenticationType, accountOwnerViewCharges, departmentAdminViewCharges, default);
-        }
-
-        /// <param name="authenticationType"> The state showing the enrollment auth level. </param>
-        /// <param name="accountOwnerViewCharges"> The policy that controls whether account owner can view charges. </param>
-        /// <param name="departmentAdminViewCharges"> The policy that controls whether department admin can view charges. </param>
         /// <returns> A new <see cref="Models.EnterpriseAgreementPolicies"/> instance for mocking. </returns>
         public static EnterpriseAgreementPolicies EnterpriseAgreementPolicies(EnrollmentAuthLevelState? authenticationType = default, EnrollmentAccountOwnerViewCharge? accountOwnerViewCharges = default, EnrollmentDepartmentAdminViewCharge? departmentAdminViewCharges = default)
         {
@@ -2286,15 +1852,6 @@ namespace Azure.ResourceManager.Billing.Models
                 savingsPlanPurchases,
                 (policies ?? new ChangeTrackingList<BillingPolicySummary>()).ToList(),
                 default);
-        }
-
-        /// <param name="authenticationType"> The state showing the enrollment auth level. </param>
-        /// <param name="accountOwnerViewCharges"> The policy that controls whether account owner can view charges. </param>
-        /// <param name="departmentAdminViewCharges"> The policy that controls whether department admin can view charges. </param>
-        /// <returns> A new <see cref="Models.BillingAccountPolicyPropertiesEnterpriseAgreementPolicies"/> instance for mocking. </returns>
-        public static BillingAccountPolicyPropertiesEnterpriseAgreementPolicies BillingAccountPolicyPropertiesEnterpriseAgreementPolicies(EnrollmentAuthLevelState? authenticationType = default, EnrollmentAccountOwnerViewCharge? accountOwnerViewCharges = default, EnrollmentDepartmentAdminViewCharge? departmentAdminViewCharges = default)
-        {
-            return new BillingAccountPolicyPropertiesEnterpriseAgreementPolicies(authenticationType, accountOwnerViewCharges, departmentAdminViewCharges, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3024,71 +2581,6 @@ namespace Azure.ResourceManager.Billing.Models
                 default);
         }
 
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesAzureCreditApplied"/> instance for mocking. </returns>
-        public static TransactionPropertiesAzureCreditApplied TransactionPropertiesAzureCreditApplied(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesAzureCreditApplied(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesConsumptionCommitmentDecremented"/> instance for mocking. </returns>
-        public static TransactionPropertiesConsumptionCommitmentDecremented TransactionPropertiesConsumptionCommitmentDecremented(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesConsumptionCommitmentDecremented(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesEffectivePrice"/> instance for mocking. </returns>
-        public static TransactionPropertiesEffectivePrice TransactionPropertiesEffectivePrice(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesEffectivePrice(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesMarketPrice"/> instance for mocking. </returns>
-        public static TransactionPropertiesMarketPrice TransactionPropertiesMarketPrice(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesMarketPrice(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesSubTotal"/> instance for mocking. </returns>
-        public static TransactionPropertiesSubTotal TransactionPropertiesSubTotal(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesSubTotal(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesTax"/> instance for mocking. </returns>
-        public static TransactionPropertiesTax TransactionPropertiesTax(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesTax(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesTransactionAmount"/> instance for mocking. </returns>
-        public static TransactionPropertiesTransactionAmount TransactionPropertiesTransactionAmount(string currency = default, float? value = default)
-        {
-            return new TransactionPropertiesTransactionAmount(currency, value, default);
-        }
-
-        /// <param name="amountRequested"> The amount of refund requested. </param>
-        /// <param name="amountRefunded"> The amount refunded. </param>
-        /// <param name="refundOperationId"> The ID of refund operation. </param>
-        /// <returns> A new <see cref="Models.TransactionPropertiesRefundTransactionDetails"/> instance for mocking. </returns>
-        public static TransactionPropertiesRefundTransactionDetails TransactionPropertiesRefundTransactionDetails(BillingAmount amountRequested = default, BillingAmount amountRefunded = default, string refundOperationId = default)
-        {
-            return new TransactionPropertiesRefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, default);
-        }
-
         /// <param name="amountRequested"> The amount of refund requested. </param>
         /// <param name="amountRefunded"> The amount refunded. </param>
         /// <param name="refundOperationId"> The ID of refund operation. </param>
@@ -3096,22 +2588,6 @@ namespace Azure.ResourceManager.Billing.Models
         public static RefundTransactionDetails RefundTransactionDetails(BillingAmount amountRequested = default, BillingAmount amountRefunded = default, string refundOperationId = default)
         {
             return new RefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundTransactionDetailsAmountRequested"/> instance for mocking. </returns>
-        public static RefundTransactionDetailsAmountRequested RefundTransactionDetailsAmountRequested(string currency = default, float? value = default)
-        {
-            return new RefundTransactionDetailsAmountRequested(currency, value, default);
-        }
-
-        /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
-        /// <returns> A new <see cref="Models.RefundTransactionDetailsAmountRefunded"/> instance for mocking. </returns>
-        public static RefundTransactionDetailsAmountRefunded RefundTransactionDetailsAmountRefunded(string currency = default, float? value = default)
-        {
-            return new RefundTransactionDetailsAmountRefunded(currency, value, default);
         }
 
         /// <param name="azureCreditApplied"> The total amount of any Azure credits applied. </param>
@@ -3381,60 +2857,6 @@ namespace Azure.ResourceManager.Billing.Models
                 isAccountAdmin,
                 productId,
                 productName,
-                default);
-        }
-
-        /// <param name="addressLine1"> Address line 1. </param>
-        /// <param name="addressLine2"> Address line 2. </param>
-        /// <param name="addressLine3"> Address line 3. </param>
-        /// <param name="city"> Address city. </param>
-        /// <param name="companyName"> Company name. Optional for MCA Individual (Pay-as-you-go). </param>
-        /// <param name="country"> Country code uses ISO 3166-1 Alpha-2 format. </param>
-        /// <param name="district"> Address district. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="firstName"> First name. Optional for MCA Enterprise. </param>
-        /// <param name="lastName"> Last name. Optional for MCA Enterprise. </param>
-        /// <param name="middleName"> Middle name. </param>
-        /// <param name="phoneNumber"> Phone number. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <param name="region"> Address region. </param>
-        /// <param name="isValidAddress"> Indicates if the address is incomplete. </param>
-        /// <returns> A new <see cref="Models.BillingPropertyPropertiesSubscriptionServiceUsageAddress"/> instance for mocking. </returns>
-        public static BillingPropertyPropertiesSubscriptionServiceUsageAddress BillingPropertyPropertiesSubscriptionServiceUsageAddress(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string companyName = default, string country = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default, bool? isValidAddress = default)
-        {
-            return new BillingPropertyPropertiesSubscriptionServiceUsageAddress(
-                addressLine1,
-                addressLine2,
-                addressLine3,
-                city,
-                companyName,
-                country,
-                district,
-                email,
-                firstName,
-                lastName,
-                middleName,
-                phoneNumber,
-                postalCode,
-                region,
-                isValidAddress,
-                default);
-        }
-
-        /// <param name="departmentDisplayName"> The name of the department. </param>
-        /// <param name="departmentId"> The ID that uniquely identifies the department. </param>
-        /// <param name="enrollmentAccountStatus"> The status of the enrollment account. </param>
-        /// <param name="enrollmentAccountDisplayName"> The name of the enrollment account. </param>
-        /// <param name="enrollmentAccountId"> The ID that uniquely identifies an enrollment account. </param>
-        /// <returns> A new <see cref="Models.BillingPropertyPropertiesEnrollmentDetails"/> instance for mocking. </returns>
-        public static BillingPropertyPropertiesEnrollmentDetails BillingPropertyPropertiesEnrollmentDetails(string departmentDisplayName = default, string departmentId = default, string enrollmentAccountStatus = default, string enrollmentAccountDisplayName = default, string enrollmentAccountId = default)
-        {
-            return new BillingPropertyPropertiesEnrollmentDetails(
-                departmentDisplayName,
-                departmentId,
-                enrollmentAccountStatus,
-                enrollmentAccountDisplayName,
-                enrollmentAccountId,
                 default);
         }
 

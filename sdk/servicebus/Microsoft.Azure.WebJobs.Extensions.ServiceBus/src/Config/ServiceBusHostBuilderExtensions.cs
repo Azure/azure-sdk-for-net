@@ -21,8 +21,16 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.Hosting
 {
+    /// <summary>
+    /// Extension methods for registering the Service Bus extension with an <see cref="IWebJobsBuilder"/>.
+    /// </summary>
     public static class ServiceBusHostBuilderExtensions
     {
+        /// <summary>
+        /// Adds the Service Bus extension to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The builder to add the extension to.</param>
+        /// <returns>The <paramref name="builder"/> so that additional calls can be chained.</returns>
         public static IWebJobsBuilder AddServiceBus(this IWebJobsBuilder builder)
         {
             if (builder == null)
@@ -34,6 +42,12 @@ namespace Microsoft.Extensions.Hosting
             return builder;
         }
 
+        /// <summary>
+        /// Adds the Service Bus extension to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The builder to add the extension to.</param>
+        /// <param name="configure">A delegate used to configure the <see cref="ServiceBusOptions"/>.</param>
+        /// <returns>The <paramref name="builder"/> so that additional calls can be chained.</returns>
         public static IWebJobsBuilder AddServiceBus(this IWebJobsBuilder builder, Action<ServiceBusOptions> configure)
         {
             if (builder == null)

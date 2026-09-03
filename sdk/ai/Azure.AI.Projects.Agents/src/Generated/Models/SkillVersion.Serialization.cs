@@ -95,7 +95,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
+            writer.WriteNumberValue(CreatedOn, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             string version = default;
             string description = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.AI.Projects.Agents
                 name,
                 version,
                 description,
-                createdAt,
+                createdOn,
                 additionalBinaryDataProperties);
         }
     }

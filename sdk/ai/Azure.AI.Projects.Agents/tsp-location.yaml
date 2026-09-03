@@ -1,7 +1,7 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-projects-agents
-commit: 7203079f304df289e922f542f4247fafdb1d3c3b
+commit: 77f6a1c26e7331a69718b021926decee1fa1e6f4
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/agents
 - specification/ai-foundry/data-plane/Foundry/src/common
 - specification/ai-foundry/data-plane/Foundry/src/memory-stores
@@ -17,5 +17,6 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/managed-blueprints
 - specification/ai-foundry/data-plane/Foundry/src/agents-optimization
 - specification/ai-foundry/data-plane/Foundry/src/sdk-common
+- specification/ai-foundry/data-plane/Foundry/src/voice-agents
 
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="recentlyUsedVersions"> List of versions that the agent pool has recently been on. </param>
         /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
         /// <returns> A new <see cref="ContainerService.AgentPoolUpgradeProfileData"/> instance for mocking. </returns>
-        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, IEnumerable<AgentPoolRecentlyUsedVersion> recentlyUsedVersions, string latestNodeImageVersion)
+        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kubernetesVersion = null, ContainerServiceOSType osType = default, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = null, IEnumerable<AgentPoolRecentlyUsedVersion> recentlyUsedVersions = null, string latestNodeImageVersion = null)
         {
             return new AgentPoolUpgradeProfileData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new ChangeTrackingList<KubernetesVersionComponents>(), (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
+                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new List<KubernetesVersionComponents>(), (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="metrics"> Metrics profile for the prometheus service addon. </param>
         /// <param name="isAppMonitoringAutoInstrumentationEnabled"> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </param>
         /// <returns> A new <see cref="Models.ManagedClusterAzureMonitorProfile"/> instance for mocking. </returns>
-        public static ManagedClusterAzureMonitorProfile ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics, bool? isAppMonitoringAutoInstrumentationEnabled)
+        public static ManagedClusterAzureMonitorProfile ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics = null, bool? isAppMonitoringAutoInstrumentationEnabled = default)
         {
             ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring = null;
             if (isAppMonitoringAutoInstrumentationEnabled.HasValue)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     IsAppMonitoringAutoInstrumentationEnabled = isAppMonitoringAutoInstrumentationEnabled
                 };
             }
-            return ManagedClusterAzureMonitorProfile(metrics, null, appMonitoring);
+            return new ManagedClusterAzureMonitorProfile(metrics, null, appMonitoring, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory now exposes
@@ -99,12 +99,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isKedaEnabled"> Whether to enable KEDA. </param>
         /// <param name="isVpaEnabled"> Whether to enable VPA add-on in cluster. Default value is false. </param>
         /// <returns> A new <see cref="Models.ManagedClusterWorkloadAutoScalerProfile"/> instance for mocking. </returns>
-        public static ManagedClusterWorkloadAutoScalerProfile ManagedClusterWorkloadAutoScalerProfile(bool? isKedaEnabled, bool? isVpaEnabled)
+        public static ManagedClusterWorkloadAutoScalerProfile ManagedClusterWorkloadAutoScalerProfile(bool? isKedaEnabled = default, bool? isVpaEnabled = default)
         {
             ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler = isVpaEnabled.HasValue
                 ? new ManagedClusterVerticalPodAutoscaler(isVpaEnabled.Value)
                 : null;
-            return ManagedClusterWorkloadAutoScalerProfile(isKedaEnabled, verticalPodAutoscaler);
+            ManagedClusterWorkloadAutoScalerProfileKeda keda = isKedaEnabled.HasValue
+                ? new ManagedClusterWorkloadAutoScalerProfileKeda(isKedaEnabled.Value)
+                : null;
+            return new ManagedClusterWorkloadAutoScalerProfile(keda, verticalPodAutoscaler, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -113,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. </param>
         /// <param name="isSecurityMonitoringEnabled"> Whether to enable Defender threat detection. </param>
         /// <returns> A new <see cref="Models.ManagedClusterSecurityProfileDefender"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfileDefender ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, bool? isSecurityMonitoringEnabled)
+        public static ManagedClusterSecurityProfileDefender ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId = null, bool? isSecurityMonitoringEnabled = default)
         {
             return ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, isSecurityMonitoringEnabled, null);
         }
@@ -126,12 +129,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. </param>
         /// <returns> A new <see cref="Models.ManagedClusterNatGatewayProfile"/> instance for mocking. </returns>
-        public static ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(int? managedOutboundIPCount, IEnumerable<WritableSubResource> effectiveOutboundIPs, int? idleTimeoutInMinutes)
+        public static ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(int? managedOutboundIPCount = default, IEnumerable<WritableSubResource> effectiveOutboundIPs = null, int? idleTimeoutInMinutes = default)
         {
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = managedOutboundIPCount.HasValue
                 ? new ManagedClusterManagedOutboundIPProfile { Count = managedOutboundIPCount }
                 : null;
-            return ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs, null, null, idleTimeoutInMinutes);
+            return new ManagedClusterNatGatewayProfile(null, managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), null, null, idleTimeoutInMinutes, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -146,9 +149,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isMultipleStandardLoadBalancersEnabled"> Enable multiple standard load balancers per AKS cluster or not. </param>
         /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
         /// <returns> A new <see cref="Models.ManagedClusterLoadBalancerProfile"/> instance for mocking. </returns>
-        public static ManagedClusterLoadBalancerProfile ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, IEnumerable<WritableSubResource> outboundPublicIPPrefixes, IEnumerable<WritableSubResource> outboundPublicIPs, IEnumerable<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? isMultipleStandardLoadBalancersEnabled, ManagedClusterLoadBalancerBackendPoolType? backendPoolType)
+        public static ManagedClusterLoadBalancerProfile ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = null, IEnumerable<WritableSubResource> outboundPublicIPPrefixes = null, IEnumerable<WritableSubResource> outboundPublicIPs = null, IEnumerable<WritableSubResource> effectiveOutboundIPs = null, int? allocatedOutboundPorts = default, int? idleTimeoutInMinutes = default, bool? isMultipleStandardLoadBalancersEnabled = default, ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default)
         {
-            return ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundPublicIPPrefixes, outboundPublicIPs, effectiveOutboundIPs, allocatedOutboundPorts, idleTimeoutInMinutes, isMultipleStandardLoadBalancersEnabled, backendPoolType, null);
+            ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = outboundPublicIPPrefixes is null
+                ? null
+                : new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(outboundPublicIPPrefixes.ToList(), null);
+            ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = outboundPublicIPs is null
+                ? null
+                : new ManagedClusterLoadBalancerProfileOutboundIPs(outboundPublicIPs.ToList(), null);
+            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundIPPrefixes, outboundIPs, effectiveOutboundIPs?.ToList(), allocatedOutboundPorts, idleTimeoutInMinutes, isMultipleStandardLoadBalancersEnabled, backendPoolType, null, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -160,9 +169,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nginxDefaultIngressControllerType"> Type of the default NginxIngressController custom resource. </param>
         /// <param name="identity"> Managed identity of the Web Application Routing add-on. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIngressProfileWebAppRouting"/> instance for mocking. </returns>
-        public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, GatewayApiIstioMode? gatewayApiImplementationsIstioMode, IEnumerable<ResourceIdentifier> dnsZoneResourceIds, NginxIngressControllerType? nginxDefaultIngressControllerType, ContainerServiceUserAssignedIdentity identity)
+        public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled = default, GatewayApiIstioMode? gatewayApiImplementationsIstioMode = default, IEnumerable<ResourceIdentifier> dnsZoneResourceIds = null, NginxIngressControllerType? nginxDefaultIngressControllerType = default, ContainerServiceUserAssignedIdentity identity = null)
         {
-            return ManagedClusterIngressProfileWebAppRouting(isEnabled, gatewayApiImplementationsIstioMode, dnsZoneResourceIds, nginxDefaultIngressControllerType, identity, null);
+            return ManagedClusterIngressProfileWebAppRouting(isEnabled, dnsZoneResourceIds, nginxDefaultIngressControllerType, identity);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -171,9 +180,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="webAppRouting"> Web App Routing settings for the ingress profile. </param>
         /// <param name="gatewayApiInstallation"> The Gateway API installation mode. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIngressProfile"/> instance for mocking. </returns>
-        public static ManagedClusterIngressProfile ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, ManagedGatewayType? gatewayApiInstallation)
+        public static ManagedClusterIngressProfile ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting = null, ManagedGatewayType? gatewayApiInstallation = default)
         {
-            return ManagedClusterIngressProfile(webAppRouting, gatewayApiInstallation, null);
+            ManagedClusterIngressProfileGatewayConfiguration gatewayApi = gatewayApiInstallation.HasValue
+                ? new ManagedClusterIngressProfileGatewayConfiguration(gatewayApiInstallation, null)
+                : null;
+            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, null, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory inserted the
@@ -185,9 +197,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeSoakDurationInMinutes"> The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node. </param>
         /// <param name="undrainableNodeBehavior"> Defines the behavior for undrainable nodes during upgrade. </param>
         /// <returns> A new <see cref="Models.AgentPoolUpgradeSettings"/> instance for mocking. </returns>
-        public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior)
+        public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge = null, string maxUnavailable = null, int? drainTimeoutInMinutes = default, int? nodeSoakDurationInMinutes = default, UndrainableNodeBehavior? undrainableNodeBehavior = default)
         {
-            return AgentPoolUpgradeSettings(maxSurge, maxUnavailable, null, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior);
+            return new AgentPoolUpgradeSettings(maxSurge, maxUnavailable, null, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.AgentPoolUpgradeProfileData"/>. </summary>
@@ -201,7 +213,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServiceAgentPoolData"/>. </summary>
         /// <returns> A new <see cref="ContainerService.ContainerServiceAgentPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, Azure.Core.ResourceIdentifier vnetSubnetId, Azure.Core.ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, Azure.Core.ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, Azure.Core.ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, Azure.Core.ResourceIdentifier capacityReservationGroupId, Azure.Core.ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolSecurityProfile securityProfile, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, LocalDnsProfile localDnsProfile, ContainerServiceStateCode? powerStateCode, Azure.Core.ResourceIdentifier creationDataSourceResourceId, bool? isOutboundNatDisabled, int? gatewayPublicIPPrefixSize, bool? isArtifactStreamingEnabled, Azure.ResponseError statusProvisioningError, string upgradeMaxSurge, IEnumerable<ManualScaleProfile> scaleManual, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, AgentPoolGpuDriver? gpuDriver, bool? enableAutoScaling, bool? enableNodePublicIP, bool? enableEncryptionAtHost, bool? enableFips, bool? enableUltraSsd)
+        public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? eTag = default, int? count = default, string vmSize = null, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = null, Azure.Core.ResourceIdentifier vnetSubnetId = null, Azure.Core.ResourceIdentifier podSubnetId = null, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = null, string currentOrchestratorVersion = null, string nodeImageVersion = null, AgentPoolUpgradeSettings upgradeSettings = null, string provisioningState = null, IEnumerable<string> availabilityZones = null, bool? isNodePublicIpEnabled = default, Azure.Core.ResourceIdentifier nodePublicIPPrefixId = null, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, KubeletConfig kubeletConfig = null, LinuxOSConfig linuxOSConfig = null, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, Azure.Core.ResourceIdentifier hostGroupId = null, AgentPoolNetworkProfile networkProfile = null, AgentPoolSecurityProfile securityProfile = null, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = null, LocalDnsProfile localDnsProfile = null, ContainerServiceStateCode? powerStateCode = default, Azure.Core.ResourceIdentifier creationDataSourceResourceId = null, bool? isOutboundNatDisabled = default, int? gatewayPublicIPPrefixSize = default, bool? isArtifactStreamingEnabled = default, Azure.ResponseError statusProvisioningError = null, string upgradeMaxSurge = null, IEnumerable<ManualScaleProfile> scaleManual = null, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = null, AgentPoolGpuDriver? gpuDriver = default, bool? enableAutoScaling = default, bool? enableNodePublicIP = default, bool? enableEncryptionAtHost = default, bool? enableFips = default, bool? enableUltraSsd = default)
         {
             var result = ContainerServiceAgentPoolData(
                 id: id,
@@ -270,20 +282,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 enableEncryptionAtHost: enableEncryptionAtHost,
                 enableFips: enableFips,
                 enableUltraSsd: enableUltraSsd,
-                upgradeStrategy: default,
-                isOSDiskFullCachingEnabled: default,
-                upgradeSettingsBlueGreen: default,
-                nodeInitializationTaints: default,
-                gpuProfile: default,
-                virtualMachinesScale: default,
-                preparedImageSpecificationId: default);
+                virtualMachinesScale: default);
             return result;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServiceManagedClusterData"/>. </summary>
         /// <returns> A new <see cref="ContainerService.ContainerServiceManagedClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, Azure.Core.AzureLocation location, string provisioningState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, Azure.Core.ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, Azure.Core.ResourceIdentifier resourceId, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ContainerServiceStateCode? powerStateCode, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel, UpgradeOverrideSettings upgradeOverrideSettings, bool? isCostAnalysisEnabled, bool? isAIToolchainOperatorEnabled, Azure.ResponseError statusProvisioningError, Azure.ETag? eTag, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string kind)
+        public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default, string provisioningState = null, int? maxAgentPools = default, string kubernetesVersion = null, string currentKubernetesVersion = null, string dnsPrefix = null, string fqdnSubdomain = null, string fqdn = null, string privateFqdn = null, string azurePortalFqdn = null, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles = null, ContainerServiceLinuxProfile linuxProfile = null, ManagedClusterWindowsProfile windowsProfile = null, ManagedClusterServicePrincipalProfile servicePrincipalProfile = null, IDictionary<string, ManagedClusterAddonProfile> addonProfiles = null, ManagedClusterPodIdentityProfile podIdentityProfile = null, ManagedClusterOidcIssuerProfile oidcIssuerProfile = null, string nodeResourceGroup = null, bool? isRbacEnabled = default, KubernetesSupportPlan? supportPlan = default, ContainerServiceNetworkProfile networkProfile = null, ManagedClusterAadProfile aadProfile = null, ManagedClusterAutoUpgradeProfile autoUpgradeProfile = null, ManagedClusterAutoScalerProfile autoScalerProfile = null, ManagedClusterApiServerAccessProfile apiServerAccessProfile = null, Azure.Core.ResourceIdentifier diskEncryptionSetId = null, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = null, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources = null, bool? isLocalAccountsDisabled = default, ManagedClusterHttpProxyConfig httpProxyConfig = null, ManagedClusterSecurityProfile securityProfile = null, ManagedClusterStorageProfile storageProfile = null, ManagedClusterIngressProfile ingressProfile = null, ContainerServicePublicNetworkAccess? publicNetworkAccess = default, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile = null, ManagedClusterAzureMonitorProfile azureMonitorProfile = null, ServiceMeshProfile serviceMeshProfile = null, Azure.Core.ResourceIdentifier resourceId = null, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = null, ManagedClusterBootstrapProfile bootstrapProfile = null, ManagedClusterHostedSystemProfile hostedSystemProfile = null, ContainerServiceStateCode? powerStateCode = default, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel = default, UpgradeOverrideSettings upgradeOverrideSettings = null, bool? isCostAnalysisEnabled = default, bool? isAIToolchainOperatorEnabled = default, Azure.ResponseError statusProvisioningError = null, Azure.ETag? eTag = default, ManagedClusterSku sku = null, ExtendedLocation extendedLocation = null, ManagedClusterIdentity clusterIdentity = null, string kind = null)
         {
             var result = ContainerServiceManagedClusterData(
                 id: id,
@@ -343,20 +349,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 extendedLocation: extendedLocation,
                 clusterIdentity: clusterIdentity,
                 kind: kind,
-                isFipsEnabled: default,
-                isNamespaceResourcesEnabled: default,
-                healthMonitorProfile: default,
-                creationDataSourceResourceId: default,
-                upstreamSchedulerConfigMode: default,
-                scalingSize: default,
-                nodeDisruptionPolicy: default);
+                upstreamSchedulerConfigMode: default);
             return result;
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfile"/>. </summary>
         /// <returns> A new <see cref="Models.ManagedClusterAgentPoolProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterAgentPoolProfile ManagedClusterAgentPoolProfile(Azure.ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, Azure.Core.ResourceIdentifier vnetSubnetId, Azure.Core.ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, Azure.Core.ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, Azure.Core.ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, Azure.Core.ResourceIdentifier creationDataSourceResourceId, Azure.Core.ResourceIdentifier capacityReservationGroupId, Azure.Core.ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, bool? isOutboundNatDisabled, AgentPoolSecurityProfile securityProfile, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, bool? isArtifactStreamingEnabled, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, Azure.ResponseError statusProvisioningError, LocalDnsProfile localDnsProfile, string name)
+        public static ManagedClusterAgentPoolProfile ManagedClusterAgentPoolProfile(Azure.ETag? eTag = default, int? count = default, string vmSize = null, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = null, Azure.Core.ResourceIdentifier vnetSubnetId = null, Azure.Core.ResourceIdentifier podSubnetId = null, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = null, string currentOrchestratorVersion = null, string nodeImageVersion = null, AgentPoolUpgradeSettings upgradeSettings = null, string provisioningState = null, ContainerServiceStateCode? powerStateCode = default, IEnumerable<string> availabilityZones = null, bool? isNodePublicIpEnabled = default, Azure.Core.ResourceIdentifier nodePublicIPPrefixId = null, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, KubeletConfig kubeletConfig = null, LinuxOSConfig linuxOSConfig = null, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, Azure.Core.ResourceIdentifier creationDataSourceResourceId = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, Azure.Core.ResourceIdentifier hostGroupId = null, AgentPoolNetworkProfile networkProfile = null, bool? isOutboundNatDisabled = default, AgentPoolSecurityProfile securityProfile = null, AgentPoolGpuDriver? gpuDriver = default, int? gatewayPublicIPPrefixSize = default, bool? isArtifactStreamingEnabled = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = null, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = null, Azure.ResponseError statusProvisioningError = null, LocalDnsProfile localDnsProfile = null, string name = null)
         {
             var result = ManagedClusterAgentPoolProfile(
                 eTag: eTag,
@@ -382,6 +382,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 orchestratorVersion: orchestratorVersion,
                 currentOrchestratorVersion: currentOrchestratorVersion,
                 nodeImageVersion: nodeImageVersion,
+                upgradeStrategy: default,
                 upgradeSettings: upgradeSettings,
                 provisioningState: provisioningState,
                 powerStateCode: powerStateCode,
@@ -413,13 +414,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 statusProvisioningError: statusProvisioningError,
                 localDnsProfile: localDnsProfile,
                 name: name,
-                upgradeStrategy: default,
-                isOSDiskFullCachingEnabled: default,
-                upgradeSettingsBlueGreen: default,
-                nodeInitializationTaints: default,
-                gpuProfile: default,
-                virtualMachinesScale: default,
-                preparedImageSpecificationId: default);
+                virtualMachinesScale: default);
             result.GpuDriver = gpuDriver;
             if (virtualMachinesScaleManual != null)
             {
@@ -434,7 +429,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfileProperties"/>. </summary>
         /// <returns> A new <see cref="Models.ManagedClusterAgentPoolProfileProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterAgentPoolProfileProperties ManagedClusterAgentPoolProfileProperties(Azure.ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, Azure.Core.ResourceIdentifier vnetSubnetId, Azure.Core.ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, Azure.Core.ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, Azure.Core.ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, Azure.Core.ResourceIdentifier creationDataSourceResourceId, Azure.Core.ResourceIdentifier capacityReservationGroupId, Azure.Core.ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, bool? isOutboundNatDisabled, AgentPoolSecurityProfile securityProfile, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, bool? isArtifactStreamingEnabled, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, Azure.ResponseError statusProvisioningError, LocalDnsProfile localDnsProfile)
+        public static ManagedClusterAgentPoolProfileProperties ManagedClusterAgentPoolProfileProperties(Azure.ETag? eTag = default, int? count = default, string vmSize = null, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = null, Azure.Core.ResourceIdentifier vnetSubnetId = null, Azure.Core.ResourceIdentifier podSubnetId = null, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = null, string currentOrchestratorVersion = null, string nodeImageVersion = null, AgentPoolUpgradeSettings upgradeSettings = null, string provisioningState = null, ContainerServiceStateCode? powerStateCode = default, IEnumerable<string> availabilityZones = null, bool? isNodePublicIpEnabled = default, Azure.Core.ResourceIdentifier nodePublicIPPrefixId = null, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, KubeletConfig kubeletConfig = null, LinuxOSConfig linuxOSConfig = null, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, Azure.Core.ResourceIdentifier creationDataSourceResourceId = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, Azure.Core.ResourceIdentifier hostGroupId = null, AgentPoolNetworkProfile networkProfile = null, bool? isOutboundNatDisabled = default, AgentPoolSecurityProfile securityProfile = null, AgentPoolGpuDriver? gpuDriver = default, int? gatewayPublicIPPrefixSize = default, bool? isArtifactStreamingEnabled = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = null, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = null, Azure.ResponseError statusProvisioningError = null, LocalDnsProfile localDnsProfile = null)
         {
             var result = ManagedClusterAgentPoolProfileProperties(
                 eTag: eTag,
@@ -460,6 +455,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 orchestratorVersion: orchestratorVersion,
                 currentOrchestratorVersion: currentOrchestratorVersion,
                 nodeImageVersion: nodeImageVersion,
+                upgradeStrategy: default,
                 upgradeSettings: upgradeSettings,
                 provisioningState: provisioningState,
                 powerStateCode: powerStateCode,
@@ -490,13 +486,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachineNodesStatus: virtualMachineNodesStatus,
                 statusProvisioningError: statusProvisioningError,
                 localDnsProfile: localDnsProfile,
-                upgradeStrategy: default,
-                isOSDiskFullCachingEnabled: default,
-                upgradeSettingsBlueGreen: default,
-                nodeInitializationTaints: default,
-                gpuProfile: default,
-                virtualMachinesScale: default,
-                preparedImageSpecificationId: default);
+                virtualMachinesScale: default);
             result.GpuDriver = gpuDriver;
             if (virtualMachinesScaleManual != null)
             {

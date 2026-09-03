@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobStates States { get; set; }
 
         /// <summary>
-        /// A delimiter that can be used to traverse a
+        /// Required. A delimiter that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
         /// delimiter may be a single character or a string.
         /// <see cref="BlobHierarchyItem.Prefix"/> will be returned

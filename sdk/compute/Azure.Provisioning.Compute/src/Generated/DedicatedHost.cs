@@ -278,7 +278,7 @@ namespace Azure.Provisioning.Compute
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DedicatedHostProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ComputeSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
-            _parent = DefineResource<DedicatedHostGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<DedicatedHostGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
