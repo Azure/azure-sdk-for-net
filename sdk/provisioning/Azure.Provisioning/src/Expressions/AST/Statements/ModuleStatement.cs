@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Expressions;
 /// <param name="name">The module symbolic name.</param>
 /// <param name="type">The module type or path expression.</param>
 /// <param name="body">The module body expression.</param>
-public class ModuleStatement(string name, BicepExpression type, BicepExpression body) : BicepStatement
+public partial class ModuleStatement(string name, BicepExpression type, BicepExpression body) : BicepStatement
 {
     /// <summary>
     /// Gets the module symbolic name.

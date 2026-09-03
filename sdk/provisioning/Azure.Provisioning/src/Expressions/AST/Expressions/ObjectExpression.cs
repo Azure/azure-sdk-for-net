@@ -10,7 +10,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep object expression composed of named properties.
 /// </summary>
 /// <param name="properties">The property expressions that make up the object.</param>
-public class ObjectExpression(params PropertyExpression[] properties) : BicepExpression
+public partial class ObjectExpression(params PropertyExpression[] properties) : BicepExpression
 {
     /// <summary>
     /// Gets the property expressions that make up the object.
