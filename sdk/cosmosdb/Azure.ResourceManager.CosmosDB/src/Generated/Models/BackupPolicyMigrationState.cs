@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="BackupPolicyMigrationState"/>. </summary>
         /// <param name="status"> Describes the status of migration between backup policy types. </param>
         /// <param name="targetType"> Describes the target backup policy type of the backup policy migration. </param>
-        /// <param name="startOn"> Time at which the backup policy migration started (ISO-8601 format). </param>
+        /// <param name="startsOn"> Time at which the backup policy migration started (ISO-8601 format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPolicyMigrationState(BackupPolicyMigrationStatus? status, BackupPolicyType? targetType, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupPolicyMigrationState(BackupPolicyMigrationStatus? status, BackupPolicyType? targetType, DateTimeOffset? startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             TargetType = targetType;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Time at which the backup policy migration started (ISO-8601 format). </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
     }
 }

@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("delayedStage"u8);
                 writer.WriteStringValue(DelayedStage.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataBox.Models
             bool? isPrepareToShipEnabled = default;
             DataBoxStageName? status = default;
             DataBoxStageName? delayedStage = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             ResponseError error = default;
             DataBoxBasicJobDetails details = default;
             string cancellationReason = default;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 isPrepareToShipEnabled,
                 status,
                 delayedStage,
-                startOn,
+                startsOn,
                 error,
                 details,
                 cancellationReason,

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
             if (Optional.IsDefined(Topic))
@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
             string schedule = default;
             string topic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeriodicTimerSourceInfo(startOn, schedule, topic, additionalBinaryDataProperties);
+            return new PeriodicTimerSourceInfo(default, schedule, topic, additionalBinaryDataProperties);
         }
     }
 }
