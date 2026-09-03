@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
+        protected ImportSettings() : this(default)
+        {
+        }
+
         /// <summary> The import setting type. </summary>
         internal string ImportSettingsType { get; set; }
 

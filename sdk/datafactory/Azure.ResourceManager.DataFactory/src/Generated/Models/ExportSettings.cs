@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
+        protected ExportSettings() : this(default)
+        {
+        }
+
         /// <summary> The export setting type. </summary>
         internal string ExportSettingsType { get; set; }
 

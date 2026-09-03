@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -1189,5 +1190,313 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
                 context,
                 "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes"), data => new NetworkCloudVolumeResource(Client, data));
         }
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdCloudServicesNetworks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudCloudServicesNetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudCloudServicesNetworksAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdCloudServicesNetworks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudCloudServicesNetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudCloudServicesNetworks(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdClusterManagers_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudClusterManagerResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudClusterManagersAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdClusterManagers_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudClusterManagerResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudClusterManagers(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdClusters_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudClusterResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudClustersAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdClusters_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudClusterResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudClusters(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdKubernetesClusters_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudKubernetesClusterResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudKubernetesClustersAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdKubernetesClusters_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudKubernetesClusterResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudKubernetesClusters(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdL2Networks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudL2NetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudL2NetworksAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdL2Networks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudL2NetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudL2Networks(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdL3Networks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudL3NetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudL3NetworksAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdL3Networks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudL3NetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudL3Networks(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdRacks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudRackResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudRacksAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPoolsOperation IdRacks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudRackResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudRacks(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of storage appliance for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/storageAppliancesOperation IdStorageAppliances_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudStorageApplianceResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudStorageAppliancesAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of storage appliance for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/storageAppliancesOperation IdStorageAppliances_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudStorageApplianceResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudStorageAppliances(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of trunked networks for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/trunkedNetworksOperation IdTrunkedNetworks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudTrunkedNetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudTrunkedNetworksAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of trunked networks for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/trunkedNetworksOperation IdTrunkedNetworks_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudTrunkedNetworkResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudTrunkedNetworks(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of virtual machines for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/virtualMachniesOperation IdVirtualMachines_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudVirtualMachineResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudVirtualMachinesAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of virtual machines for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/virtualMachniesOperation IdVirtualMachines_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudVirtualMachineResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudVirtualMachines(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of volumes for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/volumesOperation IdVolumes_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudVolumeResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudVolumesAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Get the list of volumes for the subscription
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/volumesOperation IdVolumes_ListDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudVolumeResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(CancellationToken cancellationToken)
+        {
+            return GetNetworkCloudVolumes(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

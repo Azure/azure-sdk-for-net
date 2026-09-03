@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2135,5 +2136,31 @@ namespace Azure.ResourceManager.Compute
 
             return GetVirtualMachineScaleSetVmRunCommands().Get(runCommandName, expand, cancellationToken);
         }
+
+        /// <summary> Update a VirtualMachineScaleSetVm. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}.Operation Id.VirtualMachineScaleSetVMS_Update.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineScaleSetVmResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<VirtualMachineScaleSetVmResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
+        {
+            return UpdateAsync(waitUntil: waitUntil, data: data, matchConditions: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Update a VirtualMachineScaleSetVm. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}.Operation Id.VirtualMachineScaleSetVMS_Update.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineScaleSetVmResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<VirtualMachineScaleSetVmResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
+        {
+            return Update(waitUntil: waitUntil, data: data, matchConditions: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

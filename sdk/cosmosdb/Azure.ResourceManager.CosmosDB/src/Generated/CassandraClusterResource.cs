@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1123,5 +1124,35 @@ namespace Azure.ResourceManager.CosmosDB
 
             return GetCassandraDataCenters().Get(dataCenterName, cancellationToken);
         }
+
+        /// <summary>
+        /// Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster.
+        ///             Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/deallocate.Operation Id.ClusterResources_Deallocate.Resource.<see cref="CassandraClusterResource"/>.
+        /// </summary>
+        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeallocateAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
+        {
+            return DeallocateAsync(waitUntil: waitUntil, xMsForceDeallocate: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster.
+        ///             Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/deallocate.Operation Id.ClusterResources_Deallocate.Resource.<see cref="CassandraClusterResource"/>.
+        /// </summary>
+        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation Deallocate(WaitUntil waitUntil, CancellationToken cancellationToken)
+        {
+            return Deallocate(waitUntil: waitUntil, xMsForceDeallocate: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

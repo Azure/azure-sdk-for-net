@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorsMqttAuthentication"/>. </summary>
+        protected AkriConnectorsMqttAuthentication() : this(default)
+        {
+        }
+
         /// <summary> The authentication method for the MQTT connection. </summary>
         internal AkriConnectorsMqttAuthenticationMethod Method { get; set; }
     }

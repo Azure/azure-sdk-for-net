@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Consumption.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/>. </summary>
+        protected ConsumptionChargeSummary() : this(default)
+        {
+        }
+
         /// <summary> Specifies the kind of charge summary. </summary>
         internal ChargeSummaryKind Kind { get; set; }
 

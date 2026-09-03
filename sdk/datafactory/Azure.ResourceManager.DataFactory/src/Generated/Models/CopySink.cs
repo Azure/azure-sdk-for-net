@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
+        protected CopySink() : this(default)
+        {
+        }
+
         /// <summary> Copy sink type. </summary>
         internal string CopySinkType { get; set; }
 

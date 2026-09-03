@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -591,5 +592,35 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Gets all private endpoint connections on a private link scope.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResourcesOperation IdPrivateLinkScopedResources_ListByPrivateLinkScopeDefault Api Version2021-07-01-previewResource<see cref="MonitorPrivateLinkScopedResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopedResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<MonitorPrivateLinkScopedResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(kind: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets all private endpoint connections on a private link scope.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResourcesOperation IdPrivateLinkScopedResources_ListByPrivateLinkScopeDefault Api Version2021-07-01-previewResource<see cref="MonitorPrivateLinkScopedResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopedResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<MonitorPrivateLinkScopedResource> GetAll(CancellationToken cancellationToken)
+        {
+            return GetAll(kind: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

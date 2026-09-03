@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/>. </summary>
+        protected ServicePlacementPolicyDescription() : this(default)
+        {
+        }
+
         /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
         internal ServicePlacementPolicyType Type { get; set; }
     }

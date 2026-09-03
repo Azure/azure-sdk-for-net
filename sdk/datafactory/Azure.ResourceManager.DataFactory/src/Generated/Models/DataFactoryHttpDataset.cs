@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A file in an HTTP web server. </summary>
     public partial class DataFactoryHttpDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public DataFactoryHttpDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("HttpFile", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Square Service dataset. </summary>
     public partial class SquareObjectDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="SquareObjectDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public SquareObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SquareObject", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="SquareObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

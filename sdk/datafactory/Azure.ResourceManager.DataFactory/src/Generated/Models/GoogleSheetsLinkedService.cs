@@ -7,12 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for GoogleSheets. </summary>
     public partial class GoogleSheetsLinkedService : DataFactoryLinkedServiceProperties
     {
+        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
+        /// <param name="apiToken"> The api token for the GoogleSheets source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
+        public GoogleSheetsLinkedService(DataFactorySecret apiToken) : base("GoogleSheets")
+        {
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
+
+            TypeProperties = new GoogleSheetsLinkedServiceTypeProperties(apiToken);
+        }
+
         /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

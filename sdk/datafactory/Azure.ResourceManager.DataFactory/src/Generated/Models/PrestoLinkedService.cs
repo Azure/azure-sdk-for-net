@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
+        /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
+        /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </param>
+        /// <param name="catalog"> The catalog context for all request against the server. </param>
+        /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
+        public PrestoLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, PrestoAuthenticationType authenticationType) : this(host, catalog, authenticationType)
+        {
+            ServerVersion = serverVersion;
+        }
+
         /// <summary> Presto server linked service properties. </summary>
         internal PrestoLinkedServiceTypeProperties TypeProperties { get; set; }
 

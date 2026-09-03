@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionProperties"/>. </summary>
+        protected DeliveryRuleActionProperties() : this(default)
+        {
+        }
+
         /// <summary> Gets or sets the TypeName. </summary>
         [WirePath("typeName")]
         internal DeliveryRuleActionParametersType TypeName { get; set; }

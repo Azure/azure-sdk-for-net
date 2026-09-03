@@ -1976,6 +1976,137 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriServiceProperties(provisioningState, statusHealthState is null ? default : new AkriServiceStatus(statusHealthState, default), default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsBrokerProperties"/>. </summary>
+        /// <param name="advanced"> Advanced settings of Broker. </param>
+        /// <param name="cardinality"> The cardinality details of the broker. </param>
+        /// <param name="diagnostics"> Spec defines the desired identities of Broker diagnostics settings. </param>
+        /// <param name="diskBackedMessageBuffer"> Settings of Disk Backed Message Buffer. </param>
+        /// <param name="generateResourceLimitsCpu"> This setting controls whether Kubernetes CPU resource limits are requested. Increasing the number of replicas or workers proportionally increases the amount of CPU resources requested. If this setting is enabled and there are insufficient CPU resources, an error will be emitted. </param>
+        /// <param name="memoryProfile"> Memory profile of Broker. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, IotOperationsOperationalMode? generateResourceLimitsCpu, BrokerMemoryProfile? memoryProfile, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsBrokerProperties(
+                advanced,
+                cardinality,
+                diagnostics,
+                diskBackedMessageBuffer,
+                generateResourceLimitsCpu is null ? default : new GenerateResourceLimits(generateResourceLimitsCpu, default),
+                default,
+                memoryProfile,
+                default,
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsBrokerAuthenticationProperties"/>. </summary>
+        /// <param name="authenticationMethods"> Defines a set of Broker authentication methods to be used on `BrokerListeners`. For each array element one authenticator type supported. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerAuthenticationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerAuthenticationProperties IotOperationsBrokerAuthenticationProperties(IEnumerable<BrokerAuthenticatorMethods> authenticationMethods, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsBrokerAuthenticationProperties((authenticationMethods ?? new ChangeTrackingList<BrokerAuthenticatorMethods>()).ToList(), provisioningState, default, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsBrokerAuthorizationProperties"/>. </summary>
+        /// <param name="authorizationPolicies"> The list of authorization policies supported by the Authorization Resource. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerAuthorizationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerAuthorizationProperties IotOperationsBrokerAuthorizationProperties(BrokerAuthorizationConfig authorizationPolicies, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsBrokerAuthorizationProperties(authorizationPolicies, provisioningState, default, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowEndpointProperties"/>. </summary>
+        /// <param name="endpointType"> Endpoint Type. </param>
+        /// <param name="dataExplorerSettings"> Azure Data Explorer endpoint. </param>
+        /// <param name="dataLakeStorageSettings"> Azure Data Lake endpoint. </param>
+        /// <param name="fabricOneLakeSettings"> Microsoft Fabric endpoint. </param>
+        /// <param name="kafkaSettings"> Kafka endpoint. </param>
+        /// <param name="localStoragePersistentVolumeClaimRef"> Local persistent volume endpoint. </param>
+        /// <param name="mqttSettings"> Broker endpoint. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowEndpointProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(DataflowEndpointType endpointType, DataflowEndpointDataExplorer dataExplorerSettings, DataflowEndpointDataLakeStorage dataLakeStorageSettings, DataflowEndpointFabricOneLake fabricOneLakeSettings, DataflowEndpointKafka kafkaSettings, string localStoragePersistentVolumeClaimRef, DataflowEndpointMqtt mqttSettings, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsDataflowEndpointProperties(
+                endpointType,
+                default,
+                dataExplorerSettings,
+                dataLakeStorageSettings,
+                fabricOneLakeSettings,
+                kafkaSettings,
+                localStoragePersistentVolumeClaimRef is null ? default : new DataflowEndpointLocalStorage(localStoragePersistentVolumeClaimRef, default),
+                mqttSettings,
+                default,
+                provisioningState,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowProfileProperties"/>. </summary>
+        /// <param name="diagnostics"> Spec defines the desired identities of NBC diagnostics settings. </param>
+        /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowProfileProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = default, int? instanceCount = default, IotOperationsProvisioningState? provisioningState = default)
+        {
+            return new IotOperationsDataflowProfileProperties(
+                diagnostics,
+                instanceCount,
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowProperties"/>. </summary>
+        /// <param name="mode"> Mode for Dataflow. Optional; defaults to Enabled. </param>
+        /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IEnumerable<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsDataflowProperties(
+                mode,
+                default,
+                (operations ?? new ChangeTrackingList<DataflowOperationProperties>()).ToList(),
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsInstanceProperties"/>. </summary>
+        /// <param name="description"> Detailed description of the Instance. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="version"> The Azure IoT Operations version. </param>
+        /// <param name="schemaRegistryRefResourceId"> The reference to the Schema Registry for this AIO Instance. </param>
+        /// <returns> A new <see cref="Models.IotOperationsInstanceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsInstanceProperties IotOperationsInstanceProperties(string description, IotOperationsProvisioningState? provisioningState, string version, ResourceIdentifier schemaRegistryRefResourceId)
+        {
+            return new IotOperationsInstanceProperties(
+                description,
+                provisioningState,
+                version,
+                schemaRegistryRefResourceId is null ? default : new SchemaRegistryRef(schemaRegistryRefResourceId, default),
+                default,
+                default,
+                default,
+                default,
+                default);
+        }
+
         /// <param name="advanced"> Advanced settings of Broker. </param>
         /// <param name="cardinality"> The cardinality details of the broker. </param>
         /// <param name="diagnostics"> Spec defines the desired identities of Broker diagnostics settings. </param>

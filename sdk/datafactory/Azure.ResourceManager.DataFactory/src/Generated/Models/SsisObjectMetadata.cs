@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
+        protected SsisObjectMetadata() : this(default)
+        {
+        }
+
         /// <summary> Type of metadata. </summary>
         internal SsisObjectMetadataType MetadataType { get; set; }
 
