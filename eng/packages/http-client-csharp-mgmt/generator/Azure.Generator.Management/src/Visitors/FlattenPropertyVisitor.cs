@@ -671,6 +671,7 @@ namespace Azure.Generator.Management.Visitors
                         innerProperty.IsRef,
                         FilterAttributesForFlatten(innerProperty.Attributes),
                         isLiftedToNullable: shouldLiftToNullable);
+                ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterDerivedProperty(flattenedProperty, innerProperty);
 
                 // Keep the public constructor parameter type as the original non-nullable
                 // inner type. Required leaves must be provided by the caller; lifting the
@@ -757,6 +758,7 @@ namespace Azure.Generator.Management.Visitors
                     innerProperty.IsRef,
                     FilterAttributesForFlatten(innerProperty.Attributes),
                     isLiftedToNullable: shouldLiftToNullable);
+            ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterDerivedProperty(flattenedProperty, innerProperty);
 
             // make the internalized properties internal
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);

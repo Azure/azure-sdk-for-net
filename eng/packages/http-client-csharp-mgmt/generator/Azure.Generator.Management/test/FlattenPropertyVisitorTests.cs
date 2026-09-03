@@ -235,6 +235,66 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestChainedFlattenedDateTimePropertyPreservesOuterLastContractName()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var detailsModel = InputFactory.Model(
+                "TestScheduleDetails",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("startTime", dateTimeType, serializedName: "startTime")]);
+
+            var detailsProperty = InputFactory.Property("details", detailsModel, serializedName: "details");
+            ApplyFlattenDecorator(detailsProperty);
+            var propertiesModel = InputFactory.Model(
+                "TestResourceProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [detailsProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, detailsModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+
+            var lastContractView = new TestTypeView(parentProvider.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(DateTimeOffset?),
+                    "StartOn",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            Assert.That(propertiesProvider.Properties.Select(p => p.Name), Does.Contain("StartsOn"));
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Contain("StartOn"));
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Not.Contain("StartsOn"));
+        }
+
+        [Test]
         public void TestSafeFlattenPreservesPublicLastContractWrapperProperty()
         {
             var conditionProperty = InputFactory.Property(

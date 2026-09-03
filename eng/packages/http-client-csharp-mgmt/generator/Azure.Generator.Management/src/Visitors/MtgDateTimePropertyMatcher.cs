@@ -49,6 +49,14 @@ internal sealed class MtgDateTimePropertyMatcher
         _sourceProperties[propertyProvider] = inputProperty;
     }
 
+    internal void RegisterDerivedProperty(PropertyProvider propertyProvider, PropertyProvider sourceProperty)
+    {
+        if (_sourceProperties.TryGetValue(sourceProperty, out var inputProperty))
+        {
+            _sourceProperties[propertyProvider] = inputProperty;
+        }
+    }
+
     internal bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
     {
         if (property is null ||
