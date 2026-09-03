@@ -13,7 +13,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Http Route rule. </summary>
+    /// <summary> A set of routing conditions and targets. </summary>
     public partial class ContainerAppHttpRouteRule : IJsonModel<ContainerAppHttpRouteRule>
     {
         /// <param name="data"> The data to parse. </param>

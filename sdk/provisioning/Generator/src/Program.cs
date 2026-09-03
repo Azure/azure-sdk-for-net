@@ -31,7 +31,6 @@ internal static class Program
         ];
         List<Specification> rpSpecs =
         [
-            new AppContainersSpecification(),
             new AppServiceSpecification(),
             new AppConfigurationSpecification(),
             new ApiManagementSpecification(),
