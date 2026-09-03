@@ -1,0 +1,6 @@
+directory: specification/monitoringservice/resource-manager/Microsoft.Monitor/Agents
+commit: cd9789e9cfdb4cd052f4dbe14ee0c4139ada6c7b
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
