@@ -13,10 +13,12 @@ The service intentionally removed the following API surface, so it is no longer 
 
 - Removed several models that are no longer part of the service contract, along with their corresponding properties on `FanoutLinkedNotificationRule`, `ProviderResourceType`, `ResourceProviderManagement`, `ResourceProviderManifestProperties`, `ResourceTypeEndpoint`, and `ResourceTypeRegistrationProperties`.
 - Removed the `RegistrationNewRegionFrontloadRelease` resource and collection, `ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease`, and the `ProviderFrontloadPayload`, `ProviderFrontloadPayloadProperties`, `ManifestLevelPropertyBag`, `ResourceTypeEndpointBase`, `AvailableCheckInManifestEnvironment`, and `ServiceFeatureFlagAction` models.
-- Removed the `ManifestResourceDeletionPolicy` model; `ProviderResourceType.ResourceDeletionPolicy` now uses `ResourceDeletionPolicy`.
+- `ProviderResourceType.ResourceDeletionPolicy` now uses `ResourceDeletionPolicy`, and `ResourceTypeRegistrationProperties.ResourceDeletionPolicy` is now typed `RPaaSResourceDeletionPolicy`.
 - Removed the `Models.OperationsPutContent` model. The put-content operations are now exposed through the `OperationsPutContent` resource and `OperationsPutContentData`.
 - `ResourceAccessPolicy` changed from a closed enum to an extensible enum, and only `NotSpecified` remains a well-known value.
 - `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupportSupportedOperations` was replaced by `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupport`.
+- Removed 17 `ArmProviderHubModelFactory` overloads that existed only to match the shape of the 1.2.x contract. Use the current overload for each model instead.
+- Collection properties on several models, including `ProviderResourceType`, `AsyncOperationPollingRules`, and `ResourceProviderCapabilities`, are now typed `IList<T>` rather than `IReadOnlyList<T>`.
 
 ### Bugs Fixed
 
