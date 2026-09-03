@@ -8,6 +8,7 @@
 using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Sql
 {
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.Sql
     {
         private BicepValue<DatabaseIdentityType> _identityType;
         private BicepValue<Guid> _tenantId;
-        private BicepDictionary<DatabaseUserIdentity> _userAssignedIdentities;
+        private BicepDictionary<UserAssignedIdentityDetails> _userAssignedIdentities;
 
         /// <summary> Creates a new DatabaseIdentity. </summary>
         public DatabaseIdentity()
@@ -49,7 +50,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the UserAssignedIdentities. </summary>
-        public BicepDictionary<DatabaseUserIdentity> UserAssignedIdentities
+        public BicepDictionary<UserAssignedIdentityDetails> UserAssignedIdentities
         {
             get
             {
@@ -69,7 +70,7 @@ namespace Azure.Provisioning.Sql
             base.DefineProvisionableProperties();
             _identityType = DefineProperty<DatabaseIdentityType>(nameof(IdentityType), new string[] { "type" });
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" }, isOutput: true);
-            _userAssignedIdentities = DefineDictionaryProperty<DatabaseUserIdentity>(nameof(UserAssignedIdentities), new string[] { "userAssignedIdentities" });
+            _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentityDetails>(nameof(UserAssignedIdentities), new string[] { "userAssignedIdentities" });
             DefineAdditionalProperties();
         }
 

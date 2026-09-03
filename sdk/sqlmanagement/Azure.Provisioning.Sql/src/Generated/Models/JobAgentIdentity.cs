@@ -8,6 +8,7 @@
 using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Sql
 {
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.Sql
     {
         private BicepValue<Guid> _tenantId;
         private BicepValue<JobAgentIdentityType> _identityType;
-        private BicepDictionary<JobAgentUserAssignedIdentity> _userAssignedIdentities;
+        private BicepDictionary<UserAssignedIdentityDetails> _userAssignedIdentities;
 
         /// <summary> Creates a new JobAgentIdentity. </summary>
         public JobAgentIdentity()
@@ -54,7 +55,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the UserAssignedIdentities. </summary>
-        public BicepDictionary<JobAgentUserAssignedIdentity> UserAssignedIdentities
+        public BicepDictionary<UserAssignedIdentityDetails> UserAssignedIdentities
         {
             get
             {
@@ -74,7 +75,7 @@ namespace Azure.Provisioning.Sql
             base.DefineProvisionableProperties();
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _identityType = DefineProperty<JobAgentIdentityType>(nameof(IdentityType), new string[] { "type" }, isRequired: true);
-            _userAssignedIdentities = DefineDictionaryProperty<JobAgentUserAssignedIdentity>(nameof(UserAssignedIdentities), new string[] { "userAssignedIdentities" });
+            _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentityDetails>(nameof(UserAssignedIdentities), new string[] { "userAssignedIdentities" });
             DefineAdditionalProperties();
         }
 

@@ -169,7 +169,7 @@ namespace Azure.Provisioning.Sql
         public DatabaseIdentity() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.DatabaseIdentityType> IdentityType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Sql.DatabaseUserIdentity> UserAssignedIdentities { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.UserAssignedIdentityDetails> UserAssignedIdentities { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DatabaseIdentityType
@@ -186,13 +186,6 @@ namespace Azure.Provisioning.Sql
     {
         Enabled = 0,
         Disabled = 1,
-    }
-    public partial class DatabaseUserIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public DatabaseUserIdentity() { }
-        public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
     }
     public partial class DatabaseVulnerabilityAssessmentRuleBaselineItem : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -562,14 +555,6 @@ namespace Azure.Provisioning.Sql
         Active = 0,
         Passive = 1,
     }
-    public enum IdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SystemAssigned,UserAssigned")]
-        SystemAssignedUserAssigned = 3,
-    }
     public enum ImplementationMethod
     {
         TSql = 0,
@@ -661,7 +646,7 @@ namespace Azure.Provisioning.Sql
         public JobAgentIdentity() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobAgentIdentityType> IdentityType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Sql.JobAgentUserAssignedIdentity> UserAssignedIdentities { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.UserAssignedIdentityDetails> UserAssignedIdentities { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum JobAgentIdentityType
@@ -678,13 +663,6 @@ namespace Azure.Provisioning.Sql
         Updating = 2,
         Deleting = 3,
         Disabled = 4,
-    }
-    public partial class JobAgentUserAssignedIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public JobAgentUserAssignedIdentity() { }
-        public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
     }
     public enum JobExecutionLifecycle
     {
@@ -1268,7 +1246,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.HybridSecondaryUsage> HybridSecondaryUsage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.HybridSecondaryUsageDetected> HybridSecondaryUsageDetected { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Sql.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> InstancePoolId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsGeneralPurposeV2 { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsPublicDataEndpointEnabled { get { throw null; } set { } }
@@ -2090,15 +2068,6 @@ namespace Azure.Provisioning.Sql
         Named = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="STANDBY")]
         Standby = 2,
-    }
-    public partial class ResourceIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ResourceIdentity() { }
-        public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.IdentityType> Type { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Sql.UserIdentity> UserAssignedIdentities { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public partial class RestorableDroppedDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -3174,7 +3143,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> FederatedClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> FullyQualifiedDomainName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Sql.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerNetworkAccessFlag> IsIPv6Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> KeyId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
@@ -4293,13 +4262,6 @@ namespace Azure.Provisioning.Sql
         Completed = 3,
         Failed = 4,
         Canceled = 5,
-    }
-    public partial class UserIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public UserIdentity() { }
-        public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
     }
     public partial class VirtualCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {

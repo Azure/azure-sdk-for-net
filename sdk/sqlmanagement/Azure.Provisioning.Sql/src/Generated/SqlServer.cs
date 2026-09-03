@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Sql
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private ServerProperties _properties;
-        private ResourceIdentity _identity;
+        private ManagedServiceIdentity _identity;
         private BicepValue<string> _kind;
 
         /// <summary> Creates a new SqlServer. </summary>
@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the Identity. </summary>
-        public ResourceIdentity Identity
+        public ManagedServiceIdentity Identity
         {
             get
             {
@@ -436,7 +436,7 @@ namespace Azure.Provisioning.Sql
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ServerProperties>(nameof(Properties), new string[] { "properties" });
-            _identity = DefineModelProperty<ResourceIdentity>(nameof(Identity), new string[] { "identity" });
+            _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
             DefineAdditionalProperties();
         }

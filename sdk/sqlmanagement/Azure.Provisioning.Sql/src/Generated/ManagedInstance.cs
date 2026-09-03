@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Sql
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private ManagedInstanceProperties _properties;
-        private ResourceIdentity _identity;
+        private ManagedServiceIdentity _identity;
         private SqlSku _sku;
 
         /// <summary> Creates a new ManagedInstance. </summary>
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the Identity. </summary>
-        public ResourceIdentity Identity
+        public ManagedServiceIdentity Identity
         {
             get
             {
@@ -826,7 +826,7 @@ namespace Azure.Provisioning.Sql
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ManagedInstanceProperties>(nameof(Properties), new string[] { "properties" });
-            _identity = DefineModelProperty<ResourceIdentity>(nameof(Identity), new string[] { "identity" });
+            _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _sku = DefineModelProperty<SqlSku>(nameof(Sku), new string[] { "sku" });
             DefineAdditionalProperties();
         }
