@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
@@ -17,6 +19,32 @@ namespace Azure.Provisioning.PrivateDns;
 [CodeGenSuppress("Cname")]
 public partial class PrivateDnsSrvRecord
 {
+    // TypeSpec uses the management-oriented PrivateDns prefix; the provisioning API prefers the
+    // shorter record-kind name, while the released GA name remains as a compatibility alias.
+    /// <summary> Gets or sets the SRV records in the record set. </summary>
+    [CodeGenMember("PrivateDnsSrvRecords")]
+    public BicepList<PrivateDnsSrvRecordInfo> SrvRecords
+    {
+        get => Properties is null ? default : Properties.PrivateDnsSrvRecords;
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new PrivateDnsRecordSetProperties();
+            }
+            Properties.PrivateDnsSrvRecords = value;
+        }
+    }
+
+    /// <summary> Gets or sets the SRV records in the record set. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future version. Please use SrvRecords instead.")]
+    public BicepList<PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords
+    {
+        get => SrvRecords;
+        set => SrvRecords = value;
+    }
+
     /// <summary>
     /// Supported PrivateDnsSrvRecord resource versions.
     /// </summary>

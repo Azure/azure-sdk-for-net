@@ -170,23 +170,6 @@ namespace Azure.Provisioning.PrivateDns
             }
         }
 
-        /// <summary> Gets or sets the PrivateDnsSrvRecords. </summary>
-        public BicepList<PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateDnsSrvRecords;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateDnsRecordSetProperties();
-                }
-                Properties.PrivateDnsSrvRecords = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for PrivateDnsSrvRecord. </summary>
         protected override void DefineProvisionableProperties()
         {

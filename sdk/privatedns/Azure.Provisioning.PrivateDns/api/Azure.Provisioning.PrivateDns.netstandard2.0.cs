@@ -209,7 +209,9 @@ namespace Azure.Provisioning.PrivateDns
         public Azure.Provisioning.BicepDictionary<string> Metadata { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PrivateDns.PrivateDnsZone Parent { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use SrvRecords instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> PrivateDnsSrvRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PrivateDns.PrivateDnsSrvRecordInfo> SrvRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
