@@ -42,6 +42,7 @@ public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentic
     /// </summary>
     public AzureADPartnerClientAuthentication() : base()
     {
+        ClientAuthenticationType.Assign(PartnerClientAuthenticationType.AzureAD);
     }
 
     /// <summary>
@@ -51,7 +52,6 @@ public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentic
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        DefineProperty<string>("clientAuthenticationType", ["clientAuthenticationType"], defaultValue: "AzureAD");
         _azureActiveDirectoryTenantId = DefineProperty<string>("AzureActiveDirectoryTenantId", ["properties", "azureActiveDirectoryTenantId"]);
         _azureActiveDirectoryApplicationIdOrUri = DefineProperty<Uri>("AzureActiveDirectoryApplicationIdOrUri", ["properties", "azureActiveDirectoryApplicationIdOrUri"]);
     }

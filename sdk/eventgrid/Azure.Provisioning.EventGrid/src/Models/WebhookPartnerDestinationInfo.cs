@@ -56,6 +56,7 @@ public partial class WebhookPartnerDestinationInfo : PartnerDestinationInfo
     /// </summary>
     public WebhookPartnerDestinationInfo() : base()
     {
+        EndpointType.Assign(PartnerEndpointType.WebHook);
     }
 
     /// <summary>
@@ -65,7 +66,6 @@ public partial class WebhookPartnerDestinationInfo : PartnerDestinationInfo
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        DefineProperty<string>("endpointType", ["endpointType"], defaultValue: "WebHook");
         _endpointUri = DefineProperty<Uri>("EndpointUri", ["properties", "endpointUrl"]);
         _endpointBaseUri = DefineProperty<Uri>("EndpointBaseUri", ["properties", "endpointBaseUrl"]);
         _clientAuthentication = DefineModelProperty<PartnerClientAuthentication>("ClientAuthentication", ["properties", "clientAuthentication"]);

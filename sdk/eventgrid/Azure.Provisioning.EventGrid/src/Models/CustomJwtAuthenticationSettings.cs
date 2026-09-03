@@ -53,6 +53,7 @@ public partial class CustomJwtAuthenticationSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _encodedIssuerCertificates = DefineListProperty<EncodedIssuerCertificateInfo>("EncodedIssuerCertificates", ["encodedIssuerCertificates"]);
         _tokenIssuer = DefineProperty<string>("TokenIssuer", ["tokenIssuer"]);
         _issuerCertificates = DefineListProperty<IssuerCertificateInfo>("IssuerCertificates", ["issuerCertificates"]);
     }
