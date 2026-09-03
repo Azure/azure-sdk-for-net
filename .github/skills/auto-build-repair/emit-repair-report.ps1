@@ -44,7 +44,7 @@ param(
     # The single failing SDK package path (repo-relative), for the human summary.
     [string]$PackagePath = '',
 
-    # Fallback pre-repair sha, used only when the repair edits are already committed at emit
+    # Fallback pre-repair sha, used only when a successful repair is already committed at emit
     # time (so the working tree is clean vs HEAD). The primary file list comes from the
     # uncommitted working-tree diff against HEAD. When absent, the file list falls back to the
     # union of appliedPatches (custom files only).
@@ -237,9 +237,9 @@ $pathArgs = if ($PackagePath) { @('--', $PackagePath) } else { @('--') }
 Push-Location $RepoRoot
 try {
     # Primary: uncommitted working-tree edits. At emit time the repair's custom-code edits and
-    # regenerated Generated/ are still uncommitted -- the push-to-pull-request-branch safe
-    # output commits them in a later job -- so diffing the working tree against the checked-out
-    # HEAD yields exactly the repair's footprint, independent of whatever $PreRepairSha was.
+    # regenerated Generated/ are still uncommitted. A later safe-output job commits them only
+    # for a green repair; failed-run edits remain ephemeral. Diffing the working tree against
+    # the checked-out HEAD yields exactly the repair's footprint, independent of $PreRepairSha.
     $wt = @()
     $diff = & git diff --name-only HEAD @pathArgs 2>$null
     if ($LASTEXITCODE -eq 0 -and $diff) { $wt = @($diff | Where-Object { $_ }) }
@@ -394,11 +394,11 @@ else {
         }
     }
 
-    # ----- Files changed (grouped by iteration; every iteration lands in ONE commit) -----
+    # ----- Files changed (grouped by iteration) -----
     # Custom-code edits are attributed to the exact engine iteration that made them (from
     # each result-<n>.json's appliedPatches). Regenerated Generated/ files are a cumulative
     # downstream effect and are not attributable to a single iteration, so they are listed
-    # once. All groups are part of the single repair commit pushed for this run.
+    # once. On success, all groups are part of one repair commit; on failure, none are committed.
     if ($changedFiles.Count -gt 0) {
         [void]$sb.AppendLine("### Files Changed ($($changedFiles.Count) distinct: $($customFiles.Count) custom, $($genFiles.Count) generated)")
         [void]$sb.AppendLine('')
@@ -484,23 +484,13 @@ else {
     [void]$sb.AppendLine('- No spec inputs modified (`client.tsp`, `tspconfig.yaml`, TypeSpec sources)')
     [void]$sb.AppendLine('- Pinned commit in `tsp-location.yaml` unchanged')
     [void]$sb.AppendLine('- No `.github/`, `eng/`, pipeline, or package-metadata files touched')
-    # The commit claim must match what the workflow actually pushed for this outcome. Only a
-    # successful repair commits a fix; an already-green run needed no change, and an out-of-scope
-    # (spec-change-required) failure pushes nothing. For any other failure, report a commit only
-    # when there is an actual changed-file footprint.
-    $specChangeRequired = $false
-    if ($final) {
-        $scrInv = Get-Prop $final 'specChangeRequired'
-        if ($scrInv -and @($scrInv).Count -gt 0) { $specChangeRequired = $true }
-    }
+    # Only a successful repair is eligible for the push safe output. Every failure leaves any
+    # attempted changes uncommitted in the ephemeral agent workspace.
     $commitLine = switch ($status) {
         'repaired'              { '- Fix committed as a reviewable commit - not auto-merged' }
+        'failed'                { '- Build remains red - repair changes were not committed' }
         'skipped_already_green' { '- No changes needed - nothing committed' }
-        default {
-            if ($specChangeRequired) { '- No custom-code fix applied - requires a spec-repo change; nothing committed here' }
-            elseif ($changedFiles.Count -gt 0) { '- Partial progress committed as a reviewable commit - not auto-merged' }
-            else { '- No fix applied - nothing committed' }
-        }
+        default                 { '- No fix applied - nothing committed' }
     }
     [void]$sb.AppendLine($commitLine)
     [void]$sb.AppendLine('')

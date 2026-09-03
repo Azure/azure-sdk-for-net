@@ -2,9 +2,6 @@
 
 ## 3.0.0-beta.2 (2026-09-03)
 
-### Other Changes
-- No user-facing changes
-
 ### Features Added
 - Added `AgentInsightMonitors` sub-client.
 
