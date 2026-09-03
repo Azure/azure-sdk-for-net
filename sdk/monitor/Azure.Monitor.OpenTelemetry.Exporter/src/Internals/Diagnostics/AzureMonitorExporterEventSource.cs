@@ -557,5 +557,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(60, Message = "Ingestion rejected a batch of {0} stored payloads with status code {1}. Retrying them individually to isolate the rejected payload.", Level = EventLevel.Warning)]
         public void CoalescedBatchRejected(int batchSize, int statusCode) => WriteEvent(60, batchSize, statusCode);
+
+        [Event(61, Message = "Multi-tenant export is enabled. Activities are routed by their microsoft.instrumentation_key and microsoft.ingestion_endpoint tags.", Level = EventLevel.Informational)]
+        public void MultiTenantExportEnabled() => WriteEvent(61);
+
+        [Event(62, Message = "Live Metrics was disabled because multi-tenant export is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed tenants.", Level = EventLevel.Warning)]
+        public void LiveMetricsDisabledForMultiTenantExport() => WriteEvent(62);
+
+        [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
+        public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
     }
 }

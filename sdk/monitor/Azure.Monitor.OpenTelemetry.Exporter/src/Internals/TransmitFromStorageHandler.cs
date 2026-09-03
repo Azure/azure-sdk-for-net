@@ -62,6 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         private readonly ConnectionVars _connectionVars;
+        private readonly Uri? _trackUri;
         internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
@@ -71,10 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private int _drainInProgress;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
+            _trackUri = trackUri;
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
@@ -230,12 +232,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <returns><see langword="true"/> when draining may continue.</returns>
         private bool TransmitBatch(List<PendingBlob> batch, byte[] payload)
         {
-            var telemetrySchemaTypeCounter = CountTelemetryTypes(payload);
+            // Routed telemetry is excluded from customer SDK stats. Note this only suppresses the
+            // top-level counter; 206 partial-success handling still synthesizes its own.
+            var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload) : null;
 
             var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
 
             using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
-            using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result;
+            using var httpMessage = _trackUri == null
+                ? _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result
+                : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, requestBudget.Token).Result;
 
             stopwatch?.Stop();
 

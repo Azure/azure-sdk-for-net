@@ -73,6 +73,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeAiDeviceOsVersion] = SemanticSlot.AiDeviceOsVersion,
             [SemanticConventions.AttributeMicrosoftSyntheticSource] = SemanticSlot.MicrosoftSyntheticSource,
             [SemanticConventions.AttributeMicrosoftUserAccountId] = SemanticSlot.MicrosoftUserAccountId,
+
+            // Registered in both modes, so a routing tag never reaches custom dimensions.
+            [SemanticConventions.AttributeMicrosoftInstrumentationKey] = SemanticSlot.MicrosoftInstrumentationKey,
+            [SemanticConventions.AttributeMicrosoftIngestionEndpoint] = SemanticSlot.MicrosoftIngestionEndpoint,
         };
 
         /// <remarks>

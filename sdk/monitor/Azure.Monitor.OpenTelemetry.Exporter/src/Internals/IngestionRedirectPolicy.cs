@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
@@ -15,6 +16,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         // To prevent circular redirects, max redirect is set to 10.
         internal const int MaxRedirect = 10;
+
+        // Bounds the per-endpoint redirect cache in multi-tenant mode.
+        internal const int MaxCachedRedirects = 256;
+
         internal readonly TimeSpan _defaultCacheExpirationDuration = TimeSpan.FromHours(12);
 
         private readonly Cache<Uri> _cache = new Cache<Uri>();
@@ -31,7 +36,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             Request request = message.Request;
 
-            if (_cache.TryRead(out Uri? redirectUri))
+            // Captured before any rewrite, and includes the path: endpoints can differ only by path
+            // on a shared gateway host, and the same-host trust branch does not compare paths.
+            var originKey = request.Uri.ToUri().GetLeftPart(UriPartial.Path);
+
+            if (_cache.TryRead(originKey, out Uri? redirectUri))
             {
                 if (RedirectPolicyHelper.IsTrustedIngestionRedirect(request.Uri.ToUri(), redirectUri))
                 {
@@ -89,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     cacheExpirationDuration = _defaultCacheExpirationDuration;
                 }
 
-                _cache.Set(redirectUri, cacheExpirationDuration);
+                _cache.Set(originKey, redirectUri, cacheExpirationDuration);
 
                 redirectCount++;
             }
@@ -140,37 +149,56 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
-        /// Simple class to encapsulate redirect cache.
+        /// Keyed by the endpoint the redirect was learned for. A single pipeline serves every
+        /// ingestion endpoint in multi-tenant mode, so an unkeyed cache would let one region's
+        /// redirect rewrite another region's request.
         /// </summary>
         private class Cache<T>
         {
             private readonly object _lockObj = new object();
 
-            private T? _cachedValue;
+            private readonly Dictionary<string, Entry> _entries = new(StringComparer.Ordinal);
 
-            private DateTimeOffset _expiration = DateTimeOffset.MinValue;
-
-            public bool TryRead([NotNullWhen(true)] out T? cachedValue)
-            {
-                if (DateTimeOffset.UtcNow < _expiration && _cachedValue != null)
-                {
-                    cachedValue = _cachedValue;
-                    return true;
-                }
-                else
-                {
-                    cachedValue = default;
-                    return false;
-                }
-            }
-
-            public void Set(T cachingValue, TimeSpan expire)
+            public bool TryRead(string key, [NotNullWhen(true)] out T? cachedValue)
             {
                 lock (_lockObj)
                 {
-                    _cachedValue = cachingValue;
-                    _expiration = DateTimeOffset.UtcNow.Add(expire);
+                    if (_entries.TryGetValue(key, out var entry) && DateTimeOffset.UtcNow < entry.Expiration && entry.Value != null)
+                    {
+                        cachedValue = entry.Value;
+                        return true;
+                    }
                 }
+
+                cachedValue = default;
+                return false;
+            }
+
+            public void Set(string key, T cachingValue, TimeSpan expire)
+            {
+                lock (_lockObj)
+                {
+                    // Bounded so a caller routing to many endpoints cannot grow this without limit.
+                    if (_entries.Count >= MaxCachedRedirects && !_entries.ContainsKey(key))
+                    {
+                        return;
+                    }
+
+                    _entries[key] = new Entry(cachingValue, DateTimeOffset.UtcNow.Add(expire));
+                }
+            }
+
+            private readonly struct Entry
+            {
+                internal Entry(T value, DateTimeOffset expiration)
+                {
+                    Value = value;
+                    Expiration = expiration;
+                }
+
+                internal T Value { get; }
+
+                internal DateTimeOffset Expiration { get; }
             }
         }
     }
