@@ -320,31 +320,43 @@ namespace Azure.Storage.Cryptography
                 return;
             }
 
-            if (CanWrite)
+            try
             {
-                FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
-            }
-
-            byte[] bufferToReturn = _buffer;
-            _buffer = null;
-            if (bufferToReturn != null)
-            {
-                try
+                if (CanWrite)
                 {
-                    ArrayPool<byte>.Shared.Return(bufferToReturn);
-                }
-                catch
-                {
-                    // Dispose should not throw, per .NET conventions. Return will fail only
-                    // when the incoming buffer was not rented or the runtime is in a bad
-                    // state. For either of these, there is no recovery possible so the
-                    // exception is ignored.
+                    FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
                 }
             }
+            finally
+            {
+                // The final flush writes to the inner stream and can throw. Cleanup has to
+                // happen anyway: the gate above means no later Dispose call will get here.
 
-            base.Dispose(disposing);
-            _transform.Dispose();
-            _innerStream?.Dispose();
+                // A failed flush leaves _flushedFinal unset. Set it so CanWrite reports false
+                // and a write after disposal fails as unsupported rather than on a released buffer.
+                _flushedFinal = true;
+
+                byte[] bufferToReturn = _buffer;
+                _buffer = null;
+                if (bufferToReturn != null)
+                {
+                    try
+                    {
+                        ArrayPool<byte>.Shared.Return(bufferToReturn);
+                    }
+                    catch
+                    {
+                        // Dispose should not throw, per .NET conventions. Return will fail only
+                        // when the incoming buffer was not rented or the runtime is in a bad
+                        // state. For either of these, there is no recovery possible so the
+                        // exception is ignored.
+                    }
+                }
+
+                base.Dispose(disposing);
+                _transform.Dispose();
+                _innerStream?.Dispose();
+            }
         }
     }
 }

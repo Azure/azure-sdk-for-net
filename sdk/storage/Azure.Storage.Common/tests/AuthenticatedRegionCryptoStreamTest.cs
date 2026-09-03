@@ -41,6 +41,7 @@ namespace Azure.Storage.Test
             public int TagLength { get; }
             public byte RepeatingNonceByte { get; }
             public byte RepeatingTagByte { get; }
+            public int DisposeCount { get; private set; }
 
             public MockEncryptTransform(int nonceLength, int tagLength, byte repeatingNonceByte, byte repeatingTagByte)
             {
@@ -74,6 +75,7 @@ namespace Azure.Storage.Test
 
             public void Dispose()
             {
+                DisposeCount++;
             }
         }
 
@@ -102,6 +104,24 @@ namespace Azure.Storage.Test
 
             public void Dispose()
             {
+            }
+        }
+
+        /// <summary>
+        /// Inner stream whose writes always fail, to exercise a final flush that throws
+        /// out of Dispose.
+        /// </summary>
+        private class ThrowOnWriteStream : MemoryStream
+        {
+            public bool Disposed { get; private set; }
+
+            public override void Write(byte[] buffer, int offset, int count)
+                => throw new IOException("inner stream write failed");
+
+            protected override void Dispose(bool disposing)
+            {
+                Disposed = true;
+                base.Dispose(disposing);
             }
         }
 
@@ -605,6 +625,37 @@ namespace Azure.Storage.Test
                     pool.Return(array);
                 }
             }
+        }
+
+        /// <summary>
+        /// Dispose flushes the final block before releasing anything, and that flush writes to
+        /// the inner stream, so it can throw. Since the idempotence gate stops any later Dispose
+        /// call from getting that far, cleanup has to happen on the way out regardless.
+        /// </summary>
+        [Test]
+        public void DisposeCleansUpWhenFinalFlushThrows()
+        {
+            var transform = new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte);
+            var innerStream = new ThrowOnWriteStream();
+            var stream = new AuthenticatedRegionCryptoStream(
+                innerStream,
+                transform,
+                _authRegionDataLength,
+                CryptoStreamMode.Write);
+
+            // partial region, so nothing is written until Dispose forces the final flush
+            stream.Write(GetRandomBytes(16), 0, 16);
+
+            Assert.Throws<IOException>(() => stream.Dispose());
+
+            Assert.IsTrue(innerStream.Disposed, "inner stream was left undisposed");
+            Assert.AreEqual(1, transform.DisposeCount, "transform was left undisposed");
+            // the buffer was released alongside them, so the stream no longer accepts writes
+            Assert.Throws<NotSupportedException>(() => stream.Write(new byte[1], 0, 1));
+
+            // and the failed Dispose still counts as the one Dispose that does the work
+            Assert.DoesNotThrow(() => stream.Dispose());
+            Assert.AreEqual(1, transform.DisposeCount, "transform was disposed more than once");
         }
 
         private void Swap(byte[] buf, int i, int j)
