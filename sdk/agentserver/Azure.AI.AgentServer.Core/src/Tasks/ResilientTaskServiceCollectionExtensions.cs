@@ -44,6 +44,13 @@ public static class ResilientTaskServiceCollectionExtensions
         TokenCredential? credential = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        if (credential is not null)
+        {
+            // Publish an explicitly supplied Core credential so composing protocol packages can
+            // reuse the same identity instead of creating and attempting to attach a second one.
+            services.TryAddSingleton<TokenCredential>(credential);
+        }
+
         EnsureCoreServices(services, credential);
         return services;
     }
