@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("forecastStartTime"u8);
-                writer.WriteStringValue(ForecastStartOn, "O");
+                writer.WriteStringValue(ForecastStartsOn, "O");
             }
             if (options.Format != "W")
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             StandbyVirtualMachinePoolForecastValues forecastValues = default;
-            DateTimeOffset forecastStartOn = default;
+            DateTimeOffset forecastStartsOn = default;
             string forecastInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (prop.NameEquals("forecastStartTime"u8))
                 {
-                    forecastStartOn = prop.Value.GetDateTimeOffset("O");
+                    forecastStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("forecastInfo"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StandbyVirtualMachinePoolPrediction(forecastValues, forecastStartOn, forecastInfo, additionalBinaryDataProperties);
+            return new StandbyVirtualMachinePoolPrediction(forecastValues, forecastStartsOn, forecastInfo, additionalBinaryDataProperties);
         }
     }
 }

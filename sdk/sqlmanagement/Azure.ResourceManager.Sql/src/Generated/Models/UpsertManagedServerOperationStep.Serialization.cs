@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StepStartOn))
+            if (Optional.IsDefined(StepStartsOn))
             {
                 writer.WritePropertyName("stepStartTime"u8);
-                writer.WriteStringValue(StepStartOn.Value, "O");
+                writer.WriteStringValue(StepStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(StepEndOn))
+            if (Optional.IsDefined(StepEndsOn))
             {
                 writer.WritePropertyName("stepEndTime"u8);
-                writer.WriteStringValue(StepEndOn.Value, "O");
+                writer.WriteStringValue(StepEndsOn.Value, "O");
             }
             if (Optional.IsDefined(TimeElapsed))
             {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            DateTimeOffset? stepStartOn = default;
-            DateTimeOffset? stepEndOn = default;
+            DateTimeOffset? stepStartsOn = default;
+            DateTimeOffset? stepEndsOn = default;
             string timeElapsed = default;
             int? order = default;
             string name = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    stepStartOn = prop.Value.GetDateTimeOffset("O");
+                    stepStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("stepEndTime"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    stepEndOn = prop.Value.GetDateTimeOffset("O");
+                    stepEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeElapsed"u8))
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             return new UpsertManagedServerOperationStep(
-                stepStartOn,
-                stepEndOn,
+                stepStartsOn,
+                stepEndsOn,
                 timeElapsed,
                 order,
                 name,
