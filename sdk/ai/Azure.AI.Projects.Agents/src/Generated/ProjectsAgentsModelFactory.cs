@@ -81,10 +81,49 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
         /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
+        /// <param name="invocationsModeration">
+        /// Author-declared configuration telling the platform where user/agent text lives in the
+        /// agent-defined invocations request/response bodies, so content-safety guardrails can extract
+        /// and moderate it. Optional; a rai_config without it leaves the invocations path without
+        /// content-safety moderation.
+        /// </param>
         /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
-        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default)
+        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName, RaiInvocationModeration invocationsModeration)
         {
-            return new ContentFilterConfiguration(raiPolicyName, additionalBinaryDataProperties: null);
+            return new ContentFilterConfiguration(raiPolicyName, invocationsModeration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Declares where request/response text lives so content-safety guardrails can extract it. </summary>
+        /// <param name="inputContentType"> How the REQUEST body is parsed. When omitted, the service defaults to `json`. </param>
+        /// <param name="outputContentType"> How the RESPONSE body is parsed. When omitted, the service defaults to `json`. </param>
+        /// <param name="responseMode"> Author-declared response shape; drives which output gate runs and which fields are required. </param>
+        /// <param name="inputPaths"> Path(s) to user text in the REQUEST body. Required when input_content_type is `json`. </param>
+        /// <param name="outputPaths"> Path(s) to agent text in a NON-STREAMING response body. Required when response_mode is non_streaming/both and output_content_type is `json`. </param>
+        /// <param name="streamSelectors"> One SSE event-&gt;field selector per event type carrying text. Required when response_mode is streaming/both and output_content_type is `json`. </param>
+        /// <returns> A new <see cref="Agents.RaiInvocationModeration"/> instance for mocking. </returns>
+        public static RaiInvocationModeration RaiInvocationModeration(RaiInvocationContentType? inputContentType = default, RaiInvocationContentType? outputContentType = default, RaiInvocationMode responseMode = default, IEnumerable<string> inputPaths = default, IEnumerable<string> outputPaths = default, IEnumerable<RaiSseTextSelector> streamSelectors = default)
+        {
+            inputPaths ??= new ChangeTrackingList<string>();
+            outputPaths ??= new ChangeTrackingList<string>();
+            streamSelectors ??= new ChangeTrackingList<RaiSseTextSelector>();
+
+            return new RaiInvocationModeration(
+                inputContentType,
+                outputContentType,
+                responseMode,
+                inputPaths.ToList(),
+                outputPaths.ToList(),
+                streamSelectors.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An SSE event-type to text-field selector for streaming invocation output. </summary>
+        /// <param name="eventType"> The SSE event `type` value that carries text. </param>
+        /// <param name="textField"> The field on a matched event holding the text delta. When omitted, the service defaults to `delta`. </param>
+        /// <returns> A new <see cref="Agents.RaiSseTextSelector"/> instance for mocking. </returns>
+        public static RaiSseTextSelector RaiSseTextSelector(string eventType = default, string textField = default)
+        {
+            return new RaiSseTextSelector(eventType, textField, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The hosted agent definition. </summary>
@@ -1708,6 +1747,15 @@ namespace Azure.AI.Projects.Agents
         public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default)
         {
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, draft: default, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuidInternal: default);
+        }
+
+        /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
+        /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
+        /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default)
+        {
+            return ContentFilterConfiguration(raiPolicyName: raiPolicyName, invocationsModeration: default);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

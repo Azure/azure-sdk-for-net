@@ -27,23 +27,57 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AgentEvaluatorGenerationJobSource))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentEvaluatorGenerationJobSource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgenticIdentityPreviewCredentials))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsight is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsight))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsight is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightDetails))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightDetails is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightEstimatedCost is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightEstimatedCost))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightEstimatedCost is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightHighlightedTrace is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightHighlightedTrace))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightHighlightedTrace is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightLinkedTrace is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightLinkedTrace))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightLinkedTrace is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightMonitor is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightMonitor))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightMonitor is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightMonitorCreate is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightMonitorCreate))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightMonitorCreate is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightMonitorListItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightMonitorListItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightMonitorListItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightProposedFix is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightProposedFix))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightProposedFix is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightProposedFixChange is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightProposedFixChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightProposedFixChange is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightRecommendedAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightRecommendedAction))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightRecommendedAction is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightRun is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightRun))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightRun is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightRunCreate is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightRunCreate))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightRunCreate is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightRunResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightRunResult))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightRunResult is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightsOverview is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightsOverview))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightsOverview is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightSuspension is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightSuspension))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightSuspension is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInsightTokenUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInsightTokenUsage))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInsightTokenUsage is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInvocationsApiDispatchPayload is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInvocationsApiDispatchPayload))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInvocationsApiDispatchPayload is experimental and may change in future versions.
@@ -56,9 +90,15 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentResponsesApiRoutineAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentResponsesApiRoutineAction))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentResponsesApiRoutineAction is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentsPagedResultAgentInsight is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentInsight))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultAgentInsight is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentsPagedResultAgentInsightMonitorListItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentInsightMonitorListItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultAgentInsightMonitorListItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentsPagedResultAgentInsightRun is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentInsightRun))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultAgentInsightRun is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentsPagedResultMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultMemoryItem is experimental and may change in future versions.
