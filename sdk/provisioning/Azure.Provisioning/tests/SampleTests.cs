@@ -246,7 +246,8 @@ internal class SampleTests
             }
 
             resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('cae${uniqueString(resourceGroup().id)}', 24)
+              name: take('cae-${uniqueString(resourceGroup().id)}', 24)
+              tags: tags
               location: location
               properties: {
                 appLogsConfiguration: {
@@ -263,7 +264,6 @@ internal class SampleTests
                   }
                 ]
               }
-              tags: tags
             }
 
             resource cae_mi_Contributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {

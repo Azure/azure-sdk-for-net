@@ -1,7 +1,11 @@
 import:
   - ../../.vscode/cspell.json
+words:
+  - Zhang
 overrides:
   - filename: '**/sdk/containerapps/**/*.cs'
     words:
+      - azprovision
       - Nacos
+      - occured
       - Resiliencies
