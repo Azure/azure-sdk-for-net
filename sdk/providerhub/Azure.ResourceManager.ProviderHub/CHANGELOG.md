@@ -12,7 +12,7 @@
 The service intentionally removed the following API surface, so it is no longer generated:
 
 - Removed several models that are no longer part of the service contract, along with their corresponding properties on `FanoutLinkedNotificationRule`, `ProviderResourceType`, `ResourceProviderManagement`, `ResourceProviderManifestProperties`, `ResourceTypeEndpoint`, and `ResourceTypeRegistrationProperties`.
-- Removed the `RegistrationNewRegionFrontloadRelease` resource and collection, `ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease`, and the `ProviderFrontloadPayload`, `ProviderFrontloadPayloadProperties`, `ManifestLevelPropertyBag`, `ResourceTypeEndpointBase`, `AvailableCheckInManifestEnvironment`, and `ServiceFeatureFlagAction` models.
+- Removed a resource and its collection, one operation on `ProviderRegistrationResource`, and several supporting models.
 - `ProviderResourceType.ResourceDeletionPolicy` now uses `ResourceDeletionPolicy`, and `ResourceTypeRegistrationProperties.ResourceDeletionPolicy` is now typed `RPaaSResourceDeletionPolicy`.
 - Removed the `Models.OperationsPutContent` model. The put-content operations are now exposed through the `OperationsPutContent` resource and `OperationsPutContentData`.
 - `ResourceAccessPolicy` changed from a closed enum to an extensible enum, and only `NotSpecified` remains a well-known value.
