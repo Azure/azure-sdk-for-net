@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="name">
         /// Name of the group.
-        /// It must match a group name of an existing fleet member. 
+        /// It must match a group name of an existing fleet member.
         /// </param>
         /// <param name="maxConcurrency">
         /// The max number of upgrades that can run concurrently in this specific group.

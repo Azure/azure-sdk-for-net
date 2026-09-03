@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
         /// <param name="name">
         /// Name of the group.
-        /// It must match a group name of an existing fleet member. 
+        /// It must match a group name of an existing fleet member.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerServiceFleetUpdateGroup(string name)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
         /// <param name="name">
         /// Name of the group.
-        /// It must match a group name of an existing fleet member. 
+        /// It must match a group name of an existing fleet member.
         /// </param>
         /// <param name="maxConcurrency">
         /// The max number of upgrades that can run concurrently in this specific group.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary>
         /// Name of the group.
-        /// It must match a group name of an existing fleet member. 
+        /// It must match a group name of an existing fleet member.
         /// </summary>
         public string Name { get; set; }
 

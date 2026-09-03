@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
         ///   By default, this is empty.
         ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
-        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
+        ///   If upgrade channel is not TargetKubernetesVersion, this field must be empty.
         /// </param>
         /// <param name="isLongTermSupport">
         ///   If upgrade channel is not TargetKubernetesVersion, this field must be False.
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
         ///   By default, this is empty.
         ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
-        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
+        ///   If upgrade channel is not TargetKubernetesVersion, this field must be empty.
         /// </summary>
         public string TargetKubernetesVersion { get; set; }
 
