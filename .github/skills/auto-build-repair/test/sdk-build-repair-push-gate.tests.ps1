@@ -84,6 +84,8 @@ Assert ($metadataMatch.Success -and $metadataMatch.Groups['hash'].Value -eq $bod
     'compiled metadata hash matches the source body containing the push gate'
 Assert ($lock -notmatch '(?i)commit progress made so far|commit progress and report|Partial progress committed') `
     'compiled workflow contains no stale commit-on-failure instruction'
+Assert ($lock -match 'GH_AW_ACTION_FAILURE_ISSUE_EXPIRES_HOURS: "0"') `
+    'disabled failure issues retain the repository-standard zero expiry'
 
 if ($failures.Count -gt 0) {
     Write-Error "$($failures.Count) assertion(s) failed."
