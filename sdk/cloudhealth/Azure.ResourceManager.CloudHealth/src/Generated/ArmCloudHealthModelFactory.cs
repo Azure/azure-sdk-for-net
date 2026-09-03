@@ -549,11 +549,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="degradedThreshold"> Degraded threshold for threshold-bearing strategies (MinHealthy, MaxNotHealthy). For MinHealthy: group is degraded when the healthy member count/percentage falls to or below this value. For MaxNotHealthy: group is degraded when the not-healthy member count/percentage reaches or exceeds this value. Optional — if not set, the group transitions directly between Healthy and Unhealthy. MUST NOT be set when aggregationType is WorstOf or BestOf. </param>
         /// <param name="unhealthyThreshold"> Unhealthy threshold for threshold-bearing strategies. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
         /// <param name="unit"> Unit type for the thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
-        /// <param name="ignoreUnknown"> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </param>
+        /// <param name="shouldIgnoreUnknown"> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </param>
         /// <param name="aggregatedHealthState"> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </param>
         /// <param name="unresolvedMembers"> Members listed in 'members' that do not currently resolve to a signal on this entity at the time of the last entity evaluation. Treated as Unknown during aggregation. Empty/omitted when every member resolves. </param>
         /// <returns> A new <see cref="Models.SignalAggregationGroup"/> instance for mocking. </returns>
-        public static SignalAggregationGroup SignalAggregationGroup(string name = default, string displayName = default, AggregationType? aggregationType = default, IEnumerable<string> members = default, double? degradedThreshold = default, double? unhealthyThreshold = default, AggregationUnit? unit = default, bool? ignoreUnknown = default, EntityHealthState? aggregatedHealthState = default, IEnumerable<string> unresolvedMembers = default)
+        public static SignalAggregationGroup SignalAggregationGroup(string name = default, string displayName = default, AggregationType? aggregationType = default, IEnumerable<string> members = default, double? degradedThreshold = default, double? unhealthyThreshold = default, AggregationUnit? unit = default, bool? shouldIgnoreUnknown = default, EntityHealthState? aggregatedHealthState = default, IEnumerable<string> unresolvedMembers = default)
         {
             members ??= new ChangeTrackingList<string>();
             unresolvedMembers ??= new ChangeTrackingList<string>();
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 degradedThreshold,
                 unhealthyThreshold,
                 unit,
-                ignoreUnknown,
+                shouldIgnoreUnknown,
                 aggregatedHealthState,
                 (unresolvedMembers ?? new ChangeTrackingList<string>()).ToList(),
                 default);

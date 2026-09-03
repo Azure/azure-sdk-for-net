@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsDefined(IgnoreUnknown))
+            if (Optional.IsDefined(ShouldIgnoreUnknown))
             {
                 writer.WritePropertyName("ignoreUnknown"u8);
-                writer.WriteBooleanValue(IgnoreUnknown.Value);
+                writer.WriteBooleanValue(ShouldIgnoreUnknown.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(AggregatedHealthState))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             double? degradedThreshold = default;
             double? unhealthyThreshold = default;
             AggregationUnit? unit = default;
-            bool? ignoreUnknown = default;
+            bool? shouldIgnoreUnknown = default;
             EntityHealthState? aggregatedHealthState = default;
             IReadOnlyList<string> unresolvedMembers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    ignoreUnknown = prop.Value.GetBoolean();
+                    shouldIgnoreUnknown = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("aggregatedHealthState"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 degradedThreshold,
                 unhealthyThreshold,
                 unit,
-                ignoreUnknown,
+                shouldIgnoreUnknown,
                 aggregatedHealthState,
                 unresolvedMembers ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

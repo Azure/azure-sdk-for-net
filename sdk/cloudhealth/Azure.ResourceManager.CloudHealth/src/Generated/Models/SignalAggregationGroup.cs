@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="degradedThreshold"> Degraded threshold for threshold-bearing strategies (MinHealthy, MaxNotHealthy). For MinHealthy: group is degraded when the healthy member count/percentage falls to or below this value. For MaxNotHealthy: group is degraded when the not-healthy member count/percentage reaches or exceeds this value. Optional — if not set, the group transitions directly between Healthy and Unhealthy. MUST NOT be set when aggregationType is WorstOf or BestOf. </param>
         /// <param name="unhealthyThreshold"> Unhealthy threshold for threshold-bearing strategies. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
         /// <param name="unit"> Unit type for the thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
-        /// <param name="ignoreUnknown"> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </param>
+        /// <param name="shouldIgnoreUnknown"> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </param>
         /// <param name="aggregatedHealthState"> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </param>
         /// <param name="unresolvedMembers"> Members listed in 'members' that do not currently resolve to a signal on this entity at the time of the last entity evaluation. Treated as Unknown during aggregation. Empty/omitted when every member resolves. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalAggregationGroup(string name, string displayName, AggregationType? aggregationType, IList<string> members, double? degradedThreshold, double? unhealthyThreshold, AggregationUnit? unit, bool? ignoreUnknown, EntityHealthState? aggregatedHealthState, IReadOnlyList<string> unresolvedMembers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalAggregationGroup(string name, string displayName, AggregationType? aggregationType, IList<string> members, double? degradedThreshold, double? unhealthyThreshold, AggregationUnit? unit, bool? shouldIgnoreUnknown, EntityHealthState? aggregatedHealthState, IReadOnlyList<string> unresolvedMembers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DegradedThreshold = degradedThreshold;
             UnhealthyThreshold = unhealthyThreshold;
             Unit = unit;
-            IgnoreUnknown = ignoreUnknown;
+            ShouldIgnoreUnknown = shouldIgnoreUnknown;
             AggregatedHealthState = aggregatedHealthState;
             UnresolvedMembers = unresolvedMembers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public AggregationUnit? Unit { get; set; }
 
         /// <summary> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </summary>
-        public bool? IgnoreUnknown { get; set; }
+        public bool? ShouldIgnoreUnknown { get; set; }
 
         /// <summary> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </summary>
         public EntityHealthState? AggregatedHealthState { get; }
