@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
@@ -113,11 +114,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
 
             public void Dispose()
             {
-                Func<IReadOnlyDictionary<string, string>, Task>? callback = _callback;
+                Func<IReadOnlyDictionary<string, string>, Task>? callback =
+                    Interlocked.Exchange(ref _callback, null);
                 if (callback != null)
                 {
                     _manager.UnregisterCallback(callback);
-                    _callback = null;
                 }
             }
         }
