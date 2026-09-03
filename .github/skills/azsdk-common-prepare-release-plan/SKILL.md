@@ -23,6 +23,7 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
 - Do not display Azure DevOps work item URLs; only provide the Release Plan Link and ID.
 - Require an API spec PR link or a TypeSpec project path before creating or updating a plan.
 - Validate that the spec PR repository matches the requested API release type before creation.
+- If Service Tree IDs cannot be resolved automatically, direct the user to https://aka.ms/servicetree to look them up.
 - Release plan tools accept **either** a Release Plan ID or an Azure DevOps work item ID — pass whichever the user provides. Each tool resolves the value automatically (trying it as a Release Plan ID first, then as a work item ID), so you do not need to call `azure-sdk-mcp:azsdk_get_release_plan` first just to translate one ID into the other.
 
 ## MCP Tools
