@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -102,6 +104,15 @@ namespace Azure.Storage.Test
             {
             }
         }
+
+        private static AuthenticatedRegionCryptoStream CreateStreamForDisposalTest(CryptoStreamMode mode)
+            => new AuthenticatedRegionCryptoStream(
+                new MemoryStream(GetRandomBytes(_totalAuthRegionLength)),
+                mode == CryptoStreamMode.Read
+                    ? (IAuthenticatedCryptographicTransform)new MockDecryptTransform(_nonceLength, _tagLength)
+                    : new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
+                _authRegionDataLength,
+                mode);
 
         private static byte[] GetRandomBytes(int length)
         {
@@ -532,6 +543,67 @@ namespace Azure.Storage.Test
             else
             {
                 Assert.DoesNotThrow(action);
+            }
+        }
+
+        /// <summary>
+        /// Disposal must be idempotent, per .NET conventions.
+        /// </summary>
+        [Test]
+        public void MultipleDisposeDoesNotThrow(
+            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode mode)
+        {
+            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(mode);
+
+            stream.Dispose();
+
+            Assert.DoesNotThrow(() => stream.Dispose());
+            Assert.DoesNotThrow(() => stream.Dispose());
+        }
+
+        /// <summary>
+        /// A repeated Dispose used to return the rented buffer to the shared
+        /// <see cref="ArrayPool{T}"/> more than once, which lets two unrelated callers rent
+        /// the same array instance and silently corrupt each other's data.
+        /// </summary>
+        [Test]
+        public void MultipleDisposeReturnsBufferToPoolOnce(
+            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode mode)
+        {
+            const int rentAttempts = 128;
+
+            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(mode);
+
+            stream.Dispose();
+            stream.Dispose();
+            stream.Dispose();
+
+            // The pool must never hand out the same array instance to two callers at once.
+            ArrayPool<byte> pool = ArrayPool<byte>.Shared;
+            var rented = new List<byte[]>(rentAttempts);
+            try
+            {
+                foreach (int _ in Enumerable.Range(0, rentAttempts))
+                {
+                    // same bucket the stream's buffer was rented from
+                    byte[] array = pool.Rent(_authRegionDataLength);
+                    foreach (byte[] existing in rented)
+                    {
+                        if (ReferenceEquals(existing, array))
+                        {
+                            Assert.Fail("Rented the same array instance twice; the stream buffer " +
+                                "was returned to the pool more than once.");
+                        }
+                    }
+                    rented.Add(array);
+                }
+            }
+            finally
+            {
+                foreach (byte[] array in rented)
+                {
+                    pool.Return(array);
+                }
             }
         }
 
