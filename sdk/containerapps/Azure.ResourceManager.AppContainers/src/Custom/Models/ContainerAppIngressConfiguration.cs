@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 #pragma warning disable CS0618 // Affinity is intentionally used by this obsolete compatibility property.
         /// <summary> Sticky Session Affinity. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use StickySessionsAffinityValue instead.", false)]
+        [Obsolete("Use StickySessionAffinity instead.", false)]
         public Affinity? StickySessionsAffinity
         {
-            get => StickySessionsAffinityValue.HasValue
-                ? new Affinity(StickySessionsAffinityValue.Value.ToString())
+            get => StickySessionAffinity.HasValue
+                ? new Affinity(StickySessionAffinity.Value.ToString())
                 : null;
-            set => StickySessionsAffinityValue = value.HasValue
+            set => StickySessionAffinity = value.HasValue
                 ? new StickySessionAffinity(value.Value.ToString())
                 : null;
         }

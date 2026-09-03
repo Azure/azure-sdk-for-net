@@ -13,25 +13,25 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Sticky Sessions for Single Revision Mode. </summary>
     internal partial class IngressStickySessions : ProvisionableConstruct
     {
-        private BicepValue<StickySessionAffinity> _stickySessionsAffinityValue;
+        private BicepValue<StickySessionAffinity> _stickySessionAffinity;
 
         /// <summary> Creates a new IngressStickySessions. </summary>
         public IngressStickySessions()
         {
         }
 
-        /// <summary> Gets or sets the StickySessionsAffinityValue. </summary>
-        public BicepValue<StickySessionAffinity> StickySessionsAffinityValue
+        /// <summary> Gets or sets the StickySessionAffinity. </summary>
+        public BicepValue<StickySessionAffinity> StickySessionAffinity
         {
             get
             {
                 Initialize();
-                return _stickySessionsAffinityValue;
+                return _stickySessionAffinity;
             }
             set
             {
                 Initialize();
-                _stickySessionsAffinityValue.Assign(value);
+                _stickySessionAffinity.Assign(value);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _stickySessionsAffinityValue = DefineProperty<StickySessionAffinity>(nameof(StickySessionsAffinityValue), new string[] { "affinity" });
+            _stickySessionAffinity = DefineProperty<StickySessionAffinity>(nameof(StickySessionAffinity), new string[] { "affinity" });
             DefineAdditionalProperties();
         }
 

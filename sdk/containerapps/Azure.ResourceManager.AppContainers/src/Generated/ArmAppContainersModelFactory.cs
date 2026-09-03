@@ -482,13 +482,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="customDomains"> custom domain bindings for Container Apps' hostnames. </param>
         /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
         /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
-        /// <param name="stickySessionsAffinityValue"> Sticky Session Affinity. </param>
+        /// <param name="stickySessionAffinity"> Sticky Session Affinity. </param>
         /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
         /// <param name="corsPolicy"> CORS policy for container app. </param>
         /// <param name="additionalPortMappings"> Settings to expose additional ports on container app. </param>
         /// <param name="targetPortHttpScheme"> Whether an http app listens on http or https. </param>
         /// <returns> A new <see cref="Models.ContainerAppIngressConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn = default, bool? external = default, int? targetPort = default, int? exposedPort = default, ContainerAppIngressTransportMethod? transport = default, IEnumerable<ContainerAppRevisionTrafficWeight> traffic = default, IEnumerable<ContainerAppCustomDomain> customDomains = default, bool? allowInsecure = default, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default, StickySessionAffinity? stickySessionsAffinityValue = default, ContainerAppIngressClientCertificateMode? clientCertificateMode = default, ContainerAppCorsPolicy corsPolicy = default, IEnumerable<IngressPortMapping> additionalPortMappings = default, IngressTargetPortHttpScheme? targetPortHttpScheme = default)
+        public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn = default, bool? external = default, int? targetPort = default, int? exposedPort = default, ContainerAppIngressTransportMethod? transport = default, IEnumerable<ContainerAppRevisionTrafficWeight> traffic = default, IEnumerable<ContainerAppCustomDomain> customDomains = default, bool? allowInsecure = default, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default, StickySessionAffinity? stickySessionAffinity = default, ContainerAppIngressClientCertificateMode? clientCertificateMode = default, ContainerAppCorsPolicy corsPolicy = default, IEnumerable<IngressPortMapping> additionalPortMappings = default, IngressTargetPortHttpScheme? targetPortHttpScheme = default)
         {
             traffic ??= new ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
             customDomains ??= new ChangeTrackingList<ContainerAppCustomDomain>();
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
                 allowInsecure,
                 (ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>()).ToList(),
-                stickySessionsAffinityValue is null ? default : new IngressStickySessions(stickySessionsAffinityValue, default),
+                stickySessionAffinity is null ? default : new IngressStickySessions(stickySessionAffinity, default),
                 clientCertificateMode,
                 corsPolicy,
                 (additionalPortMappings ?? new ChangeTrackingList<IngressPortMapping>()).ToList(),

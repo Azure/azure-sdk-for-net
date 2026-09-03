@@ -222,12 +222,12 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the StickySessionsAffinityValue. </summary>
-        public BicepValue<StickySessionAffinity> StickySessionsAffinityValue
+        /// <summary> Gets or sets the StickySessionAffinity. </summary>
+        public BicepValue<StickySessionAffinity> StickySessionAffinity
         {
             get
             {
-                return StickySessions is null ? default : StickySessions.StickySessionsAffinityValue;
+                return StickySessions is null ? default : StickySessions.StickySessionAffinity;
             }
             set
             {
@@ -235,7 +235,7 @@ namespace Azure.Provisioning.AppContainers
                 {
                     StickySessions = new IngressStickySessions();
                 }
-                StickySessions.StickySessionsAffinityValue = value;
+                StickySessions.StickySessionAffinity = value;
             }
         }
 
