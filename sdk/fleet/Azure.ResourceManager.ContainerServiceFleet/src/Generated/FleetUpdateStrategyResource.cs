@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string fleetUpdateStrategyApiVersion);
             _fleetUpdateStrategiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _fleetUpdateStrategiesRestClient = new FleetUpdateStrategies(_fleetUpdateStrategiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fleetUpdateStrategyApiVersion ?? "2026-06-01");
+            _fleetUpdateStrategiesRestClient = new FleetUpdateStrategies(_fleetUpdateStrategiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fleetUpdateStrategyApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -223,13 +223,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _fleetUpdateStrategiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
-                    _fleetUpdateStrategiesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location,
-                    true);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_fleetUpdateStrategiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -256,7 +250,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -279,13 +273,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _fleetUpdateStrategiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
-                    _fleetUpdateStrategiesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location,
-                    true);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_fleetUpdateStrategiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -312,7 +300,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -345,8 +333,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -373,7 +360,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -406,8 +393,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

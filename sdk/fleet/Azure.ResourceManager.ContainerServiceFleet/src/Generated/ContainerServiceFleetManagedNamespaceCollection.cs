@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ContainerServiceFleetManagedNamespaceResource.ResourceType, out string containerServiceFleetManagedNamespaceApiVersion);
             _fleetManagedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetManagedNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-06-01");
+            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,8 +99,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,8 +158,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +234,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +283,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +317,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +351,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +408,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +465,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +526,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

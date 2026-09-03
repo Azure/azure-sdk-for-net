@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// Name of the group.
         /// It must match a group name of an existing fleet member.
         /// </param>
+        /// <param name="maxAllowedFailures">
+        /// Limits the number of member (cluster) upgrade failures tolerated within this group.
+        /// Failures are evaluated over members within this group only. 
+        /// Accepts either:
+        ///   • A fixed count n, where n &gt;= 0
+        ///   • A percentage p%, where 0 &lt;= p &lt;= 100
+        ///     Percentage resolves at stage start using: resolvedThreshold = ceil(p * N), 
+        ///     where p is the percentage as a decimal and N is the number of members in this group at scope start.
+        /// Examples:
+        ///   • "3"   --&gt; up to 3 member upgrade failures are tolerated within this group. The 4th failure causes the group to fail.
+        ///   • "25%" --&gt; up to 25% of the members in this group can fail their upgrade before the group is considered failed.
+        /// </param>
         /// <param name="maxConcurrency">
         /// The max number of upgrades that can run concurrently in this specific group.
         /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the group you want to tolerate at a time.
@@ -52,13 +64,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         ///     • "100%" --&gt; “all at once”, up to all members for this group upgrade at the same time.
         ///     • "25%" --&gt; up to 25% of the members in the group will be upgraded at the same time.
         /// </param>
+        /// <param name="memberSelector">
+        /// Select the members of the group.
+        ///   * If specified, label-based selection will override group name based selection,
+        ///     and Name is only used as an identifier.
+        ///   * If not specified, group name based selection will be used, and Name must match a
+        ///     group name of an existing fleet member.
+        /// </param>
         /// <param name="beforeGates"> A list of Gates that will be created before this Group is executed. </param>
         /// <param name="afterGates"> A list of Gates that will be created after this Group is executed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroup(string name, string maxConcurrency, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateGroup(string name, string maxAllowedFailures, string maxConcurrency, MemberSelector memberSelector, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            MaxAllowedFailures = maxAllowedFailures;
             MaxConcurrency = maxConcurrency;
+            MemberSelector = memberSelector;
             BeforeGates = beforeGates;
             AfterGates = afterGates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -69,6 +90,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// It must match a group name of an existing fleet member.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Limits the number of member (cluster) upgrade failures tolerated within this group.
+        /// Failures are evaluated over members within this group only. 
+        /// Accepts either:
+        ///   • A fixed count n, where n &gt;= 0
+        ///   • A percentage p%, where 0 &lt;= p &lt;= 100
+        ///     Percentage resolves at stage start using: resolvedThreshold = ceil(p * N), 
+        ///     where p is the percentage as a decimal and N is the number of members in this group at scope start.
+        /// Examples:
+        ///   • "3"   --&gt; up to 3 member upgrade failures are tolerated within this group. The 4th failure causes the group to fail.
+        ///   • "25%" --&gt; up to 25% of the members in this group can fail their upgrade before the group is considered failed.
+        /// </summary>
+        public string MaxAllowedFailures { get; set; }
 
         /// <summary>
         /// The max number of upgrades that can run concurrently in this specific group.
@@ -87,10 +122,32 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         public string MaxConcurrency { get; set; }
 
+        /// <summary>
+        /// Select the members of the group.
+        ///   * If specified, label-based selection will override group name based selection,
+        ///     and Name is only used as an identifier.
+        ///   * If not specified, group name based selection will be used, and Name must match a
+        ///     group name of an existing fleet member.
+        /// </summary>
+        internal MemberSelector MemberSelector { get; set; }
+
         /// <summary> A list of Gates that will be created before this Group is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }
 
         /// <summary> A list of Gates that will be created after this Group is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> AfterGates { get; }
+
+        /// <summary> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </summary>
+        public string MemberSelectorByLabel
+        {
+            get
+            {
+                return MemberSelector is null ? default : MemberSelector.ByLabel;
+            }
+            set
+            {
+                MemberSelector = new MemberSelector(value);
+            }
+        }
     }
 }

@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(ScheduledStartConfiguration))
+            {
+                writer.WritePropertyName("scheduledStartConfiguration"u8);
+                writer.WriteObjectValue(ScheduledStartConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             string displayName = default;
             ContainerServiceFleetGateType @type = default;
+            ScheduledStartConfiguration scheduledStartConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,12 +149,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     @type = new ContainerServiceFleetGateType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("scheduledStartConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledStartConfiguration = ScheduledStartConfiguration.DeserializeScheduledStartConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceFleetGateConfiguration(displayName, @type, additionalBinaryDataProperties);
+            return new ContainerServiceFleetGateConfiguration(displayName, @type, scheduledStartConfiguration, additionalBinaryDataProperties);
         }
     }
 }

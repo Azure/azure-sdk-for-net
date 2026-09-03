@@ -92,6 +92,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <summary> Details for ScheduledStart gate. </summary>
+        public ScheduledStartProperties ScheduledStartProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledStartProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GateProperties();
+                }
+                Properties.ScheduledStartProperties = value;
+            }
+        }
+
         /// <summary> The target that the Gate is controlling, e.g. an Update Run. </summary>
         public ContainerServiceFleetGateTarget Target
         {

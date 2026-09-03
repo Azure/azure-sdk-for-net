@@ -35,14 +35,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the Gate resource. </param>
         /// <param name="displayName"> The human-readable display name of the Gate. </param>
         /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
+        /// <param name="scheduledStartProperties"> Details for ScheduledStart gate. </param>
         /// <param name="target"> The target that the Gate is controlling, e.g. an Update Run. </param>
         /// <param name="state"> The state of the Gate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GateProperties(ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType gateType, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GateProperties(ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType gateType, ScheduledStartProperties scheduledStartProperties, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
             GateType = gateType;
+            ScheduledStartProperties = scheduledStartProperties;
             Target = target;
             State = state;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -56,6 +58,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The type of the Gate determines how it is completed. </summary>
         public ContainerServiceFleetGateType GateType { get; set; }
+
+        /// <summary> Details for ScheduledStart gate. </summary>
+        public ScheduledStartProperties ScheduledStartProperties { get; set; }
 
         /// <summary> The target that the Gate is controlling, e.g. an Update Run. </summary>
         public ContainerServiceFleetGateTarget Target { get; set; }
