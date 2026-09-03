@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
+using TypeSpecCodeGenTypeAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -924,7 +925,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
     }
 
-    [CodeGenType("UnknownEventGridFilter")]
+    [TypeSpecCodeGenTypeAttribute("UnknownEventGridFilter")]
     internal sealed partial class UnknownFilter : EventGridFilter
     {
         internal UnknownFilter()
@@ -966,7 +967,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
     }
 
-    [CodeGenType("UnknownEventGridInputSchemaMapping")]
+    [TypeSpecCodeGenTypeAttribute("UnknownEventGridInputSchemaMapping")]
     internal sealed partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping
     {
         internal UnknownInputSchemaMapping()

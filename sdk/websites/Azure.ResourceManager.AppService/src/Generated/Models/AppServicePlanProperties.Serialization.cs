@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(SpotExpireOn))
+            if (Optional.IsDefined(SpotExpiresOn))
             {
                 writer.WritePropertyName("spotExpirationTime"u8);
-                writer.WriteStringValue(SpotExpireOn.Value, "O");
+                writer.WriteStringValue(SpotExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(FreeOfferExpireOn))
+            if (Optional.IsDefined(FreeOfferExpiresOn))
             {
                 writer.WritePropertyName("freeOfferExpirationTime"u8);
-                writer.WriteStringValue(FreeOfferExpireOn.Value, "O");
+                writer.WriteStringValue(FreeOfferExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.AppService.Models
             int? maximumElasticWorkerCount = default;
             int? numberOfSites = default;
             bool? isSpot = default;
-            DateTimeOffset? spotExpireOn = default;
-            DateTimeOffset? freeOfferExpireOn = default;
+            DateTimeOffset? spotExpiresOn = default;
+            DateTimeOffset? freeOfferExpiresOn = default;
             string resourceGroup = default;
             bool? isReserved = default;
             bool? isXenon = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    spotExpireOn = prop.Value.GetDateTimeOffset("O");
+                    spotExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("freeOfferExpirationTime"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    freeOfferExpireOn = prop.Value.GetDateTimeOffset("O");
+                    freeOfferExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceGroup"u8))
@@ -616,8 +616,8 @@ namespace Azure.ResourceManager.AppService.Models
                 maximumElasticWorkerCount,
                 numberOfSites,
                 isSpot,
-                spotExpireOn,
-                freeOfferExpireOn,
+                spotExpiresOn,
+                freeOfferExpiresOn,
                 resourceGroup,
                 isReserved,
                 isXenon,

@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingAccountId"> Billing account Id associated to this reservation order. </param>
         /// <param name="requestOn"> This is the DateTime when the reservation order was initially requested for purchase. </param>
         /// <param name="createdOn"> This is the DateTime when the reservation order was created. </param>
-        /// <param name="expireOn"> This is the date when the reservation order will expire. </param>
-        /// <param name="reservationExpireOn"> This is the date-time when the reservation order will expire. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
+        /// <param name="expiresOn"> This is the date when the reservation order will expire. </param>
+        /// <param name="reservationExpiresOn"> This is the date-time when the reservation order will expire. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the reservation benefit started. </param>
         /// <param name="originalQuantity"> Total original quantity of the skus purchased in the reservation order. </param>
         /// <param name="term"> The term of the reservation, e.g. P1Y. </param>
         /// <param name="provisioningState"> The provisioning state of the reservation, e.g. Succeeded. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="extendedStatusInfo"> Extended status information for the reservation. </param>
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationOrderProperty(string displayName, string enrollmentId, ResourceIdentifier customerId, ResourceIdentifier billingProfileId, ResourceIdentifier billingAccountId, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, string term, string provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<BillingReservationData> reservations, DateTimeOffset? reviewedOn, ReservationExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationOrderProperty(string displayName, string enrollmentId, ResourceIdentifier customerId, ResourceIdentifier billingProfileId, ResourceIdentifier billingAccountId, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, DateTimeOffset? reservationExpiresOn, DateTimeOffset? benefitStartsOn, int? originalQuantity, string term, string provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<BillingReservationData> reservations, DateTimeOffset? reviewedOn, ReservationExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             EnrollmentId = enrollmentId;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Billing.Models
             BillingAccountId = billingAccountId;
             RequestOn = requestOn;
             CreatedOn = createdOn;
-            ExpireOn = expireOn;
-            ReservationExpireOn = reservationExpireOn;
-            BenefitStartOn = benefitStartOn;
+            ExpiresOn = expiresOn;
+            ReservationExpiresOn = reservationExpiresOn;
+            BenefitStartsOn = benefitStartsOn;
             OriginalQuantity = originalQuantity;
             Term = term;
             ProvisioningState = provisioningState;
@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> This is the date when the reservation order will expire. </summary>
         [WirePath("expiryDate")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> This is the date-time when the reservation order will expire. </summary>
         [WirePath("expiryDateTime")]
-        public DateTimeOffset? ReservationExpireOn { get; set; }
+        public DateTimeOffset? ReservationExpiresOn { get; set; }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
         [WirePath("benefitStartTime")]
-        public DateTimeOffset? BenefitStartOn { get; set; }
+        public DateTimeOffset? BenefitStartsOn { get; set; }
 
         /// <summary> Total original quantity of the skus purchased in the reservation order. </summary>
         [WirePath("originalQuantity")]

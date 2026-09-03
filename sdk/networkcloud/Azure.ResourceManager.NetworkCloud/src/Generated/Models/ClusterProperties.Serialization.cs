@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("manualActionCount"u8);
                 writer.WriteNumberValue(ManualActionCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(SupportExpiresOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
-                writer.WriteStringValue(SupportExpireOn.Value, "O");
+                writer.WriteStringValue(SupportExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             DateTimeOffset? lastSuccessfulVersionUpdateOn = default;
             IReadOnlyList<string> managedCredentials = default;
             long? manualActionCount = default;
-            DateTimeOffset? supportExpireOn = default;
+            DateTimeOffset? supportExpiresOn = default;
             IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
             ClusterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    supportExpireOn = prop.Value.GetDateTimeOffset("O");
+                    supportExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("workloadResourceIds"u8))
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 lastSuccessfulVersionUpdateOn,
                 managedCredentials ?? new ChangeTrackingList<string>(),
                 manualActionCount,
-                supportExpireOn,
+                supportExpiresOn,
                 workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 provisioningState,
                 additionalBinaryDataProperties);

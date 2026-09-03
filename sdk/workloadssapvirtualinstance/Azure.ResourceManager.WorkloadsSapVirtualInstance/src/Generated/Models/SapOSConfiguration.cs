@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="osType"> The OS Type. </param>
         private protected SapOSConfiguration(SapOSType osType)
         {
-            OsType = osType;
+            OSType = osType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SapOSConfiguration(SapOSType osType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The OS Type. </summary>
-        internal SapOSType OsType { get; set; }
+        internal SapOSType OSType { get; set; }
     }
 }

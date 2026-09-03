@@ -203,18 +203,5 @@ namespace Azure.ResourceManager.Network.Models
                 Properties.FrontendIPConfigurationId = value;
             }
         }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                return Properties.AdditionalProperties;
-            }
-        }
     }
 }

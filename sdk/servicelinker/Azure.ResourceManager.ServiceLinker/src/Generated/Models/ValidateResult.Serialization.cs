@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("isConnectionAvailable"u8);
                 writer.WriteBooleanValue(IsConnectionAvailable.Value);
             }
-            if (Optional.IsDefined(ReportStartOn))
+            if (Optional.IsDefined(ReportStartsOn))
             {
                 writer.WritePropertyName("reportStartTimeUtc"u8);
-                writer.WriteStringValue(ReportStartOn.Value, "O");
+                writer.WriteStringValue(ReportStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(ReportEndOn))
+            if (Optional.IsDefined(ReportEndsOn))
             {
                 writer.WritePropertyName("reportEndTimeUtc"u8);
-                writer.WriteStringValue(ReportEndOn.Value, "O");
+                writer.WriteStringValue(ReportEndsOn.Value, "O");
             }
             if (Optional.IsDefined(SourceId))
             {
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             string linkerName = default;
             bool? isConnectionAvailable = default;
-            DateTimeOffset? reportStartOn = default;
-            DateTimeOffset? reportEndOn = default;
+            DateTimeOffset? reportStartsOn = default;
+            DateTimeOffset? reportEndsOn = default;
             ResourceIdentifier sourceId = default;
             ResourceIdentifier targetId = default;
             LinkerAuthType? authType = default;
@@ -197,20 +197,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reportStartOn = null;
+                        reportStartsOn = null;
                         continue;
                     }
-                    reportStartOn = prop.Value.GetDateTimeOffset("O");
+                    reportStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reportEndTimeUtc"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reportEndOn = null;
+                        reportEndsOn = null;
                         continue;
                     }
-                    reportEndOn = prop.Value.GetDateTimeOffset("O");
+                    reportEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceId"u8))
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new ValidateResult(
                 linkerName,
                 isConnectionAvailable,
-                reportStartOn,
-                reportEndOn,
+                reportStartsOn,
+                reportEndsOn,
                 sourceId,
                 targetId,
                 authType,
