@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #pragma warning disable CS0618 // Affinity is intentionally used by this obsolete compatibility overload.
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppIngressConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use the overload accepting StickySessionAffinity instead.", false)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Use the overload accepting StickySessionAffinity instead.", false)]
         public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn = default, bool? external = default, int? targetPort = default, int? exposedPort = default, ContainerAppIngressTransportMethod? transport = default, IEnumerable<ContainerAppRevisionTrafficWeight> traffic = default, IEnumerable<ContainerAppCustomDomain> customDomains = default, bool? allowInsecure = default, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default, Affinity? stickySessionsAffinity = default, ContainerAppIngressClientCertificateMode? clientCertificateMode = default, ContainerAppCorsPolicy corsPolicy = default, IEnumerable<IngressPortMapping> additionalPortMappings = default)
         {
             return ContainerAppIngressConfiguration(
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         // The generated affinity type changed, so preserve the older shipped model-factory overload and convert to the new type.
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppIngressConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use the overload accepting StickySessionAffinity instead.", false)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Use the overload accepting StickySessionAffinity instead.", false)]
         public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IEnumerable<ContainerAppRevisionTrafficWeight> traffic, IEnumerable<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, Affinity? stickySessionsAffinity, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
         {
             return ContainerAppIngressConfiguration(

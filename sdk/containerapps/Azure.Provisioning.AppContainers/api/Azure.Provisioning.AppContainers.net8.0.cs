@@ -932,7 +932,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppIPSecurityRestrictionRule> IPSecurityRestrictions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.StickySessionAffinity> StickySessionAffinity { get { throw null; } set { } }
-        [System.ObsoleteAttribute("Use StickySessionAffinity instead.", false)]
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Use StickySessionAffinity instead.", false)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.StickySessionAffinity> StickySessionsAffinity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TargetPort { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppRevisionTrafficWeight> Traffic { get { throw null; } set { } }

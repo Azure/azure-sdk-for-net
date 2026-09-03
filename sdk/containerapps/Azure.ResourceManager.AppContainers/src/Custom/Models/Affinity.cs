@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     // The C# TypeSpec customization renamed this type to StickySessionAffinity. Preserve the shipped management type for compatibility.
     /// <summary> Sticky Session Affinity. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("Use StickySessionAffinity instead.", false)]
+    [Obsolete("This type is obsoleted and will be removed in a future version. Use StickySessionAffinity instead.", false)]
     public readonly partial struct Affinity : IEquatable<Affinity>
     {
         private readonly string _value;
