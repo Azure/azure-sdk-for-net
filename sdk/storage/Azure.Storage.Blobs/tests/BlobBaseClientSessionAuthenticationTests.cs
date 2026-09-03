@@ -955,11 +955,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task DownloadAsync_Sessions_IncorrectAccountName()
+        public async Task DownloadAsync_Sessions_IncorrectAccountName_FallsBackToBearer()
         {
             // The account name is part of the canonicalized resource in the string-to-sign,
             // so a misconfigured SessionOptions.AccountName produces a signature the service
-            // cannot reproduce.
+            // cannot reproduce. The service returns 401, the session is invalidated, and the
+            // request is retried with bearer.
             var containerName = GetNewContainerName();
             var countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
@@ -994,6 +995,8 @@ namespace Azure.Storage.Blobs.Test
             // Assert — a session was minted and attempted, but the request was served by bearer
             Assert.AreEqual(1, countingPolicy.CreateSessionCount,
                 "Expected one create session request for the container");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount,
+                "Expected the download to first be attempted with Session authorization");
             Assert.AreEqual(1, countingPolicy.BearerGetBlobCount,
                 "Expected the download to fall back to Bearer authorization after the session signature is rejected");
         }

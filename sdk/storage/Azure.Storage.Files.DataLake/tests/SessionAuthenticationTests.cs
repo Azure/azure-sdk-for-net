@@ -353,11 +353,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task FileClient_Read_IncorrectAccountName()
+        public async Task FileClient_Read_IncorrectAccountName_FallsBackToBearer()
         {
             // The account name is part of the canonicalized resource in the string-to-sign,
             // so a misconfigured SessionOptions.AccountName produces a signature the service
-            // cannot reproduce.
+            // cannot reproduce. The service returns 401, the session is invalidated, and the
+            // request is retried with bearer.
 
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
@@ -396,6 +397,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert — a session was minted and attempted, but the read was served by bearer
             Assert.AreEqual(1, countingPolicy.CreateSessionCount,
                 "Expected one create session request");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount,
+                "Expected the read to first be attempted with Session authorization");
             Assert.AreEqual(1, countingPolicy.BearerGetCount,
                 "Expected the read to fall back to Bearer authorization after the session signature is rejected");
         }
