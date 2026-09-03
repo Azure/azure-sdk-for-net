@@ -15,10 +15,6 @@ namespace Azure.ResourceManager.AppContainers.Models
     // empty envelope internal, so suppress the public model-factory overload that would expose the internal type.
     [CodeGenSuppress("LogicAppData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ContainerAppLogicAppConfiguration))]
     [CodeGenSuppress("ContainerAppConfiguration", typeof(IEnumerable<ContainerAppWritableSecret>), typeof(ContainerAppActiveRevisionsMode?), typeof(string), typeof(ContainerAppIngressConfiguration), typeof(IEnumerable<ContainerAppRegistryCredentials>), typeof(ContainerAppDaprConfiguration), typeof(bool?), typeof(ContainerAppRuntimeJavaAgent), typeof(bool?), typeof(int?), typeof(int?), typeof(string), typeof(IEnumerable<ContainerAppIdentitySettings>))]
-#pragma warning disable CS0618 // Affinity is intentionally used by obsolete compatibility overloads.
-    [CodeGenSuppress("ContainerAppIngressConfiguration", typeof(string), typeof(bool?), typeof(int?), typeof(int?), typeof(ContainerAppIngressTransportMethod?), typeof(IEnumerable<ContainerAppRevisionTrafficWeight>), typeof(IEnumerable<ContainerAppCustomDomain>), typeof(bool?), typeof(IEnumerable<ContainerAppIPSecurityRestrictionRule>), typeof(Affinity?), typeof(ContainerAppIngressClientCertificateMode?), typeof(ContainerAppCorsPolicy), typeof(IEnumerable<IngressPortMapping>))]
-    [CodeGenSuppress("ContainerAppIngressConfiguration", typeof(string), typeof(bool?), typeof(int?), typeof(int?), typeof(ContainerAppIngressTransportMethod?), typeof(IEnumerable<ContainerAppRevisionTrafficWeight>), typeof(IEnumerable<ContainerAppCustomDomain>), typeof(bool?), typeof(IEnumerable<ContainerAppIPSecurityRestrictionRule>), typeof(Affinity?), typeof(ContainerAppIngressClientCertificateMode?), typeof(ContainerAppCorsPolicy))]
-#pragma warning restore CS0618
     public static partial class ArmAppContainersModelFactory
     {
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
