@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productType"> The type of the product for which the transaction took place. </param>
         /// <param name="quantity"> The quantity purchased in the transaction. </param>
         /// <param name="reasonCode"> There reason code for the transaction. </param>
-        /// <param name="servicePeriodStartOn"> The date of the purchase of the product, or the start date of the month in which usage started. </param>
-        /// <param name="servicePeriodEndOn"> The end date of the product term, or the end date of the month in which usage ended. </param>
+        /// <param name="servicePeriodStartsOn"> The date of the purchase of the product, or the start date of the month in which usage started. </param>
+        /// <param name="servicePeriodEndsOn"> The end date of the product term, or the end date of the month in which usage ended. </param>
         /// <param name="subTotal"> The pre-tax charged amount for the transaction. </param>
         /// <param name="tax"> The tax amount applied to the transaction. </param>
         /// <param name="transactionAmount"> The charge associated with the transaction. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="specialTaxationType"> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </param>
         /// <param name="refundTransactionDetails"> The refund details of a transaction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? @on, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? @on, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartsOn, DateTimeOffset? servicePeriodEndsOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureCreditApplied = azureCreditApplied;
             AzurePlan = azurePlan;
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Billing.Models
             ProductType = productType;
             Quantity = quantity;
             ReasonCode = reasonCode;
-            ServicePeriodStartOn = servicePeriodStartOn;
-            ServicePeriodEndOn = servicePeriodEndOn;
+            ServicePeriodStartsOn = servicePeriodStartsOn;
+            ServicePeriodEndsOn = servicePeriodEndsOn;
             SubTotal = subTotal;
             Tax = tax;
             TransactionAmount = transactionAmount;
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The date of the purchase of the product, or the start date of the month in which usage started. </summary>
         [WirePath("servicePeriodStartDate")]
-        public DateTimeOffset? ServicePeriodStartOn { get; set; }
+        public DateTimeOffset? ServicePeriodStartsOn { get; set; }
 
         /// <summary> The end date of the product term, or the end date of the month in which usage ended. </summary>
         [WirePath("servicePeriodEndDate")]
-        public DateTimeOffset? ServicePeriodEndOn { get; set; }
+        public DateTimeOffset? ServicePeriodEndsOn { get; set; }
 
         /// <summary> The pre-tax charged amount for the transaction. </summary>
         [WirePath("subTotal")]

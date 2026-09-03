@@ -155,15 +155,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("invoiceDate"u8);
                 writer.WriteStringValue(InvoiceOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoicePeriodEndOn))
+            if (options.Format != "W" && Optional.IsDefined(InvoicePeriodEndsOn))
             {
                 writer.WritePropertyName("invoicePeriodEndDate"u8);
-                writer.WriteStringValue(InvoicePeriodEndOn.Value, "O");
+                writer.WriteStringValue(InvoicePeriodEndsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoicePeriodStartOn))
+            if (options.Format != "W" && Optional.IsDefined(InvoicePeriodStartsOn))
             {
                 writer.WritePropertyName("invoicePeriodStartDate"u8);
-                writer.WriteStringValue(InvoicePeriodStartOn.Value, "O");
+                writer.WriteStringValue(InvoicePeriodStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(InvoiceType))
             {
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Billing.Models
             IReadOnlyList<BillingInvoiceFailedPayment> failedPayments = default;
             BillingAmount freeAzureCreditApplied = default;
             DateTimeOffset? invoiceOn = default;
-            DateTimeOffset? invoicePeriodEndOn = default;
-            DateTimeOffset? invoicePeriodStartOn = default;
+            DateTimeOffset? invoicePeriodEndsOn = default;
+            DateTimeOffset? invoicePeriodStartsOn = default;
             BillingInvoiceType? invoiceType = default;
             bool? isMonthlyInvoice = default;
             IReadOnlyList<BillingInvoicePayment> payments = default;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    invoicePeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    invoicePeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("invoicePeriodStartDate"u8))
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    invoicePeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    invoicePeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("invoiceType"u8))
@@ -581,8 +581,8 @@ namespace Azure.ResourceManager.Billing.Models
                 failedPayments ?? new ChangeTrackingList<BillingInvoiceFailedPayment>(),
                 freeAzureCreditApplied,
                 invoiceOn,
-                invoicePeriodEndOn,
-                invoicePeriodStartOn,
+                invoicePeriodEndsOn,
+                invoicePeriodStartsOn,
                 invoiceType,
                 isMonthlyInvoice,
                 payments ?? new ChangeTrackingList<BillingInvoicePayment>(),

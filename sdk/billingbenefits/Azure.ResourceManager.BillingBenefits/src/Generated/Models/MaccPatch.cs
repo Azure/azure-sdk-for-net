@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccPatchRequestProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
