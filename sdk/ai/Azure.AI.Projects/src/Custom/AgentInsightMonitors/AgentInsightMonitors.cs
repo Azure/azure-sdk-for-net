@@ -25,7 +25,7 @@ namespace Azure.AI.Projects;
 public partial class AgentInsightMonitors
 {
     /// <summary> List Agent Insights monitors, optionally filtered by agent name. </summary>
-    /// <param name="after"> A cursor that identifies the last item in the previous page. </param>e
+    /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
     /// <param name="before"> A cursor that identifies the first item in the next page. </param>
     /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
     /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
