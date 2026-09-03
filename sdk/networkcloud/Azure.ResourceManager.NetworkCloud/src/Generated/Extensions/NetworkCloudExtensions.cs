@@ -1803,38 +1803,6 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Get a list of bare metal machines in the provided subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/bareMetalMachinesOperation IdBareMetalMachines_ListBySubscriptionDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudBareMetalMachineResource"/>MockingTo mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.
-        /// </summary>
-        /// <param name="subscriptionResource"> The  instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-        {
-            return subscriptionResource.GetNetworkCloudBareMetalMachinesAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
-        /// Get a list of bare metal machines in the provided subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/bareMetalMachinesOperation IdBareMetalMachines_ListBySubscriptionDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudBareMetalMachineResource"/>MockingTo mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.
-        /// </summary>
-        /// <param name="subscriptionResource"> The  instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-        {
-            return subscriptionResource.GetNetworkCloudBareMetalMachines(top: default, skipToken: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
         /// Get a list of cloud services networks in the provided subscription.
         ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/cloudServicesNetworksOperation IdCloudServicesNetworks_ListBySubscriptionDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudCloudServicesNetworkResource"/>MockingTo mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.
         /// </summary>
