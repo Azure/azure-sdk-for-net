@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenTelemetry.Trace;
 using System;
 using System.Reflection;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
-
+using OpenTelemetry.Trace;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests

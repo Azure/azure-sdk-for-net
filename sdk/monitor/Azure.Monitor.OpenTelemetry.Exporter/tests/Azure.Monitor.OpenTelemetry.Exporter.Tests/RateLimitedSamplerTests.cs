@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry;
-using OpenTelemetry.Trace;
 using OpenTelemetry.Exporter;
+using OpenTelemetry.Trace;
 using Xunit;
-using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests;
 
