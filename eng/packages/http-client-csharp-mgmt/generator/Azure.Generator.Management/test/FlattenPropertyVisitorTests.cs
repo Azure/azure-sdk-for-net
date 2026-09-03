@@ -1037,6 +1037,48 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(parentProvider.Properties.Any(p => p.Name == "SkuTier"), Is.False);
         }
 
+        [Test]
+        public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                properties: [valueProperty]);
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+            var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
+            var customCodeView = new TestTypeView(wrapperProvider.Name)
+            {
+                PropertiesToBuild =
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        typeof(string),
+                        "DisplayName",
+                        new AutoPropertyBody(true),
+                        wrapperProvider)
+                ]
+            };
+            ManagementMockHelpers.SetCustomCodeView(wrapperProvider, customCodeView);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            var resultingWrapperProperty = parentProvider.Properties.Single(p => p.Name == "Wrapper");
+            Assert.That(
+                resultingWrapperProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                "A custom public property without wire metadata must contribute to the model's public property count.");
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "WrapperValue"), Is.False);
+        }
+
         private static void RunVisitors(ModelProvider model)
         {
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
