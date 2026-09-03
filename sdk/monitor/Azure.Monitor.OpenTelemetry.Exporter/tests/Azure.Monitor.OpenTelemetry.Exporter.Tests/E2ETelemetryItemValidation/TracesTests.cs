@@ -235,7 +235,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var activitySource = new ActivitySource(activitySourceName);
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
-            ;
 
             List<TelemetryItem>? logTelemetryItems = null;
 
