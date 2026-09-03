@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Azure.Communication.Identity": "2025-06-30"
+  }
+}

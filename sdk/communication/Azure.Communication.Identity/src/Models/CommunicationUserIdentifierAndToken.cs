@@ -1,14 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
-using Azure.Communication.Identity.Models;
 using Azure.Core;
+
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Identity
 {
-    [CodeGenModel("CommunicationIdentityAccessTokenResult")]
+    [CodeGenType("CommunicationIdentityAccessTokenResult")]
     [CodeGenSuppress("CommunicationUserIdentifierAndToken", typeof(CommunicationIdentity))]
     public partial class CommunicationUserIdentifierAndToken
     {

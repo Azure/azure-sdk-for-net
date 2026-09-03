@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,7 +18,10 @@ namespace Azure.Communication.Identity
     public class CommunicationIdentityClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CommunicationIdentityRestClient RestClient { get; }
+
+        internal IdentityOperations RestClient { get; }
+
+        internal TeamsUserOperations TeamsUserRestClient { get; }
 
         #region public constructors - all argument need null check
 
@@ -45,8 +48,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -56,8 +59,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                CheckNotNull(tokenCredential, nameof(tokenCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -80,7 +83,16 @@ namespace Azure.Communication.Identity
         private CommunicationIdentityClient(string endpoint, HttpPipeline httpPipeline, CommunicationIdentityClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            RestClient = new IdentityOperations(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            TeamsUserRestClient = new TeamsUserOperations(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+        }
+
+        // The generated Argument helper only exposes a void-returning AssertNotNull, but the
+        // constructor chain above needs to validate and forward in a single expression.
+        private static T CheckNotNull<T>(T value, string name)
+        {
+            Argument.AssertNotNull(value, name);
+            return value;
         }
 
         #endregion
@@ -90,6 +102,7 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = null;
             RestClient = null;
+            TeamsUserRestClient = null;
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
@@ -100,7 +113,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(createTokenWithScopes: Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken);
+                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(new CommunicationIdentityCreateRequest(), cancellationToken);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -119,7 +132,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(createTokenWithScopes: Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(new CommunicationIdentityCreateRequest(), cancellationToken).ConfigureAwait(false);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -142,7 +155,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return RestClient.Create(createTokenWithScopes: scopes, expiresInMinutes: expiresIn, cancellationToken: cancellationToken);
+                return RestClient.Create(BuildCreateRequest(scopes, expiresIn), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -169,7 +182,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return await RestClient.CreateAsync(createTokenWithScopes: scopes, expiresInMinutes: expiresIn, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(BuildCreateRequest(scopes, expiresIn), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -235,7 +248,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresIn, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, BuildAccessTokenRequest(scopes, expiresIn), cancellationToken);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
@@ -269,7 +282,7 @@ namespace Azure.Communication.Identity
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresIn, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, BuildAccessTokenRequest(scopes, expiresIn), cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
@@ -336,7 +349,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(options.TeamsUserAadToken, options.ClientId, options.UserObjectId, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = TeamsUserRestClient.ExchangeTeamsUserAccessToken(new TeamsUserExchangeTokenRequest(options.TeamsUserAadToken, options.ClientId, options.UserObjectId), cancellationToken);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -355,7 +368,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(options.TeamsUserAadToken, options.ClientId, options.UserObjectId, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await TeamsUserRestClient.ExchangeTeamsUserAccessTokenAsync(new TeamsUserExchangeTokenRequest(options.TeamsUserAadToken, options.ClientId, options.UserObjectId), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -364,6 +377,23 @@ namespace Azure.Communication.Identity
                 throw;
             }
         }
+
+        private static CommunicationIdentityCreateRequest BuildCreateRequest(IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        {
+            var request = new CommunicationIdentityCreateRequest { ExpiresInMinutes = expiresInMinutes };
+            foreach (CommunicationTokenScope scope in scopes ?? Enumerable.Empty<CommunicationTokenScope>())
+            {
+                request.CreateTokenWithScopes.Add(scope);
+            }
+
+            return request;
+        }
+
+        private static CommunicationIdentityAccessTokenRequest BuildAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
+            => new CommunicationIdentityAccessTokenRequest(scopes ?? Enumerable.Empty<CommunicationTokenScope>())
+            {
+                ExpiresInMinutes = expiresInMinutes
+            };
 
         private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresIn, string paramName)
         {
