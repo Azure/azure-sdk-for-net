@@ -19,6 +19,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new GenericProtectionPolicy. </summary>
         public GenericProtectionPolicy()
         {
+            BackupManagementType.Assign("GenericProtectionPolicy");
         }
 
         /// <summary> Gets or sets the SubProtectionPolicy. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupManagementType", new string[] { "backupManagementType" }, defaultValue: "GenericProtectionPolicy");
             _subProtectionPolicy = DefineListProperty<SubProtectionPolicy>(nameof(SubProtectionPolicy), new string[] { "subProtectionPolicy" });
             _timeZone = DefineProperty<string>(nameof(TimeZone), new string[] { "timeZone" });
             _fabricName = DefineProperty<string>(nameof(FabricName), new string[] { "fabricName" });

@@ -20,6 +20,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VmWorkloadProtectionPolicy. </summary>
         public VmWorkloadProtectionPolicy()
         {
+            BackupManagementType.Assign("AzureWorkload");
         }
 
         /// <summary> Gets or sets the WorkLoadType. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupManagementType", new string[] { "backupManagementType" }, defaultValue: "AzureWorkload");
             _workLoadType = DefineProperty<BackupWorkloadType>(nameof(WorkLoadType), new string[] { "workLoadType" });
             _settings = DefineModelProperty<BackupCommonSettings>(nameof(Settings), new string[] { "settings" });
             _subProtectionPolicy = DefineListProperty<SubProtectionPolicy>(nameof(SubProtectionPolicy), new string[] { "subProtectionPolicy" });

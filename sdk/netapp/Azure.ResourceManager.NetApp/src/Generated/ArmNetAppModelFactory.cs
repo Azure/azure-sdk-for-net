@@ -266,7 +266,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
@@ -1972,7 +1975,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
@@ -1984,7 +1987,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
+        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, SecureLdapType? secureLdapType = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
             dnsServers ??= new ChangeTrackingList<IPAddress>();
@@ -1992,7 +1995,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new LdapConfiguration(
                 domain,
                 (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                isLdapOverTlsEnabled,
+                secureLdapType,
                 serverCACertificate,
                 certificateCNHost,
                 (dnsServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
@@ -2052,7 +2055,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
@@ -2064,7 +2067,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfigurationPatch"/> instance for mocking. </returns>
-        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = default)
+        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, SecureLdapType? secureLdapType = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
             dnsServers ??= new ChangeTrackingList<IPAddress>();
@@ -2072,7 +2075,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new LdapConfigurationPatch(
                 domain,
                 (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                isLdapOverTlsEnabled,
+                secureLdapType,
                 serverCACertificate,
                 certificateCNHost,
                 (dnsServers ?? new ChangeTrackingList<IPAddress>()).ToList(),

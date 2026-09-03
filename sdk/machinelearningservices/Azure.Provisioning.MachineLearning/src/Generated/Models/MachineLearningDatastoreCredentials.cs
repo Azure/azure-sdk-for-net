@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningDatastoreCredentials : ProvisionableConstruct
     {
+        private BicepValue<CredentialsType> _credentialsType;
+
         /// <summary> Creates a new MachineLearningDatastoreCredentials. </summary>
         public MachineLearningDatastoreCredentials()
         {
+        }
+
+        /// <summary> [Required] Credential type used to authentication with storage. </summary>
+        internal BicepValue<CredentialsType> CredentialsType
+        {
+            get
+            {
+                Initialize();
+                return _credentialsType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningDatastoreCredentials. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _credentialsType = DefineProperty<CredentialsType>(nameof(CredentialsType), new string[] { "credentialsType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -71,6 +72,16 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(ApplyPatchToolParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (InternalCallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -100,6 +111,7 @@ namespace Azure.AI.Projects
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<InternalCallableToolAllowedCaller> allowedCallers = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -107,12 +119,26 @@ namespace Azure.AI.Projects
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalCallableToolAllowedCaller> array = new List<InternalCallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new InternalCallableToolAllowedCaller(item.GetString()));
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplyPatchToolParam(@type, additionalBinaryDataProperties);
+            return new ApplyPatchToolParam(@type, additionalBinaryDataProperties, allowedCallers ?? new ChangeTrackingList<InternalCallableToolAllowedCaller>());
         }
     }
 }

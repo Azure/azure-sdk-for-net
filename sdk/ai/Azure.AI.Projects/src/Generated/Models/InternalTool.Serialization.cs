@@ -159,18 +159,20 @@ namespace Azure.AI.Projects
                         return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "web_search":
                         return WebSearchTool.DeserializeWebSearchTool(element, options);
+                    case "shell":
+                        return FunctionShellToolParam.DeserializeFunctionShellToolParam(element, options);
                     case "mcp":
                         return InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "function":
                         return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "computer_use_preview":
                         return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
+                    case "programmatic_tool_calling":
+                        return ProgrammaticToolCallingParam.DeserializeProgrammaticToolCallingParam(element, options);
                     case "image_generation":
                         return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
                         return LocalShellToolParam.DeserializeLocalShellToolParam(element, options);
-                    case "shell":
-                        return FunctionShellToolParam.DeserializeFunctionShellToolParam(element, options);
                     case "custom":
                         return InternalCustomToolParam.DeserializeInternalCustomToolParam(element, options);
                     case "web_search_preview":

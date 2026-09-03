@@ -87,33 +87,33 @@ namespace Azure.Provisioning.Tests.Primitives
                       name: 'test-storage'
                       location: 'westus2'
                       properties: {
-                        tier: 'Standard'
-                        isEnabled: true
+                        accessRules: [
+                          {
+                            isEnabled: true
+                            port: 443
+                            protocol: 'Https'
+                            ruleName: 'allow-web'
+                          }
+                          {
+                            isEnabled: false
+                            port: 22
+                            protocol: 'Tcp'
+                            ruleName: 'allow-ssh'
+                          }
+                        ]
                         allowPublicAccess: false
-                        maxConnections: 100
-                        storageConfiguration: {
-                          backupRetentionDays: 30
-                          maxRetryAttempts: 3
-                          enableEncryption: true
-                        }
                         allowedSubnets: [
                           '192.168.1.0/24'
                           '10.0.0.0/8'
                         ]
-                        accessRules: [
-                          {
-                            ruleName: 'allow-web'
-                            protocol: 'Https'
-                            port: 443
-                            isEnabled: true
-                          }
-                          {
-                            ruleName: 'allow-ssh'
-                            protocol: 'Tcp'
-                            port: 22
-                            isEnabled: false
-                          }
-                        ]
+                        isEnabled: true
+                        maxConnections: 100
+                        storageConfiguration: {
+                          backupRetentionDays: 30
+                          enableEncryption: true
+                          maxRetryAttempts: 3
+                        }
+                        tier: 'Standard'
                       }
                       tags: {
                         Environment: 'Test'
@@ -199,9 +199,9 @@ namespace Azure.Provisioning.Tests.Primitives
                       name: 'test-storage'
                       location: 'westus2'
                       properties: {
-                        tier: 'Standard'
                         allowedSubnets: []
                         deniedPorts: []
+                        tier: 'Standard'
                       }
                     }
                     """);
@@ -247,11 +247,11 @@ namespace Azure.Provisioning.Tests.Primitives
                       name: 'test-storage'
                       location: 'westus2'
                       properties: {
-                        tier: 'Standard'
                         allowedSubnets: [
                           '192.168.1.0/24'
                         ]
                         deniedPorts: []
+                        tier: 'Standard'
                       }
                     }
                     """);
@@ -327,6 +327,32 @@ namespace Azure.Provisioning.Tests.Primitives
                       name: 'test-compute'
                       location: 'eastus'
                       properties: {
+                        additionalStorages: [
+                          {
+                            name: 'additional-storage'
+                            location: 'eastus'
+                            properties: {
+                              allowPublicAccess: true
+                              isEnabled: true
+                              maxConnections: 150
+                              tier: 'Standard'
+                            }
+                          }
+                        ]
+                        computeSettings: {
+                          backupStorage: {
+                            name: 'backup-storage'
+                            location: 'eastus'
+                            properties: {
+                              allowPublicAccess: false
+                              isEnabled: false
+                              maxConnections: 100
+                              tier: 'Basic'
+                            }
+                          }
+                          enableAutoShutdown: true
+                          maxIdleMinutes: 30
+                        }
                         computeType: 'Virtual'
                         cpuCores: 4
                         memoryGB: 16
@@ -334,36 +360,10 @@ namespace Azure.Provisioning.Tests.Primitives
                           name: 'primary-storage'
                           location: 'eastus'
                           properties: {
-                            tier: 'Premium'
-                            isEnabled: true
                             allowPublicAccess: false
+                            isEnabled: true
                             maxConnections: 200
-                          }
-                        }
-                        additionalStorages: [
-                          {
-                            name: 'additional-storage'
-                            location: 'eastus'
-                            properties: {
-                              tier: 'Standard'
-                              isEnabled: true
-                              allowPublicAccess: true
-                              maxConnections: 150
-                            }
-                          }
-                        ]
-                        computeSettings: {
-                          enableAutoShutdown: true
-                          maxIdleMinutes: 30
-                          backupStorage: {
-                            name: 'backup-storage'
-                            location: 'eastus'
-                            properties: {
-                              tier: 'Basic'
-                              isEnabled: false
-                              allowPublicAccess: false
-                              maxConnections: 100
-                            }
+                            tier: 'Premium'
                           }
                         }
                       }
@@ -416,15 +416,15 @@ namespace Azure.Provisioning.Tests.Primitives
                       name: take('storageaccount${uniqueString(resourceGroup().id)}', 24)
                       location: 'centralus'
                       properties: {
-                        tier: 'Standard'
-                        isEnabled: true
                         allowPublicAccess: false
+                        isEnabled: true
                         maxConnections: 100
                         storageConfiguration: useConfig ? {
                           backupRetentionDays: 30
                           maxRetryAttempts: 3
                           enableEncryption: true
                         } : null
+                        tier: 'Standard'
                       }
                     }
                     """);
