@@ -1,10 +1,41 @@
 # Release History
 
+## 4.9.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.9.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
+### Other Changes
+
 ## 4.8.1 (2026-09-02)
 
 ### Bugs Fixed
 
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
+## 4.9.0-beta.1 (2026-06-04)
+
+### Features Added
+- Added `KeyVaultEkmClient` to support External Key Management operations.
+
+### Other Changes
+- The default service version is now `2026-01-01-preview`.
 
 ## 4.8.0 (2026-05-05)
 
