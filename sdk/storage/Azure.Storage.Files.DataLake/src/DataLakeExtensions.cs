@@ -579,7 +579,22 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutAwareRouting = options.LayoutAwareRouting
+            };
+        }
+
+        internal static BlobGetLayoutOptions ToBlobGetLayoutOptions(this DataLakeFileGetLayoutOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobGetLayoutOptions
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
             };
         }
 
@@ -594,7 +609,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutEndpoint = options.LayoutEndpoint
             };
         }
 
@@ -608,7 +624,135 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutAwareRouting = options.LayoutAwareRouting
+            };
+        }
+
+        internal static DataLakeFileLayoutEndpoint ToDataLakeFileLayoutEndpoint(this BlobLayoutEndpoint item)
+        {
+            if (item == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutEndpoint
+            {
+                Index = item.Index,
+                Value = item.Value
+            };
+        }
+
+        internal static DataLakeFileLayoutEndpoints ToDataLakeFileLayoutEndpoints(this BlobLayoutEndpoints endpoints)
+        {
+            if (endpoints == null)
+            {
+                return null;
+            }
+
+            List<DataLakeFileLayoutEndpoint> mapped = null;
+            if (endpoints.Endpoint != null)
+            {
+                mapped = new List<DataLakeFileLayoutEndpoint>(endpoints.Endpoint.Count);
+                foreach (BlobLayoutEndpoint item in endpoints.Endpoint)
+                {
+                    mapped.Add(item.ToDataLakeFileLayoutEndpoint());
+                }
+            }
+
+            return new DataLakeFileLayoutEndpoints
+            {
+                Endpoint = mapped
+            };
+        }
+
+        internal static DataLakeFileLayoutRange ToDataLakeFileLayoutRange(this BlobLayoutRange item)
+        {
+            if (item == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutRange
+            {
+                Start = item.Start,
+                End = item.End,
+                EndpointIndex = item.EndpointIndex
+            };
+        }
+
+        internal static DataLakeFileLayoutRanges ToDataLakeFileLayoutRanges(this BlobLayoutRanges ranges)
+        {
+            if (ranges == null)
+            {
+                return null;
+            }
+
+            List<DataLakeFileLayoutRange> mapped = null;
+            if (ranges.Range != null)
+            {
+                mapped = new List<DataLakeFileLayoutRange>(ranges.Range.Count);
+                foreach (BlobLayoutRange item in ranges.Range)
+                {
+                    mapped.Add(item.ToDataLakeFileLayoutRange());
+                }
+            }
+
+            return new DataLakeFileLayoutRanges
+            {
+                Range = mapped
+            };
+        }
+
+        internal static DataLakeFileLayoutInfo ToDataLakeFileLayoutInfo(this BlobLayoutInfo blobLayoutInfo)
+        {
+            if (blobLayoutInfo == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutInfo
+            {
+                Endpoints = blobLayoutInfo.Endpoints.ToDataLakeFileLayoutEndpoints(),
+                Ranges = blobLayoutInfo.Ranges.ToDataLakeFileLayoutRanges(),
+                LastModified = blobLayoutInfo.LastModified,
+                CreatedOn = blobLayoutInfo.CreatedOn,
+                Metadata = blobLayoutInfo.Metadata,
+                CopyCompletedOn = blobLayoutInfo.CopyCompletedOn,
+                CopyStatusDescription = blobLayoutInfo.CopyStatusDescription,
+                CopyId = blobLayoutInfo.CopyId,
+                CopyProgress = blobLayoutInfo.CopyProgress,
+                CopySource = blobLayoutInfo.CopySource,
+                CopyStatus = blobLayoutInfo.BlobCopyStatus.HasValue
+                    ? (Models.CopyStatus?)(Models.CopyStatus)blobLayoutInfo.BlobCopyStatus.Value
+                    : null,
+                IsIncrementalCopy = blobLayoutInfo.IsIncrementalCopy,
+                LeaseDuration = (DataLakeLeaseDuration)blobLayoutInfo.LeaseDuration,
+                LeaseState = (DataLakeLeaseState)blobLayoutInfo.LeaseState,
+                LeaseStatus = (DataLakeLeaseStatus)blobLayoutInfo.LeaseStatus,
+                ContentLength = blobLayoutInfo.ContentLength,
+                ContentType = blobLayoutInfo.ContentType,
+                ETag = blobLayoutInfo.ETag,
+                ContentHash = blobLayoutInfo.ContentHash,
+                ContentEncoding = blobLayoutInfo.ContentEncoding,
+                ContentDisposition = blobLayoutInfo.ContentDisposition,
+                ContentLanguage = blobLayoutInfo.ContentLanguage,
+                CacheControl = blobLayoutInfo.CacheControl,
+                AcceptRanges = blobLayoutInfo.AcceptRanges,
+                IsServerEncrypted = blobLayoutInfo.IsServerEncrypted,
+                EncryptionKeySha256 = blobLayoutInfo.EncryptionKeySha256,
+                EncryptionScope = blobLayoutInfo.EncryptionScope,
+                AccessTier = blobLayoutInfo.AccessTier,
+                AccessTierInferred = blobLayoutInfo.AccessTierInferred,
+                SmartAccessTier = blobLayoutInfo.SmartAccessTier,
+                ArchiveStatus = blobLayoutInfo.ArchiveStatus,
+                AccessTierChangedOn = blobLayoutInfo.AccessTierChangedOn,
+                ExpiresOn = blobLayoutInfo.ExpiresOn,
+                FileContentLength = blobLayoutInfo.BlobContentLength,
+                FileContentType = blobLayoutInfo.BlobContentType,
+                FileContentEncoding = blobLayoutInfo.BlobContentEncoding,
+                FileContentMD5 = blobLayoutInfo.BlobContentMD5,
+                FileCreatedOn = blobLayoutInfo.BlobCreatedOn
             };
         }
 

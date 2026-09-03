@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -248,6 +248,15 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// Session authentication requires the storage account name, which is derived from
+        /// <paramref name="serviceUri"/> when possible. Set <see cref="Models.SessionOptions.AccountName"/>
+        /// when using a custom endpoint URL from which the account name cannot be derived.
+        /// If the account name cannot be determined, this constructor throws when
+        /// <see cref="Models.SessionOptions.SessionMode"/> was explicitly set to
+        /// <see cref="Models.SessionMode.Enabled"/>; otherwise session authentication is
+        /// disabled and bearer token authentication is used.
+        /// </remarks>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
             : this(
                   serviceUri,
@@ -359,19 +368,35 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             TokenCredential tokenCredential,
             BlobClientOptions options)
-            : this(serviceUri,
-                  new BlobClientConfiguration(
-                      pipeline: options.Build(authentication),
-                      tokenCredential: tokenCredential,
-                      clientDiagnostics: new ClientDiagnostics(options),
-                      version: options?.Version ?? BlobClientOptions.LatestVersion,
-                      customerProvidedKey: options?.CustomerProvidedKey,
-                      transferValidation: options.TransferValidation,
-                      encryptionScope: options?.EncryptionScope,
-                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
-                  authentication,
-                  options?._clientSideEncryptionOptions?.Clone())
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+
+            if (tokenCredential != null)
+            {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new ContainerSessionProvider(serviceUri, tokenCredential, options);
+                authentication = new SessionAuthenticationPolicy(
+                    endpoint: serviceUri,
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
+                    sessionOptions: options.SessionOptions);
+            }
+
+            _uri = serviceUri;
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options?.Version ?? BlobClientOptions.LatestVersion,
+                customerProvidedKey: options?.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options?.EncryptionScope,
+                trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false);
+            _authenticationPolicy = authentication;
+            _clientSideEncryption = options?._clientSideEncryptionOptions?.Clone();
+            _serviceRestClient = BuildServiceRestClient(serviceUri);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -551,6 +576,23 @@ namespace Azure.Storage.Blobs
                     trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SessionAuthenticationPolicy"/> wrapping the given bearer token policy.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
+            Uri endpoint,
+            HttpPipelinePolicy fallbackAuthPolicy,
+            SessionProvider sessionProvider,
+            SessionOptions sessionOptions)
+        {
+            return new SessionAuthenticationPolicy(
+                endpoint,
+                fallbackAuthPolicy,
+                sessionProvider,
+                sessionOptions);
         }
 
         private ServiceRestClient BuildServiceRestClient(Uri uri)
