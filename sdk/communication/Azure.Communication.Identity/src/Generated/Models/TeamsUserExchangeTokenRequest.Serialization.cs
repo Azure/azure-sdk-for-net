@@ -5,31 +5,165 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    internal partial class TeamsUserExchangeTokenRequest : IUtf8JsonSerializable
+    /// <summary> A request to exchange a Teams user access token. </summary>
+    public partial class TeamsUserExchangeTokenRequest : IJsonModel<TeamsUserExchangeTokenRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="TeamsUserExchangeTokenRequest"/> for deserialization. </summary>
+        internal TeamsUserExchangeTokenRequest()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TeamsUserExchangeTokenRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsUserExchangeTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTeamsUserExchangeTokenRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TeamsUserExchangeTokenRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsUserExchangeTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationIdentityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TeamsUserExchangeTokenRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TeamsUserExchangeTokenRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TeamsUserExchangeTokenRequest IPersistableModel<TeamsUserExchangeTokenRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TeamsUserExchangeTokenRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="teamsUserExchangeTokenRequest"> The <see cref="TeamsUserExchangeTokenRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TeamsUserExchangeTokenRequest teamsUserExchangeTokenRequest)
+        {
+            if (teamsUserExchangeTokenRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(teamsUserExchangeTokenRequest, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<TeamsUserExchangeTokenRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsUserExchangeTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeamsUserExchangeTokenRequest)} does not support writing '{format}' format.");
+            }
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
             writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TeamsUserExchangeTokenRequest IJsonModel<TeamsUserExchangeTokenRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TeamsUserExchangeTokenRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsUserExchangeTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeamsUserExchangeTokenRequest)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeamsUserExchangeTokenRequest(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TeamsUserExchangeTokenRequest DeserializeTeamsUserExchangeTokenRequest(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string token = default;
+            string appId = default;
+            string userId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("token"u8))
+                {
+                    token = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("appId"u8))
+                {
+                    appId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userId"u8))
+                {
+                    userId = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new TeamsUserExchangeTokenRequest(token, appId, userId, additionalBinaryDataProperties);
         }
     }
 }

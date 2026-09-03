@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    /// <summary> The TeamsExtensionAssignmentCreateOrUpdateRequest. </summary>
-    internal partial class TeamsExtensionAssignmentCreateOrUpdateRequest
+    /// <summary> A request to create or update a Teams Extension assignment. </summary>
+    public partial class TeamsExtensionAssignmentCreateOrUpdateRequest
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentCreateOrUpdateRequest"/>. </summary>
         /// <param name="principalType"> The type of principal the assignment is for. </param>
         public TeamsExtensionAssignmentCreateOrUpdateRequest(TeamsExtensionPrincipalType principalType)
@@ -22,16 +26,19 @@ namespace Azure.Communication.Identity.Models
 
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentCreateOrUpdateRequest"/>. </summary>
         /// <param name="principalType"> The type of principal the assignment is for. </param>
-        /// <param name="clientIds"></param>
-        internal TeamsExtensionAssignmentCreateOrUpdateRequest(TeamsExtensionPrincipalType principalType, IList<string> clientIds)
+        /// <param name="clientIds"> The client IDs for the assignment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TeamsExtensionAssignmentCreateOrUpdateRequest(TeamsExtensionPrincipalType principalType, IList<string> clientIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalType = principalType;
             ClientIds = clientIds;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of principal the assignment is for. </summary>
         public TeamsExtensionPrincipalType PrincipalType { get; }
-        /// <summary> Gets the client ids. </summary>
+
+        /// <summary> The client IDs for the assignment. </summary>
         public IList<string> ClientIds { get; }
     }
 }

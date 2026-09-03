@@ -5,14 +5,145 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    internal partial class TeamsExtensionAssignmentResponse
+    /// <summary> A Teams Extension assignment response. </summary>
+    public partial class TeamsExtensionAssignmentResponse : IJsonModel<TeamsExtensionAssignmentResponse>
     {
-        internal static TeamsExtensionAssignmentResponse DeserializeTeamsExtensionAssignmentResponse(JsonElement element)
+        /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentResponse"/> for deserialization. </summary>
+        internal TeamsExtensionAssignmentResponse()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TeamsExtensionAssignmentResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTeamsExtensionAssignmentResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TeamsExtensionAssignmentResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationIdentityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TeamsExtensionAssignmentResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TeamsExtensionAssignmentResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TeamsExtensionAssignmentResponse IPersistableModel<TeamsExtensionAssignmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TeamsExtensionAssignmentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TeamsExtensionAssignmentResponse"/> from. </param>
+        public static explicit operator TeamsExtensionAssignmentResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTeamsExtensionAssignmentResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<TeamsExtensionAssignmentResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeamsExtensionAssignmentResponse)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("objectId"u8);
+            writer.WriteStringValue(ObjectId);
+            writer.WritePropertyName("tenantId"u8);
+            writer.WriteStringValue(TenantId);
+            writer.WritePropertyName("principalType"u8);
+            writer.WriteStringValue(PrincipalType.ToString());
+            if (Optional.IsCollectionDefined(ClientIds))
+            {
+                writer.WritePropertyName("clientIds"u8);
+                writer.WriteStartArray();
+                foreach (string item in ClientIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TeamsExtensionAssignmentResponse IJsonModel<TeamsExtensionAssignmentResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TeamsExtensionAssignmentResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeamsExtensionAssignmentResponse)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeamsExtensionAssignmentResponse(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TeamsExtensionAssignmentResponse DeserializeTeamsExtensionAssignmentResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,48 +152,52 @@ namespace Azure.Communication.Identity.Models
             string objectId = default;
             string tenantId = default;
             TeamsExtensionPrincipalType principalType = default;
-            IReadOnlyList<string> clientIds = default;
-            foreach (var property in element.EnumerateObject())
+            IList<string> clientIds = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("objectId"u8))
+                if (prop.NameEquals("objectId"u8))
                 {
-                    objectId = property.Value.GetString();
+                    objectId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    tenantId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("principalType"u8))
+                if (prop.NameEquals("principalType"u8))
                 {
-                    principalType = new TeamsExtensionPrincipalType(property.Value.GetString());
+                    principalType = new TeamsExtensionPrincipalType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientIds"u8))
+                if (prop.NameEquals("clientIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     clientIds = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            return new TeamsExtensionAssignmentResponse(objectId, tenantId, principalType, clientIds ?? new ChangeTrackingList<string>());
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TeamsExtensionAssignmentResponse FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTeamsExtensionAssignmentResponse(document.RootElement);
+            return new TeamsExtensionAssignmentResponse(objectId, tenantId, principalType, clientIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

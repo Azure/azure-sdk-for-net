@@ -1,0 +1,6 @@
+directory: specification/communication/data-plane/Identity
+commit: 7ad5d5c9180ad584d3e0b90622233e01fa5978cf
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
