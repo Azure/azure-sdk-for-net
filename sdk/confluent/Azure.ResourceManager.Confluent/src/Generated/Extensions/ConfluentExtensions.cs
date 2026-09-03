@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Confluent
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaaSParameterRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaaSParameterContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Confluent
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.ActivateResource(WaitUntil, ActivateSaaSParameterRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.ActivateResource(WaitUntil, ActivateSaaSParameterContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<SaaSResourceDetailsResponse> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<SaaSResourceDetailsResult> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

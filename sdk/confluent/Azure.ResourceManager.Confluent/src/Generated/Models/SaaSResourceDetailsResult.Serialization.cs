@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Proxy Resource. </summary>
-    public partial class SaaSResourceDetailsResponse : ResourceData, IJsonModel<SaaSResourceDetailsResponse>
+    public partial class SaaSResourceDetailsResult : ResourceData, IJsonModel<SaaSResourceDetailsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSaaSResourceDetailsResponse(document.RootElement, options);
+                        return DeserializeSaaSResourceDetailsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SaaSResourceDetailsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SaaSResourceDetailsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SaaSResourceDetailsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SaaSResourceDetailsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SaaSResourceDetailsResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SaaSResourceDetailsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SaaSResourceDetailsResponse IPersistableModel<SaaSResourceDetailsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => (SaaSResourceDetailsResponse)PersistableModelCreateCore(data, options);
+        SaaSResourceDetailsResult IPersistableModel<SaaSResourceDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (SaaSResourceDetailsResult)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SaaSResourceDetailsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SaaSResourceDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SaaSResourceDetailsResponse"/> from. </param>
-        internal static SaaSResourceDetailsResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SaaSResourceDetailsResult"/> from. </param>
+        internal static SaaSResourceDetailsResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSaaSResourceDetailsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSaaSResourceDetailsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SaaSResourceDetailsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SaaSResourceDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SaaSResourceDetailsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SaaSResourceDetailsResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SaasId))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SaaSResourceDetailsResponse IJsonModel<SaaSResourceDetailsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SaaSResourceDetailsResponse)JsonModelCreateCore(ref reader, options);
+        SaaSResourceDetailsResult IJsonModel<SaaSResourceDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SaaSResourceDetailsResult)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SaaSResourceDetailsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SaaSResourceDetailsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSaaSResourceDetailsResponse(document.RootElement, options);
+            return DeserializeSaaSResourceDetailsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SaaSResourceDetailsResponse DeserializeSaaSResourceDetailsResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static SaaSResourceDetailsResult DeserializeSaaSResourceDetailsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SaaSResourceDetailsResponse(
+            return new SaaSResourceDetailsResult(
                 id,
                 name,
                 resourceType,

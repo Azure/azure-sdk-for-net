@@ -12,16 +12,16 @@ using Azure.ResourceManager.Confluent;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> A key-value pair for extensibility. </summary>
-    public partial class KeyValuePair
+    public partial class ConfluentKeyValuePair
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentKeyValuePair"/>. </summary>
         /// <param name="key"> The key. </param>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public KeyValuePair(string key, string value)
+        public ConfluentKeyValuePair(string key, string value)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Confluent.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentKeyValuePair"/>. </summary>
         /// <param name="key"> The key. </param>
         /// <param name="value"> The value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyValuePair(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfluentKeyValuePair(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;

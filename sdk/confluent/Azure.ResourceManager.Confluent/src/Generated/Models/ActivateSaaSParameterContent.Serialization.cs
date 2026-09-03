@@ -9,64 +9,72 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class LatestLinkedSaaSResponse : IJsonModel<LatestLinkedSaaSResponse>
+    /// <summary> SaaS guid &amp; PublisherId for Activate and Validate SaaS Resource. </summary>
+    public partial class ActivateSaaSParameterContent : IJsonModel<ActivateSaaSParameterContent>
     {
+        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/> for deserialization. </summary>
+        internal ActivateSaaSParameterContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatestLinkedSaaSResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActivateSaaSParameterContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLatestLinkedSaaSResponse(document.RootElement, options);
+                        return DeserializeActivateSaaSParameterContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LatestLinkedSaaSResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActivateSaaSParameterContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestLinkedSaaSResponse IPersistableModel<LatestLinkedSaaSResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActivateSaaSParameterContent IPersistableModel<ActivateSaaSParameterContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LatestLinkedSaaSResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActivateSaaSParameterContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LatestLinkedSaaSResponse"/> from. </param>
-        internal static LatestLinkedSaaSResponse FromResponse(Response response)
+        /// <param name="activateSaaSParameterContent"> The <see cref="ActivateSaaSParameterContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ActivateSaaSParameterContent activateSaaSParameterContent)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLatestLinkedSaaSResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            if (activateSaaSParameterContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(activateSaaSParameterContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LatestLinkedSaaSResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActivateSaaSParameterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,20 +85,17 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SaaSResourceId))
+            writer.WritePropertyName("saasGuid"u8);
+            writer.WriteStringValue(SaasGuid);
+            if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("saaSResourceId"u8);
-                writer.WriteStringValue(SaaSResourceId);
-            }
-            if (Optional.IsDefined(IsHiddenSaaS))
-            {
-                writer.WritePropertyName("isHiddenSaaS"u8);
-                writer.WriteBooleanValue(IsHiddenSaaS.Value);
+                writer.WritePropertyName("publisherId"u8);
+                writer.WriteStringValue(PublisherId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -111,46 +116,42 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestLinkedSaaSResponse IJsonModel<LatestLinkedSaaSResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActivateSaaSParameterContent IJsonModel<ActivateSaaSParameterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatestLinkedSaaSResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActivateSaaSParameterContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLatestLinkedSaaSResponse(document.RootElement, options);
+            return DeserializeActivateSaaSParameterContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LatestLinkedSaaSResponse DeserializeLatestLinkedSaaSResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActivateSaaSParameterContent DeserializeActivateSaaSParameterContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string saaSResourceId = default;
-            bool? isHiddenSaaS = default;
+            string saasGuid = default;
+            string publisherId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("saaSResourceId"u8))
+                if (prop.NameEquals("saasGuid"u8))
                 {
-                    saaSResourceId = prop.Value.GetString();
+                    saasGuid = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isHiddenSaaS"u8))
+                if (prop.NameEquals("publisherId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isHiddenSaaS = prop.Value.GetBoolean();
+                    publisherId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LatestLinkedSaaSResponse(saaSResourceId, isHiddenSaaS, additionalBinaryDataProperties);
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, additionalBinaryDataProperties);
         }
     }
 }

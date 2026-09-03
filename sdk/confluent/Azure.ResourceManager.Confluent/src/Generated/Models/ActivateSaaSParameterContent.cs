@@ -12,26 +12,26 @@ using Azure.ResourceManager.Confluent;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> SaaS guid &amp; PublisherId for Activate and Validate SaaS Resource. </summary>
-    public partial class ActivateSaaSParameterRequest
+    public partial class ActivateSaaSParameterContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saasGuid"/> is null. </exception>
-        public ActivateSaaSParameterRequest(string saasGuid)
+        public ActivateSaaSParameterContent(string saasGuid)
         {
             Argument.AssertNotNull(saasGuid, nameof(saasGuid));
 
             SaasGuid = saasGuid;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for Confluent resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivateSaaSParameterRequest(string saasGuid, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivateSaaSParameterContent(string saasGuid, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaasGuid = saasGuid;
             PublisherId = publisherId;

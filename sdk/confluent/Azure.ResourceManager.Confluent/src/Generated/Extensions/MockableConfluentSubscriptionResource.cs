@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ConfluentArmOperation<SaaSResourceDetailsResponse> operation = new ConfluentArmOperation<SaaSResourceDetailsResponse>(
-                    new SaaSResourceDetailsResponseOperationSource(),
+                ConfluentArmOperation<SaaSResourceDetailsResult> operation = new ConfluentArmOperation<SaaSResourceDetailsResult>(
+                    new SaaSResourceDetailsResultOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SaaSResourceDetailsResponse> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaaSResourceDetailsResult> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ConfluentArmOperation<SaaSResourceDetailsResponse> operation = new ConfluentArmOperation<SaaSResourceDetailsResponse>(
-                    new SaaSResourceDetailsResponseOperationSource(),
+                ConfluentArmOperation<SaaSResourceDetailsResult> operation = new ConfluentArmOperation<SaaSResourceDetailsResult>(
+                    new SaaSResourceDetailsResultOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,

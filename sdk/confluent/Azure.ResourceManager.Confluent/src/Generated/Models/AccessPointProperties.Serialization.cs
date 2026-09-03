@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 writer.WritePropertyName("dictionary"u8);
                 writer.WriteStartArray();
-                foreach (KeyValuePair item in Dictionary)
+                foreach (ConfluentKeyValuePair item in Dictionary)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             string accessPointName = default;
             string region = default;
-            VnetInjectionDetails vnetInjection = default;
+            VNetInjectionDetails vnetInjection = default;
             IList<string> egressRoutes = default;
             SCMetadataEntity metadata = default;
             ConfluentProvisionState? provisioningState = default;
-            IList<KeyValuePair> dictionary = default;
+            IList<ConfluentKeyValuePair> dictionary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (prop.NameEquals("vnetInjection"u8))
                 {
-                    vnetInjection = VnetInjectionDetails.DeserializeVnetInjectionDetails(prop.Value, options);
+                    vnetInjection = VNetInjectionDetails.DeserializeVNetInjectionDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("egressRoutes"u8))
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    List<KeyValuePair> array = new List<KeyValuePair>();
+                    List<ConfluentKeyValuePair> array = new List<ConfluentKeyValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KeyValuePair.DeserializeKeyValuePair(item, options));
+                        array.Add(ConfluentKeyValuePair.DeserializeConfluentKeyValuePair(item, options));
                     }
                     dictionary = array;
                     continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 egressRoutes ?? new ChangeTrackingList<string>(),
                 metadata,
                 provisioningState,
-                dictionary ?? new ChangeTrackingList<KeyValuePair>(),
+                dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>(),
                 additionalBinaryDataProperties);
         }
     }

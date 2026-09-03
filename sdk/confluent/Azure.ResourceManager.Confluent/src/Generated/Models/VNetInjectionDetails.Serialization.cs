@@ -14,62 +14,57 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> SaaS-related data properties. </summary>
-    public partial class SaaSData : IJsonModel<SaaSData>
+    /// <summary> Details for VNet injection. </summary>
+    public partial class VNetInjectionDetails : IJsonModel<VNetInjectionDetails>
     {
+        /// <summary> Initializes a new instance of <see cref="VNetInjectionDetails"/> for deserialization. </summary>
+        internal VNetInjectionDetails()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SaaSData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VNetInjectionDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VNetInjectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSaaSData(document.RootElement, options);
+                        return DeserializeVNetInjectionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SaaSData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VNetInjectionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VNetInjectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SaaSData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VNetInjectionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SaaSData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VNetInjectionDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SaaSData IPersistableModel<SaaSData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VNetInjectionDetails IPersistableModel<VNetInjectionDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SaaSData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="saaSData"> The <see cref="SaaSData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SaaSData saaSData)
-        {
-            if (saaSData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(saaSData, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<VNetInjectionDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SaaSData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VNetInjectionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,16 +75,15 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VNetInjectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SaaSData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VNetInjectionDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SaaSResourceId))
-            {
-                writer.WritePropertyName("saaSResourceId"u8);
-                writer.WriteStringValue(SaaSResourceId);
-            }
+            writer.WritePropertyName("virtualNetworkResourceId"u8);
+            writer.WriteStringValue(VirtualNetworkResourceId);
+            writer.WritePropertyName("subnetResourceId"u8);
+            writer.WriteStringValue(SubnetResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -109,36 +103,42 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SaaSData IJsonModel<SaaSData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VNetInjectionDetails IJsonModel<VNetInjectionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SaaSData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VNetInjectionDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VNetInjectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SaaSData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VNetInjectionDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSaaSData(document.RootElement, options);
+            return DeserializeVNetInjectionDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SaaSData DeserializeSaaSData(JsonElement element, ModelReaderWriterOptions options)
+        internal static VNetInjectionDetails DeserializeVNetInjectionDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string saaSResourceId = default;
+            ResourceIdentifier virtualNetworkResourceId = default;
+            ResourceIdentifier subnetResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("saaSResourceId"u8))
+                if (prop.NameEquals("virtualNetworkResourceId"u8))
                 {
-                    saaSResourceId = prop.Value.GetString();
+                    virtualNetworkResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("subnetResourceId"u8))
+                {
+                    subnetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SaaSData(saaSResourceId, additionalBinaryDataProperties);
+            return new VNetInjectionDetails(virtualNetworkResourceId, subnetResourceId, additionalBinaryDataProperties);
         }
     }
 }

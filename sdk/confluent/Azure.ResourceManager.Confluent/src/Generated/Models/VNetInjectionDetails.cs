@@ -7,21 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Details for VNet injection. </summary>
-    public partial class VnetInjectionDetails
+    public partial class VNetInjectionDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VnetInjectionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VNetInjectionDetails"/>. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of the virtual network. </param>
         /// <param name="subnetResourceId"> Resource ID of the subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> or <paramref name="subnetResourceId"/> is null. </exception>
-        public VnetInjectionDetails(string virtualNetworkResourceId, string subnetResourceId)
+        public VNetInjectionDetails(ResourceIdentifier virtualNetworkResourceId, ResourceIdentifier subnetResourceId)
         {
             Argument.AssertNotNull(virtualNetworkResourceId, nameof(virtualNetworkResourceId));
             Argument.AssertNotNull(subnetResourceId, nameof(subnetResourceId));
@@ -30,11 +31,11 @@ namespace Azure.ResourceManager.Confluent.Models
             SubnetResourceId = subnetResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VnetInjectionDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VNetInjectionDetails"/>. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of the virtual network. </param>
         /// <param name="subnetResourceId"> Resource ID of the subnet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetInjectionDetails(string virtualNetworkResourceId, string subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VNetInjectionDetails(ResourceIdentifier virtualNetworkResourceId, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             SubnetResourceId = subnetResourceId;
@@ -42,9 +43,9 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> Resource ID of the virtual network. </summary>
-        public string VirtualNetworkResourceId { get; set; }
+        public ResourceIdentifier VirtualNetworkResourceId { get; set; }
 
         /// <summary> Resource ID of the subnet. </summary>
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
     }
 }

@@ -10,32 +10,27 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class LatestLinkedSaaSResponse
+    /// <summary> SaaS-related data properties. </summary>
+    public partial class ConfluentSaaSInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResponse"/>. </summary>
-        internal LatestLinkedSaaSResponse()
+        /// <summary> Initializes a new instance of <see cref="ConfluentSaaSInfo"/>. </summary>
+        public ConfluentSaaSInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentSaaSInfo"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatestLinkedSaaSResponse(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfluentSaaSInfo(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
-            IsHiddenSaaS = isHiddenSaaS;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS resource id. </summary>
-        public string SaaSResourceId { get; }
-
-        /// <summary> Flag indicating if the SaaS resource is hidden. </summary>
-        public bool? IsHiddenSaaS { get; }
+        public string SaaSResourceId { get; set; }
     }
 }

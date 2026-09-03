@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="region"> The cloud service provider region for the access point. </param>
         /// <param name="vnetInjection"> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPointName"/>, <paramref name="region"/> or <paramref name="vnetInjection"/> is null. </exception>
-        public AccessPointProperties(string accessPointName, string region, VnetInjectionDetails vnetInjection)
+        public AccessPointProperties(string accessPointName, string region, VNetInjectionDetails vnetInjection)
         {
             Argument.AssertNotNull(accessPointName, nameof(accessPointName));
             Argument.AssertNotNull(region, nameof(region));
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Confluent.Models
             Region = region;
             VnetInjection = vnetInjection;
             EgressRoutes = new ChangeTrackingList<string>();
-            Dictionary = new ChangeTrackingList<KeyValuePair>();
+            Dictionary = new ChangeTrackingList<ConfluentKeyValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessPointProperties"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="provisioningState"> Provisioning state of the access point. </param>
         /// <param name="dictionary"> Additional properties for extensibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessPointProperties(string accessPointName, string region, VnetInjectionDetails vnetInjection, IList<string> egressRoutes, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<KeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessPointProperties(string accessPointName, string region, VNetInjectionDetails vnetInjection, IList<string> egressRoutes, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<ConfluentKeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessPointName = accessPointName;
             Region = region;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public string Region { get; set; }
 
         /// <summary> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </summary>
-        public VnetInjectionDetails VnetInjection { get; set; }
+        public VNetInjectionDetails VnetInjection { get; set; }
 
         /// <summary> IP ranges to route through your virtual network instead of Confluent's default path. Required for Kafka clients in peered VNets or on-premises networks (e.g., 10.0.0.0/8, 172.16.0.0/12). </summary>
         public IList<string> EgressRoutes { get; }
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Confluent.Models
         public ConfluentProvisionState? ProvisioningState { get; }
 
         /// <summary> Additional properties for extensibility. </summary>
-        public IList<KeyValuePair> Dictionary { get; }
+        public IList<ConfluentKeyValuePair> Dictionary { get; }
     }
 }

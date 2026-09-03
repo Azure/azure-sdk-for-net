@@ -1,5 +1,55 @@
 namespace Azure.ResourceManager.Confluent
 {
+    public partial class AccessPointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.AccessPointResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AccessPointResource() { }
+        public virtual Azure.ResourceManager.Confluent.AccessPointResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string networkGatewayId, string accessPointId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.AccessPointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.AccessPointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Confluent.AccessPointResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.AccessPointResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.AccessPointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.AccessPointResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.AccessPointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.AccessPointResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AccessPointResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Confluent.AccessPointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.AccessPointResource>, System.Collections.IEnumerable
+    {
+        protected AccessPointResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.AccessPointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string accessPointId, Azure.ResourceManager.Confluent.AccessPointResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.AccessPointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string accessPointId, Azure.ResourceManager.Confluent.AccessPointResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.AccessPointResource> Get(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Confluent.AccessPointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Confluent.AccessPointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.AccessPointResource>> GetAsync(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Confluent.AccessPointResource> GetIfExists(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Confluent.AccessPointResource>> GetIfExistsAsync(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Confluent.AccessPointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Confluent.AccessPointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Confluent.AccessPointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.AccessPointResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AccessPointResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.AccessPointResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>
+    {
+        public AccessPointResourceData() { }
+        public Azure.ResourceManager.Confluent.Models.AccessPointProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.AccessPointResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.AccessPointResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.AccessPointResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AzureResourceManagerConfluentContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConfluentContext() { }
@@ -60,10 +110,13 @@ namespace Azure.ResourceManager.Confluent
     }
     public static partial class ConfluentExtensions
     {
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult> ActivateResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>> ActivateResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Confluent.Models.ConfluentAgreement body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement>> CreateMarketplaceAgreementAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Confluent.Models.ConfluentAgreement body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement>> CreateMarketplaceAgreementAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Confluent.AccessPointResource GetAccessPointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Confluent.ConfluentConnectorResource GetConfluentConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> GetConfluentOrganization(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource>> GetConfluentOrganizationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -73,6 +126,7 @@ namespace Azure.ResourceManager.Confluent
         public static Azure.AsyncPageable<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> GetConfluentOrganizationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> GetMarketplaceAgreements(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> GetMarketplaceAgreementsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Confluent.NetworkGatewayResource GetNetworkGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Confluent.SCClusterRecordResource GetSCClusterRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Confluent.SCEnvironmentRecordResource GetSCEnvironmentRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Confluent.TopicRecordResource GetTopicRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -188,6 +242,10 @@ namespace Azure.ResourceManager.Confluent
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Confluent.Models.SchemaRegistryClusterRecord> GetSchemaRegistryClustersAsync(string environmentId, int? pageSize = default(int?), string pageToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.Models.AccessInvitationRecord> InviteUser(Azure.ResourceManager.Confluent.Models.AccessInvitationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.Models.AccessInvitationRecord>> InviteUserAsync(Azure.ResourceManager.Confluent.Models.AccessInvitationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult> LatestLinkedSaaS(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>> LatestLinkedSaaSAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> LinkSaaS(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.ConfluentOrganizationResource>> LinkSaaSAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -199,6 +257,59 @@ namespace Azure.ResourceManager.Confluent
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.ConfluentOrganizationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> Update(Azure.ResourceManager.Confluent.Models.ConfluentOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource>> UpdateAsync(Azure.ResourceManager.Confluent.Models.ConfluentOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkGatewayResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NetworkGatewayResource() { }
+        public virtual Azure.ResourceManager.Confluent.NetworkGatewayResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string networkGatewayId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.NetworkGatewayResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.AccessPointResource> GetAccessPointResource(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.AccessPointResource>> GetAccessPointResourceAsync(string accessPointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Confluent.AccessPointResourceCollection GetAccessPointResources() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.NetworkGatewayResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Confluent.NetworkGatewayResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.NetworkGatewayResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.NetworkGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.NetworkGatewayResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.NetworkGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.NetworkGatewayResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkGatewayResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Confluent.NetworkGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.NetworkGatewayResource>, System.Collections.IEnumerable
+    {
+        protected NetworkGatewayResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.NetworkGatewayResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string networkGatewayId, Azure.ResourceManager.Confluent.NetworkGatewayResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.NetworkGatewayResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string networkGatewayId, Azure.ResourceManager.Confluent.NetworkGatewayResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.NetworkGatewayResource> Get(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Confluent.NetworkGatewayResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Confluent.NetworkGatewayResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.NetworkGatewayResource>> GetAsync(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Confluent.NetworkGatewayResource> GetIfExists(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Confluent.NetworkGatewayResource>> GetIfExistsAsync(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Confluent.NetworkGatewayResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Confluent.NetworkGatewayResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Confluent.NetworkGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.NetworkGatewayResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class NetworkGatewayResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>
+    {
+        public NetworkGatewayResourceData() { }
+        public Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.NetworkGatewayResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.NetworkGatewayResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.NetworkGatewayResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SCClusterRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Confluent.SCClusterRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.SCClusterRecordResource>, System.Collections.IEnumerable
     {
@@ -305,6 +416,9 @@ namespace Azure.ResourceManager.Confluent
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.SCEnvironmentRecordResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.SCEnvironmentRecordResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Confluent.NetworkGatewayResource> GetNetworkGatewayResource(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.NetworkGatewayResource>> GetNetworkGatewayResourceAsync(string networkGatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Confluent.NetworkGatewayResourceCollection GetNetworkGatewayResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.SCClusterRecordResource> GetSCClusterRecord(string clusterId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.SCClusterRecordResource>> GetSCClusterRecordAsync(string clusterId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Confluent.SCClusterRecordCollection GetSCClusterRecords() { throw null; }
@@ -384,8 +498,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
     public partial class MockableConfluentArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableConfluentArmClient() { }
+        public virtual Azure.ResourceManager.Confluent.AccessPointResource GetAccessPointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Confluent.ConfluentConnectorResource GetConfluentConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Confluent.ConfluentOrganizationResource GetConfluentOrganizationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Confluent.NetworkGatewayResource GetNetworkGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Confluent.SCClusterRecordResource GetSCClusterRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Confluent.SCEnvironmentRecordResource GetSCEnvironmentRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Confluent.TopicRecordResource GetTopicRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -404,6 +520,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
     public partial class MockableConfluentSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableConfluentSubscriptionResource() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult> ActivateResource(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>> ActivateResourceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(Azure.ResourceManager.Confluent.Models.ConfluentAgreement body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement>> CreateMarketplaceAgreementAsync(Azure.ResourceManager.Confluent.Models.ConfluentAgreement body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -567,6 +685,26 @@ namespace Azure.ResourceManager.Confluent.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessListContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessListContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AccessPointProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>
+    {
+        public AccessPointProperties(string accessPointName, string region, Azure.ResourceManager.Confluent.Models.VNetInjectionDetails vnetInjection) { }
+        public string AccessPointName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair> Dictionary { get { throw null; } }
+        public System.Collections.Generic.IList<string> EgressRoutes { get { throw null; } }
+        public Azure.ResourceManager.Confluent.Models.SCMetadataEntity Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.Confluent.Models.ConfluentProvisionState? ProvisioningState { get { throw null; } }
+        public string Region { get { throw null; } set { } }
+        public Azure.ResourceManager.Confluent.Models.VNetInjectionDetails VnetInjection { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Confluent.Models.AccessPointProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.AccessPointProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.AccessPointProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.AccessPointProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessPointProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AccessRoleBindingCreateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AccessRoleBindingCreateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessRoleBindingCreateContent>
     {
         public AccessRoleBindingCreateContent() { }
@@ -703,6 +841,21 @@ namespace Azure.ResourceManager.Confluent.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessUserRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AccessUserRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ActivateSaaSParameterContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>
+    {
+        public ActivateSaaSParameterContent(string saasGuid) { }
+        public string PublisherId { get { throw null; } set { } }
+        public string SaasGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ApiKeyOwnerEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ApiKeyOwnerEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ApiKeyOwnerEntity>
     {
         internal ApiKeyOwnerEntity() { }
@@ -767,6 +920,8 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.AccessInvitationRecord AccessInvitationRecord(string kind = null, string id = null, Azure.ResourceManager.Confluent.Models.MetadataEntity metadata = null, string email = null, string authType = null, string status = null, System.DateTimeOffset? acceptedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessInvitedUserDetails AccessInvitedUserDetails(string invitedEmail = null, string authType = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessListContent AccessListContent(System.Collections.Generic.IDictionary<string, string> searchFilters = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.AccessPointProperties AccessPointProperties(string accessPointName = null, string region = null, Azure.ResourceManager.Confluent.Models.VNetInjectionDetails vnetInjection = null, System.Collections.Generic.IEnumerable<string> egressRoutes = null, Azure.ResourceManager.Confluent.Models.SCMetadataEntity metadata = null, Azure.ResourceManager.Confluent.Models.ConfluentProvisionState? provisioningState = default(Azure.ResourceManager.Confluent.Models.ConfluentProvisionState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair> dictionary = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.AccessPointResourceData AccessPointResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Confluent.Models.AccessPointProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessRoleBindingCreateContent AccessRoleBindingCreateContent(string principal = null, string roleName = null, string crnPattern = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessRoleBindingListResult AccessRoleBindingListResult(string kind = null, Azure.ResourceManager.Confluent.Models.ConfluentListMetadata metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.Models.AccessRoleBindingRecord> data = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessRoleBindingNameListResult AccessRoleBindingNameListResult(string kind = null, Azure.ResourceManager.Confluent.Models.ConfluentListMetadata metadata = null, System.Collections.Generic.IEnumerable<string> data = null) { throw null; }
@@ -775,6 +930,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.AccessServiceAccountRecord AccessServiceAccountRecord(string kind = null, string id = null, Azure.ResourceManager.Confluent.Models.MetadataEntity metadata = null, string displayName = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessUserListResult AccessUserListResult(string kind = null, Azure.ResourceManager.Confluent.Models.ConfluentListMetadata metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.Models.AccessUserRecord> data = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.AccessUserRecord AccessUserRecord(string kind = null, string id = null, Azure.ResourceManager.Confluent.Models.MetadataEntity metadata = null, string email = null, string fullName = null, string authType = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.ActivateSaaSParameterContent ActivateSaaSParameterContent(string saasGuid = null, string publisherId = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ApiKeyOwnerEntity ApiKeyOwnerEntity(string id = null, string related = null, string resourceName = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ApiKeyResourceEntity ApiKeyResourceEntity(string id = null, string environment = null, string related = null, string resourceName = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ApiKeySpecEntity ApiKeySpecEntity(string description = null, string name = null, string secret = null, Azure.ResourceManager.Confluent.Models.ApiKeyResourceEntity resource = null, Azure.ResourceManager.Confluent.Models.ApiKeyOwnerEntity owner = null) { throw null; }
@@ -792,6 +948,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.ConfluentApiKeyCreateContent ConfluentApiKeyCreateContent(string name = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentApiKeyRecord ConfluentApiKeyRecord(string kind = null, string id = null, Azure.ResourceManager.Confluent.Models.SCMetadataEntity metadata = null, Azure.ResourceManager.Confluent.Models.ApiKeySpecEntity spec = null) { throw null; }
         public static Azure.ResourceManager.Confluent.ConfluentConnectorData ConfluentConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Confluent.Models.ConnectorInfoBase connectorBasicInfo = null, Azure.ResourceManager.Confluent.Models.ConnectorServiceTypeInfoBase connectorServiceTypeInfo = null, Azure.ResourceManager.Confluent.Models.PartnerInfoBase partnerConnectorInfo = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair ConfluentKeyValuePair(string key = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentListMetadata ConfluentListMetadata(string first = null, string last = null, string prev = null, string next = null, int? totalSize = default(int?)) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, Azure.ResourceManager.Confluent.Models.ConfluentSaaSOfferStatus? status) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail ConfluentOfferDetail(string publisherId = null, string id = null, string planId = null, string planName = null, string termUnit = null, string termId = null, string privateOfferId = null, System.Collections.Generic.IEnumerable<string> privateOfferIds = null, Azure.ResourceManager.Confluent.Models.ConfluentSaaSOfferStatus? status = default(Azure.ResourceManager.Confluent.Models.ConfluentSaaSOfferStatus?)) { throw null; }
@@ -801,6 +958,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(System.Collections.Generic.IReadOnlyDictionary<string, string> info = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentRegionListResult ConfluentRegionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.Models.ConfluentRegionRecord> data = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentRegionRecord ConfluentRegionRecord(string kind = null, string id = null, Azure.ResourceManager.Confluent.Models.SCMetadataEntity metadata = null, Azure.ResourceManager.Confluent.Models.RegionSpecEntity spec = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo ConfluentSaaSInfo(string saaSResourceId = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentUserDetail ConfluentUserDetail(string firstName = null, string lastName = null, string emailAddress = null, string userPrincipalName = null, string aadEmail = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConnectorInfoBase ConnectorInfoBase(Azure.ResourceManager.Confluent.Models.ConnectorType? connectorType = default(Azure.ResourceManager.Confluent.Models.ConnectorType?), Azure.ResourceManager.Confluent.Models.ConnectorClass? connectorClass = default(Azure.ResourceManager.Confluent.Models.ConnectorClass?), string connectorName = null, string connectorId = null, Azure.ResourceManager.Confluent.Models.ConnectorStatus? connectorState = default(Azure.ResourceManager.Confluent.Models.ConnectorStatus?)) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConnectorServiceTypeInfoBase ConnectorServiceTypeInfoBase(string connectorServiceType = null) { throw null; }
@@ -809,9 +967,13 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.KafkaAzureCosmosDBSinkConnectorInfo KafkaAzureCosmosDBSinkConnectorInfo(Azure.ResourceManager.Confluent.Models.ConfluentAuthType? authType = default(Azure.ResourceManager.Confluent.Models.ConfluentAuthType?), Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType? inputFormat = default(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType?), Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType? outputFormat = default(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType?), string apiKey = null, string apiSecret = null, string serviceAccountId = null, string serviceAccountName = null, System.Collections.Generic.IEnumerable<string> topics = null, string topicsDir = null, string flushSize = null, string maxTasks = null, string timeInterval = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.KafkaAzureCosmosDBSourceConnectorInfo KafkaAzureCosmosDBSourceConnectorInfo(Azure.ResourceManager.Confluent.Models.ConfluentAuthType? authType = default(Azure.ResourceManager.Confluent.Models.ConfluentAuthType?), Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType? inputFormat = default(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType?), Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType? outputFormat = default(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType?), string apiKey = null, string apiSecret = null, string serviceAccountId = null, string serviceAccountName = null, string topicRegex = null, string topicsDir = null, string maxTasks = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo KafkaAzureSynapseAnalyticsSinkConnectorInfo(Azure.ResourceManager.Confluent.Models.ConfluentAuthType? authType = default(Azure.ResourceManager.Confluent.Models.ConfluentAuthType?), Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType? inputFormat = default(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType?), Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType? outputFormat = default(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType?), string apiKey = null, string apiSecret = null, string serviceAccountId = null, string serviceAccountName = null, System.Collections.Generic.IEnumerable<string> topics = null, string topicsDir = null, string flushSize = null, string maxTasks = null, string timeInterval = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult LatestLinkedSaaSResult(string saaSResourceId = null, bool? isHiddenSaaS = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.MetadataEntity MetadataEntity(string self = null, string resourceName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties NetworkGatewayProperties(string networkGatewayName = null, string region = null, Azure.ResourceManager.Confluent.Models.SCMetadataEntity metadata = null, Azure.ResourceManager.Confluent.Models.ConfluentProvisionState? provisioningState = default(Azure.ResourceManager.Confluent.Models.ConfluentProvisionState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair> dictionary = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.NetworkGatewayResourceData NetworkGatewayResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.PartnerInfoBase PartnerInfoBase(string partnerConnectorType = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.RegionSpecEntity RegionSpecEntity(string name = null, string cloud = null, string regionName = null, System.Collections.Generic.IEnumerable<string> packages = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult SaaSResourceDetailsResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string saasId = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.SCClusterByokEntity SCClusterByokEntity(string id = null, string related = null, string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.SCClusterNetworkEnvironmentEntity SCClusterNetworkEnvironmentEntity(string id = null, string environment = null, string related = null, string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.SCClusterRecord SCClusterRecord(string kind = null, string id = null, string name = null, Azure.ResourceManager.Confluent.Models.SCMetadataEntity metadata = null, Azure.ResourceManager.Confluent.Models.SCClusterSpecEntity spec = null, Azure.ResourceManager.Confluent.Models.ClusterStatusEntity status = null) { throw null; }
@@ -827,6 +989,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.TopicMetadataEntity TopicMetadataEntity(string self = null, string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Confluent.TopicRecordData TopicRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, string topicId = null, Azure.ResourceManager.Confluent.Models.TopicMetadataEntity metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Confluent.Models.TopicsInputConfig> inputConfigs = null, string partitionsCount = null, string replicationFactor = null, string partitionsRelated = null, string configsRelated = null, string partitionsReassignmentsRelated = null) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.TopicsInputConfig TopicsInputConfig(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.VNetInjectionDetails VNetInjectionDetails(Azure.Core.ResourceIdentifier virtualNetworkResourceId = null, Azure.Core.ResourceIdentifier subnetResourceId = null) { throw null; }
     }
     public partial class AzureBlobStorageSinkConnectorServiceInfo : Azure.ResourceManager.Confluent.Models.ConnectorServiceTypeInfoBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AzureBlobStorageSinkConnectorServiceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.AzureBlobStorageSinkConnectorServiceInfo>
     {
@@ -1096,6 +1259,21 @@ namespace Azure.ResourceManager.Confluent.Models
         public static bool operator !=(Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType left, Azure.ResourceManager.Confluent.Models.ConfluentDataFormatType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ConfluentKeyValuePair : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>
+    {
+        public ConfluentKeyValuePair(string key, string value) { }
+        public string Key { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ConfluentListMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentListMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentListMetadata>
     {
         internal ConfluentListMetadata() { }
@@ -1236,6 +1414,20 @@ namespace Azure.ResourceManager.Confluent.Models
         Azure.ResourceManager.Confluent.Models.ConfluentRegionRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentRegionRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentRegionRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentRegionRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConfluentSaaSInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>
+    {
+        public ConfluentSaaSInfo() { }
+        public string SaaSResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentSaaSInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfluentSaaSOfferStatus : System.IEquatable<Azure.ResourceManager.Confluent.Models.ConfluentSaaSOfferStatus>
@@ -1487,6 +1679,21 @@ namespace Azure.ResourceManager.Confluent.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LatestLinkedSaaSResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>
+    {
+        internal LatestLinkedSaaSResult() { }
+        public bool? IsHiddenSaaS { get { throw null; } }
+        public string SaaSResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.LatestLinkedSaaSResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MetadataEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.MetadataEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.MetadataEntity>
     {
         internal MetadataEntity() { }
@@ -1504,6 +1711,24 @@ namespace Azure.ResourceManager.Confluent.Models
         Azure.ResourceManager.Confluent.Models.MetadataEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.MetadataEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.MetadataEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.MetadataEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkGatewayProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>
+    {
+        public NetworkGatewayProperties(string networkGatewayName, string region) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Confluent.Models.ConfluentKeyValuePair> Dictionary { get { throw null; } }
+        public Azure.ResourceManager.Confluent.Models.SCMetadataEntity Metadata { get { throw null; } set { } }
+        public string NetworkGatewayName { get { throw null; } set { } }
+        public Azure.ResourceManager.Confluent.Models.ConfluentProvisionState? ProvisioningState { get { throw null; } }
+        public string Region { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.NetworkGatewayProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class PartnerInfoBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.PartnerInfoBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.PartnerInfoBase>
     {
@@ -1534,6 +1759,20 @@ namespace Azure.ResourceManager.Confluent.Models
         Azure.ResourceManager.Confluent.Models.RegionSpecEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.RegionSpecEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.RegionSpecEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.RegionSpecEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SaaSResourceDetailsResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>
+    {
+        internal SaaSResourceDetailsResult() { }
+        public string SaasId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.SaaSResourceDetailsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SCClusterByokEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.SCClusterByokEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.SCClusterByokEntity>
     {
@@ -1724,5 +1963,20 @@ namespace Azure.ResourceManager.Confluent.Models
         Azure.ResourceManager.Confluent.Models.TopicsInputConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.TopicsInputConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.TopicsInputConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.TopicsInputConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VNetInjectionDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>
+    {
+        public VNetInjectionDetails(Azure.Core.ResourceIdentifier virtualNetworkResourceId, Azure.Core.ResourceIdentifier subnetResourceId) { }
+        public Azure.Core.ResourceIdentifier SubnetResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Confluent.Models.VNetInjectionDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Confluent.Models.VNetInjectionDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Confluent.Models.VNetInjectionDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Confluent.Models.VNetInjectionDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.VNetInjectionDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

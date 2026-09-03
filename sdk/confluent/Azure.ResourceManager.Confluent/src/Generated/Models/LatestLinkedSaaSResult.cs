@@ -10,27 +10,32 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> SaaS-related data properties. </summary>
-    public partial class SaaSData
+    /// <summary> Response of get latest linked SaaS resource operation. </summary>
+    public partial class LatestLinkedSaaSResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SaaSData"/>. </summary>
-        public SaaSData()
+        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResult"/>. </summary>
+        internal LatestLinkedSaaSResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SaaSData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResult"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSData(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatestLinkedSaaSResult(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
+            IsHiddenSaaS = isHiddenSaaS;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS resource id. </summary>
-        public string SaaSResourceId { get; set; }
+        public string SaaSResourceId { get; }
+
+        /// <summary> Flag indicating if the SaaS resource is hidden. </summary>
+        public bool? IsHiddenSaaS { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
             NetworkGatewayName = networkGatewayName;
             Region = region;
-            Dictionary = new ChangeTrackingList<KeyValuePair>();
+            Dictionary = new ChangeTrackingList<ConfluentKeyValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkGatewayProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="provisioningState"> Provisioning state of the network gateway. </param>
         /// <param name="dictionary"> Additional properties for extensibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkGatewayProperties(string networkGatewayName, string region, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<KeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkGatewayProperties(string networkGatewayName, string region, SCMetadataEntity metadata, ConfluentProvisionState? provisioningState, IList<ConfluentKeyValuePair> dictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkGatewayName = networkGatewayName;
             Region = region;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Confluent.Models
         public ConfluentProvisionState? ProvisioningState { get; }
 
         /// <summary> Additional properties for extensibility. </summary>
-        public IList<KeyValuePair> Dictionary { get; }
+        public IList<ConfluentKeyValuePair> Dictionary { get; }
     }
 }
