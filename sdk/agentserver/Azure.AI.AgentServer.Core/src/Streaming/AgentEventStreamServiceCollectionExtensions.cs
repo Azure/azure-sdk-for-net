@@ -48,7 +48,7 @@ public static class AgentEventStreamServiceCollectionExtensions
         state.Add(new AgentEventStreamRegistrationRequest(
             $"configuration section '{sectionName}'",
             AgentEventStreamRegistrationPriority.Application,
-            () => ReadConfiguration(builder.Configuration, sectionName)));
+            _ => ReadConfiguration(builder.Configuration, sectionName)));
 
         EnsureRegistry(builder.Services, state);
         return builder;
@@ -113,6 +113,38 @@ public static class AgentEventStreamServiceCollectionExtensions
         return services;
     }
 
+    /// <summary>
+    /// Registers a protocol package's default stream backing using the final service provider.
+    /// Application configuration still takes precedence regardless of registration order.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="source">The protocol component requesting the default.</param>
+    /// <param name="configure">Builds the default backing from effective service options.</param>
+    /// <returns>The same service collection for chaining.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static IServiceCollection AddAgentEventStreamsDefault(
+        this IServiceCollection services,
+        string source,
+        Func<IServiceProvider, AgentEventStreamOptions> configure)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        if (string.IsNullOrWhiteSpace(source))
+        {
+            throw new ArgumentException(
+                "The protocol stream-default source must be non-empty.",
+                nameof(source));
+        }
+
+        ArgumentNullException.ThrowIfNull(configure);
+        AgentEventStreamRegistrationState state = GetOrCreateState(services);
+        state.Add(new AgentEventStreamRegistrationRequest(
+            source,
+            AgentEventStreamRegistrationPriority.ProtocolDefault,
+            serviceProvider => configure(serviceProvider).Configuration));
+        EnsureRegistry(services, state);
+        return services;
+    }
+
     private static AgentEventStreamRegistrationRequest CreateRequest(
         string source,
         AgentEventStreamRegistrationPriority priority,
@@ -123,7 +155,7 @@ public static class AgentEventStreamServiceCollectionExtensions
         return new AgentEventStreamRegistrationRequest(
             source,
             priority,
-            () => options.Configuration);
+            _ => options.Configuration);
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
@@ -265,7 +297,7 @@ public static class AgentEventStreamServiceCollectionExtensions
         AgentEventStreamRegistrationState state)
         => services.TryAddSingleton<AgentEventStreamRegistry>(
             serviceProvider => new InMemoryEventStreamRegistry(
-                state.ResolveOptions(),
+                state.ResolveOptions(serviceProvider),
                 serviceProvider
                     .GetService<ILoggerFactory>()
                     ?.CreateLogger("Azure.AI.AgentServer.Streaming")));

@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -99,6 +100,14 @@ public static class ResponsesServerServiceCollectionExtensions
         // SSE streaming is composed on the Core event-stream primitive (registered via
         // AddAgentEventStreams below), not a pluggable Responses stream provider.
 
+        var taskOptions = new ResponsesResilientTaskOptions();
+        services.AddHostedService(serviceProvider =>
+        {
+            taskOptions.Initialize(
+                serviceProvider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value);
+            return taskOptions;
+        });
+
         if (hostedStorage is not null)
         {
             // Response storage and resilient task storage authenticate with the SAME identity: the
@@ -154,28 +163,34 @@ public static class ResponsesServerServiceCollectionExtensions
 
         // The Responses layer does not own an event-stream store. SSE events are published onto
         // the Core event-stream primitive (AgentEventStreamRegistry/AgentEventStream) — matching Python,
-        // which uses the core EventStream registry directly. The backing is chosen from the bound
-        // configuration (ResponsesServerSettings): local + ResilientBackground uses a durable
-        // file-backed replay so a reconnecting client can replay pre-restart SSE events after a
+        // which uses the core EventStream registry directly. Register it once here. The backing is
+        // chosen from the effective options when the registry is resolved: local +
+        // ResilientBackground uses a durable file-backed replay so a
+        // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
         // otherwise an in-memory replay buffer is sufficient. Register this as a protocol default:
         // an explicit application backing overrides it regardless of registration order, while
         // conflicting protocol defaults fail when the registry is materialized.
-        var eagerOptions = new ResponsesServerOptions();
-        configure?.Invoke(eagerOptions);
-        var useDurableStreams = eagerOptions.ResilientBackground && hostedStorage is null;
-        var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
-        services.AddAgentEventStreamsDefault("ResponsesServer", o =>
+        services.AddAgentEventStreamsDefault("ResponsesServer", serviceProvider =>
         {
-            if (useDurableStreams)
+            ResponsesServerOptions responseOptions = serviceProvider
+                .GetRequiredService<IOptions<ResponsesServerOptions>>()
+                .Value;
+            TimeSpan streamTtl = serviceProvider
+                .GetRequiredService<IOptions<InMemoryProviderOptions>>()
+                .Value.EventStreamTtl;
+            var streamOptions = new AgentEventStreamOptions();
+            if (responseOptions.ResilientBackground && hostedStorage is null)
             {
-                o.UseFileBackedReplay(
+                streamOptions.UseFileBackedReplay(
                     storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
                     ttl: streamTtl);
             }
             else
             {
-                o.UseInMemoryReplay(ttl: streamTtl);
+                streamOptions.UseInMemoryReplay(ttl: streamTtl);
             }
+
+            return streamOptions;
         });
 
         services.AddSingleton<ResponseExecutionTracker>();
@@ -216,7 +231,7 @@ public static class ResponsesServerServiceCollectionExtensions
             ResponseTaskOutput,
             ResponsesResilientTaskHandler>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
-            steerable: eagerOptions.SteerableConversations);
+            isSteerable: taskOptions.IsSteerable);
 
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();

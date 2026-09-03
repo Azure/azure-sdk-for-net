@@ -134,6 +134,7 @@ internal sealed partial class TaskEngine : IDisposable
         // turn is done explicitly via GetActiveRunAsync(name, taskId, inputId).
         if (_activeRuns.TryGetValue(taskId, out IActiveRun? existing))
         {
+            EnsureTaskName(existing.Name, name, taskId);
             if (existing.DeleteRequested)
             {
                 throw CreateDeletingConflict(taskId);
@@ -187,6 +188,20 @@ internal sealed partial class TaskEngine : IDisposable
             inputId,
             isQueued,
             new TaskStreamState(_streams, taskId, inputId));
+
+    private static bool TaskNameMatches(TaskRecord record, string expectedName)
+        => string.Equals(record.Source?.Name, expectedName, StringComparison.Ordinal);
+
+    private static void EnsureTaskName(string? actualName, string expectedName, string taskId)
+    {
+        if (!string.Equals(actualName, expectedName, StringComparison.Ordinal))
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' belongs to registered task '{actualName ?? string.Empty}', " +
+                $"not '{expectedName}'.");
+        }
+    }
 
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
@@ -243,6 +258,7 @@ internal sealed partial class TaskEngine : IDisposable
             // The record already exists: converge or conflict.
             TaskRecord? current = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false)
                 ?? throw new ResilientTaskException(ResilientTaskErrorCode.Conflict, $"Task '{taskId}' is gone.") { CurrentStatus = TaskRunStatus.Completed };
+            EnsureTaskName(current.Source?.Name, name, taskId);
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
                 throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
@@ -260,6 +276,7 @@ internal sealed partial class TaskEngine : IDisposable
         TaskRunState<TOutput> runState =
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         var activeRun = new ActiveRun<TOutput>(
+            name,
             runState,
             exception => _logger.StreamCloseFailure(taskId, inputId, exception.GetType().Name));
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
@@ -276,7 +293,9 @@ internal sealed partial class TaskEngine : IDisposable
 
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
-            return _activeRuns[taskId].GetHandle<TOutput>();
+            IActiveRun concurrent = _activeRuns[taskId];
+            EnsureTaskName(concurrent.Name, name, taskId);
+            return concurrent.GetHandle<TOutput>();
         }
 
         var handlerCts = new CancellationTokenSource();
@@ -361,6 +380,8 @@ internal sealed partial class TaskEngine : IDisposable
         }
         else
         {
+            EnsureTaskName(current.Source?.Name, name, taskId);
+
             // ifLastInputId precondition (FR-006).
             if (options?.IfLastInputId is { } expected)
             {
@@ -431,13 +452,15 @@ internal sealed partial class TaskEngine : IDisposable
         TaskRunState<TOutput> runState =
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
+        bool steerable = registration.Steerable;
         var activeRun = new ActiveRun<TOutput>(
+            name,
             runState,
             exception => _logger.StreamCloseFailure(taskId, inputId, exception.GetType().Name))
         {
-            Steerable = registration.Steerable,
+            Steerable = steerable,
         };
-        if (registration.Steerable && HasPersistedSteering(record))
+        if (steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
             RehydratePendingInputs(activeRun.Steering, record, taskId);
@@ -454,7 +477,9 @@ internal sealed partial class TaskEngine : IDisposable
         }
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
-            return _activeRuns[taskId].GetHandle<TOutput>();
+            IActiveRun concurrent = _activeRuns[taskId];
+            EnsureTaskName(concurrent.Name, name, taskId);
+            return concurrent.GetHandle<TOutput>();
         }
 
         var handlerCts = new CancellationTokenSource();
@@ -1423,13 +1448,9 @@ internal sealed partial class TaskEngine : IDisposable
         TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
         if (expectedTaskName is not null)
         {
-            if (record is not null
-                && !string.Equals(record.Source?.Name, expectedTaskName, StringComparison.Ordinal))
+            if (record is not null)
             {
-                throw new ResilientTaskException(
-                    ResilientTaskErrorCode.Conflict,
-                    $"Task '{taskId}' belongs to registered task '{record.Source?.Name ?? string.Empty}', " +
-                    $"not '{expectedTaskName}'.");
+                EnsureTaskName(record.Source?.Name, expectedTaskName, taskId);
             }
         }
 
@@ -1835,7 +1856,8 @@ internal sealed partial class TaskEngine : IDisposable
             throw new ArgumentException($"Task '{name}' is multi-turn; the (name, taskId, inputId) overload is required.", nameof(name));
         }
 
-        if (_activeRuns.TryGetValue(taskId, out IActiveRun? run))
+        if (_activeRuns.TryGetValue(taskId, out IActiveRun? run)
+            && string.Equals(run.Name, name, StringComparison.Ordinal))
         {
             return run.GetHandle<TOutput>();
         }
@@ -1859,6 +1881,7 @@ internal sealed partial class TaskEngine : IDisposable
         }
 
         if (_activeRuns.TryGetValue(taskId, out IActiveRun? run) &&
+            string.Equals(run.Name, name, StringComparison.Ordinal) &&
             string.Equals(run.InputId, inputId, StringComparison.Ordinal))
         {
             return run.GetHandle<TOutput>();
@@ -1898,7 +1921,8 @@ internal sealed partial class TaskEngine : IDisposable
 
         // Only our reserved framework records are recoverable — never adopt a foreign record that
         // happens to share the (agent, session) scope.
-        if (record.Source?.Type != TaskWireKeys.SourceTypeValue)
+        if (record.Source?.Type != TaskWireKeys.SourceTypeValue
+            || !TaskNameMatches(record, name))
         {
             return null;
         }
@@ -1930,7 +1954,10 @@ internal sealed partial class TaskEngine : IDisposable
         }
 
         _activeRuns.TryGetValue(taskId, out IActiveRun? recovered);
-        return recovered;
+        return recovered is not null
+            && string.Equals(recovered.Name, name, StringComparison.Ordinal)
+                ? recovered
+                : null;
     }
 
     /// <summary>
@@ -1946,7 +1973,13 @@ internal sealed partial class TaskEngine : IDisposable
     internal async Task RecoverAsync<TInput, TOutput>(TaskRegistration registration, TaskRecord record)
     {
         string taskId = record.Id;
-        if (_activeRuns.ContainsKey(taskId) || _terminatedOneShot.ContainsKey(taskId))
+        if (_activeRuns.TryGetValue(taskId, out IActiveRun? existing))
+        {
+            EnsureTaskName(existing.Name, registration.Name, taskId);
+            return;
+        }
+
+        if (_terminatedOneShot.ContainsKey(taskId))
         {
             return;
         }
@@ -1978,19 +2011,22 @@ internal sealed partial class TaskEngine : IDisposable
         TaskRunState<TOutput> runState =
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
+        bool steerable = registration.Steerable;
         var activeRun = new ActiveRun<TOutput>(
+            registration.Name,
             runState,
             exception => _logger.StreamCloseFailure(taskId, inputId, exception.GetType().Name))
         {
-            Steerable = registration.Steerable,
+            Steerable = steerable,
         };
-        if (registration.Steerable && HasPersistedSteering(record))
+        if (steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
             RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
+            EnsureTaskName(_activeRuns[taskId].Name, registration.Name, taskId);
             return;
         }
 
@@ -2229,6 +2265,8 @@ internal sealed partial class TaskEngine : IDisposable
 
     private interface IActiveRun
     {
+        string Name { get; }
+
         string TaskId { get; }
 
         string InputId { get; }
@@ -2260,13 +2298,17 @@ internal sealed partial class TaskEngine : IDisposable
         private TaskRunState<TOutput>? _pendingCancel;
 
         public ActiveRun(
+            string name,
             TaskRunState<TOutput> state,
             Action<Exception> streamCloseFailed)
         {
+            Name = name;
             _state = state;
             _streamCloseFailed = streamCloseFailed;
             WireCancel(state);
         }
+
+        public string Name { get; }
 
         /// <summary>The in-process steering coordinator. Lazily created on first access so a
         /// non-steerable task never allocates a steering queue (pay-for-what-you-use, FR-038).

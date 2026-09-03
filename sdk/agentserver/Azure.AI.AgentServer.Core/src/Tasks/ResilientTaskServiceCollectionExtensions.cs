@@ -247,6 +247,37 @@ public static class ResilientTaskServiceCollectionExtensions
     }
 
     /// <summary>
+    /// Registers a multi-turn task whose steerability is resolved when a run starts.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="isSteerable">Resolves whether the task accepts steering.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
+        this IServiceCollection services,
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Func<bool> isSteerable,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(isSteerable);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition =
+            registrar.AddMultiTurnTask(name, handler, isSteerable, configure);
+        RegisterDefinition(services, name, definition);
+        return definition;
+    }
+
+    /// <summary>
     /// Registers a multi-turn task whose handler and dependencies are resolved from a fresh
     /// dependency-injection scope for each execution attempt.
     /// </summary>
@@ -269,16 +300,46 @@ public static class ResilientTaskServiceCollectionExtensions
         bool steerable = false,
         Action<TaskRegistrationOptions>? configure = null)
         where THandler : class, IResilientTaskHandler<TInput, TOutput>
+        => AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+            services,
+            name,
+            () => steerable,
+            configure);
+
+    /// <summary>
+    /// Registers a scoped multi-turn task whose steerability is resolved when a run starts.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <typeparam name="THandler">The scoped task handler type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="isSteerable">Resolves whether the task accepts steering.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition for running the registered task.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<
+        TInput,
+        TOutput,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
+        this IServiceCollection services,
+        string name,
+        Func<bool> isSteerable,
+        Action<TaskRegistrationOptions>? configure = null)
+        where THandler : class, IResilientTaskHandler<TInput, TOutput>
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(isSteerable);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask<TInput, TOutput>(
             name,
             (serviceProvider, context, cancellationToken) =>
                 serviceProvider.GetRequiredKeyedService<IResilientTaskHandler<TInput, TOutput>>(name)
                     .RunAsync(context, cancellationToken),
-            steerable,
+            isSteerable,
             configure);
         services.TryAddKeyedScoped<IResilientTaskHandler<TInput, TOutput>, THandler>(name);
         RegisterDefinition(services, name, definition);
