@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GitLabProjectResource.ResourceType, out string gitLabProjectApiVersion);
             _gitLabProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitLabProjectResource.ResourceType.Namespace, Diagnostics);
-            _gitLabProjectsRestClient = new GitLabProjects(_gitLabProjectsClientDiagnostics, Pipeline, Endpoint, gitLabProjectApiVersion ?? "2025-11-01-preview");
+            _gitLabProjectsRestClient = new GitLabProjects(_gitLabProjectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitLabProjectApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

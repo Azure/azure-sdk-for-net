@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsPackageResource.ResourceType, out string securityInsightsPackageApiVersion);
             _contentPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsPackageResource.ResourceType.Namespace, Diagnostics);
-            _contentPackageRestClient = new ContentPackage(_contentPackageClientDiagnostics, Pipeline, Endpoint, securityInsightsPackageApiVersion ?? "2025-07-01-preview");
+            _contentPackageRestClient = new ContentPackage(_contentPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsPackageApiVersion ?? "2025-10-01-preview");
             _contentPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsPackageResource.ResourceType.Namespace, Diagnostics);
-            _contentPackagesRestClient = new ContentPackages(_contentPackagesClientDiagnostics, Pipeline, Endpoint, securityInsightsPackageApiVersion ?? "2025-07-01-preview");
+            _contentPackagesRestClient = new ContentPackages(_contentPackagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsPackageApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -14,6 +14,6 @@ namespace Azure.Provisioning.ResourceGraph
     {
         /// <summary> basic. </summary>
         [DataMember(Name = "basic")]
-        Basic
+        Basic = 0
     }
 }

@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="ComputeSkuMixPlacementResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
+        public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacementResource(ResourceIdentifier id)
+        {
+            ComputeSkuMixPlacementResource.ValidateResourceId(id);
+            return new ComputeSkuMixPlacementResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>

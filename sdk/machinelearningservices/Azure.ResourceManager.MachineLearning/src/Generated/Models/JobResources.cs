@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> List of instance types to choose from. </summary>
         [WirePath("instanceTypes")]
-        public IList<string> InstanceTypes { get; }
+        public IList<string> InstanceTypes { get; } = new ChangeTrackingList<string>();
     }
 }

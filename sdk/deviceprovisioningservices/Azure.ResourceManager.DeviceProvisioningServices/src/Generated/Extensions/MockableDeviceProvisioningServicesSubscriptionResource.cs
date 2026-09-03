@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 
         private ClientDiagnostics ProvisioningServiceDescriptionsClientDiagnostics => _provisioningServiceDescriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Endpoint, "2025-02-01-preview");
+        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
 
         private ClientDiagnostics IotDpsResourceOperationGroupClientDiagnostics => _iotDpsResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IotDpsResourceOperationGroup IotDpsResourceOperationGroupRestClient => _iotDpsResourceOperationGroupRestClient ??= new IotDpsResourceOperationGroup(IotDpsResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-02-01-preview");
+        private IotDpsResourceOperationGroup IotDpsResourceOperationGroupRestClient => _iotDpsResourceOperationGroupRestClient ??= new IotDpsResourceOperationGroup(IotDpsResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
 
         /// <summary>
         /// List all the provisioning services for a given subscription id.

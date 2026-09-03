@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(AppResiliencyResource.ResourceType, out string appResiliencyApiVersion);
             _appResiliencyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", AppResiliencyResource.ResourceType.Namespace, Diagnostics);
-            _appResiliencyRestClient = new AppResiliency(_appResiliencyClientDiagnostics, Pipeline, Endpoint, appResiliencyApiVersion ?? "2025-10-02-preview");
+            _appResiliencyRestClient = new AppResiliency(_appResiliencyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appResiliencyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

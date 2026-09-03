@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(WorkloadNetworkVmGroupResource.ResourceType, out string workloadNetworkVmGroupApiVersion);
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2025-09-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkVmGroupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

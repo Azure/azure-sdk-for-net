@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<ChaosExperimentRunStepStatus> Steps { get; }
+        public IReadOnlyList<ChaosExperimentRunStepStatus> Steps { get; } = new ChangeTrackingList<ChaosExperimentRunStepStatus>();
     }
 }

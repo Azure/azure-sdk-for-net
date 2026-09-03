@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ApplicationMoveCost
     {
         /// <summary> Zero move cost. This value is zero. </summary>
-        Zero,
+        Zero = 0,
         /// <summary> Specifies the move cost of the service as Low. The value is 1. </summary>
-        Low,
+        Low = 1,
         /// <summary> Specifies the move cost of the service as Medium. The value is 2. </summary>
-        Medium,
+        Medium = 2,
         /// <summary> Specifies the move cost of the service as High. The value is 3. </summary>
-        High
+        High = 3
     }
 }

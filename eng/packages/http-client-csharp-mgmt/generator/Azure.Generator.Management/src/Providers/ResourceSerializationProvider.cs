@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -108,6 +109,11 @@ namespace Azure.Generator.Management.Providers
                 this);
 
             return [jsonModelWriteMethod, jsonModelCreatemethod, persistableWriteMethod, persistableCreateMethod, persistableGetFormatMethod];
+        }
+
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            return [.. originalMethods];
         }
     }
 }

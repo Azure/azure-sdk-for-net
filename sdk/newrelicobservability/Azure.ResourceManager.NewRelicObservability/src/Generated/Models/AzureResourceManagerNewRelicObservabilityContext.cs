@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
     [ModelReaderWriterBuildable(typeof(PlanDataListResponse))]
     [ModelReaderWriterBuildable(typeof(PlanDataProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

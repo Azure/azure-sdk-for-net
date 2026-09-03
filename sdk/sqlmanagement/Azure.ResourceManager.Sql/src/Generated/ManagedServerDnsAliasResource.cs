@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string managedServerDnsAliasApiVersion);
             _managedServerDnsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedServerDnsAliasesRestClient = new ManagedServerDnsAliases(_managedServerDnsAliasesClientDiagnostics, Pipeline, Endpoint, managedServerDnsAliasApiVersion ?? "2025-02-01-preview");
+            _managedServerDnsAliasesRestClient = new ManagedServerDnsAliases(_managedServerDnsAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedServerDnsAliasApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

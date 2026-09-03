@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementUserApiVersion);
             _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _userRestClient = new User(_userClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userRestClient = new User(_userClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
             _userGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _userGroupRestClient = new UserGroup(_userGroupClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userGroupRestClient = new UserGroup(_userGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
             _userConfirmationPasswordClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _userConfirmationPasswordRestClient = new UserConfirmationPassword(_userConfirmationPasswordClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userConfirmationPasswordRestClient = new UserConfirmationPassword(_userConfirmationPasswordClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
             _userIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _userIdentitiesRestClient = new UserIdentities(_userIdentitiesClientDiagnostics, Pipeline, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
+            _userIdentitiesRestClient = new UserIdentities(_userIdentitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementUserApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

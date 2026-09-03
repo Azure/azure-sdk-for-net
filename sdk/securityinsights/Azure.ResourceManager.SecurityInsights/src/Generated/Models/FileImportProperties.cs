@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state of the file import. </param>
         /// <param name="totalRecordCount"> The number of records in the file. </param>
         /// <param name="validRecordCount"> The number of records that have passed validation. </param>
-        /// <param name="filesValidUntil"> The time the files associated with this import are deleted from the storage account. </param>
-        /// <param name="importValidUntil"> The time the file import record is soft deleted from the database and history. </param>
+        /// <param name="filesExpirationOn"> The time the files associated with this import are deleted from the storage account. </param>
+        /// <param name="importExpirationOn"> The time the file import record is soft deleted from the database and history. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileImportProperties(IngestionMode ingestionMode, SecurityInsightsFileImportContentType contentType, DateTimeOffset? createdOn, SecurityInsightsFileMetadata errorFile, IReadOnlyList<SecurityInsightsFileValidationError> errorsPreview, SecurityInsightsFileMetadata importFile, int? ingestedRecordCount, string source, SecurityInsightsFileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesValidUntil, DateTimeOffset? importValidUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileImportProperties(IngestionMode ingestionMode, SecurityInsightsFileImportContentType contentType, DateTimeOffset? createdOn, SecurityInsightsFileMetadata errorFile, IReadOnlyList<SecurityInsightsFileValidationError> errorsPreview, SecurityInsightsFileMetadata importFile, int? ingestedRecordCount, string source, SecurityInsightsFileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesExpirationOn, DateTimeOffset? importExpirationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IngestionMode = ingestionMode;
             ContentType = contentType;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             State = state;
             TotalRecordCount = totalRecordCount;
             ValidRecordCount = validRecordCount;
-            FilesValidUntil = filesValidUntil;
-            ImportValidUntil = importValidUntil;
+            FilesExpirationOn = filesExpirationOn;
+            ImportExpirationOn = importExpirationOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The time the files associated with this import are deleted from the storage account. </summary>
         [WirePath("filesValidUntilTimeUTC")]
-        public DateTimeOffset? FilesValidUntil { get; }
+        public DateTimeOffset? FilesExpirationOn { get; }
 
         /// <summary> The time the file import record is soft deleted from the database and history. </summary>
         [WirePath("importValidUntilTimeUTC")]
-        public DateTimeOffset? ImportValidUntil { get; }
+        public DateTimeOffset? ImportExpirationOn { get; }
     }
 }

@@ -7,6 +7,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary> Represents an approval configuration for MCP tool calls, controlling whether user consent is required. </summary>
     public class MCPApproval
     {
         private static readonly string ALWAYS = "always";

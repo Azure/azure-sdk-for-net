@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationSourceControlResource.ResourceType, out string automationSourceControlApiVersion);
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationSourceControlResource.ResourceType.Namespace, Diagnostics);
-            _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
+            _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

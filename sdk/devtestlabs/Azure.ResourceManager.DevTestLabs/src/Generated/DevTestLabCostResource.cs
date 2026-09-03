@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(ResourceType, out string devTestLabCostApiVersion);
             _costsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _costsRestClient = new Costs(_costsClientDiagnostics, Pipeline, Endpoint, devTestLabCostApiVersion ?? "2018-09-15");
+            _costsRestClient = new Costs(_costsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabCostApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

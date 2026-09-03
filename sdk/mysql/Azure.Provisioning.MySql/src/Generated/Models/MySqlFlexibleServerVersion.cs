@@ -14,9 +14,9 @@ namespace Azure.Provisioning.MySql
     {
         /// <summary> Five7. </summary>
         [DataMember(Name = "5.7")]
-        Five7,
+        Five7 = 0,
         /// <summary> Eight021. </summary>
         [DataMember(Name = "8.0.21")]
-        Eight021
+        Eight021 = 1
     }
 }

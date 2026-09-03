@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Communication
     public enum DomainManagement
     {
         /// <summary> AzureManaged. </summary>
-        AzureManaged,
+        AzureManaged = 0,
         /// <summary> CustomerManaged. </summary>
-        CustomerManaged,
+        CustomerManaged = 1,
         /// <summary> CustomerManagedInExchangeOnline. </summary>
-        CustomerManagedInExchangeOnline
+        CustomerManagedInExchangeOnline = 2
     }
 }

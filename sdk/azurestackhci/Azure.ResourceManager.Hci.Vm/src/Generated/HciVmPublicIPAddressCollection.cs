@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmPublicIPAddressResource.ResourceType, out string hciVmPublicIPAddressApiVersion);
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmPublicIPAddressResource.ResourceType.Namespace, Diagnostics);
-            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Endpoint, hciVmPublicIPAddressApiVersion ?? "2025-09-01-preview");
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmPublicIPAddressApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

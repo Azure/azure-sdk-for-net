@@ -255,10 +255,10 @@ namespace Azure.Storage.Files.Shares
                 fileId: handleItem.FileId,
                 parentId: handleItem.ParentId,
                 sessionId: handleItem.SessionId,
-                clientIp: handleItem.ClientIp,
+                clientIp: handleItem.ClientIP,
                 clientName: handleItem.ClientName,
-                openedOn: handleItem.OpenTime,
-                lastReconnectedOn: handleItem.LastReconnectTime,
+                openedOn: handleItem.OpenOn,
+                lastReconnectedOn: handleItem.LastReconnectOn,
                 accessRights: ((IReadOnlyList<AccessRight>)handleItem.AccessRightList).ToShareFileHandleAccessRight());
         }
 
@@ -567,7 +567,53 @@ namespace Azure.Storage.Files.Shares
         internal static HttpRange ToHttpRange(this ClearRange clearRange)
             => new HttpRange(clearRange.Start, clearRange.End - clearRange.Start + 1);
 
-        // ToStorageClosedHandlesSegment for File is consolidated into the single method above.
+        #region ToShareFileRanges
+        internal static ShareFileRange[] ToShareFileRanges(this Response<ShareFileRangeListSegment> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return ToShareFileRanges(response.Value.Ranges, response.Value.ClearRanges);
+        }
+
+        internal static ShareFileRange[] ToShareFileRanges(
+            IList<FileRange> ranges,
+            IList<ClearRange> clearRanges)
+        {
+            List<ShareFileRange> merged = new List<ShareFileRange>(ranges.Count + clearRanges.Count);
+
+            int rangeIndex = 0;
+            int clearIndex = 0;
+
+            while (rangeIndex < ranges.Count || clearIndex < clearRanges.Count)
+            {
+                if (rangeIndex < ranges.Count
+                    && (clearIndex >= clearRanges.Count
+                        || ranges[rangeIndex].Start <= clearRanges[clearIndex].Start))
+                {
+                    merged.Add(new ShareFileRange
+                    {
+                        IsClear = false,
+                        Range = ranges[rangeIndex].ToHttpRange()
+                    });
+                    rangeIndex++;
+                }
+                else
+                {
+                    merged.Add(new ShareFileRange
+                    {
+                        IsClear = true,
+                        Range = clearRanges[clearIndex].ToHttpRange()
+                    });
+                    clearIndex++;
+                }
+            }
+
+            return merged.ToArray();
+        }
+        #endregion ToShareFileRanges
 
         internal enum ShareLeaseHeaderType
         {
@@ -794,11 +840,11 @@ namespace Azure.Storage.Files.Shares
                 ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
                 ProvisionedBandwidthMiBps = sharePropertiesInternal.ProvisionedBandwidthMiBps,
-                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeTime,
-                DeletedOn = sharePropertiesInternal.DeletedTime,
+                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeOn,
+                DeletedOn = sharePropertiesInternal.DeletedOn,
                 RemainingRetentionDays = sharePropertiesInternal.RemainingRetentionDays,
                 AccessTier = sharePropertiesInternal.AccessTier,
-                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangeTime,
+                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangedOn,
                 AccessTierTransitionState = sharePropertiesInternal.AccessTierTransitionState,
                 LeaseStatus = sharePropertiesInternal.LeaseStatus,
                 LeaseState = sharePropertiesInternal.LeaseState,
@@ -813,8 +859,8 @@ namespace Azure.Storage.Files.Shares
                 PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMibps,
                 IncludedBurstIops = sharePropertiesInternal.IncludedBurstIops,
                 MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
-                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
-                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
+                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeOn,
+                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeOn,
                 //EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
             };
         }
@@ -941,10 +987,10 @@ namespace Azure.Storage.Files.Shares
             }
 
             return new ShareFileItemProperties(
-                createdOn: fileProperty.CreationTime,
-                lastAccessedOn: fileProperty.LastAccessTime,
-                lastWrittenOn: fileProperty.LastWriteTime,
-                changedOn: fileProperty.ChangeTime,
+                createdOn: fileProperty.CreatedOn,
+                lastAccessedOn: fileProperty.LastAccessOn,
+                lastWrittenOn: fileProperty.LastWriteOn,
+                changedOn: fileProperty.ChangedOn,
                 lastModified: fileProperty.LastModified,
                 eTag: fileProperty.ETag == null ? null : new ETag(fileProperty.ETag));
         }

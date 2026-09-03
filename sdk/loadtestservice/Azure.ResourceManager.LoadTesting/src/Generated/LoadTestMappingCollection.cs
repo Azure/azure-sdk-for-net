@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(LoadTestMappingResource.ResourceType, out string loadTestMappingApiVersion);
             _loadTestMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestMappingResource.ResourceType.Namespace, Diagnostics);
-            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
+            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
         }
 
         /// <summary>

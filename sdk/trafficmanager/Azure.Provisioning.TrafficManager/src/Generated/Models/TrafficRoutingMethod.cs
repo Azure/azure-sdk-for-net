@@ -11,16 +11,16 @@ namespace Azure.Provisioning.TrafficManager
     public enum TrafficRoutingMethod
     {
         /// <summary> Performance. </summary>
-        Performance,
+        Performance = 0,
         /// <summary> Priority. </summary>
-        Priority,
+        Priority = 1,
         /// <summary> Weighted. </summary>
-        Weighted,
+        Weighted = 2,
         /// <summary> Geographic. </summary>
-        Geographic,
+        Geographic = 3,
         /// <summary> MultiValue. </summary>
-        MultiValue,
+        MultiValue = 4,
         /// <summary> Subnet. </summary>
-        Subnet
+        Subnet = 5
     }
 }

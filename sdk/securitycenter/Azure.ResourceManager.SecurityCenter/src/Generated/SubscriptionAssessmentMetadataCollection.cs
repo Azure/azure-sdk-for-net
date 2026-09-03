@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SubscriptionAssessmentMetadataResource.ResourceType, out string subscriptionAssessmentMetadataApiVersion);
             _assessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionAssessmentMetadataResource.ResourceType.Namespace, Diagnostics);
-            _assessmentsMetadataRestClient = new AssessmentsMetadata(_assessmentsMetadataClientDiagnostics, Pipeline, Endpoint, subscriptionAssessmentMetadataApiVersion ?? "2025-05-04");
+            _assessmentsMetadataRestClient = new AssessmentsMetadata(_assessmentsMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAssessmentMetadataApiVersion ?? "2025-05-04");
             ValidateResourceId(id);
         }
 

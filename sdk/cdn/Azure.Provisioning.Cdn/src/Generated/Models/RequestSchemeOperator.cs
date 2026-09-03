@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Cdn
     public enum RequestSchemeOperator
     {
         /// <summary> Equal. </summary>
-        Equal
+        Equal = 0
     }
 }

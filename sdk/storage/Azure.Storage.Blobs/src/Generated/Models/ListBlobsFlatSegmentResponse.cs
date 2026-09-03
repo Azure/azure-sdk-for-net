@@ -5,62 +5,63 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of blobs. </summary>
+    /// <summary> The result of the List Blobs API. </summary>
     internal partial class ListBlobsFlatSegmentResponse
     {
         /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="containerName"></param>
-        /// <param name="segment"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
-        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, BlobFlatListSegment segment)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="blobItems"> The list of blobs. </param>
+        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, IEnumerable<BlobItemInternal> blobItems)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(segment, nameof(segment));
-
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
-            Segment = segment;
+            BlobItems = blobItems.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="containerName"></param>
-        /// <param name="prefix"></param>
-        /// <param name="marker"></param>
-        /// <param name="maxResults"></param>
-        /// <param name="segment"></param>
-        /// <param name="nextMarker"></param>
-        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, BlobFlatListSegment segment, string nextMarker)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="prefix"> The prefix of the list operation. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set returned with this operation. </param>
+        /// <param name="maxResults"> The maximum number of blobs to be returned with this operation. </param>
+        /// <param name="blobItems"> The list of blobs. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
+        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, IList<BlobItemInternal> blobItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             Prefix = prefix;
             Marker = marker;
             MaxResults = maxResults;
-            Segment = segment;
+            BlobItems = blobItems;
             NextMarker = nextMarker;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the container name. </summary>
+
+        /// <summary> The container name. </summary>
         public string ContainerName { get; }
-        /// <summary> Gets the prefix. </summary>
+
+        /// <summary> The prefix of the list operation. </summary>
         public string Prefix { get; }
-        /// <summary> Gets the marker. </summary>
+
+        /// <summary> An opaque string value that identifies the portion of the result set returned with this operation. </summary>
         public string Marker { get; }
-        /// <summary> Gets the max results. </summary>
+
+        /// <summary> The maximum number of blobs to be returned with this operation. </summary>
         public int? MaxResults { get; }
-        /// <summary> Gets the segment. </summary>
-        public BlobFlatListSegment Segment { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The list of blobs. </summary>
+        public IList<BlobItemInternal> BlobItems { get; }
+
+        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
         public string NextMarker { get; }
     }
 }

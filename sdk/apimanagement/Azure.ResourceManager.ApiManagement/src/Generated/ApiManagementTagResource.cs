@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementTagApiVersion);
             _tagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _tagRestClient = new Tag(_tagClientDiagnostics, Pipeline, Endpoint, apiManagementTagApiVersion ?? "2025-09-01-preview");
+            _tagRestClient = new Tag(_tagClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementTagApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

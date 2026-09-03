@@ -17,66 +17,66 @@ namespace Azure.Provisioning.CostManagement
     {
         /// <summary> EnUs. </summary>
         [DataMember(Name = "en-us")]
-        EnUs,
+        EnUs = 0,
         /// <summary> JaJp. </summary>
         [DataMember(Name = "ja-jp")]
-        JaJp,
+        JaJp = 1,
         /// <summary> ZhCn. </summary>
         [DataMember(Name = "zh-cn")]
-        ZhCn,
+        ZhCn = 2,
         /// <summary> DeDe. </summary>
         [DataMember(Name = "de-de")]
-        DeDe,
+        DeDe = 3,
         /// <summary> EsEs. </summary>
         [DataMember(Name = "es-es")]
-        EsEs,
+        EsEs = 4,
         /// <summary> FrFr. </summary>
         [DataMember(Name = "fr-fr")]
-        FrFr,
+        FrFr = 5,
         /// <summary> ItIt. </summary>
         [DataMember(Name = "it-it")]
-        ItIt,
+        ItIt = 6,
         /// <summary> KoKr. </summary>
         [DataMember(Name = "ko-kr")]
-        KoKr,
+        KoKr = 7,
         /// <summary> PtBr. </summary>
         [DataMember(Name = "pt-br")]
-        PtBr,
+        PtBr = 8,
         /// <summary> RuRu. </summary>
         [DataMember(Name = "ru-ru")]
-        RuRu,
+        RuRu = 9,
         /// <summary> ZhTw. </summary>
         [DataMember(Name = "zh-tw")]
-        ZhTw,
+        ZhTw = 10,
         /// <summary> CsCz. </summary>
         [DataMember(Name = "cs-cz")]
-        CsCz,
+        CsCz = 11,
         /// <summary> PlPl. </summary>
         [DataMember(Name = "pl-pl")]
-        PlPl,
+        PlPl = 12,
         /// <summary> TrTr. </summary>
         [DataMember(Name = "tr-tr")]
-        TrTr,
+        TrTr = 13,
         /// <summary> DaDk. </summary>
         [DataMember(Name = "da-dk")]
-        DaDk,
+        DaDk = 14,
         /// <summary> EnGb. </summary>
         [DataMember(Name = "en-gb")]
-        EnGb,
+        EnGb = 15,
         /// <summary> HuHu. </summary>
         [DataMember(Name = "hu-hu")]
-        HuHu,
+        HuHu = 16,
         /// <summary> NbNo. </summary>
         [DataMember(Name = "nb-no")]
-        NbNo,
+        NbNo = 17,
         /// <summary> NlNl. </summary>
         [DataMember(Name = "nl-nl")]
-        NlNl,
+        NlNl = 18,
         /// <summary> PtPt. </summary>
         [DataMember(Name = "pt-pt")]
-        PtPt,
+        PtPt = 19,
         /// <summary> SvSe. </summary>
         [DataMember(Name = "sv-se")]
-        SvSe
+        SvSe = 20
     }
 }

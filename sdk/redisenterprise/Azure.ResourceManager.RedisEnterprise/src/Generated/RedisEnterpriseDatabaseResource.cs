@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(ResourceType, out string redisEnterpriseDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, redisEnterpriseDatabaseApiVersion ?? "2025-08-01-preview");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseDatabaseApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

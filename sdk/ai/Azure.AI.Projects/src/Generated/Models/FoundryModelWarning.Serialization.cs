@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A warning associated with a model. </summary>
-    internal partial class FoundryModelWarning : IJsonModel<FoundryModelWarning>
+    public partial class FoundryModelWarning : IJsonModel<FoundryModelWarning>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

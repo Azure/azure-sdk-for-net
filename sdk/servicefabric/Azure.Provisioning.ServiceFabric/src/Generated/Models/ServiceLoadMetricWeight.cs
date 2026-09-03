@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ServiceLoadMetricWeight
     {
         /// <summary> Disables resource balancing for this metric. This value is zero. </summary>
-        Zero,
+        Zero = 0,
         /// <summary> Specifies the metric weight of the service load as Low. The value is 1. </summary>
-        Low,
+        Low = 1,
         /// <summary> Specifies the metric weight of the service load as Medium. The value is 2. </summary>
-        Medium,
+        Medium = 2,
         /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
-        High
+        High = 3
     }
 }

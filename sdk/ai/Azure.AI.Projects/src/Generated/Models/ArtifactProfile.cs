@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> Artifact profile of the model. </summary>
     [Experimental("AAIP001")]
-    internal partial class ArtifactProfile
+    public partial class ArtifactProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ApplicationInsights.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ApplicationInsights.Tests.csproj" />
+</Solution>

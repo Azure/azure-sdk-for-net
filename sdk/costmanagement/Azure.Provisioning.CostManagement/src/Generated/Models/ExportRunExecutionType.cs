@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ExportRunExecutionType
     {
         /// <summary> OnDemand. </summary>
-        OnDemand,
+        OnDemand = 0,
         /// <summary> Scheduled. </summary>
-        Scheduled
+        Scheduled = 1
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceProductApiLinkResource.ResourceType, out string serviceProductApiLinkApiVersion);
             _productApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceProductApiLinkResource.ResourceType.Namespace, Diagnostics);
-            _productApiLinkRestClient = new ProductApiLink(_productApiLinkClientDiagnostics, Pipeline, Endpoint, serviceProductApiLinkApiVersion ?? "2025-09-01-preview");
+            _productApiLinkRestClient = new ProductApiLink(_productApiLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceProductApiLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

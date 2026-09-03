@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> Endpoints the device can connect to. </summary>
-        public IDictionary<string, DeviceMessagingEndpoint> Assigned { get; }
+        public IDictionary<string, DeviceMessagingEndpoint> Assigned { get; } = new ChangeTrackingDictionary<string, DeviceMessagingEndpoint>();
     }
 }

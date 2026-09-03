@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SuspiciousValue = "Suspicious";
         /// <summary> Scan summary indicates healthy state. </summary>
         private const string HealthyValue = "Healthy";
+        /// <summary> No threats reported. </summary>
+        private const string NoThreatsReportedValue = "NoThreatsReported";
 
         /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanSummary"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Scan summary indicates healthy state. </summary>
         public static BackupSourceSideScanSummary Healthy { get; } = new BackupSourceSideScanSummary(HealthyValue);
+
+        /// <summary> No threats reported. </summary>
+        public static BackupSourceSideScanSummary NoThreatsReported { get; } = new BackupSourceSideScanSummary(NoThreatsReportedValue);
 
         /// <summary> Determines if two <see cref="BackupSourceSideScanSummary"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

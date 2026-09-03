@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchAutoStorageAuthenticationMode
     {
         /// <summary> The Batch service will authenticate requests to auto-storage using storage account keys. </summary>
-        StorageKeys,
+        StorageKeys = 0,
         /// <summary> The Batch service will authenticate requests to auto-storage using the managed identity assigned to the Batch account. </summary>
-        BatchAccountManagedIdentity
+        BatchAccountManagedIdentity = 1
     }
 }

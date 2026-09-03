@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedBackupShortTermRetentionPolicyResource.ResourceType, out string managedBackupShortTermRetentionPolicyApiVersion);
             _managedBackupShortTermRetentionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedBackupShortTermRetentionPolicyResource.ResourceType.Namespace, Diagnostics);
-            _managedBackupShortTermRetentionPoliciesRestClient = new ManagedBackupShortTermRetentionPolicies(_managedBackupShortTermRetentionPoliciesClientDiagnostics, Pipeline, Endpoint, managedBackupShortTermRetentionPolicyApiVersion ?? "2025-02-01-preview");
+            _managedBackupShortTermRetentionPoliciesRestClient = new ManagedBackupShortTermRetentionPolicies(_managedBackupShortTermRetentionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedBackupShortTermRetentionPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

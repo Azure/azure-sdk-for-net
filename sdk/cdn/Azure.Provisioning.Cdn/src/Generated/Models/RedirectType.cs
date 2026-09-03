@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Cdn
     public enum RedirectType
     {
         /// <summary> Moved. </summary>
-        Moved,
+        Moved = 0,
         /// <summary> Found. </summary>
-        Found,
+        Found = 1,
         /// <summary> TemporaryRedirect. </summary>
-        TemporaryRedirect,
+        TemporaryRedirect = 2,
         /// <summary> PermanentRedirect. </summary>
-        PermanentRedirect
+        PermanentRedirect = 3
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ArmServicePackageActivationMode
     {
         /// <summary> Indicates the application package activation mode will use shared process. </summary>
-        SharedProcess,
+        SharedProcess = 0,
         /// <summary> Indicates the application package activation mode will use exclusive process. </summary>
-        ExclusiveProcess
+        ExclusiveProcess = 1
     }
 }

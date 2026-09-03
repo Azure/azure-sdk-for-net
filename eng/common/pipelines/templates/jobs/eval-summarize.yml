@@ -29,7 +29,7 @@ jobs:
 
       # Renders the rollup to the run's Summary tab (##vso[task.uploadsummary]).
       - script: |
-          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.js" \
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts" \
             --results-root "$(Pipeline.Workspace)/eval-results" \
             --output-path "$(Build.ArtifactStagingDirectory)/eval-summary.md"
         displayName: 'Render Markdown rollup'

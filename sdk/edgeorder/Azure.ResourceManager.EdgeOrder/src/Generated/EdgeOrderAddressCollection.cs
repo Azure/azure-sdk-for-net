@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             TryGetApiVersion(EdgeOrderAddressResource.ResourceType, out string edgeOrderAddressApiVersion);
             _addressResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
-            _addressResourcesRestClient = new AddressResources(_addressResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderAddressApiVersion ?? "2024-02-01");
+            _addressResourcesRestClient = new AddressResources(_addressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderAddressApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 

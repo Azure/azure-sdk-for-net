@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudTrunkedNetworkResource.ResourceType, out string networkCloudTrunkedNetworkApiVersion);
             _trunkedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudTrunkedNetworkResource.ResourceType.Namespace, Diagnostics);
-            _trunkedNetworksRestClient = new TrunkedNetworks(_trunkedNetworksClientDiagnostics, Pipeline, Endpoint, networkCloudTrunkedNetworkApiVersion ?? "2026-05-01-preview");
+            _trunkedNetworksRestClient = new TrunkedNetworks(_trunkedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudTrunkedNetworkApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ContainerService.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.ContainerServiceSafeguards</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>Azure.ResourceManager.ContainerServiceSafeguards</PackageId>
+    <PackageTags>azure;management;arm;resource manager;containerservicesafeguards</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>

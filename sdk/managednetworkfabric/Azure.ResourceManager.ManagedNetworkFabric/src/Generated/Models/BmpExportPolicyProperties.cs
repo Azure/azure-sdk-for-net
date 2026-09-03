@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
-        public IList<BmpExportPolicy> ExportPolicies { get; }
+        public IList<BmpExportPolicy> ExportPolicies { get; } = new ChangeTrackingList<BmpExportPolicy>();
     }
 }

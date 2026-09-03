@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ArmUpgradeFailureAction
     {
         /// <summary> Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails. </summary>
-        Rollback,
+        Rollback = 0,
         /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
-        Manual
+        Manual = 1
     }
 }

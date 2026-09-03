@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ResourceType, out string grafanaPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, grafanaPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

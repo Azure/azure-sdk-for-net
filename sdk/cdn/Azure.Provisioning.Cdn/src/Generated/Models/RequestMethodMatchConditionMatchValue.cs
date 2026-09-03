@@ -14,24 +14,24 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> Get. </summary>
         [DataMember(Name = "GET")]
-        Get,
+        Get = 0,
         /// <summary> Head. </summary>
         [DataMember(Name = "HEAD")]
-        Head,
+        Head = 1,
         /// <summary> Post. </summary>
         [DataMember(Name = "POST")]
-        Post,
+        Post = 2,
         /// <summary> Put. </summary>
         [DataMember(Name = "PUT")]
-        Put,
+        Put = 3,
         /// <summary> Delete. </summary>
         [DataMember(Name = "DELETE")]
-        Delete,
+        Delete = 4,
         /// <summary> Options. </summary>
         [DataMember(Name = "OPTIONS")]
-        Options,
+        Options = 5,
         /// <summary> Trace. </summary>
         [DataMember(Name = "TRACE")]
-        Trace
+        Trace = 6
     }
 }

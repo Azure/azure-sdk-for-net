@@ -116,6 +116,14 @@ namespace Azure.Generator.Management.Visitors
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
+        private static bool IsFlattenableProperty(PropertyProvider property)
+        {
+            // Infrastructure-only properties such as Patch have no wire representation and must not be flattened.
+            return property.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && property.WireInfo is not null
+                && !IsObsoleteProperty(property);
+        }
+
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
             Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
@@ -561,7 +569,7 @@ namespace Azure.Generator.Management.Visitors
                 else
                 {
                     // only safe flatten single public property (excluding obsolete ones)
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
+                    var publicPropertyCount = innerProperties.Count(IsFlattenableProperty);
                     if (publicPropertyCount != 1)
                     {
                         continue;
@@ -614,12 +622,7 @@ namespace Azure.Generator.Management.Visitors
         {
             foreach (var innerProperty in innerProperties)
             {
-                if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                {
-                    continue;
-                }
-                // skip properties marked [Obsolete] in custom code to avoid CS0618
-                if (IsObsoleteProperty(innerProperty))
+                if (!IsFlattenableProperty(innerProperty))
                 {
                     continue;
                 }
@@ -700,10 +703,11 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public non-obsolete property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
+            // Get the single public wire property from innerProperties.
+            var innerProperty = innerProperties.Single(IsFlattenableProperty);
             isFlattened = true;
 
+            UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
             // flatten the single property to public and associate it with the internal property
             var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
             var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty); // TODO: handle name conflicts

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
-    <Version>3.0.0-beta.1</Version>
+    <Version>3.0.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>2.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Projects</PackageTags>
@@ -11,11 +11,10 @@
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Custom\EvaluationRules\**" />
-    <EmbeddedResource Remove="Custom\EvaluationRules\**" />
-    <None Remove="Custom\EvaluationRules\**" />
-  </ItemGroup>
+
+  <PropertyGroup>
+    <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

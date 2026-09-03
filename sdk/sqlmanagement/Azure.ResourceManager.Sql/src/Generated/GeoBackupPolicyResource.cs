@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string geoBackupPolicyApiVersion);
             _geoBackupPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _geoBackupPoliciesRestClient = new GeoBackupPolicies(_geoBackupPoliciesClientDiagnostics, Pipeline, Endpoint, geoBackupPolicyApiVersion ?? "2025-02-01-preview");
+            _geoBackupPoliciesRestClient = new GeoBackupPolicies(_geoBackupPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, geoBackupPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

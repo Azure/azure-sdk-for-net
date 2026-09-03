@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> List of AWS accounts which need to be excluded. </summary>
-        public IList<string> ExcludedAccounts { get; }
+        public IList<string> ExcludedAccounts { get; } = new ChangeTrackingList<string>();
     }
 }

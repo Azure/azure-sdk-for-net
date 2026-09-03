@@ -240,7 +240,7 @@ namespace Azure.Provisioning.Communication
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DomainProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<EmailService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EmailService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Communication
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
         /// <summary></summary>
         public static partial class ResourceVersions

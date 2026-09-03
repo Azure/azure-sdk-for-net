@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(MaintenanceConfigurationAssignmentResource.ResourceType, out string maintenanceConfigurationAssignmentApiVersion);
             _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
+            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
         }
 
         /// <summary>

@@ -69,23 +69,23 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _intelligencePacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _intelligencePacksRestClient = new IntelligencePacks(_intelligencePacksClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _intelligencePacksRestClient = new IntelligencePacks(_intelligencePacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _workspacePurgeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _workspacePurgeRestClient = new WorkspacePurge(_workspacePurgeClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _workspacePurgeRestClient = new WorkspacePurge(_workspacePurgeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _sharedKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _sharedKeysRestClient = new SharedKeys(_sharedKeysClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _sharedKeysRestClient = new SharedKeys(_sharedKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _availableServiceTiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _availableServiceTiersRestClient = new AvailableServiceTiers(_availableServiceTiersClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _availableServiceTiersRestClient = new AvailableServiceTiers(_availableServiceTiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _managementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _managementGroupsRestClient = new ManagementGroups(_managementGroupsClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _managementGroupsRestClient = new ManagementGroups(_managementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _schemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _schemaRestClient = new Schema(_schemaClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _schemaRestClient = new Schema(_schemaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

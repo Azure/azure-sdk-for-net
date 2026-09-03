@@ -57,43 +57,43 @@ namespace Azure.ResourceManager.AppContainers.Mocking
 
         private ClientDiagnostics ContainerAppsSessionPoolsClientDiagnostics => _containerAppsSessionPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppsSessionPools ContainerAppsSessionPoolsRestClient => _containerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPools(ContainerAppsSessionPoolsClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private ContainerAppsSessionPools ContainerAppsSessionPoolsRestClient => _containerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPools(ContainerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics ContainerAppsClientDiagnostics => _containerAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerApps ContainerAppsRestClient => _containerAppsRestClient ??= new ContainerApps(ContainerAppsClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private ContainerApps ContainerAppsRestClient => _containerAppsRestClient ??= new ContainerApps(ContainerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics BuildersClientDiagnostics => _buildersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Builders BuildersRestClient => _buildersRestClient ??= new Builders(BuildersClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private Builders BuildersRestClient => _buildersRestClient ??= new Builders(BuildersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics ConnectedEnvironmentsClientDiagnostics => _connectedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConnectedEnvironments ConnectedEnvironmentsRestClient => _connectedEnvironmentsRestClient ??= new ConnectedEnvironments(ConnectedEnvironmentsClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private ConnectedEnvironments ConnectedEnvironmentsRestClient => _connectedEnvironmentsRestClient ??= new ConnectedEnvironments(ConnectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics ContainerAppManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppManagedEnvironments ContainerAppManagedEnvironmentsRestClient => _containerAppManagedEnvironmentsRestClient ??= new ContainerAppManagedEnvironments(ContainerAppManagedEnvironmentsClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private ContainerAppManagedEnvironments ContainerAppManagedEnvironmentsRestClient => _containerAppManagedEnvironmentsRestClient ??= new ContainerAppManagedEnvironments(ContainerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics ContainerAppJobsClientDiagnostics => _containerAppJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppJobs ContainerAppJobsRestClient => _containerAppJobsRestClient ??= new ContainerAppJobs(ContainerAppJobsClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private ContainerAppJobs ContainerAppJobsRestClient => _containerAppJobsRestClient ??= new ContainerAppJobs(ContainerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics AppClientClientDiagnostics => _appClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppClient AppClientRestClient => _appClientRestClient ??= new AppClient(AppClientClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private AppClient AppClientRestClient => _appClientRestClient ??= new AppClient(AppClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics AvailableWorkloadProfilesClientDiagnostics => _availableWorkloadProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableWorkloadProfiles AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfiles(AvailableWorkloadProfilesClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private AvailableWorkloadProfiles AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfiles(AvailableWorkloadProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics BillingMetersClientDiagnostics => _billingMetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BillingMeters BillingMetersRestClient => _billingMetersRestClient ??= new BillingMeters(BillingMetersClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private BillingMeters BillingMetersRestClient => _billingMetersRestClient ??= new BillingMeters(BillingMetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
 
         /// <summary>
         /// Get the session pools in a given subscription.

@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Search
     {
         /// <summary> Indicates that semantic reranker is disabled for the search service. </summary>
         [DataMember(Name = "disabled")]
-        Disabled,
+        Disabled = 0,
         /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. This is the default. </summary>
         [DataMember(Name = "free")]
-        Free,
+        Free = 1,
         /// <summary> Enables semantic reranker on a search service as a billable feature after the free quota is exhausted, with higher throughput and volume of semantically reranked queries. </summary>
         [DataMember(Name = "standard")]
-        Standard
+        Standard = 2
     }
 }

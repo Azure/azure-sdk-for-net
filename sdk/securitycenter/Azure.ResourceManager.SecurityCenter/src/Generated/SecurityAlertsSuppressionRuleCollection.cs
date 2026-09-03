@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityAlertsSuppressionRuleResource.ResourceType, out string securityAlertsSuppressionRuleApiVersion);
             _alertsSuppressionRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAlertsSuppressionRuleResource.ResourceType.Namespace, Diagnostics);
-            _alertsSuppressionRulesRestClient = new AlertsSuppressionRules(_alertsSuppressionRulesClientDiagnostics, Pipeline, Endpoint, securityAlertsSuppressionRuleApiVersion ?? "2019-01-01-preview");
+            _alertsSuppressionRulesRestClient = new AlertsSuppressionRules(_alertsSuppressionRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityAlertsSuppressionRuleApiVersion ?? "2019-01-01-preview");
             ValidateResourceId(id);
         }
 

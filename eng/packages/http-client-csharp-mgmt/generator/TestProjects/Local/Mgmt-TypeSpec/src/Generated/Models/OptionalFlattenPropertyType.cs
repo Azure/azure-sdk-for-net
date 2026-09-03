@@ -19,7 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OptionalFlattenPropertyType"/>. </summary>
-        /// <param name="randomCollectionProp"></param>
+        /// <param name="randomCollectionProp"> Required collection used by the optional flattened model scenario. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="randomCollectionProp"/> is null. </exception>
         public OptionalFlattenPropertyType(IEnumerable<string> randomCollectionProp)
         {
@@ -29,7 +29,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OptionalFlattenPropertyType"/>. </summary>
-        /// <param name="randomCollectionProp"></param>
+        /// <param name="randomCollectionProp"> Required collection used by the optional flattened model scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OptionalFlattenPropertyType(IList<string> randomCollectionProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,8 +37,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the RandomCollectionProp. </summary>
+        /// <summary> Required collection used by the optional flattened model scenario. </summary>
         [WirePath("randomCollectionProp")]
-        public IList<string> RandomCollectionProp { get; }
+        public IList<string> RandomCollectionProp { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -12,13 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Azure realtime native voice configuration. These voices are natively
-    /// supported by the `azure-realtime` model and offer higher quality speech
-    /// synthesis than standard Azure voices. Only valid when using the
-    /// `azure-realtime` model.
-    /// </summary>
-    public partial class AzureRealtimeNativeVoice : IJsonModel<AzureRealtimeNativeVoice>
+    internal partial class AzureRealtimeNativeVoice : VoiceProvider, IJsonModel<AzureRealtimeNativeVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureRealtimeNativeVoice"/> for deserialization. </summary>
         internal AzureRealtimeNativeVoice()
@@ -84,7 +78,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(AzureRealtimeNativeVoice)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Kind);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -129,14 +123,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = default;
+            string kind = default;
             AzureRealtimeNativeVoiceName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -149,7 +143,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureRealtimeNativeVoice(@type, name, additionalBinaryDataProperties);
+            return new AzureRealtimeNativeVoice(kind, name, additionalBinaryDataProperties);
         }
     }
 }

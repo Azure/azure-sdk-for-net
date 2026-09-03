@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Internet Control Message Protocol (ICMP) types. </summary>
-        public IList<string> IcmpTypes { get; }
+        public IList<string> IcmpTypes { get; } = new ChangeTrackingList<string>();
     }
 }

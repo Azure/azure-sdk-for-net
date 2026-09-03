@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Secrets.Models
             if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteBase64StringValue(Value.ToArray(), "U");
+                writer.WriteBase64StringValue(Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

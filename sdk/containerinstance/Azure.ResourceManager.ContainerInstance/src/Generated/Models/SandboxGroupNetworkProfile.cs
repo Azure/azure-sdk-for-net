@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The list of subnets associated with the SandboxGroup. </summary>
-        public IList<SubnetReference> Subnets { get; }
+        public IList<SubnetReference> Subnets { get; } = new ChangeTrackingList<SubnetReference>();
     }
 }

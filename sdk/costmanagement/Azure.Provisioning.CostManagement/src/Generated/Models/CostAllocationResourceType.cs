@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum CostAllocationResourceType
     {
         /// <summary> Indicates an Azure dimension such as a subscription id or resource group name is being used for allocation. </summary>
-        Dimension,
+        Dimension = 0,
         /// <summary> Allocates cost based on Azure Tag key value pairs. </summary>
-        Tag
+        Tag = 1
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             TryGetApiVersion(PrivateDnsMXRecordResource.ResourceType, out string dnsMXRecordApiVersion);
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsMXRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsMXRecordApiVersion ?? "2024-06-01");
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsMXRecordApiVersion ?? "2024-06-01");
             ValidateResourceId(id);
         }
 

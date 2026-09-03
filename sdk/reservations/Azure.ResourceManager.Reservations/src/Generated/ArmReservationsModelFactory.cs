@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations;
@@ -251,16 +250,16 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="effectOn"> DateTime of the reservation starting when this version is effective from. </param>
         /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
         /// <param name="lastUpdatedOn"> DateTime of the last time the reservation was updated. </param>
-        /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
         /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
+        /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="skuDescription"> Description of the sku in english. </param>
         /// <param name="extendedStatusInfo"> The message giving detailed information about the status code. </param>
         /// <param name="billingPlan"> The billing plan options available for this sku. </param>
         /// <param name="displayProvisioningState"> The provisioning state of the reservation for display, e.g. Succeeded. </param>
         /// <param name="provisioningSubState"> The provisioning sub-state of the reservation, e.g. Succeeded. </param>
-        /// <param name="reservationPurchaseOn"> This is the date when the reservation was purchased. </param>
         /// <param name="purchaseOn"> This is the date-time when the reservation was purchased. </param>
+        /// <param name="reservationPurchaseOn"> This is the date when the reservation was purchased. </param>
         /// <param name="splitProperties"> Properties of reservation split. </param>
         /// <param name="mergeProperties"> Properties of reservation merge. </param>
         /// <param name="swapProperties"> Properties of reservation swap. </param>
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="userFriendlyRenewState"> The renew state of the reservation for display, e.g. On. </param>
         /// <param name="utilization"> Reservation utilization. </param>
         /// <returns> A new <see cref="Models.ReservationProperties"/> instance for mocking. </returns>
-        public static ReservationProperties ReservationProperties(ReservedResourceType? reservedResourceType = default, InstanceFlexibility? instanceFlexibility = default, string displayName = default, IEnumerable<string> appliedScopes = default, AppliedScopeType? appliedScopeType = default, bool? isArchived = default, string capabilities = default, int? quantity = default, ReservationProvisioningState? provisioningState = default, DateTimeOffset? effectOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reviewOn = default, string skuDescription = default, ExtendedStatusInfo extendedStatusInfo = default, ReservationBillingPlan? billingPlan = default, string displayProvisioningState = default, string provisioningSubState = default, DateTimeOffset? reservationPurchaseOn = default, DateTimeOffset? purchaseOn = default, ReservationSplitProperties splitProperties = default, ReservationMergeProperties mergeProperties = default, ReservationSwapProperties swapProperties = default, AppliedScopeProperties appliedScopeProperties = default, ResourceIdentifier billingScopeId = default, bool? isRenewEnabled = default, string renewSource = default, string renewDestination = default, RenewProperties renewProperties = default, ReservationTerm? term = default, string userFriendlyAppliedScopeType = default, string userFriendlyRenewState = default, ReservationPropertiesUtilization utilization = default)
+        public static ReservationProperties ReservationProperties(ReservedResourceType? reservedResourceType = default, InstanceFlexibility? instanceFlexibility = default, string displayName = default, IEnumerable<string> appliedScopes = default, AppliedScopeType? appliedScopeType = default, bool? isArchived = default, string capabilities = default, int? quantity = default, ReservationProvisioningState? provisioningState = default, DateTimeOffset? effectOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? reviewOn = default, string skuDescription = default, ExtendedStatusInfo extendedStatusInfo = default, ReservationBillingPlan? billingPlan = default, string displayProvisioningState = default, string provisioningSubState = default, DateTimeOffset? purchaseOn = default, DateTimeOffset? reservationPurchaseOn = default, ReservationSplitProperties splitProperties = default, ReservationMergeProperties mergeProperties = default, ReservationSwapProperties swapProperties = default, AppliedScopeProperties appliedScopeProperties = default, ResourceIdentifier billingScopeId = default, bool? isRenewEnabled = default, string renewSource = default, string renewDestination = default, RenewProperties renewProperties = default, ReservationTerm? term = default, string userFriendlyAppliedScopeType = default, string userFriendlyRenewState = default, ReservationPropertiesUtilization utilization = default)
         {
             appliedScopes ??= new ChangeTrackingList<string>();
 

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum MatchProcessingBehavior
     {
         /// <summary> Continue. </summary>
-        Continue,
+        Continue = 0,
         /// <summary> Stop. </summary>
-        Stop
+        Stop = 1
     }
 }

@@ -14,12 +14,12 @@ namespace Azure.Provisioning.TrafficManager
     {
         /// <summary> Http. </summary>
         [DataMember(Name = "HTTP")]
-        Http,
+        Http = 0,
         /// <summary> Https. </summary>
         [DataMember(Name = "HTTPS")]
-        Https,
+        Https = 1,
         /// <summary> Tcp. </summary>
         [DataMember(Name = "TCP")]
-        Tcp
+        Tcp = 2
     }
 }

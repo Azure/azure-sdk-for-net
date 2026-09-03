@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CostManagement
     public enum AlertTimeGrainType
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Monthly. </summary>
-        Monthly,
+        Monthly = 1,
         /// <summary> Quarterly. </summary>
-        Quarterly,
+        Quarterly = 2,
         /// <summary> Annually. </summary>
-        Annually,
+        Annually = 3,
         /// <summary> BillingMonth. </summary>
-        BillingMonth,
+        BillingMonth = 4,
         /// <summary> BillingQuarter. </summary>
-        BillingQuarter,
+        BillingQuarter = 5,
         /// <summary> BillingAnnual. </summary>
-        BillingAnnual
+        BillingAnnual = 6
     }
 }

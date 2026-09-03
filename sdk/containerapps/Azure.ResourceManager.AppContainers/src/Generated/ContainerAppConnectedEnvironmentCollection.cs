@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppConnectedEnvironmentResource.ResourceType, out string containerAppConnectedEnvironmentApiVersion);
             _connectedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Batch
     public enum BatchIPAddressProvisioningType
     {
         /// <summary> A public IP will be created and managed by Batch. There may be multiple public IPs depending on the size of the Pool. </summary>
-        BatchManaged,
+        BatchManaged = 0,
         /// <summary> Public IPs are provided by the user and will be used to provision the Compute Nodes. </summary>
-        UserManaged,
+        UserManaged = 1,
         /// <summary> No public IP Address will be created for the Compute Nodes in the Pool. </summary>
-        NoPublicIPAddresses
+        NoPublicIPAddresses = 2
     }
 }

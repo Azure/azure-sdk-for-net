@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterNotificationLevel
     {
         /// <summary> Receive only critical notifications. </summary>
-        Critical,
+        Critical = 0,
         /// <summary> Receive all notifications. </summary>
-        All
+        All = 1
     }
 }

@@ -43,12 +43,12 @@ public class BasicSearchTests
             param location string = resourceGroup().location
 
             resource search 'Microsoft.Search/searchServices@2025-05-01' = {
-              name: take('search${uniqueString(resourceGroup().id)}', 24)
+              name: take('search-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                replicaCount: 1
-                partitionCount: 1
                 hostingMode: 'Default'
+                partitionCount: 1
+                replicaCount: 1
               }
               sku: {
                 name: 'standard'
@@ -87,13 +87,13 @@ public class BasicSearchTests
             param location string = resourceGroup().location
 
             resource search 'Microsoft.Search/searchServices@2025-05-01' = {
-              name: take('search${uniqueString(resourceGroup().id)}', 24)
+              name: take('search-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                replicaCount: 1
-                partitionCount: 1
                 hostingMode: 'Default'
+                partitionCount: 1
                 publicNetworkAccess: 'enabled'
+                replicaCount: 1
               }
               sku: {
                 name: 'standard'

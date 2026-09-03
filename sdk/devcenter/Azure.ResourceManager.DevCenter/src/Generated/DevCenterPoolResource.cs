@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devCenterPoolApiVersion ?? "2026-01-01-preview");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterPoolApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

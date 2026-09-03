@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Automation.Mocking
 
         private ClientDiagnostics AutomationAccountClientDiagnostics => _automationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutomationAccount AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccount(AutomationAccountClientDiagnostics, Pipeline, Endpoint, "2024-10-23");
+        private AutomationAccount AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccount(AutomationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-23");
 
         private ClientDiagnostics DeletedAutomationAccountsClientDiagnostics => _deletedAutomationAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAutomationAccounts DeletedAutomationAccountsRestClient => _deletedAutomationAccountsRestClient ??= new DeletedAutomationAccounts(DeletedAutomationAccountsClientDiagnostics, Pipeline, Endpoint, "2024-10-23");
+        private DeletedAutomationAccounts DeletedAutomationAccountsRestClient => _deletedAutomationAccountsRestClient ??= new DeletedAutomationAccounts(DeletedAutomationAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-23");
 
         /// <summary>
         /// Retrieve a list of accounts within a given subscription.

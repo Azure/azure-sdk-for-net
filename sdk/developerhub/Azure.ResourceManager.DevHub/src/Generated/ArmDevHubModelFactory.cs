@@ -536,13 +536,6 @@ namespace Azure.ResourceManager.DevHub.Models
             return new AdoProviderProfile(repository, armServiceConnection, default);
         }
 
-        /// <param name="status"> delete status message. </param>
-        /// <returns> A new <see cref="Models.DeveloperHubDeleteWorkflowResult"/> instance for mocking. </returns>
-        public static DeveloperHubDeleteWorkflowResult DeveloperHubDeleteWorkflowResult(string status = default)
-        {
-            return new DeveloperHubDeleteWorkflowResult(status, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

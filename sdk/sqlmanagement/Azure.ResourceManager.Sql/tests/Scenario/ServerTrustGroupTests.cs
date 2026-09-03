@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Tests
                     new ServerTrustGroupServerInfo(primaryManagedInstanceId),
                     new ServerTrustGroupServerInfo(backupManagedInstanceId),
                 },
-                TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions},
+                TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions },
             };
             var serverTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).CreateOrUpdateAsync(WaitUntil.Completed, serverTrustGroupName, data);
             return serverTrustGroup.Value;

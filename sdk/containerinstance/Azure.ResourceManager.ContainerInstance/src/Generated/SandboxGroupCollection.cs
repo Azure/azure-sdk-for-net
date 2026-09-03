@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             TryGetApiVersion(SandboxGroupResource.ResourceType, out string sandboxGroupApiVersion);
             _sandboxGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", SandboxGroupResource.ResourceType.Namespace, Diagnostics);
-            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Endpoint, sandboxGroupApiVersion ?? "2026-07-01");
+            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sandboxGroupApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

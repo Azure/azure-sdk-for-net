@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Error details of the transfer eligibility validation. </summary>
-    public partial class MoveProductEligibilityResultErrorDetails : MoveProductErrorDetails
+    internal partial class MoveProductEligibilityResultErrorDetails : MoveProductErrorDetails
     {
         /// <summary> Initializes a new instance of <see cref="MoveProductEligibilityResultErrorDetails"/>. </summary>
         internal MoveProductEligibilityResultErrorDetails()

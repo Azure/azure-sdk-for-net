@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devBoxDefinitionApiVersion);
             _devBoxDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _devBoxDefinitionsRestClient = new DevBoxDefinitions(_devBoxDefinitionsClientDiagnostics, Pipeline, Endpoint, devBoxDefinitionApiVersion ?? "2026-01-01-preview");
+            _devBoxDefinitionsRestClient = new DevBoxDefinitions(_devBoxDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devBoxDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Support.Mocking
 
         private ClientDiagnostics ClassifyServicesClientDiagnostics => _classifyServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassifyServices ClassifyServicesRestClient => _classifyServicesRestClient ??= new ClassifyServices(ClassifyServicesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ClassifyServices ClassifyServicesRestClient => _classifyServicesRestClient ??= new ClassifyServices(ClassifyServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01-preview");
 
         private ClientDiagnostics ClassifyProblemsClientDiagnostics => _classifyProblemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassifyProblems ClassifyProblemsRestClient => _classifyProblemsRestClient ??= new ClassifyProblems(ClassifyProblemsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ClassifyProblems ClassifyProblemsRestClient => _classifyProblemsRestClient ??= new ClassifyProblems(ClassifyProblemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01-preview");
 
         private ClientDiagnostics SubscriptionSupportTicketClientDiagnostics => _subscriptionSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01-preview");
 
         /// <summary> Gets a collection of SubscriptionSupportTickets in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of SubscriptionSupportTickets and their operations over a SubscriptionSupportTicketResource. </returns>

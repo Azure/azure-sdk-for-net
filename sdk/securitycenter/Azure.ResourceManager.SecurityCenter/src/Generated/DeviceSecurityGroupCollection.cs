@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(DeviceSecurityGroupResource.ResourceType, out string deviceSecurityGroupApiVersion);
             _deviceSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DeviceSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            _deviceSecurityGroupsRestClient = new DeviceSecurityGroups(_deviceSecurityGroupsClientDiagnostics, Pipeline, Endpoint, deviceSecurityGroupApiVersion ?? "2019-08-01");
+            _deviceSecurityGroupsRestClient = new DeviceSecurityGroups(_deviceSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceSecurityGroupApiVersion ?? "2019-08-01");
         }
 
         /// <summary>

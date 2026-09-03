@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             TryGetApiVersion(ResourceType, out string serviceFabricManagedServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedServiceApiVersion ?? "2026-02-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedServiceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// RestartReplica
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// RestartReplica
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

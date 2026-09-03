@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(containerName, nameof(containerName));
 
             ContainerName = containerName;
-            MaterializedViews = new ChangeTrackingList<CosmosDBMaterializedViewDetails>();
             ComputedProperties = new ChangeTrackingList<ComputedProperty>();
         }
 
@@ -40,15 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
-        /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
-        /// <param name="materializedViews"> Materialized Views defined on the container. </param>
-        /// <param name="materializedViewsProperties"> Materialized Views Properties defined for source container. </param>
         /// <param name="computedProperties"> List of computed properties. </param>
         /// <param name="vectorEmbeddingPolicy"> The vector embedding policy for the container. </param>
         /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
-        /// <param name="dataMaskingPolicy"> The Data Masking policy for the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, CosmosDBMaterializedViewDefinition materializedViewDefinition, IList<CosmosDBMaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -60,13 +55,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AnalyticalStorageTtl = analyticalStorageTtl;
             RestoreParameters = restoreParameters;
             CreateMode = createMode;
-            MaterializedViewDefinition = materializedViewDefinition;
-            MaterializedViews = materializedViews;
-            MaterializedViewsProperties = materializedViewsProperties;
             ComputedProperties = computedProperties;
             VectorEmbeddingPolicy = vectorEmbeddingPolicy;
             FullTextPolicy = fullTextPolicy;
-            DataMaskingPolicy = dataMaskingPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -110,18 +101,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
 
-        /// <summary> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </summary>
-        [WirePath("materializedViewDefinition")]
-        public CosmosDBMaterializedViewDefinition MaterializedViewDefinition { get; set; }
-
-        /// <summary> Materialized Views defined on the container. </summary>
-        [WirePath("materializedViews")]
-        public IList<CosmosDBMaterializedViewDetails> MaterializedViews { get; }
-
-        /// <summary> Materialized Views Properties defined for source container. </summary>
-        [WirePath("materializedViewsProperties")]
-        internal MaterializedViewsProperties MaterializedViewsProperties { get; set; }
-
         /// <summary> List of computed properties. </summary>
         [WirePath("computedProperties")]
         public IList<ComputedProperty> ComputedProperties { get; }
@@ -134,10 +113,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("fullTextPolicy")]
         public FullTextPolicy FullTextPolicy { get; set; }
 
-        /// <summary> The Data Masking policy for the container. </summary>
-        [WirePath("dataMaskingPolicy")]
-        public DataMaskingPolicy DataMaskingPolicy { get; set; }
-
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
         [WirePath("uniqueKeyPolicy.uniqueKeys")]
         public IList<CosmosDBUniqueKey> UniqueKeys
@@ -149,24 +124,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     UniqueKeyPolicy = new CosmosDBUniqueKeyPolicy();
                 }
                 return UniqueKeyPolicy.UniqueKeys;
-            }
-        }
-
-        /// <summary> Throughput bucket assigned for the materialized view operations on source container. </summary>
-        [WirePath("materializedViewsProperties.throughputBucketForBuild")]
-        public int? MaterializedViewsThroughputBucketForBuild
-        {
-            get
-            {
-                return MaterializedViewsProperties is null ? default : MaterializedViewsProperties.ThroughputBucketForBuild;
-            }
-            set
-            {
-                if (MaterializedViewsProperties is null)
-                {
-                    MaterializedViewsProperties = new MaterializedViewsProperties();
-                }
-                MaterializedViewsProperties.ThroughputBucketForBuild = value;
             }
         }
 

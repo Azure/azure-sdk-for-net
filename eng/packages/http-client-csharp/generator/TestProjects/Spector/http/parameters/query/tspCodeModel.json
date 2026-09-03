@@ -302,7 +302,7 @@
                 ],
                 "httpMethod": "GET",
                 "uri": "{endpoint}",
-                "path": "/parameters/query/special-char/dollarSign",
+                "path": "/parameters/query/special-char/dollar-sign",
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,

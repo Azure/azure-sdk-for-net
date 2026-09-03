@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -144,6 +145,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile, options);
             }
+            if (Optional.IsDefined(NatGatewayId))
+            {
+                writer.WritePropertyName("natGatewayId"u8);
+                writer.WriteStringValue(NatGatewayId);
+            }
             if (Optional.IsDefined(StaticEgressGatewayProfile))
             {
                 writer.WritePropertyName("staticEgressGatewayProfile"u8);
@@ -255,6 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
             ManagedClusterBastionProfile bastionProfile = default;
             ManagedClusterNatGatewayProfile natGatewayProfile = default;
+            ResourceIdentifier natGatewayId = default;
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
@@ -378,6 +385,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("natGatewayId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    natGatewayId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("staticEgressGatewayProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -481,6 +497,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 loadBalancerProfile,
                 bastionProfile,
                 natGatewayProfile,
+                natGatewayId,
                 staticEgressGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),

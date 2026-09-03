@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             TryGetApiVersion(StorageMoverResource.ResourceType, out string storageMoverApiVersion);
             _storageMoversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverResource.ResourceType.Namespace, Diagnostics);
-            _storageMoversRestClient = new StorageMovers(_storageMoversClientDiagnostics, Pipeline, Endpoint, storageMoverApiVersion ?? "2025-12-01");
+            _storageMoversRestClient = new StorageMovers(_storageMoversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverApiVersion ?? "2025-12-01");
             ValidateResourceId(id);
         }
 

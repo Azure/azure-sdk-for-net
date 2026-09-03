@@ -21,13 +21,17 @@ namespace Azure.AI.Projects
         /// <param name="fileId"></param>
         /// <param name="filename"> The name of the file to be sent to the model. </param>
         /// <param name="fileData"> The content of the file to be sent to the model. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
-        internal FunctionAndCustomToolCallOutputInputFileContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, string fileData, Uri fileUrl) : base(@type, additionalBinaryDataProperties)
+        /// <param name="detail"> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </param>
+        internal FunctionAndCustomToolCallOutputInputFileContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, string fileData, PromptCacheBreakpointConfig promptCacheBreakpoint, Uri fileUrl, FileInputDetail? detail) : base(@type, additionalBinaryDataProperties)
         {
             FileId = fileId;
             Filename = filename;
             FileData = fileData;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
             FileUrl = fileUrl;
+            Detail = detail;
         }
 
         /// <summary> Gets or sets the FileId. </summary>
@@ -39,7 +43,13 @@ namespace Azure.AI.Projects
         /// <summary> The content of the file to be sent to the model. </summary>
         public string FileData { get; set; }
 
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
+
         /// <summary> The URL of the file to be sent to the model. </summary>
         public Uri FileUrl { get; set; }
+
+        /// <summary> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </summary>
+        public FileInputDetail? Detail { get; set; }
     }
 }

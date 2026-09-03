@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsFileImportApiVersion);
             _fileImportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _fileImportsRestClient = new FileImports(_fileImportsClientDiagnostics, Pipeline, Endpoint, securityInsightsFileImportApiVersion ?? "2025-07-01-preview");
+            _fileImportsRestClient = new FileImports(_fileImportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsFileImportApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

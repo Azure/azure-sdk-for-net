@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
         }
 
-        /// <summary> Gets or sets the CodeVersion. </summary>
+        /// <summary> Gets the CodeVersion. </summary>
         public BicepValue<string> CodeVersion
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.ServiceFabric
                 Initialize();
                 return _codeVersion;
             }
-            set
-            {
-                Initialize();
-                _codeVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SupportExpireOn. </summary>
+        /// <summary> Gets the SupportExpireOn. </summary>
         public BicepValue<DateTimeOffset> SupportExpireOn
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.ServiceFabric
                 Initialize();
                 return _supportExpireOn;
             }
-            set
-            {
-                Initialize();
-                _supportExpireOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Environment. </summary>
+        /// <summary> Gets the Environment. </summary>
         public BicepValue<ClusterEnvironment> Environment
         {
             get
             {
                 Initialize();
                 return _environment;
-            }
-            set
-            {
-                Initialize();
-                _environment.Assign(value);
             }
         }
 
@@ -73,7 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _codeVersion = DefineProperty<string>(nameof(CodeVersion), new string[] { "codeVersion" });
-            _supportExpireOn = DefineProperty<DateTimeOffset>(nameof(SupportExpireOn), new string[] { "supportExpiryUtc" });
+            _supportExpireOn = DefineProperty<DateTimeOffset>(nameof(SupportExpireOn), new string[] { "supportExpiryUtc" }, format: "O");
             _environment = DefineProperty<ClusterEnvironment>(nameof(Environment), new string[] { "environment" });
             DefineAdditionalProperties();
         }

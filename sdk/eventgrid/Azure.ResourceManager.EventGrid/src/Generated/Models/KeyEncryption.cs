@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
         [WirePath("customerManagedKeyEncryption")]
-        public IList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption { get; }
+        public IList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption { get; } = new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>();
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppManagedCertificateResource.ResourceType, out string containerAppManagedCertificateApiVersion);
             _managedCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedCertificateResource.ResourceType.Namespace, Diagnostics);
-            _managedCertificatesRestClient = new ManagedCertificates(_managedCertificatesClientDiagnostics, Pipeline, Endpoint, containerAppManagedCertificateApiVersion ?? "2025-10-02-preview");
+            _managedCertificatesRestClient = new ManagedCertificates(_managedCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedCertificateApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

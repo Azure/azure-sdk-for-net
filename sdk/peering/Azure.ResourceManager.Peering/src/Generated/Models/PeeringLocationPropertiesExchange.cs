@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The list of exchange peering facilities at the peering location. </summary>
-        public IList<ExchangePeeringFacility> PeeringFacilities { get; }
+        public IList<ExchangePeeringFacility> PeeringFacilities { get; } = new ChangeTrackingList<ExchangePeeringFacility>();
     }
 }

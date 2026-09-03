@@ -11,17 +11,20 @@ using Azure.Core.Pipeline;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary>
-    /// An <see cref="HttpPipelinePolicy"/> that follows HTTP 307 and 308 redirect responses
+    /// An <see cref="HttpPipelinePolicy"/> that follows HTTP 303, 307 and 308 redirect responses
     /// while preserving the Authorization header, but only when the redirect target stays
     /// within the configured endpoint's trust boundary.
     /// </summary>
     /// <remarks>
     /// <para>
     /// Code Transparency Service nodes may return 307 (Temporary Redirect) or 308 (Permanent Redirect)
-    /// responses to route write operations to the primary node. The standard redirect behavior in .NET
+    /// responses to route write operations to the primary node, and 303 (See Other) responses to point
+    /// a completed write at the created resource (for example, the committed entry that carries the
+    /// receipt). The standard redirect behavior in .NET
     /// strips the Authorization header on cross-domain redirects for security reasons. This policy
     /// preserves the Authorization header for redirects to trusted targets — the configured endpoint
-    /// host or a subdomain of it on HTTPS with the same port.
+    /// host or a subdomain of it on HTTPS with the same port. A 303 redirect is followed with a GET
+    /// request and without the original request body, per HTTP semantics.
     /// </para>
     /// <para>
     /// Redirects to untrusted targets are refused by throwing <see cref="InvalidOperationException"/>
@@ -35,6 +38,21 @@ namespace Azure.Security.CodeTransparency
     internal sealed class CodeTransparencyRedirectPolicy : HttpPipelinePolicy
     {
         private const int MaxRedirects = 5;
+        private const int SeeOtherStatusCode = 303;
+
+        /// <summary>
+        /// Status a Code Transparency node returns for a read of a not-yet-committed entry (its
+        /// <c>Location</c> points back at the same entry URL) until the transaction is committed and
+        /// indexed. Treated as retriable on a followed redirect so the pipeline polls until 200.
+        /// </summary>
+        private const int PendingEntryStatusCode = 302;
+
+        /// <summary>
+        /// Query parameter that selects the service API version. It is preserved across followed
+        /// redirects so a <c>Location</c> that omits it (for example, <c>/entries/{id}</c>) does not
+        /// fall back to the service's unversioned (legacy) behavior instead of the versioned API.
+        /// </summary>
+        private const string ApiVersionParameter = "api-version";
 
         /// <summary>
         /// Status codes that must never cause a cache commit. Broader than
@@ -146,10 +164,29 @@ namespace Azure.Security.CodeTransparency
                         $"Confidential Ledger refused to follow redirect to untrusted target origin: {origin}");
                 }
 
-                // Stage cache candidate for non-GET trusted hops.
-                if (message.Request.Method != RequestMethod.Get)
+                // A 303 See Other instructs the client to retrieve the redirect target with a
+                // GET request and without the original request body. This is a resource redirect
+                // (for example, from a completed write to the created entry), not a primary-node redirect.
+                bool isSeeOther = message.Response.Status == SeeOtherStatusCode;
+
+                // Stage cache candidate for non-GET trusted hops. A 303 must not update the
+                // primary-node cache because its target is a resource, not a primary node.
+                if (!isSeeOther && message.Request.Method != RequestMethod.Get)
                 {
                     pendingCacheUri = GetPrimaryNodeBaseUri(redirectUri);
+                }
+
+                if (isSeeOther)
+                {
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Content = null;
+                    message.Request.Headers.Remove("Content-Type");
+
+                    // The followed GET returns the target resource (for example, 200 with the
+                    // entry receipt), a status the request's original classifier does not recognize.
+                    // Apply standard success semantics (2xx succeeds) to the followed response, and
+                    // treat a pending 302 (entry not yet committed) as retriable so the pipeline polls.
+                    message.ResponseClassifier = FollowedRedirectResponseClassifier.Instance;
                 }
 
                 // Preserve the Authorization header on trusted redirects.
@@ -257,7 +294,7 @@ namespace Azure.Security.CodeTransparency
 
         private static bool IsRedirectResponse(int statusCode)
         {
-            return statusCode == 307 || statusCode == 308;
+            return statusCode == SeeOtherStatusCode || statusCode == 307 || statusCode == 308;
         }
 
         private static Uri BuildRedirectUri(Uri requestUri, string location)
@@ -269,7 +306,101 @@ namespace Azure.Security.CodeTransparency
                 redirectUri = new Uri(requestUri, redirectUri);
             }
 
-            return redirectUri;
+            // Code Transparency Service nodes return a Location (for example, /entries/{id}) that omits
+            // the api-version. Following it verbatim makes the next request use the service's legacy
+            // (unversioned) behavior, which surfaces a still-pending transaction as 503. Carry the
+            // api-version from the original request forward so the followed request stays on the
+            // negotiated API version.
+            return PreserveApiVersion(requestUri, redirectUri);
+        }
+
+        /// <summary>
+        /// Copies the <c>api-version</c> query parameter from <paramref name="requestUri"/> onto
+        /// <paramref name="redirectUri"/> when the redirect target does not already specify one.
+        /// </summary>
+        private static Uri PreserveApiVersion(Uri requestUri, Uri redirectUri)
+        {
+            if (redirectUri == null || !redirectUri.IsAbsoluteUri)
+            {
+                return redirectUri;
+            }
+
+            // The redirect target already selects an API version; leave it untouched.
+            if (QueryContainsKey(redirectUri.Query, ApiVersionParameter))
+            {
+                return redirectUri;
+            }
+
+            string apiVersion = GetQueryParameterValue(requestUri?.Query, ApiVersionParameter);
+            if (string.IsNullOrEmpty(apiVersion))
+            {
+                return redirectUri;
+            }
+
+            string appended = ApiVersionParameter + "=" + Uri.EscapeDataString(apiVersion);
+            UriBuilder builder = new UriBuilder(redirectUri);
+            string existingQuery = builder.Query; // Leading '?' when non-empty.
+            builder.Query = string.IsNullOrEmpty(existingQuery)
+                ? appended
+                : existingQuery.TrimStart('?') + "&" + appended;
+
+            return builder.Uri;
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> when the query string contains a parameter named <paramref name="key"/>.
+        /// </summary>
+        private static bool QueryContainsKey(string query, string key)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return false;
+            }
+
+            foreach (string pair in query.TrimStart('?').Split('&'))
+            {
+                if (pair.Length == 0)
+                {
+                    continue;
+                }
+
+                int equalsIndex = pair.IndexOf('=');
+                string name = equalsIndex >= 0 ? pair.Substring(0, equalsIndex) : pair;
+                if (string.Equals(Uri.UnescapeDataString(name), key, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the value of the query parameter named <paramref name="key"/>, or <c>null</c> when absent.
+        /// </summary>
+        private static string GetQueryParameterValue(string query, string key)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return null;
+            }
+
+            foreach (string pair in query.TrimStart('?').Split('&'))
+            {
+                if (pair.Length == 0)
+                {
+                    continue;
+                }
+
+                int equalsIndex = pair.IndexOf('=');
+                string name = equalsIndex >= 0 ? pair.Substring(0, equalsIndex) : pair;
+                if (string.Equals(Uri.UnescapeDataString(name), key, StringComparison.OrdinalIgnoreCase))
+                {
+                    return equalsIndex >= 0 ? Uri.UnescapeDataString(pair.Substring(equalsIndex + 1)) : string.Empty;
+                }
+            }
+
+            return null;
         }
 
         private bool TryApplyCachedPrimaryNode(Request request)
@@ -330,6 +461,32 @@ namespace Azure.Security.CodeTransparency
             };
 
             return builder.Uri;
+        }
+
+        /// <summary>
+        /// Classifies the response of a followed 303 See Other redirect using standard HTTP
+        /// semantics: any 2xx status is a success, everything else is an error. This replaces
+        /// the originating request's classifier, which only recognizes the pre-redirect status
+        /// codes (for example, 201/303 for a write). A pending <c>302 Found</c> (the entry is not
+        /// yet committed and indexed) is additionally treated as retriable so the pipeline's retry
+        /// policy polls the entry URL, with backoff, until the committed receipt (200) is returned.
+        /// </summary>
+        private sealed class FollowedRedirectResponseClassifier : ResponseClassifier
+        {
+            public static readonly FollowedRedirectResponseClassifier Instance = new FollowedRedirectResponseClassifier();
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                int status = message.Response.Status;
+                return status < 200 || status >= 300;
+            }
+
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                // A read of a not-yet-committed entry is answered with 302 Found (Location points back
+                // at the same entry URL). Retry it so the pipeline polls until the entry is committed.
+                return message.Response.Status == PendingEntryStatusCode || base.IsRetriableResponse(message);
+            }
         }
     }
 }

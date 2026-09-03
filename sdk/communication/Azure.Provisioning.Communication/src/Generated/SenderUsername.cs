@@ -162,7 +162,7 @@ namespace Azure.Provisioning.Communication
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SenderUsernameProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CommunicationDomain>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CommunicationDomain>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
@@ -182,7 +182,7 @@ namespace Azure.Provisioning.Communication
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
         /// <summary></summary>
         public static partial class ResourceVersions

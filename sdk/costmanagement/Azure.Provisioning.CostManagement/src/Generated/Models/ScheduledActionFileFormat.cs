@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CostManagement
     public enum ScheduledActionFileFormat
     {
         /// <summary> Csv. </summary>
-        Csv
+        Csv = 0
     }
 }

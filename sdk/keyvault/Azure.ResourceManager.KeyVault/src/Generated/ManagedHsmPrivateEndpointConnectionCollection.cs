@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(ManagedHsmPrivateEndpointConnectionResource.ResourceType, out string managedHsmPrivateEndpointConnectionApiVersion);
             _mhsmPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _mhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnections(_mhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, managedHsmPrivateEndpointConnectionApiVersion ?? "2026-02-01");
+            _mhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnections(_mhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

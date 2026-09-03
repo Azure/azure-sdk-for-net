@@ -11,14 +11,14 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterReliabilityLevel
     {
         /// <summary> Run the System services with a target replica set count of 1. This should only be used for test clusters. </summary>
-        None,
+        None = 0,
         /// <summary> Run the System services with a target replica set count of 3. This should only be used for test clusters. </summary>
-        Bronze,
+        Bronze = 1,
         /// <summary> Run the System services with a target replica set count of 5. </summary>
-        Silver,
+        Silver = 2,
         /// <summary> Run the System services with a target replica set count of 7. </summary>
-        Gold,
+        Gold = 3,
         /// <summary> Run the System services with a target replica set count of 9. </summary>
-        Platinum
+        Platinum = 4
     }
 }

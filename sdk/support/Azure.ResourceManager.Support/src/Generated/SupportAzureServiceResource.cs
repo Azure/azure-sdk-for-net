@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(ResourceType, out string supportAzureServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
             _classifyProblemsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            _classifyProblemsNoSubscriptionRestClient = new ClassifyProblemsNoSubscription(_classifyProblemsNoSubscriptionClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
+            _classifyProblemsNoSubscriptionRestClient = new ClassifyProblemsNoSubscription(_classifyProblemsNoSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 

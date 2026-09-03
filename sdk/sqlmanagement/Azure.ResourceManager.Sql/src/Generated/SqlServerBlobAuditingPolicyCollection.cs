@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerBlobAuditingPolicyResource.ResourceType, out string sqlServerBlobAuditingPolicyApiVersion);
             _serverBlobAuditingPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerBlobAuditingPolicyResource.ResourceType.Namespace, Diagnostics);
-            _serverBlobAuditingPoliciesRestClient = new ServerBlobAuditingPolicies(_serverBlobAuditingPoliciesClientDiagnostics, Pipeline, Endpoint, sqlServerBlobAuditingPolicyApiVersion ?? "2025-02-01-preview");
+            _serverBlobAuditingPoliciesRestClient = new ServerBlobAuditingPolicies(_serverBlobAuditingPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerBlobAuditingPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

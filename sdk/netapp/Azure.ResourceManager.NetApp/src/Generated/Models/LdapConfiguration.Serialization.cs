@@ -27,9 +27,14 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string domain = default;
             IList<IPAddress> ldapServers = default;
-            bool? isLdapOverTlsEnabled = default;
+            SecureLdapType? secureLdapType = default;
             string serverCACertificate = default;
             string certificateCNHost = default;
+            IList<IPAddress> dnsServers = default;
+            int? ldapPort = default;
+            string userDN = default;
+            string groupDN = default;
+            string netGroupDN = default;
             BindAuthenticationLevel? bindAuthenticationLevel = default;
             string bindDN = default;
             BindPasswordKeyVaultConfig bindPasswordAkvConfig = default;
@@ -62,13 +67,13 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapServers = array;
                     continue;
                 }
-                if (prop.NameEquals("ldapOverTLS"u8))
+                if (prop.NameEquals("secureLdapType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLdapOverTlsEnabled = prop.Value.GetBoolean();
+                    secureLdapType = new SecureLdapType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serverCACertificate"u8))
@@ -84,6 +89,51 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     certificateCNHost = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dnsServers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IPAddress> array = new List<IPAddress>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
+                    }
+                    dnsServers = array;
+                    continue;
+                }
+                if (prop.NameEquals("ldapPort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ldapPort = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("userDN"u8))
+                {
+                    userDN = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("groupDN"u8))
+                {
+                    groupDN = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("netGroupDN"u8))
+                {
+                    netGroupDN = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bindAuthenticationLevel"u8))
@@ -117,9 +167,14 @@ namespace Azure.ResourceManager.NetApp.Models
             return new LdapConfiguration(
                 domain,
                 ldapServers ?? new ChangeTrackingList<IPAddress>(),
-                isLdapOverTlsEnabled,
+                secureLdapType,
                 serverCACertificate,
                 certificateCNHost,
+                dnsServers ?? new ChangeTrackingList<IPAddress>(),
+                ldapPort,
+                userDN,
+                groupDN,
+                netGroupDN,
                 bindAuthenticationLevel,
                 bindDN,
                 bindPasswordAkvConfig,

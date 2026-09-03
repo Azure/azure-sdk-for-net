@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(VpnClientRootCertificatePropertiesFormat)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("publicCertData"u8);
-            writer.WriteBase64StringValue(PublicCertData.ToArray(), "D");
+            writer.WriteBase64StringValue(PublicCertData, "D");
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

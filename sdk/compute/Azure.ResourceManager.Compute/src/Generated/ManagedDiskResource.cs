@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string managedDiskApiVersion);
             _disksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Endpoint, managedDiskApiVersion ?? "2026-03-02");
+            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDiskApiVersion ?? "2026-03-02");
             ValidateResourceId(id);
         }
 

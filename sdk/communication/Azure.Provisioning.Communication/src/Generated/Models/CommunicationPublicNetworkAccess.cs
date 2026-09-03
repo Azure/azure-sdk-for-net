@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Communication
     public enum CommunicationPublicNetworkAccess
     {
         /// <summary> Allows public network access to the resource. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disallows public network access to the resource. </summary>
-        Disabled,
+        Disabled = 1,
         /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
-        SecuredByPerimeter
+        SecuredByPerimeter = 2
     }
 }

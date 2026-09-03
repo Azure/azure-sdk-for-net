@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(SenderUsernameResource.ResourceType, out string senderUsernameResourceApiVersion);
             _senderUsernamesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", SenderUsernameResource.ResourceType.Namespace, Diagnostics);
-            _senderUsernamesRestClient = new SenderUsernames(_senderUsernamesClientDiagnostics, Pipeline, Endpoint, senderUsernameResourceApiVersion ?? "2026-03-18");
+            _senderUsernamesRestClient = new SenderUsernames(_senderUsernamesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, senderUsernameResourceApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 

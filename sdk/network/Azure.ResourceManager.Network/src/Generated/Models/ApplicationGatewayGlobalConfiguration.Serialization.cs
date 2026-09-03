@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableResponseBuffering"u8);
                 writer.WriteBooleanValue(EnableResponseBuffering.Value);
             }
+            if (Optional.IsDefined(DisableDefaultServerHeaderInResponse))
+            {
+                writer.WritePropertyName("disableDefaultServerHeaderInResponse"u8);
+                writer.WriteBooleanValue(DisableDefaultServerHeaderInResponse.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             bool? enableRequestBuffering = default;
             bool? enableResponseBuffering = default;
+            bool? disableDefaultServerHeaderInResponse = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +155,21 @@ namespace Azure.ResourceManager.Network.Models
                     enableResponseBuffering = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("disableDefaultServerHeaderInResponse"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disableDefaultServerHeaderInResponse = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationGatewayGlobalConfiguration(enableRequestBuffering, enableResponseBuffering, additionalBinaryDataProperties);
+            return new ApplicationGatewayGlobalConfiguration(enableRequestBuffering, enableResponseBuffering, disableDefaultServerHeaderInResponse, additionalBinaryDataProperties);
         }
     }
 }

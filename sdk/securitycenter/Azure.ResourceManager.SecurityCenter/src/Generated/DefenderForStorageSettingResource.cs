@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string defenderForStorageSettingApiVersion);
             _defenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
+            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

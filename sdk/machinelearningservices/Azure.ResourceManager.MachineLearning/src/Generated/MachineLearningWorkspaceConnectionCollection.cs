@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningWorkspaceConnectionResource.ResourceType, out string machineLearningWorkspaceConnectionApiVersion);
             _workspaceConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceConnectionResource.ResourceType.Namespace, Diagnostics);
-            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
+            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

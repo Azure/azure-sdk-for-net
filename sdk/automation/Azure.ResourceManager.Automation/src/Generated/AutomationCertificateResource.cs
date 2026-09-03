@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationCertificateApiVersion);
             _certificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _certificateRestClient = new Certificate(_certificateClientDiagnostics, Pipeline, Endpoint, automationCertificateApiVersion ?? "2024-10-23");
+            _certificateRestClient = new Certificate(_certificateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationCertificateApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

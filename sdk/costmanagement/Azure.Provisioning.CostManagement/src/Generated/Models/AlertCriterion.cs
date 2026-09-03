@@ -11,32 +11,32 @@ namespace Azure.Provisioning.CostManagement
     public enum AlertCriterion
     {
         /// <summary> CostThresholdExceeded. </summary>
-        CostThresholdExceeded,
+        CostThresholdExceeded = 0,
         /// <summary> UsageThresholdExceeded. </summary>
-        UsageThresholdExceeded,
+        UsageThresholdExceeded = 1,
         /// <summary> CreditThresholdApproaching. </summary>
-        CreditThresholdApproaching,
+        CreditThresholdApproaching = 2,
         /// <summary> CreditThresholdReached. </summary>
-        CreditThresholdReached,
+        CreditThresholdReached = 3,
         /// <summary> QuotaThresholdApproaching. </summary>
-        QuotaThresholdApproaching,
+        QuotaThresholdApproaching = 4,
         /// <summary> QuotaThresholdReached. </summary>
-        QuotaThresholdReached,
+        QuotaThresholdReached = 5,
         /// <summary> MultiCurrency. </summary>
-        MultiCurrency,
+        MultiCurrency = 6,
         /// <summary> ForecastCostThresholdExceeded. </summary>
-        ForecastCostThresholdExceeded,
+        ForecastCostThresholdExceeded = 7,
         /// <summary> ForecastUsageThresholdExceeded. </summary>
-        ForecastUsageThresholdExceeded,
+        ForecastUsageThresholdExceeded = 8,
         /// <summary> InvoiceDueDateApproaching. </summary>
-        InvoiceDueDateApproaching,
+        InvoiceDueDateApproaching = 9,
         /// <summary> InvoiceDueDateReached. </summary>
-        InvoiceDueDateReached,
+        InvoiceDueDateReached = 10,
         /// <summary> CrossCloudNewDataAvailable. </summary>
-        CrossCloudNewDataAvailable,
+        CrossCloudNewDataAvailable = 11,
         /// <summary> CrossCloudCollectionError. </summary>
-        CrossCloudCollectionError,
+        CrossCloudCollectionError = 12,
         /// <summary> GeneralThresholdError. </summary>
-        GeneralThresholdError
+        GeneralThresholdError = 13
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DataMigration
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of DatabaseMigrationsSqlVm for mocking. </summary>
         protected DatabaseMigrationsSqlVm()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Initializes a new instance of DatabaseMigrationsSqlVm. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DatabaseMigrationsSqlVm(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DatabaseMigrationsSqlVm(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(DatabaseMigrationsSqlVm).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
             uri.AppendPath(sqlVirtualMachineName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -69,11 +72,12 @@ namespace Azure.ResourceManager.DataMigration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDbName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
             uri.AppendPath(sqlVirtualMachineName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -93,6 +97,7 @@ namespace Azure.ResourceManager.DataMigration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.DataMigration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -148,6 +154,7 @@ namespace Azure.ResourceManager.DataMigration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -174,6 +181,7 @@ namespace Azure.ResourceManager.DataMigration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

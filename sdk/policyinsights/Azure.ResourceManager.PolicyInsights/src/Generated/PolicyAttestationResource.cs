@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             TryGetApiVersion(ResourceType, out string policyAttestationApiVersion);
             _attestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
-            _attestationsRestClient = new Attestations(_attestationsClientDiagnostics, Pipeline, Endpoint, policyAttestationApiVersion ?? "2024-10-01");
+            _attestationsRestClient = new Attestations(_attestationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyAttestationApiVersion ?? "2024-10-01");
             ValidateResourceId(id);
         }
 

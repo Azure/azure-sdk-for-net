@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
 
         private ClientDiagnostics EduEnrollmentsClientDiagnostics => _eduEnrollmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProgramEnrollment.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EduEnrollments EduEnrollmentsRestClient => _eduEnrollmentsRestClient ??= new EduEnrollments(EduEnrollmentsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private EduEnrollments EduEnrollmentsRestClient => _eduEnrollmentsRestClient ??= new EduEnrollments(EduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary>
         /// Lists the edu enrollments in a subscription.

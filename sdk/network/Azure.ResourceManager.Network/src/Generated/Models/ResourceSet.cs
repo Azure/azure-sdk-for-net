@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of subscriptions. </summary>
         [WirePath("subscriptions")]
-        public IList<string> Subscriptions { get; }
+        public IList<string> Subscriptions { get; } = new ChangeTrackingList<string>();
     }
 }

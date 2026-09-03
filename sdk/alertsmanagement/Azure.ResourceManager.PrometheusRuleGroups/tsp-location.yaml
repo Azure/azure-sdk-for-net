@@ -1,0 +1,4 @@
+directory: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/PrometheusRuleGroups
+commit: 16860eb2810ff0bcd685d6e7297cb84419cdef2e
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

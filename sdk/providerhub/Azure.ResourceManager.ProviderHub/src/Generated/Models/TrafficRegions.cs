@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Gets the Regions. </summary>
-        public IList<AzureLocation> Regions { get; }
+        public IList<AzureLocation> Regions { get; } = new ChangeTrackingList<AzureLocation>();
     }
 }

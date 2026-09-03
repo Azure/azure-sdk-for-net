@@ -10,6 +10,7 @@
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal abstract class BaseHeaderParser<T> : HttpHeaderParser<T>
     {
         protected BaseHeaderParser(bool supportsMultipleValues)

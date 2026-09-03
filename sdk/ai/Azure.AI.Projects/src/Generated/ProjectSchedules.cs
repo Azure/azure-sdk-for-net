@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Evaluation;
@@ -24,11 +23,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of ProjectSchedules. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectSchedules(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectSchedules(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,6 +37,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Deletes the specified schedule resource.
@@ -53,10 +57,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Delete(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteRequest(id, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -75,10 +89,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteRequest(id, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified schedule resource. </summary>
@@ -123,10 +147,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(id, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -145,10 +179,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(id, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified schedule resource. </summary>
@@ -157,7 +201,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<ProjectsSchedule> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -172,7 +215,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<ProjectsSchedule>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -196,7 +238,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string @type, bool? enabled, RequestOptions options)
         {
-            return new ProjectSchedulesGetAllCollectionResult(this, @type, enabled, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.GetAll");
+            scope.Start();
+            try
+            {
+                return new ProjectSchedulesGetAllCollectionResult(this, @type, enabled, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -214,7 +266,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string @type, bool? enabled, RequestOptions options)
         {
-            return new ProjectSchedulesGetAllAsyncCollectionResult(this, @type, enabled, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.GetAll");
+            scope.Start();
+            try
+            {
+                return new ProjectSchedulesGetAllAsyncCollectionResult(this, @type, enabled, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns schedules that match the supplied type and enabled filters. </summary>
@@ -222,7 +284,6 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<ProjectsSchedule> GetAll(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             return new ProjectSchedulesGetAllCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
@@ -233,7 +294,6 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<ProjectsSchedule> GetAllAsync(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             return new ProjectSchedulesGetAllAsyncCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
@@ -256,11 +316,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateOrUpdate(string id, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -280,11 +350,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateOrUpdateAsync(string id, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateOrUpdateRequest(id, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new schedule or updates an existing schedule with the supplied definition. </summary>
@@ -294,7 +374,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<ProjectsSchedule> CreateOrUpdate(string id, ProjectsSchedule resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -311,7 +390,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<ProjectsSchedule>> CreateOrUpdateAsync(string id, ProjectsSchedule resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -338,11 +416,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetRun(string scheduleId, string runId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.GetRun");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using PipelineMessage message = CreateGetRunRequest(scheduleId, runId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRunRequest(scheduleId, runId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -362,11 +450,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetRunAsync(string scheduleId, string runId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.GetRun");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using PipelineMessage message = CreateGetRunRequest(scheduleId, runId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRunRequest(scheduleId, runId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified run for a schedule. </summary>
@@ -376,7 +474,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<ScheduleRun> GetRun(string scheduleId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
@@ -393,7 +490,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<ScheduleRun>> GetRunAsync(string scheduleId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
@@ -421,9 +517,19 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetRuns(string id, string @type, bool? enabled, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.GetRuns");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new ProjectSchedulesGetRunsCollectionResult(this, id, @type, enabled, options);
+                return new ProjectSchedulesGetRunsCollectionResult(this, id, @type, enabled, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -444,9 +550,19 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetRunsAsync(string id, string @type, bool? enabled, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectSchedules.GetRuns");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new ProjectSchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
+                return new ProjectSchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns schedule runs that match the supplied filters. </summary>
@@ -457,7 +573,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<ScheduleRun> GetRuns(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -473,7 +588,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<ScheduleRun> GetRunsAsync(string id, ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));

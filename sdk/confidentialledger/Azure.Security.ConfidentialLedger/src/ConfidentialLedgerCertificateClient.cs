@@ -6,12 +6,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.ConfidentialLedger.Certificate
 {
     [CodeGenSuppress("ConfidentialLedgerCertificateClient", typeof(Uri), typeof(TokenCredential), typeof(ConfidentialLedgerClientOptions))]
     [CodeGenSuppress("ConfidentialLedgerCertificateClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenClient("ConfidentialLedgerCertificateClient")]
+    [CodeGenType("ConfidentialLedgerCertificateClient")]
     public partial class ConfidentialLedgerCertificateClient
     {
         /// <summary> Initializes a new instance of ConfidentialLedgerCertificateClient. </summary>

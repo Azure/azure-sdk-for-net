@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum IsDeviceMatchConditionMatchValue
     {
         /// <summary> Mobile. </summary>
-        Mobile,
+        Mobile = 0,
         /// <summary> Desktop. </summary>
-        Desktop
+        Desktop = 1
     }
 }

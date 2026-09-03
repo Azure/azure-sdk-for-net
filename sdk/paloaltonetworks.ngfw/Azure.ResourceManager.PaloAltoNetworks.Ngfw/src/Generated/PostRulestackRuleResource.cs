@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string postRulestackRuleApiVersion);
             _postRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _postRulesRestClient = new PostRules(_postRulesClientDiagnostics, Pipeline, Endpoint, postRulestackRuleApiVersion ?? "2025-10-08");
+            _postRulesRestClient = new PostRules(_postRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postRulestackRuleApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabDiskResource.ResourceType, out string devTestLabDiskApiVersion);
             _disksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabDiskResource.ResourceType.Namespace, Diagnostics);
-            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Endpoint, devTestLabDiskApiVersion ?? "2018-09-15");
+            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabDiskApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

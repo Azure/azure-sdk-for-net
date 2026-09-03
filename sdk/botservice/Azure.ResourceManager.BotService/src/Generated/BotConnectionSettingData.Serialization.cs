@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> Connection setting resource definition. </summary>
+    /// <summary> Bot channel resource definition. </summary>
     public partial class BotConnectionSettingData : TrackedResourceData, IJsonModel<BotConnectionSettingData>
     {
         /// <summary> Initializes a new instance of <see cref="BotConnectionSettingData"/> for deserialization. </summary>

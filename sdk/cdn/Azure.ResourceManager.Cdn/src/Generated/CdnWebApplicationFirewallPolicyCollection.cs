@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnWebApplicationFirewallPolicyResource.ResourceType, out string cdnWebApplicationFirewallPolicyApiVersion);
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnWebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, cdnWebApplicationFirewallPolicyApiVersion ?? "2025-09-01-preview");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebApplicationFirewallPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

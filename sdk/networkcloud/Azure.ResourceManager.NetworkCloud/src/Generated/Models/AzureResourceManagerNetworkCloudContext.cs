@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(EgressEndpoint))]
     [ModelReaderWriterBuildable(typeof(EndpointDependency))]
     [ModelReaderWriterBuildable(typeof(Resources.Models.ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(Models.ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FeatureStatus))]
     [ModelReaderWriterBuildable(typeof(HardwareInventory))]
     [ModelReaderWriterBuildable(typeof(HardwareInventoryNetworkInterface))]

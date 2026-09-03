@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(AccessPolicyAssignmentResource.ResourceType, out string accessPolicyAssignmentApiVersion);
             _accessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", AccessPolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _accessPolicyAssignmentRestClient = new AccessPolicyAssignment(_accessPolicyAssignmentClientDiagnostics, Pipeline, Endpoint, accessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
+            _accessPolicyAssignmentRestClient = new AccessPolicyAssignment(_accessPolicyAssignmentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

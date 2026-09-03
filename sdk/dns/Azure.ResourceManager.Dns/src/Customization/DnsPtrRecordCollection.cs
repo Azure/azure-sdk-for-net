@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dns
         {
             TryGetApiVersion(DnsPtrRecordResource.ResourceType, out string dnsPtrRecordApiVersion);
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsPtrRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsPtrRecordApiVersion ?? "2023-07-01-preview");
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsPtrRecordApiVersion ?? "2023-07-01-preview");
             ValidateResourceId(id);
         }
 

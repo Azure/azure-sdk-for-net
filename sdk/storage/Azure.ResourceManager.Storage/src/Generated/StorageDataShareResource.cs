@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageDataShareApiVersion);
             _dataSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _dataSharesRestClient = new DataShares(_dataSharesClientDiagnostics, Pipeline, Endpoint, storageDataShareApiVersion ?? "2025-08-01");
+            _dataSharesRestClient = new DataShares(_dataSharesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageDataShareApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

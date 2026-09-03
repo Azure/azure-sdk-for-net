@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings, options);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (ComputeBulkActionsVirtualMachineIpTag item in IpTags)
+                foreach (ComputeBulkActionsVirtualMachineIPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             int? idleTimeoutInMinutes = default;
             ComputeBulkActionsDeleteOption? deleteOption = default;
             ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
-            IList<ComputeBulkActionsVirtualMachineIpTag> ipTags = default;
+            IList<ComputeBulkActionsVirtualMachineIPTag> ipTags = default;
             ComputeBulkActionsSubResource publicIPPrefix = default;
             ComputeBulkActionsIPVersion? publicIPAddressVersion = default;
             ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod = default;
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<ComputeBulkActionsVirtualMachineIpTag> array = new List<ComputeBulkActionsVirtualMachineIpTag>();
+                    List<ComputeBulkActionsVirtualMachineIPTag> array = new List<ComputeBulkActionsVirtualMachineIPTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeBulkActionsVirtualMachineIpTag.DeserializeComputeBulkActionsVirtualMachineIpTag(item, options));
+                        array.Add(ComputeBulkActionsVirtualMachineIPTag.DeserializeComputeBulkActionsVirtualMachineIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>(),
+                ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIPTag>(),
                 publicIPPrefix,
                 publicIPAddressVersion,
                 publicIPAllocationMethod,

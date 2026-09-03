@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum NamespaceDeletePolicy
     {
         /// <summary> Only delete the ARM resource, keep the Kubernetes namespace. Also delete the ManagedByARM label. </summary>
-        Keep,
+        Keep = 0,
         /// <summary> Delete both the ARM resource and the Kubernetes namespace together. </summary>
-        Delete
+        Delete = 1
     }
 }
