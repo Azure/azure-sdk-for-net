@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2026-09-03)
 
 ### Features Added
 - Upgraded to API version `2026-05-01-preview`.
@@ -10,10 +10,6 @@
 
 ### Breaking Changes
 - Renamed `ServiceFabricManagedDataDiskType` values to match .NET naming guidelines and their wire values: `PremiumV2LRS` to `PremiumV2Lrs`, `PremiumZRS` to `PremiumZrs`, and the previous `PremiumZrs` value to `StandardSsdZrs`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0 (2026-03-13)
 
