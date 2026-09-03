@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Cdn
     public enum FrontDoorQueryStringCachingBehavior
     {
         /// <summary> IgnoreQueryString. </summary>
-        IgnoreQueryString,
+        IgnoreQueryString = 0,
         /// <summary> UseQueryString. </summary>
-        UseQueryString,
+        UseQueryString = 1,
         /// <summary> IgnoreSpecifiedQueryStrings. </summary>
-        IgnoreSpecifiedQueryStrings,
+        IgnoreSpecifiedQueryStrings = 2,
         /// <summary> IncludeSpecifiedQueryStrings. </summary>
-        IncludeSpecifiedQueryStrings
+        IncludeSpecifiedQueryStrings = 3
     }
 }

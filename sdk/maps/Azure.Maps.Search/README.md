@@ -186,7 +186,7 @@ GetPolygonOptions options = new GetPolygonOptions()
     ResultType = BoundaryResultTypeEnum.Locality,
     Resolution = ResolutionEnum.Small,
 };
-Response<Boundary> result = client.GetPolygon(options);
+Response<SearchBoundary> result = client.GetPolygon(options);
 
 // Print polygon information
 Console.WriteLine($"Boundary copyright URL: {result.Value.Properties?.CopyrightUrl}");

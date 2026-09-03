@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         }
 
         /// <summary> Mcc cache node Bgp Cidr details. </summary>
-        public IReadOnlyList<string> BgpCidrs { get; }
+        public IReadOnlyList<string> BgpCidrs { get; } = new ChangeTrackingList<string>();
     }
 }

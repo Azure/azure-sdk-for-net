@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppHttpRouteConfigApiVersion);
             _httpRouteConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _httpRouteConfigRestClient = new HttpRouteConfig(_httpRouteConfigClientDiagnostics, Pipeline, Endpoint, containerAppHttpRouteConfigApiVersion ?? "2025-10-02-preview");
+            _httpRouteConfigRestClient = new HttpRouteConfig(_httpRouteConfigClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppHttpRouteConfigApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

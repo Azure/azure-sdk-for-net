@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedTransparentDataEncryptionResource.ResourceType, out string managedTransparentDataEncryptionApiVersion);
             _managedDatabaseTransparentDataEncryptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedTransparentDataEncryptionResource.ResourceType.Namespace, Diagnostics);
-            _managedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryption(_managedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, Endpoint, managedTransparentDataEncryptionApiVersion ?? "2025-02-01-preview");
+            _managedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryption(_managedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedTransparentDataEncryptionApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

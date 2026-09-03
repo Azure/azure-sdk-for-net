@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         /// <summary> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </summary>
         [WirePath("providers")]
-        public IList<string> Providers { get; }
+        public IList<string> Providers { get; } = new ChangeTrackingList<string>();
     }
 }

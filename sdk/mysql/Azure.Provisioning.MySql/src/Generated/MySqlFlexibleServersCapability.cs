@@ -24,7 +24,7 @@ namespace Azure.Provisioning.MySql
         /// <summary> Creates a new MySqlFlexibleServersCapability. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MySqlFlexibleServersCapability(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/locations/capabilitySets", resourceVersion ?? "2024-12-30")
+        internal MySqlFlexibleServersCapability(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/locations/capabilitySets", resourceVersion ?? "2024-12-30")
         {
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedGeoBackupRegions;
+                return Properties is null ? default : Properties.SupportedGeoBackupRegions;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedFlexibleServerEditions;
+                return Properties is null ? default : Properties.SupportedFlexibleServerEditions;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedServerVersions;
+                return Properties is null ? default : Properties.SupportedServerVersions;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedFeatures;
+                return Properties is null ? default : Properties.SupportedFeatures;
             }
         }
 

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRuleSets")]
-        public IList<WafPolicyManagedRuleSet> ManagedRuleSets { get; }
+        public IList<WafPolicyManagedRuleSet> ManagedRuleSets { get; } = new ChangeTrackingList<WafPolicyManagedRuleSet>();
     }
 }

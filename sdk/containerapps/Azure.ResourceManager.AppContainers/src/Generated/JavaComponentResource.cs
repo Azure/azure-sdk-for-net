@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string javaComponentApiVersion);
             _javaComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _javaComponentsRestClient = new JavaComponents(_javaComponentsClientDiagnostics, Pipeline, Endpoint, javaComponentApiVersion ?? "2025-10-02-preview");
+            _javaComponentsRestClient = new JavaComponents(_javaComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, javaComponentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

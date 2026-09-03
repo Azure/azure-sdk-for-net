@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ProviderMonitorSettingResource.ResourceType, out string providerMonitorSettingApiVersion);
             _providerMonitorSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderMonitorSettingResource.ResourceType.Namespace, Diagnostics);
-            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Endpoint, providerMonitorSettingApiVersion ?? "2024-09-01");
+            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerMonitorSettingApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

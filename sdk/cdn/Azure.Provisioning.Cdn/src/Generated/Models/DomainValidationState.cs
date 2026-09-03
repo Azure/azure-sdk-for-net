@@ -11,22 +11,22 @@ namespace Azure.Provisioning.Cdn
     public enum DomainValidationState
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> Submitting. </summary>
-        Submitting,
+        Submitting = 1,
         /// <summary> Pending. </summary>
-        Pending,
+        Pending = 2,
         /// <summary> Rejected. </summary>
-        Rejected,
+        Rejected = 3,
         /// <summary> TimedOut. </summary>
-        TimedOut,
+        TimedOut = 4,
         /// <summary> PendingRevalidation. </summary>
-        PendingRevalidation,
+        PendingRevalidation = 5,
         /// <summary> Approved. </summary>
-        Approved,
+        Approved = 6,
         /// <summary> RefreshingValidationToken. </summary>
-        RefreshingValidationToken,
+        RefreshingValidationToken = 7,
         /// <summary> InternalError. </summary>
-        InternalError
+        InternalError = 8
     }
 }

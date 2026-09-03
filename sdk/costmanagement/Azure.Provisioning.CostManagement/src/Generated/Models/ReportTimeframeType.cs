@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CostManagement
     public enum ReportTimeframeType
     {
         /// <summary> WeekToDate. </summary>
-        WeekToDate,
+        WeekToDate = 0,
         /// <summary> MonthToDate. </summary>
-        MonthToDate,
+        MonthToDate = 1,
         /// <summary> YearToDate. </summary>
-        YearToDate,
+        YearToDate = 2,
         /// <summary> Custom. </summary>
-        Custom
+        Custom = 3
     }
 }

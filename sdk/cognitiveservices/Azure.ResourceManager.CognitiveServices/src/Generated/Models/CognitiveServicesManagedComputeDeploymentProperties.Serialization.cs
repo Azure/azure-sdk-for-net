@@ -96,6 +96,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartObject();
+                foreach (var item in Capabilities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(ComputeId))
             {
                 writer.WritePropertyName("computeId"u8);
@@ -177,6 +193,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string deploymentTemplate = default;
             string acceleratorType = default;
             DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
             string computeId = default;
             string priority = default;
             int? acceleratorsPerInstance = default;
@@ -209,6 +226,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     versionUpgradeOption = new DeploymentModelVersionUpgradeOption(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("capabilities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    capabilities = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("computeId"u8))
@@ -276,6 +314,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 deploymentTemplate,
                 acceleratorType,
                 versionUpgradeOption,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 computeId,
                 priority,
                 acceleratorsPerInstance,

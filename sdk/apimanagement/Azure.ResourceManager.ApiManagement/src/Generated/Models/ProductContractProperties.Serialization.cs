@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Product profile. </summary>
-    public partial class ProductContractProperties : ProductEntityBaseProperties, IJsonModel<ProductContractProperties>
+    internal partial class ProductContractProperties : ProductEntityBaseProperties, IJsonModel<ProductContractProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ProductContractProperties"/> for deserialization. </summary>
         internal ProductContractProperties()

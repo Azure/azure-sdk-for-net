@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKeyConfiguration> PublicKeys { get; }
+        public IList<SshPublicKeyConfiguration> PublicKeys { get; } = new ChangeTrackingList<SshPublicKeyConfiguration>();
     }
 }

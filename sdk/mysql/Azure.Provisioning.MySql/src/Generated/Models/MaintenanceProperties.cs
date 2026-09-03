@@ -16,10 +16,10 @@ namespace Azure.Provisioning.MySql
     {
         private BicepValue<MySqlFlexibleServerMaintenanceType> _maintenanceType;
         private BicepValue<MySqlFlexibleServerMaintenanceState> _maintenanceState;
-        private BicepValue<DateTimeOffset> _maintenanceStartOn;
-        private BicepValue<DateTimeOffset> _maintenanceEndOn;
-        private BicepValue<DateTimeOffset> _maintenanceExecutionStartOn;
-        private BicepValue<DateTimeOffset> _maintenanceExecutionEndOn;
+        private BicepValue<DateTimeOffset> _maintenanceStartsOn;
+        private BicepValue<DateTimeOffset> _maintenanceEndsOn;
+        private BicepValue<DateTimeOffset> _maintenanceExecutionStartsOn;
+        private BicepValue<DateTimeOffset> _maintenanceExecutionEndsOn;
         private BicepValue<DateTimeOffset> _maintenanceAvailableScheduleMinOn;
         private BicepValue<DateTimeOffset> _maintenanceAvailableScheduleMaxOn;
         private BicepValue<string> _maintenanceTitle;
@@ -51,48 +51,43 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the MaintenanceStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceStartOn
+        /// <summary> Gets the MaintenanceStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceStartsOn
         {
             get
             {
                 Initialize();
-                return _maintenanceStartOn;
-            }
-            set
-            {
-                Initialize();
-                _maintenanceStartOn.Assign(value);
+                return _maintenanceStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceEndOn
+        /// <summary> Gets the MaintenanceEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceEndsOn
         {
             get
             {
                 Initialize();
-                return _maintenanceEndOn;
+                return _maintenanceEndsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceExecutionStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceExecutionStartOn
+        /// <summary> Gets the MaintenanceExecutionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceExecutionStartsOn
         {
             get
             {
                 Initialize();
-                return _maintenanceExecutionStartOn;
+                return _maintenanceExecutionStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceExecutionEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceExecutionEndOn
+        /// <summary> Gets the MaintenanceExecutionEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceExecutionEndsOn
         {
             get
             {
                 Initialize();
-                return _maintenanceExecutionEndOn;
+                return _maintenanceExecutionEndsOn;
             }
         }
 
@@ -152,12 +147,12 @@ namespace Azure.Provisioning.MySql
             base.DefineProvisionableProperties();
             _maintenanceType = DefineProperty<MySqlFlexibleServerMaintenanceType>(nameof(MaintenanceType), new string[] { "maintenanceType" }, isOutput: true);
             _maintenanceState = DefineProperty<MySqlFlexibleServerMaintenanceState>(nameof(MaintenanceState), new string[] { "maintenanceState" }, isOutput: true);
-            _maintenanceStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceStartOn), new string[] { "maintenanceStartTime" });
-            _maintenanceEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceEndOn), new string[] { "maintenanceEndTime" }, isOutput: true);
-            _maintenanceExecutionStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionStartOn), new string[] { "maintenanceExecutionStartTime" }, isOutput: true);
-            _maintenanceExecutionEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionEndOn), new string[] { "maintenanceExecutionEndTime" }, isOutput: true);
-            _maintenanceAvailableScheduleMinOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMinOn), new string[] { "maintenanceAvailableScheduleMinTime" }, isOutput: true);
-            _maintenanceAvailableScheduleMaxOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMaxOn), new string[] { "maintenanceAvailableScheduleMaxTime" }, isOutput: true);
+            _maintenanceStartsOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceStartsOn), new string[] { "maintenanceStartTime" }, format: "O");
+            _maintenanceEndsOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceEndsOn), new string[] { "maintenanceEndTime" }, isOutput: true, format: "O");
+            _maintenanceExecutionStartsOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionStartsOn), new string[] { "maintenanceExecutionStartTime" }, isOutput: true, format: "O");
+            _maintenanceExecutionEndsOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceExecutionEndsOn), new string[] { "maintenanceExecutionEndTime" }, isOutput: true, format: "O");
+            _maintenanceAvailableScheduleMinOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMinOn), new string[] { "maintenanceAvailableScheduleMinTime" }, isOutput: true, format: "O");
+            _maintenanceAvailableScheduleMaxOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceAvailableScheduleMaxOn), new string[] { "maintenanceAvailableScheduleMaxTime" }, isOutput: true, format: "O");
             _maintenanceTitle = DefineProperty<string>(nameof(MaintenanceTitle), new string[] { "maintenanceTitle" }, isOutput: true);
             _maintenanceDescription = DefineProperty<string>(nameof(MaintenanceDescription), new string[] { "maintenanceDescription" }, isOutput: true);
             _provisioningState = DefineProperty<MySqlFlexibleServerMaintenanceProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

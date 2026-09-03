@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 using Azure.ResourceManager.Models;
@@ -381,13 +380,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             return new ComputeBulkActionsManagedDiskInfo(id, default, storageAccountType, diskEncryptionSetId is null ? default : new ComputeBulkActionsDiskEncryptionSetReference(diskEncryptionSetId, default), securityProfile);
         }
 
-        /// <param name="id"> The ID of the sub-resource. </param>
-        /// <returns> A new <see cref="Models.ComputeBulkActionsDiskEncryptionSetReference"/> instance for mocking. </returns>
-        public static ComputeBulkActionsDiskEncryptionSetReference ComputeBulkActionsDiskEncryptionSetReference(ResourceIdentifier id = default)
-        {
-            return new ComputeBulkActionsDiskEncryptionSetReference(id, default);
-        }
-
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
         /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsVMDiskSecurityProfile"/> instance for mocking. </returns>
@@ -706,15 +698,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeBulkActionsDeleteOption? deleteOption = default, ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<ComputeBulkActionsVirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeBulkActionsIPVersion? publicIPAddressVersion = default, ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeBulkActionsDeleteOption? deleteOption = default, ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<ComputeBulkActionsVirtualMachineIPTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeBulkActionsIPVersion? publicIPAddressVersion = default, ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
-            ipTags ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>();
+            ipTags ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineIPTag>();
 
             return new ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                (ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>()).ToList(),
+                (ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIPTag>()).ToList(),
                 publicIPPrefixId is null ? default : new ComputeBulkActionsSubResource(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
@@ -731,10 +723,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineIpTag"/> instance for mocking. </returns>
-        public static ComputeBulkActionsVirtualMachineIpTag ComputeBulkActionsVirtualMachineIpTag(string ipTagType = default, string tag = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineIPTag"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineIPTag ComputeBulkActionsVirtualMachineIPTag(string ipTagType = default, string tag = default)
         {
-            return new ComputeBulkActionsVirtualMachineIpTag(ipTagType, tag, default);
+            return new ComputeBulkActionsVirtualMachineIPTag(ipTagType, tag, default);
         }
 
         /// <param name="name"> Specify public IP sku name. </param>

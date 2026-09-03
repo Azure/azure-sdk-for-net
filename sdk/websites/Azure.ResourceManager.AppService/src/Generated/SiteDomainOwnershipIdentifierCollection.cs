@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteDomainOwnershipIdentifierResource.ResourceType, out string siteDomainOwnershipIdentifierApiVersion);
             _identifiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
-            _identifiersRestClient = new Identifiers(_identifiersClientDiagnostics, Pipeline, Endpoint, siteDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
+            _identifiersRestClient = new Identifiers(_identifiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

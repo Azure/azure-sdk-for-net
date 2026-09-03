@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum NodeProvisioningDefaultNodePool
     {
         /// <summary> No Karpenter NodePools are provisioned automatically. Automatic scaling will not happen unless the user creates one or more NodePool CRD instances. </summary>
-        None,
+        None = 0,
         /// <summary> A standard set of Karpenter NodePools are provisioned. </summary>
-        Auto
+        Auto = 1
     }
 }

@@ -126,37 +126,43 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null) continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                        continue;
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null) continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                        continue;
                     name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null) continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                        continue;
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null) continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                        continue;
                     systemData = ModelReaderWriter.Read<SystemData>(BinaryData.FromString(prop.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null) continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                        continue;
                     kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null) continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                        continue;
                     foreach (var inner in prop.Value.EnumerateObject())
                     {
                         if (inner.NameEquals("serviceIpAddress"u8) && inner.Value.ValueKind != JsonValueKind.Null)
@@ -207,10 +213,10 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                {
-                    using JsonDocument document = JsonDocument.Parse(data);
-                    return DeserializeAppServiceEnvironmentAddressResult(document.RootElement, options);
-                }
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceEnvironmentAddressResult(document.RootElement, options);
+                    }
                 default:
                     throw new FormatException($"The model {nameof(AppServiceEnvironmentAddressResult)} does not support reading '{options.Format}' format.");
             }

@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     internal static partial class MemoryStoreUpdateStatusExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this MemoryStoreUpdateStatus value) => value switch
         {
             MemoryStoreUpdateStatus.Queued => "queued",
@@ -20,6 +22,7 @@ namespace Azure.AI.Projects.Memory
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static MemoryStoreUpdateStatus ToMemoryStoreUpdateStatus(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "queued"))

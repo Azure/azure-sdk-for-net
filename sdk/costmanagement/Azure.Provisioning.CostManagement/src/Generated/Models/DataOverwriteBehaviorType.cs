@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum DataOverwriteBehaviorType
     {
         /// <summary> OverwritePreviousReport. </summary>
-        OverwritePreviousReport,
+        OverwritePreviousReport = 0,
         /// <summary> CreateNewReport. </summary>
-        CreateNewReport
+        CreateNewReport = 1
     }
 }

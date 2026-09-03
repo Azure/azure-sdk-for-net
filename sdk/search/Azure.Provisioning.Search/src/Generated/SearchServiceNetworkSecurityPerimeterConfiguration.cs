@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Search
         /// <summary> Creates a new SearchServiceNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SearchServiceNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-05-01")
+        internal SearchServiceNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Search
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SearchServiceNetworkSecurityPerimeterConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SearchService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SearchService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

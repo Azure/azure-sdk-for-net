@@ -13,15 +13,15 @@ namespace Azure.Provisioning.ContainerInstance
     public enum DnsNameLabelReusePolicy
     {
         /// <summary> Unsecure. </summary>
-        Unsecure,
+        Unsecure = 0,
         /// <summary> TenantReuse. </summary>
-        TenantReuse,
+        TenantReuse = 1,
         /// <summary> SubscriptionReuse. </summary>
-        SubscriptionReuse,
+        SubscriptionReuse = 2,
         /// <summary> ResourceGroupReuse. </summary>
-        ResourceGroupReuse,
+        ResourceGroupReuse = 3,
         /// <summary> Noreuse. </summary>
         [DataMember(Name = "Noreuse")]
-        NoReuse
+        NoReuse = 4
     }
 }

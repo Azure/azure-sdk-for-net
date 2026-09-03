@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Billing.Mocking
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Billing.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         private ClientDiagnostics InvoicesClientDiagnostics => _invoicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Billing.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Invoices InvoicesRestClient => _invoicesRestClient ??= new Invoices(InvoicesClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private Invoices InvoicesRestClient => _invoicesRestClient ??= new Invoices(InvoicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         private ClientDiagnostics AddressClientDiagnostics => _addressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Billing.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Address AddressRestClient => _addressRestClient ??= new Address(AddressClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private Address AddressRestClient => _addressRestClient ??= new Address(AddressClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         /// <summary> Gets a collection of BillingRequests in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of BillingRequests and their operations over a BillingRequestResource. </returns>

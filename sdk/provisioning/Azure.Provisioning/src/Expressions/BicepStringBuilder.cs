@@ -91,9 +91,18 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
     internal readonly List<BicepExpression> _expressions = new(capacity: 2 * formattedCount + 1);
     internal bool _isSecure = false;
 
+    /// <summary>
+    /// Appends a literal string segment to the interpolated string.
+    /// </summary>
+    /// <param name="text">The literal text to append.</param>
     public void AppendLiteral(string text) =>
         _expressions.Add(BicepSyntax.Value(text));
 
+    /// <summary>
+    /// Appends a formatted value segment to the interpolated string.
+    /// </summary>
+    /// <typeparam name="T">The type of the value to append.</typeparam>
+    /// <param name="t">The value to append.</param>
     public void AppendFormatted<T>(T t)
     {
         if (t is ProvisioningVariable v)
@@ -148,6 +157,10 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
         return value;
     }
 
+    /// <summary>
+    /// Implicitly converts a <see cref="FormattableString"/> to a <see cref="BicepInterpolatedStringHandler"/>.
+    /// </summary>
+    /// <param name="formattable">The formattable string.</param>
     public static implicit operator BicepInterpolatedStringHandler(FormattableString formattable)
     {
         var handler = new BicepInterpolatedStringHandler(formattable.Format.Length, formattable.ArgumentCount);

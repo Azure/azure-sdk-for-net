@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
@@ -130,6 +131,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
+            if (Optional.IsDefined(SourceServerResourceId))
+            {
+                writer.WritePropertyName("sourceServerResourceId"u8);
+                writer.WriteStringValue(SourceServerResourceId);
+            }
             if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
@@ -203,6 +209,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
             string availabilityZone = default;
             PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
+            ResourceIdentifier sourceServerResourceId = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
@@ -297,6 +304,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     createMode = new PostgreSqlFlexibleServerCreateModeForUpdate(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("sourceServerResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceServerResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("replicationRole"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -350,6 +366,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 dataEncryption,
                 availabilityZone,
                 createMode,
+                sourceServerResourceId,
                 replicationRole,
                 replica,
                 network,

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
         private ClientDiagnostics ReservationsClientClientDiagnostics => _reservationsClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationsClient ReservationsClientRestClient => _reservationsClientRestClient ??= new ReservationsClient(ReservationsClientClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+        private ReservationsClient ReservationsClientRestClient => _reservationsClientRestClient ??= new ReservationsClient(ReservationsClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 
         /// <summary> Gets a collection of QuotaRequestDetails in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="providerId"> The providerId for the resource. </param>

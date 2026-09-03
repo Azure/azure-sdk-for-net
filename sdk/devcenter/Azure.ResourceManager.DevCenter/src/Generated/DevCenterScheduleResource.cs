@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterScheduleApiVersion);
             _schedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _schedulesRestClient = new Schedules(_schedulesClientDiagnostics, Pipeline, Endpoint, devCenterScheduleApiVersion ?? "2026-01-01-preview");
+            _schedulesRestClient = new Schedules(_schedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterScheduleApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

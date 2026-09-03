@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> NFS access policies defined for this cache. </summary>
-        public IList<NfsAccessPolicy> AccessPolicies { get; }
+        public IList<NfsAccessPolicy> AccessPolicies { get; } = new ChangeTrackingList<NfsAccessPolicy>();
     }
 }

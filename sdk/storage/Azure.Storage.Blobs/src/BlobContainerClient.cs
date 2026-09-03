@@ -2,12 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Apache.Arrow;
+using Apache.Arrow.Ipc;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
@@ -15,6 +19,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
+using static Azure.Storage.Blobs.BlobExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -478,7 +483,7 @@ namespace Azure.Storage.Blobs
             return new ContainerRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: containerUri.AbsoluteUri,
+                endpoint: containerUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctor
@@ -1240,7 +1245,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ContainerCreateHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -1263,8 +1268,8 @@ namespace Azure.Storage.Blobs
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContainerInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobContainerInfo(BlobContainerInfoHeaderType.Create),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -1557,20 +1562,13 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
-                    ResponseWithHeaders<ContainerDeleteHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await ContainerRestClient.DeleteAsync(
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1578,12 +1576,11 @@ namespace Azure.Storage.Blobs
                     {
                         response = ContainerRestClient.Delete(
                             leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -1854,7 +1851,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ContainerGetPropertiesHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -1872,7 +1869,7 @@ namespace Azure.Storage.Blobs
 
                     return Response.FromValue(
                         response.ToBlobContainerProperties(),
-                        response.GetRawResponse());
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2028,14 +2025,14 @@ namespace Azure.Storage.Blobs
                         operationName: nameof(BlobContainerClient.SetMetadata),
                         parameterName: nameof(conditions));
 
-                    ResponseWithHeaders<ContainerSetMetadataHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await ContainerRestClient.SetMetadataAsync(
                             leaseId: conditions?.LeaseId,
                             metadata: metadata,
-                            ifModifiedSince: conditions?.IfModifiedSince,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2044,13 +2041,13 @@ namespace Azure.Storage.Blobs
                         response = ContainerRestClient.SetMetadata(
                             leaseId: conditions?.LeaseId,
                             metadata: metadata,
-                            ifModifiedSince: conditions?.IfModifiedSince,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContainerInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobContainerInfo(BlobContainerInfoHeaderType.SetMetadata),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2198,7 +2195,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response;
+                    Response<BlobSignedIdentifiers> response;
 
                     if (async)
                     {
@@ -2426,12 +2423,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     List<BlobSignedIdentifier> sanitizedPermissions = null;
                     if (permissions != null)
                     {
@@ -2447,33 +2438,31 @@ namespace Azure.Storage.Blobs
                         }
                     }
 
-                    ResponseWithHeaders<ContainerSetAccessPolicyHeaders> response;
+                    Response response;
 
                     if (async)
                     {
                         response = await ContainerRestClient.SetAccessPolicyAsync(
+                            containerAcl: sanitizedPermissions != null ? new BlobSignedIdentifiers(sanitizedPermissions) : null,
                             leaseId: conditions?.LeaseId,
                             access: accessType == PublicAccessType.None ? null : accessType,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            containerAcl: sanitizedPermissions,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ContainerRestClient.SetAccessPolicy(
+                            containerAcl: sanitizedPermissions != null ? new BlobSignedIdentifiers(sanitizedPermissions) : null,
                             leaseId: conditions?.LeaseId,
                             access: accessType == PublicAccessType.None ? null : accessType,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            containerAcl: sanitizedPermissions,
+                            requestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContainerInfo(),
-                        response.GetRawResponse());
+                        response.ToBlobContainerInfo(BlobContainerInfoHeaderType.SetAccessPolicy),
+                        response);
                 }
                 catch (Exception ex)
                 {
@@ -2524,10 +2513,12 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(
                 this,
-                options?.Traits ?? BlobTraits.None,
-                options?.States ?? BlobStates.None,
-                options?.Prefix,
-                startFrom: options?.StartFrom)
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                startFrom: options?.StartFrom,
+                endBefore: options?.EndBefore)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2563,10 +2554,12 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(
                 this,
-                options?.Traits ?? BlobTraits.None,
-                options?.States ?? BlobStates.None,
-                options?.Prefix,
-                options?.StartFrom)
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                startFrom: options?.StartFrom,
+                endBefore: options?.EndBefore)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2612,7 +2605,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync(BlobTraits, BlobStates, string, CancellationToken)"/>
@@ -2657,7 +2650,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -2673,6 +2666,9 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
         /// List Blobs</see>.
         /// </summary>
+        /// <param name="responseFormat">
+        /// Specifies the format the service should use to return list results.
+        /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
@@ -2697,6 +2693,11 @@ namespace Azure.Storage.Blobs
         /// is used to list paths starting from a defined location within prefix’s specified range.
         /// For non-recursive list, only one entity level is supported.
         /// </param>
+        /// <param name="endBefore">
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <paramref name="responseFormat"/> is set to Arrow.
+        /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
@@ -2719,11 +2720,13 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
+            StorageResponseFormat responseFormat,
             string marker,
             BlobTraits traits,
             BlobStates states,
             string prefix,
             string startFrom,
+            string endBefore,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -2743,51 +2746,94 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> response;
 
-                    if (async)
+                    bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
+
+                    ListBlobsFlatSegmentResponse listblobFlatResponse;
+                    Response rawResponse;
+
+                    if (useApacheArrow)
                     {
-                        response = await ContainerRestClient.ListBlobFlatSegmentAsync(
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        Response<Stream> arrowResponse;
+
+                        if (async)
+                        {
+                            arrowResponse = await ContainerRestClient.GetBlobFlatSegmentApacheArrowAsync(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            arrowResponse = ContainerRestClient.GetBlobFlatSegmentApacheArrow(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        rawResponse = arrowResponse.GetRawResponse();
+
+                        if (rawResponse.Headers.ContentType == Constants.Blob.ApacheArrowContentType)
+                        {
+                            // Parse using Apache Arrow
+                            listblobFlatResponse = await ParseArrowListBlobsFlatResponse(
+                                arrowResponse.Value,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // XML fallback: server returned XML despite requesting Arrow
+                            listblobFlatResponse = default;
+                            var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
+                            if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                            {
+                                listblobFlatResponse = ListBlobsFlatSegmentResponse.DeserializeListBlobsFlatSegmentResponse(enumerationResultsElement, new ModelReaderWriterOptions("W"));
+                            }
+                        }
                     }
                     else
                     {
-                        response = ContainerRestClient.ListBlobFlatSegment(
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken);
-                    }
+                        Response<ListBlobsFlatSegmentResponse> response;
 
-                    ListBlobsFlatSegmentResponse listblobFlatResponse = response.Value;
+                        if (async)
+                        {
+                            response = await ContainerRestClient.GetBlobFlatSegmentAsync(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ContainerRestClient.GetBlobFlatSegment(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken);
+                        }
 
-                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
-                    {
-                        List<BlobItemInternal> blobItemInternals = response.Value.Segment.BlobItems.Select(r => new BlobItemInternal(
-                            r.Name,
-                            r.Deleted,
-                            r.Snapshot,
-                            r.VersionId,
-                            r.IsCurrentVersion,
-                            r.Properties,
-                            metadata: null,
-                            r.BlobTags,
-                            r.HasVersionsOnly,
-                            r.OrMetadata))
-                            .ToList();
+                        listblobFlatResponse = response.Value;
+                        rawResponse = response.GetRawResponse();
                     }
 
                     return Response.FromValue(
                         listblobFlatResponse,
-                        response.GetRawResponse());
+                        rawResponse);
                 }
                 catch (Exception ex)
                 {
@@ -2802,7 +2848,255 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+
+        private async Task<ListBlobsFlatSegmentResponse> ParseArrowListBlobsFlatResponse(
+            Stream arrowStream,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var (nextMarker, blobItems, _) = await ParseArrowBlobsResponse(
+                arrowStream,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            // Apache Arrow responses only carry the blob segment and next marker.
+            return new ListBlobsFlatSegmentResponse(
+                serviceEndpoint: null,
+                containerName: null,
+                prefix: null,
+                marker: null,
+                maxResults: null,
+                blobItems: blobItems,
+                nextMarker: nextMarker);
+        }
         #endregion GetBlobs
+
+        #region ApacheArrowHelpers
+        private async Task<(string NextMarker, List<BlobItemInternal> BlobItems, List<BlobPrefix> BlobPrefixes)> ParseArrowBlobsResponse(
+            Stream arrowStream,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using var reader = new ArrowStreamReader(arrowStream);
+
+            string nextMarker = null;
+            if (reader.Schema.Metadata != null)
+            {
+                reader.Schema.Metadata.TryGetValue("NextMarker", out nextMarker);
+            }
+
+            var blobItems = new List<BlobItemInternal>();
+            var blobPrefixes = new List<BlobPrefix>();
+
+            while (true)
+            {
+                RecordBatch batch = async
+                    ? await reader.ReadNextRecordBatchAsync(cancellationToken).ConfigureAwait(false)
+                    : reader.ReadNextRecordBatch();
+
+                if (batch == null)
+                {
+                    break;
+                }
+
+                // Blob-level columns
+                StringArray nameCol = GetArrowColumn(batch, "Name") as StringArray;
+                StringArray resourceTypeCol = GetArrowColumn(batch, "ResourceType") as StringArray;
+                BooleanArray deletedCol = GetArrowColumn(batch, "Deleted") as BooleanArray;
+                StringArray snapshotCol = GetArrowColumn(batch, "Snapshot") as StringArray;
+                StringArray versionIdCol = GetArrowColumn(batch, "VersionId") as StringArray;
+                BooleanArray isCurrentVersionCol = GetArrowColumn(batch, "IsCurrentVersion") as BooleanArray;
+                BooleanArray hasVersionsOnlyCol = GetArrowColumn(batch, "HasVersionsOnly") as BooleanArray;
+
+                // Properties columns
+                TimestampArray creationTimeCol = GetArrowColumn(batch, "Creation-Time") as TimestampArray;
+                TimestampArray lastModifiedCol = GetArrowColumn(batch, "Last-Modified") as TimestampArray;
+                StringArray etagCol = GetArrowColumn(batch, "Etag") as StringArray;
+                UInt64Array contentLengthCol = GetArrowColumn(batch, "Content-Length") as UInt64Array;
+                StringArray contentTypeCol = GetArrowColumn(batch, "Content-Type") as StringArray;
+                StringArray contentEncodingCol = GetArrowColumn(batch, "Content-Encoding") as StringArray;
+                StringArray contentLanguageCol = GetArrowColumn(batch, "Content-Language") as StringArray;
+                StringArray contentMD5Col = GetArrowColumn(batch, "Content-MD5") as StringArray;
+                StringArray contentDispositionCol = GetArrowColumn(batch, "Content-Disposition") as StringArray;
+                StringArray cacheControlCol = GetArrowColumn(batch, "Cache-Control") as StringArray;
+                UInt64Array blobSequenceNumberCol = GetArrowColumn(batch, "x-ms-blob-sequence-number") as UInt64Array;
+                StringArray blobTypeCol = GetArrowColumn(batch, "BlobType") as StringArray;
+                StringArray leaseStatusCol = GetArrowColumn(batch, "LeaseStatus") as StringArray;
+                StringArray leaseStateCol = GetArrowColumn(batch, "LeaseState") as StringArray;
+                StringArray leaseDurationCol = GetArrowColumn(batch, "LeaseDuration") as StringArray;
+                StringArray copyIdCol = GetArrowColumn(batch, "CopyId") as StringArray;
+                StringArray copyStatusCol = GetArrowColumn(batch, "CopyStatus") as StringArray;
+                StringArray copySourceCol = GetArrowColumn(batch, "CopySource") as StringArray;
+                StringArray copyProgressCol = GetArrowColumn(batch, "CopyProgress") as StringArray;
+                TimestampArray copyCompletionTimeCol = GetArrowColumn(batch, "CopyCompletionTime") as TimestampArray;
+                StringArray copyStatusDescriptionCol = GetArrowColumn(batch, "CopyStatusDescription") as StringArray;
+                StringArray destinationSnapshotCol = GetArrowColumn(batch, "CopyDestinationSnapshot") as StringArray;
+                BooleanArray serverEncryptedCol = GetArrowColumn(batch, "ServerEncrypted") as BooleanArray;
+                BooleanArray incrementalCopyCol = GetArrowColumn(batch, "IncrementalCopy") as BooleanArray;
+                TimestampArray deletedTimeCol = GetArrowColumn(batch, "DeletedTime") as TimestampArray;
+                UInt64Array remainingRetentionDaysCol = GetArrowColumn(batch, "RemainingRetentionDays") as UInt64Array;
+                StringArray accessTierCol = GetArrowColumn(batch, "AccessTier") as StringArray;
+                BooleanArray accessTierInferredCol = GetArrowColumn(batch, "AccessTierInferred") as BooleanArray;
+                StringArray archiveStatusCol = GetArrowColumn(batch, "ArchiveStatus") as StringArray;
+                StringArray smartAccessTierCol = GetArrowColumn(batch, "SmartAccessTier") as StringArray;
+                StringArray customerProvidedKeySha256Col = GetArrowColumn(batch, "CustomerProvidedKeySha256") as StringArray;
+                StringArray encryptionScopeCol = GetArrowColumn(batch, "EncryptionScope") as StringArray;
+                TimestampArray accessTierChangeTimeCol = GetArrowColumn(batch, "AccessTierChangeTime") as TimestampArray;
+                UInt64Array tagCountCol = GetArrowColumn(batch, "TagCount") as UInt64Array;
+                BooleanArray sealedCol = GetArrowColumn(batch, "Sealed") as BooleanArray;
+                StringArray rehydratePriorityCol = GetArrowColumn(batch, "RehydratePriority") as StringArray;
+                TimestampArray lastAccessTimeCol = GetArrowColumn(batch, "LastAccessTime") as TimestampArray;
+                TimestampArray immutabilityPolicyUntilDateCol = GetArrowColumn(batch, "ImmutabilityPolicyUntilDate") as TimestampArray;
+                StringArray immutabilityPolicyModeCol = GetArrowColumn(batch, "ImmutabilityPolicyMode") as StringArray;
+                BooleanArray legalHoldCol = GetArrowColumn(batch, "LegalHold") as BooleanArray;
+
+                // Map columns
+                MapArray tagsCol = GetArrowColumn(batch, "Tags") as MapArray;
+                MapArray metadataCol = GetArrowColumn(batch, "Metadata") as MapArray;
+                MapArray orMetadataCol = GetArrowColumn(batch, "OrMetadata") as MapArray;
+
+                for (int i = 0; i < batch.Length; i++)
+                {
+                    string resourceType = resourceTypeCol?.GetString(i);
+
+                    // BlobPrefix rows only have Name populated; all other columns are null
+                    if (string.Equals(resourceType, "blobprefix", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        blobPrefixes.Add(new BlobPrefix(
+                            new BlobName(encoded: false, content: nameCol?.GetString(i))));
+                        continue;
+                    }
+
+                    string contentMD5Str = contentMD5Col?.GetString(i);
+                    byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
+
+                    var properties = new BlobPropertiesInternal(
+                        createdOn: creationTimeCol?.GetTimestamp(i),
+                        lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
+                        eTag: etagCol?.GetString(i),
+                        contentLength: ReadNullableLong(contentLengthCol, i),
+                        contentType: contentTypeCol?.GetString(i),
+                        contentEncoding: contentEncodingCol?.GetString(i),
+                        contentLanguage: contentLanguageCol?.GetString(i),
+                        contentMd5: contentMD5 != null ? BinaryData.FromBytes(contentMD5) : null,
+                        contentDisposition: contentDispositionCol?.GetString(i),
+                        cacheControl: cacheControlCol?.GetString(i),
+                        blobSequenceNumber: ReadNullableLong(blobSequenceNumberCol, i),
+                        blobType: ReadEnum(blobTypeCol, i, s => s.ToBlobType()),
+                        leaseStatus: ReadEnum(leaseStatusCol, i, s => s.ToLeaseStatus()),
+                        leaseState: ReadEnum(leaseStateCol, i, s => s.ToLeaseState()),
+                        leaseDuration: ReadEnum(leaseDurationCol, i, s => s.ToLeaseDurationType()),
+                        copyId: copyIdCol?.GetString(i),
+                        copyStatus: ReadEnum(copyStatusCol, i, s => s.ToCopyStatus()),
+                        copySource: copySourceCol?.GetString(i),
+                        copyProgress: copyProgressCol?.GetString(i),
+                        copyCompletionOn: copyCompletionTimeCol?.GetTimestamp(i),
+                        copyStatusDescription: copyStatusDescriptionCol?.GetString(i),
+                        serverEncrypted: ReadNullableBool(serverEncryptedCol, i),
+                        incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
+                        destinationSnapshot: destinationSnapshotCol?.GetString(i),
+                        deletedOn: deletedTimeCol?.GetTimestamp(i),
+                        remainingRetentionDays: ReadNullableInt(remainingRetentionDaysCol, i),
+                        accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
+                        accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
+                        archiveStatus: ReadEnum(archiveStatusCol, i, s => s.ToArchiveStatus()),
+                        smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
+                        customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
+                        encryptionScope: encryptionScopeCol?.GetString(i),
+                        accessTierChangedOn: accessTierChangeTimeCol?.GetTimestamp(i),
+                        tagCount: ReadNullableInt(tagCountCol, i),
+                        expiresOn: null,
+                        isSealed: ReadNullableBool(sealedCol, i),
+                        rehydratePriority: ReadEnum(rehydratePriorityCol, i, s => s.ToRehydratePriority().Value),
+                        lastAccessedOn: lastAccessTimeCol?.GetTimestamp(i),
+                        immutabilityPolicyExpiresOn: immutabilityPolicyUntilDateCol?.GetTimestamp(i),
+                        immutabilityPolicyMode: ReadEnum(immutabilityPolicyModeCol, i, s => s.ToBlobImmutabilityPolicyMode()),
+                        legalHold: ReadNullableBool(legalHoldCol, i));
+
+                    IReadOnlyDictionary<string, string> metadata = ReadArrowMap(metadataCol, i);
+                    IReadOnlyDictionary<string, string> orMetadata = ReadArrowMap(orMetadataCol, i);
+
+                    BlobTags blobTags = null;
+                    IReadOnlyDictionary<string, string> tagsDict = ReadArrowMap(tagsCol, i);
+                    if (tagsDict != null)
+                    {
+                        List<BlobTag> tagList = new List<BlobTag>();
+                        foreach (KeyValuePair<string, string> kvp in tagsDict)
+                        {
+                            tagList.Add(new BlobTag(kvp.Key, kvp.Value));
+                        }
+                        blobTags = new BlobTags(tagList);
+                    }
+
+                    blobItems.Add(new BlobItemInternal(
+                        name: new BlobName(encoded: false, content: nameCol?.GetString(i)),
+                        deleted: ReadNullableBool(deletedCol, i) == true,
+                        snapshot: snapshotCol?.GetString(i) ?? string.Empty,
+                        versionId: versionIdCol?.GetString(i),
+                        isCurrentVersion: ReadNullableBool(isCurrentVersionCol, i),
+                        properties: properties,
+                        metadata: metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                        blobTags: blobTags,
+                        hasVersionsOnly: ReadNullableBool(hasVersionsOnlyCol, i),
+                        orMetadata: orMetadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)));
+                }
+            }
+
+            return (nextMarker, blobItems, blobPrefixes);
+        }
+
+        private static IArrowArray GetArrowColumn(RecordBatch batch, string name)
+        {
+            int index = batch.Schema.GetFieldIndex(name);
+            return index >= 0 ? batch.Column(index) : null;
+        }
+
+        private static IReadOnlyDictionary<string, string> ReadArrowMap(MapArray mapArray, int rowIndex)
+        {
+            if (mapArray == null || mapArray.IsNull(rowIndex))
+            {
+                return null;
+            }
+
+            StringArray keys = mapArray.Keys as StringArray;
+            StringArray values = mapArray.Values as StringArray;
+            int start = mapArray.ValueOffsets[rowIndex];
+            int length = mapArray.ValueOffsets[rowIndex + 1] - start;
+
+            var dict = new Dictionary<string, string>(length);
+            for (int j = start; j < start + length; j++)
+            {
+                string key = keys.GetString(j);
+                string value = values.GetString(j);
+                if (key != null)
+                {
+                    dict[key] = value;
+                }
+            }
+            return dict;
+        }
+
+        private static bool? ReadNullableBool(BooleanArray array, int index)
+        {
+            return array != null && !array.IsNull(index) ? (bool?)array.GetValue(index) : null;
+        }
+
+        private static long? ReadNullableLong(UInt64Array array, int index)
+        {
+            return array != null && !array.IsNull(index) ? (long?)array.GetValue(index) : null;
+        }
+
+        private static int? ReadNullableInt(UInt64Array array, int index)
+        {
+            return array != null && !array.IsNull(index) ? (int?)array.GetValue(index) : null;
+        }
+
+        private static T? ReadEnum<T>(StringArray array, int index, Func<string, T> parse) where T : struct
+        {
+            string value = array?.GetString(index);
+            return value != null ? parse(value) : null;
+        }
+        #endregion ApacheArrowHelpers
 
         #region GetBlobsByHierarchy
         /// <summary>
@@ -2840,11 +3134,13 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(
                 this,
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
                 options?.Delimiter,
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
-                options?.StartFrom)
+                options?.StartFrom,
+                options?.EndBefore)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2882,11 +3178,13 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(
                 this,
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
                 options?.Delimiter,
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
-                options?.StartFrom)
+                options?.StartFrom,
+                options?.EndBefore)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2952,7 +3250,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyAsync(BlobTraits, BlobStates, string, string, CancellationToken)"/>
@@ -3017,7 +3315,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
@@ -3035,6 +3333,9 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
         /// List Blobs</see>.
         /// </summary>
+        /// <param name="responseFormat">
+        /// Specifies the format the service should use to return list results.
+        /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
@@ -3077,6 +3378,11 @@ namespace Azure.Storage.Blobs
         /// For non-recursive list, only one entity level is supported.
         /// For recursive list, multiple entity levels are supported. (Inclusive).
         /// </param>
+        /// <param name="endBefore">
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <paramref name="responseFormat"/> is set to Arrow.
+        /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
@@ -3099,12 +3405,14 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobsByHierarchyInternal(
+            StorageResponseFormat responseFormat,
             string marker,
             string delimiter,
             BlobTraits traits,
             BlobStates states,
             string prefix,
             string startFrom,
+            string endBefore,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -3125,53 +3433,98 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> response;
 
-                    if (async)
+                    bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
+
+                    ListBlobsHierarchySegmentResponse listblobHierachyResponse;
+                    Response rawResponse;
+
+                    if (useApacheArrow)
                     {
-                        response = await ContainerRestClient.ListBlobHierarchySegmentAsync(
-                            delimiter: delimiter,
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        Response<Stream> arrowResponse;
+
+                        if (async)
+                        {
+                            arrowResponse = await ContainerRestClient.GetBlobHierarchySegmentApacheArrowAsync(
+                                prefix: prefix,
+                                delimiter: delimiter,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            arrowResponse = ContainerRestClient.GetBlobHierarchySegmentApacheArrow(
+                                prefix: prefix,
+                                delimiter: delimiter,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        rawResponse = arrowResponse.GetRawResponse();
+
+                        if (rawResponse.Headers.ContentType == Constants.Blob.ApacheArrowContentType)
+                        {
+                            // Parse using Apache Arrow
+                            listblobHierachyResponse = await ParseArrowListBlobsHierarchyResponse(
+                                arrowResponse.Value,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // XML fallback: server returned XML despite requesting Arrow
+                            listblobHierachyResponse = default;
+                            var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
+                            if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                            {
+                                listblobHierachyResponse = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement, new ModelReaderWriterOptions("W"));
+                            }
+                        }
                     }
                     else
                     {
-                        response = ContainerRestClient.ListBlobHierarchySegment(
-                            delimiter: delimiter,
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken);
-                    }
+                        Response<ListBlobsHierarchySegmentResponse> response;
 
-                    ListBlobsHierarchySegmentResponse listblobHierachyResponse = response.Value;
+                        if (async)
+                        {
+                            response = await ContainerRestClient.GetBlobHierarchySegmentAsync(
+                                delimiter: delimiter,
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ContainerRestClient.GetBlobHierarchySegment(
+                                delimiter: delimiter,
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken);
+                        }
 
-                    if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
-                    {
-                        List<BlobItemInternal> blobItemInternals = response.Value.Segment.BlobItems.Select(r => new BlobItemInternal(
-                            r.Name,
-                            r.Deleted,
-                            r.Snapshot,
-                            r.VersionId,
-                            r.IsCurrentVersion,
-                            r.Properties,
-                            metadata: null,
-                            r.BlobTags,
-                            r.HasVersionsOnly,
-                            r.OrMetadata))
-                            .ToList();
+                        listblobHierachyResponse = response.Value;
+                        rawResponse = response.GetRawResponse();
                     }
 
                     return Response.FromValue(
                         listblobHierachyResponse,
-                        response.GetRawResponse());
+                        rawResponse);
                 }
                 catch (Exception ex)
                 {
@@ -3185,6 +3538,28 @@ namespace Azure.Storage.Blobs
                     scope.Dispose();
                 }
             }
+        }
+
+        private async Task<ListBlobsHierarchySegmentResponse> ParseArrowListBlobsHierarchyResponse(
+            Stream arrowStream,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var (nextMarker, blobItems, blobPrefixes) = await ParseArrowBlobsResponse(
+                arrowStream,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            // Apache Arrow responses only carry the blob segment and next marker.
+            return new ListBlobsHierarchySegmentResponse(
+                serviceEndpoint: null,
+                containerName: null,
+                prefix: null,
+                marker: null,
+                maxResults: null,
+                delimiter: null,
+                hierarchicalList: new BlobHierarchyList(blobItems, blobPrefixes),
+                nextMarker: nextMarker);
         }
         #endregion GetBlobsByHierarchy
 
@@ -3690,7 +4065,7 @@ namespace Azure.Storage.Blobs
                         AuthenticationPolicy,
                         ClientSideEncryption);
 
-                    ResponseWithHeaders<ContainerRenameHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -3814,12 +4189,12 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<FilterBlobSegment, ContainerFilterBlobsHeaders> response;
+                    Response<FilterBlobSegment> response;
 
                     if (async)
                     {
                         response = await ContainerRestClient.FilterBlobsAsync(
-                            where: expression,
+                            filterExpression: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken)
@@ -3828,7 +4203,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.FilterBlobs(
-                            where: expression,
+                            filterExpression: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken);
@@ -3947,7 +4322,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ContainerGetAccountInfoHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -3962,8 +4337,8 @@ namespace Azure.Storage.Blobs
                     }
 
                     return Response.FromValue(
-                        response.ToAccountInfo(),
-                        response.GetRawResponse());
+                        response.ToAccountInfo(AccountInfoHeaderType.Container),
+                        response);
                 }
                 catch (Exception ex)
                 {

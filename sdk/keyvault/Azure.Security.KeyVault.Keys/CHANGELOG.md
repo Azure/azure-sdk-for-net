@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.2 (Unreleased)
+## 4.11.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,23 @@
 
 ### Bugs Fixed
 
+- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
 ### Other Changes
+
+## 4.11.0-beta.3 (2026-07-16)
+
+### Features Added
+- Added the `SecureWrapKey` and `SecureUnwrapKey` methods (and their async counterparts) to `CryptographyClient` for secure wrap/unwrap operations on Managed HSM keys ([#60933](https://github.com/Azure/azure-sdk-for-net/pull/60933)).
+- Added the `SecureKeyWrapAlgorithm` type, listing the algorithms supported by the secure wrap/unwrap operations.
+- Added the `SecureWrapResult` and `SecureUnwrapResult` model classes wrapping the results of `SecureWrapKey` and `SecureUnwrapKey`, respectively.
+- Added the `SecureWrapKey` and `SecureUnwrapKey` values to `KeyOperation`.
+
+## 4.11.0-beta.2 (2026-06-10)
+
+### Features Added
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ## 4.11.0-beta.1 (2026-06-04)
 

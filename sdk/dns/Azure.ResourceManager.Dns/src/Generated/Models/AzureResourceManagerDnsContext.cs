@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsZoneResource))]
     [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
     [ModelReaderWriterBuildable(typeof(RecordSetListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneListResult))]

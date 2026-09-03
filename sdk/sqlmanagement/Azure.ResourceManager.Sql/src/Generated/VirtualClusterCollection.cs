@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(VirtualClusterResource.ResourceType, out string virtualClusterApiVersion);
             _virtualClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, Diagnostics);
-            _virtualClustersRestClient = new VirtualClusters(_virtualClustersClientDiagnostics, Pipeline, Endpoint, virtualClusterApiVersion ?? "2025-02-01-preview");
+            _virtualClustersRestClient = new VirtualClusters(_virtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualClusterApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -14,7 +14,7 @@ namespace Azure.Storage
     /// <summary>
     /// Hashes Storage content.
     /// </summary>
-    internal static class ContentHasher
+    internal static partial class ContentHasher
     {
         internal class GetHashResult
         {

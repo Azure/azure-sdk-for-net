@@ -11,10 +11,10 @@ namespace Azure.Provisioning.MySql
     public enum MySqlPrivateEndpointServiceConnectionStatus
     {
         /// <summary> Connection waiting for approval or rejection. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> Connection approved. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> Connection Rejected. </summary>
-        Rejected
+        Rejected = 2
     }
 }

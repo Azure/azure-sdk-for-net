@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningCodeVersionApiVersion);
             _codeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _codeVersionsRestClient = new CodeVersions(_codeVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningCodeVersionApiVersion ?? "2026-03-15-preview");
+            _codeVersionsRestClient = new CodeVersions(_codeVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningCodeVersionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

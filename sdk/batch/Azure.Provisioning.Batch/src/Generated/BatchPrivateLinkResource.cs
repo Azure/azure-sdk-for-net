@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new BatchPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BatchPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/privateLinkResources", resourceVersion ?? "2025-06-01")
+        internal BatchPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/privateLinkResources", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<BatchPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BatchAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 101, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 101, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 
         /// <summary></summary>
         public static partial class ResourceVersions

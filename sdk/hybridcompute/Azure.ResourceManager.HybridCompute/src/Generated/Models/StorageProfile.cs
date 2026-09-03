@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The disks on the machine. </summary>
         [WirePath("disks")]
-        public IReadOnlyList<HybridComputeDisk> Disks { get; }
+        public IReadOnlyList<HybridComputeDisk> Disks { get; } = new ChangeTrackingList<HybridComputeDisk>();
     }
 }

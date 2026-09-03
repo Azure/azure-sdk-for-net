@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2026-08-06)
+
+### Other Changes
+
+- The spec change in [PR #42886](https://github.com/Azure/azure-rest-api-specs/pull/42886) made the rank property optional.
 
 ## 1.2.0-beta.4 (2026-05-14)
 

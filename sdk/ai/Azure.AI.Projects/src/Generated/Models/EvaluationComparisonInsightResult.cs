@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the evaluation comparison. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluationComparisonInsightResult : InsightResult
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationComparisonInsightResult"/>. </summary>

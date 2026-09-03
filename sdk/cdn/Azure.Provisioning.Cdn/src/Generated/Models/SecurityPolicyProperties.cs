@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// The json object containing security policy parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewall"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewall"/>.
     /// </summary>
     public partial class SecurityPolicyProperties : ProvisionableConstruct
     {
+        private BicepValue<SecurityPolicyType> _policyType;
+
         /// <summary> Creates a new SecurityPolicyProperties. </summary>
         public SecurityPolicyProperties()
         {
+        }
+
+        /// <summary> The type of the Security policy to create. </summary>
+        internal BicepValue<SecurityPolicyType> PolicyType
+        {
+            get
+            {
+                Initialize();
+                return _policyType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for SecurityPolicyProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _policyType = DefineProperty<SecurityPolicyType>(nameof(PolicyType), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of Windows Remote Management listeners. </summary>
-        public IList<WinRMListener> Listeners { get; }
+        public IList<WinRMListener> Listeners { get; } = new ChangeTrackingList<WinRMListener>();
     }
 }

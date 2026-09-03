@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The extensions information. </summary>
-        public IReadOnlyList<VirtualMachineStatusCodeCount> StatusesSummary { get; }
+        public IReadOnlyList<VirtualMachineStatusCodeCount> StatusesSummary { get; } = new ChangeTrackingList<VirtualMachineStatusCodeCount>();
     }
 }

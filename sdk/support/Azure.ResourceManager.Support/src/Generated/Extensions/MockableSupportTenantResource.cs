@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Support.Mocking
 
         private ClientDiagnostics ClassifyServicesNoSubscriptionClientDiagnostics => _classifyServicesNoSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassifyServicesNoSubscription ClassifyServicesNoSubscriptionRestClient => _classifyServicesNoSubscriptionRestClient ??= new ClassifyServicesNoSubscription(ClassifyServicesNoSubscriptionClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
+        private ClassifyServicesNoSubscription ClassifyServicesNoSubscriptionRestClient => _classifyServicesNoSubscriptionRestClient ??= new ClassifyServicesNoSubscription(ClassifyServicesNoSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics SubscriptionSupportTicketClientDiagnostics => _subscriptionSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
+        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics TenantSupportTicketClientDiagnostics => _tenantSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TenantSupportTicket TenantSupportTicketRestClient => _tenantSupportTicketRestClient ??= new TenantSupportTicket(TenantSupportTicketClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
+        private TenantSupportTicket TenantSupportTicketRestClient => _tenantSupportTicketRestClient ??= new TenantSupportTicket(TenantSupportTicketClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of SupportAzureServices in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of SupportAzureServices and their operations over a SupportAzureServiceResource. </returns>

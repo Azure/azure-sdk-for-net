@@ -103,6 +103,46 @@ public class InvocationEndpointTests
     }
 
     [Test]
+    public async Task GetAsyncApiJson_Returns404_ByDefault()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, TestInvocationHandler>();
+
+        var app = builder.Build();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.GetAsync("/invocations/docs/asyncapi.json");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public async Task GetAsyncApiYaml_Returns404_ByDefault()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, TestInvocationHandler>();
+
+        var app = builder.Build();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.GetAsync("/invocations/docs/asyncapi.yaml");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+
+        await app.StopAsync();
+    }
+
+    [Test]
     public async Task GetInvocation_SessionIdHeader_MatchesEnvVar()
     {
         var originalValue = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");

@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Network security configuration properties. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
         public static OperationalInsightsNetworkSecurityPerimeterConfiguration OperationalInsightsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNetworkSecurityPerimeterConfigurationProperties properties = default)
         {
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
         public static OperationalInsightsNetworkSecurityPerimeterConfigurationProperties OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default, OperationalInsightsNetworkSecurityPerimeter networkSecurityPerimeter = default, OperationalInsightsNetworkSecurityPerimeterResourceAssociation resourceAssociation = default, OperationalInsightsNetworkSecurityProfile profile = default)
         {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
         public static OperationalInsightsNetworkSecurityPerimeterProvisioningIssue OperationalInsightsNetworkSecurityPerimeterProvisioningIssue(string name = default, OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties properties = default)
         {
@@ -421,14 +421,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterAccessRule"/> instance for mocking. </returns>
         public static OperationalInsightsNetworkSecurityPerimeterAccessRule OperationalInsightsNetworkSecurityPerimeterAccessRule(string name = default, OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties properties = default)
         {
             return new OperationalInsightsNetworkSecurityPerimeterAccessRule(name, properties, default);
         }
 
-        /// <param name="direction"></param>
+        /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <param name="name"> Name of the resource association. </param>
-        /// <param name="accessMode"></param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation"/> instance for mocking. </returns>
         public static OperationalInsightsNetworkSecurityPerimeterResourceAssociation OperationalInsightsNetworkSecurityPerimeterResourceAssociation(string name = default, OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default)
         {
@@ -1036,28 +1036,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="ruleType"> SummaryRules rule type: User. </param>
+        /// <param name="summaryLogsRuleType"> SummaryRules rule type: User. </param>
         /// <param name="displayName"> The display name of the Summary rule. </param>
         /// <param name="description"> The description of the Summary rule. </param>
         /// <param name="isActive"> Indicates if Summary rule is active. If not, Summary rule execution stops. </param>
-        /// <param name="statusCode"> Indicates the reason for rule deactivation. </param>
-        /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
+        /// <param name="summaryLogsStatusCode"> Indicates the reason for rule deactivation. </param>
+        /// <param name="summaryLogsProvisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
-        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default, OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode = default, OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
         {
             return new OperationalInsightsSummaryLogsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ruleType is null && displayName is null && description is null && isActive is null && statusCode is null && provisioningState is null && ruleDefinition is null ? default : new SummaryLogsProperties(
-                    ruleType,
+                summaryLogsRuleType is null && displayName is null && description is null && isActive is null && summaryLogsStatusCode is null && summaryLogsProvisioningState is null && ruleDefinition is null ? default : new SummaryLogsProperties(
+                    summaryLogsRuleType,
                     displayName,
                     description,
                     isActive,
-                    statusCode,
-                    provisioningState,
+                    summaryLogsStatusCode,
+                    summaryLogsProvisioningState,
                     ruleDefinition,
                     default),
                 default);

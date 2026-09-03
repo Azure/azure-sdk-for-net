@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Strategies for attacks. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct AttackStrategy : IEquatable<AttackStrategy>
     {
         private readonly string _value;

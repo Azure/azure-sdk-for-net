@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Array of MCP server configurations. This array is replaced in its entirety on update; individual servers cannot be patched independently. An empty array signals that MCP should be disabled/deleted. </summary>
         [WirePath("servers")]
-        public IList<McpServerConfig> Servers { get; }
+        public IList<McpServerConfig> Servers { get; } = new ChangeTrackingList<McpServerConfig>();
     }
 }

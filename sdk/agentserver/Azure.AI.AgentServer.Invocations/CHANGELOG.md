@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2026-08-12)
+
+### Features Added
+
+- Added application-owned target-turn tracing for Voice handlers.
+  `VoiceSession.StartTurn` creates a mockable `VoiceTurnTrace` parented to the
+  physical Voice connection; applications activate it around model/tool work and
+  complete it once with an immutable, content-free `VoiceTurnResult`. The relay
+  does not infer target outcomes from sent messages or connection termination.
+- Added the experimental typed Voice Live Bridge Protocol 1.0 relay. `VoiceHandler` dispatches
+  immutable inbound events, `VoiceSession.SendAsync` serializes explicit outbound
+  messages, and `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` reuse the
+  existing `/invocations_ws` transport without owning application lifecycle state.
+  Consumers acknowledge this preview surface with the `AAAS001` diagnostic.
+- AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
+  virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
+  at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`
+  respectively. Both default to `404`; override either or both to publish the
+  AsyncAPI companion to the existing `openapi.json` endpoint for
+  streaming/bidirectional surfaces (e.g. the `invocations_ws` WebSocket protocol)
+  that OpenAPI cannot express. The path extension is authoritative for the
+  returned content type — no `Accept` negotiation and no format conversion.
+
+### Other Changes
+
+- Updated the resilient research and multi-turn samples to use `FoundryStateStore`
+  directly for application state with session-scoped store names and invocation tags,
+  without user isolation or per-item call IDs.
 
 ## 1.0.0-beta.5 (2026-06-28)
 

@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string vmConfigurationAssignmentApiVersion);
             _vmConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _vmConfigurationAssignmentsRestClient = new VmConfigurationAssignments(_vmConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, vmConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _vmConfigurationAssignmentsRestClient = new VmConfigurationAssignments(_vmConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmConfigurationAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

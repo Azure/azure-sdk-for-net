@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ArtifactSigning;
 using Azure.ResourceManager.Models;
@@ -104,6 +103,15 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     failureReason,
                     default),
                 default);
+        }
+
+        /// <param name="revokeCertificates"> List of certificates to be revoked in a certificate profile. </param>
+        /// <returns> A new <see cref="Models.RevokeCertificateList"/> instance for mocking. </returns>
+        public static RevokeCertificateList RevokeCertificateList(IEnumerable<RevokeCertificateContent> revokeCertificates = default)
+        {
+            revokeCertificates ??= new ChangeTrackingList<RevokeCertificateContent>();
+
+            return new RevokeCertificateList((revokeCertificates ?? new ChangeTrackingList<RevokeCertificateContent>()).ToList(), default);
         }
 
         /// <param name="serialNumber"> Serial number of the certificate. </param>

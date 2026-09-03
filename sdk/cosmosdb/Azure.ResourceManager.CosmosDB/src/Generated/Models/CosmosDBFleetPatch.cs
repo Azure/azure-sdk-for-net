@@ -20,16 +20,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetPatch"/>. </summary>
         public CosmosDBFleetPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties to update Azure Cosmos DB fleet resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFleetPatch(FleetResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBFleetPatch(IDictionary<string, string> tags, FleetResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Properties to update Azure Cosmos DB fleet resource. </summary>
         [WirePath("properties")]

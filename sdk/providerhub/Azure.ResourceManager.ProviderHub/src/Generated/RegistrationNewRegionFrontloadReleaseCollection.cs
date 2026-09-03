@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(RegistrationNewRegionFrontloadReleaseResource.ResourceType, out string registrationNewRegionFrontloadReleaseApiVersion);
             _registrationNewRegionFrontloadReleasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", RegistrationNewRegionFrontloadReleaseResource.ResourceType.Namespace, Diagnostics);
-            _registrationNewRegionFrontloadReleasesRestClient = new RegistrationNewRegionFrontloadReleases(_registrationNewRegionFrontloadReleasesClientDiagnostics, Pipeline, Endpoint, registrationNewRegionFrontloadReleaseApiVersion ?? "2024-09-01");
+            _registrationNewRegionFrontloadReleasesRestClient = new RegistrationNewRegionFrontloadReleases(_registrationNewRegionFrontloadReleasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, registrationNewRegionFrontloadReleaseApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

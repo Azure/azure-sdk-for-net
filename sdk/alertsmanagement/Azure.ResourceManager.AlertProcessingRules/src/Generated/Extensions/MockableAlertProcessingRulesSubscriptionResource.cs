@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Mocking
 
         private ClientDiagnostics AlertProcessingRulesOperationGroupClientDiagnostics => _alertProcessingRulesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertProcessingRules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AlertProcessingRulesOperationGroup AlertProcessingRulesOperationGroupRestClient => _alertProcessingRulesOperationGroupRestClient ??= new AlertProcessingRulesOperationGroup(AlertProcessingRulesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2021-08-08");
+        private AlertProcessingRulesOperationGroup AlertProcessingRulesOperationGroupRestClient => _alertProcessingRulesOperationGroupRestClient ??= new AlertProcessingRulesOperationGroup(AlertProcessingRulesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-08");
 
         /// <summary>
         /// List all alert processing rules in a subscription.

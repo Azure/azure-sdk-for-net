@@ -1,15 +1,58 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
-- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state.
+- Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
+  are composed directly on the `Azure.AI.AgentServer.Core` durable-task and event-stream primitives
+  rather than a bespoke Responses-owned recovery stack, matching the Python implementation.
+  Interrupted background responses are automatically recovered and re-invoked in the next process
+  lifetime.
+  - Resilient streaming with checkpoint/resumption: handlers persist durable snapshots at safe
+    boundaries via `ResponseEventStream.Checkpoint()` and, on a recovered entry, reconstruct the
+    resumption response from `ResponseContext.IsRecovery` / `ResponseContext.PersistedResponse`.
+  - Steerable conversations (`ResponsesServerOptions.SteerableConversations`) with in-turn steering:
+    a superseding turn enqueues and drains against the active turn, observable through
+    `ResponseContext.IsSteeredTurn` and `ResponseContext.PendingInputCount`; fork, lock, and
+    queue-full conflicts map to `409 Conflict`.
+  - Internal metadata is persisted for recovery and stripped on egress so it never leaks to clients.
+  - Fail-loud composition validation: misconfigured resilient setups fail at startup with actionable
+    errors instead of silently degrading.
+  - The local default response provider is now file-based (durable) when resilient background is
+    enabled outside a hosted environment.
+  - Every stored (`store=true`) request now runs its handler inside a Core resilient task —
+    foreground or background, streaming or non-streaming — so a crashed turn is task-tracked and
+    recovered/marked-failed by the next-lifetime recovery scan (matching the Python resilience
+    contract; only `store=false` runs inline). Streaming relays the per-response event stream
+    immediately, preserving standalone SSE `error` semantics for pre-creation failures and
+    `response.failed` (not `response.completed`) for terminal persistence failures.
+  - A streaming turn superseded by steering that reaches its terminal via the framework
+    completion fallback (a non-cooperative handler that lets its token trip without emitting its
+    own terminal) is now durably persisted as `completed`, so the client-visible
+    `response.completed` matches the stored record and the turn is valid conversation context for
+    the draining steered turn (FR-053).
 
 ### Breaking Changes
-
-### Bugs Fixed
+- Removed `ConversationChainMetadata`, `ConversationChainMetadataNamespace`,
+  `ResponseContext.ConversationChainMetadata`, and `ResponseContextExtensions.MetadataNamespace`.
+  Durable application state now belongs in an explicit
+  `Azure.AI.AgentServer.Core.Storage.FoundryStateStore` scoped with
+  `ResponseContext.ConversationChainId`.
+- Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
+  interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
+  primitive (`IEventStreamRegistry` / `IEventStream`) rather than a Responses-owned stream
+  provider, matching the Python implementation. The local default event-stream backing is
+  in-memory replay, upgraded automatically to durable file-backed replay when resilient
+  background is enabled outside a hosted environment.
 
 ### Other Changes
+- Retired the interim .NET ↔ Python resilience parity reports now that the port has
+  converged.
+
+## 1.0.0-beta.7 (2026-07-07)
+
+### Features Added
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope. When no explicit session ID is supplied, the derived agent session scope now falls back to the response's own partition key instead of a random value, so the chain id is stable from the first turn of a conversation onward.
 
 ## 1.0.0-beta.6 (2026-06-28)
 

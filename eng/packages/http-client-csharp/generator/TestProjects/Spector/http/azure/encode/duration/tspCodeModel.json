@@ -26,6 +26,7 @@
       "$id": "3",
       "kind": "model",
       "name": "DurationModel",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.Encode.Duration",
       "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.DurationModel",
       "usage": "Input,Json",
@@ -41,6 +42,7 @@
           "$id": "4",
           "kind": "property",
           "name": "input",
+          "apiVersions": [],
           "serializedName": "input",
           "type": {
             "$id": "5",

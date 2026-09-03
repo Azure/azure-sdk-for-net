@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ViewKpiType
     {
         /// <summary> Forecast. </summary>
-        Forecast,
+        Forecast = 0,
         /// <summary> Budget. </summary>
-        Budget
+        Budget = 1
     }
 }

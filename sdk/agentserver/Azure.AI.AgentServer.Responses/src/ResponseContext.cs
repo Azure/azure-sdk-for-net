@@ -30,30 +30,46 @@ public class ResponseContext
     /// <summary>Gets the unique response identifier.</summary>
     public string ResponseId { get; }
 
-    /// <summary>
-    /// Gets the stable identifier for the multi-turn conversation chain this response belongs to.
-    /// <para>
-    /// Every response in the same logical conversation shares this value, so handlers can use it
-    /// as a key into their own application-side conversation state (e.g., upstream SDK session IDs,
-    /// per-conversation rate limits, conversation indexes). When derived from the request's
-    /// conversation context, it is the first 32 characters of the lowercase hex SHA-256 digest of
-    /// <c>{agentName}:{sessionId}:{discriminator}:{partition}</c>, where the partition is extracted
-    /// from the request's conversation ID, the <c>previous_response_id</c> chain, or this response's
-    /// own ID, and the discriminator namespaces the partition by source type. Including the agent
-    /// name and session ID scopes the value so it does not collide across agents or sessions.
-    /// </para>
-    /// <para>
-    /// The base implementation returns <see cref="ResponseId"/>; enhanced contexts override this to
-    /// derive the value from the request's conversation context.
-    /// </para>
-    /// </summary>
-    public virtual string ConversationChainId => ResponseId;
+    private readonly CancellationTokenSource _shutdownSignal = new();
 
     /// <summary>
-    /// Gets or sets whether the server is shutting down.
-    /// Handlers can use this to distinguish shutdown from explicit cancel or client disconnect.
+    /// Gets or sets whether the host is gracefully shutting down. Setting this to
+    /// <see langword="true"/> also signals <see cref="Shutdown"/>; setting it to
+    /// <see langword="false"/> has no effect (a shutdown signal cannot be withdrawn).
+    /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
+    /// graceful shutdown from an explicit client cancel or a client disconnect.
     /// </summary>
-    public bool IsShutdownRequested { get; set; }
+    public bool IsShutdownRequested
+    {
+        get => _shutdownSignal.IsCancellationRequested;
+        set
+        {
+            if (value && !_shutdownSignal.IsCancellationRequested)
+            {
+                try
+                {
+                    _shutdownSignal.Cancel();
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets a cancellation token that is signaled when the host begins a graceful shutdown.
+    /// This is a <em>dedicated</em> shutdown signal, kept separate from the handler's primary
+    /// cancellation token (the <c>cancellationToken</c> passed to the handler), mirroring the
+    /// task-primitive <c>TaskContext.Shutdown</c> and the Python <c>context.shutdown</c>
+    /// event. Handlers can <c>await</c> or link this token to react to shutdown specifically —
+    /// winding down to a natural terminal, emitting <c>response.incomplete</c>, or calling
+    /// <see cref="ExitForRecoveryAsync"/> — rather than inferring shutdown from a generic
+    /// <see cref="OperationCanceledException"/>. A handler must never convert a raw cancellation
+    /// into a <c>failed</c> terminal purely because shutdown is happening: check
+    /// <see cref="IsShutdownRequested"/> (or this token) first and defer for recovery instead.
+    /// </summary>
+    public virtual CancellationToken Shutdown => _shutdownSignal.Token;
 
     /// <summary>
     /// Gets the full raw JSON request body as a <see cref="BinaryData"/>.
@@ -130,4 +146,63 @@ public class ResponseContext
     /// </summary>
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
         = new Dictionary<string, StringValues>();
+
+    /// <summary>
+    /// Gets whether this handler invocation is a recovery re-invocation of a previously
+    /// interrupted background response (only possible when
+    /// <see cref="ResponsesServerOptions.ResilientBackground"/> is enabled). When
+    /// <see langword="true"/>, <see cref="PersistedResponse"/> carries the last durable
+    /// snapshot from the prior lifetime and request-scoped inputs are restored from the
+    /// persisted recovery payload. When <see langword="false"/> (the default), this is a
+    /// fresh invocation.
+    /// </summary>
+    public virtual bool IsRecovery => false;
+
+    /// <summary>
+    /// Gets the last durable response snapshot persisted before the current lifetime, or
+    /// <see langword="null"/> when this is not a recovery invocation
+    /// (<see cref="IsRecovery"/> is <see langword="false"/>). Handlers can use this to
+    /// resume from the last checkpointed watermark rather than restarting work.
+    /// </summary>
+    public virtual ResponseObject? PersistedResponse => null;
+
+    /// <summary>
+    /// Gets the stable conversation-chain identifier for this response. The value is stable
+    /// across turns of the same conversation and across recovery re-invocations, allowing
+    /// handlers to scope durable per-conversation state.
+    /// </summary>
+    public virtual string ConversationChainId => ResponseId;
+
+    /// <summary>
+    /// Gets whether the current invocation is draining steering input (additional input that
+    /// arrived mid-turn for the same conversation) rather than starting a fresh turn. Only
+    /// meaningful when <see cref="ResponsesServerOptions.SteerableConversations"/> is enabled.
+    /// </summary>
+    public virtual bool IsSteeredTurn => false;
+
+    /// <summary>
+    /// Gets the number of steering input envelopes currently queued for the running handler
+    /// to drain. Zero when steering is disabled or no additional input is pending.
+    /// </summary>
+    public virtual int PendingInputCount => 0;
+
+    /// <summary>
+    /// Gets whether the client has explicitly cancelled this response. Distinct from
+    /// <see cref="IsShutdownRequested"/> (server shutting down) and client disconnect;
+    /// handlers can use this to stop work in response to an explicit cancel request.
+    /// </summary>
+    public virtual bool ClientCancelled => false;
+
+    /// <summary>
+    /// Defers the current handler invocation for recovery instead of failing. Used during a
+    /// graceful shutdown (Path B) or cooperative hand-off so that a resilient background
+    /// response is re-invoked in a subsequent process lifetime with its durable snapshot and
+    /// checkpoint watermark preserved, rather than transitioning to a failed terminal state.
+    /// Has an effect only for resilient background responses; for non-resilient responses it
+    /// completes without deferring.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>A task that completes once the deferral has been recorded.</returns>
+    public virtual Task ExitForRecoveryAsync(CancellationToken cancellationToken = default)
+        => Task.CompletedTask;
 }

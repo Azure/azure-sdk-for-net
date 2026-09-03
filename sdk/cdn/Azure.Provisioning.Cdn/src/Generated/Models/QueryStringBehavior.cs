@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Cdn
     public enum QueryStringBehavior
     {
         /// <summary> Include. </summary>
-        Include,
+        Include = 0,
         /// <summary> IncludeAll. </summary>
-        IncludeAll,
+        IncludeAll = 1,
         /// <summary> Exclude. </summary>
-        Exclude,
+        Exclude = 2,
         /// <summary> ExcludeAll. </summary>
-        ExcludeAll
+        ExcludeAll = 3
     }
 }

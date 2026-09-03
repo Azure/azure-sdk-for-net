@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Endpoint-based evaluator definition. The customer owns and hosts an HTTP endpoint that implements the evaluation contract. The evaluator references a Project Connection by name; the connection stores the endpoint URL and credentials (API Key or Entra ID). At execution time, the service resolves the connection to obtain the endpoint URL and authentication details, then calls the endpoint for each evaluation row. </summary>
+    [Experimental("AAIP001")]
     public partial class EndpointBasedEvaluatorDefinition : EvaluatorDefinition
     {
         /// <summary> Initializes a new instance of <see cref="EndpointBasedEvaluatorDefinition"/>. </summary>

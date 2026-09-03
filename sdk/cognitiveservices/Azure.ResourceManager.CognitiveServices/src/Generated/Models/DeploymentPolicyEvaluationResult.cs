@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentPolicyEvaluationResult"/>. </summary>
         internal DeploymentPolicyEvaluationResult()
         {
-            NonCompliantAssignments = new ChangeTrackingList<PolicyAssignmentEvaluationDetails>();
+            NonCompliantAssignments = new ChangeTrackingList<DeploymentPolicyAssignmentEvaluationDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentPolicyEvaluationResult"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorMessage"> Error message if the evaluation outcome is Error. </param>
         /// <param name="nonCompliantAssignments"> Details of non-compliant policy assignments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentPolicyEvaluationResult(PolicyEvaluationOutcome? evaluationOutcome, string errorMessage, IList<PolicyAssignmentEvaluationDetails> nonCompliantAssignments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentPolicyEvaluationResult(DeploymentPolicyEvaluationOutcome? evaluationOutcome, string errorMessage, IList<DeploymentPolicyAssignmentEvaluationDetails> nonCompliantAssignments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EvaluationOutcome = evaluationOutcome;
             ErrorMessage = errorMessage;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The evaluation outcome. </summary>
         [WirePath("evaluationOutcome")]
-        public PolicyEvaluationOutcome? EvaluationOutcome { get; }
+        public DeploymentPolicyEvaluationOutcome? EvaluationOutcome { get; }
 
         /// <summary> Error message if the evaluation outcome is Error. </summary>
         [WirePath("errorMessage")]
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Details of non-compliant policy assignments. </summary>
         [WirePath("nonCompliantAssignments")]
-        public IList<PolicyAssignmentEvaluationDetails> NonCompliantAssignments { get; }
+        public IList<DeploymentPolicyAssignmentEvaluationDetails> NonCompliantAssignments { get; }
     }
 }

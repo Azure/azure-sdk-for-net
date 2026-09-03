@@ -1,4 +1,6 @@
-directory: specification/compute/resource-manager/Microsoft.Compute/RecommenderRP
-commit: a61de433bd587bd7e9b65b7c95d6651f9f39e350
+directory: specification/compute/resource-manager/Microsoft.Compute/Recommender
+commit: 397bf665c4d649b98bcfaf239c4b0a526301a03a
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

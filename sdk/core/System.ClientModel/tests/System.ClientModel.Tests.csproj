@@ -5,7 +5,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);SCME0001;SCME0002</NoWarn>
+    <NoWarn>$(NoWarn);SCME0001;SCME0002;SCME0005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

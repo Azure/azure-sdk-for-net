@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
         public int? CosmosDbCollectionsThroughput
         {
-            get => ServiceManagedResourcesCosmosDbCollectionsThroughput;
-            set => ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
+            get => ServiceManagedResourcesCosmosDBCollectionsThroughput;
+            set => ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
         }
 
         /// <summary> Gets or sets the KeyIdentifier. </summary>

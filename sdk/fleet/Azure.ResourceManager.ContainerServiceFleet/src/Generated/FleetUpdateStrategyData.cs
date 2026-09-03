@@ -54,5 +54,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
+
+        /// <summary> The list of stages that compose this update run. Min size: 1. </summary>
+        public IList<ContainerServiceFleetUpdateStage> StrategyStages
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetUpdateStrategyProperties();
+                }
+                return Properties.StrategyStages;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetUpdateStrategyProperties();
+                }
+                Properties.StrategyStages = value;
+            }
+        }
     }
 }

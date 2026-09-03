@@ -16,6 +16,7 @@ namespace OpenAI
         private const string FunctionValue = "function";
         private const string McpValue = "mcp";
         private const string CustomValue = "custom";
+        private const string ProgrammaticToolCallingValue = "programmatic_tool_calling";
         private const string ApplyPatchValue = "apply_patch";
         private const string ShellValue = "shell";
         private const string FileSearchValue = "file_search";
@@ -48,6 +49,9 @@ namespace OpenAI
 
         /// <summary> Gets the Custom. </summary>
         public static ToolChoiceParamType Custom { get; } = new ToolChoiceParamType(CustomValue);
+
+        /// <summary> Gets the ProgrammaticToolCalling. </summary>
+        public static ToolChoiceParamType ProgrammaticToolCalling { get; } = new ToolChoiceParamType(ProgrammaticToolCallingValue);
 
         /// <summary> Gets the ApplyPatch. </summary>
         public static ToolChoiceParamType ApplyPatch { get; } = new ToolChoiceParamType(ApplyPatchValue);

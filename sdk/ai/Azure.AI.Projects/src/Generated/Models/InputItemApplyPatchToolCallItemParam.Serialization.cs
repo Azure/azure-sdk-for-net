@@ -83,6 +83,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Caller))
+            {
+                writer.WritePropertyName("caller"u8);
+                writer.WriteObjectValue(Caller, options);
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("operation"u8);
@@ -118,6 +123,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            ToolCallCallerParam caller = default;
             ApplyPatchCallStatusParam status = default;
             ApplyPatchOperationParam operation = default;
             foreach (var prop in element.EnumerateObject())
@@ -142,6 +148,16 @@ namespace Azure.AI.Projects
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("caller"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCallerParam.DeserializeToolCallCallerParam(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     status = prop.Value.GetString().ToApplyPatchCallStatusParam();
@@ -162,6 +178,7 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                caller,
                 status,
                 operation);
         }

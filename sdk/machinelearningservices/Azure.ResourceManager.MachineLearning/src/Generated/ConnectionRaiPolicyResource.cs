@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string connectionRaiPolicyApiVersion);
             _connectionRaiPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRaiPolicyRestClient = new ConnectionRaiPolicy(_connectionRaiPolicyClientDiagnostics, Pipeline, Endpoint, connectionRaiPolicyApiVersion ?? "2026-03-15-preview");
+            _connectionRaiPolicyRestClient = new ConnectionRaiPolicy(_connectionRaiPolicyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionRaiPolicyApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

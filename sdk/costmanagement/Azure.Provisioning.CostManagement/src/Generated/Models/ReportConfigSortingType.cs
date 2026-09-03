@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ReportConfigSortingType
     {
         /// <summary> Ascending. </summary>
-        Ascending,
+        Ascending = 0,
         /// <summary> Descending. </summary>
-        Descending
+        Descending = 1
     }
 }

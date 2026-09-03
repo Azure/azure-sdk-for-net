@@ -73,6 +73,7 @@ namespace Azure.Storage.Queues
                 encryptedMessage.EncryptionData,
                 ivInStream: false,
                 noPadding: false,
+                0,
                 async: async,
                 cancellationToken).ConfigureAwait(false);
             // if we got back the stream we put in, then we couldn't decrypt and are supposed to return the original

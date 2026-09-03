@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceMongoConnection"> Source Mongo connection details. </param>
         /// <param name="targetMongoConnection"> Target Cosmos DB Mongo connection details. </param>
         /// <param name="collectionList"> List of Mongo Collections to be migrated. </param>
-        /// <returns> A new <see cref="DataMigration.DatabaseMigrationCosmosDbMongoData"/> instance for mocking. </returns>
-        public static DatabaseMigrationCosmosDbMongoData DatabaseMigrationCosmosDbMongoData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, MongoConnectionInformation sourceMongoConnection = default, MongoConnectionInformation targetMongoConnection = default, IEnumerable<DataMigrationMongoMigrationCollectionInfo> collectionList = default)
+        /// <returns> A new <see cref="DataMigration.DatabaseMigrationCosmosDBMongoData"/> instance for mocking. </returns>
+        public static DatabaseMigrationCosmosDBMongoData DatabaseMigrationCosmosDBMongoData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, MongoConnectionInformation sourceMongoConnection = default, MongoConnectionInformation targetMongoConnection = default, IEnumerable<DataMigrationMongoMigrationCollectionInfo> collectionList = default)
         {
-            return new DatabaseMigrationCosmosDbMongoData(
+            return new DatabaseMigrationCosmosDBMongoData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                scope is null && provisioningState is null && migrationStatus is null && startedOn is null && endedOn is null && migrationService is null && migrationOperationId is null && migrationFailureError is null && provisioningError is null && sourceMongoConnection is null && targetMongoConnection is null && collectionList is null ? default : new DatabaseMigrationPropertiesCosmosDbMongo(
+                scope is null && provisioningState is null && migrationStatus is null && startedOn is null && endedOn is null && migrationService is null && migrationOperationId is null && migrationFailureError is null && provisioningError is null && sourceMongoConnection is null && targetMongoConnection is null && collectionList is null ? default : new DatabaseMigrationPropertiesCosmosDBMongo(
                     default,
                     scope,
                     provisioningState,
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceMongoConnection"> Source Mongo connection details. </param>
         /// <param name="targetMongoConnection"> Target Cosmos DB Mongo connection details. </param>
         /// <param name="collectionList"> List of Mongo Collections to be migrated. </param>
-        /// <returns> A new <see cref="Models.DatabaseMigrationPropertiesCosmosDbMongo"/> instance for mocking. </returns>
-        public static DatabaseMigrationPropertiesCosmosDbMongo DatabaseMigrationPropertiesCosmosDbMongo(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, MongoConnectionInformation sourceMongoConnection = default, MongoConnectionInformation targetMongoConnection = default, IEnumerable<DataMigrationMongoMigrationCollectionInfo> collectionList = default)
+        /// <returns> A new <see cref="Models.DatabaseMigrationPropertiesCosmosDBMongo"/> instance for mocking. </returns>
+        public static DatabaseMigrationPropertiesCosmosDBMongo DatabaseMigrationPropertiesCosmosDBMongo(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, MongoConnectionInformation sourceMongoConnection = default, MongoConnectionInformation targetMongoConnection = default, IEnumerable<DataMigrationMongoMigrationCollectionInfo> collectionList = default)
         {
             collectionList ??= new ChangeTrackingList<DataMigrationMongoMigrationCollectionInfo>();
 
-            return new DatabaseMigrationPropertiesCosmosDbMongo(
+            return new DatabaseMigrationPropertiesCosmosDBMongo(
                 default,
                 scope,
                 provisioningState,

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SupportAzureServiceResource.ResourceType, out string supportAzureServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportAzureServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2026-07-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportAzureServiceApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

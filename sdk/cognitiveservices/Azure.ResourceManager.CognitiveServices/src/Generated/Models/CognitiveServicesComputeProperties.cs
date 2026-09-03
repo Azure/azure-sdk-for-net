@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary>
     /// Base properties for all compute resource types.
     /// The computeType discriminator determines the concrete property shape.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClusterComputeProperties"/> and <see cref="ContainerInstanceComputeProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesClusterComputeProperties"/> and <see cref="ContainerInstanceComputeProperties"/>.
     /// </summary>
     public abstract partial class CognitiveServicesComputeProperties
     {
@@ -24,21 +25,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesComputeProperties"/>. </summary>
         /// <param name="computeType"> The type of compute resource. </param>
-        private protected CognitiveServicesComputeProperties(ComputeType computeType)
+        /// <param name="location"> The location of the compute resource. </param>
+        private protected CognitiveServicesComputeProperties(ComputeType computeType, AzureLocation location)
         {
             ComputeType = computeType;
+            Location = location;
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesComputeProperties"/>. </summary>
         /// <param name="computeType"> The type of compute resource. </param>
+        /// <param name="location"> The location of the compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
         /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesComputeProperties(ComputeType computeType, AzureLocation location, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeType = computeType;
+            Location = location;
             ProvisioningState = provisioningState;
             Errors = errors;
             CreatedOn = createdOn;
@@ -48,6 +53,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The type of compute resource. </summary>
         [WirePath("computeType")]
         internal ComputeType ComputeType { get; set; }
+
+        /// <summary> The location of the compute resource. </summary>
+        [WirePath("location")]
+        public AzureLocation Location { get; set; }
 
         /// <summary> Provisioning state of the compute resource. </summary>
         [WirePath("provisioningState")]

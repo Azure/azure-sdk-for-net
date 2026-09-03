@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
+    /// <summary> Geo-replication information for the secondary storage service. </summary>
     public partial class BlobGeoReplication
     {
         /// <summary> Initializes a new instance of <see cref="BlobGeoReplication"/>. </summary>
         /// <param name="status"> The status of the secondary location. </param>
-        /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
+        /// <param name="lastSyncedOn"> A date-time value that indicates where all primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
         internal BlobGeoReplication(BlobGeoReplicationStatus status, DateTimeOffset? lastSyncedOn)
         {
             Status = status;

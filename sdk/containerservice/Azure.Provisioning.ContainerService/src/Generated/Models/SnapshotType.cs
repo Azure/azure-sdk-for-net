@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ContainerService
     public enum SnapshotType
     {
         /// <summary> The snapshot is a snapshot of a node pool. </summary>
-        NodePool
+        NodePool = 0
     }
 }

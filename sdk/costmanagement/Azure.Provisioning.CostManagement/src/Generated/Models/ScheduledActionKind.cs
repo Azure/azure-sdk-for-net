@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ScheduledActionKind
     {
         /// <summary> Cost analysis data will be emailed. </summary>
-        Email,
+        Email = 0,
         /// <summary> Cost anomaly information will be emailed. Available only on subscription scope at daily frequency. If no anomaly is detected on the resource, an email won't be sent. </summary>
-        InsightAlert
+        InsightAlert = 1
     }
 }

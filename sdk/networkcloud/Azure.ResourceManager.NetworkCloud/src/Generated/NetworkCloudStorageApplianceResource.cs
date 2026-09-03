@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudStorageApplianceApiVersion);
             _storageAppliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _storageAppliancesRestClient = new StorageAppliances(_storageAppliancesClientDiagnostics, Pipeline, Endpoint, networkCloudStorageApplianceApiVersion ?? "2026-05-01-preview");
+            _storageAppliancesRestClient = new StorageAppliances(_storageAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudStorageApplianceApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

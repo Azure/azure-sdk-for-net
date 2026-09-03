@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotPremierAddOnResource.ResourceType, out string webSiteSlotPremierAddOnApiVersion);
             _premierAddOnOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotPremierAddOnResource.ResourceType.Namespace, Diagnostics);
-            _premierAddOnOperationGroupRestClient = new PremierAddOnOperationGroup(_premierAddOnOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotPremierAddOnApiVersion ?? "2026-03-15");
+            _premierAddOnOperationGroupRestClient = new PremierAddOnOperationGroup(_premierAddOnOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotPremierAddOnApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

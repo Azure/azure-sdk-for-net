@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

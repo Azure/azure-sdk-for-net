@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
 {
     public class BulkActionsManagementTestBase : ManagementRecordedTestBase<BulkActionsManagementTestEnvironment>
     {
-        // Terminal states for ScheduledActionOperationState; reaching any of these means the
+        // Terminal states for BulkActionOperationState; reaching any of these means the
         // service is done with the operation.
-        protected static readonly HashSet<ScheduledActionOperationState> TerminalOperationStates = new()
+        protected static readonly HashSet<BulkActionOperationState> TerminalOperationStates = new()
         {
-            ScheduledActionOperationState.Succeeded,
-            ScheduledActionOperationState.Failed,
-            ScheduledActionOperationState.Cancelled,
-            ScheduledActionOperationState.Blocked,
+            BulkActionOperationState.Succeeded,
+            BulkActionOperationState.Failed,
+            BulkActionOperationState.Cancelled,
+            BulkActionOperationState.Blocked,
         };
 
         // Non-terminal "the service accepted the request" states. Used to assert the initial
         // response when we cannot afford to wait for the full InitiateAt deadline (~hours).
-        protected static readonly HashSet<ScheduledActionOperationState> AcceptedOperationStates = new()
+        protected static readonly HashSet<BulkActionOperationState> AcceptedOperationStates = new()
         {
-            ScheduledActionOperationState.PendingScheduling,
-            ScheduledActionOperationState.Scheduled,
-            ScheduledActionOperationState.PendingExecution,
-            ScheduledActionOperationState.Executing,
-            ScheduledActionOperationState.Succeeded,
+            BulkActionOperationState.PendingScheduling,
+            BulkActionOperationState.Scheduled,
+            BulkActionOperationState.PendingExecution,
+            BulkActionOperationState.Executing,
+            BulkActionOperationState.Succeeded,
         };
 
         protected ArmClient Client { get; private set; }
@@ -92,21 +92,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
         }
 
         protected static ExecuteStartContent BuildStartContent(IList<ResourceIdentifier> ids) =>
-            new ExecuteStartContent(BuildExecutionParameters(), new UserRequestResources(ids));
+            new ExecuteStartContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids) };
 
         protected static ExecuteDeallocateContent BuildDeallocateContent(IList<ResourceIdentifier> ids) =>
-            new ExecuteDeallocateContent(BuildExecutionParameters(), new UserRequestResources(ids));
+            new ExecuteDeallocateContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids) };
 
         protected static ExecuteHibernateContent BuildHibernateContent(IList<ResourceIdentifier> ids) =>
-            new ExecuteHibernateContent(BuildExecutionParameters(), new UserRequestResources(ids));
+            new ExecuteHibernateContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids) };
 
         protected static ExecuteDeleteContent BuildDeleteContent(IList<ResourceIdentifier> ids, bool forceDelete = false) =>
-            new ExecuteDeleteContent(BuildExecutionParameters(), new UserRequestResources(ids)) { IsForceDeletion = forceDelete };
+            new ExecuteDeleteContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids), IsForceDeletion = forceDelete };
 
         // Builds execution parameters with a representative retry policy so recordings exercise a
         // realistic request shape.
-        private static ScheduledActionExecutionParameterDetail BuildExecutionParameters() =>
-            new ScheduledActionExecutionParameterDetail
+        private static BulkActionExecutionParameterDetail BuildExecutionParameters() =>
+            new BulkActionExecutionParameterDetail
             {
                 RetryPolicy = new BulkOperationRetryPolicy { RetryCount = 3, RetryWindowInMinutes = 30 }
             };
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
             {
                 var content = new GetBulkOperationStatusContent(ids);
                 var response = await DefaultResourceGroup
-                    .BulkGetOperationsStatusAsync(content)
+                    .BulkGetOperationsStatusAsync(Location, content)
                     .ConfigureAwait(false);
                 last = response.Value;
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
             PollUntilAsync(
                 operationIds,
                 r => r.Operation?.State.HasValue == true
-                     && r.Operation.State.Value != ScheduledActionOperationState.PendingScheduling,
+                     && r.Operation.State.Value != BulkActionOperationState.PendingScheduling,
                 maxWait,
                 pollInterval);
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
         // within reasonable bounds, and an initial state the service considers "accepted".
         protected static void AssertBulkResponseAccepted(
             IEnumerable<ComputeBulkOperationResult> results,
-            ComputeBulkOperationType expectedOpType,
+            ComputeBulkOperationKind expectedOpType,
             int expectedCount)
         {
             var list = results.ToList();
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
                 ClassicAssert.IsTrue(
                     AcceptedOperationStates.Contains(r.Operation.State.Value),
                     $"Initial state for {r.ResourceId} was {r.Operation.State} (expected one of {string.Join(",", AcceptedOperationStates)}).");
-                ClassicAssert.AreEqual(expectedOpType, r.Operation.OperationType, $"OperationType mismatch for {r.ResourceId}.");
+                ClassicAssert.AreEqual(expectedOpType, r.Operation.OperationKind, $"OperationKind mismatch for {r.ResourceId}.");
 
                 if (r.Operation.DeadlineOn.HasValue)
                 {
-                    ClassicAssert.AreEqual(ScheduledActionDeadlineType.InitiateAt, r.Operation.DeadlineType,
-                        $"Unexpected DeadlineType for {r.ResourceId}.");
+                    ClassicAssert.AreEqual(BulkActionDeadlineKind.InitiateAt, r.Operation.DeadlineKind,
+                        $"Unexpected DeadlineKind for {r.ResourceId}.");
                 }
             }
         }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub
             _nestedResourceTypeFirst = nestedResourceTypeFirst;
             _nestedResourceTypeSecond = nestedResourceTypeSecond;
             _nestedResourceTypeSecondSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", NestedResourceTypeSecondSkuResource.ResourceType.Namespace, Diagnostics);
-            _nestedResourceTypeSecondSkuRestClient = new NestedResourceTypeSecondSku(_nestedResourceTypeSecondSkuClientDiagnostics, Pipeline, Endpoint, nestedResourceTypeSecondSkuApiVersion ?? "2024-09-01");
+            _nestedResourceTypeSecondSkuRestClient = new NestedResourceTypeSecondSku(_nestedResourceTypeSecondSkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedResourceTypeSecondSkuApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

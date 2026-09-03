@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(DataMigrationServiceTaskResource.ResourceType, out string dataMigrationServiceTaskApiVersion);
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationServiceTaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
+            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(WorkspaceContractResource.ResourceType, out string workspaceContractApiVersion);
             _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CostManagement
     public enum CostManagementAlertCategory
     {
         /// <summary> Cost. </summary>
-        Cost,
+        Cost = 0,
         /// <summary> Usage. </summary>
-        Usage,
+        Usage = 1,
         /// <summary> Billing. </summary>
-        Billing,
+        Billing = 2,
         /// <summary> System. </summary>
-        System
+        System = 3
     }
 }

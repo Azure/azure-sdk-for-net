@@ -57,43 +57,43 @@ namespace Azure.ResourceManager.Peering.Mocking
 
         private ClientDiagnostics PeeringsClientDiagnostics => _peeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Peerings PeeringsRestClient => _peeringsRestClient ??= new Peerings(PeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private Peerings PeeringsRestClient => _peeringsRestClient ??= new Peerings(PeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringServicesClientDiagnostics => _peeringServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServices PeeringServicesRestClient => _peeringServicesRestClient ??= new PeeringServices(PeeringServicesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringServices PeeringServicesRestClient => _peeringServicesRestClient ??= new PeeringServices(PeeringServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringClientClientDiagnostics => _peeringClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringClient PeeringClientRestClient => _peeringClientRestClient ??= new PeeringClient(PeeringClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringClient PeeringClientRestClient => _peeringClientRestClient ??= new PeeringClient(PeeringClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics CdnPeeringPrefixesClientDiagnostics => _cdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnPeeringPrefixes CdnPeeringPrefixesRestClient => _cdnPeeringPrefixesRestClient ??= new CdnPeeringPrefixes(CdnPeeringPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private CdnPeeringPrefixes CdnPeeringPrefixesRestClient => _cdnPeeringPrefixesRestClient ??= new CdnPeeringPrefixes(CdnPeeringPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LegacyPeerings LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeerings(LegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private LegacyPeerings LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeerings(LegacyPeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics LookingGlassClientDiagnostics => _lookingGlassClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LookingGlass LookingGlassRestClient => _lookingGlassRestClient ??= new LookingGlass(LookingGlassClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private LookingGlass LookingGlassRestClient => _lookingGlassRestClient ??= new LookingGlass(LookingGlassClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringLocationsClientDiagnostics => _peeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringLocations PeeringLocationsRestClient => _peeringLocationsRestClient ??= new PeeringLocations(PeeringLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringLocations PeeringLocationsRestClient => _peeringLocationsRestClient ??= new PeeringLocations(PeeringLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringServiceCountriesClientDiagnostics => _peeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServiceCountries PeeringServiceCountriesRestClient => _peeringServiceCountriesRestClient ??= new PeeringServiceCountries(PeeringServiceCountriesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringServiceCountries PeeringServiceCountriesRestClient => _peeringServiceCountriesRestClient ??= new PeeringServiceCountries(PeeringServiceCountriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringServiceLocationsClientDiagnostics => _peeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServiceLocations PeeringServiceLocationsRestClient => _peeringServiceLocationsRestClient ??= new PeeringServiceLocations(PeeringServiceLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringServiceLocations PeeringServiceLocationsRestClient => _peeringServiceLocationsRestClient ??= new PeeringServiceLocations(PeeringServiceLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringServiceProvidersClientDiagnostics => _peeringServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServiceProviders PeeringServiceProvidersRestClient => _peeringServiceProvidersRestClient ??= new PeeringServiceProviders(PeeringServiceProvidersClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringServiceProviders PeeringServiceProvidersRestClient => _peeringServiceProvidersRestClient ??= new PeeringServiceProviders(PeeringServiceProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         /// <summary> Gets a collection of PeerAsns in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of PeerAsns and their operations over a PeerAsnResource. </returns>

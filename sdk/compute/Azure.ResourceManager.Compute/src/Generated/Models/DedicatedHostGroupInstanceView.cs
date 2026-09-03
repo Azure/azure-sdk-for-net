@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> List of instance view of the dedicated hosts under the dedicated host group. </summary>
-        public IList<DedicatedHostInstanceViewWithName> Hosts { get; }
+        public IList<DedicatedHostInstanceViewWithName> Hosts { get; } = new ChangeTrackingList<DedicatedHostInstanceViewWithName>();
     }
 }

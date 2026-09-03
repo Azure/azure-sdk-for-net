@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
 
         private ClientDiagnostics PublishersClientDiagnostics => _publishersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Publishers PublishersRestClient => _publishersRestClient ??= new Publishers(PublishersClientDiagnostics, Pipeline, Endpoint, "2025-03-30");
+        private Publishers PublishersRestClient => _publishersRestClient ??= new Publishers(PublishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
 
         private ClientDiagnostics ConfigurationGroupValuesClientDiagnostics => _configurationGroupValuesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationGroupValues ConfigurationGroupValuesRestClient => _configurationGroupValuesRestClient ??= new ConfigurationGroupValues(ConfigurationGroupValuesClientDiagnostics, Pipeline, Endpoint, "2025-03-30");
+        private ConfigurationGroupValues ConfigurationGroupValuesRestClient => _configurationGroupValuesRestClient ??= new ConfigurationGroupValues(ConfigurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
 
         private ClientDiagnostics NetworkFunctionsClientDiagnostics => _networkFunctionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkFunctions NetworkFunctionsRestClient => _networkFunctionsRestClient ??= new NetworkFunctions(NetworkFunctionsClientDiagnostics, Pipeline, Endpoint, "2025-03-30");
+        private NetworkFunctions NetworkFunctionsRestClient => _networkFunctionsRestClient ??= new NetworkFunctions(NetworkFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
 
         private ClientDiagnostics SitesClientDiagnostics => _sitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Endpoint, "2025-03-30");
+        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
 
         private ClientDiagnostics SiteNetworkServicesClientDiagnostics => _siteNetworkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SiteNetworkServices SiteNetworkServicesRestClient => _siteNetworkServicesRestClient ??= new SiteNetworkServices(SiteNetworkServicesClientDiagnostics, Pipeline, Endpoint, "2025-03-30");
+        private SiteNetworkServices SiteNetworkServicesRestClient => _siteNetworkServicesRestClient ??= new SiteNetworkServices(SiteNetworkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
 
         /// <summary>
         /// Lists all the publishers in a subscription.

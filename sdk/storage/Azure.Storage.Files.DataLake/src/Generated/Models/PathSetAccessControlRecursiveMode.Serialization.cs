@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class PathSetAccessControlRecursiveModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PathSetAccessControlRecursiveMode value) => value switch
         {
             PathSetAccessControlRecursiveMode.Set => "set",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathSetAccessControlRecursiveMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PathSetAccessControlRecursiveMode ToPathSetAccessControlRecursiveMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set")) return PathSetAccessControlRecursiveMode.Set;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "modify")) return PathSetAccessControlRecursiveMode.Modify;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return PathSetAccessControlRecursiveMode.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set"))
+            {
+                return PathSetAccessControlRecursiveMode.Set;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "modify"))
+            {
+                return PathSetAccessControlRecursiveMode.Modify;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove"))
+            {
+                return PathSetAccessControlRecursiveMode.Remove;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathSetAccessControlRecursiveMode value.");
         }
     }

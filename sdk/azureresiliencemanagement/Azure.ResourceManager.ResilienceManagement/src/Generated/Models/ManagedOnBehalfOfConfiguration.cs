@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<ManagedBrokerTarget> MoboBrokerResources { get; }
+        public IReadOnlyList<ManagedBrokerTarget> MoboBrokerResources { get; } = new ChangeTrackingList<ManagedBrokerTarget>();
     }
 }

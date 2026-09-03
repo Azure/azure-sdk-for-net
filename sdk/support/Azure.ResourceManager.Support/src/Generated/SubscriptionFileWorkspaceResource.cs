@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(ResourceType, out string subscriptionFileWorkspaceApiVersion);
             _subscriptionFileWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            _subscriptionFileWorkspaceRestClient = new SubscriptionFileWorkspace(_subscriptionFileWorkspaceClientDiagnostics, Pipeline, Endpoint, subscriptionFileWorkspaceApiVersion ?? "2026-07-01");
+            _subscriptionFileWorkspaceRestClient = new SubscriptionFileWorkspace(_subscriptionFileWorkspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionFileWorkspaceApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

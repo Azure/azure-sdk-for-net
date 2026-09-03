@@ -1,0 +1,8 @@
+# Azure.Storage.Blobs.ChangeFeed approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# BlobChangeFeedClient is a GA'd client whose only options-taking constructor accepts both a
+# BlobClientOptions and a change-feed-specific BlobChangeFeedClientOptions, so no single-options
+# overload matching the minimal (connection-string-only) constructor exists. Adding one would be a
+# breaking change to the public constructor surface, so AZC0007 is suppressed for this type.
+nowarn:AZC0007 T:Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClient

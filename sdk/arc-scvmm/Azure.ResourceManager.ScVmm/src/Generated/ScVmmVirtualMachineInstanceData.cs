@@ -14,43 +14,11 @@ using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
 {
-    /// <summary>
-    /// A class representing the ScVmmVirtualMachineInstance data model.
-    /// Define the virtualMachineInstance.
-    /// </summary>
+    /// <summary> Define the virtualMachineInstance. </summary>
     public partial class ScVmmVirtualMachineInstanceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineInstanceData"/>. </summary>
         /// <param name="extendedLocation"> Gets or sets the extended location. </param>
@@ -60,82 +28,135 @@ namespace Azure.ResourceManager.ScVmm
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            AvailabilitySets = new ChangeTrackingList<ScVmmAvailabilitySetItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Gets or sets the extended location. </param>
-        /// <param name="availabilitySets"> Availability Sets in vm. </param>
-        /// <param name="osProfile"> OS properties. </param>
-        /// <param name="hardwareProfile"> Hardware properties. </param>
-        /// <param name="networkProfile"> Network properties. </param>
-        /// <param name="storageProfile"> Storage properties. </param>
-        /// <param name="infrastructureProfile"> Gets the infrastructure profile. </param>
-        /// <param name="powerState"> Gets the power state of the virtual machine. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmVirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedLocation extendedLocation, IList<ScVmmAvailabilitySetItem> availabilitySets, OSProfileForVmInstance osProfile, ScVmmHardwareProfile hardwareProfile, ScVmmNetworkProfile networkProfile, ScVmmStorageProfile storageProfile, ScVmmInfrastructureProfile infrastructureProfile, string powerState, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmVirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineInstanceProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            AvailabilitySets = availabilitySets;
-            OSProfile = osProfile;
-            HardwareProfile = hardwareProfile;
-            NetworkProfile = networkProfile;
-            StorageProfile = storageProfile;
-            InfrastructureProfile = infrastructureProfile;
-            PowerState = powerState;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineInstanceData"/> for deserialization. </summary>
-        internal ScVmmVirtualMachineInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal VirtualMachineInstanceProperties Properties { get; set; }
 
         /// <summary> Gets or sets the extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> Availability Sets in vm. </summary>
-        public IList<ScVmmAvailabilitySetItem> AvailabilitySets { get; }
+        public IList<ScVmmAvailabilitySetItem> AvailabilitySets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceProperties();
+                }
+                return Properties.AvailabilitySets;
+            }
+        }
+
         /// <summary> OS properties. </summary>
-        public OSProfileForVmInstance OSProfile { get; set; }
+        public OSProfileForVmInstance OSProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceProperties();
+                }
+                Properties.OSProfile = value;
+            }
+        }
+
         /// <summary> Hardware properties. </summary>
-        public ScVmmHardwareProfile HardwareProfile { get; set; }
-        /// <summary> Network properties. </summary>
-        internal ScVmmNetworkProfile NetworkProfile { get; set; }
+        public ScVmmHardwareProfile HardwareProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardwareProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceProperties();
+                }
+                Properties.HardwareProfile = value;
+            }
+        }
+
+        /// <summary> Gets the infrastructure profile. </summary>
+        public ScVmmInfrastructureProfile InfrastructureProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InfrastructureProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceProperties();
+                }
+                Properties.InfrastructureProfile = value;
+            }
+        }
+
+        /// <summary> Gets the power state of the virtual machine. </summary>
+        public string PowerState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PowerState;
+            }
+        }
+
+        /// <summary> Provisioning state of the resource. </summary>
+        public ScVmmProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>
         public IList<ScVmmNetworkInterface> NetworkInterfaces
         {
             get
             {
-                if (NetworkProfile is null)
-                    NetworkProfile = new ScVmmNetworkProfile();
-                return NetworkProfile.NetworkInterfaces;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceProperties();
+                }
+                return Properties.NetworkInterfaces;
             }
         }
 
-        /// <summary> Storage properties. </summary>
-        internal ScVmmStorageProfile StorageProfile { get; set; }
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
         public IList<ScVmmVirtualDisk> StorageDisks
         {
             get
             {
-                if (StorageProfile is null)
-                    StorageProfile = new ScVmmStorageProfile();
-                return StorageProfile.Disks;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceProperties();
+                }
+                return Properties.StorageDisks;
             }
         }
-
-        /// <summary> Gets the infrastructure profile. </summary>
-        public ScVmmInfrastructureProfile InfrastructureProfile { get; set; }
-        /// <summary> Gets the power state of the virtual machine. </summary>
-        public string PowerState { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public ScVmmProvisioningState? ProvisioningState { get; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotTriggeredWebJobHistoryResource.ResourceType, out string webSiteSlotTriggeredWebJobHistoryApiVersion);
             _triggeredJobHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotTriggeredWebJobHistoryResource.ResourceType.Namespace, Diagnostics);
-            _triggeredJobHistoriesRestClient = new TriggeredJobHistories(_triggeredJobHistoriesClientDiagnostics, Pipeline, Endpoint, webSiteSlotTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
+            _triggeredJobHistoriesRestClient = new TriggeredJobHistories(_triggeredJobHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

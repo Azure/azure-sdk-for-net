@@ -380,6 +380,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Whether to enable node hardening at the cluster level. When enabled, AKS applies hardened defaults for soft eviction thresholds, kube-reserved, and system-reserved on all Linux node pools in the cluster. Per-node-pool kubeletConfig settings take precedence over hardening defaults. On agent pools running Kubernetes 1.37 or later, node hardening is enabled by default and cannot be disabled; setting this field to false has no effect on those pools. </summary>
+        [WirePath("properties.enableNodeHardening")]
+        public bool? EnableNodeHardening
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableNodeHardening;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.EnableNodeHardening = value;
+            }
+        }
+
         /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
         [WirePath("properties.enableNamespaceResources")]
         public bool? IsNamespaceResourcesEnabled
@@ -878,8 +896,8 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("properties.schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("properties.schedulerProfile.upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
         {
             get

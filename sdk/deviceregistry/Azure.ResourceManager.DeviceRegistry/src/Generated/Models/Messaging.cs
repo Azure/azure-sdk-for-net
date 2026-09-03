@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> Dictionary of messaging endpoints. </summary>
-        public IDictionary<string, MessagingEndpoint> Endpoints { get; }
+        public IDictionary<string, MessagingEndpoint> Endpoints { get; } = new ChangeTrackingDictionary<string, MessagingEndpoint>();
     }
 }

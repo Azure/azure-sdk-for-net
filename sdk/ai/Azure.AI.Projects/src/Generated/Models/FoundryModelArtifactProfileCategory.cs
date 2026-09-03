@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The artifact profile category. </summary>
-    internal readonly partial struct FoundryModelArtifactProfileCategory : IEquatable<FoundryModelArtifactProfileCategory>
+    [Experimental("AAIP001")]
+    public readonly partial struct FoundryModelArtifactProfileCategory : IEquatable<FoundryModelArtifactProfileCategory>
     {
         private readonly string _value;
         /// <summary> Data only artifacts. </summary>

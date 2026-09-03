@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum ParamIndicator
     {
         /// <summary> Expires. </summary>
-        Expires,
+        Expires = 0,
         /// <summary> KeyId. </summary>
-        KeyId,
+        KeyId = 1,
         /// <summary> Signature. </summary>
-        Signature
+        Signature = 2
     }
 }

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Provider specific inputs for container creation. </summary>
-        public IList<ReplicationProviderSpecificContainerCreationContent> SiteRecoveryCreateProtectionContainerProviderSpecificContent { get; }
+        public IList<ReplicationProviderSpecificContainerCreationContent> SiteRecoveryCreateProtectionContainerProviderSpecificContent { get; } = new ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>();
     }
 }

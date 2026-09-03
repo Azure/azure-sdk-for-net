@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
         /// <param name="onFailureAction"> Action to take on failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkOperationRetryPolicy(int? retryCount, int? retryWindowInMinutes, ComputeBulkOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkOperationRetryPolicy(int? retryCount, int? retryWindowInMinutes, ComputeBulkOperationKind? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryCount = retryCount;
             RetryWindowInMinutes = retryWindowInMinutes;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public int? RetryWindowInMinutes { get; set; }
 
         /// <summary> Action to take on failure. </summary>
-        public ComputeBulkOperationType? OnFailureAction { get; set; }
+        public ComputeBulkOperationKind? OnFailureAction { get; set; }
     }
 }

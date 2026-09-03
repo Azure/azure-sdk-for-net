@@ -44,6 +44,42 @@ namespace Azure.Messaging.ServiceBus
         public string Identifier { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the session is locked non-exclusively, allowing another receiver to
+        /// cooperatively take over the session by presenting its <see cref="SessionLockToken"/>. When <c>false</c>
+        /// (the default), the session is locked exclusively and no other receiver can access it until the lock is released.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Because a non-exclusive session can change hands, settlement for such a session is routed over the management
+        /// link rather than the receive link, so that messages delivered to a previous holder can still be settled. This
+        /// costs a request/response exchange on the shared management link per settlement rather than a disposition on
+        /// the receiver's own link, which lowers settlement throughput compared to an exclusive session.
+        ///
+        /// <para>Accepting a session with this set throws <see cref="NotSupportedException"/> when the endpoint declines it,
+        /// either by refusing the request outright or by accepting it without assigning a lock token, so catching that is how
+        /// a caller detects whether the feature is available for a namespace. An endpoint that declines in some other way
+        /// surfaces the exception its own error maps to.</para>
+        /// </remarks>
+        public bool EnableNonExclusiveSession { get; set; }
+
+        /// <summary>
+        /// Gets or sets the session lock token to present when cooperatively taking over a non-exclusive session. This must be
+        /// the token previously assigned by the service to the session, as reported by
+        /// <see cref="ServiceBusSessionReceiver.SessionLockToken"/> on the receiver that currently holds it, and is only valid
+        /// when <see cref="EnableNonExclusiveSession"/> is <c>true</c> and a specific session is being accepted (validated when
+        /// the receiver is created).
+        /// </summary>
+        /// <remarks>
+        /// The service represents this token as a GUID on the wire, so it is taken here as a <see cref="Guid"/> while the
+        /// receiver reports it as a <see cref="string"/>, matching how lock tokens are surfaced elsewhere in the library.
+        /// Convert with <see cref="Guid.Parse(string)"/> when taking a session over from another receiver.
+        ///
+        /// <para>This token authorizes taking over the session lock for any caller with Listen rights on the entity, so treat
+        /// it as sensitive: do not log it, do not persist it unprotected, and transmit it only over a trusted channel.</para>
+        /// </remarks>
+        public Guid? SessionLockToken { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -72,7 +108,7 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         internal ServiceBusReceiverOptions ToReceiverOptions() =>
-            new ServiceBusReceiverOptions()
+            new ServiceBusReceiverOptions(!EnableNonExclusiveSession, SessionLockToken)
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,

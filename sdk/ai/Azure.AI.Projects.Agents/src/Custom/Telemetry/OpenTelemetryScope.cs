@@ -272,6 +272,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     }
                 }
             }
+#pragma warning disable AAIP001
             else if (agentDefinition is WorkflowAgentDefinition workflowAgentDefinition)
             {
                 // Handle workflow agent
@@ -306,6 +307,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     new ActivityEvent(EventNameAgentWorkflow, tags: workflowTags)
                 );
             }
+#pragma warning restore AAIP001
             // Check for ImageBasedHostedAgentDefinition BEFORE checking for HostedAgentDefinition
             // since ImageBasedHostedAgentDefinition inherits from HostedAgentDefinition
             else if (agentDefinition is HostedAgentDefinition imageBasedHostedAgentDefinition)
@@ -367,11 +369,12 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
 
             // Check for workflow agent
+#pragma warning disable AAIP001
             if (agentDefinition is WorkflowAgentDefinition)
             {
                 return AgentTypeWorkflow;
             }
-
+#pragma warning restore AAIP001
             // Check for prompt agent
             if (agentDefinition is DeclarativeAgentDefinition)
             {

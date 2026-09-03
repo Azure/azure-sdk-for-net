@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(ResourceGuardProxyBaseResource.ResourceType, out string resourceGuardProxyBaseResourceApiVersion);
             _resourceGuardProxyBaseResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardProxyBaseResource.ResourceType.Namespace, Diagnostics);
-            _resourceGuardProxyBaseResourcesRestClient = new ResourceGuardProxyBaseResources(_resourceGuardProxyBaseResourcesClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyBaseResourceApiVersion ?? "2026-03-01");
+            _resourceGuardProxyBaseResourcesRestClient = new ResourceGuardProxyBaseResources(_resourceGuardProxyBaseResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardProxyBaseResourceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

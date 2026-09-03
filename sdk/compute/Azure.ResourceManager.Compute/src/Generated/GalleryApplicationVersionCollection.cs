@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(GalleryApplicationVersionResource.ResourceType, out string galleryApplicationVersionApiVersion);
             _galleryApplicationVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryApplicationVersionResource.ResourceType.Namespace, Diagnostics);
-            _galleryApplicationVersionsRestClient = new GalleryApplicationVersions(_galleryApplicationVersionsClientDiagnostics, Pipeline, Endpoint, galleryApplicationVersionApiVersion ?? "2025-12-03");
+            _galleryApplicationVersionsRestClient = new GalleryApplicationVersions(_galleryApplicationVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApplicationVersionApiVersion ?? "2025-12-03");
             ValidateResourceId(id);
         }
 

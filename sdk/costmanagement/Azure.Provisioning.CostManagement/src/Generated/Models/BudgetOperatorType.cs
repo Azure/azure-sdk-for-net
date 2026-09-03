@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CostManagement
     public enum BudgetOperatorType
     {
         /// <summary> In. </summary>
-        In
+        In = 0
     }
 }

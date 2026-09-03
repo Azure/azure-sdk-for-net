@@ -14,8 +14,8 @@ namespace Azure.Provisioning.CostManagement
     public enum CategoryType
     {
         /// <summary> A Budget that evaluates monetary cost of Azure resources against an amount, and alerts based on a configured notification threshold. </summary>
-        Cost,
+        Cost = 0,
         /// <summary> An Alert Rule that evaluates the utilization percentage of Azure Reservations, and alerts based on a configured notification threshold. </summary>
-        ReservationUtilization
+        ReservationUtilization = 1
     }
 }

@@ -267,7 +267,7 @@ namespace Azure.Core.Pipeline
                 Log(requestId, eventType, bytes, textEncoding);
             }
 
-            public void Log(string requestId, bool isError, byte[] buffer, int offset, int length, Encoding? textEncoding, int? block = null)
+            public void Log(string requestId, bool isError, byte[] buffer, int offset, int length, Encoding? textEncoding, int block)
             {
                 EventType eventType = ResponseOrError(isError);
 
@@ -278,18 +278,11 @@ namespace Azure.Core.Pipeline
 
                 var logLength = Math.Min(length, _maxLength);
 
-                byte[] bytes;
-                if (length == logLength && offset == 0)
-                {
-                    bytes = buffer;
-                }
-                else
-                {
-                    bytes = new byte[logLength];
-                    Array.Copy(buffer, offset, bytes, 0, logLength);
-                }
-
-                Log(requestId, eventType, bytes, textEncoding, block);
+                // Forward the slice that was actually read rather than the caller's whole buffer.
+                // Aliasing the buffer here published its unwritten remainder, which for pooled
+                // buffers is unrelated recycled content, and also defeated _maxLength.
+                // See https://github.com/Azure/azure-sdk-for-net/issues/61399.
+                Log(requestId, eventType, buffer, offset, logLength, textEncoding, block);
             }
 
             public bool IsEnabled(bool isError)
@@ -364,6 +357,27 @@ namespace Azure.Core.Pipeline
                         break;
                     case EventType.ErrorResponse:
                         azureCoreEventSource.ErrorResponseContent(requestId, bytes, textEncoding);
+                        break;
+                }
+            }
+
+            private void Log(string requestId, EventType eventType, byte[] buffer, int offset, int count, Encoding? textEncoding, int block)
+            {
+                // We checked IsEnabled before we got here
+                Debug.Assert(_eventSource != null);
+                AzureCoreEventSource azureCoreEventSource = _eventSource!;
+
+                // ResponseOrError never yields EventType.Request, so only the response cases apply here.
+                Debug.Assert(eventType != EventType.Request);
+
+                switch (eventType)
+                {
+                    case EventType.Response:
+                        azureCoreEventSource.ResponseContentBlock(requestId, block, buffer, offset, count, textEncoding);
+                        break;
+
+                    case EventType.ErrorResponse:
+                        azureCoreEventSource.ErrorResponseContentBlock(requestId, block, buffer, offset, count, textEncoding);
                         break;
                 }
             }

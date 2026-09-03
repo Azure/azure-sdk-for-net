@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Cdn
     public enum HealthProbeRequestType
     {
         /// <summary> NotSet. </summary>
-        NotSet,
+        NotSet = 0,
         /// <summary> Get. </summary>
         [DataMember(Name = "GET")]
-        Get,
+        Get = 1,
         /// <summary> Head. </summary>
         [DataMember(Name = "HEAD")]
-        Head
+        Head = 2
     }
 }

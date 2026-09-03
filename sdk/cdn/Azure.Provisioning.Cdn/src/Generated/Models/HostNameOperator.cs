@@ -11,24 +11,24 @@ namespace Azure.Provisioning.Cdn
     public enum HostNameOperator
     {
         /// <summary> Any. </summary>
-        Any,
+        Any = 0,
         /// <summary> Equal. </summary>
-        Equal,
+        Equal = 1,
         /// <summary> Contains. </summary>
-        Contains,
+        Contains = 2,
         /// <summary> BeginsWith. </summary>
-        BeginsWith,
+        BeginsWith = 3,
         /// <summary> EndsWith. </summary>
-        EndsWith,
+        EndsWith = 4,
         /// <summary> LessThan. </summary>
-        LessThan,
+        LessThan = 5,
         /// <summary> LessThanOrEqual. </summary>
-        LessThanOrEqual,
+        LessThanOrEqual = 6,
         /// <summary> GreaterThan. </summary>
-        GreaterThan,
+        GreaterThan = 7,
         /// <summary> GreaterThanOrEqual. </summary>
-        GreaterThanOrEqual,
+        GreaterThanOrEqual = 8,
         /// <summary> RegEx. </summary>
-        RegEx
+        RegEx = 9
     }
 }

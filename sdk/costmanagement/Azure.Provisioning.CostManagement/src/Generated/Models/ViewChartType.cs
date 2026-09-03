@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CostManagement
     public enum ViewChartType
     {
         /// <summary> Area. </summary>
-        Area,
+        Area = 0,
         /// <summary> Line. </summary>
-        Line,
+        Line = 1,
         /// <summary> StackedColumn. </summary>
-        StackedColumn,
+        StackedColumn = 2,
         /// <summary> GroupedColumn. </summary>
-        GroupedColumn,
+        GroupedColumn = 3,
         /// <summary> Table. </summary>
-        Table
+        Table = 4
     }
 }

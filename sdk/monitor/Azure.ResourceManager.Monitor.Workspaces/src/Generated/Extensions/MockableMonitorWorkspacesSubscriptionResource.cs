@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
 
         private ClientDiagnostics AzureMonitorWorkspacesClientDiagnostics => _azureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-10-03");
+        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-03");
 
         /// <summary>
         /// Lists all Azure Monitor Workspaces in the specified subscription

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ManagedClusterAdvancedNetworkingAccelerationMode
     {
         /// <summary> Enable eBPF host routing with veth device mode. </summary>
-        BpfVeth,
+        BpfVeth = 0,
         /// <summary> Disable acceleration options. </summary>
-        None
+        None = 1
     }
 }

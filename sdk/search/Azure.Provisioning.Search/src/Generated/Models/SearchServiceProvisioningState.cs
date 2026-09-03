@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Search
     {
         /// <summary> The last provisioning operation has completed successfully. </summary>
         [DataMember(Name = "succeeded")]
-        Succeeded,
+        Succeeded = 0,
         /// <summary> The search service is being provisioned or scaled up or down. For dedicated search services only. </summary>
         [DataMember(Name = "provisioning")]
-        Provisioning,
+        Provisioning = 1,
         /// <summary> The last provisioning operation has failed. </summary>
         [DataMember(Name = "failed")]
-        Failed
+        Failed = 2
     }
 }

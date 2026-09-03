@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string dedicatedHostApiVersion);
             _dedicatedHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _dedicatedHostsRestClient = new DedicatedHosts(_dedicatedHostsClientDiagnostics, Pipeline, Endpoint, dedicatedHostApiVersion ?? "2026-03-01");
+            _dedicatedHostsRestClient = new DedicatedHosts(_dedicatedHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHostApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

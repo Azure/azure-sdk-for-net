@@ -144,20 +144,19 @@ public class BasicAppContainersTests
               properties: {
                 configuration: {
                   ingress: {
+                    allowInsecure: false
                     external: true
                     targetPort: 80
                     traffic: [
                       {
-                        weight: 100
                         latestRevision: true
+                        weight: 100
                       }
                     ]
-                    allowInsecure: false
                   }
                 }
                 managedEnvironmentId: env.id
                 template: {
-                  revisionSuffix: 'firstrevision'
                   containers: [
                     {
                       image: containerImage
@@ -168,9 +167,10 @@ public class BasicAppContainersTests
                       }
                     }
                   ]
+                  revisionSuffix: 'firstrevision'
                   scale: {
-                    minReplicas: 1
                     maxReplicas: 3
+                    minReplicas: 1
                   }
                 }
               }

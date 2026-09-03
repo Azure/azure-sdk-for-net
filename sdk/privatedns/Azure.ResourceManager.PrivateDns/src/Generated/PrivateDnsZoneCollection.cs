@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             TryGetApiVersion(PrivateDnsZoneResource.ResourceType, out string privateDnsZoneApiVersion);
             _privateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsZoneResource.ResourceType.Namespace, Diagnostics);
-            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
             ValidateResourceId(id);
         }
 

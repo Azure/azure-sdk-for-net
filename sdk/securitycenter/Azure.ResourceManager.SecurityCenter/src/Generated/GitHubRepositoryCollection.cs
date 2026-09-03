@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GitHubRepositoryResource.ResourceType, out string gitHubRepositoryApiVersion);
             _gitHubReposClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitHubRepositoryResource.ResourceType.Namespace, Diagnostics);
-            _gitHubReposRestClient = new GitHubRepos(_gitHubReposClientDiagnostics, Pipeline, Endpoint, gitHubRepositoryApiVersion ?? "2025-11-01-preview");
+            _gitHubReposRestClient = new GitHubRepos(_gitHubReposClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitHubRepositoryApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

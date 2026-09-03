@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> List of times of day this schedule has to be run. </summary>
-        public IList<DateTimeOffset> ScheduleRunTimes { get; }
+        public IList<DateTimeOffset> ScheduleRunTimes { get; } = new ChangeTrackingList<DateTimeOffset>();
     }
 }

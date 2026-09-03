@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Common Data Service data type connection. </summary>
-    public partial class Dynamics365DataConnectorDataTypesDynamics365CdsActivities : DataConnectorDataTypeCommon, IJsonModel<Dynamics365DataConnectorDataTypesDynamics365CdsActivities>
+    internal partial class Dynamics365DataConnectorDataTypesDynamics365CdsActivities : DataConnectorDataTypeCommon, IJsonModel<Dynamics365DataConnectorDataTypesDynamics365CdsActivities>
     {
         /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/> for deserialization. </summary>
         internal Dynamics365DataConnectorDataTypesDynamics365CdsActivities()

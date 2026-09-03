@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 vmGroupName,
                 autoScaleConfiguration,
                 hardwareVmSize is null ? default : new HardwareProfile(hardwareVmSize, default),
-                osLinuxProfile is null ? default : new OsProfile(osLinuxProfile, default),
+                osLinuxProfile is null ? default : new OSProfile(osLinuxProfile, default),
                 virtualNetworkProfile,
                 (dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>()).ToList(),
                 (scriptActions ?? new ChangeTrackingList<ScriptAction>()).ToList(),
@@ -284,6 +284,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 privateIPAllocationMethod,
                 new ResourceId(subnetId, default),
                 default), default);
+        }
+
+        /// <param name="status"> The async operation state. </param>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
+        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = default, ResponseError error = default)
+        {
+            return new HDInsightAsyncOperationResult(status, error is null ? default : new ErrorResponse(error, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

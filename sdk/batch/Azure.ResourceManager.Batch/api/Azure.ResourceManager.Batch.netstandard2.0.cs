@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.Batch
     public partial class BatchAccountData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.BatchAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.BatchAccountData>
     {
         public BatchAccountData() { }
+        public BatchAccountData(Azure.Core.AzureLocation? location) { }
         public string AccountEndpoint { get { throw null; } }
         public int? ActiveJobAndJobScheduleQuota { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } }

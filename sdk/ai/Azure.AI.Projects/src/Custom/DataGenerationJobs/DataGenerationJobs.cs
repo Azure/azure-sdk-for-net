@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -130,11 +131,27 @@ public partial class DataGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<DataGenerationJob> Create(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = Create(false, job, operationId, cancellationToken);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Creates a data generation job. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual OperationResult Create(bool waitUntilCompleted, DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
         return CreateGenerationJob(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         );
     }
 
@@ -146,11 +163,27 @@ public partial class DataGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<DataGenerationJob>> CreateAsync(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = await CreateAsync(false, job, operationId, cancellationToken).ConfigureAwait(false);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Creates a data generation job. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
         return await CreateGenerationJobAsync(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
     }
 

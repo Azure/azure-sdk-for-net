@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         /// <param name="includeCountry"> Whether to include C in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
         /// <param name="includePostalCode"> Whether to include PC in the certificate subject name. </param>
         /// <param name="identityValidationId"> Identity validation id used for the certificate subject name. </param>
+        /// <param name="programType"> Indicates whether the resource is intended for a specific usage scenario. </param>
         /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateProfileProperties(CertificateProfileType certificateProfileType, bool? includeStreetAddress, bool? includeCity, bool? includeState, bool? includeCountry, bool? includePostalCode, string identityValidationId, ArtifactSigningProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<ArtifactSigningCertificate> certificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateProfileProperties(CertificateProfileType certificateProfileType, bool? includeStreetAddress, bool? includeCity, bool? includeState, bool? includeCountry, bool? includePostalCode, string identityValidationId, string programType, ArtifactSigningProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<ArtifactSigningCertificate> certificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateProfileType = certificateProfileType;
             IncludeStreetAddress = includeStreetAddress;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             IncludeCountry = includeCountry;
             IncludePostalCode = includePostalCode;
             IdentityValidationId = identityValidationId;
+            ProgramType = programType;
             ProvisioningState = provisioningState;
             Status = status;
             Certificates = certificates;
@@ -77,6 +79,9 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <summary> Identity validation id used for the certificate subject name. </summary>
         public string IdentityValidationId { get; set; }
+
+        /// <summary> Indicates whether the resource is intended for a specific usage scenario. </summary>
+        public string ProgramType { get; set; }
 
         /// <summary> Status of the current operation on certificate profile. </summary>
         public ArtifactSigningProvisioningState? ProvisioningState { get; }

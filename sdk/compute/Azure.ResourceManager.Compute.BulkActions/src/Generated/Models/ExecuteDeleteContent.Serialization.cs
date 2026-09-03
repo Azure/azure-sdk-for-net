@@ -92,8 +92,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
-            writer.WritePropertyName("resources"u8);
-            writer.WriteObjectValue(Resources, options);
+            if (Optional.IsDefined(Resources))
+            {
+                writer.WritePropertyName("resources"u8);
+                writer.WriteObjectValue(Resources, options);
+            }
+            if (Optional.IsDefined(ResourcesWithContext))
+            {
+                writer.WritePropertyName("resourcesWithContext"u8);
+                writer.WriteObjectValue(ResourcesWithContext, options);
+            }
             if (Optional.IsDefined(IsForceDeletion))
             {
                 writer.WritePropertyName("forceDeletion"u8);
@@ -141,20 +149,34 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ScheduledActionExecutionParameterDetail executionParameters = default;
+            BulkActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
+            ResourcesWithContext resourcesWithContext = default;
             bool? isForceDeletion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
+                    executionParameters = BulkActionExecutionParameterDetail.DeserializeBulkActionExecutionParameterDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resources = UserRequestResources.DeserializeUserRequestResources(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("resourcesWithContext"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourcesWithContext = ResourcesWithContext.DeserializeResourcesWithContext(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("forceDeletion"u8))
@@ -171,7 +193,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExecuteDeleteContent(executionParameters, resources, isForceDeletion, additionalBinaryDataProperties);
+            return new ExecuteDeleteContent(executionParameters, resources, resourcesWithContext, isForceDeletion, additionalBinaryDataProperties);
         }
     }
 }

@@ -33,10 +33,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
+        /// <param name="zoneRedundant"> A value that indicates whether the cluster is zone redundant. </param>
         /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsClusterData"/> instance for mocking. </returns>
-        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, EventHubsClusterProvisioningState? provisioningState = default, DateTimeOffset? updatedOn = default, string metricId = default, string status = default, bool? supportsScaling = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsClusterSku sku = default)
+        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, EventHubsClusterProvisioningState? provisioningState = default, DateTimeOffset? updatedOn = default, string metricId = default, string status = default, bool? supportsScaling = default, bool? zoneRedundant = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsClusterSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createdOn is null && provisioningState is null && updatedOn is null && metricId is null && status is null && supportsScaling is null && platformCapabilitiesConfidentialComputeMode is null ? default : new ClusterProperties(
+                createdOn is null && provisioningState is null && updatedOn is null && metricId is null && status is null && supportsScaling is null && platformCapabilitiesConfidentialComputeMode is null && zoneRedundant is null ? default : new ClusterProperties(
                     createdOn,
                     provisioningState,
                     updatedOn,
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     status,
                     supportsScaling,
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
+                    zoneRedundant,
                     default),
                 sku,
                 default);
@@ -437,6 +439,122 @@ namespace Azure.ResourceManager.EventHubs.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Microsoft Fabric shortcut. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsFabricShortcutData"/> instance for mocking. </returns>
+        public static EventHubsFabricShortcutData EventHubsFabricShortcutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsFabricShortcutProperties properties = default, string location = default)
+        {
+            return new EventHubsFabricShortcutData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                default);
+        }
+
+        /// <param name="configuration"> Microsoft Fabric workspace and artifact configuration. </param>
+        /// <param name="shortcutType"> The type of the shortcut. </param>
+        /// <param name="shortcutStatus"> The current shortcut status. Only Pending can be supplied on create or update. </param>
+        /// <param name="statusDescription"> A description of the current shortcut status. </param>
+        /// <param name="createdOn"> The UTC time when the shortcut was created. </param>
+        /// <param name="modifiedOn"> The UTC time when the shortcut was last modified. </param>
+        /// <returns> A new <see cref="Models.EventHubsFabricShortcutProperties"/> instance for mocking. </returns>
+        public static EventHubsFabricShortcutProperties EventHubsFabricShortcutProperties(EventHubsFabricShortcutConfiguration configuration = default, EventHubsFabricShortcutType? shortcutType = default, EventHubsFabricShortcutStatus? shortcutStatus = default, string statusDescription = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default)
+        {
+            return new EventHubsFabricShortcutProperties(
+                configuration,
+                shortcutType,
+                shortcutStatus,
+                statusDescription,
+                createdOn,
+                modifiedOn,
+                default);
+        }
+
+        /// <param name="tenantId"> The Microsoft Fabric tenant ID. </param>
+        /// <param name="workspaceId"> The Microsoft Fabric workspace ID. </param>
+        /// <param name="artifactId"> The Microsoft Fabric artifact ID. </param>
+        /// <param name="premiumCapacityId"> The Microsoft Fabric premium capacity ID. </param>
+        /// <param name="logAnalyticsResourceId"> The resource ID of the Log Analytics workspace. </param>
+        /// <param name="workspaceName"> The Microsoft Fabric workspace name. </param>
+        /// <param name="artifactName"> The Microsoft Fabric artifact name. </param>
+        /// <returns> A new <see cref="Models.EventHubsFabricShortcutConfiguration"/> instance for mocking. </returns>
+        public static EventHubsFabricShortcutConfiguration EventHubsFabricShortcutConfiguration(Guid tenantId = default, Guid workspaceId = default, Guid artifactId = default, string premiumCapacityId = default, ResourceIdentifier logAnalyticsResourceId = default, string workspaceName = default, string artifactName = default)
+        {
+            return new EventHubsFabricShortcutConfiguration(
+                tenantId,
+                workspaceId,
+                artifactId,
+                premiumCapacityId,
+                logAnalyticsResourceId,
+                workspaceName,
+                artifactName,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Upgrade preference properties for the Event Hubs Dedicated cluster. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsUpgradePreferencesData"/> instance for mocking. </returns>
+        public static EventHubsUpgradePreferencesData EventHubsUpgradePreferencesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsUpgradePreferencesProperties properties = default)
+        {
+            return new EventHubsUpgradePreferencesData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="maintenanceWindows"> Recurring weekly maintenance windows in UTC. At least one window must be supplied when preferences are created or updated. A maximum of two windows can be configured, and their combined duration must be at least 16 hours per week. </param>
+        /// <param name="exceptionWindows"> Date-specific exceptions to the recurring maintenance windows. </param>
+        /// <param name="upgradeStatus"> The current cluster upgrade status. </param>
+        /// <returns> A new <see cref="Models.EventHubsUpgradePreferencesProperties"/> instance for mocking. </returns>
+        public static EventHubsUpgradePreferencesProperties EventHubsUpgradePreferencesProperties(IEnumerable<EventHubsMaintenanceWindow> maintenanceWindows = default, IEnumerable<EventHubsExceptionWindow> exceptionWindows = default, EventHubsUpgradeStatus upgradeStatus = default)
+        {
+            maintenanceWindows ??= new ChangeTrackingList<EventHubsMaintenanceWindow>();
+            exceptionWindows ??= new ChangeTrackingList<EventHubsExceptionWindow>();
+
+            return new EventHubsUpgradePreferencesProperties((maintenanceWindows ?? new ChangeTrackingList<EventHubsMaintenanceWindow>()).ToList(), (exceptionWindows ?? new ChangeTrackingList<EventHubsExceptionWindow>()).ToList(), upgradeStatus, default);
+        }
+
+        /// <param name="dayOfWeek"> The UTC day of the week on which the maintenance window starts. </param>
+        /// <param name="startTimeOfDay"> The UTC time of day at which the maintenance window starts, represented as an ISO 8601 duration since midnight. </param>
+        /// <param name="durationMinutes"> The maintenance window duration in minutes. The value must be between 480 and 1440 in 60-minute increments. </param>
+        /// <returns> A new <see cref="Models.EventHubsMaintenanceWindow"/> instance for mocking. </returns>
+        public static EventHubsMaintenanceWindow EventHubsMaintenanceWindow(EventHubsUpgradePreferenceDayOfWeek dayOfWeek = default, TimeSpan startTimeOfDay = default, int durationMinutes = default)
+        {
+            return new EventHubsMaintenanceWindow(dayOfWeek, startTimeOfDay, durationMinutes, default);
+        }
+
+        /// <param name="dateOn"> The UTC date on which the exception starts. </param>
+        /// <param name="action"> Whether the exception blocks or allows upgrades. </param>
+        /// <param name="startTimeOfDay"> The UTC time of day at which the exception starts, represented as an ISO 8601 duration since midnight. </param>
+        /// <param name="durationMinutes"> The exception duration in minutes. Allow exceptions must be between 480 and 1440 minutes in 60-minute increments. Block exceptions must be 1440 minutes. </param>
+        /// <returns> A new <see cref="Models.EventHubsExceptionWindow"/> instance for mocking. </returns>
+        public static EventHubsExceptionWindow EventHubsExceptionWindow(DateTimeOffset dateOn = default, EventHubsExceptionWindowAction action = default, TimeSpan startTimeOfDay = default, int durationMinutes = default)
+        {
+            return new EventHubsExceptionWindow(dateOn, action, startTimeOfDay, durationMinutes, default);
+        }
+
+        /// <param name="hasPendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
+        /// <param name="isInProgress"> Whether an upgrade-now override is currently active. </param>
+        /// <param name="completesOn"> The estimated UTC time when the current upgrade will complete. </param>
+        /// <returns> A new <see cref="Models.EventHubsUpgradeStatus"/> instance for mocking. </returns>
+        public static EventHubsUpgradeStatus EventHubsUpgradeStatus(bool hasPendingUpgrade = default, bool isInProgress = default, DateTimeOffset? completesOn = default)
+        {
+            return new EventHubsUpgradeStatus(hasPendingUpgrade, isInProgress, completesOn, default);
+        }
+
         /// <param name="settings"> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </param>
         /// <returns> A new <see cref="Models.ClusterQuotaConfigurationProperties"/> instance for mocking. </returns>
         public static ClusterQuotaConfigurationProperties ClusterQuotaConfigurationProperties(IDictionary<string, string> settings = default)
@@ -470,11 +588,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
+        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
         /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsNamespaceData"/> instance for mocking. </returns>
-        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, ResourceIdentifier clusterArmId = default, string metricId = default, bool? isAutoInflateEnabled = default, EventHubsPublicNetworkAccess? publicNetworkAccess = default, int? maximumThroughputUnits = default, bool? kafkaEnabled = default, bool? zoneRedundant = default, EventHubsEncryption encryption = default, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsSku sku = default, ManagedServiceIdentity identity = default)
+        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, ResourceIdentifier clusterArmId = default, string metricId = default, bool? isAutoInflateEnabled = default, EventHubsPublicNetworkAccess? publicNetworkAccess = default, int? maximumThroughputUnits = default, bool? kafkaEnabled = default, bool? zoneRedundant = default, EventHubsEncryption encryption = default, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = default, EventHubsIPAddressType? ipAddressType = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsSku sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -485,7 +604,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && clusterArmId is null && metricId is null && isAutoInflateEnabled is null && publicNetworkAccess is null && maximumThroughputUnits is null && kafkaEnabled is null && zoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null ? default : new EHNamespaceProperties(
+                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && clusterArmId is null && metricId is null && isAutoInflateEnabled is null && publicNetworkAccess is null && maximumThroughputUnits is null && kafkaEnabled is null && zoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new EHNamespaceProperties(
                     minimumTlsVersion,
                     provisioningState,
                     status,
@@ -505,6 +624,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     alternateName,
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     geoDataReplication,
+                    ipAddressType,
                     default),
                 sku,
                 identity,
@@ -547,7 +667,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="replicaState"> state of Namespace replica. </param>
         /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <returns> A new <see cref="Models.EventHubsNamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = default, EventHubsNamespaceGeoDRRoleType? roleType = default, string replicaState = default, ResourceIdentifier clusterArmId = default)
+        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = default, EventHubsNamespaceGeoDrRoleType? roleType = default, string replicaState = default, ResourceIdentifier clusterArmId = default)
         {
             return new EventHubsNamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, default);
         }
@@ -616,12 +736,12 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="value"> The NetworkRuleSet items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.NetworkRuleSetListResult"/> instance for mocking. </returns>
-        public static NetworkRuleSetListResult NetworkRuleSetListResult(IEnumerable<EventHubsNetworkRuleSetData> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetListResult"/> instance for mocking. </returns>
+        public static EventHubsNetworkRuleSetListResult EventHubsNetworkRuleSetListResult(IEnumerable<EventHubsNetworkRuleSetData> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<EventHubsNetworkRuleSetData>();
 
-            return new NetworkRuleSetListResult((value ?? new ChangeTrackingList<EventHubsNetworkRuleSetData>()).ToList(), nextLink, default);
+            return new EventHubsNetworkRuleSetListResult((value ?? new ChangeTrackingList<EventHubsNetworkRuleSetData>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -745,6 +865,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     status,
                     supportsScaling,
                     default,
+                    default,
                     default),
                 sku,
                 default);
@@ -805,6 +926,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>()).ToList(),
                     disableLocalAuth,
                     alternateName,
+                    default,
                     default,
                     default,
                     default),

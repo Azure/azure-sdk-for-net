@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(EventGridDomainPrivateEndpointConnectionResource.ResourceType, out string eventGridDomainPrivateEndpointConnectionApiVersion);
             _eventGridPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EventGridDomainPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _eventGridPrivateEndpointConnectionsRestClient = new EventGridPrivateEndpointConnections(_eventGridPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, eventGridDomainPrivateEndpointConnectionApiVersion ?? "2024-05-01");
+            _eventGridPrivateEndpointConnectionsRestClient = new EventGridPrivateEndpointConnections(_eventGridPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainPrivateEndpointConnectionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

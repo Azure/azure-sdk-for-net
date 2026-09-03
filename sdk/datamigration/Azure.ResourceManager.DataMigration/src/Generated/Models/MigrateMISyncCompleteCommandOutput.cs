@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> List of errors that happened during the command execution. </summary>
-        public IList<DataMigrationReportableException> Errors { get; }
+        public IList<DataMigrationReportableException> Errors { get; } = new ChangeTrackingList<DataMigrationReportableException>();
     }
 }

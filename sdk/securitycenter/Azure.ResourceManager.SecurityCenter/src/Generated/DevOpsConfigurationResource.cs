@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string devOpsConfigurationApiVersion);
             _devOpsConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _devOpsConfigurationsRestClient = new DevOpsConfigurations(_devOpsConfigurationsClientDiagnostics, Pipeline, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
+            _devOpsConfigurationsRestClient = new DevOpsConfigurations(_devOpsConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
             _devOpsOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _devOpsOperationResultsRestClient = new DevOpsOperationResults(_devOpsOperationResultsClientDiagnostics, Pipeline, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
+            _devOpsOperationResultsRestClient = new DevOpsOperationResults(_devOpsOperationResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
             _gitHubOwnersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _gitHubOwnersRestClient = new GitHubOwners(_gitHubOwnersClientDiagnostics, Pipeline, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
+            _gitHubOwnersRestClient = new GitHubOwners(_gitHubOwnersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
             _gitLabGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _gitLabGroupsRestClient = new GitLabGroups(_gitLabGroupsClientDiagnostics, Pipeline, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
+            _gitLabGroupsRestClient = new GitLabGroups(_gitLabGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
             _azureDevOpsOrgsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _azureDevOpsOrgsRestClient = new AzureDevOpsOrgs(_azureDevOpsOrgsClientDiagnostics, Pipeline, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
+            _azureDevOpsOrgsRestClient = new AzureDevOpsOrgs(_azureDevOpsOrgsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsConfigurationApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

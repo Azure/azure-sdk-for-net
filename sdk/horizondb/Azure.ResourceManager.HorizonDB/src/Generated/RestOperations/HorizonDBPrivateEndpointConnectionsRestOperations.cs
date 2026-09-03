@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HorizonDB
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of HorizonDBPrivateEndpointConnections for mocking. </summary>
         protected HorizonDBPrivateEndpointConnections()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.HorizonDB
         /// <summary> Initializes a new instance of HorizonDBPrivateEndpointConnections. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal HorizonDBPrivateEndpointConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HorizonDBPrivateEndpointConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(HorizonDBPrivateEndpointConnections).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.HorizonDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.HorizonDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -107,11 +112,12 @@ namespace Azure.ResourceManager.HorizonDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateUpdatePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateStatusPrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -119,7 +125,9 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HorizonDb/privateEndpointConnections/", false);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             if (_apiVersion != null)
             {
@@ -128,14 +136,15 @@ namespace Azure.ResourceManager.HorizonDB
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
+            request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContext context)
+        internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -143,7 +152,9 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HorizonDb/privateEndpointConnections/", false);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             if (_apiVersion != null)
             {
@@ -153,6 +164,7 @@ namespace Azure.ResourceManager.HorizonDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
     }

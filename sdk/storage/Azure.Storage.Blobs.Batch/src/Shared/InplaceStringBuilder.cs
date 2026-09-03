@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [DebuggerDisplay("Value = {_value}")]
     [Obsolete("This type is obsolete and will be removed in a future version.")]
     internal struct InplaceStringBuilder

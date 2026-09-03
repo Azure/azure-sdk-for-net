@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupEngineApiVersion);
             _backupEnginesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupEnginesRestClient = new BackupEngines(_backupEnginesClientDiagnostics, Pipeline, Endpoint, backupEngineApiVersion ?? "2026-01-31-preview");
+            _backupEnginesRestClient = new BackupEngines(_backupEnginesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupEngineApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

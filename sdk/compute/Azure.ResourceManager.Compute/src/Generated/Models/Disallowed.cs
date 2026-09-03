@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of disk types. </summary>
-        public IList<string> DiskTypes { get; }
+        public IList<string> DiskTypes { get; } = new ChangeTrackingList<string>();
     }
 }

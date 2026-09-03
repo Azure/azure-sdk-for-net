@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string firewallPolicyApiVersion);
             _firewallPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-09-01");
             _firewallPolicyDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyDeploymentsRestClient = new FirewallPolicyDeployments(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyDeploymentsRestClient = new FirewallPolicyDeployments(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-09-01");
             _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValues(_firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValues(_firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-09-01");
             _firewallPolicyIdpsSignaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignatures(_firewallPolicyIdpsSignaturesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignatures(_firewallPolicyIdpsSignaturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-09-01");
             _firewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1116,6 +1116,39 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             return GetFirewallPolicyRuleCollectionGroups().Get(ruleCollectionGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FirewallPolicyKubeSelectorGroups in the <see cref="FirewallPolicyResource"/>. </summary>
+        /// <returns> An object representing collection of FirewallPolicyKubeSelectorGroups and their operations over a FirewallPolicyKubeSelectorGroupResource. </returns>
+        public virtual FirewallPolicyKubeSelectorGroupCollection GetFirewallPolicyKubeSelectorGroups()
+        {
+            return GetCachedClient(client => new FirewallPolicyKubeSelectorGroupCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified FirewallPolicyKubeSelectorGroup. </summary>
+        /// <param name="kubeSelectorGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubeSelectorGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubeSelectorGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FirewallPolicyKubeSelectorGroupResource>> GetFirewallPolicyKubeSelectorGroupAsync(string kubeSelectorGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kubeSelectorGroupName, nameof(kubeSelectorGroupName));
+
+            return await GetFirewallPolicyKubeSelectorGroups().GetAsync(kubeSelectorGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified FirewallPolicyKubeSelectorGroup. </summary>
+        /// <param name="kubeSelectorGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubeSelectorGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubeSelectorGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FirewallPolicyKubeSelectorGroupResource> GetFirewallPolicyKubeSelectorGroup(string kubeSelectorGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kubeSelectorGroupName, nameof(kubeSelectorGroupName));
+
+            return GetFirewallPolicyKubeSelectorGroups().Get(kubeSelectorGroupName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="PolicySignaturesOverridesForIdpsResource"/> along with the instance operations that can be performed on it in the <see cref="FirewallPolicyResource"/>. </summary>

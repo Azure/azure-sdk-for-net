@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "Microsoft.Discovery.Workspace": "2026-06-01",
+    "Microsoft.Discovery.Bookshelf": "2026-06-01"
+  }
+}

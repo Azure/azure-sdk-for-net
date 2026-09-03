@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

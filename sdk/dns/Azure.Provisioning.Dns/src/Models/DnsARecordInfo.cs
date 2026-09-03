@@ -13,6 +13,9 @@ namespace Azure.Provisioning.Dns;
 /// </summary>
 public partial class DnsARecordInfo : ProvisionableConstruct
 {
+    /// <summary>
+    /// The IPv4 address of this A record.
+    /// </summary>
     public BicepValue<IPAddress> Ipv4Address
     {
         get { Initialize(); return _ipv4Address!; }

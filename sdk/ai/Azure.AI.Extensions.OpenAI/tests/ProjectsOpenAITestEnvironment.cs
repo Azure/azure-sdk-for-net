@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Tests.Shared;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 
@@ -12,6 +13,11 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
+        public ProjectsOpenAITestEnvironment()
+        {
+            PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+        }
+
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string FOUNDRY_AGENT_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_AGENT_NAME), isSecret: false);
         public string FOUNDRY_MODEL_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_MODEL_NAME), isSecret: false);
@@ -69,7 +75,22 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 
         public override Dictionary<string, string> ParseEnvironmentFile()
         {
-            return new();
+            var values = AiTestEnvironmentBootstrap.ReadEnvironmentFile(null, out bool environmentFileFound);
+
+            if (environmentFileFound)
+            {
+                // A test environment is already provisioned. The AI Foundry suites need far more
+                // settings than the deployment template/scripts pre-create, so don't launch resource
+                // creation for a missing setting; let the test fail with a clear "missing environment
+                // variable" error instead.
+                AiTestEnvironmentBootstrap.DisableResourceBootstrapping();
+            }
+            else
+            {
+                PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+            }
+
+            return values;
         }
 
         public override Task WaitForEnvironmentAsync()

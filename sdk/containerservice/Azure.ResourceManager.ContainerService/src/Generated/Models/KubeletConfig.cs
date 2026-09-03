@@ -38,8 +38,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="seccompDefault"> Specifies the default seccomp profile applied to all workloads. If not specified, 'Unconfined' will be used by default. </param>
         /// <param name="kubeReserved"> Kube-reserved values for kubelet. When a value is not set, the system-computed default based on VM size is used. See [AKS node resource reservations](https://aka.ms/aks/nodereservations) for details on computed defaults. Only applicable for Linux nodepools. </param>
         /// <param name="hardEvictionThreshold"> Hard eviction thresholds for kubelet. When a threshold is not set, the system default is used. See [AKS node resource reservations](https://aka.ms/aks/nodereservations) for details on computed defaults. Only applicable for Linux nodepools. </param>
+        /// <param name="softEvictionThreshold"> Soft eviction thresholds for kubelet. When crossed, pods are evicted after the paired softEvictionGracePeriod. System defaults apply when the cluster's `enableNodeHardening` property is true; otherwise no soft eviction is configured. For each signal (memoryAvailable, nodeFsAvailable, nodeFsInodesFree), the entries in softEvictionThreshold and softEvictionGracePeriod must be in the same state: both omitted (default), both non-empty (override), or both empty strings (opt that signal out). Only applicable for Linux nodepools. See https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#soft-eviction-thresholds. </param>
+        /// <param name="softEvictionGracePeriod"> Grace periods for soft eviction signals — how long a threshold must be held before pod eviction. Same defaulting and pairing rules as softEvictionThreshold. Values are Go-style duration strings (e.g. '1m30s'); supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. Only applicable for Linux nodepools. </param>
+        /// <param name="evictionMaxPodGracePeriodInSeconds"> Maximum grace period, in seconds, for pods to terminate during a soft eviction; caps the pod's terminationGracePeriodSeconds. Default is 60, applied when the cluster's `enableNodeHardening` property is true. Only applicable for Linux nodepools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? shouldFailStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, SeccompDefault? seccompDefault, KubeletReservedResources kubeReserved, KubeletHardEvictionThreshold hardEvictionThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? shouldFailStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, SeccompDefault? seccompDefault, KubeletReservedResources kubeReserved, KubeletHardEvictionThreshold hardEvictionThreshold, SoftEvictionThreshold softEvictionThreshold, SoftEvictionGracePeriod softEvictionGracePeriod, int? evictionMaxPodGracePeriodInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuManagerPolicy = cpuManagerPolicy;
             IsCpuCfsQuotaEnabled = isCpuCfsQuotaEnabled;
@@ -55,6 +58,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             SeccompDefault = seccompDefault;
             KubeReserved = kubeReserved;
             HardEvictionThreshold = hardEvictionThreshold;
+            SoftEvictionThreshold = softEvictionThreshold;
+            SoftEvictionGracePeriod = softEvictionGracePeriod;
+            EvictionMaxPodGracePeriodInSeconds = evictionMaxPodGracePeriodInSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -113,5 +119,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Hard eviction thresholds for kubelet. When a threshold is not set, the system default is used. See [AKS node resource reservations](https://aka.ms/aks/nodereservations) for details on computed defaults. Only applicable for Linux nodepools. </summary>
         [WirePath("hardEvictionThreshold")]
         public KubeletHardEvictionThreshold HardEvictionThreshold { get; set; }
+
+        /// <summary> Soft eviction thresholds for kubelet. When crossed, pods are evicted after the paired softEvictionGracePeriod. System defaults apply when the cluster's `enableNodeHardening` property is true; otherwise no soft eviction is configured. For each signal (memoryAvailable, nodeFsAvailable, nodeFsInodesFree), the entries in softEvictionThreshold and softEvictionGracePeriod must be in the same state: both omitted (default), both non-empty (override), or both empty strings (opt that signal out). Only applicable for Linux nodepools. See https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#soft-eviction-thresholds. </summary>
+        [WirePath("softEvictionThreshold")]
+        public SoftEvictionThreshold SoftEvictionThreshold { get; set; }
+
+        /// <summary> Grace periods for soft eviction signals — how long a threshold must be held before pod eviction. Same defaulting and pairing rules as softEvictionThreshold. Values are Go-style duration strings (e.g. '1m30s'); supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. Only applicable for Linux nodepools. </summary>
+        [WirePath("softEvictionGracePeriod")]
+        public SoftEvictionGracePeriod SoftEvictionGracePeriod { get; set; }
+
+        /// <summary> Maximum grace period, in seconds, for pods to terminate during a soft eviction; caps the pod's terminationGracePeriodSeconds. Default is 60, applied when the cluster's `enableNodeHardening` property is true. Only applicable for Linux nodepools. </summary>
+        [WirePath("evictionMaxPodGracePeriodInSeconds")]
+        public int? EvictionMaxPodGracePeriodInSeconds { get; set; }
     }
 }

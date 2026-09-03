@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new BatchAccountDetector. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BatchAccountDetector(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/detectors", resourceVersion ?? "2025-06-01")
+        internal BatchAccountDetector(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/detectors", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -111,12 +111,12 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Value. </summary>
+        /// <summary> Gets the Value. </summary>
         public BicepValue<string> Value
         {
             get
             {
-                return Properties.Value;
+                return Properties is null ? default : Properties.Value;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<DetectorResponseProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BatchAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

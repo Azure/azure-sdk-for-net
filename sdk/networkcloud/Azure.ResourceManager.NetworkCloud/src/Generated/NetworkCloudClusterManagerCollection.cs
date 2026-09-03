@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudClusterManagerResource.ResourceType, out string networkCloudClusterManagerApiVersion);
             _clusterManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterManagerResource.ResourceType.Namespace, Diagnostics);
-            _clusterManagersRestClient = new ClusterManagers(_clusterManagersClientDiagnostics, Pipeline, Endpoint, networkCloudClusterManagerApiVersion ?? "2026-05-01-preview");
+            _clusterManagersRestClient = new ClusterManagers(_clusterManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterManagerApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

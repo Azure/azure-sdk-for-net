@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string NotConfiguredValue = "NotConfigured";
         /// <summary> Source side scan is not applicable. </summary>
         private const string NotApplicableValue = "NotApplicable";
+        /// <summary> Source side scan configuration failed. </summary>
+        private const string ConfigurationFailedValue = "ConfigurationFailed";
 
         /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Source side scan is not applicable. </summary>
         public static BackupSourceSideScanStatus NotApplicable { get; } = new BackupSourceSideScanStatus(NotApplicableValue);
+
+        /// <summary> Source side scan configuration failed. </summary>
+        public static BackupSourceSideScanStatus ConfigurationFailed { get; } = new BackupSourceSideScanStatus(ConfigurationFailedValue);
 
         /// <summary> Determines if two <see cref="BackupSourceSideScanStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

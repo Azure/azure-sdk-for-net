@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
 
         private ClientDiagnostics ResourceChangesOperationsClientDiagnostics => _resourceChangesOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceChangesOperations ResourceChangesOperationsRestClient => _resourceChangesOperationsRestClient ??= new ResourceChangesOperations(ResourceChangesOperationsClientDiagnostics, Pipeline, Endpoint, "2020-09-01-preview");
+        private ResourceChangesOperations ResourceChangesOperationsRestClient => _resourceChangesOperationsRestClient ??= new ResourceChangesOperations(ResourceChangesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-09-01-preview");
 
         private ClientDiagnostics ResourceGraphOperationsClientDiagnostics => _resourceGraphOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceGraphOperations ResourceGraphOperationsRestClient => _resourceGraphOperationsRestClient ??= new ResourceGraphOperations(ResourceGraphOperationsClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private ResourceGraphOperations ResourceGraphOperationsRestClient => _resourceGraphOperationsRestClient ??= new ResourceGraphOperations(ResourceGraphOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         private ClientDiagnostics ResourceHistoryOperationsClientDiagnostics => _resourceHistoryOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceHistoryOperations ResourceHistoryOperationsRestClient => _resourceHistoryOperationsRestClient ??= new ResourceHistoryOperations(ResourceHistoryOperationsClientDiagnostics, Pipeline, Endpoint, "2021-06-01-preview");
+        private ResourceHistoryOperations ResourceHistoryOperationsRestClient => _resourceHistoryOperationsRestClient ??= new ResourceHistoryOperations(ResourceHistoryOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-06-01-preview");
 
         /// <summary>
         /// List changes to a resource for a given time interval.

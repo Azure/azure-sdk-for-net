@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -34,12 +35,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dataEncryption"> Data encryption properties of a server. </param>
         /// <param name="availabilityZone"> Availability zone of a server. </param>
         /// <param name="createMode"> Update mode of an existing server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. </param>
         /// <param name="replicationRole"> Role of the server in a replication set. </param>
         /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
         /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, ResourceIdentifier sourceServerResourceId, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             DataEncryption = dataEncryption;
             AvailabilityZone = availabilityZone;
             CreateMode = createMode;
+            SourceServerResourceId = sourceServerResourceId;
             ReplicationRole = replicationRole;
             Replica = replica;
             Network = network;
@@ -102,6 +105,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Update mode of an existing server. </summary>
         [WirePath("createMode")]
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
+
+        /// <summary> Identifier of the server to be used as the source of the new server. </summary>
+        [WirePath("sourceServerResourceId")]
+        public ResourceIdentifier SourceServerResourceId { get; set; }
 
         /// <summary> Role of the server in a replication set. </summary>
         [WirePath("replicationRole")]

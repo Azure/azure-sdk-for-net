@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string fileServiceUsageApiVersion);
             _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, fileServiceUsageApiVersion ?? "2025-08-01");
+            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileServiceUsageApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

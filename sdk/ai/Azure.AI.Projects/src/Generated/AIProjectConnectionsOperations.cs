@@ -22,11 +22,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectConnectionsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectConnectionsOperations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -34,6 +36,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Retrieves the specified connection and its configuration details without including credential values.
@@ -49,8 +54,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetConnection(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnection");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -67,8 +82,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetConnectionAsync(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnection");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified connection and its configuration details without including credential values. </summary>
@@ -105,8 +130,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetConnectionWithCredentials(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnectionWithCredentials");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -123,8 +158,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetConnectionWithCredentialsAsync(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnectionWithCredentials");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified connection together with its credential values. </summary>
@@ -162,7 +207,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetConnections(string connectionType, bool? defaultConnection, RequestOptions options)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsCollectionResult(this, connectionType, defaultConnection, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnections");
+            scope.Start();
+            try
+            {
+                return new AIProjectConnectionsOperationsGetConnectionsCollectionResult(this, connectionType, defaultConnection, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -180,7 +235,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, RequestOptions options)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(this, connectionType, defaultConnection, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnections");
+            scope.Start();
+            try
+            {
+                return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(this, connectionType, defaultConnection, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the connections available in the current project, optionally filtered by type or default status. </summary>

@@ -21,18 +21,13 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the KeyIdentifier. </summary>
+        /// <summary> Gets the KeyIdentifier. </summary>
         public BicepValue<Uri> KeyIdentifier
         {
             get
             {
                 Initialize();
                 return _keyIdentifier;
-            }
-            set
-            {
-                Initialize();
-                _keyIdentifier.Assign(value);
             }
         }
 

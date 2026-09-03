@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum SocketAddressOperator
     {
         /// <summary> Any. </summary>
-        Any,
+        Any = 0,
         /// <summary> IPMatch. </summary>
-        IPMatch
+        IPMatch = 1
     }
 }

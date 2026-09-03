@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Alerts data type for Microsoft Threat Protection Platforms data connector. </summary>
-    public partial class MtpDataConnectorDataTypesAlerts : DataConnectorDataTypeCommon
+    internal partial class MtpDataConnectorDataTypesAlerts : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="MtpDataConnectorDataTypesAlerts"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

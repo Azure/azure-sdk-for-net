@@ -12,6 +12,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
+#pragma warning disable AAIP001
 
 /// <summary>
 /// Asynchronous recorded tests for data generation job operations using test-proxy.
@@ -92,7 +93,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         //// Two limits:
-        forward = await projectClient.DataGenerationJobs.GetAllAsync( order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
+        forward = await projectClient.DataGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
@@ -118,7 +119,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         };
         outputOptions.Tags["sample"] = DATASET_NAME;
         DataGenerationJobInputs inputs = new(
-                name:  name,
+                name: name,
                 sources: [new PromptDataGenerationJobSource(prompt: "Contoso offers a full refund within 30 days of purchase for any product " +
                         "returned in its original condition. After 30 days, store credit may be " +
                         "issued at the discretion of customer support. Digital goods are " +

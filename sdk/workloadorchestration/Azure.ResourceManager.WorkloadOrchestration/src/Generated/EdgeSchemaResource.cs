@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(ResourceType, out string edgeSchemaApiVersion);
             _schemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Endpoint, edgeSchemaApiVersion ?? "2025-06-01");
+            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

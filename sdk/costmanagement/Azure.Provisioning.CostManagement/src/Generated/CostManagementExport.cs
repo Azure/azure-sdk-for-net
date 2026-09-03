@@ -43,13 +43,18 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -135,23 +140,6 @@ namespace Azure.Provisioning.CostManagement
             {
                 Initialize();
                 _scope.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Schedule. </summary>
-        public ExportSchedule Schedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Schedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportProperties();
-                }
-                Properties.Schedule = value;
             }
         }
 
@@ -306,6 +294,23 @@ namespace Azure.Provisioning.CostManagement
                     Properties = new ExportProperties();
                 }
                 return Properties.RunHistoryValue;
+            }
+        }
+
+        /// <summary> Gets or sets the Schedule. </summary>
+        public ExportSchedule Schedule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schedule;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.Schedule = value;
             }
         }
 

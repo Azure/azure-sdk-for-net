@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsForwardingRulesetVirtualNetworkLinkApiVersion);
             _virtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsForwardingRulesetVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

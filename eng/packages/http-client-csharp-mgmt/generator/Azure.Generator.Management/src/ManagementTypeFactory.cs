@@ -92,7 +92,7 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            return base.CreateClientCore(inputClient);
+            return new ManagementClientProvider(inputClient);
         }
 
         /// <inheritdoc/>

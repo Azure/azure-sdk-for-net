@@ -55,7 +55,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
         /// <param name="flattenedNestedProperty"></param>
-        /// <param name="optionalFlattenProperty"></param>
+        /// <param name="optionalFlattenProperty">
+        /// Optional single-property model used to verify generated flattened collection
+        /// getters initialize the nested collection wrapper instead of returning null.
+        /// </param>
         /// <param name="discriminatorProperty"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
@@ -90,7 +93,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [WirePath("flattenedNestedProperty")]
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
-        /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        /// <summary>
+        /// Optional single-property model used to verify generated flattened collection
+        /// getters initialize the nested collection wrapper instead of returning null.
+        /// </summary>
         [WirePath("optionalFlattenProperty")]
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
@@ -236,7 +242,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets the RandomCollectionProp. </summary>
+        /// <summary> Required collection used by the optional flattened model scenario. </summary>
         [WirePath("optionalFlattenProperty.randomCollectionProp")]
         public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {

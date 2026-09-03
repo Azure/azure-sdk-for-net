@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(ResourceType, out string supportTicketNoSubChatTranscriptApiVersion);
             _supportTicketNoSubChatTranscriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            _supportTicketNoSubChatTranscriptRestClient = new SupportTicketNoSubChatTranscript(_supportTicketNoSubChatTranscriptClientDiagnostics, Pipeline, Endpoint, supportTicketNoSubChatTranscriptApiVersion ?? "2026-07-01");
+            _supportTicketNoSubChatTranscriptRestClient = new SupportTicketNoSubChatTranscript(_supportTicketNoSubChatTranscriptClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketNoSubChatTranscriptApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

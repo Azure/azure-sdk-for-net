@@ -133,5 +133,14 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             IotOperationsAkriConnectorResource.ValidateResourceId(id);
             return new IotOperationsAkriConnectorResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="AkriServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AkriServiceResource"/> object. </returns>
+        public virtual AkriServiceResource GetAkriServiceResource(ResourceIdentifier id)
+        {
+            AkriServiceResource.ValidateResourceId(id);
+            return new AkriServiceResource(Client, id);
+        }
     }
 }
