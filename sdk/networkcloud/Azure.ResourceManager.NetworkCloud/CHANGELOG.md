@@ -4,18 +4,11 @@
 
 ### Features Added
 
-- Added `AdministrativeCredentialsPatch`, `BareMetalMachineConfigurationPatch`, `ClusterSecretArchivePatch`, `ClusterUpdateStrategyPatch`, `ImageRepositoryCredentialsPatch`, `NetworkCloudRackDefinitionPatch`, `NetworkCloudSshPublicKeyPatch`, `RuntimeProtectionConfigurationPatch`, `ServicePrincipalInformationPatch`, `StorageApplianceConfigurationPatch`, and `ValidationThresholdPatch` models to align the update/patch payloads with their corresponding patch semantics.
+- Added support for API version `2026-07-01`.
 
-### Breaking Changes
+### Other Changes
 
-- Changed the type of `NetworkCloudClusterPatch.AggregatorOrSingleRackDefinition` from `NetworkCloudRackDefinition` to `NetworkCloudRackDefinitionPatch`.
-- Changed the type of `NetworkCloudClusterPatch.ClusterServicePrincipal` from `ServicePrincipalInformation` to `ServicePrincipalInformationPatch`.
-- Changed the type of `NetworkCloudClusterPatch.ComputeDeploymentThreshold` from `ValidationThreshold` to `ValidationThresholdPatch`.
-- Changed the type of `NetworkCloudClusterPatch.ComputeRackDefinitions` from `IList<NetworkCloudRackDefinition>` to `IList<NetworkCloudRackDefinitionPatch>`.
-- Changed the type of `NetworkCloudClusterPatch.SecretArchive` from `ClusterSecretArchive` to `ClusterSecretArchivePatch`.
-- Changed the type of `NetworkCloudClusterPatch.UpdateStrategy` from `ClusterUpdateStrategy` to `ClusterUpdateStrategyPatch`.
-- Changed the type of `NetworkCloudVirtualMachinePatch.VmImageRepositoryCredentials` from `ImageRepositoryCredentials` to `ImageRepositoryCredentialsPatch`.
-- Changed the parameter order of the `StorageApplianceProperties` constructor to `(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials)`.
+- The service-side patch payloads for `NetworkCloudClusterPatch` and `NetworkCloudVirtualMachinePatch` now use dedicated `*Patch`-shaped models (for example `NetworkCloudRackDefinitionPatch`, `ValidationThresholdPatch`, `ClusterUpdateStrategyPatch`) internally. The public properties on `NetworkCloudClusterPatch` and `NetworkCloudVirtualMachinePatch` continue to expose the classic model types for backward compatibility.
 
 ## 1.4.0-beta.1 (2026-06-16)
 

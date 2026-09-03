@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> RackDefinitionPatch represents details regarding the rack for patch operations. </summary>
-    public partial class NetworkCloudRackDefinitionPatch : IJsonModel<NetworkCloudRackDefinitionPatch>
+    internal partial class NetworkCloudRackDefinitionPatch : IJsonModel<NetworkCloudRackDefinitionPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

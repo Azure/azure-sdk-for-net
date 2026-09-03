@@ -992,156 +992,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 default);
         }
 
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
-        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
-        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
-        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
-        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
-        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
-        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
-        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
-        /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudClusterPatch"/> instance for mocking. </returns>
-        public static NetworkCloudClusterPatch NetworkCloudClusterPatch(ManagedServiceIdentity identity = default, NetworkCloudRackDefinitionPatch aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, string clusterLocation = default, ServicePrincipalInformationPatch clusterServicePrincipal = default, CommandOutputSettings commandOutputSettings = default, ValidationThresholdPatch computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinitionPatch> computeRackDefinitions = default, RuntimeProtectionConfigurationPatch runtimeProtectionConfiguration = default, ClusterSecretArchivePatch secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategyPatch updateStrategy = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudClusterPatch(identity, aggregatorOrSingleRackDefinition is null && analyticsOutputSettings is null && clusterLocation is null && clusterServicePrincipal is null && commandOutputSettings is null && computeDeploymentThreshold is null && computeRackDefinitions is null && runtimeProtectionConfiguration is null && secretArchive is null && secretArchiveSettings is null && updateStrategy is null && vulnerabilityScanningContainerScan is null ? default : new ClusterPatchProperties(
-                aggregatorOrSingleRackDefinition,
-                analyticsOutputSettings,
-                clusterLocation,
-                clusterServicePrincipal,
-                commandOutputSettings,
-                computeDeploymentThreshold,
-                (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinitionPatch>()).ToList(),
-                runtimeProtectionConfiguration,
-                secretArchive,
-                secretArchiveSettings,
-                updateStrategy,
-                new VulnerabilityScanningSettingsPatch(vulnerabilityScanningContainerScan, default),
-                default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="availabilityZone"> The zone name used for this rack when created. Availability zones are used for workload placement. </param>
-        /// <param name="bareMetalMachineConfigurationData"> The unordered list of bare metal machine configuration. </param>
-        /// <param name="networkRackId"> The resource ID of the network rack that matches this rack definition. </param>
-        /// <param name="rackLocation"> The free-form description of the rack's location. </param>
-        /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
-        /// <param name="rackSkuId"> The resource ID of the sku for the rack being added. </param>
-        /// <param name="storageApplianceConfigurationData"> The list of storage appliance configuration data for this rack. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudRackDefinitionPatch"/> instance for mocking. </returns>
-        public static NetworkCloudRackDefinitionPatch NetworkCloudRackDefinitionPatch(string availabilityZone = default, IEnumerable<BareMetalMachineConfigurationPatch> bareMetalMachineConfigurationData = default, ResourceIdentifier networkRackId = default, string rackLocation = default, string rackSerialNumber = default, ResourceIdentifier rackSkuId = default, IEnumerable<StorageApplianceConfigurationPatch> storageApplianceConfigurationData = default)
-        {
-            bareMetalMachineConfigurationData ??= new ChangeTrackingList<BareMetalMachineConfigurationPatch>();
-            storageApplianceConfigurationData ??= new ChangeTrackingList<StorageApplianceConfigurationPatch>();
-
-            return new NetworkCloudRackDefinitionPatch(
-                availabilityZone,
-                (bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfigurationPatch>()).ToList(),
-                networkRackId,
-                rackLocation,
-                rackSerialNumber,
-                rackSkuId,
-                (storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfigurationPatch>()).ToList(),
-                default);
-        }
-
-        /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
-        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
-        /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
-        /// <param name="bootMacAddress"> The MAC address associated with the PXE NIC card. </param>
-        /// <param name="machineDetails"> The free-form additional information about the machine, e.g. an asset tag. </param>
-        /// <param name="machineName"> The user-provided name for the bare metal machine created from this specification. If not provided, the machine name will be generated programmatically. </param>
-        /// <param name="rackSlot"> The slot the physical machine is in the rack based on the BOM configuration. </param>
-        /// <param name="serialNumber"> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </param>
-        /// <returns> A new <see cref="Models.BareMetalMachineConfigurationPatch"/> instance for mocking. </returns>
-        public static BareMetalMachineConfigurationPatch BareMetalMachineConfigurationPatch(string bmcConnectionString = default, AdministrativeCredentialsPatch bmcCredentials = default, string bmcMacAddress = default, string bootMacAddress = default, string machineDetails = default, string machineName = default, long? rackSlot = default, string serialNumber = default)
-        {
-            return new BareMetalMachineConfigurationPatch(
-                bmcConnectionString,
-                bmcCredentials,
-                bmcMacAddress,
-                bootMacAddress,
-                machineDetails,
-                machineName,
-                rackSlot,
-                serialNumber,
-                default);
-        }
-
-        /// <param name="password"> The password of the administrator of the device used during initialization. </param>
-        /// <param name="username"> The username of the administrator of the device used during initialization. </param>
-        /// <returns> A new <see cref="Models.AdministrativeCredentialsPatch"/> instance for mocking. </returns>
-        public static AdministrativeCredentialsPatch AdministrativeCredentialsPatch(string password = default, string username = default)
-        {
-            return new AdministrativeCredentialsPatch(password, username, default);
-        }
-
-        /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
-        /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
-        /// <param name="serialNumber"> The serial number of the appliance. </param>
-        /// <param name="storageApplianceName"> The user-provided name for the storage appliance that will be created from this specification. </param>
-        /// <returns> A new <see cref="Models.StorageApplianceConfigurationPatch"/> instance for mocking. </returns>
-        public static StorageApplianceConfigurationPatch StorageApplianceConfigurationPatch(AdministrativeCredentialsPatch adminCredentials = default, long? rackSlot = default, string serialNumber = default, string storageApplianceName = default)
-        {
-            return new StorageApplianceConfigurationPatch(adminCredentials, rackSlot, serialNumber, storageApplianceName, default);
-        }
-
-        /// <param name="applicationId"> The application ID, also known as client ID, of the service principal. </param>
-        /// <param name="password"> The password of the service principal. </param>
-        /// <param name="principalId"> The principal ID, also known as the object ID, of the service principal. </param>
-        /// <param name="tenantId"> The tenant ID, also known as the directory ID, of the tenant in which the service principal is created. </param>
-        /// <returns> A new <see cref="Models.ServicePrincipalInformationPatch"/> instance for mocking. </returns>
-        public static ServicePrincipalInformationPatch ServicePrincipalInformationPatch(string applicationId = default, string password = default, string principalId = default, string tenantId = default)
-        {
-            return new ServicePrincipalInformationPatch(applicationId, password, principalId, tenantId, default);
-        }
-
-        /// <param name="grouping"> Selection of how the type evaluation is applied to the cluster calculation. </param>
-        /// <param name="thresholdType"> Selection of how the threshold should be evaluated. </param>
-        /// <param name="value"> The numeric threshold value. </param>
-        /// <returns> A new <see cref="Models.ValidationThresholdPatch"/> instance for mocking. </returns>
-        public static ValidationThresholdPatch ValidationThresholdPatch(ValidationThresholdGrouping? grouping = default, ValidationThresholdType? thresholdType = default, long? value = default)
-        {
-            return new ValidationThresholdPatch(grouping, thresholdType, value, default);
-        }
-
         /// <param name="definitionUpdateMode"> The definition update mode for runtime protection. </param>
         /// <param name="enforcementLevel"> The mode of operation for runtime protection. </param>
         /// <returns> A new <see cref="Models.RuntimeProtectionConfigurationPatch"/> instance for mocking. </returns>
         public static RuntimeProtectionConfigurationPatch RuntimeProtectionConfigurationPatch(RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default, RuntimeProtectionEnforcementLevel? enforcementLevel = default)
         {
             return new RuntimeProtectionConfigurationPatch(definitionUpdateMode, enforcementLevel, default);
-        }
-
-        /// <param name="keyVaultId"> The resource ID of the key vault to archive the secrets of the cluster. </param>
-        /// <param name="useKeyVault"> The indicator if the specified key vault should be used to archive the secrets of the cluster. </param>
-        /// <returns> A new <see cref="Models.ClusterSecretArchivePatch"/> instance for mocking. </returns>
-        public static ClusterSecretArchivePatch ClusterSecretArchivePatch(ResourceIdentifier keyVaultId = default, ClusterSecretArchiveEnabled? useKeyVault = default)
-        {
-            return new ClusterSecretArchivePatch(keyVaultId, useKeyVault, default);
-        }
-
-        /// <param name="maxUnavailable"> The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack. Limited by the maximum number of machines in the increment. Defaults to the whole increment size. </param>
-        /// <param name="strategyType"> The mode of operation for runtime protection. </param>
-        /// <param name="thresholdType"> Selection of how the threshold should be evaluated. </param>
-        /// <param name="thresholdValue"> The numeric threshold value. </param>
-        /// <param name="waitTimeMinutes"> The time to wait between the increments of update defined by the strategy. </param>
-        /// <returns> A new <see cref="Models.ClusterUpdateStrategyPatch"/> instance for mocking. </returns>
-        public static ClusterUpdateStrategyPatch ClusterUpdateStrategyPatch(long? maxUnavailable = default, ClusterUpdateStrategyType? strategyType = default, ValidationThresholdType? thresholdType = default, long? thresholdValue = default, long? waitTimeMinutes = default)
-        {
-            return new ClusterUpdateStrategyPatch(
-                maxUnavailable,
-                strategyType,
-                thresholdType,
-                thresholdValue,
-                waitTimeMinutes,
-                default);
         }
 
         /// <param name="machineGroupTargetingMode"> The mode by which the cluster will target the next grouping of servers to continue the update. </param>
@@ -2219,26 +2075,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static ImageRepositoryCredentials ImageRepositoryCredentials(string password = default, string registryUriString = default, string username = default)
         {
             return new ImageRepositoryCredentials(password, registryUriString, username, default);
-        }
-
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudVirtualMachinePatch"/> instance for mocking. </returns>
-        public static NetworkCloudVirtualMachinePatch NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity = default, ImageRepositoryCredentialsPatch vmImageRepositoryCredentials = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudVirtualMachinePatch(identity, vmImageRepositoryCredentials is null ? default : new VirtualMachinePatchProperties(vmImageRepositoryCredentials, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="password"> The password or token used to access an image in the target repository. </param>
-        /// <param name="registryUriString"> The URL of the authentication server used to validate the repository credentials. </param>
-        /// <param name="username"> The username used to access an image in the target repository. </param>
-        /// <returns> A new <see cref="Models.ImageRepositoryCredentialsPatch"/> instance for mocking. </returns>
-        public static ImageRepositoryCredentialsPatch ImageRepositoryCredentialsPatch(string password = default, string registryUriString = default, string username = default)
-        {
-            return new ImageRepositoryCredentialsPatch(password, registryUriString, username, default);
         }
 
         /// <param name="machineId"> The resourceId of the Microsoft.HybridCompute machine resource to assign relay usage. </param>

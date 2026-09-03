@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterSecretArchivePatch configures the key vault to archive the secrets of the cluster for later retrieval for patch operations. </summary>
-    public partial class ClusterSecretArchivePatch : IJsonModel<ClusterSecretArchivePatch>
+    internal partial class ClusterSecretArchivePatch : IJsonModel<ClusterSecretArchivePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

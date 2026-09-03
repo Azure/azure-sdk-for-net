@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AdministrativeCredentialsPatch represents the admin credentials for the device requiring password-based authentication. </summary>
-    public partial class AdministrativeCredentialsPatch
+    internal partial class AdministrativeCredentialsPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

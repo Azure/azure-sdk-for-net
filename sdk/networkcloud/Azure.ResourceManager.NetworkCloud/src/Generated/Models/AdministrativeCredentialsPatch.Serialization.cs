@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AdministrativeCredentialsPatch represents the admin credentials for the device requiring password-based authentication. </summary>
-    public partial class AdministrativeCredentialsPatch : IJsonModel<AdministrativeCredentialsPatch>
+    internal partial class AdministrativeCredentialsPatch : IJsonModel<AdministrativeCredentialsPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

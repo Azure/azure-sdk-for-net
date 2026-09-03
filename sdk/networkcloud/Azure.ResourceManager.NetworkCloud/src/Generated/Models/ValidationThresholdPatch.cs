@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ValidationThresholdPatch indicates allowed machine and node hardware and deployment failures for patch operations. </summary>
-    public partial class ValidationThresholdPatch
+    internal partial class ValidationThresholdPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

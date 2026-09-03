@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ImageRepositoryCredentialsPatch represents the credentials used to login to the image repository for patch operations. </summary>
-    public partial class ImageRepositoryCredentialsPatch : IJsonModel<ImageRepositoryCredentialsPatch>
+    internal partial class ImageRepositoryCredentialsPatch : IJsonModel<ImageRepositoryCredentialsPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

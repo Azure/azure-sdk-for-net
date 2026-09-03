@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ValidationThresholdPatch indicates allowed machine and node hardware and deployment failures for patch operations. </summary>
-    public partial class ValidationThresholdPatch : IJsonModel<ValidationThresholdPatch>
+    internal partial class ValidationThresholdPatch : IJsonModel<ValidationThresholdPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
