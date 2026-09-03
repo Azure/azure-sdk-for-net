@@ -601,11 +601,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter, int? top, string @orderby, CancellationToken cancellationToken)
         {
             return GetAllAsync(@type: @type, filter: filter, top: top, @orderby: @orderby, expand: default, cancellationToken: cancellationToken);
         }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
 
         /// <summary>
         /// Gets a list of virtual machine extension image versions.
@@ -617,10 +620,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter, int? top, string @orderby, CancellationToken cancellationToken)
         {
             return GetAll(@type: @type, filter: filter, top: top, @orderby: @orderby, expand: default, cancellationToken: cancellationToken);
         }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
