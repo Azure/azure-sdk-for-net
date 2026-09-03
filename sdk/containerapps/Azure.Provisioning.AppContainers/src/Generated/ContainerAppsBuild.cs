@@ -95,7 +95,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.BuildStatus;
+                return Properties is null ? default : Properties.BuildStatus;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.DestinationContainerRegistry;
+                return Properties is null ? default : Properties.DestinationContainerRegistry;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Configuration;
+                return Properties is null ? default : Properties.Configuration;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.LogStreamEndpoint;
+                return Properties is null ? default : Properties.LogStreamEndpoint;
             }
         }
 

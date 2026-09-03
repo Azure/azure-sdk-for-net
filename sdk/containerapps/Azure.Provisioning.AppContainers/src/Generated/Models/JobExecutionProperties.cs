@@ -102,7 +102,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return DetailedStatus.Replicas;
+                return DetailedStatus is null ? default : DetailedStatus.Replicas;
             }
         }
 

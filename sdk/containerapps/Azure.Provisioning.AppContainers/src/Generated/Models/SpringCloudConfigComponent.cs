@@ -13,13 +13,13 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new SpringCloudConfigComponent. </summary>
         public SpringCloudConfigComponent()
         {
+            ComponentType.Assign(JavaComponentType.SpringCloudConfig);
         }
 
         /// <summary> Define all the provisionable properties for SpringCloudConfigComponent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("componentType", new string[] { "componentType" }, defaultValue: "SpringCloudConfig");
             DefineAdditionalProperties();
         }
 

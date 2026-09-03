@@ -96,7 +96,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.StartsOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.EndsOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Template;
+                return Properties is null ? default : Properties.Template;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Reason;
+                return Properties is null ? default : Properties.Reason;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Message;
+                return Properties is null ? default : Properties.Message;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.DetailedStatusReplicas;
+                return Properties is null ? default : Properties.DetailedStatusReplicas;
             }
         }
 

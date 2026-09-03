@@ -18,6 +18,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new SpringCloudGatewayComponent. </summary>
         public SpringCloudGatewayComponent()
         {
+            ComponentType.Assign(JavaComponentType.SpringCloudGateway);
         }
 
         /// <summary> Gets or sets the Ingress. </summary>
@@ -67,7 +68,6 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("componentType", new string[] { "componentType" }, defaultValue: "SpringCloudGateway");
             _ingress = DefineModelProperty<JavaComponentIngress>(nameof(Ingress), new string[] { "ingress" });
             _springCloudGatewayRoutes = DefineListProperty<ScgRoute>(nameof(SpringCloudGatewayRoutes), new string[] { "springCloudGatewayRoutes" });
             DefineAdditionalProperties();

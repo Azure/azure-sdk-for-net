@@ -96,7 +96,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.InvokeUrlTemplate;
+                return Properties is null ? default : Properties.InvokeUrlTemplate;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.TriggerType;
+                return Properties is null ? default : Properties.TriggerType;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Language;
+                return Properties is null ? default : Properties.Language;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.IsDisabled;
+                return Properties is null ? default : Properties.IsDisabled;
             }
         }
 

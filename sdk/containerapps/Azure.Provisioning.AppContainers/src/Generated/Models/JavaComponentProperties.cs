@@ -16,6 +16,7 @@ namespace Azure.Provisioning.AppContainers
     /// </summary>
     public partial class JavaComponentProperties : ProvisionableConstruct
     {
+        private BicepValue<JavaComponentType> _componentType;
         private BicepValue<JavaComponentProvisioningState> _provisioningState;
         private BicepList<JavaComponentConfigurationProperty> _configurations;
         private JavaComponentPropertiesScale _scale;
@@ -24,6 +25,16 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new JavaComponentProperties. </summary>
         public JavaComponentProperties()
         {
+        }
+
+        /// <summary> Type of the Java Component. </summary>
+        internal BicepValue<JavaComponentType> ComponentType
+        {
+            get
+            {
+                Initialize();
+                return _componentType;
+            }
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
@@ -85,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _componentType = DefineProperty<JavaComponentType>(nameof(ComponentType), new string[] { "componentType" }, isRequired: true);
             _provisioningState = DefineProperty<JavaComponentProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _configurations = DefineListProperty<JavaComponentConfigurationProperty>(nameof(Configurations), new string[] { "configurations" });
             _scale = DefineModelProperty<JavaComponentPropertiesScale>(nameof(Scale), new string[] { "scale" });

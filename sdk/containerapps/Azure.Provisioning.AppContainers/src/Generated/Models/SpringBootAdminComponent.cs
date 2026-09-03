@@ -17,6 +17,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new SpringBootAdminComponent. </summary>
         public SpringBootAdminComponent()
         {
+            ComponentType.Assign(JavaComponentType.SpringBootAdmin);
         }
 
         /// <summary> Gets or sets the Ingress. </summary>
@@ -51,7 +52,6 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("componentType", new string[] { "componentType" }, defaultValue: "SpringBootAdmin");
             _ingress = DefineModelProperty<JavaComponentIngress>(nameof(Ingress), new string[] { "ingress" });
             DefineAdditionalProperties();
         }

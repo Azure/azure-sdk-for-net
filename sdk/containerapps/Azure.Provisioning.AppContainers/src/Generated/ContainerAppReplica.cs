@@ -95,7 +95,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.RunningState;
+                return Properties is null ? default : Properties.RunningState;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.RunningStateDetails;
+                return Properties is null ? default : Properties.RunningStateDetails;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Containers;
+                return Properties is null ? default : Properties.Containers;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.InitContainers;
+                return Properties is null ? default : Properties.InitContainers;
             }
         }
 

@@ -80,7 +80,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Ingress.TargetPort;
+                return Ingress is null ? default : Ingress.TargetPort;
             }
         }
 

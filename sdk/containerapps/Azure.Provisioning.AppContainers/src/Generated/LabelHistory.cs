@@ -95,7 +95,7 @@ namespace Azure.Provisioning.AppContainers
         {
             get
             {
-                return Properties.Records;
+                return Properties is null ? default : Properties.Records;
             }
         }
 

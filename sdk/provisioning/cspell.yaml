@@ -4,5 +4,3 @@ overrides:
   - filename: '**/sdk/provisioning/**/*.cs'
     words:
       - AZPROVISION
-      - conv
-      - iface
