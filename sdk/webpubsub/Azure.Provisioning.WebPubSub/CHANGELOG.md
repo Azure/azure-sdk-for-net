@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Migrated the library to TypeSpec generation and updated the WebPubSub API version to `2025-01-01-preview`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
