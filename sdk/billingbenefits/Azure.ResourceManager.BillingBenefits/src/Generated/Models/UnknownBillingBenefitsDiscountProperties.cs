@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="UnknownBillingBenefitsDiscountProperties"/>. </summary>
         /// <param name="entityType"> This defines whether the entity being created is primary or affiliate. Supported values: primary, affiliate. Validation: Required, must match one of the 2 values. </param>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <param name="systemId"> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </param>
         /// <param name="provisioningState"> The state of the resource. Supported values are Pending, Failed, Succeeded, Canceled. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the discount metadata is present. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="appliedScopeType"> List of applied scopes supported for discounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBillingBenefitsDiscountProperties(DiscountEntityType entityType, string productCode, DateTimeOffset startOn, string systemId, DiscountProvisioningState? provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string displayName, DiscountStatus? status, ResourceIdentifier benefitResourceId, DiscountAppliedScopeType? appliedScopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(entityType != default ? entityType : "unknown", productCode, startOn, systemId, provisioningState, billingAccountResourceId, billingProfileResourceId, customerResourceId, displayName, status, benefitResourceId, appliedScopeType, additionalBinaryDataProperties)
+        internal UnknownBillingBenefitsDiscountProperties(DiscountEntityType entityType, string productCode, DateTimeOffset startsOn, string systemId, DiscountProvisioningState? provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string displayName, DiscountStatus? status, ResourceIdentifier benefitResourceId, DiscountAppliedScopeType? appliedScopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(entityType != default ? entityType : "unknown", productCode, startsOn, systemId, provisioningState, billingAccountResourceId, billingProfileResourceId, customerResourceId, displayName, status, benefitResourceId, appliedScopeType, additionalBinaryDataProperties)
         {
         }
     }

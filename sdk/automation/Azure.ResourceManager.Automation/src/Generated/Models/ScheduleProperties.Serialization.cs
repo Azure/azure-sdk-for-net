@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(StartInMinutes))
             {
                 writer.WritePropertyName("startTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(StartInMinutes.Value);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireInMinutes))
             {
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             double? startInMinutes = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             double? expireInMinutes = default;
             bool? isEnabled = default;
             DateTimeOffset? nextRunOn = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startTimeOffsetMinutes"u8))
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        expireOn = null;
+                        expiresOn = null;
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryTimeOffsetMinutes"u8))
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             return new ScheduleProperties(
-                startOn,
+                startsOn,
                 startInMinutes,
-                expireOn,
+                expiresOn,
                 expireInMinutes,
                 isEnabled,
                 nextRunOn,
