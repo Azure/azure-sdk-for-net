@@ -200,7 +200,7 @@ function Invoke-AutoReleaseResolution {
         $matchedArtifacts += $artifact
 
         # Update release pending status and release pipeline URL in the release plan for this package.
-        # release status is updated as "Released" when the package has been successfully released; here we are marking it as "Release In Progress" to indicate that the release is awaiting approval.
+        # The release status is updated to "Released" after successful completion; until then, mark it as "Release In Progress" to indicate that the release is underway.
         try
         {
           if($AzsdkExePath)
