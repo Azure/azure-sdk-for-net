@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 default));
         }
 
+        /// <summary> Subnet first address, scope, and/or last address. </summary>
         /// <param name="first"> First address in the subnet. </param>
         /// <param name="last"> Last address in the subnet. </param>
         /// <param name="scope"> Block size (number of leading bits in the subnet mask). </param>
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerEndpointSubnetInfo(first, last, scope, default);
         }
 
+        /// <summary> Custom header name and value. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         /// <returns> A new <see cref="Models.TrafficManagerEndpointCustomHeaderInfo"/> instance for mocking. </returns>
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerEndpointCustomHeaderInfo(name, value, default);
         }
 
+        /// <summary> The resource model definition for a ARM proxy resource. It will have everything other than required location and tags. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
@@ -81,6 +84,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerProxyResourceData(id, name, resourceType, default);
         }
 
+        /// <summary> The core properties of ARM resources. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
@@ -90,6 +94,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerResourceData(id, name, resourceType, default);
         }
 
+        /// <summary> The result of the request or operation. </summary>
         /// <param name="isSuccessful"> The result of the operation or request. </param>
         /// <returns> A new <see cref="Models.TrafficManagerDeleteOperationResult"/> instance for mocking. </returns>
         public static TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? isSuccessful = default)
@@ -136,6 +141,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     default));
         }
 
+        /// <summary> Class containing DNS settings in a Traffic Manager profile. </summary>
         /// <param name="relativeName"> The relative DNS name provided by this Traffic Manager profile. This value is combined with the DNS domain name used by Azure Traffic Manager to form the fully-qualified domain name (FQDN) of the profile. </param>
         /// <param name="fqdn"> The fully-qualified domain name (FQDN) of the Traffic Manager profile. This is formed from the concatenation of the RelativeName with the DNS domain used by Azure Traffic Manager. </param>
         /// <param name="ttl"> The DNS Time-To-Live (TTL), in seconds. This informs the local DNS resolvers and DNS clients how long to cache DNS responses provided by this Traffic Manager profile. </param>
@@ -145,6 +151,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerDnsConfig(relativeName, fqdn, ttl, default);
         }
 
+        /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
         /// <param name="profileMonitorStatus"> The profile-level monitoring status of the Traffic Manager profile. </param>
         /// <param name="protocol"> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </param>
         /// <param name="port"> The TCP port used to probe for endpoint health. </param>
@@ -173,6 +180,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 default);
         }
 
+        /// <summary> Custom header name and value. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         /// <returns> A new <see cref="Models.TrafficManagerMonitorConfigCustomHeaderInfo"/> instance for mocking. </returns>
@@ -181,6 +189,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerMonitorConfigCustomHeaderInfo(name, value, default);
         }
 
+        /// <summary> Min and max value of a status code range. </summary>
         /// <param name="min"> Min status code. </param>
         /// <param name="max"> Max status code. </param>
         /// <returns> A new <see cref="Models.ExpectedStatusCodeRangeInfo"/> instance for mocking. </returns>
@@ -189,6 +198,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new ExpectedStatusCodeRangeInfo(min, max, default);
         }
 
+        /// <summary> The resource model definition for a ARM tracked top level resource. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
@@ -208,6 +218,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 location);
         }
 
+        /// <summary> Parameters supplied to check Traffic Manager name operation. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <returns> A new <see cref="Models.TrafficManagerRelativeDnsNameAvailabilityContent"/> instance for mocking. </returns>
@@ -216,6 +227,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerRelativeDnsNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> Class representing a Traffic Manager Name Availability response. </summary>
         /// <param name="name"> The relative name. </param>
         /// <param name="resourceType"> Traffic Manager profile resource type. </param>
         /// <param name="isNameAvailable"> Describes whether the relative name is available or not. </param>
@@ -243,6 +255,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerGeographicHierarchyData(id, name, resourceType, default, geographicHierarchy is null ? default : new GeographicHierarchyProperties(geographicHierarchy, default));
         }
 
+        /// <summary> Class representing a region in the Geographic hierarchy used with the Geographic traffic routing method. </summary>
         /// <param name="code"> The code of the region. </param>
         /// <param name="name"> The name of the region. </param>
         /// <param name="regions"> The list of Regions grouped under this Region in the Geographic Hierarchy. </param>
@@ -257,16 +270,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
-        /// <param name="startOn"> The beginning of the time window for this HeatMap, inclusive. </param>
-        /// <param name="endOn"> The ending of the time window for this HeatMap, exclusive. </param>
+        /// <param name="startsOn"> The beginning of the time window for this HeatMap, inclusive. </param>
+        /// <param name="endsOn"> The ending of the time window for this HeatMap, exclusive. </param>
         /// <param name="endpoints"> The endpoints used in this HeatMap calculation. </param>
         /// <param name="trafficFlows"> The traffic flows produced in this HeatMap calculation. </param>
         /// <returns> A new <see cref="TrafficManager.TrafficManagerHeatMapData"/> instance for mocking. </returns>
-        public static TrafficManagerHeatMapData TrafficManagerHeatMapData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<TrafficManagerHeatMapEndpoint> endpoints = default, IEnumerable<TrafficManagerHeatMapTrafficFlow> trafficFlows = default)
+        public static TrafficManagerHeatMapData TrafficManagerHeatMapData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<TrafficManagerHeatMapEndpoint> endpoints = default, IEnumerable<TrafficManagerHeatMapTrafficFlow> trafficFlows = default)
         {
-            return new TrafficManagerHeatMapData(id, name, resourceType, default, startOn is null && endOn is null && endpoints is null && trafficFlows is null ? default : new HeatMapProperties(startOn, endOn, (endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>()).ToList(), (trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>()).ToList(), default));
+            return new TrafficManagerHeatMapData(id, name, resourceType, default, startsOn is null && endsOn is null && endpoints is null && trafficFlows is null ? default : new HeatMapProperties(startsOn, endsOn, (endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>()).ToList(), (trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>()).ToList(), default));
         }
 
+        /// <summary> Class which is a sparse representation of a Traffic Manager endpoint. </summary>
         /// <param name="resourceId"> The ARM Resource ID of this Traffic Manager endpoint. </param>
         /// <param name="endpointId"> A number uniquely identifying this endpoint in query experiences. </param>
         /// <returns> A new <see cref="Models.TrafficManagerHeatMapEndpoint"/> instance for mocking. </returns>
@@ -275,6 +289,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerHeatMapEndpoint(resourceId, endpointId, default);
         }
 
+        /// <summary> Class representing a Traffic Manager HeatMap traffic flow properties. </summary>
         /// <param name="sourceIP"> The IP address that this query experience originated from. </param>
         /// <param name="latitude"> The approximate latitude that these queries originated from. </param>
         /// <param name="longitude"> The approximate longitude that these queries originated from. </param>
@@ -287,6 +302,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerHeatMapTrafficFlow(sourceIP, latitude, longitude, (queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>()).ToList(), default);
         }
 
+        /// <summary> Class representing a Traffic Manager HeatMap query experience properties. </summary>
         /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         /// <param name="latency"> The latency experienced by queries originating from this location. </param>

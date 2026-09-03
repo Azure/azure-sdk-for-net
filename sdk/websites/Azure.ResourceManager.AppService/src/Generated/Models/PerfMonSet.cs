@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
         /// <param name="name"> Unique key name of the counter. </param>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="startsOn"> Start time of the period. </param>
+        /// <param name="endsOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. </param>
         /// <param name="values"> Collection of workers that are active during this time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerfMonSet(string name, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, IReadOnlyList<PerfMonSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             TimeGrain = timeGrain;
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Presented time grain. </summary>
         [WirePath("timeGrain")]

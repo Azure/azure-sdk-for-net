@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
+        /// <param name="startsOn"> Start time. </param>
+        /// <param name="endsOn"> End time. </param>
         /// <param name="duration"> Job duration. </param>
         /// <param name="outputUri"> Output URL. </param>
         /// <param name="errorUri"> Error URL. </param>
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Duration = duration;
             OutputUri = outputUri;
             ErrorUri = errorUri;
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time. </summary>
         [WirePath("start_time")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time. </summary>
         [WirePath("end_time")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Job duration. </summary>
         [WirePath("duration")]
