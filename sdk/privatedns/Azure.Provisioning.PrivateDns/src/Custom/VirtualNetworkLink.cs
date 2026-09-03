@@ -12,6 +12,8 @@ namespace Azure.Provisioning.PrivateDns;
 public partial class VirtualNetworkLink
 {
     /// <summary> Gets or sets the virtual network resource identifier. </summary>
+    // TypeSpec models virtualNetwork as a nested WritableSubResource, while the released API
+    // exposes its id as a flattened ResourceIdentifier. Keep this forwarder to preserve that API.
     [CodeGenMember("VirtualNetworkId")]
     public BicepValue<ResourceIdentifier> VirtualNetworkId
     {
