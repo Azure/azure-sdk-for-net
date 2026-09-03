@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmSearchModelFactory
     {
+        /// <summary> The SearchManagementRequestOptions. </summary>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <returns> A new <see cref="Models.SearchManagementRequestOptions"/> instance for mocking. </returns>
         public static SearchManagementRequestOptions SearchManagementRequestOptions(Guid? clientRequestId = default)
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchManagementRequestOptions(clientRequestId, default);
         }
 
+        /// <summary> Describes the quota usage for a particular SKU. </summary>
         /// <param name="id"> The resource ID of the quota usage SKU endpoint for Microsoft.Search provider. </param>
         /// <param name="unit"> The unit of measurement for the search SKU. </param>
         /// <param name="currentValue"> The currently used up value for the particular search SKU. </param>
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> The SKU name information, including its identifier and localized display name. </summary>
         /// <param name="value"> The SKU name supported by Azure AI Search. </param>
         /// <param name="localizedValue"> The localized string value for the SKU name. </param>
         /// <returns> A new <see cref="Models.QuotaUsageResultName"/> instance for mocking. </returns>
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.Search.Models
             return new QuotaUsageResultName(value, localizedValue, default);
         }
 
+        /// <summary> Describes the Azure AI Search features and SKUs available in a specific Azure region. </summary>
         /// <param name="regionName"> The name of the region. </param>
         /// <param name="features"> The list of features offered in this region. </param>
         /// <param name="skus"> The list of SKUs offered in this region. </param>
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchOfferingsByRegion(regionName, (features ?? new ChangeTrackingList<SearchFeatureOffering>()).ToList(), (skus ?? new ChangeTrackingList<SearchSkuOffering>()).ToList(), default);
         }
 
+        /// <summary> Describes the availability of a specific feature in a region. </summary>
         /// <param name="name"> The name of the feature offered in this region. </param>
         /// <returns> A new <see cref="Models.SearchFeatureOffering"/> instance for mocking. </returns>
         public static SearchFeatureOffering SearchFeatureOffering(string name = default)
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchSkuOffering(searchSkuName is null ? default : new SearchSku(searchSkuName, default), limits, default);
         }
 
+        /// <summary> Describes the limits associated with a SKU offering. </summary>
         /// <param name="indexes"> The maximum number of indexes available for this SKU. </param>
         /// <param name="indexers"> The maximum number of indexers available for this SKU. </param>
         /// <param name="partitionStorageInGigabytes"> The maximum storage size in Gigabytes available for this SKU per partition. </param>
@@ -100,6 +106,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Describes an existing private endpoint connection to the Azure AI Search service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -127,6 +134,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServicePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointConnectionPropertiesPrivateEndpoint(privateEndpointId, default), connectionState, groupId, provisioningState, default);
         }
 
+        /// <summary> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </summary>
         /// <param name="status"> Status of the the private link service connection. Valid values are Pending, Approved, Rejected, or Disconnected. </param>
         /// <param name="description"> The description for the private link service connection state. </param>
         /// <param name="actionsRequired"> A description of any extra actions that may be required. </param>
@@ -136,6 +144,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServicePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Describes a shared private link resource managed by the Azure AI Search service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -153,6 +162,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Describes the properties of an existing shared private link resource managed by the Azure AI Search service. </summary>
         /// <param name="privateLinkResourceId"> The resource ID of the resource the shared private link resource is for. </param>
         /// <param name="groupId"> The group ID from the provider of resource the shared private link resource is for. </param>
         /// <param name="requestMessage"> The message for requesting approval of the shared private link resource. </param>
@@ -172,6 +182,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Network security perimeter (NSP) configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -189,6 +200,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Network security configuration properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
@@ -208,6 +220,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
@@ -216,6 +229,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceNetworkSecurityPerimeterProvisioningIssue(name, properties, default);
         }
 
+        /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
@@ -236,6 +250,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Access rule in a network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterAccessRule"/> instance for mocking. </returns>
@@ -244,6 +259,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceNetworkSecurityPerimeterAccessRule(name, properties, default);
         }
 
+        /// <summary> Properties of Access Rule. </summary>
         /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -272,6 +288,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Information about a network security perimeter (NSP). </summary>
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
@@ -281,6 +298,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceNetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
+        /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterResourceAssociation"/> instance for mocking. </returns>
@@ -289,6 +307,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceNetworkSecurityPerimeterResourceAssociation(name, accessMode, default);
         }
 
+        /// <summary> Network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
@@ -309,6 +328,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Input of check name availability API. </summary>
         /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
         /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
         public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = default)
@@ -316,6 +336,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceNameAvailabilityContent(name, default, default);
         }
 
+        /// <summary> Output of check name availability API. </summary>
         /// <param name="isNameAvailable"> A value indicating whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. 'Invalid' indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). 'AlreadyExists' indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> A message that explains why the name is invalid and provides resource naming requirements. Available only if 'Invalid' is returned in the 'reason' property. </param>
@@ -394,6 +415,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Network specific rules that determine how the Azure AI Search service may be reached. </summary>
         /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="bypass"> Possible origins of inbound traffic that can bypass the rules defined in the 'ipRules' section. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkRuleSet"/> instance for mocking. </returns>
@@ -404,6 +426,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceNetworkRuleSet((ipRules ?? new ChangeTrackingList<SearchServiceIPRule>()).ToList(), bypass, default);
         }
 
+        /// <summary> The IP restriction rule of the Azure AI Search service. </summary>
         /// <param name="value"> Value corresponding to a single IPv4 address (eg., 123.1.2.3) or an IP range in CIDR format (eg., 123.1.2.3/24) to be allowed. </param>
         /// <returns> A new <see cref="Models.SearchServiceIPRule"/> instance for mocking. </returns>
         public static SearchServiceIPRule SearchServiceIPRule(string value = default)
@@ -411,6 +434,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceIPRule(value, default);
         }
 
+        /// <summary> Describes a policy that determines how resources within the search service are to be encrypted with customer managed keys. </summary>
         /// <param name="enforcement"> Describes how a search service should enforce compliance if it finds objects that aren't encrypted with the customer-managed key. </param>
         /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
         /// <param name="serviceLevelEncryptionKey"> Describes the customer-managed key configuration for encrypting the search service. </param>
@@ -420,6 +444,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serviceLevelEncryptionKey, default);
         }
 
+        /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
@@ -437,6 +462,10 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary>
+        /// Abstract base type for data identities.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SearchDataNoneIdentity"/> and <see cref="Models.SearchDataUserAssignedIdentity"/>.
+        /// </summary>
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         /// <returns> A new <see cref="Models.SearchDataIdentity"/> instance for mocking. </returns>
         public static SearchDataIdentity SearchDataIdentity(string odataType = default)
@@ -444,12 +473,14 @@ namespace Azure.ResourceManager.Search.Models
             return new UnknownSearchDataIdentity(odataType, default);
         }
 
+        /// <summary> Clears the identity property. </summary>
         /// <returns> A new <see cref="Models.SearchDataNoneIdentity"/> instance for mocking. </returns>
         public static SearchDataNoneIdentity SearchDataNoneIdentity()
         {
             return new SearchDataNoneIdentity(default, default);
         }
 
+        /// <summary> Specifies the user assigned identity to use. </summary>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
         /// <param name="federatedIdentityClientId"> Optional for Multi-tenant User-Assigned Managed Identity CMK Support: The client id (as a UUID) of the multi-tenant App Registration that has been configured to federate with the userAssignedIdentity. </param>
         /// <returns> A new <see cref="Models.SearchDataUserAssignedIdentity"/> instance for mocking. </returns>
@@ -458,6 +489,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchDataUserAssignedIdentity(default, default, userAssignedIdentity, federatedIdentityClientId);
         }
 
+        /// <summary> Describes the Azure Active Directory application credentials required to access an Azure Key Vault. </summary>
         /// <param name="applicationId"> The application (client) ID of an App Registration in the tenant. </param>
         /// <param name="applicationSecret"> An AAD client secret that was generated for the App Registration used to authenticate with Azure Key Vault. </param>
         /// <returns> A new <see cref="Models.SearchAadApplicationCredentials"/> instance for mocking. </returns>
@@ -543,6 +575,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Response containing the primary and secondary admin API keys for a given Azure AI Search service. </summary>
         /// <param name="primaryKey"> The primary admin API key of the search service. </param>
         /// <param name="secondaryKey"> The secondary admin API key of the search service. </param>
         /// <returns> A new <see cref="Models.SearchServiceAdminKeyResult"/> instance for mocking. </returns>
@@ -551,6 +584,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceAdminKeyResult(primaryKey, secondaryKey, default);
         }
 
+        /// <summary> Describes an API key for a given Azure AI Search service that conveys read-only permissions on the docs collection of an index. </summary>
         /// <param name="name"> The name of the query API key. Query names are optional, but assigning a name can help you remember how it's used. </param>
         /// <param name="key"> The value of the query API key. </param>
         /// <returns> A new <see cref="Models.SearchServiceQueryKey"/> instance for mocking. </returns>
@@ -559,6 +593,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServiceQueryKey(name, key, default);
         }
 
+        /// <summary> Describes a supported private link resource for the Azure AI Search service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -576,6 +611,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
+        /// <summary> Describes the properties of a supported private link resource for the Azure AI Search service. For a given API version, this represents the 'supported' groupIds when creating a shared private link resource. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="requiredMembers"> The list of required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> The list of required DNS zone names of the private link resource. </param>
@@ -590,6 +626,7 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), (shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>()).ToList(), default);
         }
 
+        /// <summary> Describes an resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
         /// <param name="name"> The name of the resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <returns> A new <see cref="Models.ShareableSearchServicePrivateLinkResourceType"/> instance for mocking. </returns>
@@ -598,6 +635,7 @@ namespace Azure.ResourceManager.Search.Models
             return new ShareableSearchServicePrivateLinkResourceType(name, properties, default);
         }
 
+        /// <summary> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
         /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
@@ -607,34 +645,35 @@ namespace Azure.ResourceManager.Search.Models
             return new ShareableSearchServicePrivateLinkResourceProperties(shareablePrivateLinkResourcePropertiesType, groupId, description, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Search.SearchServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The SKU of the search service, which determines billing rate and capacity limits. This property is required when creating a new search service. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <summary> Describes an Azure AI Search service and its current state. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"></param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="replicaCount"> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
+        /// <param name="partitionCount"> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
-        /// <param name="publicNetworkAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
-        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. If your service is in the degraded, disabled, or error states, Microsoft is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
+        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
+        /// <param name="publicNetworkAccess"></param>
+        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
-        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'succeeded' or 'failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
-        /// <param name="ipRules"> Network-specific rules that determine how the search service may be reached. </param>
+        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
+        /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="dataExfiltrationProtections"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain search SKUs in certain locations. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the search service. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the search service. </param>
-        /// <param name="upgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
-        /// <param name="serviceUpgradeOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
+        /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
+        /// <param name="upgradeAvailable"></param>
+        /// <param name="serviceUpgradeOn"></param>
+        /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn)
         {
@@ -673,29 +712,29 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Search.SearchServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The SKU of the search service, which determines billing rate and capacity limits. This property is required when creating a new search service. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="publicNetworkAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
-        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. If your service is in the degraded, disabled, or error states, Microsoft is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
+        /// <summary> Describes an Azure AI Search service and its current state. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"></param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="replicaCount"> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
+        /// <param name="partitionCount"> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </param>
+        /// <param name="publicNetworkAccess"></param>
+        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
-        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'succeeded' or 'failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
-        /// <param name="ipRules"> Network-specific rules that determine how the search service may be reached. </param>
+        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
+        /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the search service. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain search SKUs in certain locations. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the search service. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
+        /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources)
@@ -735,34 +774,34 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServicePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The SKU of the search service, which determines billing rate and capacity limits. This property is required when creating a new search service. </param>
+        /// <summary> The parameters used to update an Azure AI Search service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"></param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="replicaCount"> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
+        /// <param name="partitionCount"> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
-        /// <param name="publicNetworkAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
+        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
+        /// <param name="publicNetworkAccess"></param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
-        /// <param name="ipRules"> Network-specific rules that determine how the search service may be reached. </param>
+        /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="dataExfiltrationProtections"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
+        /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
-        /// <param name="upgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
-        /// <param name="serviceUpgradeOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
+        /// <param name="upgradeAvailable"></param>
+        /// <param name="serviceUpgradeOn"></param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn)
@@ -802,29 +841,29 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServicePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The SKU of the search service, which determines the billing rate and capacity limits. This property is required when creating a new search service. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="publicNetworkAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
-        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. If your service is in the degraded, disabled, or error states, Microsoft is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
+        /// <summary> The parameters used to update an Azure AI Search service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"></param>
+        /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
+        /// <param name="replicaCount"> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
+        /// <param name="partitionCount"> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </param>
+        /// <param name="publicNetworkAccess"></param>
+        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
-        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'succeeded' or 'failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
-        /// <param name="ipRules"> Network-specific rules that determine how the search service may be reached. </param>
+        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
+        /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the search service. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain search SKUs in certain locations. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the search service. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
+        /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources)
@@ -864,21 +903,21 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Search.SearchServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="searchSkuName"> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </param>
+        /// <summary> Describes an Azure AI Search service and its current state. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="searchSkuName"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="replicaCount"> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
+        /// <param name="partitionCount"> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
+        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </param>
         /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
-        /// <param name="publicInternetAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
+        /// <param name="publicInternetAccess"> This value can be set to 'Enabled' to avoid breaking changes on existing customer resources and templates. If set to 'Disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
@@ -887,7 +926,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
+        /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
@@ -932,7 +971,7 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SearchEncryptionWithCmk"/>. </summary>
+        /// <summary> Describes a policy that determines how resources within the search service are to be encrypted with customer managed keys. </summary>
         /// <param name="enforcement"> Describes how a search service should enforce compliance if it finds objects that aren't encrypted with the customer-managed key. </param>
         /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
         /// <returns> A new <see cref="Models.SearchEncryptionWithCmk"/> instance for mocking. </returns>
@@ -942,21 +981,21 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServicePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="searchSkuName"> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </param>
+        /// <summary> The parameters used to update an Azure AI Search service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="searchSkuName"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="replicaCount"> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
+        /// <param name="partitionCount"> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
+        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </param>
         /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
-        /// <param name="publicInternetAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
+        /// <param name="publicInternetAccess"> This value can be set to 'Enabled' to avoid breaking changes on existing customer resources and templates. If set to 'Disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
@@ -965,7 +1004,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
+        /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
@@ -1010,9 +1049,9 @@ namespace Azure.ResourceManager.Search.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNameAvailabilityContent"/>. </summary>
+        /// <summary> Input of check name availability API. </summary>
         /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
-        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
+        /// <param name="resourceType"></param>
         /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = default, SearchServiceResourceType resourceType = default)
