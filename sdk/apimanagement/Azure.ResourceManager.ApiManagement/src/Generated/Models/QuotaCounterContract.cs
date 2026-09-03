@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
-        /// <param name="periodStartOn"> The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="periodEndOn"> The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn)
+        /// <param name="periodStartsOn"> The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="periodEndsOn"> The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn)
         {
             CounterKey = counterKey;
             PeriodKey = periodKey;
-            PeriodStartOn = periodStartOn;
-            PeriodEndOn = periodEndOn;
+            PeriodStartsOn = periodStartsOn;
+            PeriodEndsOn = periodEndsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
-        /// <param name="periodStartOn"> The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="periodEndOn"> The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="periodStartsOn"> The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="periodEndsOn"> The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="value"> Quota Value Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn, QuotaCounterValueContractProperties value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, QuotaCounterValueContractProperties value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CounterKey = counterKey;
             PeriodKey = periodKey;
-            PeriodStartOn = periodStartOn;
-            PeriodEndOn = periodEndOn;
+            PeriodStartsOn = periodStartsOn;
+            PeriodEndsOn = periodEndsOn;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("periodStartTime")]
-        public DateTimeOffset PeriodStartOn { get; }
+        public DateTimeOffset PeriodStartsOn { get; }
 
         /// <summary> The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("periodEndTime")]
-        public DateTimeOffset PeriodEndOn { get; }
+        public DateTimeOffset PeriodEndsOn { get; }
 
         /// <summary> Quota Value Properties. </summary>
         [WirePath("value")]
