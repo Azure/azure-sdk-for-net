@@ -65,7 +65,7 @@ await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // Delete all messages in the queue that were enqueued more than a year ago.
 DateTimeOffset deleteBefore = DateTimeOffset.UtcNow.AddYears(-1);
-int numberOfMessagesDeleted = (await receiver.PurgeMessagesAsync(deleteBefore)).DeletedCount;
+long numberOfMessagesDeleted = (await receiver.PurgeMessagesAsync(deleteBefore)).DeletedCount;
 ```
 
 ## Delete a batch of old messages
