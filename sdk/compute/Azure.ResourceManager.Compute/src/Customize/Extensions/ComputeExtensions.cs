@@ -14,6 +14,22 @@ namespace Azure.ResourceManager.Compute
 {
     public static partial class ComputeExtensions
     {
+        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, cancellationToken);
+        }
+
+        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachines(statusOnly, filter, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
         /// <list type="bullet">
