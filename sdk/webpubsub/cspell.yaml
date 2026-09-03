@@ -4,4 +4,3 @@ overrides:
   - filename: '**/sdk/webpubsub/Azure.Provisioning.WebPubSub/**/*'
     words:
       - AZPROVISION
-      - Trycep
