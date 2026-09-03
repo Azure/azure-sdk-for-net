@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
@@ -383,24 +382,6 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
                     Properties = new FluxConfigurationProperties();
                 }
                 return Properties.ErrorMessage;
-            }
-        }
-
-        /// <summary> Gets or sets the InstallationScope. </summary>
-        [CodeGenMember("Scope")]
-        public BicepValue<FluxConfigurationScopeType> InstallationScope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InstallationScope;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FluxConfigurationProperties();
-                }
-                Properties.InstallationScope = value;
             }
         }
 

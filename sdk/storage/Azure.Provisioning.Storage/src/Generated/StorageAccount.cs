@@ -121,7 +121,7 @@ namespace Azure.Provisioning.Storage
         }
 
         /// <summary> Gets or sets the Sku. </summary>
-        public StorageSku Sku
+        internal StorageSku Sku
         {
             get
             {
@@ -729,6 +729,19 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the Tier. </summary>
+        public BicepValue<StorageSkuTier> SkuTier
+        {
+            get
+            {
+                if (Sku is null)
+                {
+                    Sku = new StorageSku();
+                }
+                return Sku.Tier;
+            }
+        }
+
         /// <summary> Gets or sets the ZonePlacementPolicy. </summary>
         public BicepValue<StorageAccountZonePlacementPolicy> ZonePlacementPolicy
         {
@@ -743,6 +756,19 @@ namespace Azure.Provisioning.Storage
                     Placement = new Placement();
                 }
                 Placement.ZonePlacementPolicy = value;
+            }
+        }
+
+        /// <summary> Gets the IPv6Rules. </summary>
+        public BicepList<StorageAccountIPRule> NetworkRuleSetIPv6Rules
+        {
+            get
+            {
+                if (NetworkRuleSet is null)
+                {
+                    NetworkRuleSet = new StorageAccountNetworkRuleSet();
+                }
+                return NetworkRuleSet.IPv6Rules;
             }
         }
 

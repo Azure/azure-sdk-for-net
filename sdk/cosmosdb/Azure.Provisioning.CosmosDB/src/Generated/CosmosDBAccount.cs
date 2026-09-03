@@ -14,7 +14,6 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CosmosDB
 {
@@ -805,52 +804,6 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DatabaseAccountOfferType. </summary>
-        [CodeGenMember("DatabaseAccountOfferType")]
-        public BicepValue<CosmosDBAccountOfferType> DatabaseAccountOfferType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DatabaseAccountOfferType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DatabaseAccountOfferType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Locations. </summary>
-        [CodeGenMember("Locations")]
-        public BicepList<CosmosDBAccountLocation> Locations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Locations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.Locations = value;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnectionResources. </summary>
-        [CodeGenMember("PrivateEndpointConnections")]
-        public BicepList<CosmosDBPrivateEndpointConnection> PrivateEndpointConnectionResources
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointConnectionResources;
             }
         }
 

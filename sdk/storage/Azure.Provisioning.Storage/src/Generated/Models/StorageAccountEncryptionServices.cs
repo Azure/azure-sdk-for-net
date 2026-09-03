@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -15,6 +17,58 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new StorageAccountEncryptionServices. </summary>
         public StorageAccountEncryptionServices()
         {
+        }
+
+        /// <summary> Gets the LastEnabledOn. </summary>
+        public BicepValue<DateTimeOffset> BlobLastEnabledOn
+        {
+            get
+            {
+                if (Blob is null)
+                {
+                    Blob = new StorageEncryptionService();
+                }
+                return Blob.LastEnabledOn;
+            }
+        }
+
+        /// <summary> Gets the LastEnabledOn. </summary>
+        public BicepValue<DateTimeOffset> FileLastEnabledOn
+        {
+            get
+            {
+                if (File is null)
+                {
+                    File = new StorageEncryptionService();
+                }
+                return File.LastEnabledOn;
+            }
+        }
+
+        /// <summary> Gets the LastEnabledOn. </summary>
+        public BicepValue<DateTimeOffset> TableLastEnabledOn
+        {
+            get
+            {
+                if (Table is null)
+                {
+                    Table = new StorageEncryptionService();
+                }
+                return Table.LastEnabledOn;
+            }
+        }
+
+        /// <summary> Gets the LastEnabledOn. </summary>
+        public BicepValue<DateTimeOffset> QueueLastEnabledOn
+        {
+            get
+            {
+                if (Queue is null)
+                {
+                    Queue = new StorageEncryptionService();
+                }
+                return Queue.LastEnabledOn;
+            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountEncryptionServices. </summary>
