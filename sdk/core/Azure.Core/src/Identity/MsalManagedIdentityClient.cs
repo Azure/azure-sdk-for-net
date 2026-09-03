@@ -170,9 +170,7 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
             Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport =
-                ShouldAttemptMtlsPop(requestContext, isTokenBindingAvailable)
-                    ? GetAttestationSupport()
-                    : null;
+                GetAttestationSupport(requestContext, isTokenBindingAvailable);
             bool enableMtlsPop = withAttestationSupport != null;
 
             IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, enableMtlsPop, cancellationToken).ConfigureAwait(false);
@@ -201,9 +199,18 @@ namespace Azure.Identity
 
         public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
-            // Keep honoring PoP request intent when selecting the cached MSAL MI app,
-            // same behavior as GetManagedIdentitySourceAsync.
-            IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, context.IsProofOfPossessionEnabled, cancellationToken).ConfigureAwait(false);
+            // Capability discovery determines whether the host can satisfy PoP, so evaluate the
+            // request-level prerequisites here and apply the binding-strength requirement afterward.
+            bool enableMtlsPop = GetAttestationSupport(context, isTokenBindingAvailable: true) != null;
+            IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, enableMtlsPop, cancellationToken).ConfigureAwait(false);
+            return await GetManagedIdentityCapabilitiesFromClientAsync(client, context, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFromClientAsync(
+            IManagedIdentityApplication client,
+            TokenRequestContext context,
+            CancellationToken cancellationToken)
+        {
             ManagedIdentityApplication app = client as ManagedIdentityApplication;
             return await app.GetManagedIdentityCapabilitiesAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -241,7 +248,14 @@ namespace Azure.Identity
             requestContext.IsProofOfPossessionEnabled &&
             isTokenBindingAvailable;
 
-        protected virtual Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> GetAttestationSupport() =>
+        private Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> GetAttestationSupport(
+            TokenRequestContext requestContext,
+            bool isTokenBindingAvailable) =>
+            ShouldAttemptMtlsPop(requestContext, isTokenBindingAvailable)
+                ? ResolveAttestationSupport()
+                : null;
+
+        protected virtual Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> ResolveAttestationSupport() =>
             s_withAttestationSupport.Value;
     }
 }
