@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
         /// <param name="enableDataIsolation"> Gets or sets the EnableDataIsolation. </param>
         /// <param name="enableServiceSideCMKEncryption"> Gets or sets the EnableServiceSideCMKEncryption. </param>
-        /// <param name="encryption"> Gets or sets the Encryption. </param>
+        /// <param name="encryptionProperty"> Gets or sets the EncryptionProperty. </param>
         /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
         /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
         /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="kind"></param>
         /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? allowPublicAccessWhenBehindVnet = default, string applicationInsights = default, IEnumerable<string> associatedWorkspaces = default, string containerRegistry = default, string description = default, Uri discoveryUri = default, bool? enableDataIsolation = default, bool? enableServiceSideCMKEncryption = default, EncryptionProperty encryption = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, bool? isHbiWorkspace = default, ResourceIdentifier hubResourceId = default, string imageBuildCompute = default, string keyVault = default, ManagedNetworkSettings managedNetwork = default, Uri mlFlowTrackingUri = default, MachineLearningNotebookResourceInfo notebookInfo = default, string primaryUserAssignedIdentity = default, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default, int? privateLinkCount = default, bool? isProvisionNetworkNow = default, MachineLearningProvisioningState? provisioningState = default, PublicNetworkAccess? publicNetworkAccess = default, ServerlessComputeSettings serverlessComputeSettings = default, string serviceProvisionedResourceGroup = default, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default, string storageAccount = default, bool? isStorageHnsEnabled = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, Guid? tenantId = default, bool? isV1LegacyMode = default, WorkspaceHubConfig workspaceHubConfig = default, string workspaceId = default, int? serviceManagedResourcesCosmosDBCollectionsThroughput = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
+        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? allowPublicAccessWhenBehindVnet = default, string applicationInsights = default, IEnumerable<string> associatedWorkspaces = default, string containerRegistry = default, string description = default, Uri discoveryUri = default, bool? enableDataIsolation = default, bool? enableServiceSideCMKEncryption = default, MachineLearningEncryptionProperty encryptionProperty = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, bool? isHbiWorkspace = default, ResourceIdentifier hubResourceId = default, string imageBuildCompute = default, string keyVault = default, ManagedNetworkSettings managedNetwork = default, Uri mlFlowTrackingUri = default, MachineLearningNotebookResourceInfo notebookInfo = default, string primaryUserAssignedIdentity = default, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default, int? privateLinkCount = default, bool? isProvisionNetworkNow = default, MachineLearningProvisioningState? provisioningState = default, PublicNetworkAccess? publicNetworkAccess = default, ServerlessComputeSettings serverlessComputeSettings = default, string serviceProvisionedResourceGroup = default, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default, string storageAccount = default, bool? isStorageHnsEnabled = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, Guid? tenantId = default, bool? isV1LegacyMode = default, WorkspaceHubConfig workspaceHubConfig = default, string workspaceId = default, int? serviceManagedResourcesCosmosDBCollectionsThroughput = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     default,
                     enableDataIsolation,
                     enableServiceSideCMKEncryption,
-                    new EncryptionProperty(
+                    new MachineLearningEncryptionProperty(
                         default,
                         new IdentityForCmk(primaryUserAssignedIdentity, default),
                         default,
@@ -124,6 +124,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 kind,
                 sku,
                 default);
+        }
+
+        /// <param name="cosmosDBResourceId">
+        /// The byok cosmosdb account that customer brings to store customer's data
+        /// with encryption
+        /// </param>
+        /// <param name="userAssignedIdentity"> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </param>
+        /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
+        /// <param name="searchAccountResourceId">
+        /// The byok search account that customer brings to store customer's data
+        /// with encryption
+        /// </param>
+        /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
+        /// <param name="storageAccountResourceId">
+        /// The byok storage account that customer brings to store customer's data
+        /// with encryption
+        /// </param>
+        /// <returns> A new <see cref="Models.MachineLearningEncryptionProperty"/> instance for mocking. </returns>
+        public static MachineLearningEncryptionProperty MachineLearningEncryptionProperty(ResourceIdentifier cosmosDBResourceId = default, string userAssignedIdentity = default, MachineLearningKeyVaultProperties keyVaultProperties = default, ResourceIdentifier searchAccountResourceId = default, MachineLearningEncryptionStatus status = default, ResourceIdentifier storageAccountResourceId = default)
+        {
+            return new MachineLearningEncryptionProperty(
+                cosmosDBResourceId,
+                userAssignedIdentity is null ? default : new IdentityForCmk(userAssignedIdentity, default),
+                keyVaultProperties,
+                searchAccountResourceId,
+                status,
+                storageAccountResourceId,
+                default);
+        }
+
+        /// <param name="identityClientId">
+        /// Currently, we support only SystemAssigned MSI.
+        /// We need this when we support UserAssignedIdentities
+        /// </param>
+        /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
+        /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
+        /// <returns> A new <see cref="Models.MachineLearningKeyVaultProperties"/> instance for mocking. </returns>
+        public static MachineLearningKeyVaultProperties MachineLearningKeyVaultProperties(string identityClientId = default, string keyIdentifier = default, ResourceIdentifier keyVaultArmId = default)
+        {
+            return new MachineLearningKeyVaultProperties(identityClientId, keyIdentifier, keyVaultArmId, default);
         }
 
         /// <param name="sparkRuntimeVersion"> Gets or sets the SparkRuntimeVersion. </param>
@@ -7467,7 +7507,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     discoveryUri,
                     enableDataIsolation,
                     default,
-                    new EncryptionProperty(
+                    new MachineLearningEncryptionProperty(
                         default,
                         new IdentityForCmk(primaryUserAssignedIdentity, default),
                         default,

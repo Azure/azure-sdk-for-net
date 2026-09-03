@@ -196,6 +196,24 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary> Gets or sets the EncryptionProperty. </summary>
+        [WirePath("properties.encryption")]
+        public MachineLearningEncryptionProperty EncryptionProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.EncryptionProperty = value;
+            }
+        }
+
         /// <summary> Settings for feature store type workspace. </summary>
         [WirePath("properties.featureStoreSettings")]
         public FeatureStoreSettings FeatureStoreSettings

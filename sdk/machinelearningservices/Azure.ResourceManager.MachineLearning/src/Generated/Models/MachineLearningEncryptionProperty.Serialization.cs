@@ -14,57 +14,57 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EncryptionProperty. </summary>
-    internal partial class EncryptionProperty : IJsonModel<EncryptionProperty>
+    /// <summary> The MachineLearningEncryptionProperty. </summary>
+    public partial class MachineLearningEncryptionProperty : IJsonModel<MachineLearningEncryptionProperty>
     {
-        /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/> for deserialization. </summary>
-        internal EncryptionProperty()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionProperty"/> for deserialization. </summary>
+        internal MachineLearningEncryptionProperty()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EncryptionProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MachineLearningEncryptionProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEncryptionProperty(document.RootElement, options);
+                        return DeserializeMachineLearningEncryptionProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionProperty)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEncryptionProperty)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionProperty)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEncryptionProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EncryptionProperty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MachineLearningEncryptionProperty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EncryptionProperty IPersistableModel<EncryptionProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MachineLearningEncryptionProperty IPersistableModel<MachineLearningEncryptionProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EncryptionProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MachineLearningEncryptionProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EncryptionProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MachineLearningEncryptionProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionProperty)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEncryptionProperty)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(CosmosDBResourceId))
             {
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EncryptionProperty IJsonModel<EncryptionProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MachineLearningEncryptionProperty IJsonModel<MachineLearningEncryptionProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EncryptionProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MachineLearningEncryptionProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionProperty)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEncryptionProperty)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionProperty(document.RootElement, options);
+            return DeserializeMachineLearningEncryptionProperty(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EncryptionProperty DeserializeEncryptionProperty(JsonElement element, ModelReaderWriterOptions options)
+        internal static MachineLearningEncryptionProperty DeserializeMachineLearningEncryptionProperty(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ResourceIdentifier cosmosDBResourceId = default;
             IdentityForCmk identity = default;
-            KeyVaultProperties keyVaultProperties = default;
+            MachineLearningKeyVaultProperties keyVaultProperties = default;
             ResourceIdentifier searchAccountResourceId = default;
             MachineLearningEncryptionStatus status = default;
             ResourceIdentifier storageAccountResourceId = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(prop.Value, options);
+                    keyVaultProperties = MachineLearningKeyVaultProperties.DeserializeMachineLearningKeyVaultProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("searchAccountResourceId"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EncryptionProperty(
+            return new MachineLearningEncryptionProperty(
                 cosmosDBResourceId,
                 identity,
                 keyVaultProperties,

@@ -12,17 +12,17 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EncryptionProperty. </summary>
-    internal partial class EncryptionProperty
+    /// <summary> The MachineLearningEncryptionProperty. </summary>
+    public partial class MachineLearningEncryptionProperty
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionProperty"/>. </summary>
         /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
-        public EncryptionProperty(KeyVaultProperties keyVaultProperties, MachineLearningEncryptionStatus status)
+        public MachineLearningEncryptionProperty(MachineLearningKeyVaultProperties keyVaultProperties, MachineLearningEncryptionStatus status)
         {
             Argument.AssertNotNull(keyVaultProperties, nameof(keyVaultProperties));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionProperty"/>. </summary>
         /// <param name="cosmosDBResourceId">
         /// The byok cosmosdb account that customer brings to store customer's data
         /// with encryption
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProperty(ResourceIdentifier cosmosDBResourceId, IdentityForCmk identity, KeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningEncryptionProperty(ResourceIdentifier cosmosDBResourceId, IdentityForCmk identity, MachineLearningKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CosmosDBResourceId = cosmosDBResourceId;
             Identity = identity;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> KeyVault details to do the encryption. </summary>
         [WirePath("keyVaultProperties")]
-        public KeyVaultProperties KeyVaultProperties { get; set; }
+        public MachineLearningKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary>
         /// The byok search account that customer brings to store customer's data

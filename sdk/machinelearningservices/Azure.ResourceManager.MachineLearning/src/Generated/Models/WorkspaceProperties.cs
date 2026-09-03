@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
         /// <param name="enableDataIsolation"></param>
         /// <param name="enableServiceSideCMKEncryption"></param>
-        /// <param name="encryption"></param>
+        /// <param name="encryptionProperty"></param>
         /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
         /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
         /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(bool? allowPublicAccessWhenBehindVnet, string applicationInsights, IList<string> associatedWorkspaces, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, bool? enableServiceSideCMKEncryption, EncryptionProperty encryption, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, ResourceIdentifier hubResourceId, string imageBuildCompute, string keyVault, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, bool? isProvisionNetworkNow, MachineLearningProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, string storageAccount, bool? isStorageHnsEnabled, SystemDatastoresAuthMode? systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(bool? allowPublicAccessWhenBehindVnet, string applicationInsights, IList<string> associatedWorkspaces, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, bool? enableServiceSideCMKEncryption, MachineLearningEncryptionProperty encryptionProperty, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, ResourceIdentifier hubResourceId, string imageBuildCompute, string keyVault, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, bool? isProvisionNetworkNow, MachineLearningProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, string storageAccount, bool? isStorageHnsEnabled, SystemDatastoresAuthMode? systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowPublicAccessWhenBehindVnet = allowPublicAccessWhenBehindVnet;
             ApplicationInsights = applicationInsights;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DiscoveryUri = discoveryUri;
             EnableDataIsolation = enableDataIsolation;
             EnableServiceSideCMKEncryption = enableServiceSideCMKEncryption;
-            Encryption = encryption;
+            EncryptionProperty = encryptionProperty;
             FeatureStoreSettings = featureStoreSettings;
             FriendlyName = friendlyName;
             IsHbiWorkspace = isHbiWorkspace;
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("enableServiceSideCMKEncryption")]
         public bool? EnableServiceSideCMKEncryption { get; set; }
 
-        /// <summary> Gets or sets the Encryption. </summary>
+        /// <summary> Gets or sets the EncryptionProperty. </summary>
         [WirePath("encryption")]
-        public EncryptionProperty Encryption { get; set; }
+        public MachineLearningEncryptionProperty EncryptionProperty { get; set; }
 
         /// <summary> Settings for feature store type workspace. </summary>
         [WirePath("featureStoreSettings")]

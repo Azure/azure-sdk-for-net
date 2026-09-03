@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("enableServiceSideCMKEncryption"u8);
                 writer.WriteBooleanValue(EnableServiceSideCMKEncryption.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Optional.IsDefined(EncryptionProperty))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                writer.WriteObjectValue(EncryptionProperty, options);
             }
             if (Optional.IsDefined(FeatureStoreSettings))
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Uri discoveryUri = default;
             bool? enableDataIsolation = default;
             bool? enableServiceSideCMKEncryption = default;
-            EncryptionProperty encryption = default;
+            MachineLearningEncryptionProperty encryptionProperty = default;
             FeatureStoreSettings featureStoreSettings = default;
             string friendlyName = default;
             bool? isHbiWorkspace = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionProperty.DeserializeEncryptionProperty(prop.Value, options);
+                    encryptionProperty = MachineLearningEncryptionProperty.DeserializeMachineLearningEncryptionProperty(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("featureStoreSettings"u8))
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 discoveryUri,
                 enableDataIsolation,
                 enableServiceSideCMKEncryption,
-                encryption,
+                encryptionProperty,
                 featureStoreSettings,
                 friendlyName,
                 isHbiWorkspace,

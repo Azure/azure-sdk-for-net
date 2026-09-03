@@ -13,16 +13,16 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Customer Key vault properties. </summary>
-    internal partial class KeyVaultProperties
+    public partial class MachineLearningKeyVaultProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
         /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> or <paramref name="keyVaultArmId"/> is null. </exception>
-        public KeyVaultProperties(string keyIdentifier, ResourceIdentifier keyVaultArmId)
+        public MachineLearningKeyVaultProperties(string keyIdentifier, ResourceIdentifier keyVaultArmId)
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVaultArmId = keyVaultArmId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKeyVaultProperties"/>. </summary>
         /// <param name="identityClientId">
         /// Currently, we support only SystemAssigned MSI.
         /// We need this when we support UserAssignedIdentities
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
         /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultProperties(string identityClientId, string keyIdentifier, ResourceIdentifier keyVaultArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningKeyVaultProperties(string identityClientId, string keyIdentifier, ResourceIdentifier keyVaultArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityClientId = identityClientId;
             KeyIdentifier = keyIdentifier;

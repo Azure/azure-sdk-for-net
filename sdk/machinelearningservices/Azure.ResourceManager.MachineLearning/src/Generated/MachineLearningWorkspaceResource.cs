@@ -1998,5 +1998,38 @@ namespace Azure.ResourceManager.MachineLearning
 
             return GetMachineLearningPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of MachineLearningOutboundRuleBasics in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningOutboundRuleBasics and their operations over a MachineLearningOutboundRuleBasicResource. </returns>
+        public virtual MachineLearningOutboundRuleBasicCollection GetMachineLearningOutboundRuleBasics()
+        {
+            return GetCachedClient(client => new MachineLearningOutboundRuleBasicCollection(client, Id));
+        }
+
+        /// <summary> Gets an outbound rule from the managed network of a machine learning workspace. </summary>
+        /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MachineLearningOutboundRuleBasicResource>> GetMachineLearningOutboundRuleBasicAsync(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetMachineLearningOutboundRuleBasics().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an outbound rule from the managed network of a machine learning workspace. </summary>
+        /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningOutboundRuleBasicResource> GetMachineLearningOutboundRuleBasic(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return GetMachineLearningOutboundRuleBasics().Get(ruleName, cancellationToken);
+        }
     }
 }
