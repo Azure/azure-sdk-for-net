@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Result statistics produced when an agent insight run succeeds. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightRunResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

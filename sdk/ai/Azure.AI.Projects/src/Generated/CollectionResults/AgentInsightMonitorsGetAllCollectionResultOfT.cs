@@ -6,13 +6,14 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class AgentInsightMonitorsGetAllCollectionResultOfT : CollectionResult<AgentInsightMonitorListItem>
     {
         private readonly AgentInsightMonitors _client;
-        private readonly string _foundryFeatures;
         private readonly string _after;
         private readonly string _before;
         private readonly int? _limit;
@@ -22,17 +23,15 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of AgentInsightMonitorsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentInsightMonitors client used to send requests. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="after"> A cursor that identifies the last item in the previous page. </param>
         /// <param name="before"> A cursor that identifies the first item in the next page. </param>
         /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
         /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
         /// <param name="agentName"> Filter monitors by agent name. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentInsightMonitorsGetAllCollectionResultOfT(AgentInsightMonitors client, string foundryFeatures, string after, string before, int? limit, string order, string agentName, RequestOptions options)
+        public AgentInsightMonitorsGetAllCollectionResultOfT(AgentInsightMonitors client, string after, string before, int? limit, string order, string agentName, RequestOptions options)
         {
             _client = client;
-            _foundryFeatures = foundryFeatures;
             _after = after;
             _before = before;
             _limit = limit;
@@ -45,7 +44,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetAllRequest(_foundryFeatures, _after, _before, _limit, _order, _agentName, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_after, _before, _limit, _order, _agentName, _options);
             string nextToken = null;
             while (true)
             {
@@ -57,7 +56,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateGetAllRequest(_foundryFeatures, nextToken, _before, _limit, _order, _agentName, _options);
+                message = _client.CreateGetAllRequest(nextToken, _before, _limit, _order, _agentName, _options);
             }
         }
 

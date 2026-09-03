@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A persisted issue discovered from an agent's traces. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsight
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> An Agent Insights monitor summary returned by list operations. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightMonitorListItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
