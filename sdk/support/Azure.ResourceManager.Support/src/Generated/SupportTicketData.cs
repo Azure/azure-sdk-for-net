@@ -453,6 +453,24 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        /// <summary> Support channel type for the support ticket. </summary>
+        public SupportChannel? SupportChannel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportChannel;
+            }
+        }
+
+        /// <summary> Status of the chat conversation associated with the support ticket. </summary>
+        public ChatConversationStatus? ChatConversationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChatConversationStatus;
+            }
+        }
+
         /// <summary> Email address of the Azure Support engineer assigned to the support ticket. </summary>
         public string SupportEngineerEmailAddress
         {

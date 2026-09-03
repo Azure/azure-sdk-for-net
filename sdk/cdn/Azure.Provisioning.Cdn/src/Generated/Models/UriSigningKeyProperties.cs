@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriSigningKeyProperties. </summary>
         public UriSigningKeyProperties()
         {
+            SecretType.Assign(Cdn.SecretType.UriSigningKey);
         }
 
         /// <summary> Gets or sets the KeyId. </summary>
@@ -88,7 +89,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "UrlSigningKey");
             _keyId = DefineProperty<string>(nameof(KeyId), new string[] { "keyId" }, isRequired: true);
             _secretSource = DefineModelProperty<CdnResourceReference>(nameof(SecretSource), new string[] { "secretSource" }, isRequired: true);
             _secretVersion = DefineProperty<string>(nameof(SecretVersion), new string[] { "secretVersion" }, isRequired: true);

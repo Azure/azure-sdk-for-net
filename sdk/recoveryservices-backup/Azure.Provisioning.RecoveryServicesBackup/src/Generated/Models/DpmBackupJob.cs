@@ -25,6 +25,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new DpmBackupJob. </summary>
         public DpmBackupJob()
         {
+            JobType.Assign("DpmJob");
         }
 
         /// <summary> Gets the Duration. </summary>
@@ -111,7 +112,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "DpmJob");
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _dpmServerName = DefineProperty<string>(nameof(DpmServerName), new string[] { "dpmServerName" });
             _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "containerName" });

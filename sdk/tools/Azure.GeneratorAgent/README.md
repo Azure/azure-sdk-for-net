@@ -82,7 +82,7 @@ The agent uses a three-layer architecture:
 
 - **MCP Server** — Exposes deterministic fix tools over the [Model Context Protocol](https://modelcontextprotocol.io/) via stdio transport. Tools are auto-discovered from the assembly at startup.
 - **MCP Tools** — 19 individual tool classes covering project discovery, regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, `[CodeGenSuppress]` attribute insertion, build output parsing, error classification, code generation, generated code snapshots, test execution, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
-- **Skill-Driven Workflow** — The migration skill docs ([`dpg-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) and [`mpg-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-migration/SKILL.md)) are the orchestrators. The LLM reads the appropriate skill, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
+- **Skill-Driven Workflow** — The [`dpg-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) skill is the data-plane migration orchestrator. The LLM reads the skill, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
 
 ### MCP Tools
 
@@ -120,13 +120,13 @@ The `DeterministicFixRegistry` contains rules that map error codes and message p
 - **Nullable annotations** — CS8625/CS8600 fixes
 - **Method call replacements** — `FromCancellationToken` → `ToRequestContext`, `Fetch(response)` → `FromLroResponse`, obsolete `.ToRequestContent()` removal
 
-See [`.github/skills/dpg-migration/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) for the data-plane workflow and [`.github/skills/mpg-migration/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-migration/SKILL.md) for the management-plane workflow.
+See [`.github/skills/dpg-migration/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) for the data-plane migration workflow.
 
 ## Examples
 
 ### Use with a migration skill
 
-The tools are designed to be called by the dedicated migration skills. Use [`dpg-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) for data-plane libraries and [`mpg-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-migration/SKILL.md) for management-plane libraries. The typical workflow is:
+The tools are designed to be called by the dedicated [`dpg-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) skill for data-plane libraries. The typical workflow is:
 
 1. **Setup** — `pregen_cleanup` → `validate_tsp_config` → `commit_iteration` → `run_code_generation`
 2. **Build-fix loop** — `build_and_classify` → `batch_fix` (for deterministic errors) → LLM reasoning (for non-deterministic errors) → rebuild
@@ -180,4 +180,4 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 - Explore the [Azure SDK for .NET repository](https://github.com/Azure/azure-sdk-for-net)
 - Learn about [Azure SDK design guidelines](https://azure.github.io/azure-sdk/)
-- Read the [DPG migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) or the [MPG migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-migration/SKILL.md) for the full migration workflow
+- Read the [DPG migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/dpg-migration/SKILL.md) for the full data-plane migration workflow

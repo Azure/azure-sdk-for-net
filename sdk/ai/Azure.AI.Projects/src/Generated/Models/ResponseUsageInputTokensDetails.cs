@@ -15,21 +15,28 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="ResponseUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens"></param>
-        internal ResponseUsageInputTokensDetails(long cachedTokens)
+        /// <param name="cacheWriteTokens"></param>
+        internal ResponseUsageInputTokensDetails(long cachedTokens, long cacheWriteTokens)
         {
             CachedTokens = cachedTokens;
+            CacheWriteTokens = cacheWriteTokens;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens"></param>
+        /// <param name="cacheWriteTokens"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseUsageInputTokensDetails(long cachedTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseUsageInputTokensDetails(long cachedTokens, long cacheWriteTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CachedTokens = cachedTokens;
+            CacheWriteTokens = cacheWriteTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the CachedTokens. </summary>
         public long CachedTokens { get; }
+
+        /// <summary> Gets the CacheWriteTokens. </summary>
+        public long CacheWriteTokens { get; }
     }
 }

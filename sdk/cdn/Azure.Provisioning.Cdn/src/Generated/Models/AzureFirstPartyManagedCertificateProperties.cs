@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new AzureFirstPartyManagedCertificateProperties. </summary>
         public AzureFirstPartyManagedCertificateProperties()
         {
+            SecretType.Assign(Cdn.SecretType.AzureFirstPartyManagedCertificate);
         }
 
         /// <summary> Gets the SecretSource. </summary>
@@ -95,7 +96,7 @@ namespace Azure.Provisioning.Cdn
         {
             get
             {
-                return SecretSource.Id;
+                return SecretSource is null ? default : SecretSource.Id;
             }
         }
 
@@ -103,7 +104,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "AzureFirstPartyManagedCertificate");
             _secretSource = DefineModelProperty<CdnResourceReference>(nameof(SecretSource), new string[] { "secretSource" }, isOutput: true);
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isOutput: true);
             _expirationDate = DefineProperty<string>(nameof(ExpirationDate), new string[] { "expirationDate" }, isOutput: true);

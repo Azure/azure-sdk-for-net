@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.ProvisioningIssues;
+                return Properties is null ? default : Properties.ProvisioningIssues;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.NetworkSecurityPerimeter;
+                return Properties is null ? default : Properties.NetworkSecurityPerimeter;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.ResourceAssociation;
+                return Properties is null ? default : Properties.ResourceAssociation;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return Properties.Profile;
+                return Properties is null ? default : Properties.Profile;
             }
         }
 
