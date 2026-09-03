@@ -67,6 +67,7 @@ namespace Azure.Storage.Blobs
                 _accountName = new BlobUriBuilder(endpoint).AccountName;
                 if (string.IsNullOrEmpty(_accountName))
                 {
+                    // Sessions explicitly enabled
                     if (_sessionOptions.SessionMode == SessionMode.Enabled)
                     {
                         BlobsEventSource.Singleton.SessionAuthenticationCannotBeEnabledAccountNameUnavailable(
@@ -74,6 +75,7 @@ namespace Azure.Storage.Blobs
                         throw BlobErrors.AccountNameRequiredForSessionSigning(endpoint);
                     }
 
+                    // Sessions enabled by default
                     if (_sessionOptions.SessionMode.ResolveAuto() == SessionMode.Enabled)
                     {
                         BlobsEventSource.Singleton.SessionAuthenticationDisabledAccountNameUnavailable(
