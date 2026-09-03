@@ -46,20 +46,20 @@ Pass the **build error output** as `customizationRequest`. Pass `packagePath` fo
 | Allowed | Forbidden |
 |---------|-----------|
 | Drive `azsdk_customized_code_update` (editScope: CustomCode) to patch the failing package's **custom (non-generated) code**. | Edit any **spec input**: `client.tsp`, `tspconfig.yaml`, `main.tsp`, or any TypeSpec source. |
-| Let the tool **regenerate** `Generated/` from the **unchanged pinned** commit, and **commit** the deterministic result. | **Move the pinned spec commit** in `tsp-location.yaml` (the `commit`/`repo`/`directory` fields). |
-| Commit the tool's custom-code changes + regenerated output as reviewable commits. | Hand-edit code (custom or generated) to "help" the tool; let the engine own the edits. |
+| Let the tool **regenerate** `Generated/` from the **unchanged pinned** commit, and commit the deterministic result **only after the final build is green**. | **Move the pinned spec commit** in `tsp-location.yaml` (the `commit`/`repo`/`directory` fields), or commit partial progress while the final build is red. |
+| After a green final build, commit the tool's custom-code changes + regenerated output as a reviewable commit. | Hand-edit code (custom or generated) to "help" the tool; let the engine own the edits. |
 | Re-invoke the tool on an already-partially-repaired branch (it is idempotent). | Touch `.github/`, `eng/`, shared props/targets, pipeline files, package metadata, or secrets. |
 
 **Custom code only.** If the only viable fix is a spec/decorator (Phase-A) change — e.g. a naming fix that must live in `client.tsp` via `@@clientName`, or `@@access` — that belongs in a **separate spec-repo PR** and is **out of scope**. The tool will stop and return guidance; surface it (see [Stop Conditions](#stop-conditions)) and do not attempt it.
 
-**Regeneration is expected, not a violation.** Fixing custom code that carries generator signals legitimately changes `Generated/` as a deterministic downstream effect. The regenerated `Generated/` **must be committed** so the repo's existing generated-code-diff check (.NET: `eng/scripts/CodeChecks.ps1` → `/t:GenerateCode` + `git diff --exit-code`) stays green. The guard is "`Generated/` is *reproducible from unchanged inputs*", not "`Generated/` is frozen".
+**Regeneration is expected, not a violation.** Fixing custom code that carries generator signals legitimately changes `Generated/` as a deterministic downstream effect. After the final build is green, the regenerated `Generated/` **must be committed** so the repo's existing generated-code-diff check (.NET: `eng/scripts/CodeChecks.ps1` → `/t:GenerateCode` + `git diff --exit-code`) stays green. If the final build is red, commit nothing. The guard is "`Generated/` is *reproducible from unchanged inputs*", not "`Generated/` is frozen".
 
 ## Configuration
 
 `maxIterations` is a **cross-language repair concept**: every language repo's auto-build-repair skill bounds its repair loop by the same `maxIterations` key, but the **value is tunable per language** (build + regeneration cost differs across .NET / Python / Java). This skill reads it from the co-located per-language config file:
 
 - File: [`repair-config.yml`](repair-config.yml) (next to this `SKILL.md`).
-- Key: `maxIterations` — max number of times the skill re-invokes `azsdk_customized_code_update` before committing progress and stopping.
+- Key: `maxIterations` — max number of times the skill re-invokes `azsdk_customized_code_update` before stopping and reporting. Reaching the limit without a green build never permits a commit.
 - If the file or key is absent, fall back to the cross-language default **3**.
 
 To tune this repo, edit `maxIterations` in `repair-config.yml`; do not hardcode a different number in the skill body. Other language repos carry their own `repair-config.yml` with their own value.
@@ -69,7 +69,7 @@ To tune this repo, edit `maxIterations` in `repair-config.yml`; do not hardcode 
 Each call performs **one repair attempt**; the skill owns the iterate-until-green loop and caps it at **`maxIterations`** attempts (read from [`repair-config.yml`](#configuration); default 3):
 
 - Re-invoke the tool at most `maxIterations` times (it is idempotent on an already-partially-repaired branch); do not loop it unbounded. Re-invoke only while the build error set is still shrinking — stop early if an attempt makes no progress.
-- If `maxIterations` attempts are reached without a green build, **commit progress made so far and report** — do not switch to manual fixing.
+- If `maxIterations` attempts are reached without a green build, **do not commit any attempted changes; report the remaining errors** — do not switch to manual fixing.
 - Do not expand scope to other packages — `packagePath` already targets the single failing package.
 
 ## Workflow
@@ -81,11 +81,11 @@ Each call performs **one repair attempt**; the skill owns the iterate-until-gree
       editScope = "CustomCode", packagePath, customizationRequest = <build errors>  (omit tspProjectPath).
    The tool regenerates from the pinned commit, patches ONLY custom code, rebuilds, and returns a build result.
 3. Inspect the structured result (build success/failure + BuildResult, plus ResponseError / ErrorCode):
-      - Build green → ensure custom-code edits AND regenerated Generated/ are committed. Go to 5.
+      - Build green (`success: true` in the final structured result) → ensure custom-code edits AND regenerated Generated/ are included in the workflow's success-only commit. Go to 5.
       - Still failing but the error set shrank and attempts remain (< `maxIterations`) → re-invoke (step 2) with the updated build errors; it is idempotent.
       - SpecChangeRequired / RegenerateFailed at the pinned commit / no further progress → STOP (see Stop Conditions).
 4. Never hand-edit to finish the job; if the tool cannot, it is a stop condition.
-5. Emit the deterministic PR summary comment (see the "Reporting" section below): capture each attempt's `result-<n>.json`, run `emit-repair-report.ps1`, and post its output verbatim via `add_comment`. Fixes land as reviewable commits — no auto-merge.
+5. Emit the deterministic PR summary comment (see the "Reporting" section below): capture each attempt's `result-<n>.json`, run `emit-repair-report.ps1`, and post its output verbatim via `add_comment`. Successful, green fixes land as reviewable commits; failed attempts remain uncommitted — no auto-merge.
 ```
 
 ## Reporting (deterministic — do NOT author the comment yourself)
@@ -117,7 +117,7 @@ When the tool returns one of these, **surface its guidance (`ResponseError` / `B
 - **Out of scope (spec change required)** — the tool reports `SpecChangeRequired`: the only real fix is a `client.tsp`/`tspconfig.yaml` decorator or spec edit (e.g. `@@clientName`, `@@access`, `AZC0030`/`AZC0012` naming). Because the call uses `editScope: CustomCode`, the tool reports these instead of applying them. Report "requires a spec-repo PR" with the offending errors. Leave the PR red for a human to route.
 - **Regeneration fails at the pinned commit (spec-side error)** — the tool returns `ErrorCode: RegenerateFailed` because of a spec-side problem at the **unchanged** pinned `tsp-location.yaml` commit: invalid `tspconfig.yaml`, missing/renamed spec files, or a broken TypeSpec source. Because this skill must never move the pinned commit or edit spec inputs, treat this as an **immediate stop** — report "spec-side generation failure at the pinned commit; requires a spec-repo fix" with the generation error. Do **not** attempt to fix the spec or bump the commit.
 - **Suspected generator bug** — `Generated/` has structural errors that persist after the tool reconciles customizations and regenerates from the unchanged pinned commit. Do NOT suppress; report with the minimal repro.
-- **`maxIterations` reached** — the skill's re-invocation cap is reached without a green build. Commit progress and report remaining errors.
+- **`maxIterations` reached** — the skill's re-invocation cap is reached without a green build. Do not commit attempted changes; report the remaining errors.
 
 On success, summarize: errors fixed, files changed (generated-vs-custom split), final build status, and confirmation that no spec inputs or the pinned commit were touched.
 
@@ -125,7 +125,7 @@ On success, summarize: errors fixed, files changed (generated-vs-custom split), 
 
 1. Drive **`azure-sdk-mcp:azsdk_customized_code_update`** with `editScope: CustomCode` (+ the failing `packagePath` and the build errors as `customizationRequest`); do not hand-edit code and do not use any other fix engine.
 2. Never edit `client.tsp`, `tspconfig.yaml`, or any TypeSpec/spec input; never move the pinned spec commit in `tsp-location.yaml` (`editScope: CustomCode` enforces this — and omit `tspProjectPath`).
-3. Commit the tool's regenerated `Generated/` alongside the custom-code edits (the guard is reproducibility, not freezing).
+3. Commit the tool's regenerated `Generated/` alongside the custom-code edits only when the final structured result has `success: true` (the guard is reproducibility, not freezing). If the build remains red for any reason, commit nothing.
 4. Never touch `.github/`, `eng/`, shared props/targets, pipelines, metadata, or secrets.
 5. Never prompt the user; run fully headless, honoring `maxIterations`.
 6. Never auto-merge — fixes land as reviewable commits for human review.
