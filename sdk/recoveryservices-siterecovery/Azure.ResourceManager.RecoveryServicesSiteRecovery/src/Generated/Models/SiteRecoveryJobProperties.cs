@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="stateDescription"> The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </param>
         /// <param name="tasks"> The tasks. </param>
         /// <param name="errors"> The errors. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="allowedActions"> The Allowed action the job. </param>
         /// <param name="targetObjectId"> The affected Object Id. </param>
         /// <param name="targetObjectName"> The name of the affected object. </param>
         /// <param name="targetInstanceType"> The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class. </param>
         /// <param name="customDetails"> The custom job details like test failover job details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryJobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, SiteRecoveryJobDetails customDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteRecoveryJobProperties(string activityId, string scenarioName, string friendlyName, string state, string stateDescription, IReadOnlyList<AsrTask> tasks, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<string> allowedActions, string targetObjectId, string targetObjectName, string targetInstanceType, SiteRecoveryJobDetails customDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActivityId = activityId;
             ScenarioName = scenarioName;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             StateDescription = stateDescription;
             Tasks = tasks;
             Errors = errors;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             AllowedActions = allowedActions;
             TargetObjectId = targetObjectId;
             TargetObjectName = targetObjectName;
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyList<SiteRecoveryJobErrorDetails> Errors { get; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The Allowed action the job. </summary>
         public IReadOnlyList<string> AllowedActions { get; }

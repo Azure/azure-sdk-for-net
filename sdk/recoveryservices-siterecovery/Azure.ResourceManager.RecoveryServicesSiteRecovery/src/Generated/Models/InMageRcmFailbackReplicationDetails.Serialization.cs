@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastPlannedFailoverStartOn))
+            if (options.Format != "W" && Optional.IsDefined(LastPlannedFailoverStartsOn))
             {
                 writer.WritePropertyName("lastPlannedFailoverStartTime"u8);
-                writer.WriteStringValue(LastPlannedFailoverStartOn.Value, "O");
+                writer.WriteStringValue(LastPlannedFailoverStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastPlannedFailoverStatus))
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default;
             InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = default;
             IReadOnlyList<InMageRcmFailbackNicDetails> vmNics = default;
-            DateTimeOffset? lastPlannedFailoverStartOn = default;
+            DateTimeOffset? lastPlannedFailoverStartsOn = default;
             PlannedFailoverStatus? lastPlannedFailoverStatus = default;
             InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = default;
             ResourceIdentifier lastUsedPolicyId = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    lastPlannedFailoverStartOn = prop.Value.GetDateTimeOffset("O");
+                    lastPlannedFailoverStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastPlannedFailoverStatus"u8))
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 protectedDisks ?? new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>(),
                 mobilityAgentDetails,
                 vmNics ?? new ChangeTrackingList<InMageRcmFailbackNicDetails>(),
-                lastPlannedFailoverStartOn,
+                lastPlannedFailoverStartsOn,
                 lastPlannedFailoverStatus,
                 discoveredVmDetails,
                 lastUsedPolicyId,

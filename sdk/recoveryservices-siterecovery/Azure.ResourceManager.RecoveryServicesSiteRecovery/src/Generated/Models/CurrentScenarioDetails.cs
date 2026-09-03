@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
         /// <param name="scenarioName"> Scenario name. </param>
         /// <param name="jobId"> ARM Id of the job being executed. </param>
-        /// <param name="startOn"> Start time of the workflow. </param>
+        /// <param name="startsOn"> Start time of the workflow. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScenarioName = scenarioName;
             JobId = jobId;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public ResourceIdentifier JobId { get; set; }
 
         /// <summary> Start time of the workflow. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
     }
 }

@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("threatState"u8);
                 writer.WriteStringValue(ThreatState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ThreatStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ThreatStartsOn))
             {
                 writer.WritePropertyName("threatStartTime"u8);
-                writer.WriteStringValue(ThreatStartOn.Value, "O");
+                writer.WriteStringValue(ThreatStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ThreatEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ThreatEndsOn))
             {
                 writer.WritePropertyName("threatEndTime"u8);
-                writer.WriteStringValue(ThreatEndOn.Value, "O");
+                writer.WriteStringValue(ThreatEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ThreatUri))
             {
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string threatDescription = default;
             DateTimeOffset? lastUpdatedOn = default;
             BackupThreatState? threatState = default;
-            DateTimeOffset? threatStartOn = default;
-            DateTimeOffset? threatEndOn = default;
+            DateTimeOffset? threatStartsOn = default;
+            DateTimeOffset? threatEndsOn = default;
             Uri threatUri = default;
             BackupThreatSeverity? threatSeverity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStartOn = prop.Value.GetDateTimeOffset("O");
+                    threatStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("threatEndTime"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatEndOn = prop.Value.GetDateTimeOffset("O");
+                    threatEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("threatURI"u8))
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 threatDescription,
                 lastUpdatedOn,
                 threatState,
-                threatStartOn,
-                threatEndOn,
+                threatStartsOn,
+                threatEndsOn,
                 threatUri,
                 threatSeverity,
                 additionalBinaryDataProperties);

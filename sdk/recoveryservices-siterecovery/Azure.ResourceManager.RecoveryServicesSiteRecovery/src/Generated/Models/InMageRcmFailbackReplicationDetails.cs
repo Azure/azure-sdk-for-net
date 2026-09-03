@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="protectedDisks"> The list of protected disks. </param>
         /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
         /// <param name="vmNics"> The network details. </param>
-        /// <param name="lastPlannedFailoverStartOn"> The last planned failover start time. </param>
+        /// <param name="lastPlannedFailoverStartsOn"> The last planned failover start time. </param>
         /// <param name="lastPlannedFailoverStatus"> The last planned failover status. </param>
         /// <param name="discoveredVmDetails"> The discovered VM information. </param>
         /// <param name="lastUsedPolicyId"> The policy Id used by the forward replication. </param>
         /// <param name="lastUsedPolicyFriendlyName"> The policy friendly name used by the forward replication. </param>
         /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
-        internal InMageRcmFailbackReplicationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType, additionalBinaryDataProperties)
+        internal InMageRcmFailbackReplicationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartsOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType, additionalBinaryDataProperties)
         {
             InternalIdentifier = internalIdentifier;
             AzureVirtualMachineId = azureVirtualMachineId;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProtectedDisks = protectedDisks;
             MobilityAgentDetails = mobilityAgentDetails;
             VmNics = vmNics;
-            LastPlannedFailoverStartOn = lastPlannedFailoverStartOn;
+            LastPlannedFailoverStartsOn = lastPlannedFailoverStartsOn;
             LastPlannedFailoverStatus = lastPlannedFailoverStatus;
             DiscoveredVmDetails = discoveredVmDetails;
             LastUsedPolicyId = lastUsedPolicyId;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyList<InMageRcmFailbackNicDetails> VmNics { get; }
 
         /// <summary> The last planned failover start time. </summary>
-        public DateTimeOffset? LastPlannedFailoverStartOn { get; }
+        public DateTimeOffset? LastPlannedFailoverStartsOn { get; }
 
         /// <summary> The last planned failover status. </summary>
         public PlannedFailoverStatus? LastPlannedFailoverStatus { get; }

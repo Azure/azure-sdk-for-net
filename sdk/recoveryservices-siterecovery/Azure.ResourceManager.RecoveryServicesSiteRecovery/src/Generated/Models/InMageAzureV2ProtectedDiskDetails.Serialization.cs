@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("resyncLastDataTransferTimeUTC"u8);
                 writer.WriteStringValue(ResyncLastDataTransferOn.Value, "O");
             }
-            if (Optional.IsDefined(ResyncStartOn))
+            if (Optional.IsDefined(ResyncStartsOn))
             {
                 writer.WritePropertyName("resyncStartTime"u8);
-                writer.WriteStringValue(ResyncStartOn.Value, "O");
+                writer.WriteStringValue(ResyncStartsOn.Value, "O");
             }
             if (Optional.IsDefined(ProgressHealth))
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             long? resyncTotalTransferredBytes = default;
             long? resyncLast15MinutesTransferredBytes = default;
             DateTimeOffset? resyncLastDataTransferOn = default;
-            DateTimeOffset? resyncStartOn = default;
+            DateTimeOffset? resyncStartsOn = default;
             string progressHealth = default;
             string progressStatus = default;
             long? secondsToTakeSwitchProvider = default;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncStartOn = prop.Value.GetDateTimeOffset("O");
+                    resyncStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("progressHealth"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 resyncTotalTransferredBytes,
                 resyncLast15MinutesTransferredBytes,
                 resyncLastDataTransferOn,
-                resyncStartOn,
+                resyncStartsOn,
                 progressHealth,
                 progressStatus,
                 secondsToTakeSwitchProvider,

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="workloadType"> Workload type of backup item. </param>
         /// <param name="errorDetails"> The errors. </param>
         /// <param name="extendedInfo"> Additional information on the job. </param>
-        internal MabBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, additionalBinaryDataProperties)
+        internal MabBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startsOn, endsOn, activityId, jobType, additionalBinaryDataProperties)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
         /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
         /// <param name="resyncLastDataTransferOn"> The last data transfer time in UTC. </param>
-        /// <param name="resyncStartOn"> The resync start time. </param>
+        /// <param name="resyncStartsOn"> The resync start time. </param>
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
         /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartsOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResyncTotalTransferredBytes = resyncTotalTransferredBytes;
             ResyncLast15MinutesTransferredBytes = resyncLast15MinutesTransferredBytes;
             ResyncLastDataTransferOn = resyncLastDataTransferOn;
-            ResyncStartOn = resyncStartOn;
+            ResyncStartsOn = resyncStartsOn;
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
             SecondsToTakeSwitchProvider = secondsToTakeSwitchProvider;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public DateTimeOffset? ResyncLastDataTransferOn { get; }
 
         /// <summary> The resync start time. </summary>
-        public DateTimeOffset? ResyncStartOn { get; }
+        public DateTimeOffset? ResyncStartsOn { get; }
 
         /// <summary> The Progress Health. </summary>
         public string ProgressHealth { get; }
