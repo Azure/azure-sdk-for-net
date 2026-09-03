@@ -24,7 +24,10 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// Registration entry points for the resilient-tasks feature. Hosted storage can be configured
 /// with an explicit credential and endpoint, or through configuration-bound
 /// <see cref="ResilientTaskSettings"/> on an <see cref="Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>.
-/// Lease durations and retry/timeout defaults are configured per task rather than globally.
+/// Without an explicit endpoint, the hosted credential can also be supplied through
+/// <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/> or a registered
+/// <see cref="TokenCredential"/> service. Lease durations and retry/timeout defaults are
+/// configured per task rather than globally.
 /// </summary>
 public static class ResilientTaskServiceCollectionExtensions
 {
@@ -33,7 +36,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// Calling <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> directly also performs this
     /// setup on first use, so this method only needs to be called explicitly to supply a hosted
     /// credential. The credential may be supplied before or after task registrations while composing
-    /// the service collection; the first non-null credential wins.
+    /// the service collection. A <see cref="TokenCredential"/> registered directly in the service
+    /// collection is also supported; when both forms are used they must resolve to the same instance.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
@@ -510,13 +514,22 @@ public static class ResilientTaskServiceCollectionExtensions
             return TaskStoreSelector.Create(hostedFactory: () =>
             {
                 var env = sp.GetRequiredService<TaskHostEnvironment>();
-                var cred = env.Credential;
+                TokenCredential? cred = env.Endpoint is not null
+                    ? env.Credential
+                    : sp.GetService<TokenCredential>() ?? env.Credential;
                 if (cred is null)
                 {
                     throw new InvalidOperationException(
                         "A TokenCredential is required for hosted task storage. Call " +
-                        "AddResilientTasks(credential) while composing services when running in a hosted " +
-                        "environment.");
+                        "AddResilientTasks(credential) or register TokenCredential while composing " +
+                        "services when running in a hosted environment.");
+                }
+
+                if (env.Endpoint is null)
+                {
+                    // Without explicit endpoint-bound settings, publish the provider's effective
+                    // credential onto the shared holder and reject any explicit/DI mismatch.
+                    env.AttachConfiguration(cred, endpoint: null);
                 }
 
                 Uri? configuredEndpoint = env.Endpoint;
