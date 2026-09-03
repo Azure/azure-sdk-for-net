@@ -33,6 +33,13 @@
 
 ### Other Changes
 
+- Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion rents fewer pooled buffers. Standard metrics no longer collect the tags they never read.
+  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
+  - Fixed pooled tag buffers being leaked whenever converting an activity failed, and retaining tag keys and values after being returned to the pool.
+  - Fixed the buffer rent size being process-wide mutable state written without synchronization.
+  - Fixed an activity tag with a null key dropping the remaining tags from custom properties.
+  - Removed two attribute lookups that could never match. `http.server_name` and `server.socket.address` are still exported as custom properties, unchanged.
+
 ## 1.8.3 (2026-07-24)
 
 ### Bugs Fixed

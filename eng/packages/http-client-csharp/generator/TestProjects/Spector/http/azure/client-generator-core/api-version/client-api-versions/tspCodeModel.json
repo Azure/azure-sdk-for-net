@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "ClientApiVersions",
+      "apiVersions": [
+        "2024-01-01"
+      ],
       "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.ClientApiVersions",
       "valueType": {
         "$id": "2",

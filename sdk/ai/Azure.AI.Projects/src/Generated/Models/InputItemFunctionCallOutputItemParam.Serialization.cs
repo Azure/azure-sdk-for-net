@@ -92,6 +92,11 @@ namespace Azure.AI.Projects
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
+            if (Optional.IsDefined(Caller))
+            {
+                writer.WritePropertyName("caller"u8);
+                writer.WriteObjectValue(Caller, options);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -129,6 +134,7 @@ namespace Azure.AI.Projects
             string id = default;
             string callId = default;
             BinaryData output = default;
+            ToolCallCallerParam caller = default;
             FunctionCallItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,6 +163,16 @@ namespace Azure.AI.Projects
                     output = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("caller"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCallerParam.DeserializeToolCallCallerParam(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -178,6 +194,7 @@ namespace Azure.AI.Projects
                 id,
                 callId,
                 output,
+                caller,
                 status);
         }
     }
