@@ -24,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly bool _enablePerformanceCounters;
 
         internal readonly Lazy<MeterProvider?> _meterProvider;
+        private readonly AzureMonitorMetricExporter _metricExporter;
         private readonly Meter? _standardMetricMeter;
         private readonly Meter? _perfCounterMeter;
 
@@ -74,6 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             _enableStandardMetrics = options.EnableStandardMetrics;
             _enablePerformanceCounters = options.EnablePerformanceCounters;
+            _metricExporter = metricExporter;
 
             // Initialize Lazy<T> for thread-safe lazy initialization of MeterProvider
             _meterProvider = new Lazy<MeterProvider?>(() =>
@@ -103,8 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
 
                 return meterProviderBuilder
-                    .AddReader(new PeriodicExportingMetricReader(metricExporter)
-                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(metricExporter))
                     .Build();
             }, LazyThreadSafetyMode.ExecutionAndPublication);
 
@@ -198,51 +199,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void ReportDependencyDurationMetric(Activity activity)
         {
-            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity, includeUnmappedTags: false);
 
-            string? dependencyTarget;
-            string? statusCode;
-
-            if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+            try
             {
-                // Reverting it for dependency type checks below
-                activityTagsProcessor.activityType &= ~OperationType.V2;
+                string? dependencyTarget;
+                string? statusCode;
 
-                dependencyTarget = activityTagsProcessor.MappedTags.GetNewSchemaDependencyTarget(activityTagsProcessor.activityType);
+                if (activityTagsProcessor.IsV2)
+                {
+                    dependencyTarget = activityTagsProcessor.MappedTags.GetNewSchemaDependencyTarget(activityTagsProcessor.BaseActivityType);
 
-                statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+                    statusCode = activityTagsProcessor.MappedTags[SemanticSlot.HttpResponseStatusCode]?.ToString();
+                }
+                else
+                {
+                    dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.BaseActivityType);
+
+                    statusCode = activityTagsProcessor.MappedTags[SemanticSlot.HttpStatusCode]?.ToString();
+                }
+
+                string? dependencyType;
+                if (activityTagsProcessor.AzureNamespace != null)
+                {
+                    dependencyType = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+                }
+                else
+                {
+                    dependencyType = activity.Kind == ActivityKind.Internal ? "InProc" : activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.BaseActivityType);
+                }
+
+                TagList tags = default;
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyResultCodeKey, statusCode ?? "0"));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource?.RoleName));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
+                tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTypeKey, dependencyType));
+
+                // Report metric
+                _dependencyDuration?.Record(activity.Duration.TotalMilliseconds, tags);
             }
-            else
+            finally
             {
-                dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
-
-                statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString();
+                activityTagsProcessor.Return();
             }
-
-            string? dependencyType;
-            if (activityTagsProcessor.AzureNamespace != null)
-            {
-                dependencyType = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
-            }
-            else
-            {
-                dependencyType = activity.Kind == ActivityKind.Internal ? "InProc" : activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
-            }
-
-            TagList tags = default;
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyResultCodeKey, statusCode ?? "0"));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.IsAutoCollectedKey, "True"));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource?.RoleInstance));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource?.RoleName));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
-            tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTypeKey, dependencyType));
-
-            // Report metric
-            _dependencyDuration?.Record(activity.Duration.TotalMilliseconds, tags);
-
-            activityTagsProcessor.Return();
         }
 
         private long GetProcessPrivateBytes()
@@ -472,6 +475,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             _meterProvider.Value?.Dispose();
                         }
+
+                        // The exporter is created up front but only handed to the meter provider if
+                        // that provider is ever built, so it has to be released here too. Disposal is
+                        // idempotent, so this is safe when the provider already owned it.
+                        _metricExporter.Dispose();
+
                         _standardMetricMeter?.Dispose();
                         _perfCounterMeter?.Dispose();
                         _process?.Dispose();

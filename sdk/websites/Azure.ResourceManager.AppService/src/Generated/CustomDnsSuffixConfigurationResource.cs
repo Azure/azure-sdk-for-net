@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string customDnsSuffixConfigurationApiVersion);
             _customDnsSuffixConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _customDnsSuffixConfigurationsRestClient = new CustomDnsSuffixConfigurations(_customDnsSuffixConfigurationsClientDiagnostics, Pipeline, Endpoint, customDnsSuffixConfigurationApiVersion ?? "2026-03-15");
+            _customDnsSuffixConfigurationsRestClient = new CustomDnsSuffixConfigurations(_customDnsSuffixConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customDnsSuffixConfigurationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

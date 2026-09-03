@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DevHub
         {
             TryGetApiVersion(ResourceType, out string adoOAuthResponseApiVersion);
             _adooAuthClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", ResourceType.Namespace, Diagnostics);
-            _adooAuthRestClient = new ADOOAuth(_adooAuthClientDiagnostics, Pipeline, Endpoint, adoOAuthResponseApiVersion ?? "2025-03-01-preview");
+            _adooAuthRestClient = new ADOOAuth(_adooAuthClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, adoOAuthResponseApiVersion ?? "2025-03-01-preview");
             _devHubClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", ResourceType.Namespace, Diagnostics);
-            _devHubClientRestClient = new DevHubClient(_devHubClientClientDiagnostics, Pipeline, Endpoint, adoOAuthResponseApiVersion ?? "2025-03-01-preview");
+            _devHubClientRestClient = new DevHubClient(_devHubClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, adoOAuthResponseApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string blobServiceApiVersion);
             _blobServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobServiceApiVersion ?? "2025-08-01");
+            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, blobServiceApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

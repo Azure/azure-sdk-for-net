@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerAzureADOnlyAuthenticationResource.ResourceType, out string sqlServerAzureADOnlyAuthenticationApiVersion);
             _serverAzureADOnlyAuthenticationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerAzureADOnlyAuthenticationResource.ResourceType.Namespace, Diagnostics);
-            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthentications(_serverAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, Endpoint, sqlServerAzureADOnlyAuthenticationApiVersion ?? "2025-02-01-preview");
+            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthentications(_serverAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAzureADOnlyAuthenticationApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmLogicalNetworkApiVersion);
             _logicalNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _logicalNetworksRestClient = new LogicalNetworks(_logicalNetworksClientDiagnostics, Pipeline, Endpoint, hciVmLogicalNetworkApiVersion ?? "2025-09-01-preview");
+            _logicalNetworksRestClient = new LogicalNetworks(_logicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmLogicalNetworkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

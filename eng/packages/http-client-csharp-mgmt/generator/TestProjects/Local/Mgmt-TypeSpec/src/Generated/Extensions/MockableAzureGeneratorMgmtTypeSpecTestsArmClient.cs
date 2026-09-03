@@ -41,15 +41,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics SelfHelpScopeQueryOperationGroupClientDiagnostics => _selfHelpScopeQueryOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SelfHelpScopeQueryOperationGroup SelfHelpScopeQueryOperationGroupRestClient => _selfHelpScopeQueryOperationGroupRestClient ??= new SelfHelpScopeQueryOperationGroup(SelfHelpScopeQueryOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private SelfHelpScopeQueryOperationGroup SelfHelpScopeQueryOperationGroupRestClient => _selfHelpScopeQueryOperationGroupRestClient ??= new SelfHelpScopeQueryOperationGroup(SelfHelpScopeQueryOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

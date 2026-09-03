@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryManagedVirtualNetworkResource.ResourceType, out string dataFactoryManagedVirtualNetworkApiVersion);
             _managedVirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryManagedVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _managedVirtualNetworksRestClient = new ManagedVirtualNetworks(_managedVirtualNetworksClientDiagnostics, Pipeline, Endpoint, dataFactoryManagedVirtualNetworkApiVersion ?? "2018-06-01");
+            _managedVirtualNetworksRestClient = new ManagedVirtualNetworks(_managedVirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryManagedVirtualNetworkApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

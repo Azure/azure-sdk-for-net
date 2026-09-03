@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceConnector.Models;
 
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.ResourceConnector
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceData))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerResourceConnectorContext : ModelReaderWriterContext

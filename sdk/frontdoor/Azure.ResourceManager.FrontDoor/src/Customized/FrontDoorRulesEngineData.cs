@@ -3,13 +3,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager.FrontDoor.Models;
-using System.Collections.Generic;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor

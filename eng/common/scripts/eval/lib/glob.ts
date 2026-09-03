@@ -62,7 +62,7 @@ function walk(dir, segments, out) {
  * glob `pattern`. Results are sorted for deterministic ordering.
  *
  * @param {string} root Absolute or relative base directory to glob from.
- * @param {string} pattern Forward-slashed glob relative to `root` (e.g. "evals/tools/*.eval.yaml").
+ * @param {string} pattern Forward-slashed glob relative to `root` (e.g. "tools/*.eval.yaml").
  * @returns {string[]} Sorted absolute file paths.
  */
 export function globFiles(root, pattern) {

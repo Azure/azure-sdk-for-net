@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             TryGetApiVersion(StandbyContainerGroupPoolResource.ResourceType, out string standbyContainerGroupPoolApiVersion);
             _standbyContainerGroupPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolResource.ResourceType.Namespace, Diagnostics);
-            _standbyContainerGroupPoolsRestClient = new StandbyContainerGroupPools(_standbyContainerGroupPoolsClientDiagnostics, Pipeline, Endpoint, standbyContainerGroupPoolApiVersion ?? "2025-10-01");
+            _standbyContainerGroupPoolsRestClient = new StandbyContainerGroupPools(_standbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

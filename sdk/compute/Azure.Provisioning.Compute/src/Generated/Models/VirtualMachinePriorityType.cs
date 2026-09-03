@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachinePriorityType
     {
         /// <summary> Regular. </summary>
-        Regular,
+        Regular = 0,
         /// <summary> Low. </summary>
-        Low,
+        Low = 1,
         /// <summary> Spot. </summary>
-        Spot
+        Spot = 2
     }
 }

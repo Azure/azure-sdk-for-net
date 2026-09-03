@@ -74,7 +74,7 @@ namespace Azure.Provisioning.ServiceFabric
             base.DefineProvisionableProperties();
             _isAdmin = DefineProperty<bool>(nameof(IsAdmin), new string[] { "isAdmin" }, isRequired: true);
             _certificateCommonName = DefineProperty<string>(nameof(CertificateCommonName), new string[] { "certificateCommonName" }, isRequired: true);
-            _certificateIssuerThumbprint = DefineProperty<BinaryData>(nameof(CertificateIssuerThumbprint), new string[] { "certificateIssuerThumbprint" }, isRequired: true);
+            _certificateIssuerThumbprint = DefineProperty<BinaryData>(nameof(CertificateIssuerThumbprint), new string[] { "certificateIssuerThumbprint" }, isRequired: true, format: "base64");
             DefineAdditionalProperties();
         }
 

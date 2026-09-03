@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
@@ -89,6 +90,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
+            if (Optional.IsDefined(ShouldRunRebalanceJob))
+            {
+                writer.WritePropertyName("runRebalanceJob"u8);
+                writer.WriteBooleanValue(ShouldRunRebalanceJob.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RebalanceJobId))
+            {
+                writer.WritePropertyName("rebalanceJobId"u8);
+                writer.WriteStringValue(RebalanceJobId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +145,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             AmlFileSystemExpansionJobProvisioningState? provisioningState = default;
             float? newStorageCapacityTiB = default;
             ExpansionJobPropertiesStatus status = default;
+            bool? shouldRunRebalanceJob = default;
+            ResourceIdentifier rebalanceJobId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +177,36 @@ namespace Azure.ResourceManager.StorageCache.Models
                     status = ExpansionJobPropertiesStatus.DeserializeExpansionJobPropertiesStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("runRebalanceJob"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    shouldRunRebalanceJob = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("rebalanceJobId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rebalanceJobId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpansionJobProperties(provisioningState, newStorageCapacityTiB, status, additionalBinaryDataProperties);
+            return new ExpansionJobProperties(
+                provisioningState,
+                newStorageCapacityTiB,
+                status,
+                shouldRunRebalanceJob,
+                rebalanceJobId,
+                additionalBinaryDataProperties);
         }
     }
 }

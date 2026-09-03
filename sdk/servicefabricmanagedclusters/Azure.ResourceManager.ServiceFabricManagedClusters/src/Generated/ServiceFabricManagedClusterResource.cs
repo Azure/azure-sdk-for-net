@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             TryGetApiVersion(ResourceType, out string serviceFabricManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
             _managedApplyMaintenanceWindowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _managedApplyMaintenanceWindowRestClient = new ManagedApplyMaintenanceWindow(_managedApplyMaintenanceWindowClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
+            _managedApplyMaintenanceWindowRestClient = new ManagedApplyMaintenanceWindow(_managedApplyMaintenanceWindowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
             _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatus(_managedAzResiliencyStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
+            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatus(_managedAzResiliencyStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
             _managedMaintenanceWindowStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _managedMaintenanceWindowStatusRestClient = new ManagedMaintenanceWindowStatus(_managedMaintenanceWindowStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
+            _managedMaintenanceWindowStatusRestClient = new ManagedMaintenanceWindowStatus(_managedMaintenanceWindowStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

@@ -14,501 +14,501 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> BasicA0. </summary>
         [DataMember(Name = "Basic_A0")]
-        BasicA0,
+        BasicA0 = 0,
         /// <summary> BasicA1. </summary>
         [DataMember(Name = "Basic_A1")]
-        BasicA1,
+        BasicA1 = 1,
         /// <summary> BasicA2. </summary>
         [DataMember(Name = "Basic_A2")]
-        BasicA2,
+        BasicA2 = 2,
         /// <summary> BasicA3. </summary>
         [DataMember(Name = "Basic_A3")]
-        BasicA3,
+        BasicA3 = 3,
         /// <summary> BasicA4. </summary>
         [DataMember(Name = "Basic_A4")]
-        BasicA4,
+        BasicA4 = 4,
         /// <summary> StandardA0. </summary>
         [DataMember(Name = "Standard_A0")]
-        StandardA0,
+        StandardA0 = 5,
         /// <summary> StandardA1. </summary>
         [DataMember(Name = "Standard_A1")]
-        StandardA1,
+        StandardA1 = 6,
         /// <summary> StandardA2. </summary>
         [DataMember(Name = "Standard_A2")]
-        StandardA2,
+        StandardA2 = 7,
         /// <summary> StandardA3. </summary>
         [DataMember(Name = "Standard_A3")]
-        StandardA3,
+        StandardA3 = 8,
         /// <summary> StandardA4. </summary>
         [DataMember(Name = "Standard_A4")]
-        StandardA4,
+        StandardA4 = 9,
         /// <summary> StandardA5. </summary>
         [DataMember(Name = "Standard_A5")]
-        StandardA5,
+        StandardA5 = 10,
         /// <summary> StandardA6. </summary>
         [DataMember(Name = "Standard_A6")]
-        StandardA6,
+        StandardA6 = 11,
         /// <summary> StandardA7. </summary>
         [DataMember(Name = "Standard_A7")]
-        StandardA7,
+        StandardA7 = 12,
         /// <summary> StandardA8. </summary>
         [DataMember(Name = "Standard_A8")]
-        StandardA8,
+        StandardA8 = 13,
         /// <summary> StandardA9. </summary>
         [DataMember(Name = "Standard_A9")]
-        StandardA9,
+        StandardA9 = 14,
         /// <summary> StandardA10. </summary>
         [DataMember(Name = "Standard_A10")]
-        StandardA10,
+        StandardA10 = 15,
         /// <summary> StandardA11. </summary>
         [DataMember(Name = "Standard_A11")]
-        StandardA11,
+        StandardA11 = 16,
         /// <summary> StandardA1V2. </summary>
         [DataMember(Name = "Standard_A1_v2")]
-        StandardA1V2,
+        StandardA1V2 = 17,
         /// <summary> StandardA2V2. </summary>
         [DataMember(Name = "Standard_A2_v2")]
-        StandardA2V2,
+        StandardA2V2 = 18,
         /// <summary> StandardA4V2. </summary>
         [DataMember(Name = "Standard_A4_v2")]
-        StandardA4V2,
+        StandardA4V2 = 19,
         /// <summary> StandardA8V2. </summary>
         [DataMember(Name = "Standard_A8_v2")]
-        StandardA8V2,
+        StandardA8V2 = 20,
         /// <summary> StandardA2MV2. </summary>
         [DataMember(Name = "Standard_A2m_v2")]
-        StandardA2MV2,
+        StandardA2MV2 = 21,
         /// <summary> StandardA4MV2. </summary>
         [DataMember(Name = "Standard_A4m_v2")]
-        StandardA4MV2,
+        StandardA4MV2 = 22,
         /// <summary> StandardA8MV2. </summary>
         [DataMember(Name = "Standard_A8m_v2")]
-        StandardA8MV2,
+        StandardA8MV2 = 23,
         /// <summary> StandardB1S. </summary>
         [DataMember(Name = "Standard_B1s")]
-        StandardB1S,
+        StandardB1S = 24,
         /// <summary> StandardB1Ms. </summary>
         [DataMember(Name = "Standard_B1ms")]
-        StandardB1Ms,
+        StandardB1Ms = 25,
         /// <summary> StandardB2S. </summary>
         [DataMember(Name = "Standard_B2s")]
-        StandardB2S,
+        StandardB2S = 26,
         /// <summary> StandardB2Ms. </summary>
         [DataMember(Name = "Standard_B2ms")]
-        StandardB2Ms,
+        StandardB2Ms = 27,
         /// <summary> StandardB4Ms. </summary>
         [DataMember(Name = "Standard_B4ms")]
-        StandardB4Ms,
+        StandardB4Ms = 28,
         /// <summary> StandardB8Ms. </summary>
         [DataMember(Name = "Standard_B8ms")]
-        StandardB8Ms,
+        StandardB8Ms = 29,
         /// <summary> StandardD1. </summary>
         [DataMember(Name = "Standard_D1")]
-        StandardD1,
+        StandardD1 = 30,
         /// <summary> StandardD2. </summary>
         [DataMember(Name = "Standard_D2")]
-        StandardD2,
+        StandardD2 = 31,
         /// <summary> StandardD3. </summary>
         [DataMember(Name = "Standard_D3")]
-        StandardD3,
+        StandardD3 = 32,
         /// <summary> StandardD4. </summary>
         [DataMember(Name = "Standard_D4")]
-        StandardD4,
+        StandardD4 = 33,
         /// <summary> StandardD11. </summary>
         [DataMember(Name = "Standard_D11")]
-        StandardD11,
+        StandardD11 = 34,
         /// <summary> StandardD12. </summary>
         [DataMember(Name = "Standard_D12")]
-        StandardD12,
+        StandardD12 = 35,
         /// <summary> StandardD13. </summary>
         [DataMember(Name = "Standard_D13")]
-        StandardD13,
+        StandardD13 = 36,
         /// <summary> StandardD14. </summary>
         [DataMember(Name = "Standard_D14")]
-        StandardD14,
+        StandardD14 = 37,
         /// <summary> StandardD1V2. </summary>
         [DataMember(Name = "Standard_D1_v2")]
-        StandardD1V2,
+        StandardD1V2 = 38,
         /// <summary> StandardD2V2. </summary>
         [DataMember(Name = "Standard_D2_v2")]
-        StandardD2V2,
+        StandardD2V2 = 39,
         /// <summary> StandardD3V2. </summary>
         [DataMember(Name = "Standard_D3_v2")]
-        StandardD3V2,
+        StandardD3V2 = 40,
         /// <summary> StandardD4V2. </summary>
         [DataMember(Name = "Standard_D4_v2")]
-        StandardD4V2,
+        StandardD4V2 = 41,
         /// <summary> StandardD5V2. </summary>
         [DataMember(Name = "Standard_D5_v2")]
-        StandardD5V2,
+        StandardD5V2 = 42,
         /// <summary> StandardD2V3. </summary>
         [DataMember(Name = "Standard_D2_v3")]
-        StandardD2V3,
+        StandardD2V3 = 43,
         /// <summary> StandardD4V3. </summary>
         [DataMember(Name = "Standard_D4_v3")]
-        StandardD4V3,
+        StandardD4V3 = 44,
         /// <summary> StandardD8V3. </summary>
         [DataMember(Name = "Standard_D8_v3")]
-        StandardD8V3,
+        StandardD8V3 = 45,
         /// <summary> StandardD16V3. </summary>
         [DataMember(Name = "Standard_D16_v3")]
-        StandardD16V3,
+        StandardD16V3 = 46,
         /// <summary> StandardD32V3. </summary>
         [DataMember(Name = "Standard_D32_v3")]
-        StandardD32V3,
+        StandardD32V3 = 47,
         /// <summary> StandardD64V3. </summary>
         [DataMember(Name = "Standard_D64_v3")]
-        StandardD64V3,
+        StandardD64V3 = 48,
         /// <summary> StandardD2SV3. </summary>
         [DataMember(Name = "Standard_D2s_v3")]
-        StandardD2SV3,
+        StandardD2SV3 = 49,
         /// <summary> StandardD4SV3. </summary>
         [DataMember(Name = "Standard_D4s_v3")]
-        StandardD4SV3,
+        StandardD4SV3 = 50,
         /// <summary> StandardD8SV3. </summary>
         [DataMember(Name = "Standard_D8s_v3")]
-        StandardD8SV3,
+        StandardD8SV3 = 51,
         /// <summary> StandardD16SV3. </summary>
         [DataMember(Name = "Standard_D16s_v3")]
-        StandardD16SV3,
+        StandardD16SV3 = 52,
         /// <summary> StandardD32SV3. </summary>
         [DataMember(Name = "Standard_D32s_v3")]
-        StandardD32SV3,
+        StandardD32SV3 = 53,
         /// <summary> StandardD64SV3. </summary>
         [DataMember(Name = "Standard_D64s_v3")]
-        StandardD64SV3,
+        StandardD64SV3 = 54,
         /// <summary> StandardD11V2. </summary>
         [DataMember(Name = "Standard_D11_v2")]
-        StandardD11V2,
+        StandardD11V2 = 55,
         /// <summary> StandardD12V2. </summary>
         [DataMember(Name = "Standard_D12_v2")]
-        StandardD12V2,
+        StandardD12V2 = 56,
         /// <summary> StandardD13V2. </summary>
         [DataMember(Name = "Standard_D13_v2")]
-        StandardD13V2,
+        StandardD13V2 = 57,
         /// <summary> StandardD14V2. </summary>
         [DataMember(Name = "Standard_D14_v2")]
-        StandardD14V2,
+        StandardD14V2 = 58,
         /// <summary> StandardD15V2. </summary>
         [DataMember(Name = "Standard_D15_v2")]
-        StandardD15V2,
+        StandardD15V2 = 59,
         /// <summary> StandardDS1. </summary>
         [DataMember(Name = "Standard_DS1")]
-        StandardDS1,
+        StandardDS1 = 60,
         /// <summary> StandardDS2. </summary>
         [DataMember(Name = "Standard_DS2")]
-        StandardDS2,
+        StandardDS2 = 61,
         /// <summary> StandardDS3. </summary>
         [DataMember(Name = "Standard_DS3")]
-        StandardDS3,
+        StandardDS3 = 62,
         /// <summary> StandardDS4. </summary>
         [DataMember(Name = "Standard_DS4")]
-        StandardDS4,
+        StandardDS4 = 63,
         /// <summary> StandardDS11. </summary>
         [DataMember(Name = "Standard_DS11")]
-        StandardDS11,
+        StandardDS11 = 64,
         /// <summary> StandardDS12. </summary>
         [DataMember(Name = "Standard_DS12")]
-        StandardDS12,
+        StandardDS12 = 65,
         /// <summary> StandardDS13. </summary>
         [DataMember(Name = "Standard_DS13")]
-        StandardDS13,
+        StandardDS13 = 66,
         /// <summary> StandardDS14. </summary>
         [DataMember(Name = "Standard_DS14")]
-        StandardDS14,
+        StandardDS14 = 67,
         /// <summary> StandardDS1V2. </summary>
         [DataMember(Name = "Standard_DS1_v2")]
-        StandardDS1V2,
+        StandardDS1V2 = 68,
         /// <summary> StandardDS2V2. </summary>
         [DataMember(Name = "Standard_DS2_v2")]
-        StandardDS2V2,
+        StandardDS2V2 = 69,
         /// <summary> StandardDS3V2. </summary>
         [DataMember(Name = "Standard_DS3_v2")]
-        StandardDS3V2,
+        StandardDS3V2 = 70,
         /// <summary> StandardDS4V2. </summary>
         [DataMember(Name = "Standard_DS4_v2")]
-        StandardDS4V2,
+        StandardDS4V2 = 71,
         /// <summary> StandardDS5V2. </summary>
         [DataMember(Name = "Standard_DS5_v2")]
-        StandardDS5V2,
+        StandardDS5V2 = 72,
         /// <summary> StandardDS11V2. </summary>
         [DataMember(Name = "Standard_DS11_v2")]
-        StandardDS11V2,
+        StandardDS11V2 = 73,
         /// <summary> StandardDS12V2. </summary>
         [DataMember(Name = "Standard_DS12_v2")]
-        StandardDS12V2,
+        StandardDS12V2 = 74,
         /// <summary> StandardDS13V2. </summary>
         [DataMember(Name = "Standard_DS13_v2")]
-        StandardDS13V2,
+        StandardDS13V2 = 75,
         /// <summary> StandardDS14V2. </summary>
         [DataMember(Name = "Standard_DS14_v2")]
-        StandardDS14V2,
+        StandardDS14V2 = 76,
         /// <summary> StandardDS15V2. </summary>
         [DataMember(Name = "Standard_DS15_v2")]
-        StandardDS15V2,
+        StandardDS15V2 = 77,
         /// <summary> StandardDS134V2. </summary>
         [DataMember(Name = "Standard_DS13-4_v2")]
-        StandardDS134V2,
+        StandardDS134V2 = 78,
         /// <summary> StandardDS132V2. </summary>
         [DataMember(Name = "Standard_DS13-2_v2")]
-        StandardDS132V2,
+        StandardDS132V2 = 79,
         /// <summary> StandardDS148V2. </summary>
         [DataMember(Name = "Standard_DS14-8_v2")]
-        StandardDS148V2,
+        StandardDS148V2 = 80,
         /// <summary> StandardDS144V2. </summary>
         [DataMember(Name = "Standard_DS14-4_v2")]
-        StandardDS144V2,
+        StandardDS144V2 = 81,
         /// <summary> StandardE2V3. </summary>
         [DataMember(Name = "Standard_E2_v3")]
-        StandardE2V3,
+        StandardE2V3 = 82,
         /// <summary> StandardE4V3. </summary>
         [DataMember(Name = "Standard_E4_v3")]
-        StandardE4V3,
+        StandardE4V3 = 83,
         /// <summary> StandardE8V3. </summary>
         [DataMember(Name = "Standard_E8_v3")]
-        StandardE8V3,
+        StandardE8V3 = 84,
         /// <summary> StandardE16V3. </summary>
         [DataMember(Name = "Standard_E16_v3")]
-        StandardE16V3,
+        StandardE16V3 = 85,
         /// <summary> StandardE32V3. </summary>
         [DataMember(Name = "Standard_E32_v3")]
-        StandardE32V3,
+        StandardE32V3 = 86,
         /// <summary> StandardE64V3. </summary>
         [DataMember(Name = "Standard_E64_v3")]
-        StandardE64V3,
+        StandardE64V3 = 87,
         /// <summary> StandardE2SV3. </summary>
         [DataMember(Name = "Standard_E2s_v3")]
-        StandardE2SV3,
+        StandardE2SV3 = 88,
         /// <summary> StandardE4SV3. </summary>
         [DataMember(Name = "Standard_E4s_v3")]
-        StandardE4SV3,
+        StandardE4SV3 = 89,
         /// <summary> StandardE8SV3. </summary>
         [DataMember(Name = "Standard_E8s_v3")]
-        StandardE8SV3,
+        StandardE8SV3 = 90,
         /// <summary> StandardE16SV3. </summary>
         [DataMember(Name = "Standard_E16s_v3")]
-        StandardE16SV3,
+        StandardE16SV3 = 91,
         /// <summary> StandardE32SV3. </summary>
         [DataMember(Name = "Standard_E32s_v3")]
-        StandardE32SV3,
+        StandardE32SV3 = 92,
         /// <summary> StandardE64SV3. </summary>
         [DataMember(Name = "Standard_E64s_v3")]
-        StandardE64SV3,
+        StandardE64SV3 = 93,
         /// <summary> StandardE3216V3. </summary>
         [DataMember(Name = "Standard_E32-16_v3")]
-        StandardE3216V3,
+        StandardE3216V3 = 94,
         /// <summary> StandardE328SV3. </summary>
         [DataMember(Name = "Standard_E32-8s_v3")]
-        StandardE328SV3,
+        StandardE328SV3 = 95,
         /// <summary> StandardE6432SV3. </summary>
         [DataMember(Name = "Standard_E64-32s_v3")]
-        StandardE6432SV3,
+        StandardE6432SV3 = 96,
         /// <summary> StandardE6416SV3. </summary>
         [DataMember(Name = "Standard_E64-16s_v3")]
-        StandardE6416SV3,
+        StandardE6416SV3 = 97,
         /// <summary> StandardF1. </summary>
         [DataMember(Name = "Standard_F1")]
-        StandardF1,
+        StandardF1 = 98,
         /// <summary> StandardF2. </summary>
         [DataMember(Name = "Standard_F2")]
-        StandardF2,
+        StandardF2 = 99,
         /// <summary> StandardF4. </summary>
         [DataMember(Name = "Standard_F4")]
-        StandardF4,
+        StandardF4 = 100,
         /// <summary> StandardF8. </summary>
         [DataMember(Name = "Standard_F8")]
-        StandardF8,
+        StandardF8 = 101,
         /// <summary> StandardF16. </summary>
         [DataMember(Name = "Standard_F16")]
-        StandardF16,
+        StandardF16 = 102,
         /// <summary> StandardF1S. </summary>
         [DataMember(Name = "Standard_F1s")]
-        StandardF1S,
+        StandardF1S = 103,
         /// <summary> StandardF2S. </summary>
         [DataMember(Name = "Standard_F2s")]
-        StandardF2S,
+        StandardF2S = 104,
         /// <summary> StandardF4S. </summary>
         [DataMember(Name = "Standard_F4s")]
-        StandardF4S,
+        StandardF4S = 105,
         /// <summary> StandardF8S. </summary>
         [DataMember(Name = "Standard_F8s")]
-        StandardF8S,
+        StandardF8S = 106,
         /// <summary> StandardF16S. </summary>
         [DataMember(Name = "Standard_F16s")]
-        StandardF16S,
+        StandardF16S = 107,
         /// <summary> StandardF2SV2. </summary>
         [DataMember(Name = "Standard_F2s_v2")]
-        StandardF2SV2,
+        StandardF2SV2 = 108,
         /// <summary> StandardF4SV2. </summary>
         [DataMember(Name = "Standard_F4s_v2")]
-        StandardF4SV2,
+        StandardF4SV2 = 109,
         /// <summary> StandardF8SV2. </summary>
         [DataMember(Name = "Standard_F8s_v2")]
-        StandardF8SV2,
+        StandardF8SV2 = 110,
         /// <summary> StandardF16SV2. </summary>
         [DataMember(Name = "Standard_F16s_v2")]
-        StandardF16SV2,
+        StandardF16SV2 = 111,
         /// <summary> StandardF32SV2. </summary>
         [DataMember(Name = "Standard_F32s_v2")]
-        StandardF32SV2,
+        StandardF32SV2 = 112,
         /// <summary> StandardF64SV2. </summary>
         [DataMember(Name = "Standard_F64s_v2")]
-        StandardF64SV2,
+        StandardF64SV2 = 113,
         /// <summary> StandardF72SV2. </summary>
         [DataMember(Name = "Standard_F72s_v2")]
-        StandardF72SV2,
+        StandardF72SV2 = 114,
         /// <summary> StandardG1. </summary>
         [DataMember(Name = "Standard_G1")]
-        StandardG1,
+        StandardG1 = 115,
         /// <summary> StandardG2. </summary>
         [DataMember(Name = "Standard_G2")]
-        StandardG2,
+        StandardG2 = 116,
         /// <summary> StandardG3. </summary>
         [DataMember(Name = "Standard_G3")]
-        StandardG3,
+        StandardG3 = 117,
         /// <summary> StandardG4. </summary>
         [DataMember(Name = "Standard_G4")]
-        StandardG4,
+        StandardG4 = 118,
         /// <summary> StandardG5. </summary>
         [DataMember(Name = "Standard_G5")]
-        StandardG5,
+        StandardG5 = 119,
         /// <summary> StandardGS1. </summary>
         [DataMember(Name = "Standard_GS1")]
-        StandardGS1,
+        StandardGS1 = 120,
         /// <summary> StandardGS2. </summary>
         [DataMember(Name = "Standard_GS2")]
-        StandardGS2,
+        StandardGS2 = 121,
         /// <summary> StandardGS3. </summary>
         [DataMember(Name = "Standard_GS3")]
-        StandardGS3,
+        StandardGS3 = 122,
         /// <summary> StandardGS4. </summary>
         [DataMember(Name = "Standard_GS4")]
-        StandardGS4,
+        StandardGS4 = 123,
         /// <summary> StandardGS5. </summary>
         [DataMember(Name = "Standard_GS5")]
-        StandardGS5,
+        StandardGS5 = 124,
         /// <summary> StandardGS48. </summary>
         [DataMember(Name = "Standard_GS4-8")]
-        StandardGS48,
+        StandardGS48 = 125,
         /// <summary> StandardGS44. </summary>
         [DataMember(Name = "Standard_GS4-4")]
-        StandardGS44,
+        StandardGS44 = 126,
         /// <summary> StandardGS516. </summary>
         [DataMember(Name = "Standard_GS5-16")]
-        StandardGS516,
+        StandardGS516 = 127,
         /// <summary> StandardGS58. </summary>
         [DataMember(Name = "Standard_GS5-8")]
-        StandardGS58,
+        StandardGS58 = 128,
         /// <summary> StandardH8. </summary>
         [DataMember(Name = "Standard_H8")]
-        StandardH8,
+        StandardH8 = 129,
         /// <summary> StandardH16. </summary>
         [DataMember(Name = "Standard_H16")]
-        StandardH16,
+        StandardH16 = 130,
         /// <summary> StandardH8M. </summary>
         [DataMember(Name = "Standard_H8m")]
-        StandardH8M,
+        StandardH8M = 131,
         /// <summary> StandardH16M. </summary>
         [DataMember(Name = "Standard_H16m")]
-        StandardH16M,
+        StandardH16M = 132,
         /// <summary> StandardH16R. </summary>
         [DataMember(Name = "Standard_H16r")]
-        StandardH16R,
+        StandardH16R = 133,
         /// <summary> StandardH16Mr. </summary>
         [DataMember(Name = "Standard_H16mr")]
-        StandardH16Mr,
+        StandardH16Mr = 134,
         /// <summary> StandardL4S. </summary>
         [DataMember(Name = "Standard_L4s")]
-        StandardL4S,
+        StandardL4S = 135,
         /// <summary> StandardL8S. </summary>
         [DataMember(Name = "Standard_L8s")]
-        StandardL8S,
+        StandardL8S = 136,
         /// <summary> StandardL16S. </summary>
         [DataMember(Name = "Standard_L16s")]
-        StandardL16S,
+        StandardL16S = 137,
         /// <summary> StandardL32S. </summary>
         [DataMember(Name = "Standard_L32s")]
-        StandardL32S,
+        StandardL32S = 138,
         /// <summary> StandardM64S. </summary>
         [DataMember(Name = "Standard_M64s")]
-        StandardM64S,
+        StandardM64S = 139,
         /// <summary> StandardM64Ms. </summary>
         [DataMember(Name = "Standard_M64ms")]
-        StandardM64Ms,
+        StandardM64Ms = 140,
         /// <summary> StandardM128S. </summary>
         [DataMember(Name = "Standard_M128s")]
-        StandardM128S,
+        StandardM128S = 141,
         /// <summary> StandardM128Ms. </summary>
         [DataMember(Name = "Standard_M128ms")]
-        StandardM128Ms,
+        StandardM128Ms = 142,
         /// <summary> StandardM6432Ms. </summary>
         [DataMember(Name = "Standard_M64-32ms")]
-        StandardM6432Ms,
+        StandardM6432Ms = 143,
         /// <summary> StandardM6416Ms. </summary>
         [DataMember(Name = "Standard_M64-16ms")]
-        StandardM6416Ms,
+        StandardM6416Ms = 144,
         /// <summary> StandardM12864Ms. </summary>
         [DataMember(Name = "Standard_M128-64ms")]
-        StandardM12864Ms,
+        StandardM12864Ms = 145,
         /// <summary> StandardM12832Ms. </summary>
         [DataMember(Name = "Standard_M128-32ms")]
-        StandardM12832Ms,
+        StandardM12832Ms = 146,
         /// <summary> StandardNC6. </summary>
         [DataMember(Name = "Standard_NC6")]
-        StandardNC6,
+        StandardNC6 = 147,
         /// <summary> StandardNC12. </summary>
         [DataMember(Name = "Standard_NC12")]
-        StandardNC12,
+        StandardNC12 = 148,
         /// <summary> StandardNC24. </summary>
         [DataMember(Name = "Standard_NC24")]
-        StandardNC24,
+        StandardNC24 = 149,
         /// <summary> StandardNC24R. </summary>
         [DataMember(Name = "Standard_NC24r")]
-        StandardNC24R,
+        StandardNC24R = 150,
         /// <summary> StandardNC6SV2. </summary>
         [DataMember(Name = "Standard_NC6s_v2")]
-        StandardNC6SV2,
+        StandardNC6SV2 = 151,
         /// <summary> StandardNC12SV2. </summary>
         [DataMember(Name = "Standard_NC12s_v2")]
-        StandardNC12SV2,
+        StandardNC12SV2 = 152,
         /// <summary> StandardNC24SV2. </summary>
         [DataMember(Name = "Standard_NC24s_v2")]
-        StandardNC24SV2,
+        StandardNC24SV2 = 153,
         /// <summary> StandardNC24RsV2. </summary>
         [DataMember(Name = "Standard_NC24rs_v2")]
-        StandardNC24RsV2,
+        StandardNC24RsV2 = 154,
         /// <summary> StandardNC6SV3. </summary>
         [DataMember(Name = "Standard_NC6s_v3")]
-        StandardNC6SV3,
+        StandardNC6SV3 = 155,
         /// <summary> StandardNC12SV3. </summary>
         [DataMember(Name = "Standard_NC12s_v3")]
-        StandardNC12SV3,
+        StandardNC12SV3 = 156,
         /// <summary> StandardNC24SV3. </summary>
         [DataMember(Name = "Standard_NC24s_v3")]
-        StandardNC24SV3,
+        StandardNC24SV3 = 157,
         /// <summary> StandardNC24RsV3. </summary>
         [DataMember(Name = "Standard_NC24rs_v3")]
-        StandardNC24RsV3,
+        StandardNC24RsV3 = 158,
         /// <summary> StandardND6S. </summary>
         [DataMember(Name = "Standard_ND6s")]
-        StandardND6S,
+        StandardND6S = 159,
         /// <summary> StandardND12S. </summary>
         [DataMember(Name = "Standard_ND12s")]
-        StandardND12S,
+        StandardND12S = 160,
         /// <summary> StandardND24S. </summary>
         [DataMember(Name = "Standard_ND24s")]
-        StandardND24S,
+        StandardND24S = 161,
         /// <summary> StandardND24Rs. </summary>
         [DataMember(Name = "Standard_ND24rs")]
-        StandardND24Rs,
+        StandardND24Rs = 162,
         /// <summary> StandardNV6. </summary>
         [DataMember(Name = "Standard_NV6")]
-        StandardNV6,
+        StandardNV6 = 163,
         /// <summary> StandardNV12. </summary>
         [DataMember(Name = "Standard_NV12")]
-        StandardNV12,
+        StandardNV12 = 164,
         /// <summary> StandardNV24. </summary>
         [DataMember(Name = "Standard_NV24")]
-        StandardNV24
+        StandardNV24 = 165
     }
 }

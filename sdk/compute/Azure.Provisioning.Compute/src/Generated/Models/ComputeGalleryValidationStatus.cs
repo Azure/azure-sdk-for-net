@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ComputeGalleryValidationStatus
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> Succeeded. </summary>
-        Succeeded
+        Succeeded = 2
     }
 }

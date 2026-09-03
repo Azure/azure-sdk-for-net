@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ComputeStorageFaultDomainAlignmentType
     {
         /// <summary> Disk Storage Fault Domains are mapped to Compute Fault Domains. Deployment fails if disk does not support enough Fault Domains. </summary>
-        Aligned,
+        Aligned = 0,
         /// <summary> Attempt to map Storage Fault Domains to Compute Fault Domains. Disks are unaligned if disk does not support enough Fault Domains. </summary>
-        BestEffortAligned
+        BestEffortAligned = 1
     }
 }

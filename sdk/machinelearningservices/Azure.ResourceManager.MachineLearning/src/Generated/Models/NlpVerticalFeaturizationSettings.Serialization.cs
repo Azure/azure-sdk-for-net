@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The NlpVerticalFeaturizationSettings. </summary>
-    public partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings, IJsonModel<NlpVerticalFeaturizationSettings>
+    internal partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings, IJsonModel<NlpVerticalFeaturizationSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

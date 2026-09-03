@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum SharingProfileGroupType
     {
         /// <summary> Subscriptions. </summary>
-        Subscriptions,
+        Subscriptions = 0,
         /// <summary> AADTenants. </summary>
-        AADTenants
+        AADTenants = 1
     }
 }

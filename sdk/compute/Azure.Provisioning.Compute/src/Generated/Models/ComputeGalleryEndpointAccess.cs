@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ComputeGalleryEndpointAccess
     {
         /// <summary> Allow. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Deny. </summary>
-        Deny
+        Deny = 1
     }
 }

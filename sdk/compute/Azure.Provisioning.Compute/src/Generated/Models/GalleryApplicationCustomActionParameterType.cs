@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum GalleryApplicationCustomActionParameterType
     {
         /// <summary> String. </summary>
-        String,
+        String = 0,
         /// <summary> ConfigurationDataBlob. </summary>
-        ConfigurationDataBlob,
+        ConfigurationDataBlob = 1,
         /// <summary> LogOutputBlob. </summary>
-        LogOutputBlob
+        LogOutputBlob = 2
     }
 }

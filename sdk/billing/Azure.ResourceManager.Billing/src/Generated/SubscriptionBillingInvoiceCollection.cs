@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Billing
             TryGetApiVersion(SubscriptionBillingInvoiceResource.ResourceType, out string subscriptionBillingInvoiceApiVersion);
             _subscriptionId = subscriptionId;
             _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", SubscriptionBillingInvoiceResource.ResourceType.Namespace, Diagnostics);
-            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, subscriptionBillingInvoiceApiVersion ?? "2024-04-01");
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionBillingInvoiceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

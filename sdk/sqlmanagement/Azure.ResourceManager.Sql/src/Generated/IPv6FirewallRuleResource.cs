@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class IPv6FirewallRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _iPv6FirewallRulesClientDiagnostics;
-        private readonly IPv6FirewallRules _iPv6FirewallRulesRestClient;
+        private readonly ClientDiagnostics _ipv6FirewallRulesClientDiagnostics;
+        private readonly IPv6FirewallRules _ipv6FirewallRulesRestClient;
         private readonly IPv6FirewallRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/ipv6FirewallRules";
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IPv6FirewallRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string iPv6FirewallRuleApiVersion);
-            _iPv6FirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _iPv6FirewallRulesRestClient = new IPv6FirewallRules(_iPv6FirewallRulesClientDiagnostics, Pipeline, Endpoint, iPv6FirewallRuleApiVersion ?? "2025-02-01-preview");
+            TryGetApiVersion(ResourceType, out string ipv6FirewallRuleApiVersion);
+            _ipv6FirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _ipv6FirewallRulesRestClient = new IPv6FirewallRules(_ipv6FirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipv6FirewallRuleApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IPv6FirewallRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Get");
+            using DiagnosticScope scope = _ipv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _ipv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IPv6FirewallRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Get");
+            using DiagnosticScope scope = _ipv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _ipv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Delete");
+            using DiagnosticScope scope = _ipv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Delete");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iPv6FirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _ipv6FirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Delete");
+            using DiagnosticScope scope = _ipv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Delete");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iPv6FirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _ipv6FirewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Update");
+            using DiagnosticScope scope = _ipv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Update");
             scope.Start();
             try
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iPv6FirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv6FirewallRuleData.ToRequestContent(data), context);
+                HttpMessage message = _ipv6FirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv6FirewallRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Update");
+            using DiagnosticScope scope = _ipv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Update");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iPv6FirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv6FirewallRuleData.ToRequestContent(data), context);
+                HttpMessage message = _ipv6FirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv6FirewallRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

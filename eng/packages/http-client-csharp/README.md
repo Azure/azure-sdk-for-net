@@ -13,7 +13,7 @@ npm install @azure-typespec/http-client-csharp
 ### Prerequisite
 
 - Install [Node.js](https://nodejs.org/download/) 20 or above. (Verify by running `node --version`)
-- Install [**.NET 10.0 SDK**](https://dotnet.microsoft.com/download/dotnet/10.0) for your specific platform. (or a higher version within the 10.0.\* band)
+- Install [**.NET 10.0 SDK**](https://dotnet.microsoft.com/download/dotnet/10.0) for your specific platform. (or a higher version within the 10.0.* band)
 
 ### Customizing Generated Code
 
@@ -57,7 +57,7 @@ See [Configuring output directory for more info](https://typespec.io/docs/handbo
 
 **Type:** `string | object`
 
-Use this flag if you would like to generate the sdk only for a specific version. Default value is the latest version. Also accepts values `latest` and `all`. For multi-service packages, provide a map from each service namespace's full name to its desired version; services not listed default to their latest version.
+Use this flag if you would like to generate the sdk only for a specific version. Default value is the latest version. Also accepts values `latest` and `all`. For multi-service packages, provide a map from each service namespace to its desired version. Nested namespaces must be represented as nested objects in `tspconfig.yaml`; services not listed default to their latest version.
 
 **Options:**
 

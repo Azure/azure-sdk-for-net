@@ -7,24 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHybridContainerServiceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.ProvisionedClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the provisioned cluster. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         /// <returns> A new <see cref="HybridContainerService.ProvisionedClusterData"/> instance for mocking. </returns>
-        public static ProvisionedClusterData ProvisionedClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisionedClusterProperties properties = null, HybridContainerServiceExtendedLocation extendedLocation = null)
+        public static ProvisionedClusterData ProvisionedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProvisionedClusterProperties properties = default, HybridContainerServiceExtendedLocation extendedLocation = default)
         {
             return new ProvisionedClusterData(
                 id,
@@ -33,7 +35,607 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 systemData,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
+        }
+
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </param>
+        /// <param name="controlPlane"> The profile for control plane of the provisioned cluster. </param>
+        /// <param name="kubernetesVersion"> The version of Kubernetes in use by the provisioned cluster. </param>
+        /// <param name="networkProfile"> The network configuration profile for the provisioned cluster. </param>
+        /// <param name="storageProfile"> The storage configuration profile for the provisioned cluster. </param>
+        /// <param name="securityProfile"> The security configuration profile for the provisioned cluster. </param>
+        /// <param name="clusterVmAccessAuthorizedIPRanges"> IP Address or CIDR for SSH access to VMs in the provisioned cluster. </param>
+        /// <param name="agentPoolProfiles"> The agent pool properties for the provisioned cluster. </param>
+        /// <param name="infraNetworkVnetSubnetIds"> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
+        /// <param name="provisioningState"> The status of the latest long running operation for the provisioned cluster. </param>
+        /// <param name="status"> The observed status of the provisioned cluster. </param>
+        /// <param name="licenseAzureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. Default value is false. </param>
+        /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterProperties"/> instance for mocking. </returns>
+        public static ProvisionedClusterProperties ProvisionedClusterProperties(IEnumerable<LinuxSshPublicKey> sshPublicKeys = default, ProvisionedClusterControlPlaneProfile controlPlane = default, string kubernetesVersion = default, ProvisionedClusterNetworkProfile networkProfile = default, StorageProfile storageProfile = default, ProvisionedClusterSecurityProfile securityProfile = default, string clusterVmAccessAuthorizedIPRanges = default, IEnumerable<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default, IEnumerable<ResourceIdentifier> infraNetworkVnetSubnetIds = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, ProvisionedClusterStatus status = default, ProvisionedClusterAzureHybridBenefit? licenseAzureHybridBenefit = default, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default)
+        {
+            agentPoolProfiles ??= new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>();
+
+            return new ProvisionedClusterProperties(
+                sshPublicKeys is null ? default : new LinuxProfileProperties(new LinuxSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>()).ToList(), default), default),
+                controlPlane,
+                kubernetesVersion,
+                networkProfile,
+                storageProfile,
+                securityProfile,
+                clusterVmAccessAuthorizedIPRanges is null ? default : new ClusterVMAccessProfile(clusterVmAccessAuthorizedIPRanges, default),
+                (agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>()).ToList(),
+                infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterCloudProviderProfile(new ProvisionedClusterInfraNetworkProfile((infraNetworkVnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default),
+                provisioningState,
+                status,
+                licenseAzureHybridBenefit is null ? default : new ProvisionedClusterLicenseProfile(licenseAzureHybridBenefit, default),
+                autoScalerProfile,
+                default);
+        }
+
+        /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
+        /// <returns> A new <see cref="Models.LinuxSshPublicKey"/> instance for mocking. </returns>
+        public static LinuxSshPublicKey LinuxSshPublicKey(string keyData = default)
+        {
+            return new LinuxSshPublicKey(keyData, default);
+        }
+
+        /// <param name="count"> Number of control plane nodes. The default value is 1, and the count can be either 2 or odd numbers. </param>
+        /// <param name="vmSize"> VM sku size of the control plane nodes. </param>
+        /// <param name="controlPlaneEndpointHostIP"> IP address of the Kubernetes API server. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterControlPlaneProfile"/> instance for mocking. </returns>
+        public static ProvisionedClusterControlPlaneProfile ProvisionedClusterControlPlaneProfile(int? count = default, string vmSize = default, string controlPlaneEndpointHostIP = default)
+        {
+            return new ProvisionedClusterControlPlaneProfile(count, vmSize, controlPlaneEndpointHostIP is null ? default : new ProvisionedClusterControlPlaneEndpoint(controlPlaneEndpointHostIP, default), default);
+        }
+
+        /// <param name="loadBalancerCount"> Number of HA Proxy load balancer VMs. The default value is 0. </param>
+        /// <param name="networkPolicy"> Network policy used for building Kubernetes network. Possible values include: 'calico'. </param>
+        /// <param name="podCidr"> A CIDR notation IP Address range from which to assign pod IPs. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterNetworkProfile"/> instance for mocking. </returns>
+        public static ProvisionedClusterNetworkProfile ProvisionedClusterNetworkProfile(int? loadBalancerCount = default, ProvisionedClusterNetworkPolicy? networkPolicy = default, string podCidr = default)
+        {
+            return new ProvisionedClusterNetworkProfile(loadBalancerCount is null ? default : new ProvisionedClusterLoadBalancerProfile(loadBalancerCount, default), networkPolicy, podCidr, default);
+        }
+
+        /// <param name="isSmbCsiDriverEnabled"> Indicates whether to enable SMB CSI Driver. The default value is true. </param>
+        /// <param name="isNfsCsiDriverEnabled"> Indicates whether to enable NFS CSI Driver. The default value is true. </param>
+        /// <returns> A new <see cref="Models.StorageProfile"/> instance for mocking. </returns>
+        public static StorageProfile StorageProfile(bool? isSmbCsiDriverEnabled = default, bool? isNfsCsiDriverEnabled = default)
+        {
+            return new StorageProfile(isSmbCsiDriverEnabled is null ? default : new StorageProfileSmbCSIDriver(isSmbCsiDriverEnabled, default), isNfsCsiDriverEnabled is null ? default : new StorageProfileNfsCSIDriver(isNfsCsiDriverEnabled, default), default);
+        }
+
+        /// <param name="customCATrustCertificates"> The list of base64 encoded certificate strings that will be added to the node trust store. At most 10 certificates can be provided. </param>
+        /// <param name="isFipsImageEnabled"> Indicates whether to enable FIPS image. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterSecurityProfile"/> instance for mocking. </returns>
+        public static ProvisionedClusterSecurityProfile ProvisionedClusterSecurityProfile(IEnumerable<BinaryData> customCATrustCertificates = default, bool? isFipsImageEnabled = default)
+        {
+            customCATrustCertificates ??= new ChangeTrackingList<BinaryData>();
+
+            return new ProvisionedClusterSecurityProfile((customCATrustCertificates ?? new ChangeTrackingList<BinaryData>()).ToList(), isFipsImageEnabled is null ? default : new SecurityProfileFipsImage(isFipsImageEnabled, default), default);
+        }
+
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        /// <param name="gpuCountPerNode"> The number of gpus attached to a node. </param>
+        /// <param name="name"> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/> instance for mocking. </returns>
+        public static HybridContainerServiceNamedAgentPoolProfile HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType = default, HybridContainerServiceOSSku? osSku = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, int? maxCount = default, int? minCount = default, bool? enableAutoScaling = default, int? maxPods = default, int? count = default, string vmSize = default, string kubernetesVersion = default, int? gpuCountPerNode = default, string name = default)
+        {
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+
+            return new HybridContainerServiceNamedAgentPoolProfile(
+                osType,
+                osSku,
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                maxPods,
+                default,
+                count,
+                vmSize,
+                kubernetesVersion,
+                gpuCountPerNode,
+                name);
+        }
+
+        /// <param name="controlPlaneStatus"> The detailed status of the provisioned cluster components including addons. </param>
+        /// <param name="currentState"> The current state of the provisioned cluster. </param>
+        /// <param name="keyRotationStatus"> The status of workload identity key rotation. </param>
+        /// <param name="errorMessage"> Error messages during a provisioned cluster operation or steady state. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterStatus"/> instance for mocking. </returns>
+        public static ProvisionedClusterStatus ProvisionedClusterStatus(IEnumerable<ProvisionedClusterAddonStatusProfile> controlPlaneStatus = default, HybridContainerServiceResourceProvisioningState? currentState = default, KeyRotationStatus keyRotationStatus = default, string errorMessage = default)
+        {
+            controlPlaneStatus ??= new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>();
+
+            return new ProvisionedClusterStatus((controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>()).ToList(), currentState, keyRotationStatus is null ? default : new FeaturesStatus(keyRotationStatus, default), errorMessage, default);
+        }
+
+        /// <param name="name"> Name of the addon or component. </param>
+        /// <param name="phase"> Observed phase of the addon or component on the provisioned cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
+        /// <param name="ready"> Indicates whether the addon or component is ready. </param>
+        /// <param name="errorMessage"> Observed error message from the addon or component. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterAddonStatusProfile"/> instance for mocking. </returns>
+        public static ProvisionedClusterAddonStatusProfile ProvisionedClusterAddonStatusProfile(string name = default, ProvisionedClusterAddonPhase? phase = default, bool? ready = default, string errorMessage = default)
+        {
+            return new ProvisionedClusterAddonStatusProfile(name, phase, ready, errorMessage, default);
+        }
+
+        /// <param name="keyAdditionAt"> Timestamp when the new key was added to the system. </param>
+        /// <param name="nextScheduledRotation"> Timestamp when the next scheduled key rotation will occur. </param>
+        /// <param name="previousKeyExpiresAt"> Timestamp for when old public key is rotated out. This breaks static tokens, which must be rotated before this deadline. </param>
+        /// <param name="newKeyActivatedAt"> Timestamp when the new key is activated and becomes the primary key. </param>
+        /// <param name="state"> The current state of the key rotation operation. Possible values include: 'Pending', 'Failed', 'Success'. </param>
+        /// <returns> A new <see cref="Models.KeyRotationStatus"/> instance for mocking. </returns>
+        public static KeyRotationStatus KeyRotationStatus(string keyAdditionAt = default, string nextScheduledRotation = default, string previousKeyExpiresAt = default, string newKeyActivatedAt = default, KeyRotationState? state = default)
+        {
+            return new KeyRotationStatus(
+                keyAdditionAt,
+                nextScheduledRotation,
+                previousKeyExpiresAt,
+                newKeyActivatedAt,
+                state,
+                default);
+        }
+
+        /// <param name="balanceSimilarNodeGroups"> Valid values are 'true' and 'false'. </param>
+        /// <param name="expander"> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </param>
+        /// <param name="maxEmptyBulkDelete"> The default is 10. </param>
+        /// <param name="maxGracefulTerminationSec"> The default is 600. </param>
+        /// <param name="maxNodeProvisionTime"> The default is '15m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
+        /// <param name="maxTotalUnreadyPercentage"> The default is 45. The maximum is 100 and the minimum is 0. </param>
+        /// <param name="newPodScaleUpDelay"> For scenarios like burst/batch scale where you don't want CA to act before the kubernetes scheduler could schedule all the pods, you can tell CA to ignore unscheduled pods before they're a certain age. The default is '0s'. Values must be an integer followed by a unit ('s' for seconds, 'm' for minutes, 'h' for hours, etc). </param>
+        /// <param name="okTotalUnreadyCount"> This must be an integer. The default is 3. </param>
+        /// <param name="scanInterval"> The default is '10'. Values must be an integer number of seconds. </param>
+        /// <param name="scaleDownDelayAfterAdd"> The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
+        /// <param name="scaleDownDelayAfterDelete"> The default is the scan-interval. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
+        /// <param name="scaleDownDelayAfterFailure"> The default is '3m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
+        /// <param name="scaleDownUnneededTime"> The default is '10m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
+        /// <param name="scaleDownUnreadyTime"> The default is '20m'. Values must be an integer followed by an 'm'. No unit of time other than minutes (m) is supported. </param>
+        /// <param name="scaleDownUtilizationThreshold"> The default is '0.5'. </param>
+        /// <param name="skipNodesWithLocalStorage"> The default is true. </param>
+        /// <param name="skipNodesWithSystemPods"> The default is true. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterPropertiesAutoScalerProfile"/> instance for mocking. </returns>
+        public static ProvisionedClusterPropertiesAutoScalerProfile ProvisionedClusterPropertiesAutoScalerProfile(string balanceSimilarNodeGroups = default, HybridContainerServiceExpander? expander = default, string maxEmptyBulkDelete = default, string maxGracefulTerminationSec = default, string maxNodeProvisionTime = default, string maxTotalUnreadyPercentage = default, string newPodScaleUpDelay = default, string okTotalUnreadyCount = default, string scanInterval = default, string scaleDownDelayAfterAdd = default, string scaleDownDelayAfterDelete = default, string scaleDownDelayAfterFailure = default, string scaleDownUnneededTime = default, string scaleDownUnreadyTime = default, string scaleDownUtilizationThreshold = default, string skipNodesWithLocalStorage = default, string skipNodesWithSystemPods = default)
+        {
+            return new ProvisionedClusterPropertiesAutoScalerProfile(
+                balanceSimilarNodeGroups,
+                expander,
+                maxEmptyBulkDelete,
+                maxGracefulTerminationSec,
+                maxNodeProvisionTime,
+                maxTotalUnreadyPercentage,
+                newPodScaleUpDelay,
+                okTotalUnreadyCount,
+                scanInterval,
+                scaleDownDelayAfterAdd,
+                scaleDownDelayAfterDelete,
+                scaleDownDelayAfterFailure,
+                scaleDownUnneededTime,
+                scaleDownUnreadyTime,
+                scaleDownUtilizationThreshold,
+                skipNodesWithLocalStorage,
+                skipNodesWithSystemPods,
+                default);
+        }
+
+        /// <param name="extendedLocationType"> The extended location type. Allowed value: 'CustomLocation'. </param>
+        /// <param name="name"> ARM Id of the extended location. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceExtendedLocation"/> instance for mocking. </returns>
+        public static HybridContainerServiceExtendedLocation HybridContainerServiceExtendedLocation(HybridContainerServiceExtendedLocationType? extendedLocationType = default, string name = default)
+        {
+            return new HybridContainerServiceExtendedLocation(extendedLocationType, name, default);
+        }
+
+        /// <param name="id"> Operation Id. </param>
+        /// <param name="name"> Operation Name. </param>
+        /// <param name="resourceId"> ARM Resource Id of the provisioned cluster instance. </param>
+        /// <param name="status"> Provisioning state of the resource. </param>
+        /// <param name="error"> Error listing the kubeconfig credential response. </param>
+        /// <param name="listCredentialResponseKubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceCredentialListResult"/> instance for mocking. </returns>
+        public static HybridContainerServiceCredentialListResult HybridContainerServiceCredentialListResult(string id = default, string name = default, ResourceIdentifier resourceId = default, HybridContainerServiceResourceProvisioningState? status = default, HybridContainerServiceCredentialListError error = default, IEnumerable<HybridContainerServiceCredential> listCredentialResponseKubeconfigs = default)
+        {
+            return new HybridContainerServiceCredentialListResult(
+                id,
+                name,
+                resourceId,
+                status,
+                error,
+                listCredentialResponseKubeconfigs is null ? default : new ListCredentialResponseProperties((listCredentialResponseKubeconfigs ?? new ChangeTrackingList<HybridContainerServiceCredential>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceCredentialListError"/> instance for mocking. </returns>
+        public static HybridContainerServiceCredentialListError HybridContainerServiceCredentialListError(string code = default, string message = default)
+        {
+            return new HybridContainerServiceCredentialListError(code, message, default);
+        }
+
+        /// <param name="name"> The name of the credential. </param>
+        /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceCredential"/> instance for mocking. </returns>
+        public static HybridContainerServiceCredential HybridContainerServiceCredential(string name = default, byte[] value = default)
+        {
+            return new HybridContainerServiceCredential(name, value, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
+        /// <returns> A new <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/> instance for mocking. </returns>
+        public static ProvisionedClusterUpgradeProfileData ProvisionedClusterUpgradeProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default)
+        {
+            return new ProvisionedClusterUpgradeProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && controlPlaneProfile is null ? default : new ProvisionedClusterUpgradeProfileProperties(provisioningState, controlPlaneProfile, default),
+                default);
+        }
+
+        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
+        /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/> instance for mocking. </returns>
+        public static ProvisionedClusterPoolUpgradeProfile ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion = default, HybridContainerServiceOSType? osType = default, IEnumerable<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = default)
+        {
+            upgrades ??= new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>();
+
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, osType, (upgrades ?? new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>()).ToList(), default);
+        }
+
+        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
+        /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
+        /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/> instance for mocking. </returns>
+        public static ProvisionedClusterPoolUpgradeProfileProperties ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion = default, bool? isPreview = default)
+        {
+            return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion, isPreview, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resourceUid"> Unique id of the parent provisioned cluster resource. </param>
+        /// <param name="publicKey"> Onboarding public key for provisioning the Managed identity for the connected cluster. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="HybridContainerService.HybridIdentityMetadataData"/> instance for mocking. </returns>
+        public static HybridIdentityMetadataData HybridIdentityMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceUid = default, string publicKey = default, HybridContainerServiceResourceProvisioningState? provisioningState = default)
+        {
+            return new HybridIdentityMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceUid is null && publicKey is null && provisioningState is null ? default : new HybridIdentityMetadataProperties(resourceUid, publicKey, provisioningState, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        /// <param name="gpuCountPerNode"> The number of gpus attached to a node. </param>
+        /// <param name="provisioningState"> The status of the latest long running operation for the agent pool. </param>
+        /// <param name="status"> The observed status of the agent pool. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/> instance for mocking. </returns>
+        public static HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceOSType? osType = default, HybridContainerServiceOSSku? osSku = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, int? maxCount = default, int? minCount = default, bool? enableAutoScaling = default, int? maxPods = default, int? count = default, string vmSize = default, string kubernetesVersion = default, int? gpuCountPerNode = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, AgentPoolProvisioningStatus status = default, HybridContainerServiceExtendedLocation extendedLocation = default)
+        {
+            return new HybridContainerServiceAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                osType is null && osSku is null && nodeLabels is null && nodeTaints is null && maxCount is null && minCount is null && enableAutoScaling is null && maxPods is null && count is null && vmSize is null && kubernetesVersion is null && gpuCountPerNode is null && provisioningState is null && status is null ? default : new AgentPoolProperties(
+                    osType,
+                    osSku,
+                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                    (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
+                    maxCount,
+                    minCount,
+                    enableAutoScaling,
+                    maxPods,
+                    count,
+                    vmSize,
+                    kubernetesVersion,
+                    gpuCountPerNode,
+                    provisioningState,
+                    status,
+                    default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="currentState"> The current state of the agent pool. </param>
+        /// <param name="errorMessage"> Error messages during an agent pool operation or steady state. </param>
+        /// <param name="readyReplicas"> The agent pools that are ready. </param>
+        /// <returns> A new <see cref="Models.AgentPoolProvisioningStatus"/> instance for mocking. </returns>
+        public static AgentPoolProvisioningStatus AgentPoolProvisioningStatus(HybridContainerServiceResourceProvisioningState? currentState = default, string errorMessage = default, IEnumerable<AgentPoolUpdateProfile> readyReplicas = default)
+        {
+            readyReplicas ??= new ChangeTrackingList<AgentPoolUpdateProfile>();
+
+            return new AgentPoolProvisioningStatus(currentState, errorMessage, (readyReplicas ?? new ChangeTrackingList<AgentPoolUpdateProfile>()).ToList(), default);
+        }
+
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        /// <param name="gpuCountPerNode"> The number of gpus attached to a node. </param>
+        /// <returns> A new <see cref="Models.AgentPoolUpdateProfile"/> instance for mocking. </returns>
+        public static AgentPoolUpdateProfile AgentPoolUpdateProfile(int? count = default, string vmSize = default, string kubernetesVersion = default, int? gpuCountPerNode = default)
+        {
+            return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, gpuCountPerNode, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        /// <returns> A new <see cref="HybridContainerService.KubernetesVersionProfileData"/> instance for mocking. </returns>
+        public static KubernetesVersionProfileData KubernetesVersionProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesVersionProfileProperties properties = default, HybridContainerServiceExtendedLocation extendedLocation = default)
+        {
+            return new KubernetesVersionProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="values"> List of supported Kubernetes versions. </param>
+        /// <returns> A new <see cref="Models.KubernetesVersionProfileProperties"/> instance for mocking. </returns>
+        public static KubernetesVersionProfileProperties KubernetesVersionProfileProperties(HybridContainerServiceResourceProvisioningState? provisioningState = default, IEnumerable<KubernetesVersionProperties> values = default)
+        {
+            values ??= new ChangeTrackingList<KubernetesVersionProperties>();
+
+            return new KubernetesVersionProfileProperties(provisioningState, (values ?? new ChangeTrackingList<KubernetesVersionProperties>()).ToList(), default);
+        }
+
+        /// <param name="version"> major.minor version of Kubernetes release. </param>
+        /// <param name="isPreview"> Whether this version is in preview mode. </param>
+        /// <param name="patchVersions"> Patch versions of a Kubernetes release. </param>
+        /// <returns> A new <see cref="Models.KubernetesVersionProperties"/> instance for mocking. </returns>
+        public static KubernetesVersionProperties KubernetesVersionProperties(string version = default, bool? isPreview = default, IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions = default)
+        {
+            patchVersions ??= new ChangeTrackingDictionary<string, KubernetesPatchVersions>();
+
+            return new KubernetesVersionProperties(version, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersions>(), default);
+        }
+
+        /// <param name="readiness"> Indicates whether the kubernetes version image is ready or not. </param>
+        /// <param name="upgrades"> Possible upgrade paths for given patch version. </param>
+        /// <returns> A new <see cref="Models.KubernetesPatchVersions"/> instance for mocking. </returns>
+        public static KubernetesPatchVersions KubernetesPatchVersions(IEnumerable<KubernetesVersionReadiness> readiness = default, IEnumerable<string> upgrades = default)
+        {
+            readiness ??= new ChangeTrackingList<KubernetesVersionReadiness>();
+            upgrades ??= new ChangeTrackingList<string>();
+
+            return new KubernetesPatchVersions((readiness ?? new ChangeTrackingList<KubernetesVersionReadiness>()).ToList(), (upgrades ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
+        /// <param name="ready"> Whether the kubernetes version image is ready or not. </param>
+        /// <param name="errorMessage"> The error message for version not being ready. </param>
+        /// <returns> A new <see cref="Models.KubernetesVersionReadiness"/> instance for mocking. </returns>
+        public static KubernetesVersionReadiness KubernetesVersionReadiness(HybridContainerServiceOSType? osType = default, HybridContainerServiceOSSku? osSku = default, bool? ready = default, string errorMessage = default)
+        {
+            return new KubernetesVersionReadiness(osType, osSku, ready, errorMessage, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="values"> List of supported VM SKUs. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceVmSkuData"/> instance for mocking. </returns>
+        public static HybridContainerServiceVmSkuData HybridContainerServiceVmSkuData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, IEnumerable<HybridContainerServiceVmSkuProperties> values = default, HybridContainerServiceExtendedLocation extendedLocation = default)
+        {
+            return new HybridContainerServiceVmSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && values is null ? default : new VmSkuProfileProperties(provisioningState, (values ?? new ChangeTrackingList<HybridContainerServiceVmSkuProperties>()).ToList(), default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="capabilities"> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </param>
+        /// <param name="name"> The name of the VM SKU. </param>
+        /// <param name="tier"> The tier of the VM SKU. </param>
+        /// <param name="size"> The size of the VM SKU. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceVmSkuProperties"/> instance for mocking. </returns>
+        public static HybridContainerServiceVmSkuProperties HybridContainerServiceVmSkuProperties(string resourceType = default, IEnumerable<HybridContainerServiceVmSkuCapabilities> capabilities = default, string name = default, string tier = default, string size = default)
+        {
+            capabilities ??= new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>();
+
+            return new HybridContainerServiceVmSkuProperties(
+                resourceType,
+                (capabilities ?? new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>()).ToList(),
+                name,
+                tier,
+                size,
+                default);
+        }
+
+        /// <param name="name"> Name of the VM SKU capability. </param>
+        /// <param name="value"> Value of the VM SKU capability. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceVmSkuCapabilities"/> instance for mocking. </returns>
+        public static HybridContainerServiceVmSkuCapabilities HybridContainerServiceVmSkuCapabilities(string name = default, string value = default)
+        {
+            return new HybridContainerServiceVmSkuCapabilities(name, value, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceVirtualNetworkData"/> instance for mocking. </returns>
+        public static HybridContainerServiceVirtualNetworkData HybridContainerServiceVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridContainerServiceVirtualNetworkProperties properties = default, HybridContainerServiceExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HybridContainerServiceVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="infraVnetHci"> Infrastructure network profile for HCI platform. </param>
+        /// <param name="vipPool"> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </param>
+        /// <param name="vmipPool"> Range of IP Addresses for Kubernetes node VMs. </param>
+        /// <param name="dnsServers"> List of DNS server IP Addresses associated with the network. </param>
+        /// <param name="gateway"> IP Address of the Gateway associated with the network. </param>
+        /// <param name="ipAddressPrefix"> IP Address Prefix of the network. </param>
+        /// <param name="vlanId"> VLAN Id used by the network. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
+        /// <param name="operationStatus"> The detailed status of the long running operation. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceVirtualNetworkProperties"/> instance for mocking. </returns>
+        public static HybridContainerServiceVirtualNetworkProperties HybridContainerServiceVirtualNetworkProperties(HciInfraVnetProfile infraVnetHci = default, IEnumerable<KubernetesVirtualIPItem> vipPool = default, IEnumerable<VirtualMachineIPItem> vmipPool = default, IEnumerable<string> dnsServers = default, string gateway = default, string ipAddressPrefix = default, int? vlanId = default, HybridContainerServiceProvisioningState? provisioningState = default, VirtualNetworkPropertiesStatusOperationStatus operationStatus = default)
+        {
+            vipPool ??= new ChangeTrackingList<KubernetesVirtualIPItem>();
+            vmipPool ??= new ChangeTrackingList<VirtualMachineIPItem>();
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new HybridContainerServiceVirtualNetworkProperties(
+                infraVnetHci is null ? default : new InfraVnetProfile(infraVnetHci, default),
+                (vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>()).ToList(),
+                (vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>()).ToList(),
+                (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
+                gateway,
+                ipAddressPrefix,
+                vlanId,
+                provisioningState,
+                operationStatus is null ? default : new HybridContainerServiceNetworkStatus(operationStatus, default),
+                default);
+        }
+
+        /// <param name="mocGroup"> Group in MOC(Microsoft On-premises Cloud). </param>
+        /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
+        /// <param name="mocVnetName"> Virtual Network name in MOC(Microsoft On-premises Cloud). </param>
+        /// <returns> A new <see cref="Models.HciInfraVnetProfile"/> instance for mocking. </returns>
+        public static HciInfraVnetProfile HciInfraVnetProfile(string mocGroup = default, string mocLocation = default, string mocVnetName = default)
+        {
+            return new HciInfraVnetProfile(mocGroup, mocLocation, mocVnetName, default);
+        }
+
+        /// <param name="startIP"> Starting IP address for the IP Pool. </param>
+        /// <param name="endIP"> Ending IP address for the IP Pool. </param>
+        /// <returns> A new <see cref="Models.KubernetesVirtualIPItem"/> instance for mocking. </returns>
+        public static KubernetesVirtualIPItem KubernetesVirtualIPItem(string startIP = default, string endIP = default)
+        {
+            return new KubernetesVirtualIPItem(startIP, endIP, default);
+        }
+
+        /// <param name="startIP"> Starting IP address for the IP Pool. </param>
+        /// <param name="endIP"> Ending IP address for the IP Pool. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineIPItem"/> instance for mocking. </returns>
+        public static VirtualMachineIPItem VirtualMachineIPItem(string startIP = default, string endIP = default)
+        {
+            return new VirtualMachineIPItem(startIP, endIP, default);
+        }
+
+        /// <param name="error"> The error if any from the operation. </param>
+        /// <param name="operationId"> The identifier of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkPropertiesStatusOperationStatus"/> instance for mocking. </returns>
+        public static VirtualNetworkPropertiesStatusOperationStatus VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error = default, string operationId = default, string status = default)
+        {
+            return new VirtualNetworkPropertiesStatusOperationStatus(error, operationId, status, default);
+        }
+
+        /// <param name="code"> The error code from the operation. </param>
+        /// <param name="message"> The error message from the operation. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceNetworkOperationError"/> instance for mocking. </returns>
+        public static HybridContainerServiceNetworkOperationError HybridContainerServiceNetworkOperationError(string code = default, string message = default)
+        {
+            return new HybridContainerServiceNetworkOperationError(code, message, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceVirtualNetworkPatch"/> instance for mocking. </returns>
+        public static HybridContainerServiceVirtualNetworkPatch HybridContainerServiceVirtualNetworkPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HybridContainerServiceVirtualNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <returns> A new <see cref="Models.HybridContainerServiceAgentPoolProfile"/> instance for mocking. </returns>
+        public static HybridContainerServiceAgentPoolProfile HybridContainerServiceAgentPoolProfile(HybridContainerServiceOSType? osType = default, HybridContainerServiceOSSku? osSku = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, int? maxCount = default, int? minCount = default, bool? enableAutoScaling = default, int? maxPods = default)
+        {
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+
+            return new HybridContainerServiceAgentPoolProfile(
+                osType,
+                osSku,
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                maxPods,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterProperties"/>. </summary>
@@ -50,26 +652,24 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="licenseAzureHybridBenefit"> The license profile of the provisioned cluster. </param>
         /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterProperties"/> instance for mocking. </returns>
-        public static ProvisionedClusterProperties ProvisionedClusterProperties(IEnumerable<LinuxSshPublicKey> sshPublicKeys = null, ProvisionedClusterControlPlaneProfile controlPlane = null, string kubernetesVersion = null, ProvisionedClusterNetworkProfile networkProfile = null, StorageProfile storageProfile = null, string clusterVmAccessAuthorizedIPRanges = null, IEnumerable<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = null, IEnumerable<ResourceIdentifier> infraNetworkVnetSubnetIds = null, HybridContainerServiceResourceProvisioningState? provisioningState = null, ProvisionedClusterStatus status = null, ProvisionedClusterAzureHybridBenefit? licenseAzureHybridBenefit = null, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProvisionedClusterProperties ProvisionedClusterProperties(IEnumerable<LinuxSshPublicKey> sshPublicKeys = default, ProvisionedClusterControlPlaneProfile controlPlane = default, string kubernetesVersion = default, ProvisionedClusterNetworkProfile networkProfile = default, StorageProfile storageProfile = default, string clusterVmAccessAuthorizedIPRanges = default, IEnumerable<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default, IEnumerable<ResourceIdentifier> infraNetworkVnetSubnetIds = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, ProvisionedClusterStatus status = default, ProvisionedClusterAzureHybridBenefit? licenseAzureHybridBenefit = default, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default)
         {
-            sshPublicKeys ??= new List<LinuxSshPublicKey>();
-            agentPoolProfiles ??= new List<HybridContainerServiceNamedAgentPoolProfile>();
-            infraNetworkVnetSubnetIds ??= new List<ResourceIdentifier>();
-
             return new ProvisionedClusterProperties(
-                sshPublicKeys != null ? new LinuxProfileProperties(new LinuxSshConfiguration(sshPublicKeys?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                sshPublicKeys is null ? default : new LinuxProfileProperties(new LinuxSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>()).ToList(), default), default),
                 controlPlane,
                 kubernetesVersion,
                 networkProfile,
                 storageProfile,
-                clusterVmAccessAuthorizedIPRanges != null ? new ClusterVmAccessProfile(clusterVmAccessAuthorizedIPRanges, serializedAdditionalRawData: null) : null,
-                agentPoolProfiles?.ToList(),
-                infraNetworkVnetSubnetIds != null ? new ProvisionedClusterCloudProviderProfile(new ProvisionedClusterInfraNetworkProfile(infraNetworkVnetSubnetIds?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                default,
+                clusterVmAccessAuthorizedIPRanges is null ? default : new ClusterVMAccessProfile(clusterVmAccessAuthorizedIPRanges, default),
+                (agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>()).ToList(),
+                infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterCloudProviderProfile(new ProvisionedClusterInfraNetworkProfile((infraNetworkVnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default),
                 provisioningState,
                 status,
-                licenseAzureHybridBenefit != null ? new ProvisionedClusterLicenseProfile(licenseAzureHybridBenefit, serializedAdditionalRawData: null) : null,
+                licenseAzureHybridBenefit is null ? default : new ProvisionedClusterLicenseProfile(licenseAzureHybridBenefit, default),
                 autoScalerProfile,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/>. </summary>
@@ -86,24 +686,23 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
         /// <param name="name"> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/> instance for mocking. </returns>
-        public static HybridContainerServiceNamedAgentPoolProfile HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, string name = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridContainerServiceNamedAgentPoolProfile HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType = default, HybridContainerServiceOSSku? osSku = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, int? maxCount = default, int? minCount = default, bool? enableAutoScaling = default, int? maxPods = default, int? count = default, string vmSize = default, string kubernetesVersion = default, string name = default)
         {
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
             return new HybridContainerServiceNamedAgentPoolProfile(
                 osType,
                 osSku,
-                nodeLabels,
-                nodeTaints?.ToList(),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
                 maxCount,
                 minCount,
                 enableAutoScaling,
                 maxPods,
-                serializedAdditionalRawData: null,
+                default,
                 count,
                 vmSize,
                 kubernetesVersion,
+                default,
                 name);
         }
 
@@ -112,9 +711,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
         /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
         /// <returns> A new <see cref="Models.AgentPoolUpdateProfile"/> instance for mocking. </returns>
-        public static AgentPoolUpdateProfile AgentPoolUpdateProfile(int? count = null, string vmSize = null, string kubernetesVersion = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AgentPoolUpdateProfile AgentPoolUpdateProfile(int? count = default, string vmSize = default, string kubernetesVersion = default)
         {
-            return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, serializedAdditionalRawData: null);
+            return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterStatus"/>. </summary>
@@ -122,85 +722,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="currentState"> The current state of the provisioned cluster. </param>
         /// <param name="errorMessage"> Error messages during a provisioned cluster operation or steady state. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterStatus"/> instance for mocking. </returns>
-        public static ProvisionedClusterStatus ProvisionedClusterStatus(IEnumerable<ProvisionedClusterAddonStatusProfile> controlPlaneStatus = null, HybridContainerServiceResourceProvisioningState? currentState = null, string errorMessage = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProvisionedClusterStatus ProvisionedClusterStatus(IEnumerable<ProvisionedClusterAddonStatusProfile> controlPlaneStatus = default, HybridContainerServiceResourceProvisioningState? currentState = default, string errorMessage = default)
         {
-            controlPlaneStatus ??= new List<ProvisionedClusterAddonStatusProfile>();
-
-            return new ProvisionedClusterStatus(controlPlaneStatus?.ToList(), currentState, errorMessage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterAddonStatusProfile"/>. </summary>
-        /// <param name="name"> Name of the addon or component. </param>
-        /// <param name="phase"> Observed phase of the addon or component on the provisioned cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
-        /// <param name="ready"> Indicates whether the addon or component is ready. </param>
-        /// <param name="errorMessage"> Observed error message from the addon or component. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClusterAddonStatusProfile"/> instance for mocking. </returns>
-        public static ProvisionedClusterAddonStatusProfile ProvisionedClusterAddonStatusProfile(string name = null, ProvisionedClusterAddonPhase? phase = null, bool? ready = null, string errorMessage = null)
-        {
-            return new ProvisionedClusterAddonStatusProfile(name, phase, ready, errorMessage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
-        /// <returns> A new <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/> instance for mocking. </returns>
-        public static ProvisionedClusterUpgradeProfileData ProvisionedClusterUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridContainerServiceResourceProvisioningState? provisioningState = null, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = null)
-        {
-            return new ProvisionedClusterUpgradeProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                controlPlaneProfile,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
-        /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/> instance for mocking. </returns>
-        public static ProvisionedClusterPoolUpgradeProfile ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion = null, HybridContainerServiceOSType? osType = null, IEnumerable<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = null)
-        {
-            upgrades ??= new List<ProvisionedClusterPoolUpgradeProfileProperties>();
-
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, osType, upgrades?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
-        /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/> instance for mocking. </returns>
-        public static ProvisionedClusterPoolUpgradeProfileProperties ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion = null, bool? isPreview = null)
-        {
-            return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion, isPreview, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridIdentityMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceUid"> Unique id of the parent provisioned cluster resource. </param>
-        /// <param name="publicKey"> Onboarding public key for provisioning the Managed identity for the connected cluster. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="HybridContainerService.HybridIdentityMetadataData"/> instance for mocking. </returns>
-        public static HybridIdentityMetadataData HybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceUid = null, string publicKey = null, HybridContainerServiceResourceProvisioningState? provisioningState = null)
-        {
-            return new HybridIdentityMetadataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resourceUid,
-                publicKey,
-                provisioningState,
-                serializedAdditionalRawData: null);
+            return new ProvisionedClusterStatus((controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>()).ToList(), currentState, default, errorMessage, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/>. </summary>
@@ -224,85 +749,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="provisioningState"> The status of the latest long running operation for the agent pool. </param>
         /// <param name="status"> The observed status of the agent pool. </param>
         /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/> instance for mocking. </returns>
-        public static HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, HybridContainerServiceExtendedLocation extendedLocation = null, HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, HybridContainerServiceResourceProvisioningState? provisioningState = null, AgentPoolProvisioningStatus status = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, HybridContainerServiceExtendedLocation extendedLocation = default, HybridContainerServiceOSType? osType = default, HybridContainerServiceOSSku? osSku = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, int? maxCount = default, int? minCount = default, bool? enableAutoScaling = default, int? maxPods = default, int? count = default, string vmSize = default, string kubernetesVersion = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, AgentPoolProvisioningStatus status = default)
         {
-            tags ??= new Dictionary<string, string>();
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
             return new HybridContainerServiceAgentPoolData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                osType is null && osSku is null && nodeLabels is null && nodeTaints is null && maxCount is null && minCount is null && enableAutoScaling is null && maxPods is null && count is null && vmSize is null && kubernetesVersion is null && provisioningState is null && status is null ? default : new AgentPoolProperties(
+                    osType,
+                    osSku,
+                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                    (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
+                    maxCount,
+                    minCount,
+                    enableAutoScaling,
+                    maxPods,
+                    count,
+                    vmSize,
+                    kubernetesVersion,
+                    default,
+                    provisioningState,
+                    status,
+                    default),
                 extendedLocation,
-                osType,
-                osSku,
-                nodeLabels,
-                nodeTaints?.ToList(),
-                maxCount,
-                minCount,
-                enableAutoScaling,
-                maxPods,
-                count,
-                vmSize,
-                kubernetesVersion,
-                provisioningState,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AgentPoolProvisioningStatus"/>. </summary>
-        /// <param name="currentState"> The current state of the agent pool. </param>
-        /// <param name="errorMessage"> Error messages during an agent pool operation or steady state. </param>
-        /// <param name="readyReplicas"></param>
-        /// <returns> A new <see cref="Models.AgentPoolProvisioningStatus"/> instance for mocking. </returns>
-        public static AgentPoolProvisioningStatus AgentPoolProvisioningStatus(HybridContainerServiceResourceProvisioningState? currentState = null, string errorMessage = null, IEnumerable<AgentPoolUpdateProfile> readyReplicas = null)
-        {
-            readyReplicas ??= new List<AgentPoolUpdateProfile>();
-
-            return new AgentPoolProvisioningStatus(currentState, errorMessage, readyReplicas?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceCredentialListResult"/>. </summary>
-        /// <param name="id"> Operation Id. </param>
-        /// <param name="name"> Operation Name. </param>
-        /// <param name="resourceId"> ARM Resource Id of the provisioned cluster instance. </param>
-        /// <param name="status"> Provisioning state of the resource. </param>
-        /// <param name="error"></param>
-        /// <param name="listCredentialResponseKubeconfigs"></param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceCredentialListResult"/> instance for mocking. </returns>
-        public static HybridContainerServiceCredentialListResult HybridContainerServiceCredentialListResult(string id = null, string name = null, ResourceIdentifier resourceId = null, HybridContainerServiceResourceProvisioningState? status = null, HybridContainerServiceCredentialListError error = null, IEnumerable<HybridContainerServiceCredential> listCredentialResponseKubeconfigs = null)
-        {
-            listCredentialResponseKubeconfigs ??= new List<HybridContainerServiceCredential>();
-
-            return new HybridContainerServiceCredentialListResult(
-                id,
-                name,
-                resourceId,
-                status,
-                error,
-                listCredentialResponseKubeconfigs != null ? new ListCredentialResponseProperties(listCredentialResponseKubeconfigs?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceCredentialListError"/>. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceCredentialListError"/> instance for mocking. </returns>
-        public static HybridContainerServiceCredentialListError HybridContainerServiceCredentialListError(string code = null, string message = null)
-        {
-            return new HybridContainerServiceCredentialListError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceCredential"/>. </summary>
-        /// <param name="name"> The name of the credential. </param>
-        /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceCredential"/> instance for mocking. </returns>
-        public static HybridContainerServiceCredential HybridContainerServiceCredential(string name = null, byte[] value = null)
-        {
-            return new HybridContainerServiceCredential(name, value, serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.KubernetesVersionProfileData"/>. </summary>
@@ -313,62 +785,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="HybridContainerService.KubernetesVersionProfileData"/> instance for mocking. </returns>
-        public static KubernetesVersionProfileData KubernetesVersionProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridContainerServiceExtendedLocation extendedLocation = null, KubernetesVersionProfileProperties properties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KubernetesVersionProfileData KubernetesVersionProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceExtendedLocation extendedLocation = default, KubernetesVersionProfileProperties properties = default)
         {
             return new KubernetesVersionProfileData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                extendedLocation,
                 properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesVersionProfileProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="values"> List of supported Kubernetes versions. </param>
-        /// <returns> A new <see cref="Models.KubernetesVersionProfileProperties"/> instance for mocking. </returns>
-        public static KubernetesVersionProfileProperties KubernetesVersionProfileProperties(HybridContainerServiceResourceProvisioningState? provisioningState = null, IEnumerable<KubernetesVersionProperties> values = null)
-        {
-            values ??= new List<KubernetesVersionProperties>();
-
-            return new KubernetesVersionProfileProperties(provisioningState, values?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesVersionProperties"/>. </summary>
-        /// <param name="version"> major.minor version of Kubernetes release. </param>
-        /// <param name="isPreview"> Whether this version is in preview mode. </param>
-        /// <param name="patchVersions"> Patch versions of a Kubernetes release. </param>
-        /// <returns> A new <see cref="Models.KubernetesVersionProperties"/> instance for mocking. </returns>
-        public static KubernetesVersionProperties KubernetesVersionProperties(string version = null, bool? isPreview = null, IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions = null)
-        {
-            patchVersions ??= new Dictionary<string, KubernetesPatchVersions>();
-
-            return new KubernetesVersionProperties(version, isPreview, patchVersions, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesPatchVersions"/>. </summary>
-        /// <param name="readiness"> Indicates whether the kubernetes version image is ready or not. </param>
-        /// <param name="upgrades"> Possible upgrade paths for given patch version. </param>
-        /// <returns> A new <see cref="Models.KubernetesPatchVersions"/> instance for mocking. </returns>
-        public static KubernetesPatchVersions KubernetesPatchVersions(IEnumerable<KubernetesVersionReadiness> readiness = null, IEnumerable<string> upgrades = null)
-        {
-            readiness ??= new List<KubernetesVersionReadiness>();
-            upgrades ??= new List<string>();
-
-            return new KubernetesPatchVersions(readiness?.ToList(), upgrades?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesVersionReadiness"/>. </summary>
-        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="ready"> Whether the kubernetes version image is ready or not. </param>
-        /// <param name="errorMessage"> The error message for version not being ready. </param>
-        /// <returns> A new <see cref="Models.KubernetesVersionReadiness"/> instance for mocking. </returns>
-        public static KubernetesVersionReadiness KubernetesVersionReadiness(HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, bool? ready = null, string errorMessage = null)
-        {
-            return new KubernetesVersionReadiness(osType, osSku, ready, errorMessage, serializedAdditionalRawData: null);
+                extendedLocation,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceVmSkuData"/>. </summary>
@@ -380,123 +807,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> List of supported VM SKUs. </param>
         /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceVmSkuData"/> instance for mocking. </returns>
-        public static HybridContainerServiceVmSkuData HybridContainerServiceVmSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridContainerServiceExtendedLocation extendedLocation = null, HybridContainerServiceResourceProvisioningState? provisioningState = null, IEnumerable<HybridContainerServiceVmSkuProperties> values = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridContainerServiceVmSkuData HybridContainerServiceVmSkuData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceExtendedLocation extendedLocation = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, IEnumerable<HybridContainerServiceVmSkuProperties> values = default)
         {
-            values ??= new List<HybridContainerServiceVmSkuProperties>();
-
             return new HybridContainerServiceVmSkuData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                provisioningState is null && values is null ? default : new VmSkuProfileProperties(provisioningState, (values ?? new ChangeTrackingList<HybridContainerServiceVmSkuProperties>()).ToList(), default),
                 extendedLocation,
-                provisioningState,
-                values?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceVmSkuProperties"/>. </summary>
-        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
-        /// <param name="capabilities"> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </param>
-        /// <param name="name"> The name of the VM SKU. </param>
-        /// <param name="tier"> The tier of the VM SKU. </param>
-        /// <param name="size"> The size of the VM SKU. </param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceVmSkuProperties"/> instance for mocking. </returns>
-        public static HybridContainerServiceVmSkuProperties HybridContainerServiceVmSkuProperties(string resourceType = null, IEnumerable<HybridContainerServiceVmSkuCapabilities> capabilities = null, string name = null, string tier = null, string size = null)
-        {
-            capabilities ??= new List<HybridContainerServiceVmSkuCapabilities>();
-
-            return new HybridContainerServiceVmSkuProperties(
-                resourceType,
-                capabilities?.ToList(),
-                name,
-                tier,
-                size,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceVmSkuCapabilities"/>. </summary>
-        /// <param name="name"> Name of the VM SKU capability. </param>
-        /// <param name="value"> Value of the VM SKU capability. </param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceVmSkuCapabilities"/> instance for mocking. </returns>
-        public static HybridContainerServiceVmSkuCapabilities HybridContainerServiceVmSkuCapabilities(string name = null, string value = null)
-        {
-            return new HybridContainerServiceVmSkuCapabilities(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Properties of the virtual network resource. </param>
-        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
-        /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceVirtualNetworkData"/> instance for mocking. </returns>
-        public static HybridContainerServiceVirtualNetworkData HybridContainerServiceVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridContainerServiceVirtualNetworkProperties properties = null, HybridContainerServiceExtendedLocation extendedLocation = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HybridContainerServiceVirtualNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                extendedLocation,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceVirtualNetworkProperties"/>. </summary>
-        /// <param name="infraVnetHci"></param>
-        /// <param name="vipPool"> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </param>
-        /// <param name="vmipPool"> Range of IP Addresses for Kubernetes node VMs. </param>
-        /// <param name="dnsServers"> List of DNS server IP Addresses associated with the network. </param>
-        /// <param name="gateway"> IP Address of the Gateway associated with the network. </param>
-        /// <param name="ipAddressPrefix"> IP Address Prefix of the network. </param>
-        /// <param name="vlanId"> VLAN Id used by the network. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="operationStatus"> Status of the virtual network resource. </param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceVirtualNetworkProperties"/> instance for mocking. </returns>
-        public static HybridContainerServiceVirtualNetworkProperties HybridContainerServiceVirtualNetworkProperties(HciInfraVnetProfile infraVnetHci = null, IEnumerable<KubernetesVirtualIPItem> vipPool = null, IEnumerable<VirtualMachineIPItem> vmipPool = null, IEnumerable<string> dnsServers = null, string gateway = null, string ipAddressPrefix = null, int? vlanId = null, HybridContainerServiceProvisioningState? provisioningState = null, VirtualNetworkPropertiesStatusOperationStatus operationStatus = null)
-        {
-            vipPool ??= new List<KubernetesVirtualIPItem>();
-            vmipPool ??= new List<VirtualMachineIPItem>();
-            dnsServers ??= new List<string>();
-
-            return new HybridContainerServiceVirtualNetworkProperties(
-                infraVnetHci != null ? new InfraVnetProfile(infraVnetHci, serializedAdditionalRawData: null) : null,
-                vipPool?.ToList(),
-                vmipPool?.ToList(),
-                dnsServers?.ToList(),
-                gateway,
-                ipAddressPrefix,
-                vlanId,
-                provisioningState,
-                operationStatus != null ? new HybridContainerServiceNetworkStatus(operationStatus, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
-        /// <param name="error"> The error if any from the operation. </param>
-        /// <param name="operationId"> The identifier of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkPropertiesStatusOperationStatus"/> instance for mocking. </returns>
-        public static VirtualNetworkPropertiesStatusOperationStatus VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error = null, string operationId = null, string status = null)
-        {
-            return new VirtualNetworkPropertiesStatusOperationStatus(error, operationId, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceNetworkOperationError"/>. </summary>
-        /// <param name="code"> The error code from the operation. </param>
-        /// <param name="message"> The error message from the operation. </param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceNetworkOperationError"/> instance for mocking. </returns>
-        public static HybridContainerServiceNetworkOperationError HybridContainerServiceNetworkOperationError(string code = null, string message = null)
-        {
-            return new HybridContainerServiceNetworkOperationError(code, message, serializedAdditionalRawData: null);
+                default);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [ModelReaderWriterBuildable(typeof(EnrichmentDomainWhoisDetails))]
     [ModelReaderWriterBuildable(typeof(EnrichmentDomainWhoisRegistrarDetails))]
     [ModelReaderWriterBuildable(typeof(EnrichmentIPAddressContent))]
-    [ModelReaderWriterBuildable(typeof(EnrichmentIpGeodata))]
+    [ModelReaderWriterBuildable(typeof(EnrichmentIPGeodata))]
     [ModelReaderWriterBuildable(typeof(EntityAnalytics))]
     [ModelReaderWriterBuildable(typeof(EntityAnalyticsProperties))]
     [ModelReaderWriterBuildable(typeof(EntityCommonProperties))]
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [ModelReaderWriterBuildable(typeof(IoTDataConnector))]
     [ModelReaderWriterBuildable(typeof(IoTDataConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(IoTDeviceEntityProperties))]
-    [ModelReaderWriterBuildable(typeof(IpEntityProperties))]
+    [ModelReaderWriterBuildable(typeof(IPEntityProperties))]
     [ModelReaderWriterBuildable(typeof(JobList))]
     [ModelReaderWriterBuildable(typeof(JobProperties))]
     [ModelReaderWriterBuildable(typeof(JwtAuthModel))]
@@ -361,7 +360,6 @@ namespace Azure.ResourceManager.SecurityInsights
     [ModelReaderWriterBuildable(typeof(RepositoryAccessObject))]
     [ModelReaderWriterBuildable(typeof(RepositoryAccessProperties))]
     [ModelReaderWriterBuildable(typeof(RepositoryResourceInfo))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerDataConnector))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerDataConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerRequestConfig))]

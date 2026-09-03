@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsLinkedServiceApiVersion);
             _linkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Endpoint, operationalInsightsLinkedServiceApiVersion ?? "2025-07-01");
+            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsLinkedServiceApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

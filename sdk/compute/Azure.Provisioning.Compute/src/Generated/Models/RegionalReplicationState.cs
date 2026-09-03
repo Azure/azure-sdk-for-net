@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Compute
     public enum RegionalReplicationState
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> Replicating. </summary>
-        Replicating,
+        Replicating = 1,
         /// <summary> Completed. </summary>
-        Completed,
+        Completed = 2,
         /// <summary> Failed. </summary>
-        Failed
+        Failed = 3
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(AccessPointResource.ResourceType, out string accessPointResourceApiVersion);
             _accessPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", AccessPointResource.ResourceType.Namespace, Diagnostics);
-            _accessPointResourcesRestClient = new AccessPointResources(_accessPointResourcesClientDiagnostics, Pipeline, Endpoint, accessPointResourceApiVersion ?? "2026-06-02-preview");
+            _accessPointResourcesRestClient = new AccessPointResources(_accessPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessPointResourceApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 

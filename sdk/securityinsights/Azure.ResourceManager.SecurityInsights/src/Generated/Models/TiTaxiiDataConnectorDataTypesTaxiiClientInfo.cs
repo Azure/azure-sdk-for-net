@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for TAXII connector. </summary>
-    public partial class TiTaxiiDataConnectorDataTypesTaxiiClientInfo : DataConnectorDataTypeCommon
+    internal partial class TiTaxiiDataConnectorDataTypesTaxiiClientInfo : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="TiTaxiiDataConnectorDataTypesTaxiiClientInfo"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

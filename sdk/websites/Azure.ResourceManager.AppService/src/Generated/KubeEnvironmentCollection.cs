@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(KubeEnvironmentResource.ResourceType, out string kubeEnvironmentApiVersion);
             _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-15");
+            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

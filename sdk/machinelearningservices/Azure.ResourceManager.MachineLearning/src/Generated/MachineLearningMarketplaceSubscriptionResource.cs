@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningMarketplaceSubscriptionApiVersion);
             _marketplaceSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _marketplaceSubscriptionsRestClient = new MarketplaceSubscriptions(_marketplaceSubscriptionsClientDiagnostics, Pipeline, Endpoint, machineLearningMarketplaceSubscriptionApiVersion ?? "2026-03-15-preview");
+            _marketplaceSubscriptionsRestClient = new MarketplaceSubscriptions(_marketplaceSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningMarketplaceSubscriptionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             TryGetApiVersion(ResourceType, out string deviceProvisioningServicesCertificateApiVersion);
             _certificateResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _certificateResponsesRestClient = new CertificateResponses(_certificateResponsesClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServicesCertificateApiVersion ?? "2025-02-01-preview");
+            _certificateResponsesRestClient = new CertificateResponses(_certificateResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesCertificateApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

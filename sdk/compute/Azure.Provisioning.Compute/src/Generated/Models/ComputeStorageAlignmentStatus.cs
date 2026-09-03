@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ComputeStorageAlignmentStatus
     {
         /// <summary> Disk does not have Storage Fault Domain to Compute Fault Domain mapping. A single Storage Fault Domain failure may impact all VMs that reference this disk profile. </summary>
-        Unaligned,
+        Unaligned = 0,
         /// <summary> Disk has Storage Fault Domain to Compute Fault Domain mapping. Storage Fault Domain failure is contained to VMs in a single Compute Fault Domain. </summary>
-        Aligned
+        Aligned = 1
     }
 }

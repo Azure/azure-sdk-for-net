@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerDnsAliasResource.ResourceType, out string sqlServerDnsAliasApiVersion);
             _serverDnsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDnsAliasResource.ResourceType.Namespace, Diagnostics);
-            _serverDnsAliasesRestClient = new ServerDnsAliases(_serverDnsAliasesClientDiagnostics, Pipeline, Endpoint, sqlServerDnsAliasApiVersion ?? "2025-02-01-preview");
+            _serverDnsAliasesRestClient = new ServerDnsAliases(_serverDnsAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDnsAliasApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

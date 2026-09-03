@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string managedInstancePrivateEndpointConnectionApiVersion);
             _managedInstancePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedInstancePrivateEndpointConnectionsRestClient = new ManagedInstancePrivateEndpointConnections(_managedInstancePrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, managedInstancePrivateEndpointConnectionApiVersion ?? "2025-02-01-preview");
+            _managedInstancePrivateEndpointConnectionsRestClient = new ManagedInstancePrivateEndpointConnections(_managedInstancePrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstancePrivateEndpointConnectionApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

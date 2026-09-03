@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(ResourceType, out string healthModelSignalDefinitionApiVersion);
             _signalDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", ResourceType.Namespace, Diagnostics);
-            _signalDefinitionsRestClient = new SignalDefinitions(_signalDefinitionsClientDiagnostics, Pipeline, Endpoint, healthModelSignalDefinitionApiVersion ?? "2026-05-01-preview");
+            _signalDefinitionsRestClient = new SignalDefinitions(_signalDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelSignalDefinitionApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverOutboundEndpointResource.ResourceType, out string dnsResolverOutboundEndpointApiVersion);
             _outboundEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverOutboundEndpointResource.ResourceType.Namespace, Diagnostics);
-            _outboundEndpointsRestClient = new OutboundEndpoints(_outboundEndpointsClientDiagnostics, Pipeline, Endpoint, dnsResolverOutboundEndpointApiVersion ?? "2025-10-01-preview");
+            _outboundEndpointsRestClient = new OutboundEndpoints(_outboundEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverOutboundEndpointApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

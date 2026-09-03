@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.SignalR.Mocking
 
         private ClientDiagnostics SignalRResourcesClientDiagnostics => _signalRResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(SignalRResourcesClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(SignalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         private ClientDiagnostics SignalROperationGroupClientDiagnostics => _signalROperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SignalROperationGroup SignalROperationGroupRestClient => _signalROperationGroupRestClient ??= new SignalROperationGroup(SignalROperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private SignalROperationGroup SignalROperationGroupRestClient => _signalROperationGroupRestClient ??= new SignalROperationGroup(SignalROperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.

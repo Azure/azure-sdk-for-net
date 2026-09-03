@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityStandardApiVersion);
             _securityStandardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securityStandardsRestClient = new SecurityStandards(_securityStandardsClientDiagnostics, Pipeline, Endpoint, securityStandardApiVersion ?? "2024-08-01");
+            _securityStandardsRestClient = new SecurityStandards(_securityStandardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityStandardApiVersion ?? "2024-08-01");
             ValidateResourceId(id);
         }
 

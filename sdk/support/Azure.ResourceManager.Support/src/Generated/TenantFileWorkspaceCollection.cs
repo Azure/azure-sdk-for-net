@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(TenantFileWorkspaceResource.ResourceType, out string tenantFileWorkspaceApiVersion);
             _tenantFileWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantFileWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _tenantFileWorkspaceRestClient = new TenantFileWorkspace(_tenantFileWorkspaceClientDiagnostics, Pipeline, Endpoint, tenantFileWorkspaceApiVersion ?? "2025-06-01-preview");
+            _tenantFileWorkspaceRestClient = new TenantFileWorkspace(_tenantFileWorkspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantFileWorkspaceApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 

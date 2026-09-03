@@ -57,7 +57,7 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _formula = DefineProperty<string>(nameof(Formula), new string[] { "formula" }, isRequired: true);
-            _evaluationInterval = DefineProperty<TimeSpan>(nameof(EvaluationInterval), new string[] { "evaluationInterval" });
+            _evaluationInterval = DefineProperty<TimeSpan>(nameof(EvaluationInterval), new string[] { "evaluationInterval" }, format: "P");
             DefineAdditionalProperties();
         }
 

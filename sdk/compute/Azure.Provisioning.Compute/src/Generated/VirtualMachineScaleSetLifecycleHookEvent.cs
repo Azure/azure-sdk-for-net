@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachineScaleSetLifecycleHookEvent. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachineScaleSetLifecycleHookEvent(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/lifecycleHookEvents", resourceVersion ?? "2026-03-01")
+        internal VirtualMachineScaleSetLifecycleHookEvent(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/lifecycleHookEvents", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -63,18 +63,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public VirtualMachineScaleSetLifecycleHookEventProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -101,7 +96,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<VirtualMachineScaleSetLifecycleHookEventProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualMachineScaleSet>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

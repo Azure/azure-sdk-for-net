@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Compute
     public enum VmssRebalanceBehavior
     {
         /// <summary> CreateBeforeDelete. </summary>
-        CreateBeforeDelete
+        CreateBeforeDelete = 0
     }
 }

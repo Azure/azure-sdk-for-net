@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ComputeAllocationStrategy
     {
         /// <summary> LowestPrice. </summary>
-        LowestPrice,
+        LowestPrice = 0,
         /// <summary> CapacityOptimized. </summary>
-        CapacityOptimized,
+        CapacityOptimized = 1,
         /// <summary> Prioritized. </summary>
-        Prioritized
+        Prioritized = 2
     }
 }

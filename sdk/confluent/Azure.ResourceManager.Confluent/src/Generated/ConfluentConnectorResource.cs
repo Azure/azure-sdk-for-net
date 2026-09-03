@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string confluentConnectorApiVersion);
             _connectorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Endpoint, confluentConnectorApiVersion ?? "2026-06-02-preview");
+            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentConnectorApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 

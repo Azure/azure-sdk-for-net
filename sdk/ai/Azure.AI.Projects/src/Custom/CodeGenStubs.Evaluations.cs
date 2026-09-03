@@ -29,10 +29,9 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvaluatorGenerationArtifacts")] public partial class EvaluatorGenerationArtifacts { }
 [CodeGenType("EvaluatorGenerationInputs")] public partial class EvaluatorGenerationInputs { }
 [CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
-[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage{ }
+[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage { }
 [CodeGenType("EvaluationLevel")] public readonly partial struct ProjectsEvaluationLevel { }
 [CodeGenType("EvaluationResultSample")] public partial class EvaluationResultSample { }
-[CodeGenType("EvaluationRule")] public partial class EvaluationRule { }
 [CodeGenType("EvaluationRuleAction")] public abstract partial class EvaluationRuleAction { }
 [CodeGenType("EvaluationRuleEventType")] public readonly partial struct EvaluationRuleEventType { }
 [CodeGenType("EvaluationRuleFilter")] public partial class EvaluationRuleFilter { }

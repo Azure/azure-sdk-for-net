@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(ResourceType, out string batchApplicationPackageApiVersion);
             _applicationPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _applicationPackageRestClient = new ApplicationPackage(_applicationPackageClientDiagnostics, Pipeline, Endpoint, batchApplicationPackageApiVersion ?? "2025-06-01");
+            _applicationPackageRestClient = new ApplicationPackage(_applicationPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchApplicationPackageApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

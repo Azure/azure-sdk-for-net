@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum GalleryExtendedLocationType
     {
         /// <summary> EdgeZone. </summary>
-        EdgeZone,
+        EdgeZone = 0,
         /// <summary> Unknown. </summary>
-        Unknown
+        Unknown = 1
     }
 }

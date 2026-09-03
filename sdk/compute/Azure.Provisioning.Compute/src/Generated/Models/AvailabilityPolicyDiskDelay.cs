@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum AvailabilityPolicyDiskDelay
     {
         /// <summary> Defaults to behavior without av policy specified, which is VM restart upon slow disk io. </summary>
-        None,
+        None = 0,
         /// <summary> Upon a disk io failure or slow response, try detaching then reattaching the disk. </summary>
-        AutomaticReattach
+        AutomaticReattach = 1
     }
 }

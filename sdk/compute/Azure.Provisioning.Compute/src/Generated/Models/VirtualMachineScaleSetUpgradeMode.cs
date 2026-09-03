@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineScaleSetUpgradeMode
     {
         /// <summary> Automatic. </summary>
-        Automatic,
+        Automatic = 0,
         /// <summary> Manual. </summary>
-        Manual,
+        Manual = 1,
         /// <summary> Rolling. </summary>
-        Rolling
+        Rolling = 2
     }
 }

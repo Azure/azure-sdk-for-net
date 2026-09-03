@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningRegistryApiVersion);
             _registriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryApiVersion ?? "2026-03-15-preview");
+            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryApiVersion ?? "2026-03-15-preview");
             _registryDataReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _registryDataReferencesRestClient = new RegistryDataReferences(_registryDataReferencesClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryApiVersion ?? "2026-03-15-preview");
+            _registryDataReferencesRestClient = new RegistryDataReferences(_registryDataReferencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -624,6 +624,39 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of MachineLearningRegistryComponentContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningRegistryComponentContainers and their operations over a MachineLearningRegistryComponentContainerResource. </returns>
+        public virtual MachineLearningRegistryComponentContainerCollection GetMachineLearningRegistryComponentContainers()
+        {
+            return GetCachedClient(client => new MachineLearningRegistryComponentContainerCollection(client, Id));
+        }
+
+        /// <summary> Get container. </summary>
+        /// <param name="componentName"> Container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MachineLearningRegistryComponentContainerResource>> GetMachineLearningRegistryComponentContainerAsync(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return await GetMachineLearningRegistryComponentContainers().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get container. </summary>
+        /// <param name="componentName"> Container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningRegistryComponentContainerResource> GetMachineLearningRegistryComponentContainer(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return GetMachineLearningRegistryComponentContainers().Get(componentName, cancellationToken);
         }
     }
 }

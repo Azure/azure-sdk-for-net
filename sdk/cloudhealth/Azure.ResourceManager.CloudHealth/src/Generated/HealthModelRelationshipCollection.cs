@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(HealthModelRelationshipResource.ResourceType, out string healthModelRelationshipApiVersion);
             _relationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelRelationshipResource.ResourceType.Namespace, Diagnostics);
-            _relationshipsRestClient = new Relationships(_relationshipsClientDiagnostics, Pipeline, Endpoint, healthModelRelationshipApiVersion ?? "2026-05-01-preview");
+            _relationshipsRestClient = new Relationships(_relationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelRelationshipApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Network base admin rule. </summary>
+    /// <summary>
+    /// Network base admin rule.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
+    /// </summary>
     public partial class BaseAdminRuleData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

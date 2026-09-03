@@ -14,24 +14,24 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> StandardLrs. </summary>
         [DataMember(Name = "Standard_LRS")]
-        StandardLrs,
+        StandardLrs = 0,
         /// <summary> PremiumLrs. </summary>
         [DataMember(Name = "Premium_LRS")]
-        PremiumLrs,
+        PremiumLrs = 1,
         /// <summary> StandardSsdLrs. </summary>
         [DataMember(Name = "StandardSSD_LRS")]
-        StandardSsdLrs,
+        StandardSsdLrs = 2,
         /// <summary> UltraSsdLrs. </summary>
         [DataMember(Name = "UltraSSD_LRS")]
-        UltraSsdLrs,
+        UltraSsdLrs = 3,
         /// <summary> PremiumZrs. </summary>
         [DataMember(Name = "Premium_ZRS")]
-        PremiumZrs,
+        PremiumZrs = 4,
         /// <summary> StandardSsdZrs. </summary>
         [DataMember(Name = "StandardSSD_ZRS")]
-        StandardSsdZrs,
+        StandardSsdZrs = 5,
         /// <summary> PremiumV2Lrs. </summary>
         [DataMember(Name = "PremiumV2_LRS")]
-        PremiumV2Lrs
+        PremiumV2Lrs = 6
     }
 }

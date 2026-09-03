@@ -155,7 +155,7 @@ options:
 
 Then regenerate the SDK.
 
-If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.txt`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
+If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.xml`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
 
 Do not create a local `ApiCompatBaseline.txt`, do not baseline unrelated ApiCompat errors, and do not disable ApiCompat.
 

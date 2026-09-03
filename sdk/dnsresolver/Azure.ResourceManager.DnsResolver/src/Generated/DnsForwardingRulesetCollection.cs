@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsForwardingRulesetResource.ResourceType, out string dnsForwardingRulesetApiVersion);
             _dnsForwardingRulesetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
-            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(_dnsForwardingRulesetsClientDiagnostics, Pipeline, Endpoint, dnsForwardingRulesetApiVersion ?? "2025-10-01-preview");
+            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(_dnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorEndpointApiVersion);
             _frontDoorEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _frontDoorEndpointsRestClient = new FrontDoorEndpoints(_frontDoorEndpointsClientDiagnostics, Pipeline, Endpoint, frontDoorEndpointApiVersion ?? "2025-09-01-preview");
+            _frontDoorEndpointsRestClient = new FrontDoorEndpoints(_frontDoorEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorEndpointApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

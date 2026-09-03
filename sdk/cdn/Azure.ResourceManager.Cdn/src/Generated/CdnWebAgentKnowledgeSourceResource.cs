@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnWebAgentKnowledgeSourceApiVersion);
             _knowledgeSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _knowledgeSourcesRestClient = new KnowledgeSources(_knowledgeSourcesClientDiagnostics, Pipeline, Endpoint, cdnWebAgentKnowledgeSourceApiVersion ?? "2025-09-01-preview");
+            _knowledgeSourcesRestClient = new KnowledgeSources(_knowledgeSourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebAgentKnowledgeSourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

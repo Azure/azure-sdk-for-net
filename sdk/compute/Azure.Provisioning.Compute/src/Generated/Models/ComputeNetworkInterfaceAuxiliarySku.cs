@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Compute
     public enum ComputeNetworkInterfaceAuxiliarySku
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> A1. </summary>
-        A1,
+        A1 = 1,
         /// <summary> A2. </summary>
-        A2,
+        A2 = 2,
         /// <summary> A4. </summary>
-        A4,
+        A4 = 3,
         /// <summary> A8. </summary>
-        A8
+        A8 = 4
     }
 }

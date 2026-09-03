@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ServiceEmergingIssueResource.ResourceType, out string serviceEmergingIssueApiVersion);
             _emergingIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ServiceEmergingIssueResource.ResourceType.Namespace, Diagnostics);
-            _emergingIssuesRestClient = new EmergingIssues(_emergingIssuesClientDiagnostics, Pipeline, Endpoint, serviceEmergingIssueApiVersion ?? "2025-05-01");
+            _emergingIssuesRestClient = new EmergingIssues(_emergingIssuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEmergingIssueApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 

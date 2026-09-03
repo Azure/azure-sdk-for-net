@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="credentials"> The parameters that describes a set of credentials that will be used when this run is invoked. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskPropertiesUpdateParameters(ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformUpdateContent platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, TaskStepUpdateContent step, ContainerRegistryTaskTriggerUpdateContent trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskPropertiesUpdateParameters(ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformUpdateContent platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, ContainerRegistryTaskStepUpdateContent step, ContainerRegistryTaskTriggerUpdateContent trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Platform = platform;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public int? TimeoutInSeconds { get; set; }
 
         /// <summary> The properties for updating a task step. </summary>
-        public TaskStepUpdateContent Step { get; set; }
+        public ContainerRegistryTaskStepUpdateContent Step { get; set; }
 
         /// <summary> The properties for updating trigger properties. </summary>
         public ContainerRegistryTaskTriggerUpdateContent Trigger { get; set; }

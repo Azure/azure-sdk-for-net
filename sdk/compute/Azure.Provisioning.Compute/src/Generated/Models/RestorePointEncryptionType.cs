@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum RestorePointEncryptionType
     {
         /// <summary> Disk Restore Point is encrypted at rest with Platform managed key. </summary>
-        EncryptionAtRestWithPlatformKey,
+        EncryptionAtRestWithPlatformKey = 0,
         /// <summary> Disk Restore Point is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
-        EncryptionAtRestWithCustomerKey,
+        EncryptionAtRestWithCustomerKey = 1,
         /// <summary> Disk Restore Point is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
-        EncryptionAtRestWithPlatformAndCustomerKeys
+        EncryptionAtRestWithPlatformAndCustomerKeys = 2
     }
 }

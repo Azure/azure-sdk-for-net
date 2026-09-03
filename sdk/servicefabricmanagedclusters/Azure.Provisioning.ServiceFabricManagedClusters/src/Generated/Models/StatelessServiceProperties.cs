@@ -19,6 +19,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new StatelessServiceProperties. </summary>
         public StatelessServiceProperties()
         {
+            ServiceKind.Assign(ServiceFabricManagedClusters.ServiceKind.Stateless);
         }
 
         /// <summary> Gets or sets the InstanceCount. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceKind", new string[] { "serviceKind" }, defaultValue: "Stateless");
             _instanceCount = DefineProperty<int>(nameof(InstanceCount), new string[] { "instanceCount" }, isRequired: true);
             _minInstanceCount = DefineProperty<int>(nameof(MinInstanceCount), new string[] { "minInstanceCount" });
             _minInstancePercentage = DefineProperty<int>(nameof(MinInstancePercentage), new string[] { "minInstancePercentage" });

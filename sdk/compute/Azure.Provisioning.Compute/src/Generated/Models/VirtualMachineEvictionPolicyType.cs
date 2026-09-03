@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineEvictionPolicyType
     {
         /// <summary> Deallocate. </summary>
-        Deallocate,
+        Deallocate = 0,
         /// <summary> Delete. </summary>
-        Delete
+        Delete = 1
     }
 }

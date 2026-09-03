@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string syncMemberApiVersion);
             _syncMembersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _syncMembersRestClient = new SyncMembers(_syncMembersClientDiagnostics, Pipeline, Endpoint, syncMemberApiVersion ?? "2025-02-01-preview");
+            _syncMembersRestClient = new SyncMembers(_syncMembersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, syncMemberApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

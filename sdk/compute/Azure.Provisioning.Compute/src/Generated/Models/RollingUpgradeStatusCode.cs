@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Compute
     public enum RollingUpgradeStatusCode
     {
         /// <summary> RollingForward. </summary>
-        RollingForward,
+        RollingForward = 0,
         /// <summary> RollingBack. </summary>
-        RollingBack,
+        RollingBack = 1,
         /// <summary> Cancelled. </summary>
-        Cancelled,
+        Cancelled = 2,
         /// <summary> Completed. </summary>
-        Completed,
+        Completed = 3,
         /// <summary> Faulted. </summary>
-        Faulted
+        Faulted = 4
     }
 }

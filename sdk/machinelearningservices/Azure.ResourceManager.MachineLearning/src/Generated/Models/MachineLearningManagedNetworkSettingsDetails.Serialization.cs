@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ManagedNetworkProvisionStatus status = default;
             FirewallSku? firewallSku = default;
             ManagedNetworkKind? managedNetworkKind = default;
-            string firewallPublicIpAddress = default;
+            string firewallPublicIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<IsolationMode> changeableIsolationModes = default;
             foreach (var prop in element.EnumerateObject())
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firewallPublicIpAddress = null;
+                        firewallPublicIPAddress = null;
                         continue;
                     }
-                    firewallPublicIpAddress = prop.Value.GetString();
+                    firewallPublicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("changeableIsolationModes"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 additionalBinaryDataProperties,
                 changeableIsolationModes ?? new ChangeTrackingList<IsolationMode>());
         }

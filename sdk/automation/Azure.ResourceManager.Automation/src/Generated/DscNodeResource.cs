@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string dscNodeApiVersion);
             _dscNodeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _dscNodeRestClient = new DscNode(_dscNodeClientDiagnostics, Pipeline, Endpoint, dscNodeApiVersion ?? "2024-10-23");
+            _dscNodeRestClient = new DscNode(_dscNodeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscNodeApiVersion ?? "2024-10-23");
             _nodeReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _nodeReportsRestClient = new NodeReports(_nodeReportsClientDiagnostics, Pipeline, Endpoint, dscNodeApiVersion ?? "2024-10-23");
+            _nodeReportsRestClient = new NodeReports(_nodeReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscNodeApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

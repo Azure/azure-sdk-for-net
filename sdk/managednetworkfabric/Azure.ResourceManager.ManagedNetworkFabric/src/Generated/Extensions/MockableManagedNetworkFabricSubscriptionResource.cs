@@ -73,79 +73,79 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
 
         private ClientDiagnostics AccessControlListsClientDiagnostics => _accessControlListsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessControlLists AccessControlListsRestClient => _accessControlListsRestClient ??= new AccessControlLists(AccessControlListsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private AccessControlLists AccessControlListsRestClient => _accessControlListsRestClient ??= new AccessControlLists(AccessControlListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics InternetGatewayRulesClientDiagnostics => _internetGatewayRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InternetGatewayRules InternetGatewayRulesRestClient => _internetGatewayRulesRestClient ??= new InternetGatewayRules(InternetGatewayRulesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private InternetGatewayRules InternetGatewayRulesRestClient => _internetGatewayRulesRestClient ??= new InternetGatewayRules(InternetGatewayRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics InternetGatewaysClientDiagnostics => _internetGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InternetGateways InternetGatewaysRestClient => _internetGatewaysRestClient ??= new InternetGateways(InternetGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private InternetGateways InternetGatewaysRestClient => _internetGatewaysRestClient ??= new InternetGateways(InternetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics IpCommunitiesClientDiagnostics => _ipCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpCommunities IpCommunitiesRestClient => _ipCommunitiesRestClient ??= new IpCommunities(IpCommunitiesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private IpCommunities IpCommunitiesRestClient => _ipCommunitiesRestClient ??= new IpCommunities(IpCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics IpExtendedCommunitiesClientDiagnostics => _ipExtendedCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpExtendedCommunities IpExtendedCommunitiesRestClient => _ipExtendedCommunitiesRestClient ??= new IpExtendedCommunities(IpExtendedCommunitiesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private IpExtendedCommunities IpExtendedCommunitiesRestClient => _ipExtendedCommunitiesRestClient ??= new IpExtendedCommunities(IpExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics IpPrefixesClientDiagnostics => _ipPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpPrefixes IpPrefixesRestClient => _ipPrefixesRestClient ??= new IpPrefixes(IpPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private IpPrefixes IpPrefixesRestClient => _ipPrefixesRestClient ??= new IpPrefixes(IpPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics L2IsolationDomainsClientDiagnostics => _l2IsolationDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L2IsolationDomains L2IsolationDomainsRestClient => _l2IsolationDomainsRestClient ??= new L2IsolationDomains(L2IsolationDomainsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private L2IsolationDomains L2IsolationDomainsRestClient => _l2IsolationDomainsRestClient ??= new L2IsolationDomains(L2IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics L3IsolationDomainsClientDiagnostics => _l3IsolationDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L3IsolationDomains L3IsolationDomainsRestClient => _l3IsolationDomainsRestClient ??= new L3IsolationDomains(L3IsolationDomainsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private L3IsolationDomains L3IsolationDomainsRestClient => _l3IsolationDomainsRestClient ??= new L3IsolationDomains(L3IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NeighborGroupsClientDiagnostics => _neighborGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NeighborGroups NeighborGroupsRestClient => _neighborGroupsRestClient ??= new NeighborGroups(NeighborGroupsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NeighborGroups NeighborGroupsRestClient => _neighborGroupsRestClient ??= new NeighborGroups(NeighborGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkDevicesClientDiagnostics => _networkDevicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkDevices NetworkDevicesRestClient => _networkDevicesRestClient ??= new NetworkDevices(NetworkDevicesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkDevices NetworkDevicesRestClient => _networkDevicesRestClient ??= new NetworkDevices(NetworkDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkFabricControllersClientDiagnostics => _networkFabricControllersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkFabricControllers NetworkFabricControllersRestClient => _networkFabricControllersRestClient ??= new NetworkFabricControllers(NetworkFabricControllersClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkFabricControllers NetworkFabricControllersRestClient => _networkFabricControllersRestClient ??= new NetworkFabricControllers(NetworkFabricControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkFabricsClientDiagnostics => _networkFabricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkFabrics NetworkFabricsRestClient => _networkFabricsRestClient ??= new NetworkFabrics(NetworkFabricsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkFabrics NetworkFabricsRestClient => _networkFabricsRestClient ??= new NetworkFabrics(NetworkFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkPacketBrokersClientDiagnostics => _networkPacketBrokersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkPacketBrokers NetworkPacketBrokersRestClient => _networkPacketBrokersRestClient ??= new NetworkPacketBrokers(NetworkPacketBrokersClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkPacketBrokers NetworkPacketBrokersRestClient => _networkPacketBrokersRestClient ??= new NetworkPacketBrokers(NetworkPacketBrokersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkRacksClientDiagnostics => _networkRacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkRacks NetworkRacksRestClient => _networkRacksRestClient ??= new NetworkRacks(NetworkRacksClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkRacks NetworkRacksRestClient => _networkRacksRestClient ??= new NetworkRacks(NetworkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkTapRulesClientDiagnostics => _networkTapRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkTapRules NetworkTapRulesRestClient => _networkTapRulesRestClient ??= new NetworkTapRules(NetworkTapRulesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkTapRules NetworkTapRulesRestClient => _networkTapRulesRestClient ??= new NetworkTapRules(NetworkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkTapsClientDiagnostics => _networkTapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkTaps NetworkTapsRestClient => _networkTapsRestClient ??= new NetworkTaps(NetworkTapsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkTaps NetworkTapsRestClient => _networkTapsRestClient ??= new NetworkTaps(NetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics RoutePoliciesClientDiagnostics => _routePoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoutePolicies RoutePoliciesRestClient => _routePoliciesRestClient ??= new RoutePolicies(RoutePoliciesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private RoutePolicies RoutePoliciesRestClient => _routePoliciesRestClient ??= new RoutePolicies(RoutePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkMonitorsClientDiagnostics => _networkMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkMonitors NetworkMonitorsRestClient => _networkMonitorsRestClient ??= new NetworkMonitors(NetworkMonitorsClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkMonitors NetworkMonitorsRestClient => _networkMonitorsRestClient ??= new NetworkMonitors(NetworkMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics NetworkBootstrapDevicesClientDiagnostics => _networkBootstrapDevicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkBootstrapDevices NetworkBootstrapDevicesRestClient => _networkBootstrapDevicesRestClient ??= new NetworkBootstrapDevices(NetworkBootstrapDevicesClientDiagnostics, Pipeline, Endpoint, "2025-07-15");
+        private NetworkBootstrapDevices NetworkBootstrapDevicesRestClient => _networkBootstrapDevicesRestClient ??= new NetworkBootstrapDevices(NetworkBootstrapDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         /// <summary> Gets a collection of NetworkDeviceSkus in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of NetworkDeviceSkus and their operations over a NetworkDeviceSkuResource. </returns>

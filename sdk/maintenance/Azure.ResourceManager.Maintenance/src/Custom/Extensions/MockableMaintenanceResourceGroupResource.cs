@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationAssignments ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignments(ConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private ConfigurationAssignments ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignments(ConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
 
         // ===== ApplyUpdate operations =====
 

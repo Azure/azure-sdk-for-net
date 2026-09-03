@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum NetworkAccessPolicy
     {
         /// <summary> The disk can be exported or uploaded to from any network. </summary>
-        AllowAll,
+        AllowAll = 0,
         /// <summary> The disk can be exported or uploaded to using a DiskAccess resource's private endpoints. </summary>
-        AllowPrivate,
+        AllowPrivate = 1,
         /// <summary> The disk cannot be exported. </summary>
-        DenyAll
+        DenyAll = 2
     }
 }

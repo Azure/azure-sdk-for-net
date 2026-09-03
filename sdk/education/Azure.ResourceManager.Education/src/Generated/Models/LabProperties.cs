@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Education;
 
 namespace Azure.ResourceManager.Education.Models
 {
+    /// <summary> Lab detail result properties. </summary>
     internal partial class LabProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,8 +22,13 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="budgetPerStudent"> Default monetary cap for each student in this lab. </param>
         /// <param name="description"> Detail description of this lab. </param>
         /// <param name="expireOn"> Default expiration date for each student in this lab. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="budgetPerStudent"/> or <paramref name="description"/> is null. </exception>
         public LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expireOn)
         {
+            Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(budgetPerStudent, nameof(budgetPerStudent));
+            Argument.AssertNotNull(description, nameof(description));
+
             DisplayName = displayName;
             BudgetPerStudent = budgetPerStudent;
             Description = description;
@@ -80,9 +87,9 @@ namespace Azure.ResourceManager.Education.Models
         public string InvitationCode { get; }
 
         /// <summary> Total budget. </summary>
-        internal EducationAmount TotalBudget { get; }
+        public EducationAmount TotalBudget { get; }
 
         /// <summary> Total allocated budget. </summary>
-        internal EducationAmount TotalAllocatedBudget { get; }
+        public EducationAmount TotalAllocatedBudget { get; }
     }
 }

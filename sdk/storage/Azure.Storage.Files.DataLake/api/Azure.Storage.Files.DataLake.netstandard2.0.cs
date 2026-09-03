@@ -1,8 +1,14 @@
 namespace Azure.Storage.Files.DataLake
 {
+    public partial class AzureStorageFilesDataLakeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageFilesDataLakeContext() { }
+        public static Azure.Storage.Files.DataLake.AzureStorageFilesDataLakeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_06_06) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_10_06) { }
         public Azure.Storage.Files.DataLake.Models.DataLakeAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
@@ -42,6 +48,7 @@ namespace Azure.Storage.Files.DataLake
             V2026_02_06 = 29,
             V2026_04_06 = 30,
             V2026_06_06 = 31,
+            V2026_10_06 = 32,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -684,6 +691,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakePathScheduleDeletionOptions ScheduleDeletionOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
         public string Umask { get { throw null; } set { } }
@@ -956,13 +964,22 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
     }
-    public partial class FileSystemItem
+    public partial class FileSystemItem : System.ClientModel.Primitives.IJsonModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>
     {
         internal FileSystemItem() { }
         public bool? IsDeleted { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.FileSystemProperties Properties { get { throw null; } }
         public string VersionId { get { throw null; } }
+        protected virtual Azure.Storage.Files.DataLake.Models.FileSystemItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Storage.Files.DataLake.Models.FileSystemItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.DataLake.Models.FileSystemItem System.ClientModel.Primitives.IJsonModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Storage.Files.DataLake.Models.FileSystemItem System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.DataLake.Models.FileSystemItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FileSystemProperties
     {

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedInstanceDtcResource.ResourceType, out string managedInstanceDtcApiVersion);
             _managedInstanceDtcsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDtcResource.ResourceType.Namespace, Diagnostics);
-            _managedInstanceDtcsRestClient = new ManagedInstanceDtcs(_managedInstanceDtcsClientDiagnostics, Pipeline, Endpoint, managedInstanceDtcApiVersion ?? "2025-02-01-preview");
+            _managedInstanceDtcsRestClient = new ManagedInstanceDtcs(_managedInstanceDtcsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceDtcApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -687,39 +687,39 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearninRegistryComponentContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MachineLearningRegistryComponentContainerResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearninRegistryComponentContainerResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningRegistryComponentContainerResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource"/> object. </returns>
-        public static MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningRegistryComponentContainerResource"/> object. </returns>
+        public static MachineLearningRegistryComponentContainerResource GetMachineLearningRegistryComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetMachineLearninRegistryComponentContainerResource(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningRegistryComponentContainerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearninRegistryComponentVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MachineLearningRegistryComponentVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearninRegistryComponentVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningRegistryComponentVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource"/> object. </returns>
-        public static MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningRegistryComponentVersionResource"/> object. </returns>
+        public static MachineLearningRegistryComponentVersionResource GetMachineLearningRegistryComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetMachineLearninRegistryComponentVersionResource(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningRegistryComponentVersionResource(id);
         }
 
         /// <summary>

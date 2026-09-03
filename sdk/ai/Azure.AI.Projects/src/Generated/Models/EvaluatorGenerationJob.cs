@@ -19,6 +19,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/>. </summary>
         public EvaluatorGenerationJob()
         {
+            InputQualityWarnings = new ChangeTrackingList<RubricGenerationInputQualityWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/>. </summary>
@@ -27,20 +28,22 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
-        /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
-        /// <param name="finishedAt"> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="finishedOn"> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="usage"> Token consumption summary. Populated when the job reaches a terminal state. </param>
+        /// <param name="inputQualityWarnings"> Non-fatal input-quality advisories produced by the generation pipeline. Read-only; service-generated; populated only on terminal jobs when advisories fired. Omitted when generation was clean. Cleared when a subsequent `PATCH` to the paired `EvaluatorVersion.definition` invalidates the advisories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationJob(string id, EvaluatorGenerationInputs inputs, EvaluatorVersion result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset? finishedAt, EvaluatorGenerationTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationJob(string id, EvaluatorGenerationInputs inputs, EvaluatorVersion result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdOn, DateTimeOffset? finishedOn, EvaluatorGenerationTokenUsage usage, IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
             Result = result;
             Status = status;
             Error = error;
-            CreatedAt = createdAt;
-            FinishedAt = finishedAt;
+            CreatedOn = createdOn;
+            FinishedOn = finishedOn;
             Usage = usage;
+            InputQualityWarnings = inputQualityWarnings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,12 +60,15 @@ namespace Azure.AI.Projects.Evaluation
         public ProjectsJobStatus Status { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset? FinishedAt { get; }
+        public DateTimeOffset? FinishedOn { get; }
 
         /// <summary> Token consumption summary. Populated when the job reaches a terminal state. </summary>
         public EvaluatorGenerationTokenUsage Usage { get; }
+
+        /// <summary> Non-fatal input-quality advisories produced by the generation pipeline. Read-only; service-generated; populated only on terminal jobs when advisories fired. Omitted when generation was clean. Cleared when a subsequent `PATCH` to the paired `EvaluatorVersion.definition` invalidates the advisories. </summary>
+        public IReadOnlyList<RubricGenerationInputQualityWarning> InputQualityWarnings { get; }
     }
 }

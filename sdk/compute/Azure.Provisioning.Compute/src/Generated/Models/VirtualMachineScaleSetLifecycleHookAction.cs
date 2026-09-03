@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineScaleSetLifecycleHookAction
     {
         /// <summary> The lifecycle hook of a target resource in a lifecycle hook event will be approved. </summary>
-        Approve,
+        Approve = 0,
         /// <summary> The lifecycle hook of a target resource in a lifecycle hook event will be rejected. </summary>
-        Reject
+        Reject = 1
     }
 }

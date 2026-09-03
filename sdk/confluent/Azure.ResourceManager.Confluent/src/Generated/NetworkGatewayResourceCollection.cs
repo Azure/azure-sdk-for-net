@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(NetworkGatewayResource.ResourceType, out string networkGatewayResourceApiVersion);
             _networkGatewayResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", NetworkGatewayResource.ResourceType.Namespace, Diagnostics);
-            _networkGatewayResourcesRestClient = new NetworkGatewayResources(_networkGatewayResourcesClientDiagnostics, Pipeline, Endpoint, networkGatewayResourceApiVersion ?? "2026-06-02-preview");
+            _networkGatewayResourcesRestClient = new NetworkGatewayResources(_networkGatewayResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkGatewayResourceApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 

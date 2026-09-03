@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ComputePublicIPAddressSkuName
     {
         /// <summary> Basic. </summary>
-        Basic,
+        Basic = 0,
         /// <summary> Standard. </summary>
-        Standard
+        Standard = 1
     }
 }

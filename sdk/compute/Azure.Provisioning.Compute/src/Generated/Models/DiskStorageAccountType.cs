@@ -14,24 +14,24 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
         [DataMember(Name = "Standard_LRS")]
-        StandardLrs,
+        StandardLrs = 0,
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
         [DataMember(Name = "Premium_LRS")]
-        PremiumLrs,
+        PremiumLrs = 1,
         /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
         [DataMember(Name = "StandardSSD_LRS")]
-        StandardSsdLrs,
+        StandardSsdLrs = 2,
         /// <summary> Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example, SQL, Oracle), and other transaction-heavy workloads. </summary>
         [DataMember(Name = "UltraSSD_LRS")]
-        UltraSsdLrs,
+        UltraSsdLrs = 3,
         /// <summary> Premium SSD zone redundant storage. Best for the production workloads that need storage resiliency against zone failures. </summary>
         [DataMember(Name = "Premium_ZRS")]
-        PremiumZrs,
+        PremiumZrs = 4,
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
         [DataMember(Name = "StandardSSD_ZRS")]
-        StandardSsdZrs,
+        StandardSsdZrs = 5,
         /// <summary> Premium SSD v2 locally redundant storage. Best for production and performance-sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
         [DataMember(Name = "PremiumV2_LRS")]
-        PremiumV2Lrs
+        PremiumV2Lrs = 6
     }
 }

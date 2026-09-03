@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         private ClientDiagnostics ValidationsOperationGroupClientDiagnostics => _validationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ValidationsOperationGroup ValidationsOperationGroupRestClient => _validationsOperationGroupRestClient ??= new ValidationsOperationGroup(ValidationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-06-02-preview");
+        private ValidationsOperationGroup ValidationsOperationGroupRestClient => _validationsOperationGroupRestClient ??= new ValidationsOperationGroup(ValidationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
 
         /// <summary> Gets a collection of ConfluentOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ConfluentOrganizations and their operations over a ConfluentOrganizationResource. </returns>

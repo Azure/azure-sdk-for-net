@@ -6,20 +6,14 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> The JSON object that contains the properties of the origin group. </summary>
-    internal partial class OriginGroupProperties : ProvisionableConstruct
+    internal partial class OriginGroupProperties : OriginGroupUpdatePropertiesParameters
     {
         private BicepValue<OriginGroupResourceState> _resourceState;
         private BicepValue<OriginGroupProvisioningState> _provisioningState;
-        private HealthProbeSettings _healthProbeSettings;
-        private BicepList<WritableSubResource> _origins;
-        private BicepValue<int> _trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
-        private ResponseBasedOriginErrorDetectionSettings _responseBasedOriginErrorDetectionSettings;
 
         /// <summary> Creates a new OriginGroupProperties. </summary>
         public OriginGroupProperties()
@@ -46,76 +40,12 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets or sets the HealthProbeSettings. </summary>
-        public HealthProbeSettings HealthProbeSettings
-        {
-            get
-            {
-                Initialize();
-                return _healthProbeSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _healthProbeSettings, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Origins. </summary>
-        public BicepList<WritableSubResource> Origins
-        {
-            get
-            {
-                Initialize();
-                return _origins;
-            }
-            set
-            {
-                Initialize();
-                _origins.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the TrafficRestorationTimeToHealedOrNewEndpointsInMinutes. </summary>
-        public BicepValue<int> TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        {
-            get
-            {
-                Initialize();
-                return _trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
-            }
-            set
-            {
-                Initialize();
-                _trafficRestorationTimeToHealedOrNewEndpointsInMinutes.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ResponseBasedOriginErrorDetectionSettings. </summary>
-        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings
-        {
-            get
-            {
-                Initialize();
-                return _responseBasedOriginErrorDetectionSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _responseBasedOriginErrorDetectionSettings, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for OriginGroupProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resourceState = DefineProperty<OriginGroupResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
             _provisioningState = DefineProperty<OriginGroupProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _healthProbeSettings = DefineModelProperty<HealthProbeSettings>(nameof(HealthProbeSettings), new string[] { "healthProbeSettings" });
-            _origins = DefineListProperty<WritableSubResource>(nameof(Origins), new string[] { "origins" });
-            _trafficRestorationTimeToHealedOrNewEndpointsInMinutes = DefineProperty<int>(nameof(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes), new string[] { "trafficRestorationTimeToHealedOrNewEndpointsInMinutes" });
-            _responseBasedOriginErrorDetectionSettings = DefineModelProperty<ResponseBasedOriginErrorDetectionSettings>(nameof(ResponseBasedOriginErrorDetectionSettings), new string[] { "responseBasedOriginErrorDetectionSettings" });
             DefineAdditionalProperties();
         }
 

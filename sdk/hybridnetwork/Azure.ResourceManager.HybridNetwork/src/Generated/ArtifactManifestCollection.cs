@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ArtifactManifestResource.ResourceType, out string artifactManifestApiVersion);
             _artifactManifestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ArtifactManifestResource.ResourceType.Namespace, Diagnostics);
-            _artifactManifestsRestClient = new ArtifactManifests(_artifactManifestsClientDiagnostics, Pipeline, Endpoint, artifactManifestApiVersion ?? "2025-03-30");
+            _artifactManifestsRestClient = new ArtifactManifests(_artifactManifestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactManifestApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 

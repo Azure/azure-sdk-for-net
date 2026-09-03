@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DomainServices.Mocking
 
         private ClientDiagnostics DomainServiceOperationGroupClientDiagnostics => _domainServiceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DomainServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DomainServiceOperationGroup DomainServiceOperationGroupRestClient => _domainServiceOperationGroupRestClient ??= new DomainServiceOperationGroup(DomainServiceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DomainServiceOperationGroup DomainServiceOperationGroupRestClient => _domainServiceOperationGroupRestClient ??= new DomainServiceOperationGroup(DomainServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// The List Domain Services in Subscription operation lists all the domain services available under the given subscription (and across all resource groups within that subscription).

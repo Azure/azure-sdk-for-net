@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(HealthReportResource.ResourceType, out string healthReportApiVersion);
             _healthReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", HealthReportResource.ResourceType.Namespace, Diagnostics);
-            _healthReportsRestClient = new HealthReports(_healthReportsClientDiagnostics, Pipeline, Endpoint, healthReportApiVersion ?? "2023-05-01-preview");
+            _healthReportsRestClient = new HealthReports(_healthReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthReportApiVersion ?? "2023-05-01-preview");
         }
 
         /// <summary>

@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Compute
     public enum CopyCompletionErrorReason
     {
         /// <summary> Indicates that the source snapshot was deleted while the background copy of the resource created via CopyStart operation was in progress. </summary>
-        CopySourceNotFound
+        CopySourceNotFound = 0
     }
 }

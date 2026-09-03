@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(EdgeActionResource.ResourceType, out string edgeActionApiVersion);
             _edgeActionsMgmtClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionResource.ResourceType.Namespace, Diagnostics);
-            _edgeActionsMgmtClientRestClient = new EdgeActionsMgmtClient(_edgeActionsMgmtClientClientDiagnostics, Pipeline, Endpoint, edgeActionApiVersion ?? "2025-12-01-preview");
+            _edgeActionsMgmtClientRestClient = new EdgeActionsMgmtClient(_edgeActionsMgmtClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

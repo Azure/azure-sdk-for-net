@@ -101,7 +101,7 @@ namespace OpenAI;
 [CodeGenType("MCPCallItemResource")] internal partial class InternalMCPCallItemResource { }
 [CodeGenType("MCPListToolsItemParam")] internal partial class InternalMCPListToolsItemParam { }
 [CodeGenType("MCPListToolsItemResource")] internal partial class InternalMCPListToolsItemResource { }
-[CodeGenType("MCPListToolsTool")] internal partial class InternalMCPListToolsTool { }
+[CodeGenType("MCPListToolsTool")] internal partial class InternalMCPListToolsTool {}
 [CodeGenType("MCPTool")] internal partial class InternalMCPTool { }
 [CodeGenType("MCPToolAllowedTools1")] internal partial class InternalMCPToolAllowedTools1 { }
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }
@@ -159,3 +159,4 @@ namespace OpenAI;
 [CodeGenType("WebSearchToolCallItemResourceStatus")] internal readonly partial struct WebSearchToolCallItemResourceStatus { }
 /// <summary> Discriminator value identifying the kind of agent object returned by the service. </summary>
 [CodeGenType("AgentObjectType")] public readonly partial struct AgentObjectType { }
+[CodeGenType("CallableToolAllowedCaller")] internal readonly partial struct InternalCallableToolAllowedCaller { }

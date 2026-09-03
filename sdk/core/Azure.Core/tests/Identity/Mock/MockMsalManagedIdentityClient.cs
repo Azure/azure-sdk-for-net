@@ -93,6 +93,14 @@ namespace Azure.Core.Tests.Identity.Mock
             return new ValueTask<ManagedIdentityCapabilities>(CreateManagedIdentityCapabilities(_detectedSource));
         }
 
+        /// <summary>
+        /// Builds a <see cref="ManagedIdentityCapabilities"/> reporting the given <paramref name="source"/>.
+        /// Tests use this with <see cref="GetManagedIdentityCapabilitiesFactory"/> to drive the credential down a
+        /// specific code path (for example, <c>None</c> to reach the token-acquisition call).
+        /// </summary>
+        internal static ManagedIdentityCapabilities CreateCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
+            => CreateManagedIdentityCapabilities(source);
+
         private static ManagedIdentityCapabilities CreateManagedIdentityCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
         {
             ConstructorInfo ctor = typeof(ManagedIdentityCapabilities).GetConstructor(

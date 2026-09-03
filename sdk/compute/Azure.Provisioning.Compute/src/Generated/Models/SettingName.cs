@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum SettingName
     {
         /// <summary> AutoLogon. </summary>
-        AutoLogon,
+        AutoLogon = 0,
         /// <summary> FirstLogonCommands. </summary>
-        FirstLogonCommands
+        FirstLogonCommands = 1
     }
 }

@@ -50,7 +50,7 @@ public class BasicCognitiveServicesTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource account 'Microsoft.CognitiveServices/accounts@2025-09-01' = {
+            resource account 'Microsoft.CognitiveServices/accounts@2026-05-01' = {
               name: take('account-${uniqueString(resourceGroup().id)}', 64)
               location: location
               identity: {
@@ -58,11 +58,11 @@ public class BasicCognitiveServicesTests
               }
               kind: 'TextTranslation'
               properties: {
+                disableLocalAuth: true
                 networkAcls: {
                   defaultAction: 'Deny'
                 }
                 publicNetworkAccess: 'Disabled'
-                disableLocalAuth: true
               }
               sku: {
                 name: 'S1'

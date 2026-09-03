@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageAccountManagementPolicyApiVersion);
             _managementPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _managementPoliciesRestClient = new ManagementPolicies(_managementPoliciesClientDiagnostics, Pipeline, Endpoint, storageAccountManagementPolicyApiVersion ?? "2025-08-01");
+            _managementPoliciesRestClient = new ManagementPolicies(_managementPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountManagementPolicyApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum RepairAction
     {
         /// <summary> Replace. </summary>
-        Replace,
+        Replace = 0,
         /// <summary> Restart. </summary>
-        Restart,
+        Restart = 1,
         /// <summary> Reimage. </summary>
-        Reimage
+        Reimage = 2
     }
 }

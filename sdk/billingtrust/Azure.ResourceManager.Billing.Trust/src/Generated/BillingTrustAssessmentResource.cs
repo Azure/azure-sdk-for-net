@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing.Trust
         {
             TryGetApiVersion(ResourceType, out string billingTrustAssessmentApiVersion);
             _assessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing.Trust", ResourceType.Namespace, Diagnostics);
-            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Endpoint, billingTrustAssessmentApiVersion ?? "2026-03-17-preview");
+            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingTrustAssessmentApiVersion ?? "2026-03-17-preview");
             ValidateResourceId(id);
         }
 

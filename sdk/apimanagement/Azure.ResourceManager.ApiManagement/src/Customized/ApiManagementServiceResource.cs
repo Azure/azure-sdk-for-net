@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementContentTypeResource.ResourceType, out string apiVersion);
             diagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementContentTypeResource.ResourceType.Namespace, Diagnostics);
-            return new ContentType(diagnostics, Pipeline, Endpoint, apiVersion ?? "2025-09-01-preview");
+            return new ContentType(diagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion ?? "2025-09-01-preview");
         }
 
         private async Task<Response<ApiManagementContentType>> SendContentTypeRequestAsync(ClientDiagnostics diagnostics, string scopeName, Func<RequestContext, HttpMessage> createMessage, CancellationToken cancellationToken)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoDBAtlas;
@@ -223,18 +222,18 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="clusterName"> Name of the MongoDB Atlas Cluster. </param>
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
         /// <param name="regionName"> Azure region where the cluster is deployed. </param>
-        /// <param name="mongoDbVersion"> MongoDB version running on the cluster. </param>
+        /// <param name="mongoDBVersion"> MongoDB version running on the cluster. </param>
         /// <param name="isBackupsEnabled"> Whether backups are active for the cluster; null if undetermined. </param>
         /// <param name="state"> Current state of the cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.MongoDBAtlasClusterProperties"/> instance for mocking. </returns>
-        public static MongoDBAtlasClusterProperties MongoDBAtlasClusterProperties(string clusterName = default, MongoDBAtlasClusterTier clusterTier = default, string regionName = default, string mongoDbVersion = default, bool? isBackupsEnabled = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
+        public static MongoDBAtlasClusterProperties MongoDBAtlasClusterProperties(string clusterName = default, MongoDBAtlasClusterTier clusterTier = default, string regionName = default, string mongoDBVersion = default, bool? isBackupsEnabled = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
         {
             return new MongoDBAtlasClusterProperties(
                 clusterName,
                 clusterTier,
                 regionName,
-                mongoDbVersion,
+                mongoDBVersion,
                 isBackupsEnabled,
                 state,
                 provisioningState,

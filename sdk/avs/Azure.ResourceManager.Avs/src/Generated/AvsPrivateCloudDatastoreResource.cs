@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsPrivateCloudDatastoreApiVersion);
             _datastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _datastoresRestClient = new Datastores(_datastoresClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudDatastoreApiVersion ?? "2025-09-01");
+            _datastoresRestClient = new Datastores(_datastoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudDatastoreApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

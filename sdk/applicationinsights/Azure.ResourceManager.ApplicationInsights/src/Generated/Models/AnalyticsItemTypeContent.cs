@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> The AnalyticsItemTypeContent. </summary>
+    /// <summary></summary>
     public readonly partial struct AnalyticsItemTypeContent : IEquatable<AnalyticsItemTypeContent>
     {
         private readonly string _value;
+        /// <summary> none. </summary>
+        private const string NoneValue = "none";
+        /// <summary> query. </summary>
+        private const string QueryValue = "query";
+        /// <summary> function. </summary>
+        private const string FunctionValue = "function";
+        /// <summary> folder. </summary>
+        private const string FolderValue = "folder";
+        /// <summary> recent. </summary>
+        private const string RecentValue = "recent";
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsItemTypeContent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyticsItemTypeContent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string QueryValue = "query";
-        private const string FunctionValue = "function";
-        private const string FolderValue = "folder";
-        private const string RecentValue = "recent";
+            _value = value;
+        }
 
         /// <summary> none. </summary>
         public static AnalyticsItemTypeContent None { get; } = new AnalyticsItemTypeContent(NoneValue);
+
         /// <summary> query. </summary>
         public static AnalyticsItemTypeContent Query { get; } = new AnalyticsItemTypeContent(QueryValue);
+
         /// <summary> function. </summary>
         public static AnalyticsItemTypeContent Function { get; } = new AnalyticsItemTypeContent(FunctionValue);
+
         /// <summary> folder. </summary>
         public static AnalyticsItemTypeContent Folder { get; } = new AnalyticsItemTypeContent(FolderValue);
+
         /// <summary> recent. </summary>
         public static AnalyticsItemTypeContent Recent { get; } = new AnalyticsItemTypeContent(RecentValue);
+
         /// <summary> Determines if two <see cref="AnalyticsItemTypeContent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyticsItemTypeContent left, AnalyticsItemTypeContent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AnalyticsItemTypeContent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyticsItemTypeContent left, AnalyticsItemTypeContent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyticsItemTypeContent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AnalyticsItemTypeContent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AnalyticsItemTypeContent(string value) => new AnalyticsItemTypeContent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AnalyticsItemTypeContent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AnalyticsItemTypeContent?(string value) => value == null ? null : new AnalyticsItemTypeContent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AnalyticsItemTypeContent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AnalyticsItemTypeContent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

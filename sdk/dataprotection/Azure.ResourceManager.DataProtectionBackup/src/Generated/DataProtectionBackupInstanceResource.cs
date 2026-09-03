@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(ResourceType, out string dataProtectionBackupInstanceApiVersion);
             _backupInstanceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _backupInstanceResourcesRestClient = new BackupInstanceResources(_backupInstanceResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2026-03-01");
+            _backupInstanceResourcesRestClient = new BackupInstanceResources(_backupInstanceResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(DurableTaskHubResource.ResourceType, out string durableTaskHubApiVersion);
             _taskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskHubResource.ResourceType.Namespace, Diagnostics);
-            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
+            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

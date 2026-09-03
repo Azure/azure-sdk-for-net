@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes;
 using Azure.ResourceManager.Models;
@@ -18,6 +17,53 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationPrivateLinkScopesModelFactory
     {
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateLinkResourceData KubernetesConfigurationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new KubernetesConfigurationPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateEndpointConnectionData KubernetesConfigurationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new KubernetesConfigurationPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                default);
+        }
+
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState(KubernetesConfigurationPrivateLinkScopesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -60,34 +106,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateEndpointConnectionData KubernetesConfigurationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new KubernetesConfigurationPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
-                default);
-        }
-
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState(KubernetesConfigurationPrivateLinkScopesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopePatch"/> instance for mocking. </returns>
         public static KubernetesConfigurationPrivateLinkScopePatch KubernetesConfigurationPrivateLinkScopePatch(IDictionary<string, string> tags = default)
@@ -95,25 +113,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new KubernetesConfigurationPrivateLinkScopePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkResourceData KubernetesConfigurationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            return new KubernetesConfigurationPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
         }
     }
 }

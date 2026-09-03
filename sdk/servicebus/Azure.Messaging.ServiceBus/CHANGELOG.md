@@ -1,6 +1,6 @@
 # Release History
 
-## 7.21.0-beta.1 (Unreleased)
+## 7.21.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,24 @@
 
 ### Bugs Fixed
 
+- Fixed a bug where canceling `ServiceBusReceiver.CloseAsync` left the receiver unable to close its own links. The receiver was marked as closed, and its set of locked messages disposed, before the cancellation was observed, so every later call to `CloseAsync` returned immediately without doing any work and the links stayed open until the owning `ServiceBusClient` was disposed. The receiver is now left open and closable when a close does not complete, so the operation can be retried. ([#59309](https://github.com/Azure/azure-sdk-for-net/issues/59309))
+
 ### Other Changes
+
+## 7.21.0-beta.1 (2026-08-21)
+
+### Features Added
+
+- Added `SqlFilterCount` and `CorrelationFilterCount` properties to `TopicRuntimeProperties`, exposing the total number of SQL filters and correlation filters across all of a topic's subscriptions. These are populated by `GetTopicRuntimePropertiesAsync` and `GetTopicsRuntimePropertiesAsync`.
+- Added `ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05` and made it the default service version. The topic filter counts above are served by the `2024-05` service API version, so the administration client now sends `api-version=2024-05` by default.
+- Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. The no-filter overload returns the IDs of sessions that have active messages or session state, and the `sessionStateUpdatedAfter` overload returns session IDs whose session state was updated after the specified timestamp. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
+- Added opt-in support for non-exclusive session locking on `ServiceBusSessionReceiver`, allowing a session to be cooperatively taken over by another receiver. Set `ServiceBusSessionReceiverOptions.EnableNonExclusiveSession` to accept a session non-exclusively, then read the token from `ServiceBusSessionReceiver.SessionLockToken` and pass it as `ServiceBusSessionReceiverOptions.SessionLockToken = Guid.Parse(token)` to take that session over. `ServiceBusSessionReceiver.IsSessionExclusive` reports the mode the session was established under. Dispositions for a non-exclusive session are routed over the management link so that settlement keeps working across a takeover, which lowers settlement throughput compared to an exclusive session. This applies to `ServiceBusSessionReceiver` only; `ServiceBusSessionProcessor` continues to lock sessions exclusively. Accepting a session with `EnableNonExclusiveSession` set throws `NotSupportedException` when the endpoint declines it, either by refusing the request outright or by accepting it without assigning a lock token, which is how a caller detects whether the feature is available for a namespace. An endpoint that declines in some other way surfaces the exception its own error maps to. ([#60060](https://github.com/Azure/azure-sdk-for-net/pull/60060))
+
+- Fixed retry classification for web socket failures with nested causes.  On modern .NET, a transient network failure during a web socket connection attempt surfaces as a `WebSocketException` that wraps an `HttpRequestException`, which wraps the meaningful `IOException` or `SocketException`.  The retry policy previously inspected only one level of nesting and treated these failures as terminal.  The policy now unwraps nested wrapper exceptions to a bounded depth, so transient failures such as a connection reset use the configured retries.  Terminal socket failures, such as host-not-found and host-unreachable, are not retried at any supported depth.  A host-unreachable failure on an established connection is now terminal.  Earlier versions retried it. ([#61868](https://github.com/Azure/azure-sdk-for-net/issues/61868))
+
+### Other Changes
+
+- The default `ServiceBusAdministrationClient` service version is now `2024-05` (previously `2021-05`). Existing operations are unaffected in behavior; the change is required to surface the new topic filter count properties.
 
 ## 7.20.2 (2026-07-08)
 

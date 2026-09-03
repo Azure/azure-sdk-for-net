@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Models;
 
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(PartnerInfoBase))]
     [ModelReaderWriterBuildable(typeof(RegionProperties))]
     [ModelReaderWriterBuildable(typeof(RegionSpecEntity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SaaSData))]
     [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsResponse))]
     [ModelReaderWriterBuildable(typeof(SCClusterByokEntity))]

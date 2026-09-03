@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(PrivateStoreOfferResource.ResourceType, out string privateStoreOfferApiVersion);
             _privateStoreCollectionOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreOfferResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
+            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 

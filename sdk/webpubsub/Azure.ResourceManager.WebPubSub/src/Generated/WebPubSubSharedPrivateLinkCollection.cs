@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubSharedPrivateLinkResource.ResourceType, out string webPubSubSharedPrivateLinkApiVersion);
             _webPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubSharedPrivateLinkApiVersion ?? "2025-08-01-preview");
+            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubSharedPrivateLinkApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

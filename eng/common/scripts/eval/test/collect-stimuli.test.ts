@@ -31,19 +31,19 @@ describe("collect-stimuli (default discovery)", () => {
   before(() => {
     root = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-"));
     writeFile(
-      path.join(root, "evals/tools/prompt-to-tool-github.eval.yaml"),
+      path.join(root, "tools/prompt-to-tool-github.eval.yaml"),
       "tags:\n  area: github"
     );
     writeFile(
-      path.join(root, "evals/tools/add-arm-resource.eval.yaml"),
+      path.join(root, "tools/add-arm-resource.eval.yaml"),
       "tags:\n  area: typespec"
     );
     writeFile(
-      path.join(root, "evals/workflow-scenarios/mock/rename-client-property.eval.yaml"),
+      path.join(root, "workflows/mock/rename-client-property.eval.yaml"),
       "tags:\n  area: typespec"
     );
     writeFile(
-      path.join(root, "evals/workflow-scenarios/live/release-planner.eval.yaml"),
+      path.join(root, "workflows/live/release-planner.eval.yaml"),
       "tags:\n  area: release-plan"
     );
   });
@@ -70,7 +70,7 @@ describe("collect-stimuli (default discovery)", () => {
     const matrix = buildMatrix({ roots: [root] });
     for (const entry of Object.values(matrix)) {
       assert.doesNotMatch(entry.evalArgs, /\\/);
-      assert.match(entry.evalArgs, /^-e evals\//);
+      assert.match(entry.evalArgs, /^-e (tools|workflows)\//);
     }
   });
 
@@ -94,15 +94,15 @@ describe("collect-stimuli (area grouping)", () => {
   before(() => {
     root = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-area-"));
     writeFile(
-      path.join(root, "evals/tools/prompt-to-tool-github.eval.yaml"),
+      path.join(root, "tools/prompt-to-tool-github.eval.yaml"),
       "tags:\n  area: github"
     );
     writeFile(
-      path.join(root, "evals/tools/add-arm-resource.eval.yaml"),
+      path.join(root, "tools/add-arm-resource.eval.yaml"),
       "tags:\n  area: typespec"
     );
     writeFile(
-      path.join(root, "evals/workflow-scenarios/mock/rename-client-property.eval.yaml"),
+      path.join(root, "workflows/mock/rename-client-property.eval.yaml"),
       "tags:\n  area: typespec"
     );
   });
@@ -127,11 +127,11 @@ describe("collect-stimuli (area grouping)", () => {
     const collideRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-area-collide-"));
     try {
       writeFile(
-        path.join(collideRoot, "evals/tools/a.eval.yaml"),
+        path.join(collideRoot, "tools/a.eval.yaml"),
         "tags:\n  area: release-plan"
       );
       writeFile(
-        path.join(collideRoot, "evals/tools/b.eval.yaml"),
+        path.join(collideRoot, "tools/b.eval.yaml"),
         "tags:\n  area: release_plan"
       );
       assert.throws(
@@ -149,8 +149,8 @@ describe("collect-stimuli (area with an untagged eval)", () => {
 
   before(() => {
     root = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-ut-"));
-    writeFile(path.join(root, "evals/tools/tagged.eval.yaml"), "tags:\n  area: github");
-    writeFile(path.join(root, "evals/tools/untagged.eval.yaml"), "no tags here");
+    writeFile(path.join(root, "tools/tagged.eval.yaml"), "tags:\n  area: github");
+    writeFile(path.join(root, "tools/untagged.eval.yaml"), "no tags here");
   });
 
   after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -159,7 +159,7 @@ describe("collect-stimuli (area with an untagged eval)", () => {
     const { result: matrix } = withWarnings((warn) =>
       buildMatrix({
         roots: [root],
-        patterns: ["evals/tools/*.eval.yaml"],
+        patterns: ["tools/*.eval.yaml"],
         warn,
       })
     );
@@ -172,7 +172,7 @@ describe("collect-stimuli (area with an untagged eval)", () => {
     const { result: matrix } = withWarnings((warn) =>
       buildMatrix({
         roots: [root],
-        patterns: ["evals/tools/*.eval.yaml"],
+        patterns: ["tools/*.eval.yaml"],
         warn,
       })
     );
@@ -183,7 +183,7 @@ describe("collect-stimuli (area with an untagged eval)", () => {
     const { warnings } = withWarnings((warn) =>
       buildMatrix({
         roots: [root],
-        patterns: ["evals/tools/*.eval.yaml"],
+        patterns: ["tools/*.eval.yaml"],
         warn,
       })
     );
@@ -197,11 +197,11 @@ describe("collect-stimuli (overlapping patterns)", () => {
   before(() => {
     root = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-overlap-"));
     writeFile(
-      path.join(root, "evals/tools/add-arm-resource.eval.yaml"),
+      path.join(root, "tools/add-arm-resource.eval.yaml"),
       "tags:\n  area: typespec"
     );
     writeFile(
-      path.join(root, "evals/tools/prompt-to-tool-github.eval.yaml"),
+      path.join(root, "tools/prompt-to-tool-github.eval.yaml"),
       "tags:\n  area: github"
     );
   });
@@ -211,7 +211,7 @@ describe("collect-stimuli (overlapping patterns)", () => {
   it("does not emit a duplicate -e flag for a file matched by multiple patterns", () => {
     const matrix = buildMatrix({
       roots: [root],
-      patterns: ["evals/tools/*.eval.yaml", "evals/tools/add-arm-resource.eval.yaml"],
+      patterns: ["tools/*.eval.yaml", "tools/add-arm-resource.eval.yaml"],
     });
     const count = (matrix.area_typespec.evalArgs.match(/add-arm-resource/g) || []).length;
     assert.equal(count, 1);
@@ -226,11 +226,11 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
     repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-repo-"));
     commonRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-common-"));
     writeFile(
-      path.join(repoRoot, "evals/tools/repo-specific.eval.yaml"),
+      path.join(repoRoot, "tools/repo-specific.eval.yaml"),
       "tags:\n  area: repo"
     );
     writeFile(
-      path.join(commonRoot, "evals/tools/shared-scenario.eval.yaml"),
+      path.join(commonRoot, "tools/shared-scenario.eval.yaml"),
       "tags:\n  area: shared"
     );
   });
@@ -243,7 +243,7 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
   it("collects evals from both roots into one matrix", () => {
     const matrix = buildMatrix({
       roots: [repoRoot, commonRoot],
-      patterns: ["evals/tools/*.eval.yaml"],
+      patterns: ["tools/*.eval.yaml"],
     });
     const keys = Object.keys(matrix);
     assert.equal(keys.length, 2);
@@ -254,11 +254,11 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
   it("computes each file's relative path against its own root", () => {
     const matrix = buildMatrix({
       roots: [repoRoot, commonRoot],
-      patterns: ["evals/tools/*.eval.yaml"],
+      patterns: ["tools/*.eval.yaml"],
     });
     assert.equal(
       matrix.area_shared.evalArgs,
-      "-e evals/tools/shared-scenario.eval.yaml"
+      "-e tools/shared-scenario.eval.yaml"
     );
   });
 });
@@ -275,11 +275,11 @@ describe("collect-stimuli (pathBase anchors scattered roots to one run root)", (
     runRoot = path.join(parent, "project");
     scatteredRoot = path.join(parent, "extra");
     writeFile(
-      path.join(runRoot, "evals/tools/in-project.eval.yaml"),
+      path.join(runRoot, "tools/in-project.eval.yaml"),
       "tags:\n  area: inproject"
     );
     writeFile(
-      path.join(scatteredRoot, "evals/out-of-tree.eval.yaml"),
+      path.join(scatteredRoot, "workflows/out-of-tree.eval.yaml"),
       "tags:\n  area: scattered"
     );
   });
@@ -290,28 +290,28 @@ describe("collect-stimuli (pathBase anchors scattered roots to one run root)", (
     const matrix = buildMatrix({
       roots: [runRoot, scatteredRoot],
       pathBase: runRoot,
-      patterns: ["evals/**/*.eval.yaml", "evals/*.eval.yaml"],
+      patterns: ["tools/**/*.eval.yaml", "workflows/*.eval.yaml"],
     });
     // The in-project file stays a simple relative path; the scattered one walks up.
     assert.equal(
       matrix.area_inproject.evalArgs,
-      "-e evals/tools/in-project.eval.yaml"
+      "-e tools/in-project.eval.yaml"
     );
     assert.equal(
       matrix.area_scattered.evalArgs,
-      "-e ../extra/evals/out-of-tree.eval.yaml"
+      "-e ../extra/workflows/out-of-tree.eval.yaml"
     );
   });
 
   it("falls back to per-root relative paths when no pathBase is given", () => {
     const matrix = buildMatrix({
       roots: [scatteredRoot],
-      patterns: ["evals/*.eval.yaml"],
+      patterns: ["workflows/*.eval.yaml"],
     });
     // Without a base, the path is relative to the root it was found under (no `../`).
     assert.equal(
       matrix.area_scattered.evalArgs,
-      "-e evals/out-of-tree.eval.yaml"
+      "-e workflows/out-of-tree.eval.yaml"
     );
   });
 });

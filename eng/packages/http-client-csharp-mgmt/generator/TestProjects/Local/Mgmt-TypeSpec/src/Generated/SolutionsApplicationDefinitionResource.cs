@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string solutionsApplicationDefinitionApiVersion);
             _solutionsApplicationDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _solutionsApplicationDefinitionsRestClient = new SolutionsApplicationDefinitions(_solutionsApplicationDefinitionsClientDiagnostics, Pipeline, Endpoint, solutionsApplicationDefinitionApiVersion ?? "2024-05-01");
+            _solutionsApplicationDefinitionsRestClient = new SolutionsApplicationDefinitions(_solutionsApplicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, solutionsApplicationDefinitionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

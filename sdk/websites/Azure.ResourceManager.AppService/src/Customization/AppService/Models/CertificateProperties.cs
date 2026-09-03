@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         [WirePath("cerBlob")]
-        public BinaryData CerBlob { get; set;}
+        public BinaryData CerBlob { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeKeyVaultId(JsonProperty property, ref ResourceIdentifier keyVaultId)

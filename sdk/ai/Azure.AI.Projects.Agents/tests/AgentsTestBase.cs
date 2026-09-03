@@ -31,14 +31,13 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly int PAGE_SIZE = 3;
 
-    protected const string FOUNDRY_HEADER = "Foundry-Features";
-    protected const string FOUNDRY_HEADER_VALUE = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V1Preview,Routines=V1Preview,ExternalAgents=V1Preview";
-
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
         // Please note that in System.ClientModel, the recording mode is taken from CLIENTMODEL_TEST_MODE
         // environment variable as opposed to AZURE_TEST_MODE in Azure.Core.
         // Allowed values are: Playback, Live, Record.
+        // Uncomment this line to debug the connection to locally running test-proxy (the connection will be made to default port 5000).
+        // UseLocalDebugProxy = true;
         ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
@@ -138,7 +137,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 {
                     message.NetworkTimeout = TimeSpan.FromMinutes(5);
                 }
-                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
             }),
             PipelinePosition.PerCall);
         return CreateProxyFromClient(new AgentAdministrationClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), InstrumentClientOptions(options)));
@@ -157,7 +155,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
 
     public static void AssertListEqual(string[] expected, List<string> observed)
     {
-        // Assert.AreEqual(expected.Length, observed.Count, $"The length of arrays are different. Expected: {expected}, Observed: {observed.ToArray()}");
         HashSet<string> expectedHash = [.. expected];
         HashSet<string> observedHash = [.. observed];
         if (!expectedHash.SetEquals(observedHash))
@@ -267,7 +264,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                             fileIds: []
                     ))
             },
-            ToolType.FileSearch =>new FileSearchToolboxTool()
+            ToolType.FileSearch => new FileSearchToolboxTool()
             {
                 Name = "file-search",
                 Description = "Test file search",
@@ -361,14 +358,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(
-            new TestPipelinePolicy(message =>
-            {
-                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
-            }),
-            PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), options);
+        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider());
 
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))
@@ -379,7 +369,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
+        List<string> hostedAgents = [.. agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
         foreach (string agentName in hostedAgents)
         {
             await agentsClient.DeleteAgentAsync(agentName, force: true);
@@ -399,6 +389,12 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         foreach (string skill in delete)
         {
             await skillsClient.DeleteSkillAsync(skill);
+        }
+        AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+        List<string> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).Select(x => x.Id).ToListAsync();
+        foreach (string record in records)
+        {
+            await jobsClient.DeleteAsync(record, cancellationToken: default);
         }
     }
     #endregion

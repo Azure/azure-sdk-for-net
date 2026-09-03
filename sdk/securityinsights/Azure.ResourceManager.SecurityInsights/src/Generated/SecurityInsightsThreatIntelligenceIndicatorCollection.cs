@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType, out string securityInsightsThreatIntelligenceIndicatorApiVersion);
             _threatIntelligenceIndicatorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType.Namespace, Diagnostics);
-            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicator(_threatIntelligenceIndicatorClientDiagnostics, Pipeline, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
+            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicator(_threatIntelligenceIndicatorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-10-01-preview");
             _threatIntelligenceIndicatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType.Namespace, Diagnostics);
-            _threatIntelligenceIndicatorsRestClient = new ThreatIntelligenceIndicators(_threatIntelligenceIndicatorsClientDiagnostics, Pipeline, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
+            _threatIntelligenceIndicatorsRestClient = new ThreatIntelligenceIndicators(_threatIntelligenceIndicatorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,17 +280,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAllAsync(string filter = default, int? top = default, string skipToken = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAllAsync(string filter = default, int? top = default, string skipToken = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 filter,
                 top,
                 skipToken,
-                @orderby,
+                orderBy,
                 context,
                 "SecurityInsightsThreatIntelligenceIndicatorCollection.GetAll"), data => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, data));
         }
@@ -322,17 +322,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAll(string filter = default, int? top = default, string skipToken = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAll(string filter = default, int? top = default, string skipToken = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 filter,
                 top,
                 skipToken,
-                @orderby,
+                orderBy,
                 context,
                 "SecurityInsightsThreatIntelligenceIndicatorCollection.GetAll"), data => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, data));
         }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

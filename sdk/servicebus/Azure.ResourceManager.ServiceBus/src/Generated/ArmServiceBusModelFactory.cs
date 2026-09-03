@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus;
@@ -475,7 +474,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, default);
         }
 
-        /// <param name="applicationProperties"> dictionary object for custom filters. </param>
+        /// <param name="properties"> dictionary object for custom filters. </param>
         /// <param name="correlationId"> Identifier of the correlation. </param>
         /// <param name="messageId"> Identifier of the message. </param>
         /// <param name="sendTo"> Address to send to. </param>
@@ -486,12 +485,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
         /// <returns> A new <see cref="Models.ServiceBusCorrelationFilter"/> instance for mocking. </returns>
-        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
+        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, string> properties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
         {
-            applicationProperties ??= new ChangeTrackingDictionary<string, object>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceBusCorrelationFilter(
-                applicationProperties ?? new ChangeTrackingDictionary<string, object>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 correlationId,
                 messageId,
                 sendTo,
@@ -525,11 +524,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
+        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
         /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusNamespaceData"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusMinimumTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, bool? isZoneRedundant = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusPublicNetworkAccess? publicNetworkAccess = default, int? premiumMessagingPartitions = default, GeoDataReplicationProperties geoDataReplication = default, ServiceBusConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
+        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusMinimumTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, bool? isZoneRedundant = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusPublicNetworkAccess? publicNetworkAccess = default, int? premiumMessagingPartitions = default, GeoDataReplicationProperties geoDataReplication = default, ServiceBusIPAddressType? ipAddressType = default, ServiceBusConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && isZoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && publicNetworkAccess is null && premiumMessagingPartitions is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null ? default : new SBNamespaceProperties(
+                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && isZoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && publicNetworkAccess is null && premiumMessagingPartitions is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new SBNamespaceProperties(
                     minimumTlsVersion,
                     provisioningState,
                     status,
@@ -557,6 +557,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     premiumMessagingPartitions,
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     geoDataReplication,
+                    ipAddressType,
                     default),
                 sku,
                 identity,
@@ -596,11 +597,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
         /// <param name="roleType"> GeoDR Role Types. </param>
-        /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <returns> A new <see cref="Models.ServiceBusNamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceReplicaLocation ServiceBusNamespaceReplicaLocation(string locationName = default, GeoDRRoleType? roleType = default, string clusterArmId = default)
+        public static ServiceBusNamespaceReplicaLocation ServiceBusNamespaceReplicaLocation(string locationName = default, GeoDRRoleType? roleType = default)
         {
-            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, clusterArmId, default);
+            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, default);
         }
 
         /// <param name="name"> Name of this SKU. </param>
@@ -660,11 +660,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
-        /// <param name="force"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
+        /// <param name="isForced"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <returns> A new <see cref="Models.ServiceBusNamespaceFailOver"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceFailOver ServiceBusNamespaceFailOver(string primaryLocation = default, bool? force = default)
+        public static ServiceBusNamespaceFailOver ServiceBusNamespaceFailOver(string primaryLocation = default, bool? isForced = default)
         {
-            return new ServiceBusNamespaceFailOver(primaryLocation is null && force is null ? default : new ServiceBusFailOverDetail(primaryLocation, force, default), default);
+            return new ServiceBusNamespaceFailOver(primaryLocation is null && isForced is null ? default : new ServiceBusFailOverDetail(primaryLocation, isForced, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -848,6 +848,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     alternateName,
                     publicNetworkAccess,
                     premiumMessagingPartitions,
+                    default,
                     default,
                     default,
                     default),

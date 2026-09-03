@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
         {
             toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
 
-            return new AzureAIAgentTarget("azure_ai_agent", additionalBinaryDataProperties: null, name, version, [..toolDescriptions], []);
+            return new AzureAIAgentTarget("azure_ai_agent", additionalBinaryDataProperties: null, name, version, [.. toolDescriptions], []);
         }
     }
 }

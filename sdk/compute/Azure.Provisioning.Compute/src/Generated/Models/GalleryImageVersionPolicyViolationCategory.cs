@@ -13,13 +13,13 @@ namespace Azure.Provisioning.Compute
     public enum GalleryImageVersionPolicyViolationCategory
     {
         /// <summary> Other. </summary>
-        Other,
+        Other = 0,
         /// <summary> ImageFlaggedUnsafe. </summary>
-        ImageFlaggedUnsafe,
+        ImageFlaggedUnsafe = 1,
         /// <summary> CopyrightValidation. </summary>
-        CopyrightValidation,
+        CopyrightValidation = 2,
         /// <summary> IPTheft. </summary>
         [DataMember(Name = "IpTheft")]
-        IPTheft
+        IPTheft = 3
     }
 }

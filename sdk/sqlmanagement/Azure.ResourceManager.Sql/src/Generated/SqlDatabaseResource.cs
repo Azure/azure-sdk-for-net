@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,25 +72,25 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _databaseOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databaseOperationsRestClient = new DatabaseOperations(_databaseOperationsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _databaseOperationsRestClient = new DatabaseOperations(_databaseOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _restorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _databaseUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databaseUsagesRestClient = new DatabaseUsages(_databaseUsagesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _databaseUsagesRestClient = new DatabaseUsages(_databaseUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _databaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databaseColumnsRestClient = new DatabaseColumns(_databaseColumnsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _databaseColumnsRestClient = new DatabaseColumns(_databaseColumnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _sensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _sensitivityLabelsRestClient = new SensitivityLabels(_sensitivityLabelsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _sensitivityLabelsRestClient = new SensitivityLabels(_sensitivityLabelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _recommendedSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _recommendedSensitivityLabelsRestClient = new RecommendedSensitivityLabels(_recommendedSensitivityLabelsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _recommendedSensitivityLabelsRestClient = new RecommendedSensitivityLabels(_recommendedSensitivityLabelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _databaseEncryptionProtectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databaseEncryptionProtectorsRestClient = new DatabaseEncryptionProtectors(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _databaseEncryptionProtectorsRestClient = new DatabaseEncryptionProtectors(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _synapseLinkWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspaces(_synapseLinkWorkspacesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspaces(_synapseLinkWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             _databaseExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databaseExtensionsRestClient = new DatabaseExtensions(_databaseExtensionsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
+            _databaseExtensionsRestClient = new DatabaseExtensions(_databaseExtensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -3041,5 +3042,33 @@ namespace Azure.ResourceManager.Sql
         {
             return GetLogicalDatabaseTransparentDataEncryptions().Get(tdeName, cancellationToken);
         }
+
+        /// <summary>
+        /// Gets a database.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}Operation IdDatabases_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<SqlDatabaseResource>> GetAsync(CancellationToken cancellationToken)
+        {
+            return GetAsync(expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets a database.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}Operation IdDatabases_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<SqlDatabaseResource> Get(CancellationToken cancellationToken)
+        {
+            return Get(expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

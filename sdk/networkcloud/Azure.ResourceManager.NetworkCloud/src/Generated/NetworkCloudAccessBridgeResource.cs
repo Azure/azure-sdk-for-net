@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudAccessBridgeApiVersion);
             _accessBridgesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-05-01-preview");
+            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

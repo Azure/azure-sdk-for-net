@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRSharedPrivateLinkResource.ResourceType, out string signalRSharedPrivateLinkResourceApiVersion);
             _signalRSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _signalRSharedPrivateLinkResourcesRestClient = new SignalRSharedPrivateLinkResources(_signalRSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, signalRSharedPrivateLinkResourceApiVersion ?? "2025-01-01-preview");
+            _signalRSharedPrivateLinkResourcesRestClient = new SignalRSharedPrivateLinkResources(_signalRSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRSharedPrivateLinkResourceApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 

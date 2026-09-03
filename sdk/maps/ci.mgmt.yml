@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Maps
       safeName: AzureResourceManagerMaps
+    - name: Azure.Provisioning.Maps
+      safeName: AzureProvisioningMaps

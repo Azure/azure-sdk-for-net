@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
 
         private ClientDiagnostics EdgeActionsMgmtClientClientDiagnostics => _edgeActionsMgmtClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EdgeActionsMgmtClient EdgeActionsMgmtClientRestClient => _edgeActionsMgmtClientRestClient ??= new EdgeActionsMgmtClient(EdgeActionsMgmtClientClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private EdgeActionsMgmtClient EdgeActionsMgmtClientRestClient => _edgeActionsMgmtClientRestClient ??= new EdgeActionsMgmtClient(EdgeActionsMgmtClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         /// <summary>
         /// List EdgeAction resources by subscription ID

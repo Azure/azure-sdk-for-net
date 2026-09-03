@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineScaleSetLifecycleHookEventType
     {
         /// <summary> Lifecycle hook event sent to the customer before an Auto OS Upgrade operation starts on the virtual machine scale set. </summary>
-        UpgradeAutoOSScheduling,
+        UpgradeAutoOSScheduling = 0,
         /// <summary> Lifecycle hook event sent to the customer before upgrade starts on a batch of virtual machines belonging to a virtual machine scale set during an Auto OS Upgrade operation. </summary>
-        UpgradeAutoOSRollingBatchStarting
+        UpgradeAutoOSRollingBatchStarting = 1
     }
 }

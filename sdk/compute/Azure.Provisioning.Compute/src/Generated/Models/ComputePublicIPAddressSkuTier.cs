@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ComputePublicIPAddressSkuTier
     {
         /// <summary> Regional. </summary>
-        Regional,
+        Regional = 0,
         /// <summary> Global. </summary>
-        Global
+        Global = 1
     }
 }

@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1.0"
+      ],
       "crossLanguageDefinitionId": "Server.Path.Multiple.Versions",
       "valueType": {
         "$id": "2",

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingSubscriptionAliasResource.ResourceType, out string billingSubscriptionAliasApiVersion);
             _billingSubscriptionsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
-            _billingSubscriptionsAliasesRestClient = new BillingSubscriptionsAliases(_billingSubscriptionsAliasesClientDiagnostics, Pipeline, Endpoint, billingSubscriptionAliasApiVersion ?? "2024-04-01");
+            _billingSubscriptionsAliasesRestClient = new BillingSubscriptionsAliases(_billingSubscriptionsAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingSubscriptionAliasApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -611,5 +612,35 @@ namespace Azure.ResourceManager.Billing
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Lists the subscription aliases for a billing account. The operation is supported for seat based billing subscriptions.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliasesOperation IdBillingSubscriptionsAliases_ListByBillingAccountDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionAliasResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<BillingSubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(includeDeleted: default, filter: default, orderBy: default, maxCount: default, skip: default, count: default, search: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the subscription aliases for a billing account. The operation is supported for seat based billing subscriptions.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliasesOperation IdBillingSubscriptionsAliases_ListByBillingAccountDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionAliasResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<BillingSubscriptionAliasResource> GetAll(CancellationToken cancellationToken)
+        {
+            return GetAll(includeDeleted: default, filter: default, orderBy: default, maxCount: default, skip: default, count: default, search: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

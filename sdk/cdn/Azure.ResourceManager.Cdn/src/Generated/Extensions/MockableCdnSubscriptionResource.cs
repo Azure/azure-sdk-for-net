@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics WebAgentsClientDiagnostics => _webAgentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebAgents WebAgentsRestClient => _webAgentsRestClient ??= new WebAgents(WebAgentsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private WebAgents WebAgentsRestClient => _webAgentsRestClient ??= new WebAgents(WebAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ResourceUsageClientDiagnostics => _resourceUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceUsage ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsage(ResourceUsageClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ResourceUsage ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsage(ResourceUsageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.

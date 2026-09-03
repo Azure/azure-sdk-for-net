@@ -15,6 +15,7 @@ namespace Azure.AI.Projects
             InputItemWebSearchToolCallStatus.Searching => "searching",
             InputItemWebSearchToolCallStatus.Completed => "completed",
             InputItemWebSearchToolCallStatus.Failed => "failed",
+            InputItemWebSearchToolCallStatus.Incomplete => "incomplete",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemWebSearchToolCallStatus value.")
         };
 
@@ -36,6 +37,10 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
             {
                 return InputItemWebSearchToolCallStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            {
+                return InputItemWebSearchToolCallStatus.Incomplete;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InputItemWebSearchToolCallStatus value.");
         }

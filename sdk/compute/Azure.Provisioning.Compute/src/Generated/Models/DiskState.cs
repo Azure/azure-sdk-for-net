@@ -13,22 +13,22 @@ namespace Azure.Provisioning.Compute
     public enum DiskState
     {
         /// <summary> The disk is not being used and can be attached to a VM. </summary>
-        Unattached,
+        Unattached = 0,
         /// <summary> The disk is currently attached to a running VM. </summary>
-        Attached,
+        Attached = 1,
         /// <summary> The disk is attached to a stopped-deallocated VM. </summary>
-        Reserved,
+        Reserved = 2,
         /// <summary> The disk is attached to a VM which is in hibernated state. </summary>
-        Frozen,
+        Frozen = 3,
         /// <summary> The disk currently has an Active SAS Uri associated with it. </summary>
         [DataMember(Name = "ActiveSAS")]
-        ActiveSas,
+        ActiveSas = 4,
         /// <summary> The disk is attached to a VM in hibernated state and has an active SAS URI associated with it. </summary>
         [DataMember(Name = "ActiveSASFrozen")]
-        ActiveSasFrozen,
+        ActiveSasFrozen = 5,
         /// <summary> A disk is ready to be created by upload by requesting a write token. </summary>
-        ReadyToUpload,
+        ReadyToUpload = 6,
         /// <summary> A disk is created for upload and a write token has been issued for uploading to it. </summary>
-        ActiveUpload
+        ActiveUpload = 7
     }
 }

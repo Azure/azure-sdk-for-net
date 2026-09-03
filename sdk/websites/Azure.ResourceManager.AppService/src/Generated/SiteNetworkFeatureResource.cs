@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteNetworkFeatureApiVersion);
             _networkFeaturesOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _networkFeaturesOperationGroupRestClient = new NetworkFeaturesOperationGroup(_networkFeaturesOperationGroupClientDiagnostics, Pipeline, Endpoint, siteNetworkFeatureApiVersion ?? "2026-03-15");
+            _networkFeaturesOperationGroupRestClient = new NetworkFeaturesOperationGroup(_networkFeaturesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteNetworkFeatureApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

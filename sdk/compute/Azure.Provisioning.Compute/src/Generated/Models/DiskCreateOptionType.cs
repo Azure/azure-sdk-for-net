@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Compute
     public enum DiskCreateOptionType
     {
         /// <summary> FromImage. </summary>
-        FromImage,
+        FromImage = 0,
         /// <summary> Empty. </summary>
-        Empty,
+        Empty = 1,
         /// <summary> Attach. </summary>
-        Attach,
+        Attach = 2,
         /// <summary> Copy. </summary>
-        Copy,
+        Copy = 3,
         /// <summary> Restore. </summary>
-        Restore
+        Restore = 4
     }
 }

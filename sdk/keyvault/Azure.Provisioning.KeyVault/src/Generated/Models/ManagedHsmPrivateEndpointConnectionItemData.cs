@@ -59,7 +59,7 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                return Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
 

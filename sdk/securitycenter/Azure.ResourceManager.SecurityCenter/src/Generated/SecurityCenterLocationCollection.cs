@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityCenterLocationResource.ResourceType, out string securityCenterLocationApiVersion);
             _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
             ValidateResourceId(id);
         }
 

@@ -48,27 +48,27 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Endpoint, "2026-03-15-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
 
         private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Endpoint, "2026-03-15-preview");
+        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2026-03-15-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
 
         private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineSizes VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizes(VirtualMachineSizesClientDiagnostics, Pipeline, Endpoint, "2026-03-15-preview");
+        private VirtualMachineSizes VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizes(VirtualMachineSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
 
         private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Quotas QuotasRestClient => _quotasRestClient ??= new Quotas(QuotasClientDiagnostics, Pipeline, Endpoint, "2026-03-15-preview");
+        private Quotas QuotasRestClient => _quotasRestClient ??= new Quotas(QuotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
 
         private ClientDiagnostics PTUQuotaClientDiagnostics => _ptuQuotaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PTUQuota PTUQuotaRestClient => _ptuQuotaRestClient ??= new PTUQuota(PTUQuotaClientDiagnostics, Pipeline, Endpoint, "2026-03-15-preview");
+        private PTUQuota PTUQuotaRestClient => _ptuQuotaRestClient ??= new PTUQuota(PTUQuotaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.

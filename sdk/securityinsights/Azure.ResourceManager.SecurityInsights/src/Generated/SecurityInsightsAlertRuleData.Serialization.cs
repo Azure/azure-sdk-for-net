@@ -15,7 +15,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Alert rule. </summary>
+    /// <summary>
+    /// Alert rule.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="ThreatIntelligenceAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/>, and <see cref="NrtAlertRule"/>.
+    /// </summary>
     public partial class SecurityInsightsAlertRuleData : ResourceData, IJsonModel<SecurityInsightsAlertRuleData>
     {
         /// <param name="data"> The data to parse. </param>

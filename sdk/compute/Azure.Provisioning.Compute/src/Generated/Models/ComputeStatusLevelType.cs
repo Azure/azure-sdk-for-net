@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ComputeStatusLevelType
     {
         /// <summary> Info. </summary>
-        Info,
+        Info = 0,
         /// <summary> Warning. </summary>
-        Warning,
+        Warning = 1,
         /// <summary> Error. </summary>
-        Error
+        Error = 2
     }
 }

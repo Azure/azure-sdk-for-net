@@ -14,11 +14,11 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> VmGuestStateOnly. </summary>
         [DataMember(Name = "VMGuestStateOnly")]
-        VmGuestStateOnly,
+        VmGuestStateOnly = 0,
         /// <summary> DiskWithVmGuestState. </summary>
         [DataMember(Name = "DiskWithVMGuestState")]
-        DiskWithVmGuestState,
+        DiskWithVmGuestState = 1,
         /// <summary> NonPersistedTPM. </summary>
-        NonPersistedTPM
+        NonPersistedTPM = 2
     }
 }
