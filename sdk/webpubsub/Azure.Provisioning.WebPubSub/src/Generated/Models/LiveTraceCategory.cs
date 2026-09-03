@@ -14,6 +14,7 @@ namespace Azure.Provisioning.WebPubSub
     public partial class LiveTraceCategory : ProvisionableConstruct
     {
         private BicepValue<string> _name;
+        private BicepValue<string> _isEnabled;
 
         /// <summary> Creates a new LiveTraceCategory. </summary>
         public LiveTraceCategory()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.WebPubSub
             }
         }
 
+        /// <summary> Gets or sets the IsEnabled. </summary>
+        public BicepValue<string> IsEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for LiveTraceCategory. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _isEnabled = DefineProperty<string>(nameof(IsEnabled), new string[] { "enabled" });
             DefineAdditionalProperties();
         }
 

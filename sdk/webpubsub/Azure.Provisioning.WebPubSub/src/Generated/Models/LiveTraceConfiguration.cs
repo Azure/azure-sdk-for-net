@@ -13,11 +13,27 @@ namespace Azure.Provisioning.WebPubSub
     /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
     public partial class LiveTraceConfiguration : ProvisionableConstruct
     {
+        private BicepValue<string> _isEnabled;
         private BicepList<LiveTraceCategory> _categories;
 
         /// <summary> Creates a new LiveTraceConfiguration. </summary>
         public LiveTraceConfiguration()
         {
+        }
+
+        /// <summary> Gets or sets the IsEnabled. </summary>
+        public BicepValue<string> IsEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Categories. </summary>
@@ -39,6 +55,7 @@ namespace Azure.Provisioning.WebPubSub
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _isEnabled = DefineProperty<string>(nameof(IsEnabled), new string[] { "enabled" });
             _categories = DefineListProperty<LiveTraceCategory>(nameof(Categories), new string[] { "categories" });
             DefineAdditionalProperties();
         }
