@@ -1,0 +1,4 @@
+directory: specification/automation/Automation.Management
+commit: bece1f1405d4c678a8c07e6cc6734cd0606c392f
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
