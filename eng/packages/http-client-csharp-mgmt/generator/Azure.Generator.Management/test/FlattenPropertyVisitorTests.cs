@@ -348,6 +348,59 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestSafeFlattenIgnoresInternalLastContractWrapperProperty()
+        {
+            var skuModel = InputFactory.Model(
+                "TestSku",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name")]);
+            var skuProperty = InputFactory.Property("sku", skuModel, serializedName: "sku");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [skuProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, skuModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var skuProvider = plugin.Object.TypeFactory.CreateModel(skuModel)!;
+
+            var lastContractView = new TestTypeView(parentProvider.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Internal,
+                    skuProvider.Type,
+                    "Sku",
+                    new AutoPropertyBody(true),
+                    lastContractView),
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(string),
+                    "SkuName",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            var sku = parentProvider.Properties.Single(p => p.Name == "Sku");
+            Assert.That(sku.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.False);
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Contain("SkuName"));
+        }
+
+        [Test]
         public void TestFlattenedCollectionPreservesLastContractSetter()
         {
             var stagesProperty = InputFactory.Property("stages", InputFactory.Array(InputPrimitiveType.String), isRequired: true, serializedName: "stages");

@@ -776,6 +776,7 @@ namespace Azure.Generator.Management.Visitors
         private static bool ShouldPreserveLastContractProperty(ModelProvider model, PropertyProvider property)
         {
             return model.LastContractView?.Properties.Any(p =>
+                IsPublicApi(p.Modifiers) &&
                 p.Name == property.Name &&
                 p.Type.WithNullable(false).Equals(property.Type.WithNullable(false))) == true;
         }
@@ -784,6 +785,10 @@ namespace Azure.Generator.Management.Visitors
         {
             return model.LastContractView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
         }
+
+        private static bool IsPublicApi(MethodSignatureModifiers modifiers)
+            => (modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected)) &&
+                !modifiers.HasFlag(MethodSignatureModifiers.Private);
 
         private static string ResolveFlattenedDateTimePropertyName(
             ModelProvider model,
