@@ -9,11 +9,28 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    [CodeGenSuppress("ReservationType")]
     public partial class CapacityReservationGroupPatch
     {
+        /// <summary> Indicates the type of capacity reservation. </summary>
+        [CodeGenMember("ReservationType")]
+        public CapacityReservationType? ReservationType
+        {
+            get => Properties is null ? default : Properties.ReservationType;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                Properties.ReservationType = value;
+            }
+        }
+
         /// <summary> A list of all capacity reservation instance views. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations

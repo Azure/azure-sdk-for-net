@@ -5,10 +5,7 @@
 ### Features Added
 
 - Upgraded Compute API version to `2026-04-01`.
-
-### Breaking Changes
-
-- Changed the type of `CapacityReservationGroupData.ReservationType` and `CapacityReservationGroupPatch.ReservationType` from `CapacityReservationType?` to `ReservationType?`.
+- Added the `ReservationType` model for capacity reservation groups.
 
 ## 1.16.0 (2026-07-01)
 
