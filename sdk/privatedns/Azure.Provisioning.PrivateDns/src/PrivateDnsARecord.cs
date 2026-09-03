@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PrivateDns;
 
+// The shared properties model includes every record kind; expose only A records on this resource.
 [CodeGenSuppress("PrivateDnsAaaaRecords")]
 [CodeGenSuppress("PrivateDnsMXRecords")]
 [CodeGenSuppress("PrivateDnsPtrRecords")]

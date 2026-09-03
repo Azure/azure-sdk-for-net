@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using Azure.Core;
 using Azure.Provisioning.Primitives;
@@ -13,6 +13,7 @@ namespace Azure.Provisioning.PrivateDns;
 /// <summary>
 /// PrivateDnsSoaRecord.
 /// </summary>
+// The shared properties model includes every record kind; expose only the SOA record on this resource.
 [CodeGenSuppress("PrivateDnsARecords")]
 [CodeGenSuppress("PrivateDnsAaaaRecords")]
 [CodeGenSuppress("PrivateDnsMXRecords")]

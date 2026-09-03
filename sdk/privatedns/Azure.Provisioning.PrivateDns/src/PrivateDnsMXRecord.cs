@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,7 @@ namespace Azure.Provisioning.PrivateDns;
 /// <summary>
 /// PrivateDnsMXRecord.
 /// </summary>
+// The shared properties model includes every record kind; expose only MX records on this resource.
 [CodeGenSuppress("PrivateDnsARecords")]
 [CodeGenSuppress("PrivateDnsAaaaRecords")]
 [CodeGenSuppress("PrivateDnsPtrRecords")]
