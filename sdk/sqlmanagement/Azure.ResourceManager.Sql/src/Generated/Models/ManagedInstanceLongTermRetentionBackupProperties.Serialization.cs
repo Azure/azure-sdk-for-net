@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(BackupExpiresOn))
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
-                writer.WriteStringValue(BackupExpireOn.Value, "O");
+                writer.WriteStringValue(BackupExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
             string databaseName = default;
             DateTimeOffset? databaseDeletedOn = default;
             DateTimeOffset? backupOn = default;
-            DateTimeOffset? backupExpireOn = default;
+            DateTimeOffset? backupExpiresOn = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    backupExpireOn = prop.Value.GetDateTimeOffset("O");
+                    backupExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupStorageRedundancy"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Models
                 databaseName,
                 databaseDeletedOn,
                 backupOn,
-                backupExpireOn,
+                backupExpiresOn,
                 backupStorageRedundancy,
                 backupStorageAccessTier,
                 additionalBinaryDataProperties);
