@@ -25,29 +25,14 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterConfiguration"/>. </summary>
         /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
-        /// <param name="invocationsModeration">
-        /// Author-declared configuration telling the platform where user/agent text lives in the
-        /// agent-defined invocations request/response bodies, so content-safety guardrails can extract
-        /// and moderate it. Optional; a rai_config without it leaves the invocations path without
-        /// content-safety moderation.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterConfiguration(string raiPolicyName, RaiInvocationModeration invocationsModeration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentFilterConfiguration(string raiPolicyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RaiPolicyName = raiPolicyName;
-            InvocationsModeration = invocationsModeration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the RAI policy to apply. </summary>
         public string RaiPolicyName { get; set; }
-
-        /// <summary>
-        /// Author-declared configuration telling the platform where user/agent text lives in the
-        /// agent-defined invocations request/response bodies, so content-safety guardrails can extract
-        /// and moderate it. Optional; a rai_config without it leaves the invocations path without
-        /// content-safety moderation.
-        /// </summary>
-        public RaiInvocationModeration InvocationsModeration { get; set; }
     }
 }
