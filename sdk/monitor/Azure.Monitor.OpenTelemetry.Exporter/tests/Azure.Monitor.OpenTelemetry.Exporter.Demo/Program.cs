@@ -93,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.WriteLine($"Run id     : {runId}");
             Console.WriteLine($"Activities : {activityCount} requests, each with one dependency");
             Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
-            Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s)");
+            Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");
             Console.WriteLine($"Endpoints  : {(faultEndpoints ? "FAULTED (503 injected)" : "live")}");
             Console.WriteLine();
 

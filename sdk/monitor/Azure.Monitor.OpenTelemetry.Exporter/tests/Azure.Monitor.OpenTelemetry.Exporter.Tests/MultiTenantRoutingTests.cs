@@ -95,8 +95,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 routeBatch[0].TelemetryItems.Select(item => item.InstrumentationKey));
         }
 
+        /// <summary>
+        /// On the routed path they are consumed, so they must not also appear as dimensions.
+        /// </summary>
         [Fact]
-        public void RoutingTagsDoNotReachCustomDimensions()
+        public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
             var routeBatch = Convert(CreateActivity("ikey-a", EastUs));
 
@@ -306,19 +309,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// On the routed path they are consumed, so they must not also appear as dimensions.
-        /// </summary>
-        [Fact]
-        public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
-        {
-            var routeBatch = Convert(CreateActivity("ikey-a", EastUs));
-
-            var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
-            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
-            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
-        }
-
-        /// <summary>
         /// The credential is scoped to the exporter's own audience, and the bearer token policy sits
         /// in the shared pipeline, so it would be attached to requests addressed to hosts named by
         /// telemetry. The combination is refused rather than disclosing the token.
@@ -513,11 +503,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// The non-negotiable constraint: with the gate off nothing about the exported payload
-        /// changes, and with it on only the instrumentation key and the consumed routing tags differ.
+        /// The non-negotiable constraint: routing changes where an envelope goes and nothing about
+        /// how it is built. Both sides use the same key, so this compares the conversion itself;
+        /// the key is covered by <c>RoutedTelemetryNeverCarriesTheExportersOwnInstrumentationKey</c>.
         /// </summary>
         [Fact]
-        public void EnvelopesMatchSingleTenantExceptForTheInstrumentationKey()
+        public void RoutedConversionProducesTheSameEnvelopesAsSingleTenant()
         {
             var corpus = new Func<Activity>[]
             {

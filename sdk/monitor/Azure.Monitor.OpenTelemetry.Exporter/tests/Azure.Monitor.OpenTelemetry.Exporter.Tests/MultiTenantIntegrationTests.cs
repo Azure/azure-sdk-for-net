@@ -92,6 +92,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-c", request.Body, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// One failing stamp must not abandon the groups queued behind it. Endpoint-scoped back-off
+        /// is covered separately in the storage tests: offline storage is disabled here, so there is
+        /// no per-endpoint transmission state for this test to exercise.
+        /// </summary>
         [Fact]
         public void AFailingStampDoesNotStopTheHealthyOnes()
         {
@@ -198,10 +203,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// A stamp answers 404 for a path it does not serve, so a request that lands somewhere the
-        /// API is not cannot be mistaken for a delivered one.
+        /// API is not cannot be mistaken for a delivered one. The failed target must also not be
+        /// remembered: caching it would pin the endpoint to a destination known not to work, and
+        /// nothing would invalidate it because the replay is no longer a redirect.
         /// </summary>
         [Fact]
-        public void ARedirectToAPathTheStampDoesNotServeIsNotTreatedAsDelivered()
+        public void ARedirectToAPathTheStampDoesNotServeIsNeitherDeliveredNorCached()
         {
             var ingestion = new MockIngestion();
             ingestion.SetRedirectOnce(EastUs, EastUs + "not/the/api");
@@ -213,6 +220,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(ExportResult.Failure, result);
             Assert.Equal(2, ingestion.Requests.Count);
             Assert.Equal(EastUs + "not/the/api", ingestion.Requests[1].Uri);
+
+            ingestion.Requests.Clear();
+
+            // The next export goes to the endpoint itself, not to the target that just failed.
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+
+            Assert.Equal(EastUs + "v2.1/track", Assert.Single(ingestion.Requests).Uri);
         }
 
         [Fact]
@@ -300,9 +314,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using (var routed = CreateExporter(ingestion, out _))
             {
-                routed.Export(CreateBatch(
+                var routedRequests = ingestion.Requests.Count;
+
+                var result = routed.Export(CreateBatch(
                     CreateActivity("ikey-east", EastUs),
                     CreateActivity("ikey-west", WestUs)));
+
+                // Asserted so the equality below cannot hold merely because nothing was sent.
+                Assert.Equal(ExportResult.Success, result);
+                Assert.Equal(routedRequests + 2, ingestion.Requests.Count);
             }
 
             Assert.Equal(control, Volatile.Read(ref measurements));
@@ -369,8 +389,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// </summary>
         /// <remarks>
         /// Keyed by the whole endpoint rather than the host, so two tenants behind one gateway that
-        /// differ only by path are distinguishable, and a request to a path no stamp serves is a 404
-        /// rather than a success. Answering 200 to anything let a misrouted request look like a pass.
+        /// differ only by path are distinguishable. A request whose path is not the ingestion API is
+        /// a 404; an unconfigured endpoint that does address the API is a healthy stamp answering
+        /// 200, which is what most tests want.
         /// </remarks>
         private sealed class MockIngestion
         {

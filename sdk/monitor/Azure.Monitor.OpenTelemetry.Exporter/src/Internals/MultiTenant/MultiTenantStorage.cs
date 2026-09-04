@@ -61,6 +61,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// </summary>
         private const long RecountIntervalMilliseconds = 30000;
 
+        /// <summary>
+        /// The staleness allowed before refusing a write or deleting anything. A drain removes blobs
+        /// through the provider without telling this class, so the running total can read high by a
+        /// whole backlog; refusing on that is a permanent drop and evicting on it takes another
+        /// tenant's telemetry to satisfy a shortfall that no longer exists.
+        /// </summary>
+        private const long EvictionRecountIntervalMilliseconds = 1000;
+
         private readonly ConcurrentDictionary<string, EndpointStorage> _partitions = new(StringComparer.Ordinal);
         private readonly ApplicationInsightsRestClient _restClient;
         private readonly ConnectionVars _connectionVars;
@@ -120,7 +128,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return false;
             }
 
-            RecountIfStale();
+            RecountIfStale(RecountIntervalMilliseconds);
+
+            if (TryReserve(buffer.Length))
+            {
+                return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+            }
+
+            // Being over budget is the one moment the total has to be trusted, so re-derive it on a
+            // much shorter leash before anything is refused or deleted on the strength of it.
+            RecountIfStale(EvictionRecountIntervalMilliseconds);
 
             if (TryReserve(buffer.Length))
             {
@@ -153,8 +170,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
                 for (int i = 0; i < candidates.Count && !reserved; i++)
                 {
-                    TryEvict(candidates[i]);
+                    // Checked before each delete, not after: room may have appeared while this writer
+                    // waited for the lock, and evicting first would spend a blob to discover that.
                     reserved = TryReserve(buffer.Length);
+
+                    if (!reserved)
+                    {
+                        TryEvict(candidates[i]);
+                        reserved = TryReserve(buffer.Length);
+                    }
                 }
             }
 
@@ -211,12 +235,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// negative costs one blob of overshoot. Re-deriving is what keeps the drift bounded, and it
         /// is why a failed measurement is no longer a permanent bypass of the cap.
         /// </remarks>
-        private void RecountIfStale()
+        private void RecountIfStale(long maxAgeMilliseconds)
         {
             var now = _clock.ElapsedMilliseconds;
             var last = Interlocked.Read(ref _lastRecountMilliseconds);
 
-            if (now - last < RecountIntervalMilliseconds)
+            if (now - last < maxAgeMilliseconds)
             {
                 return;
             }

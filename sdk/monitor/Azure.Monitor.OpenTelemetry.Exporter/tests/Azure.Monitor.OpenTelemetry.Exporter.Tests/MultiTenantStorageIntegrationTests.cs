@@ -81,6 +81,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             partition.TransmissionStateManager.CloseTransmission();
             partition.TransmitFromStorageHandler.Drain();
 
+            // Asserted before reading the last request: the failed export already carries the same
+            // endpoint and key, so without this a drain that did nothing would pass.
+            Assert.Equal(2, ingestion.Requests.Count);
+
             var replay = ingestion.Requests.Last();
             Assert.Equal(EastUs + "v2.1/track", replay.Uri);
             Assert.Contains("ikey-east", replay.Body, StringComparison.Ordinal);
@@ -115,6 +119,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             partition.TransmissionStateManager.ResetConsecutiveErrors();
             partition.TransmissionStateManager.CloseTransmission();
             partition.TransmitFromStorageHandler.Drain();
+
+            Assert.Equal(2, ingestion.Requests.Count);
 
             var replay = ingestion.Requests.Last();
             Assert.Equal(EastUs + "v2.1/track", replay.Uri);

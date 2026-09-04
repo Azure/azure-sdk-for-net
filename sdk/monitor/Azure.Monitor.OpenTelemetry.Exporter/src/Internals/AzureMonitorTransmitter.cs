@@ -242,11 +242,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     waitMilliseconds = GetRemainingDrainWait();
 
-                    // Recomposing is only worth its risk when there are partitions the earlier
-                    // composite could not have seen. Otherwise reuse what is already running: a
-                    // composite can complete after its inner drain does, and recomposing in that
-                    // window starts a fresh pass with a budget that may already be spent, leaving
-                    // the pipeline to be disposed underneath it.
+                    // Partitions can be created after an earlier composite was built, so with routed
+                    // storage present the drain is recomposed to pick them up. Without it there is
+                    // nothing new to gather: reuse what is running, because a composite completes
+                    // after its inner drain does, and starting a fresh pass in that window spends a
+                    // budget that may already be gone and leaves the pipeline disposed underneath it.
                     if (_multiTenantStorage == null)
                     {
                         drain = existing;

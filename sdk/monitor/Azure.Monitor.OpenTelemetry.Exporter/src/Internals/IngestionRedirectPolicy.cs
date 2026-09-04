@@ -107,6 +107,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     cacheExpirationDuration = _defaultCacheExpirationDuration;
                 }
 
+                // Only a target that answered is worth remembering. Caching one that failed pins
+                // every later request for this endpoint to a destination known not to work, for the
+                // full cache lifetime, with nothing to invalidate it: the replayed request is not a
+                // redirect, so this loop never runs again to correct it.
+                if (!IsRedirection(response.Status) && response.Status >= 400)
+                {
+                    break;
+                }
+
                 _cache.Set(originKey, redirectUri, cacheExpirationDuration);
 
                 redirectCount++;
