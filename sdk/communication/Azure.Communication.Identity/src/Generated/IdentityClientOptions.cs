@@ -14,7 +14,7 @@ namespace Azure.Communication.Identity
 {
     internal partial class IdentityClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.Vc2025_06_30;
+        private const ServiceVersion LatestVersion = ServiceVersion.Vc2026_09_23;
 
         /// <summary> Initializes a new instance of IdentityClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -23,6 +23,7 @@ namespace Azure.Communication.Identity
             Version = version switch
             {
                 ServiceVersion.Vc2025_06_30 => "2025-06-30",
+                ServiceVersion.Vc2026_09_23 => "2026-09-23",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -33,7 +34,7 @@ namespace Azure.Communication.Identity
         [Experimental("SCME0002")]
         internal IdentityClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2025-06-30";
+            Version = "2026-09-23";
             if (section is null || !section.Exists())
             {
                 return;
@@ -54,7 +55,9 @@ namespace Azure.Communication.Identity
         internal enum ServiceVersion
         {
             /// <summary> Communication Identity 2025-06-30 api version. </summary>
-            Vc2025_06_30 = 1
+            Vc2025_06_30 = 1,
+            /// <summary> Communication Identity 2026-09-23 api version. </summary>
+            Vc2026_09_23 = 2
         }
     }
 }
