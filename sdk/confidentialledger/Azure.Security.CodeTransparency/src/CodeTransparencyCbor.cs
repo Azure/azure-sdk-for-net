@@ -13,7 +13,7 @@ namespace Azure.Security.CodeTransparency
     /// absence, or unexpected CBOR shapes they return an empty string instead of throwing,
     /// allowing callers to decide whether absence is an error condition.
     /// </summary>
-    public class CborUtils
+    public static class CodeTransparencyCbor
     {
         /// <summary>
         /// Reads a CBOR-encoded map and returns the text string value associated with the specified key.
