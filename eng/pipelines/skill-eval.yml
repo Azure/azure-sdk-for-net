@@ -1,5 +1,5 @@
 # Manual probe for running the synced shared skill evals through the common Vally archetype.
-# This starts with one deterministic mock suite; it is report-only and has no CI or PR trigger.
+# This runs all synced shared-skill suites against the mock MCP; it is report-only and has no CI or PR trigger.
 
 trigger: none
 
@@ -25,6 +25,7 @@ extends:
     toolsRepo: azure-sdk-tools
     vallyRoot: .github/skills
     evalGlobs:
-      - 'azsdk-common-generate-sdk-locally/evals/eval.yaml'
+      - 'azsdk-common-*/evals/eval.yaml'
+      - 'azsdk-common-*/evals/*.eval.yaml'
     failOnFailedTests: false
     shardTimeoutInMinutes: 20
