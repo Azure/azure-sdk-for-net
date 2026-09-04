@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         //         FaultKind = "Zone",
         //     };
 
-        //     FaultSimulationContentWrapper faultSimulationContentWrapper = new FaultSimulationContentWrapper(content);
+        //     StartFaultSimulationContent faultSimulationContentWrapper = new StartFaultSimulationContent(content);
 
         //     try
         //     {
