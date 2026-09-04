@@ -60,7 +60,7 @@
     "@typespec/openapi": "1.15.0",
     "@typespec/rest": "0.85.0",
     "@typespec/spec-api": "0.1.0-alpha.15",
-    "@typespec/spector": "0.1.0-alpha.26",
+    "@typespec/spector": "0.1.0-alpha.27-dev.1",
     "@typespec/sse": "0.85.0",
     "@typespec/streams": "0.85.0",
     "@typespec/tspd": "0.77.0",
