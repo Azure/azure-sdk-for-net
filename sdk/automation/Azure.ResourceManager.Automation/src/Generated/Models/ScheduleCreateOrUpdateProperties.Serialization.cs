@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(ExpireOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(Interval))
             {
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string description = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? expiresOn = default;
             BinaryData interval = default;
             AutomationScheduleFrequency frequency = default;
             string timeZone = default;
@@ -174,17 +174,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        expireOn = null;
+                        expiresOn = null;
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("interval"u8))
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             return new ScheduleCreateOrUpdateProperties(
                 description,
-                startOn,
-                expireOn,
+                startsOn,
+                expiresOn,
                 interval,
                 frequency,
                 timeZone,
