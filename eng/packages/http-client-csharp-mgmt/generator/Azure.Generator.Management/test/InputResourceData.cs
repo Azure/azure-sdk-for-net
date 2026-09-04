@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -25,6 +25,10 @@ namespace Azure.Generator.Management.Tests.Common
             {
                 properties.Add(InputFactory.Property("zones", InputFactory.Array(InputPrimitiveType.String), isReadOnly: false));
             }
+            if (additionalProperties is not null)
+            {
+                properties.AddRange(additionalProperties);
+            }
 
             var usage = InputModelTypeUsage.Output | InputModelTypeUsage.Json;
             if (isInputModel)
@@ -35,6 +39,7 @@ namespace Azure.Generator.Management.Tests.Common
             var responseModel = InputFactory.Model(ResourceModelName,
                         usage: usage,
                         properties: properties,
+                        baseModel: baseModel,
                         decorators: [],
                         isDynamicModel: isDynamicModel);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
@@ -94,7 +99,7 @@ namespace Azure.Generator.Management.Tests.Common
                 decorators: [armProviderDecorator],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
 
-            return (client, [responseModel]);
+            return (client, baseModel is null ? [responseModel] : [responseModel, baseModel]);
         }
 
         /// <summary>
