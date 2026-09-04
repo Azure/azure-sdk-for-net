@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Azure Monitor now uses 100% trace sampling by default while preserving explicit sampler environment settings. Azure SDK and outbound `HttpClient` dependency spans are disabled by default and can be re-enabled through `AgentHostBuilder.ConfigureTracing`.
+
 ## 1.0.0-beta.28 (2026-08-12)
 
 ### Features Added
