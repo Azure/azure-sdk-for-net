@@ -3,12 +3,12 @@
 ## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
+- Upgraded to API version `2026-09-01-preview`.
+- Added Instance Mix support through `SkuProfile`, ranked VM sizes, and allocation strategies.
+- Added configurable caching, write acceleration, IOPS, and throughput for primary and additional data disks.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Expanded the `NodeTypeVmssDataDisk` and `ServiceFabricManagedNodeTypeData` model factory methods with Instance Mix and data disk configuration parameters. Callers using positional arguments must update for the new parameter order; named arguments and object initializers are recommended.
 
 ## 1.4.0-beta.1 (2026-09-03)
 

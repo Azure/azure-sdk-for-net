@@ -862,6 +862,91 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
+        /// <summary> Specifies the sku profile for the node type. This allows specifying multiple VM sizes and an allocation strategy for Instance Mix scenarios. </summary>
+        public SkuProfile SkuProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkuProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.SkuProfile = value;
+            }
+        }
+
+        /// <summary> Specifies the caching requirements for the primary Service Fabric data disk. Possible values include: None, ReadOnly, ReadWrite. </summary>
+        public DiskCachingType? DataDiskCaching
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataDiskCaching;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.DataDiskCaching = value;
+            }
+        }
+
+        /// <summary> Specifies whether write accelerator should be enabled or disabled on the primary Service Fabric data disk. </summary>
+        public bool? DataDiskWriteAcceleratorEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataDiskWriteAcceleratorEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.DataDiskWriteAcceleratorEnabled = value;
+            }
+        }
+
+        /// <summary> Specifies the Read-Write IOPS for the primary Service Fabric data disk. </summary>
+        public int? DataDiskIOPSReadWrite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataDiskIOPSReadWrite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.DataDiskIOPSReadWrite = value;
+            }
+        }
+
+        /// <summary> Specifies the bandwidth in MB per second for the primary Service Fabric data disk. </summary>
+        public int? DataDiskMBpsReadWrite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataDiskMBpsReadWrite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.DataDiskMBpsReadWrite = value;
+            }
+        }
+
         /// <summary> The scale in policy mode for a node type. </summary>
         public ScaleInPolicyMode? ScaleInMode
         {

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             TryGetApiVersion(ResourceType, out string serviceFabricManagedNodeTypeApiVersion);
             _nodeTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _nodeTypesRestClient = new NodeTypes(_nodeTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-05-01-preview");
+            _nodeTypesRestClient = new NodeTypes(_nodeTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-09-01-preview");
             _nodeTypeSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _nodeTypeSkusRestClient = new NodeTypeSkus(_nodeTypeSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-05-01-preview");
+            _nodeTypeSkusRestClient = new NodeTypeSkus(_nodeTypeSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1516,7 +1516,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

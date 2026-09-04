@@ -134,6 +134,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(ServiceResourceList))]
     [ModelReaderWriterBuildable(typeof(ServiceTypeHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(SingletonPartitionScheme))]
+    [ModelReaderWriterBuildable(typeof(SkuProfile))]
+    [ModelReaderWriterBuildable(typeof(SkuProfileVmSize))]
     [ModelReaderWriterBuildable(typeof(StatefulServiceProperties))]
     [ModelReaderWriterBuildable(typeof(StatelessServiceProperties))]
     [ModelReaderWriterBuildable(typeof(Models.SubResource))]
