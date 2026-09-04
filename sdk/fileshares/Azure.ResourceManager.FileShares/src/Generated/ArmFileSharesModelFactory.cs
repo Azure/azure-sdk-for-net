@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.FileShares.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFileSharesModelFactory
     {
+        /// <summary> File share resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 default);
         }
 
+        /// <summary> Properties specific to the NFS protocol. </summary>
         /// <param name="rootSquash"> Root squash defines how root users on clients are mapped to the NFS share. </param>
         /// <param name="encryptionInTransitRequired"> Encryption in transit defines whether data is encrypted for NFS shares. </param>
         /// <returns> A new <see cref="Models.NfsProtocolProperties"/> instance for mocking. </returns>
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new NfsProtocolProperties(rootSquash, encryptionInTransitRequired, default);
         }
 
+        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -122,6 +125,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileSharePrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -131,6 +135,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileSharePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> The type used for update operations of the FileShare. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.FileSharePatch"/> instance for mocking. </returns>
@@ -160,6 +165,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 default);
         }
 
+        /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
         /// <returns> A new <see cref="Models.FileShareNameAvailabilityContent"/> instance for mocking. </returns>
@@ -168,6 +174,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareNameAvailabilityContent(name, @type, default);
         }
 
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
@@ -177,6 +184,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> FileShareSnapshot resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -194,6 +202,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 default);
         }
 
+        /// <summary> FileShareSnapshot properties. </summary>
         /// <param name="snapshotTime"> The FileShareSnapshot time in UTC in string representation. </param>
         /// <param name="initiatorId"> The initiator of the FileShareSnapshot. This is a user-defined value. </param>
         /// <param name="metadata"> The metadata. </param>
@@ -219,6 +228,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareUsageDataResult(new FileShareUsageDataProperties(new LiveSharesUsageData(liveSharesFileShareCount, default), default), default);
         }
 
+        /// <summary> Response structure for file share limits API. </summary>
         /// <param name="properties"> The properties of the file share limits. </param>
         /// <returns> A new <see cref="Models.FileShareLimitsResult"/> instance for mocking. </returns>
         public static FileShareLimitsResult FileShareLimitsResult(FileShareLimitsOutput properties = default)
@@ -226,6 +236,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareLimitsResult(properties, default);
         }
 
+        /// <summary> File share limits API result. </summary>
         /// <param name="limits"> The limits for the file share. </param>
         /// <param name="provisioningConstants"> The provisioning constants for the file share. </param>
         /// <returns> A new <see cref="Models.FileShareLimitsOutput"/> instance for mocking. </returns>
@@ -234,6 +245,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareLimitsOutput(limits, provisioningConstants, default);
         }
 
+        /// <summary> File share-related limits in the specified subscription/location. </summary>
         /// <param name="maxFileShares"> The maximum number of file shares that can be created. </param>
         /// <param name="maxFileShareSnapshots"> The maximum number of snapshots allowed per file share. </param>
         /// <param name="maxFileShareSubnets"> The maximum number of subnets that can be associated with a file share. </param>
@@ -261,6 +273,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 default);
         }
 
+        /// <summary> Constants used for calculating recommended values of file share provisioning properties. </summary>
         /// <param name="baseIOPerSec"> Base IO per second. </param>
         /// <param name="scalarIOPerSec"> Scalar IO per second. </param>
         /// <param name="baseThroughputMiBPerSec"> Base throughput in MiB per second. </param>
@@ -287,6 +300,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareProvisioningRecommendationContent(new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB, default), default);
         }
 
+        /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>
         /// <param name="properties"> The properties of the file share provisioning recommendation output. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationResult"/> instance for mocking. </returns>
         public static FileShareProvisioningRecommendationResult FileShareProvisioningRecommendationResult(FileShareProvisioningRecommendationOutputProperties properties = default)
@@ -294,6 +308,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareProvisioningRecommendationResult(properties, default);
         }
 
+        /// <summary> File share provisioning parameters recommendation API result. </summary>
         /// <param name="provisionedIOPerSec"> The recommended value of provisioned IO / sec of the share. </param>
         /// <param name="provisionedThroughputMiBPerSec"> The recommended value of provisioned throughput / sec of the share. </param>
         /// <param name="availableRedundancyOptions"> Redundancy options for the share. </param>
@@ -305,6 +320,7 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareProvisioningRecommendationOutputProperties(provisionedIOPerSec, provisionedThroughputMiBPerSec, (availableRedundancyOptions ?? new ChangeTrackingList<FileShareRedundancyLevel>()).ToList(), default);
         }
 
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -322,6 +338,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
