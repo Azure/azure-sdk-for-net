@@ -605,6 +605,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsPoolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties>
     {
         public DevOpsPoolProperties(int maximumConcurrency, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganizationProfile organizationProfile, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolAgentProfile agentProfile, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile fabricProfile) { }
+        public DevOpsPoolProperties(int maximumConcurrency, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganizationProfile organizationProfile, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolAgentProfile agentProfile, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile fabricProfile, string devCenterProjectResourceId) { }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolAgentProfile AgentProfile { get { throw null; } set { } }
         public string DevCenterProjectResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile FabricProfile { get { throw null; } set { } }
@@ -835,10 +836,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsVmssFabricProfile : Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsVmssFabricProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsVmssFabricProfile>
     {
         public DevOpsVmssFabricProfile(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku sku, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> images) { }
+        public DevOpsVmssFabricProfile(string skuName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> images) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> Images { get { throw null; } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku Sku { get { throw null; } set { } }
+        public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageProfile StorageProfile { get { throw null; } set { } }
         protected override Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
