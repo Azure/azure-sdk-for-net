@@ -849,5 +849,58 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             });
             await eventProcessor.ProcessEventsAsync(partitionContext, events);
         }
+
+        /// <summary>
+        /// When BatchCheckpointFrequency > 1 and no new events arrive for longer than the idle
+        /// checkpoint interval, the next empty ProcessEventsAsync call should force a checkpoint.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_IdleCheckpoint_FiresAfterInterval()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var checkpoints = 0;
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = 5
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
+            {
+                checkpoints++;
+            }).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default, default);
+
+            // Process 3 batches (less than frequency of 5), so no regular checkpoint occurs.
+            for (int i = 0; i < 3; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
+            }
+
+            Assert.AreEqual(0, checkpoints, "No checkpoint should have occurred yet (3 < frequency 5).");
+
+            // Simulate an empty batch arriving before the idle interval — should NOT checkpoint.
+            await eventProcessor.ProcessEventsAsync(partitionContext, Enumerable.Empty<EventData>());
+            Assert.AreEqual(0, checkpoints, "Empty batch before idle interval should not checkpoint.");
+
+            // Backdate _lastBatchProcessedTime to simulate the idle interval having passed.
+            // We use reflection since the field is private.
+            var field = typeof(EventHubListener.PartitionProcessor).GetField("_lastBatchProcessedTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.IsNotNull(field, "Expected private field '_lastBatchProcessedTime' not found.");
+            field.SetValue(eventProcessor, DateTimeOffset.UtcNow - EventHubListener.PartitionProcessor.IdleCheckpointInterval - TimeSpan.FromSeconds(1));
+
+            // Now an empty batch should trigger the idle checkpoint.
+            await eventProcessor.ProcessEventsAsync(partitionContext, Enumerable.Empty<EventData>());
+            Assert.AreEqual(1, checkpoints, "Idle checkpoint should have fired after the interval elapsed.");
+
+            eventProcessor.Dispose();
+        }
     }
 }
