@@ -859,7 +859,7 @@
 
 # PRLabel: %Service Fabric
 /sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
-/sdk/servicefabricmanagedclusters/                                 @waldmannly @a-santamaria
+/sdk/servicefabricmanagedclusters/                                 @juhacket @waldmannly @a-santamaria
 
 # ServiceLabel: %Service Fabric %Mgmt
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
