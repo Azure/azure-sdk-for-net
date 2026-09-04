@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Formats.Cbor;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -79,12 +78,12 @@ namespace Azure.Security.CodeTransparency
 
             string kid = GetRequiredString(jwk, "kid");
             string crv = GetRequiredString(jwk, "crv");
-            (ECCurve curve, int fieldSize) = MapJwkCurve(crv);
+            int fieldSize = GetFieldSize(crv);
 
             byte[] x = NormalizeCoordinate(DecodeBase64Url(jwk, "x"), fieldSize, kid);
             byte[] y = NormalizeCoordinate(DecodeBase64Url(jwk, "y"), fieldSize, kid);
 
-            return CodeTransparencyVerificationKey.FromPublicPoint(kid, curve, x, y);
+            return CodeTransparencyVerificationKey.FromPublicPoint(kid, crv, x, y);
         }
 
         /// <summary>Parses a COSE_Key_Set (CBOR array of COSE_Key maps).</summary>
@@ -213,33 +212,33 @@ namespace Azure.Security.CodeTransparency
 
             // The service uses textual UTF-8 key IDs.
             string kid = Encoding.UTF8.GetString(kidBytes);
-            (ECCurve curve, int fieldSize) = MapCoseCurve(crv.Value);
+            (string curveName, int fieldSize) = MapCoseCurve(crv.Value);
 
             return CodeTransparencyVerificationKey.FromPublicPoint(
                 kid,
-                curve,
+                curveName,
                 NormalizeCoordinate(x, fieldSize, kid),
                 NormalizeCoordinate(y, fieldSize, kid));
         }
 
-        private static (ECCurve Curve, int FieldSize) MapJwkCurve(string curveName)
+        private static int GetFieldSize(string curveName)
         {
             return curveName switch
             {
-                "P-256" => (ECCurve.NamedCurves.nistP256, 32),
-                "P-384" => (ECCurve.NamedCurves.nistP384, 48),
-                "P-521" => (ECCurve.NamedCurves.nistP521, 66),
+                "P-256" => 32,
+                "P-384" => 48,
+                "P-521" => 66,
                 _ => throw new NotSupportedException($"Unsupported JWK curve '{curveName}'. Only P-256, P-384, and P-521 are supported."),
             };
         }
 
-        private static (ECCurve Curve, int FieldSize) MapCoseCurve(int curve)
+        private static (string CurveName, int FieldSize) MapCoseCurve(int curve)
         {
             return curve switch
             {
-                CoseCurveP256 => (ECCurve.NamedCurves.nistP256, 32),
-                CoseCurveP384 => (ECCurve.NamedCurves.nistP384, 48),
-                CoseCurveP521 => (ECCurve.NamedCurves.nistP521, 66),
+                CoseCurveP256 => ("P-256", 32),
+                CoseCurveP384 => ("P-384", 48),
+                CoseCurveP521 => ("P-521", 66),
                 _ => throw new NotSupportedException($"Unsupported COSE curve '{curve}'. Only P-256 (1), P-384 (2), and P-521 (3) are supported."),
             };
         }

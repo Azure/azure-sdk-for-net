@@ -104,11 +104,11 @@ namespace Azure.Security.CodeTransparency.Tests
             CodeTransparencyVerificationKey fromJwk = CodeTransparencyKeyParser.ParseJwksJson(BuildJwks(BuildJwk("k", crvName, pub))).Keys[0];
             CodeTransparencyVerificationKey fromCose = CodeTransparencyKeyParser.ParseCoseKey(BuildCoseKey("k", coseCrv, pub));
 
-            ECParameters a = fromJwk.ExportPublicParameters();
-            ECParameters b = fromCose.ExportPublicParameters();
+            fromJwk.ExportPublicPoint(out byte[] ax, out byte[] ay);
+            fromCose.ExportPublicPoint(out byte[] bx, out byte[] by);
             Assert.AreEqual(fromJwk.KeyId, fromCose.KeyId);
-            CollectionAssert.AreEqual(a.Q.X, b.Q.X);
-            CollectionAssert.AreEqual(a.Q.Y, b.Q.Y);
+            CollectionAssert.AreEqual(ax, bx);
+            CollectionAssert.AreEqual(ay, by);
         }
 
         [Test]

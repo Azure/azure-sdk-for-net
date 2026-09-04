@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Azure.Security.CodeTransparency
@@ -184,13 +183,13 @@ namespace Azure.Security.CodeTransparency
 
             foreach (CodeTransparencyVerificationKey key in keySet.Keys)
             {
-                ECParameters parameters = key.ExportPublicParameters();
+                key.ExportPublicPoint(out byte[] x, out byte[] y);
 
                 writer.WriteStartObject();
                 writer.WriteString("keyId", key.KeyId);
                 writer.WriteString("curve", key.CurveName);
-                writer.WriteString("x", Convert.ToBase64String(parameters.Q.X));
-                writer.WriteString("y", Convert.ToBase64String(parameters.Q.Y));
+                writer.WriteString("x", Convert.ToBase64String(x));
+                writer.WriteString("y", Convert.ToBase64String(y));
                 writer.WriteEndObject();
             }
 
@@ -220,21 +219,21 @@ namespace Azure.Security.CodeTransparency
         {
             string keyId = GetRequiredString(keyElement, "keyId");
             string curveName = GetRequiredString(keyElement, "curve");
-            (ECCurve curve, int fieldSize) = MapCurve(curveName);
+            int fieldSize = GetFieldSize(curveName);
 
             byte[] x = DecodeCoordinate(keyElement, "x", fieldSize);
             byte[] y = DecodeCoordinate(keyElement, "y", fieldSize);
 
-            return CodeTransparencyVerificationKey.FromPublicPoint(keyId, curve, x, y);
+            return CodeTransparencyVerificationKey.FromPublicPoint(keyId, curveName, x, y);
         }
 
-        private static (ECCurve Curve, int FieldSize) MapCurve(string curveName)
+        private static int GetFieldSize(string curveName)
         {
             return curveName switch
             {
-                "P-256" => (ECCurve.NamedCurves.nistP256, 32),
-                "P-384" => (ECCurve.NamedCurves.nistP384, 48),
-                "P-521" => (ECCurve.NamedCurves.nistP521, 66),
+                "P-256" => 32,
+                "P-384" => 48,
+                "P-521" => 66,
                 _ => throw new NotSupportedException($"Unsupported curve '{curveName}' in serialized trust store."),
             };
         }

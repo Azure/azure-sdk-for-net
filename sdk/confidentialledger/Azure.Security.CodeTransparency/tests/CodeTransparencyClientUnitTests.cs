@@ -884,6 +884,8 @@ namespace Azure.Security.CodeTransparency.Tests
             Response<CodeTransparencyVerificationKeySet> result = client.GetPublicKeys();
 
             Assert.NotNull(result);
+            using ECDsa publicKey = result.Value.Keys.Single().ToECDsa();
+            Assert.AreEqual(384, publicKey.KeySize);
             Assert.AreEqual(2, mockTransport.Requests.Count);
             Assert.AreEqual("https://foo.bar.com/jwks?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
         }

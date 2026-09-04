@@ -26,7 +26,7 @@ namespace Azure.Security.CodeTransparency
 
         private static ResponseClassifier PipelineMessageClassifier201303 => _pipelineMessageClassifier201303 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 303 });
 
-        internal HttpMessage CreateGetPublicKeysV09Request(RequestContext context)
+        internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

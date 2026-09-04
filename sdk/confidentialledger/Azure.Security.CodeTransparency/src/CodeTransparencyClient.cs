@@ -680,12 +680,40 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get the public keys used by the service to verify receipts. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The raw JWK Set JSON response returned from the service. </returns>
-        public virtual Response GetPublicKeys(RequestContext context) => GetPublicKeysV09(context);
+        public virtual Response GetPublicKeys(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary> Get the public keys used by the service to verify receipts. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The raw JWK Set JSON response returned from the service. </returns>
-        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context) => await GetPublicKeysV09Async(context).ConfigureAwait(false);
+        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary> Get the public keys used by the service to verify receipts, normalized to a key set. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

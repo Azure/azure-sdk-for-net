@@ -16,8 +16,8 @@ namespace Azure.Security.CodeTransparency
     public sealed class CodeTransparencyVerificationKey
 #pragma warning restore AZC0035
     {
-        // Only public EC parameters (named curve + public point Q) are ever stored.
-        private readonly ECParameters _publicParameters;
+        private readonly byte[] _x;
+        private readonly byte[] _y;
 
         /// <summary>
         /// Initializes a new instance of <see cref="CodeTransparencyVerificationKey"/> by copying only the
@@ -39,12 +39,9 @@ namespace Azure.Security.CodeTransparency
                 throw new ArgumentNullException(nameof(publicKey));
             }
 
-            // ExportParameters(false) requests only public parameters; private material is never copied.
-            ECParameters exported = publicKey.ExportParameters(false);
-            CoseAlgorithm = MapKeySizeToCoseAlgorithm(publicKey.KeySize);
-
             KeyId = keyId;
-            _publicParameters = ClonePublicParameters(exported);
+            CoseAlgorithm = MapKeySizeToCoseAlgorithm(publicKey.KeySize);
+            CodeTransparencyEcdsaCompatibility.ExportPublicPoint(publicKey, CurveName, out _x, out _y);
         }
 
         /// <summary>
@@ -74,36 +71,28 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         public ECDsa ToECDsa()
         {
-            return ECDsa.Create(ClonePublicParameters(_publicParameters));
+            return CodeTransparencyEcdsaCompatibility.Create(CurveName, _x, _y);
         }
 
         /// <summary>
-        /// Returns an independent defensive copy of the public parameters for internal verification use.
+        /// Returns independent defensive copies of the public coordinates for internal use.
         /// </summary>
-        internal ECParameters ExportPublicParameters()
+        internal void ExportPublicPoint(out byte[] x, out byte[] y)
         {
-            return ClonePublicParameters(_publicParameters);
+            x = (byte[])_x.Clone();
+            y = (byte[])_y.Clone();
         }
 
         /// <summary>
         /// Builds a verification key from a named curve and raw big-endian public coordinates, validating
         /// that the point is on the curve. Used by JWK and COSE_Key normalization.
         /// </summary>
-        internal static CodeTransparencyVerificationKey FromPublicPoint(string keyId, ECCurve curve, byte[] x, byte[] y)
+        internal static CodeTransparencyVerificationKey FromPublicPoint(string keyId, string curveName, byte[] x, byte[] y)
         {
-            var parameters = new ECParameters
-            {
-                Curve = curve,
-                Q = new ECPoint { X = x, Y = y },
-            };
-
             ECDsa ecdsa;
             try
             {
-                // ECDsa.Create validates that the supplied point lies on the curve. Depending on the platform,
-                // an invalid point surfaces as CryptographicException, ArgumentException, or (on Windows CNG)
-                // PlatformNotSupportedException wrapping a CryptographicException.
-                ecdsa = ECDsa.Create(parameters);
+                ecdsa = CodeTransparencyEcdsaCompatibility.Create(curveName, x, y);
             }
             catch (Exception ex) when (ex is CryptographicException || ex is ArgumentException || ex is PlatformNotSupportedException)
             {
@@ -114,20 +103,6 @@ namespace Azure.Security.CodeTransparency
             {
                 return new CodeTransparencyVerificationKey(keyId, ecdsa);
             }
-        }
-
-        private static ECParameters ClonePublicParameters(ECParameters source)
-        {
-            return new ECParameters
-            {
-                Curve = source.Curve,
-                Q = new ECPoint
-                {
-                    X = source.Q.X == null ? null : (byte[])source.Q.X.Clone(),
-                    Y = source.Q.Y == null ? null : (byte[])source.Q.Y.Clone(),
-                },
-                // D (private key) is intentionally never copied.
-            };
         }
 
         private static int MapKeySizeToCoseAlgorithm(int keySize)

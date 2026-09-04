@@ -218,7 +218,12 @@ namespace Azure.Security.CodeTransparency.Tests
 #endif
             // Download the transparent statement
             Response<BinaryData> transparentStatementResponse = client.GetEntryStatement("4.44");
+#if !SNIPPET
+            string filePath = Path.Combine(Path.GetTempPath(), $"transparent_statement_{Guid.NewGuid():N}.cose");
+#endif
+#if SNIPPET
             string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
+#endif
             File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
             // Download and store the public keys for offline verification
             Response<CodeTransparencyVerificationKeySet> ledgerKeys = client.GetPublicKeys();
@@ -229,7 +234,12 @@ namespace Azure.Security.CodeTransparency.Tests
 #if SNIPPET
             allKeys.SetKeys("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
 #endif
+#if !SNIPPET
+            string keysFilePath = Path.Combine(Path.GetTempPath(), $"ledger_keys_{Guid.NewGuid():N}.json");
+#endif
+#if SNIPPET
             string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");
+#endif
             File.WriteAllBytes(keysFilePath, allKeys.ToBinaryData().ToArray());
 
             #endregion Snippet:CodeTransparencyVerification_StoreForOfflineUse
@@ -260,6 +270,10 @@ namespace Azure.Security.CodeTransparency.Tests
             }
 #endif
             #endregion Snippet:CodeTransparencyVerification_Offline
+#if !SNIPPET
+            File.Delete(filePath);
+            File.Delete(keysFilePath);
+#endif
 #endif
         }
 

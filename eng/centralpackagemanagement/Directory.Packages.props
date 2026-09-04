@@ -93,6 +93,7 @@
     <PackageVersion Include="System.Numerics.Vectors" Version="4.6.1" />
     <PackageVersion Include="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageVersion Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+    <PackageVersion Include="System.Security.Cryptography.Cng" Version="5.0.0" />
     <PackageVersion Include="System.Security.Cryptography.Cose" Version="10.0.10" />
     <PackageVersion Include="System.Text.Encodings.Web" Version="10.0.10" />
     <PackageVersion Include="System.Text.Json" Version="10.0.10" />

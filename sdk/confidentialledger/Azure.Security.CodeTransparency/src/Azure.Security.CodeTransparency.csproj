@@ -21,4 +21,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Security.Cryptography.Cose" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Security.Cryptography.Cng" />
+  </ItemGroup>
 </Project>
