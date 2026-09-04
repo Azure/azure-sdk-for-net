@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return FileShareProperties is null ? default : FileShareProperties.AccessTierChangeOn;
+                return FileShareProperties is null ? default : FileShareProperties.AccessTierChangedOn;
             }
         }
 
