@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MinimumTimeStamp;
+                return Properties is null ? default : Properties.MinimumOn;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new SupportPackageRequestProperties();
                 }
-                Properties.MinimumTimeStamp = value;
+                Properties.MinimumOn = value;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MaximumTimeStamp;
+                return Properties is null ? default : Properties.MaximumOn;
             }
             set
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new SupportPackageRequestProperties();
                 }
-                Properties.MaximumTimeStamp = value;
+                Properties.MaximumOn = value;
             }
         }
 

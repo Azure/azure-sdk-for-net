@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
         [WirePath("linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile { get; set; }
+        internal ContainerServiceLinuxProfile LinuxProfile { get; set; }
 
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("windowsProfile")]
@@ -384,6 +384,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                     CreationData = new ContainerServiceCreationData();
                 }
                 CreationData.SourceResourceId = value;
+            }
+        }
+
+        /// <summary> The administrator username to use for Linux VMs. </summary>
+        [WirePath("linuxProfile.adminUsername")]
+        public string LinuxAdminUsername
+        {
+            get
+            {
+                return LinuxProfile is null ? default : LinuxProfile.AdminUsername;
+            }
+            set
+            {
+                LinuxProfile = new ContainerServiceLinuxProfile(value);
             }
         }
 

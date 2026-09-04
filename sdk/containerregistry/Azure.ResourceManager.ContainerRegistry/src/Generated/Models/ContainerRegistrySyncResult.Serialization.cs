@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.ToString());
             }
-            if (Optional.IsDefined(LastSyncStartOn))
+            if (Optional.IsDefined(LastSyncStartsOn))
             {
                 writer.WritePropertyName("lastSyncStartTime"u8);
-                writer.WriteStringValue(LastSyncStartOn.Value, "O");
+                writer.WriteStringValue(LastSyncStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSyncEndOn))
+            if (Optional.IsDefined(LastSyncEndsOn))
             {
                 writer.WritePropertyName("lastSyncEndTime"u8);
-                writer.WriteStringValue(LastSyncEndOn.Value, "O");
+                writer.WriteStringValue(LastSyncEndsOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSuccessfulSyncEndOn))
+            if (Optional.IsDefined(LastSuccessfulSyncEndsOn))
             {
                 writer.WritePropertyName("lastSuccessfulSyncEndTime"u8);
-                writer.WriteStringValue(LastSuccessfulSyncEndOn.Value, "O");
+                writer.WriteStringValue(LastSuccessfulSyncEndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             ContainerRegistrySyncTrigger syncTrigger = default;
             ContainerRegistrySyncState syncState = default;
-            DateTimeOffset? lastSyncStartOn = default;
-            DateTimeOffset? lastSyncEndOn = default;
-            DateTimeOffset? lastSuccessfulSyncEndOn = default;
+            DateTimeOffset? lastSyncStartsOn = default;
+            DateTimeOffset? lastSyncEndsOn = default;
+            DateTimeOffset? lastSuccessfulSyncEndsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    lastSyncStartOn = prop.Value.GetDateTimeOffset("O");
+                    lastSyncStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastSyncEndTime"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    lastSyncEndOn = prop.Value.GetDateTimeOffset("O");
+                    lastSyncEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastSuccessfulSyncEndTime"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    lastSuccessfulSyncEndOn = prop.Value.GetDateTimeOffset("O");
+                    lastSuccessfulSyncEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistrySyncResult(
                 syncTrigger,
                 syncState,
-                lastSyncStartOn,
-                lastSyncEndOn,
-                lastSuccessfulSyncEndOn,
+                lastSyncStartsOn,
+                lastSyncEndsOn,
+                lastSuccessfulSyncEndsOn,
                 additionalBinaryDataProperties);
         }
     }
