@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
+
 ### Other Changes
 
 - Internal: the `SecretClient` transport now delegates to a TypeSpec-generated implementation. Public API surface, default service version, exception contracts, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are all unchanged. `SecretClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end. The TypeSpec emitter incidentally adds one additive public type (`AzureSecurityKeyVaultSecretsContext`, the `ModelReaderWriterContext` required for AOT-friendly `ModelReaderWriter` round-trip), matching the sibling `Azure.Security.KeyVault.Administration` package convention.

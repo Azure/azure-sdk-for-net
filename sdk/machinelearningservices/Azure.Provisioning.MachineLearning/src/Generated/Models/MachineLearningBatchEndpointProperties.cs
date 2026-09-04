@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Batch endpoint configuration. </summary>
-    public partial class MachineLearningBatchEndpointProperties : ProvisionableConstruct
+    public partial class MachineLearningBatchEndpointProperties : MachineLearningEndpointProperties
     {
         private BatchEndpointDefaults _defaults;
         private BicepValue<MachineLearningEndpointProvisioningState> _provisioningState;
-        private BicepValue<MachineLearningEndpointAuthMode> _authMode;
-        private BicepValue<string> _description;
-        private MachineLearningEndpointAuthKeys _keys;
-        private BicepDictionary<string> _properties;
-        private BicepValue<Uri> _scoringUri;
-        private BicepValue<Uri> _swaggerUri;
 
         /// <summary> Creates a new MachineLearningBatchEndpointProperties. </summary>
         public MachineLearningBatchEndpointProperties()
@@ -53,86 +45,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the AuthMode. </summary>
-        public BicepValue<MachineLearningEndpointAuthMode> AuthMode
-        {
-            get
-            {
-                Initialize();
-                return _authMode;
-            }
-            set
-            {
-                Initialize();
-                _authMode.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Keys. </summary>
-        public MachineLearningEndpointAuthKeys Keys
-        {
-            get
-            {
-                Initialize();
-                return _keys;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _keys, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the ScoringUri. </summary>
-        public BicepValue<Uri> ScoringUri
-        {
-            get
-            {
-                Initialize();
-                return _scoringUri;
-            }
-        }
-
-        /// <summary> Gets the SwaggerUri. </summary>
-        public BicepValue<Uri> SwaggerUri
-        {
-            get
-            {
-                Initialize();
-                return _swaggerUri;
-            }
-        }
-
         /// <summary> Gets or sets the DeploymentName. </summary>
         public BicepValue<string> DefaultsDeploymentName
         {
@@ -156,12 +68,6 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _defaults = DefineModelProperty<BatchEndpointDefaults>(nameof(Defaults), new string[] { "defaults" });
             _provisioningState = DefineProperty<MachineLearningEndpointProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _authMode = DefineProperty<MachineLearningEndpointAuthMode>(nameof(AuthMode), new string[] { "authMode" }, isRequired: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _keys = DefineModelProperty<MachineLearningEndpointAuthKeys>(nameof(Keys), new string[] { "keys" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
-            _scoringUri = DefineProperty<Uri>(nameof(ScoringUri), new string[] { "scoringUri" }, isOutput: true);
-            _swaggerUri = DefineProperty<Uri>(nameof(SwaggerUri), new string[] { "swaggerUri" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

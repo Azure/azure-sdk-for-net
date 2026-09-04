@@ -416,10 +416,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("isOutboundOnly"u8);
                 writer.WriteBooleanValue(IsOutboundOnly.Value);
             }
-            if (Optional.IsDefined(EnableResilientEphemeralOsDisk))
+            if (Optional.IsDefined(EnableResilientEphemeralOSDisk))
             {
                 writer.WritePropertyName("enableResilientEphemeralOsDisk"u8);
-                writer.WriteBooleanValue(EnableResilientEphemeralOsDisk.Value);
+                writer.WriteBooleanValue(EnableResilientEphemeralOSDisk.Value);
+            }
+            if (Optional.IsDefined(ScaleInPolicy))
+            {
+                writer.WritePropertyName("scaleInPolicy"u8);
+                writer.WriteObjectValue(ScaleInPolicy, options);
+            }
+            if (Optional.IsDefined(ProxyAgentSettings))
+            {
+                writer.WritePropertyName("proxyAgentSettings"u8);
+                writer.WriteObjectValue(ProxyAgentSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -516,7 +526,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IList<ServiceFabricManagedVmApplication> vmApplications = default;
             bool? isZoneBalanceEnabled = default;
             bool? isOutboundOnly = default;
-            bool? enableResilientEphemeralOsDisk = default;
+            bool? enableResilientEphemeralOSDisk = default;
+            ScaleInPolicy scaleInPolicy = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1040,7 +1052,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    enableResilientEphemeralOsDisk = prop.Value.GetBoolean();
+                    enableResilientEphemeralOSDisk = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("scaleInPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("proxyAgentSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -1102,7 +1132,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 isZoneBalanceEnabled,
                 isOutboundOnly,
-                enableResilientEphemeralOsDisk,
+                enableResilientEphemeralOSDisk,
+                scaleInPolicy,
+                proxyAgentSettings,
                 additionalBinaryDataProperties);
         }
     }

@@ -155,7 +155,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            FeatureType @type = default;
+            FeatureKind @type = default;
             GeoJsonGeometry geometry = default;
             IDictionary<string, TilerInfo> properties = default;
             string id = default;
@@ -165,7 +165,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new FeatureType(prop.Value.GetString());
+                    @type = new FeatureKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("geometry"u8))

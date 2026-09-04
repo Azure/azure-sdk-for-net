@@ -80,7 +80,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         var fabricIQProjectConnectionName = TestEnvironment.FABRIC_IQ_PROJECT_CONNECTION_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        string fabricIQProjectConnectionId = projectClient.Connections.GetConnection(fabricIQProjectConnectionName).Id;
+        string fabricIQProjectConnectionId = projectClient.Connections.GetConnection(fabricIQProjectConnectionName).Value.Id;
         #region Snippet:Sample_CreateAgent_FabricIQ_Sync
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
         {

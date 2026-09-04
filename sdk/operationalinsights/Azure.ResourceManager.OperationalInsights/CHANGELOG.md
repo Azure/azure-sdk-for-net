@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Corrected the names of Summary Logs enum types. The previous names remain available as obsolete compatibility APIs.
+
 ## 1.3.2 (2026-06-23)
 
 ### Other Changes

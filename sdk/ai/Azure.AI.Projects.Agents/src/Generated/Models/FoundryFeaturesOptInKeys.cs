@@ -14,12 +14,14 @@ namespace Azure.AI.Projects.Agents
         private const string SchedulesV1PreviewValue = "Schedules=V1Preview";
         private const string RedTeamsV1PreviewValue = "RedTeams=V1Preview";
         private const string InsightsV1PreviewValue = "Insights=V1Preview";
+        private const string AgentInsightsV1PreviewValue = "AgentInsights=V1Preview";
         private const string MemoryStoresV1PreviewValue = "MemoryStores=V1Preview";
-        private const string RoutinesV1PreviewValue = "Routines=V1Preview";
+        private const string RoutinesV2PreviewValue = "Routines=V2Preview";
         private const string SkillsV1PreviewValue = "Skills=V1Preview";
         private const string DataGenerationJobsV1PreviewValue = "DataGenerationJobs=V1Preview";
         private const string ModelsV1PreviewValue = "Models=V1Preview";
         private const string AgentsOptimizationV2PreviewValue = "AgentsOptimization=V2Preview";
+        private const string ModelRouterControlsV1PreviewValue = "ModelRouterControls=V1Preview";
 
         /// <summary> Initializes a new instance of <see cref="FoundryFeaturesOptInKeys"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,11 +42,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the InsightsV1Preview. </summary>
         public static FoundryFeaturesOptInKeys InsightsV1Preview { get; } = new FoundryFeaturesOptInKeys(InsightsV1PreviewValue);
 
+        /// <summary> Gets the AgentInsightsV1Preview. </summary>
+        public static FoundryFeaturesOptInKeys AgentInsightsV1Preview { get; } = new FoundryFeaturesOptInKeys(AgentInsightsV1PreviewValue);
+
         /// <summary> Gets the MemoryStoresV1Preview. </summary>
         public static FoundryFeaturesOptInKeys MemoryStoresV1Preview { get; } = new FoundryFeaturesOptInKeys(MemoryStoresV1PreviewValue);
 
-        /// <summary> Gets the RoutinesV1Preview. </summary>
-        public static FoundryFeaturesOptInKeys RoutinesV1Preview { get; } = new FoundryFeaturesOptInKeys(RoutinesV1PreviewValue);
+        /// <summary> Gets the RoutinesV2Preview. </summary>
+        public static FoundryFeaturesOptInKeys RoutinesV2Preview { get; } = new FoundryFeaturesOptInKeys(RoutinesV2PreviewValue);
 
         /// <summary> Gets the SkillsV1Preview. </summary>
         public static FoundryFeaturesOptInKeys SkillsV1Preview { get; } = new FoundryFeaturesOptInKeys(SkillsV1PreviewValue);
@@ -57,6 +62,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the AgentsOptimizationV2Preview. </summary>
         public static FoundryFeaturesOptInKeys AgentsOptimizationV2Preview { get; } = new FoundryFeaturesOptInKeys(AgentsOptimizationV2PreviewValue);
+
+        /// <summary> Gets the ModelRouterControlsV1Preview. </summary>
+        public static FoundryFeaturesOptInKeys ModelRouterControlsV1Preview { get; } = new FoundryFeaturesOptInKeys(ModelRouterControlsV1PreviewValue);
 
         /// <summary> Determines if two <see cref="FoundryFeaturesOptInKeys"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

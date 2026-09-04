@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="lastSyncedWithAzureOn"> Customer resource last Azure sync timestamp. </param>
         /// <param name="isEnterpriseManaged"> Customer resource flag for enterprise management as boolean. </param>
         /// <param name="shouldMigrate"> Customer resource flag for migration. </param>
-        /// <param name="resendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
-        /// <param name="verifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
+        /// <param name="shouldResendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
+        /// <param name="shouldVerifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
         /// <param name="verifySignupPhrase"> Customer resource phrase for verifying signup. </param>
         /// <returns> A new <see cref="Models.MccCustomerEntity"/> instance for mocking. </returns>
-        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string contactEmail = default, string contactPhone = default, string contactName = default, bool? isEntitled = default, int? releaseVersion = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, int? synchWithAzureAttemptsCount = default, DateTimeOffset? lastSyncedWithAzureOn = default, bool? isEnterpriseManaged = default, bool? shouldMigrate = default, bool? resendSignupCode = default, bool? verifySignupCode = default, string verifySignupPhrase = default)
+        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string contactEmail = default, string contactPhone = default, string contactName = default, bool? isEntitled = default, int? releaseVersion = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, int? synchWithAzureAttemptsCount = default, DateTimeOffset? lastSyncedWithAzureOn = default, bool? isEnterpriseManaged = default, bool? shouldMigrate = default, bool? shouldResendSignupCode = default, bool? shouldVerifySignupCode = default, string verifySignupPhrase = default)
         {
             return new MccCustomerEntity(
                 fullyQualifiedResourceId,
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 lastSyncedWithAzureOn,
                 isEnterpriseManaged,
                 shouldMigrate,
-                resendSignupCode,
-                verifySignupCode,
+                shouldResendSignupCode,
+                shouldVerifySignupCode,
                 verifySignupPhrase,
                 default);
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="customerPropertiesOverviewMissMbpsMaxOn"> Customer resource peak cache miss throughput timestamp. </param>
         /// <param name="customerPropertiesOverviewCacheNodesHealthyCount"> Customer resource total healthy cache nodes. </param>
         /// <param name="customerPropertiesOverviewCacheNodesUnhealthyCount"> Customer resource total unhealthy cache nodes. </param>
-        /// <param name="signupStatus"> Customer resource signup status as boolean. </param>
+        /// <param name="isSignupComplete"> Customer resource signup status as boolean. </param>
         /// <param name="signupStatusCode"> Customer resource signup status as integer code. </param>
         /// <param name="signupStatusText"> Customer resource signup status as string text. </param>
         /// <param name="signupPhaseStatusCode"> Customer resource signup phase status code as integer. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <returns> A new <see cref="Models.MccCustomerAdditionalProperties"/> instance for mocking. </returns>
-        public static MccCustomerAdditionalProperties MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency = default, float? customerPropertiesOverviewAverageEgressMbps = default, float? customerPropertiesOverviewAverageMissMbps = default, float? customerPropertiesOverviewEgressMbpsMax = default, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = default, float? customerPropertiesOverviewMissMbpsMax = default, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default, int? customerPropertiesOverviewCacheNodesHealthyCount = default, int? customerPropertiesOverviewCacheNodesUnhealthyCount = default, bool? signupStatus = default, int? signupStatusCode = default, string signupStatusText = default, int? signupPhaseStatusCode = default, string signupPhaseStatusText = default, DateTimeOffset? peeringDBLastUpdatedOn = default, string customerOrgName = default, string customerEmail = default, string customerTransitAsn = default, CustomerTransitState? customerTransitState = default, string customerAsn = default, float? customerAsnEstimatedEgressPeekGbps = default, string customerEntitlementSkuId = default, string customerEntitlementSkuGuid = default, string customerEntitlementSkuName = default, DateTimeOffset? customerEntitlementExpiryOn = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
+        public static MccCustomerAdditionalProperties MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency = default, float? customerPropertiesOverviewAverageEgressMbps = default, float? customerPropertiesOverviewAverageMissMbps = default, float? customerPropertiesOverviewEgressMbpsMax = default, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = default, float? customerPropertiesOverviewMissMbpsMax = default, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default, int? customerPropertiesOverviewCacheNodesHealthyCount = default, int? customerPropertiesOverviewCacheNodesUnhealthyCount = default, bool? isSignupComplete = default, int? signupStatusCode = default, string signupStatusText = default, int? signupPhaseStatusCode = default, string signupPhaseStatusText = default, DateTimeOffset? peeringDBLastUpdatedOn = default, string customerOrgName = default, string customerEmail = default, string customerTransitAsn = default, CustomerTransitState? customerTransitState = default, string customerAsn = default, float? customerAsnEstimatedEgressPeekGbps = default, string customerEntitlementSkuId = default, string customerEntitlementSkuGuid = default, string customerEntitlementSkuName = default, DateTimeOffset? customerEntitlementExpiryOn = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
         {
             return new MccCustomerAdditionalProperties(
                 customerPropertiesOverviewCacheEfficiency,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 customerPropertiesOverviewMissMbpsMaxOn,
                 customerPropertiesOverviewCacheNodesHealthyCount,
                 customerPropertiesOverviewCacheNodesUnhealthyCount,
-                signupStatus,
+                isSignupComplete,
                 signupStatusCode,
                 signupStatusText,
                 signupPhaseStatusCode,
@@ -254,6 +254,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="containerConfigurations"> Cache node resource container configuration details. </param>
         /// <param name="cidrCsv"> Cache node resource comma separated values of Cidrs. </param>
         /// <param name="cidrCsvLastUpdatedOn"> Cache node resource last Cidr Csv update timestamp. </param>
+        /// <param name="bgpNetworkInterface"> Cache node resource Bgp network interface. </param>
         /// <param name="bgpCidrCsvLastUpdatedOn"> Cache node resource last Bgp Cidr Csv update timestamp. </param>
         /// <param name="bgpLastReportedOn"> Cache node resource last Bgp report timestamp. </param>
         /// <param name="bgpReviewStateText"> Cache node resource Bgp review state string text in detail. </param>
@@ -278,12 +279,17 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="containerResyncTrigger"> Cache node resource Mcc container configuration details re-sync trigger. </param>
         /// <param name="imageUri"> Cache node resource Mcc Container Id Uri. </param>
         /// <param name="fullyQualifiedDomainName"> FQDN(fully qualified domain name) value of the mcc cache node. </param>
-        /// <param name="autoUpdateRingType"> Auto Update Ring Type which is slow or fast etc. </param>
+        /// <param name="autoUpdateRingType"> Auto Update Ring Type which is stable or beta as new values. slow or fast are legacy from version 2026-06-01. </param>
         /// <param name="autoUpdateRequestedWeek"> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </param>
         /// <param name="autoUpdateRequestedDay"> Customer requested day of week for mcc install of auto update cycle. 0 is default no selection. 1-7 are days of week, 1 is Sunday, 2 is Monday, etc. </param>
         /// <param name="autoUpdateRequestedTime"> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </param>
+        /// <param name="shouldOpenFirewallPort80"> Cache node port firewall rule creation opt-in for port 80 property. </param>
+        /// <param name="shouldOpenFirewallPort443"> Cache node port firewall rule creation opt-in for port 443 property. </param>
+        /// <param name="shouldOpenFirewallPort5000"> Cache node port firewall rule creation opt-in for port 5000 property. </param>
+        /// <param name="shouldOpenFirewallPort5001"> Cache node port firewall rule creation opt-in for port 5001 property. </param>
+        /// <param name="runtimeAccountType"> Connected Cache runtime account type. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeEntity"/> instance for mocking. </returns>
-        public static MccCacheNodeEntity MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string ipAddress = default, string customerIndex = default, string cacheNodeId = default, string cacheNodeName = default, int? customerAsn = default, bool? isEnabled = default, int? maxAllowableEgressInMbps = default, float? maxAllowableProbability = default, string xCid = default, bool? isEnterpriseManaged = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, string category = default, int? releaseVersion = default, DateTimeOffset? lastSyncedWithAzureOn = default, DateTimeOffset? lastUpdatedOn = default, int? synchWithAzureAttemptsCount = default, string containerConfigurations = default, IEnumerable<string> cidrCsv = default, DateTimeOffset? cidrCsvLastUpdatedOn = default, DateTimeOffset? bgpCidrCsvLastUpdatedOn = default, DateTimeOffset? bgpLastReportedOn = default, string bgpReviewStateText = default, MccCacheNodeBgpReviewState? bgpReviewState = default, string bgpReviewFeedback = default, int? bgpNumberOfTimesUpdated = default, int? bgpNumberOfRecords = default, int? bgpCidrBlocksCount = default, int? bgpAddressSpace = default, bool? shouldMigrate = default, int? bgpFileBytesTruncated = default, int? cidrSelectionType = default, bool? isFrozen = default, int? reviewState = default, string reviewStateText = default, string reviewFeedback = default, MccCacheNodeConfigurationState? configurationState = default, string configurationStateText = default, int? addressSpace = default, int? workerConnections = default, DateTimeOffset? workerConnectionsLastUpdatedOn = default, int? containerResyncTrigger = default, Uri imageUri = default, string fullyQualifiedDomainName = default, AutoUpdateRingType? autoUpdateRingType = default, int? autoUpdateRequestedWeek = default, int? autoUpdateRequestedDay = default, string autoUpdateRequestedTime = default)
+        public static MccCacheNodeEntity MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string ipAddress = default, string customerIndex = default, string cacheNodeId = default, string cacheNodeName = default, int? customerAsn = default, bool? isEnabled = default, int? maxAllowableEgressInMbps = default, float? maxAllowableProbability = default, string xCid = default, bool? isEnterpriseManaged = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, string category = default, int? releaseVersion = default, DateTimeOffset? lastSyncedWithAzureOn = default, DateTimeOffset? lastUpdatedOn = default, int? synchWithAzureAttemptsCount = default, string containerConfigurations = default, IEnumerable<string> cidrCsv = default, DateTimeOffset? cidrCsvLastUpdatedOn = default, string bgpNetworkInterface = default, DateTimeOffset? bgpCidrCsvLastUpdatedOn = default, DateTimeOffset? bgpLastReportedOn = default, string bgpReviewStateText = default, MccCacheNodeBgpReviewState? bgpReviewState = default, string bgpReviewFeedback = default, int? bgpNumberOfTimesUpdated = default, int? bgpNumberOfRecords = default, int? bgpCidrBlocksCount = default, int? bgpAddressSpace = default, bool? shouldMigrate = default, int? bgpFileBytesTruncated = default, int? cidrSelectionType = default, bool? isFrozen = default, int? reviewState = default, string reviewStateText = default, string reviewFeedback = default, MccCacheNodeConfigurationState? configurationState = default, string configurationStateText = default, int? addressSpace = default, int? workerConnections = default, DateTimeOffset? workerConnectionsLastUpdatedOn = default, int? containerResyncTrigger = default, Uri imageUri = default, string fullyQualifiedDomainName = default, AutoUpdateRingType? autoUpdateRingType = default, int? autoUpdateRequestedWeek = default, int? autoUpdateRequestedDay = default, string autoUpdateRequestedTime = default, bool? shouldOpenFirewallPort80 = default, bool? shouldOpenFirewallPort443 = default, bool? shouldOpenFirewallPort5000 = default, bool? shouldOpenFirewallPort5001 = default, string runtimeAccountType = default)
         {
             cidrCsv ??= new ChangeTrackingList<string>();
 
@@ -312,6 +318,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 containerConfigurations,
                 (cidrCsv ?? new ChangeTrackingList<string>()).ToList(),
                 cidrCsvLastUpdatedOn,
+                bgpNetworkInterface,
                 bgpCidrCsvLastUpdatedOn,
                 bgpLastReportedOn,
                 bgpReviewStateText,
@@ -340,6 +347,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateRequestedWeek,
                 autoUpdateRequestedDay,
                 autoUpdateRequestedTime,
+                shouldOpenFirewallPort80,
+                shouldOpenFirewallPort443,
+                shouldOpenFirewallPort5000,
+                shouldOpenFirewallPort5001,
+                runtimeAccountType,
                 default);
         }
 
@@ -373,13 +385,25 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateLastTriggeredOn"> Auto update last triggered date time of mcc install. </param>
         /// <param name="creationMethod"> Resource creation method of mcc cache node resource, cli or portal. </param>
         /// <param name="tlsStatus"> Cache node tls certificate status. </param>
+        /// <param name="hostOSEdition"> Operating system edition of the cache node host machine. </param>
+        /// <param name="hostOSVersion"> Operating system version of the cache node host machine. </param>
+        /// <param name="hostOSBuild"> Operating system build of the cache node host machine. </param>
+        /// <param name="distroOSEditionWsl"> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSVersionWsl"> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSBuildWsl"> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="containerOSEdition"> Operating system edition of container used to run the cache node. </param>
+        /// <param name="containerOSVersion"> Operating system version of the container used to run the cache node. </param>
+        /// <param name="containerOSBuild"> Operating system build of the container used to run the cache node. </param>
+        /// <param name="installVersionMsix"> Version of the Windows deployment application used to deploy the cache node. </param>
+        /// <param name="installVersionScript"> Version of the installation scripts used to deploy the cache node. </param>
+        /// <param name="appVersionWsl"> Version of the Windows Subsystem for Linux application version used to run the cache node on the Windows host machine. </param>
         /// <param name="optionalProperty1"> Optional property #1 of Mcc response object. </param>
         /// <param name="optionalProperty2"> Optional property #2 of Mcc response object. </param>
         /// <param name="optionalProperty3"> Optional property #3 of Mcc response object. </param>
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeAdditionalProperties"/> instance for mocking. </returns>
-        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = default, IEnumerable<string> issuesList = default, int? issuesCount = default, MccCacheNodeTlsCertificate currentTlsCertificate = default, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = default, string aggregatedStatusDetails = default, string aggregatedStatusText = default, int? aggregatedStatusCode = default, string productVersion = default, bool? isProvisioned = default, string cacheNodeStateDetailedText = default, string cacheNodeStateShortText = default, int? cacheNodeState = default, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = default, string bgpAsnToIPAddressMapping = default, Uri proxyUri = default, MccCacheNodeProxyRequired? isProxyRequired = default, MccCacheNodeOSType? osType = default, string autoUpdateVersion = default, string updateInfoDetails = default, DateTimeOffset? updateRequestedOn = default, string autoUpdateNextAvailableVersion = default, DateTimeOffset? autoUpdateNextAvailableOn = default, string autoUpdateAppliedVersion = default, string autoUpdateLastAppliedDetails = default, string autoUpdateLastAppliedState = default, DateTimeOffset? autoUpdateLastAppliedOn = default, DateTimeOffset? autoUpdateLastTriggeredOn = default, int? creationMethod = default, string tlsStatus = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
+        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = default, IEnumerable<string> issuesList = default, int? issuesCount = default, MccCacheNodeTlsCertificate currentTlsCertificate = default, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = default, string aggregatedStatusDetails = default, string aggregatedStatusText = default, int? aggregatedStatusCode = default, string productVersion = default, bool? isProvisioned = default, string cacheNodeStateDetailedText = default, string cacheNodeStateShortText = default, int? cacheNodeState = default, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = default, string bgpAsnToIPAddressMapping = default, Uri proxyUri = default, MccCacheNodeProxyRequired? isProxyRequired = default, MccCacheNodeOSType? osType = default, string autoUpdateVersion = default, string updateInfoDetails = default, DateTimeOffset? updateRequestedOn = default, string autoUpdateNextAvailableVersion = default, DateTimeOffset? autoUpdateNextAvailableOn = default, string autoUpdateAppliedVersion = default, string autoUpdateLastAppliedDetails = default, string autoUpdateLastAppliedState = default, DateTimeOffset? autoUpdateLastAppliedOn = default, DateTimeOffset? autoUpdateLastTriggeredOn = default, int? creationMethod = default, string tlsStatus = default, string hostOSEdition = default, string hostOSVersion = default, string hostOSBuild = default, string distroOSEditionWsl = default, string distroOSVersionWsl = default, string distroOSBuildWsl = default, string containerOSEdition = default, string containerOSVersion = default, string containerOSBuild = default, string installVersionMsix = default, string installVersionScript = default, string appVersionWsl = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
         {
             cacheNodePropertiesDetailsIssuesList ??= new ChangeTrackingList<string>();
             issuesList ??= new ChangeTrackingList<string>();
@@ -416,6 +440,18 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateLastTriggeredOn,
                 creationMethod,
                 tlsStatus,
+                hostOSEdition,
+                hostOSVersion,
+                hostOSBuild,
+                distroOSEditionWsl,
+                distroOSVersionWsl,
+                distroOSBuildWsl,
+                containerOSEdition,
+                containerOSVersion,
+                containerOSBuild,
+                installVersionMsix,
+                installVersionScript,
+                appVersionWsl,
                 optionalProperty1,
                 optionalProperty2,
                 optionalProperty3,
@@ -426,17 +462,19 @@ namespace Azure.ResourceManager.ConnectedCache.Models
 
         /// <param name="actionRequired"> Mcc cache node Tls certificate status. </param>
         /// <param name="certificateFileName"> Mcc cache node Tls certificate file name. </param>
+        /// <param name="certType"> Mcc cache node Tls certificate Type. </param>
         /// <param name="thumbprint"> Mcc cache node Tls certificate thumbprint. </param>
         /// <param name="expiryOn"> Mcc cache node Tls certificate expiry date. </param>
         /// <param name="notBeforeOn"> Mcc cache node Tls certificate not before date. </param>
         /// <param name="subject"> Mcc cache node Tls certificate subject name. </param>
         /// <param name="subjectAltName"> Mcc cache node Tls certificate subject alternate name. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeTlsCertificate"/> instance for mocking. </returns>
-        public static MccCacheNodeTlsCertificate MccCacheNodeTlsCertificate(string actionRequired = default, string certificateFileName = default, string thumbprint = default, DateTimeOffset? expiryOn = default, DateTimeOffset? notBeforeOn = default, string subject = default, string subjectAltName = default)
+        public static MccCacheNodeTlsCertificate MccCacheNodeTlsCertificate(string actionRequired = default, string certificateFileName = default, string certType = default, string thumbprint = default, DateTimeOffset? expiryOn = default, DateTimeOffset? notBeforeOn = default, string subject = default, string subjectAltName = default)
         {
             return new MccCacheNodeTlsCertificate(
                 actionRequired,
                 certificateFileName,
+                certType,
                 thumbprint,
                 expiryOn,
                 notBeforeOn,

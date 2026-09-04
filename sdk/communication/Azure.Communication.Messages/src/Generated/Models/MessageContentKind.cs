@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
         /// <summary> The ButtonSet content type. </summary>
         private const string ButtonSetValue = "buttonSet";
         /// <summary> The Url content type. </summary>
-        private const string UrlValue = "url";
+        private const string UriValue = "url";
 
         /// <summary> Initializes a new instance of <see cref="MessageContentKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -58,7 +58,7 @@ namespace Azure.Communication.Messages
         public static MessageContentKind ButtonSet { get; } = new MessageContentKind(ButtonSetValue);
 
         /// <summary> The Url content type. </summary>
-        public static MessageContentKind Url { get; } = new MessageContentKind(UrlValue);
+        public static MessageContentKind Uri { get; } = new MessageContentKind(UriValue);
 
         /// <summary> Determines if two <see cref="MessageContentKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

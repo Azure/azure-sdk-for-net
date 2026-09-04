@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.MachineLearning.Models.CustomService.AdditionalProperties:[T:Azure.ResourceManager.MachineLearning.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.MachineLearning.Models.DockerSetting.AdditionalProperties:[T:Azure.ResourceManager.MachineLearning.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.MachineLearning.Models.EnvironmentVariable.AdditionalProperties:[T:Azure.ResourceManager.MachineLearning.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.MachineLearning.Models.ImageSetting.AdditionalProperties:[T:Azure.ResourceManager.MachineLearning.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspaceGetKeysResult.UserStorageResourceId:[T:Azure.ResourceManager.MachineLearning.WirePathAttribute]</Target>
+  </Suppression>
+</Suppressions>

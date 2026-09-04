@@ -228,7 +228,7 @@ namespace BasicTypeSpec
             }
             writer.WriteEndElement();
             writer.WriteStartElement("createdAt");
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("duration");
             writer.WriteStringValue(Duration, "P");
@@ -392,7 +392,7 @@ namespace BasicTypeSpec
             XmlNestedModel nestedModel = default;
             XmlNestedModel optionalNestedModel = default;
             IDictionary<string, string> metadata = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             TimeSpan duration = default;
             BinaryData data = default;
             IDictionary<string, BinaryData> optionalRecordUnknown = default;
@@ -546,7 +546,7 @@ namespace BasicTypeSpec
                 }
                 if (localName == "createdAt")
                 {
-                    createdAt = child.GetDateTimeOffset("O");
+                    createdOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "duration")
@@ -719,7 +719,7 @@ namespace BasicTypeSpec
                 nestedModel,
                 optionalNestedModel,
                 metadata,
-                createdAt,
+                createdOn,
                 duration,
                 data,
                 optionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),

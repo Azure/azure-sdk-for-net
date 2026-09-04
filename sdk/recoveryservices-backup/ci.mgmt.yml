@@ -5,8 +5,9 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: recoveryservices-backup
-    BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.RecoveryServicesBackup
       safeName: AzureResourceManagerRecoveryServicesBackup
+    - name: Azure.Provisioning.RecoveryServicesBackup
+      safeName: AzureProvisioningRecoveryServicesBackup

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.StandbyPool
     public partial class StandbyVirtualMachinePoolPrediction : ProvisionableConstruct
     {
         private StandbyVirtualMachinePoolForecastValues _forecastValues;
-        private BicepValue<DateTimeOffset> _forecastStartOn;
+        private BicepValue<DateTimeOffset> _forecastStartsOn;
         private BicepValue<string> _forecastInfo;
 
         /// <summary> Creates a new StandbyVirtualMachinePoolPrediction. </summary>
@@ -33,13 +33,13 @@ namespace Azure.Provisioning.StandbyPool
             }
         }
 
-        /// <summary> Gets the ForecastStartOn. </summary>
-        public BicepValue<DateTimeOffset> ForecastStartOn
+        /// <summary> Gets the ForecastStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ForecastStartsOn
         {
             get
             {
                 Initialize();
-                return _forecastStartOn;
+                return _forecastStartsOn;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.StandbyPool
         {
             base.DefineProvisionableProperties();
             _forecastValues = DefineModelProperty<StandbyVirtualMachinePoolForecastValues>(nameof(ForecastValues), new string[] { "forecastValues" }, isOutput: true);
-            _forecastStartOn = DefineProperty<DateTimeOffset>(nameof(ForecastStartOn), new string[] { "forecastStartTime" }, isOutput: true);
+            _forecastStartsOn = DefineProperty<DateTimeOffset>(nameof(ForecastStartsOn), new string[] { "forecastStartTime" }, isOutput: true, format: "O");
             _forecastInfo = DefineProperty<string>(nameof(ForecastInfo), new string[] { "forecastInfo" }, isOutput: true);
             DefineAdditionalProperties();
         }

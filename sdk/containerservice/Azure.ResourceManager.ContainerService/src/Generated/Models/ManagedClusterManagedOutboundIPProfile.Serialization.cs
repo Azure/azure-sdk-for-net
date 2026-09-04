@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Profile of the managed outbound IP resources of the managed cluster. </summary>
-    internal partial class ManagedClusterManagedOutboundIPProfile : IJsonModel<ManagedClusterManagedOutboundIPProfile>
+    public partial class ManagedClusterManagedOutboundIPProfile : IJsonModel<ManagedClusterManagedOutboundIPProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
+            if (Optional.IsDefined(CountIPv6))
+            {
+                writer.WritePropertyName("countIPv6"u8);
+                writer.WriteNumberValue(CountIPv6.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             int? count = default;
+            int? countIPv6 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     count = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("countIPv6"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    countIPv6 = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterManagedOutboundIPProfile(count, additionalBinaryDataProperties);
+            return new ManagedClusterManagedOutboundIPProfile(count, countIPv6, additionalBinaryDataProperties);
         }
     }
 }

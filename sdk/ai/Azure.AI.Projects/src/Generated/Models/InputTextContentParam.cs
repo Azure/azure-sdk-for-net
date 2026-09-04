@@ -26,11 +26,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InputTextContentParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_text`. </param>
         /// <param name="text"> The text input to the model. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputTextContentParam(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputTextContentParam(string @type, string text, PromptCacheBreakpointParam promptCacheBreakpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,5 +41,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The text input to the model. </summary>
         public string Text { get; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointParam PromptCacheBreakpoint { get; set; }
     }
 }

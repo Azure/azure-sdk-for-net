@@ -233,19 +233,20 @@ namespace Azure.Generator.Management.Utilities
             return lazyCreateAndAssign;
         }
 
-        public static string GetCombinedPropertyName(PropertyProvider innerProperty, PropertyProvider immediateParentProperty)
+        public static string GetCombinedPropertyName(PropertyProvider innerProperty, PropertyProvider immediateParentProperty, string? innerPropertyName = null)
         {
             var immediateParentPropertyName = GetPropertyName(immediateParentProperty);
+            var name = innerPropertyName ?? innerProperty.Name;
 
             if (innerProperty.Type.Equals(typeof(bool)) || innerProperty.Type.Equals(typeof(bool?)))
             {
-                return innerProperty.Name.Equals("Enabled", StringComparison.Ordinal) ? $"{immediateParentPropertyName}{innerProperty.Name}" : innerProperty.Name;
+                return name.Equals("Enabled", StringComparison.Ordinal) ? $"{immediateParentPropertyName}{name}" : name;
             }
 
-            if (innerProperty.Name.Equals("Id", StringComparison.Ordinal))
-                return $"{immediateParentPropertyName}{innerProperty.Name}";
+            if (name.Equals("Id", StringComparison.Ordinal))
+                return $"{immediateParentPropertyName}{name}";
 
-            if (immediateParentPropertyName.EndsWith(innerProperty.Name, StringComparison.Ordinal))
+            if (immediateParentPropertyName.EndsWith(name, StringComparison.Ordinal))
                 return immediateParentPropertyName;
 
             var parentWords = immediateParentPropertyName.SplitByCamelCase();
@@ -262,7 +263,7 @@ namespace Azure.Generator.Management.Utilities
 
             var parentWordArray = parentWords.ToArray();
             var parentWordsHash = new HashSet<string>(parentWordArray);
-            var nameWords = innerProperty.Name.SplitByCamelCase().ToArray();
+            var nameWords = name.SplitByCamelCase().ToArray();
             var lastWord = string.Empty;
             for (int i = 0; i < nameWords.Length; i++)
             {
@@ -276,18 +277,18 @@ namespace Azure.Generator.Management.Utilities
                         break;
                     }
                     {
-                        return innerProperty.Name;
+                        return name;
                     }
                 }
 
                 //need to pluralize or singularize the last word and check
                 if (i == nameWords.Length - 1 && (parentWordsHash.Contains(lastWord.Pluralize()) || (suffixStripped && parentWordsHash.Contains(lastWord.Singularize()))))
-                    return innerProperty.Name;
+                    return name;
             }
 
             immediateParentPropertyName = string.Join("", parentWords);
 
-            return $"{immediateParentPropertyName}{innerProperty.Name}";
+            return $"{immediateParentPropertyName}{name}";
         }
 
         private static string GetPropertyName(PropertyProvider property)

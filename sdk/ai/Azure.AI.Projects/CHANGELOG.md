@@ -1,6 +1,11 @@
 # Release History
 
-## 3.0.0-beta.1 (Unreleased)
+## 3.0.0-beta.2 (2026-09-03)
+
+### Features Added
+- Added `AgentInsightMonitors` sub-client.
+
+## 3.0.0-beta.1 (2026-08-24)
 
 ### Features Added
 - Enabled the Model weights subclient.
@@ -8,11 +13,11 @@
 - Added distributed tracing support.
 
 ### Breaking Changes
+- The `GetConnectionAsync` and `GetConnection` methods of `AIProjectConnectionsOperations` are now returning `Task<ClientResult<AIProjectConnection>>` and `ClientResult<AIProjectConnection>` respectively.
+- The Routines and routine runs listing has been changed: the parameter `before` was removed from both `GetRoutineRuns` and `GetRoutines` methods. In the `GetRoutineRuns` the parameter `name` was replaced by `routineName`. The same changes were done for asynchronous methods.
 
 ### Bugs Fixed
 - Fix the Foundry-Features header, resulting in 400 error during Agent optimization jobs submission.
-
-### Other Changes
 
 ### Sample Updates
 - Added sample for Model weights.

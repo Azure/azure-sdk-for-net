@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public partial class OpenShiftApiServerProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile>
     {
         public OpenShiftApiServerProfile() { }
-        public System.Net.IPAddress Ip { get { throw null; } }
+        public System.Net.IPAddress IP { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? Visibility { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
     public partial class OpenShiftIngressProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile>
     {
         public OpenShiftIngressProfile() { }
-        public System.Net.IPAddress Ip { get { throw null; } }
+        public System.Net.IPAddress IP { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftVisibility? Visibility { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -4,11 +4,6 @@ This directory contains per-package analyzer allow-list files that record SDK-te
 diagnostic suppressions for shipping client libraries. Every file in this directory represents an
 explicit, reviewed approval with a justification.
 
-> **Not "approved" yet?** If a project has existing `<NoWarn>` entries that have **not** been
-> reviewed by the SDK team, the project should be listed in
-> [`eng/NoWarnSkipValidation.txt`](../NoWarnSkipValidation.txt) — the temporary backlog — rather
-> than getting a file here. See [Workflow](#workflow) below.
-
 ## File Naming
 
 Files are named by `$(MSBuildProjectName)`:
@@ -116,8 +111,6 @@ elevating it back to Error globally.
 3. `eng/NoWarnValidation.targets` uses `_ProjectAllowedNoWarn` to validate that any
    codes the project itself declares in `<NoWarn>` are all approved. Any unapproved
    csproj-declared code fails the build with `AZSDK0002`.
-4. Projects listed in `eng/NoWarnSkipValidation.txt` short-circuit the validator entirely
-   (temporary backlog escape hatch).
 
 ## Workflow
 
@@ -140,27 +133,22 @@ cannot be fixed or narrowed:
   then remove the `<NoWarn>` entry from the csproj.
 - Use `[SuppressMessage]` with a `Justification` parameter for non-pragma-compatible scopes.
 
-### Removing a project from the skip list
+### Resolving an AZSDK0002 build failure
 
-When picking a project out of `eng/NoWarnSkipValidation.txt`:
+The validator reports every unapproved `<NoWarn>` code in the project as an `AZSDK0002`
+error. For each one, decide between:
 
-1. Delete the project's line from `eng/NoWarnSkipValidation.txt`.
-2. Build the project. The validator will report each unapproved `<NoWarn>` code as an
-   `AZSDK0002` error.
-3. For each error, decide one of:
-   - **Fix:** make the underlying warning go away and delete the code from `<NoWarn>`.
-   - **Migrate:** convert to a scoped `#pragma warning disable` with a justification and
-     remove from `<NoWarn>`.
-   - **Approve:** add a `nowarn:CODE` entry to this directory's file for the project, with
-     a justification comment, **and remove the code from the csproj `<NoWarn>`** — the
-     allow-list entry both records the approval and applies the suppression.
-4. Land in a per-project PR.
+- **Fix:** make the underlying warning go away and delete the code from `<NoWarn>`.
+- **Migrate:** convert to a scoped `#pragma warning disable` with a justification and
+  remove from `<NoWarn>`.
+- **Approve:** add a `nowarn:CODE` entry to this directory's file for the project, with
+  a justification comment, **and remove the code from the csproj `<NoWarn>`** — the
+  allow-list entry both records the approval and applies the suppression.
 
 ## Related
 
 - `eng/NoWarnValidation.targets` — The validation target that enforces NoWarn policy
 - `eng/AnalyzerAllowList.targets` — MSBuild logic that reads these files
-- `eng/NoWarnSkipValidation.txt` — Temporary backlog of unverified projects
 - [Issue #55312](https://github.com/Azure/azure-sdk-for-net/issues/55312) — NoWarn visibility
 - [Issue #57586](https://github.com/Azure/azure-sdk-for-net/issues/57586) — Suppression validation
 

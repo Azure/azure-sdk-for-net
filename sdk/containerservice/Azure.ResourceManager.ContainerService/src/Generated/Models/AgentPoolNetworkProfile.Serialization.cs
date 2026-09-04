@@ -85,6 +85,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(NodePublicIPPrefixIDs))
+            {
+                writer.WritePropertyName("nodePublicIPPrefixIDs"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in NodePublicIPPrefixIDs)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(AllowedHostPorts))
             {
                 writer.WritePropertyName("allowedHostPorts"u8);
@@ -109,6 +124,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SecondaryNetworkInterfaces))
+            {
+                writer.WritePropertyName("secondaryNetworkInterfaces"u8);
+                writer.WriteStartArray();
+                foreach (AgentPoolNetworkInterface item in SecondaryNetworkInterfaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Dranet))
+            {
+                writer.WritePropertyName("dranet"u8);
+                writer.WriteObjectValue(Dranet, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,8 +183,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<ContainerServiceIPTag> nodePublicIPTags = default;
+            IList<ResourceIdentifier> nodePublicIPPrefixIDs = default;
             IList<AgentPoolNetworkPortRange> allowedHostPorts = default;
             IList<ResourceIdentifier> applicationSecurityGroups = default;
+            IList<AgentPoolNetworkInterface> secondaryNetworkInterfaces = default;
+            DRANETProfile dranet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,6 +203,27 @@ namespace Azure.ResourceManager.ContainerService.Models
                         array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item, options));
                     }
                     nodePublicIPTags = array;
+                    continue;
+                }
+                if (prop.NameEquals("nodePublicIPPrefixIDs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    nodePublicIPPrefixIDs = array;
                     continue;
                 }
                 if (prop.NameEquals("allowedHostPorts"u8))
@@ -207,12 +261,42 @@ namespace Azure.ResourceManager.ContainerService.Models
                     applicationSecurityGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("secondaryNetworkInterfaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AgentPoolNetworkInterface> array = new List<AgentPoolNetworkInterface>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AgentPoolNetworkInterface.DeserializeAgentPoolNetworkInterface(item, options));
+                    }
+                    secondaryNetworkInterfaces = array;
+                    continue;
+                }
+                if (prop.NameEquals("dranet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dranet = DRANETProfile.DeserializeDRANETProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolNetworkProfile(nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(), applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new AgentPoolNetworkProfile(
+                nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(),
+                nodePublicIPPrefixIDs ?? new ChangeTrackingList<ResourceIdentifier>(),
+                allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(),
+                secondaryNetworkInterfaces ?? new ChangeTrackingList<AgentPoolNetworkInterface>(),
+                dranet,
+                additionalBinaryDataProperties);
         }
     }
 }

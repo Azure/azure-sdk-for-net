@@ -13,31 +13,31 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary> Defines all connectivity endpoints and properties for an ComputeInstance. </summary>
     public partial class MachineLearningComputeInstanceConnectivityEndpoints : ProvisionableConstruct
     {
-        private BicepValue<string> _publicIpAddress;
-        private BicepValue<string> _privateIpAddress;
+        private BicepValue<string> _publicIPAddress;
+        private BicepValue<string> _privateIPAddress;
 
         /// <summary> Creates a new MachineLearningComputeInstanceConnectivityEndpoints. </summary>
         public MachineLearningComputeInstanceConnectivityEndpoints()
         {
         }
 
-        /// <summary> Gets the PublicIpAddress. </summary>
-        public BicepValue<string> PublicIpAddress
+        /// <summary> Gets the PublicIPAddress. </summary>
+        public BicepValue<string> PublicIPAddress
         {
             get
             {
                 Initialize();
-                return _publicIpAddress;
+                return _publicIPAddress;
             }
         }
 
-        /// <summary> Gets the PrivateIpAddress. </summary>
-        public BicepValue<string> PrivateIpAddress
+        /// <summary> Gets the PrivateIPAddress. </summary>
+        public BicepValue<string> PrivateIPAddress
         {
             get
             {
                 Initialize();
-                return _privateIpAddress;
+                return _privateIPAddress;
             }
         }
 
@@ -45,8 +45,8 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _publicIpAddress = DefineProperty<string>(nameof(PublicIpAddress), new string[] { "publicIpAddress" }, isOutput: true);
-            _privateIpAddress = DefineProperty<string>(nameof(PrivateIpAddress), new string[] { "privateIpAddress" }, isOutput: true);
+            _publicIPAddress = DefineProperty<string>(nameof(PublicIPAddress), new string[] { "publicIpAddress" }, isOutput: true);
+            _privateIPAddress = DefineProperty<string>(nameof(PrivateIPAddress), new string[] { "privateIpAddress" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

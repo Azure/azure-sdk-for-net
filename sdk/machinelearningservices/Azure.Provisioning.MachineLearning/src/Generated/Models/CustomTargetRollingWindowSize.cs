@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new CustomTargetRollingWindowSize. </summary>
         public CustomTargetRollingWindowSize()
         {
+            Mode.Assign(TargetRollingWindowSizeMode.Custom);
         }
 
         /// <summary> Gets or sets the Value. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("mode", new string[] { "mode" }, defaultValue: "Custom");
             _value = DefineProperty<int>(nameof(Value), new string[] { "value" }, isRequired: true);
             DefineAdditionalProperties();
         }

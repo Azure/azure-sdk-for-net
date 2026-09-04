@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ScVmm
@@ -25,73 +26,84 @@ namespace Azure.ResourceManager.ScVmm
     /// </summary>
     public partial class ScVmmVirtualMachineTemplateCollection : ArmCollection, IEnumerable<ScVmmVirtualMachineTemplateResource>, IAsyncEnumerable<ScVmmVirtualMachineTemplateResource>
     {
-        private readonly ClientDiagnostics _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics;
-        private readonly VirtualMachineTemplatesRestOperations _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient;
+        private readonly ClientDiagnostics _virtualMachineTemplatesClientDiagnostics;
+        private readonly VirtualMachineTemplates _virtualMachineTemplatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineTemplateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateCollection for mocking. </summary>
         protected ScVmmVirtualMachineTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmVirtualMachineTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmVirtualMachineTemplateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ScVmmVirtualMachineTemplateResource.ResourceType, out string scVmmVirtualMachineTemplateVirtualMachineTemplatesApiVersion);
-            _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient = new VirtualMachineTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmVirtualMachineTemplateVirtualMachineTemplatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ScVmmVirtualMachineTemplateResource.ResourceType, out string scVmmVirtualMachineTemplateApiVersion);
+            _virtualMachineTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmVirtualMachineTemplateResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineTemplatesRestClient = new VirtualMachineTemplates(_virtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmVirtualMachineTemplateApiVersion ?? "2025-03-13");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Onboards the ScVmm VM Template as an Azure VM Template resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
-        /// <param name="data"> Request payload. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ScVmmVirtualMachineTemplateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineTemplateName, ScVmmVirtualMachineTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateOperationSource(Client), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, ScVmmVirtualMachineTemplateData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ScVmmArmOperation<ScVmmVirtualMachineTemplateResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(
+                    new ScVmmVirtualMachineTemplateResourceOperationSource(Client),
+                    _virtualMachineTemplatesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,42 +117,51 @@ namespace Azure.ResourceManager.ScVmm
         /// Onboards the ScVmm VM Template as an Azure VM Template resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
-        /// <param name="data"> Request payload. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ScVmmVirtualMachineTemplateResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineTemplateName, ScVmmVirtualMachineTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data, cancellationToken);
-                var operation = new ScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateOperationSource(Client), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, ScVmmVirtualMachineTemplateData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ScVmmArmOperation<ScVmmVirtualMachineTemplateResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(
+                    new ScVmmVirtualMachineTemplateResourceOperationSource(Client),
+                    _virtualMachineTemplatesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ScVmm
         /// Implements VirtualMachineTemplate GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> GetAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Get");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScVmmVirtualMachineTemplateData> response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ScVmm
         /// Implements VirtualMachineTemplate GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ScVmmVirtualMachineTemplateResource> Get(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Get");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScVmmVirtualMachineTemplateData> response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ScVmm
         /// List of VirtualMachineTemplates in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualMachineTemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetByResourceGroupAsyncCollectionResultOfT(_virtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmVirtualMachineTemplateCollection.GetAll"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
         /// List of VirtualMachineTemplates in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualMachineTemplateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetByResourceGroupCollectionResultOfT(_virtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmVirtualMachineTemplateCollection.GetAll"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ScVmmVirtualMachineTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScVmmVirtualMachineTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ScVmm
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ScVmmVirtualMachineTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScVmmVirtualMachineTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ScVmm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ScVmmVirtualMachineTemplateResource>> GetIfExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ScVmmVirtualMachineTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScVmmVirtualMachineTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ScVmmVirtualMachineTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ScVmm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ScVmmVirtualMachineTemplateResource> GetIfExists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ScVmmVirtualMachineTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScVmmVirtualMachineTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ScVmmVirtualMachineTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ScVmm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ScVmmVirtualMachineTemplateResource> IAsyncEnumerable<ScVmmVirtualMachineTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -46,8 +46,6 @@ namespace Azure.ResourceManager.ServiceGroups
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceGroups.ServiceGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ServiceGroups.ServiceGroupResource> GetAncestors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceGroups.ServiceGroupResource> GetAncestorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceGroups.ServiceGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceGroups.ServiceGroupResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceGroups.ServiceGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -89,11 +87,12 @@ namespace Azure.ResourceManager.ServiceGroups.Models
     public static partial class ArmServiceGroupsModelFactory
     {
         public static Azure.ResourceManager.ServiceGroups.ServiceGroupData ServiceGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties properties = null, string kind = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties ServiceGroupProperties(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState?), string displayName = null, Azure.Core.ResourceIdentifier parentResourceId = null) { throw null; }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties ServiceGroupProperties(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState?), string displayName = null, int? attributesCriticality = default(int?), Azure.Core.ResourceIdentifier parentResourceId = null) { throw null; }
     }
     public partial class ServiceGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>
     {
         public ServiceGroupProperties() { }
+        public int? AttributesCriticality { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ParentResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState? ProvisioningState { get { throw null; } }

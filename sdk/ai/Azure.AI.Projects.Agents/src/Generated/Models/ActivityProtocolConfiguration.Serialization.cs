@@ -75,6 +75,16 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("enable_m365_public_endpoint"u8);
                 writer.WriteBooleanValue(EnableM365PublicEndpoint.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AccessBoundaries))
+            {
+                writer.WritePropertyName("access_boundaries"u8);
+                writer.WriteStartArray();
+                foreach (ActivityProtocolAccessBoundary item in AccessBoundaries)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -118,6 +128,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             bool? enableM365PublicEndpoint = default;
+            IReadOnlyList<ActivityProtocolAccessBoundary> accessBoundaries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,12 +141,26 @@ namespace Azure.AI.Projects.Agents
                     enableM365PublicEndpoint = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("access_boundaries"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ActivityProtocolAccessBoundary> array = new List<ActivityProtocolAccessBoundary>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ActivityProtocolAccessBoundary(item.GetString()));
+                    }
+                    accessBoundaries = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActivityProtocolConfiguration(enableM365PublicEndpoint, additionalBinaryDataProperties);
+            return new ActivityProtocolConfiguration(enableM365PublicEndpoint, accessBoundaries ?? new ChangeTrackingList<ActivityProtocolAccessBoundary>(), additionalBinaryDataProperties);
         }
     }
 }

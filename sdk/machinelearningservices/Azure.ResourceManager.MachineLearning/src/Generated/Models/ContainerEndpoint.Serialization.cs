@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("published"u8);
                 writer.WriteNumberValue(Published.Value);
             }
-            if (Optional.IsDefined(HostIp))
+            if (Optional.IsDefined(HostIP))
             {
                 writer.WritePropertyName("hostIp"u8);
-                writer.WriteStringValue(HostIp);
+                writer.WriteStringValue(HostIP);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string name = default;
             int? target = default;
             int? published = default;
-            string hostIp = default;
+            string hostIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        hostIp = null;
+                        hostIP = null;
                         continue;
                     }
-                    hostIp = prop.Value.GetString();
+                    hostIP = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 name,
                 target,
                 published,
-                hostIp,
+                hostIP,
                 additionalBinaryDataProperties);
         }
     }

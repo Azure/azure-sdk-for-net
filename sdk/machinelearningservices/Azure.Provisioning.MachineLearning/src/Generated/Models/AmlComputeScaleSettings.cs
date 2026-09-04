@@ -74,7 +74,7 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _maxNodeCount = DefineProperty<int>(nameof(MaxNodeCount), new string[] { "maxNodeCount" }, isRequired: true);
             _minNodeCount = DefineProperty<int>(nameof(MinNodeCount), new string[] { "minNodeCount" });
-            _nodeIdleTimeBeforeScaleDown = DefineProperty<TimeSpan>(nameof(NodeIdleTimeBeforeScaleDown), new string[] { "nodeIdleTimeBeforeScaleDown" });
+            _nodeIdleTimeBeforeScaleDown = DefineProperty<TimeSpan>(nameof(NodeIdleTimeBeforeScaleDown), new string[] { "nodeIdleTimeBeforeScaleDown" }, format: "P");
             DefineAdditionalProperties();
         }
 

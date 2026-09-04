@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> The ScVmmForceDeletion. </summary>
+    /// <summary> Force Delete. </summary>
     public readonly partial struct ScVmmForceDeletion : IEquatable<ScVmmForceDeletion>
     {
         private readonly string _value;
+        /// <summary> Enable force delete. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Disable force delete. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="ScVmmForceDeletion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScVmmForceDeletion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FalseValue = "false";
-        private const string TrueValue = "true";
-
-        /// <summary> false. </summary>
-        public static ScVmmForceDeletion False { get; } = new ScVmmForceDeletion(FalseValue);
-        /// <summary> true. </summary>
+        /// <summary> Enable force delete. </summary>
         public static ScVmmForceDeletion True { get; } = new ScVmmForceDeletion(TrueValue);
+
+        /// <summary> Disable force delete. </summary>
+        public static ScVmmForceDeletion False { get; } = new ScVmmForceDeletion(FalseValue);
+
         /// <summary> Determines if two <see cref="ScVmmForceDeletion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScVmmForceDeletion left, ScVmmForceDeletion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScVmmForceDeletion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScVmmForceDeletion left, ScVmmForceDeletion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScVmmForceDeletion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScVmmForceDeletion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScVmmForceDeletion(string value) => new ScVmmForceDeletion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScVmmForceDeletion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScVmmForceDeletion?(string value) => value == null ? null : new ScVmmForceDeletion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScVmmForceDeletion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScVmmForceDeletion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

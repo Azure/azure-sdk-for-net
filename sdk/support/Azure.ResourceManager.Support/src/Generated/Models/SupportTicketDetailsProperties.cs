@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
         /// <param name="directConnectEscalation"> Direct Connect Escalation details for a support ticket. </param>
         /// <param name="communityForumPost"> Contains a link to the post on the community forum. </param>
+        /// <param name="supportChannel"> Support channel type for the support ticket. </param>
+        /// <param name="chatConversationStatus"> Status of the chat conversation associated with the support ticket. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportTicketDetailsProperties(string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, IsTemporaryTicket? isTemporaryTicket, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent, SupportDirectConnectEscalation directConnectEscalation, string communityForumPost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportTicketDetailsProperties(string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, IsTemporaryTicket? isTemporaryTicket, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent, SupportDirectConnectEscalation directConnectEscalation, string communityForumPost, SupportChannel? supportChannel, ChatConversationStatus? chatConversationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SupportTicketId = supportTicketId;
             Description = description;
@@ -107,6 +109,8 @@ namespace Azure.ResourceManager.Support.Models
             SecondaryConsent = secondaryConsent;
             DirectConnectEscalation = directConnectEscalation;
             CommunityForumPost = communityForumPost;
+            SupportChannel = supportChannel;
+            ChatConversationStatus = chatConversationStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -196,6 +200,12 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Contains a link to the post on the community forum. </summary>
         public string CommunityForumPost { get; set; }
+
+        /// <summary> Support channel type for the support ticket. </summary>
+        public SupportChannel? SupportChannel { get; }
+
+        /// <summary> Status of the chat conversation associated with the support ticket. </summary>
+        public ChatConversationStatus? ChatConversationStatus { get; }
 
         /// <summary> Email address of the Azure Support engineer assigned to the support ticket. </summary>
         public string SupportEngineerEmailAddress

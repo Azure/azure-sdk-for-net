@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(IPConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(KafkaRestProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(OsProfile))]
+    [ModelReaderWriterBuildable(typeof(OSProfile))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkConfigurationProperties))]

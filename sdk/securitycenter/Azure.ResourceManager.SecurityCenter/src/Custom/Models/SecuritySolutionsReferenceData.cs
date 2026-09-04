@@ -22,16 +22,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         /// <param name="securityFamily">The value preserved for API compatibility.</param>
         /// <param name="alertVendorName">The value preserved for API compatibility.</param>
-        /// <param name="packageInfoUrl">The value preserved for API compatibility.</param>
+        /// <param name="packageInfoUri">The value preserved for API compatibility.</param>
         /// <param name="productName">The value preserved for API compatibility.</param>
         /// <param name="publisher">The value preserved for API compatibility.</param>
         /// <param name="publisherDisplayName">The value preserved for API compatibility.</param>
         /// <param name="template">The value preserved for API compatibility.</param>
-        public SecuritySolutionsReferenceData(SecurityFamily securityFamily, string alertVendorName, Uri packageInfoUrl, string productName, string publisher, string publisherDisplayName, string template)
+        // TODO: Remove this compatibility constructor after https://github.com/microsoft/typespec/issues/11588 is fixed.
+        public SecuritySolutionsReferenceData(SecurityFamily securityFamily, string alertVendorName, Uri packageInfoUri, string productName, string publisher, string publisherDisplayName, string template)
         {
             SecurityFamily = securityFamily;
             AlertVendorName = alertVendorName;
-            PackageInfoUrl = packageInfoUrl;
+            PackageInfoUrl = packageInfoUri;
+            PackageInfoUri = packageInfoUri;
             ProductName = productName;
             Publisher = publisher;
             PublisherDisplayName = publisherDisplayName;
