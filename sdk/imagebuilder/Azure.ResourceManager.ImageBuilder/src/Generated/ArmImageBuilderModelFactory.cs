@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public static partial class ArmImageBuilderModelFactory
     {
 
+        /// <summary> Represents a trigger that can invoke an image template build. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,6 +36,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 default);
         }
 
+        /// <summary>
+        /// Describes the properties of a trigger
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SourceImageTriggerProperties"/>.
+        /// </summary>
         /// <param name="kind"> The kind of trigger. </param>
         /// <param name="status"> Trigger status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new UnknownTriggerProperties(kind, status, provisioningState, default);
         }
 
+        /// <summary> Describes the status of a trigger. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="recordedOn"> The time of the status. </param>
@@ -53,6 +59,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateTriggerStatus(code, message, recordedOn, default);
         }
 
+        /// <summary> Properties of SourceImage kind of trigger. </summary>
         /// <param name="status"> Trigger status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.SourceImageTriggerProperties"/> instance for mocking. </returns>
@@ -118,6 +125,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 default);
         }
 
+        /// <summary>
+        /// Describes a virtual machine image source for building, customizing and distributing
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplatePlatformImageSource"/>, <see cref="Models.ImageTemplateManagedImageSource"/>, and <see cref="Models.ImageTemplateSharedImageVersionSource"/>.
+        /// </summary>
         /// <param name="type"> Specifies the type of source image you want to start with. </param>
         /// <returns> A new <see cref="Models.ImageTemplateSource"/> instance for mocking. </returns>
         public static ImageTemplateSource ImageTemplateSource(string @type = default)
@@ -125,6 +136,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new UnknownImageTemplateSource(@type, default);
         }
 
+        /// <summary> Describes an image source from [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages). </summary>
         /// <param name="publisher"> Image Publisher in [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages). </param>
         /// <param name="offer"> Image offer from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages). </param>
         /// <param name="sku"> Image sku from the [Azure Gallery Images](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachineimages). </param>
@@ -145,6 +157,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 planInfo);
         }
 
+        /// <summary> Purchase plan configuration for platform image. </summary>
         /// <param name="planName"> Name of the purchase plan. </param>
         /// <param name="planProduct"> Product of the purchase plan. </param>
         /// <param name="planPublisher"> Publisher of the purchase plan. </param>
@@ -154,6 +167,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new PlatformImagePurchasePlan(planName, planProduct, planPublisher, default);
         }
 
+        /// <summary> Describes an image source that is a managed image in customer subscription. This image must reside in the same subscription and region as the Image Builder template. </summary>
         /// <param name="imageId"> ARM resource id of the managed image in customer subscription. </param>
         /// <returns> A new <see cref="Models.ImageTemplateManagedImageSource"/> instance for mocking. </returns>
         public static ImageTemplateManagedImageSource ImageTemplateManagedImageSource(ResourceIdentifier imageId = default)
@@ -161,6 +175,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateManagedImageSource(default, default, imageId);
         }
 
+        /// <summary> Describes an image source that is an image version in an Azure Compute Gallery or a Direct Shared Gallery. </summary>
         /// <param name="imageVersionId"> ARM resource id of the image version. When image version name is 'latest', the version is evaluated when the image build takes place. </param>
         /// <param name="exactVersion"> Exact ARM resource id of the image version. This readonly field differs from the image version Id in 'imageVersionId' only if the version name specified in 'imageVersionId' field is 'latest'. </param>
         /// <returns> A new <see cref="Models.ImageTemplateSharedImageVersionSource"/> instance for mocking. </returns>
@@ -169,6 +184,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateSharedImageVersionSource(default, default, imageVersionId, exactVersion);
         }
 
+        /// <summary>
+        /// Describes a unit of image customization
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateShellCustomizer"/>, <see cref="Models.ImageTemplateRestartCustomizer"/>, <see cref="Models.ImageTemplateWindowsUpdateCustomizer"/>, <see cref="Models.ImageTemplatePowerShellCustomizer"/>, and <see cref="Models.ImageTemplateFileCustomizer"/>.
+        /// </summary>
         /// <param name="type"> The type of customization tool you want to use on the Image. For example, "Shell" can be shell customizer. </param>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
         /// <returns> A new <see cref="Models.ImageTemplateCustomizer"/> instance for mocking. </returns>
@@ -177,6 +196,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new UnknownImageTemplateCustomizer(@type, name, default);
         }
 
+        /// <summary> Runs a shell script during the customization phase (Linux). Corresponds to Packer shell provisioner. Exactly one of 'scriptUri' or 'inline' can be specified. </summary>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
         /// <param name="scriptUri"> URI of the shell script to be run for customizing. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the shell script provided in the scriptUri field. </param>
@@ -195,6 +215,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 (inline ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> Reboots a VM and waits for it to come back online (Windows). Corresponds to Packer windows-restart provisioner. </summary>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
         /// <param name="restartCommand"> Command to execute the restart [Default: 'shutdown /r /f /t 0 /c "packer restart"']. </param>
         /// <param name="restartCheckCommand"> Command to check if restart succeeded [Default: '']. </param>
@@ -211,6 +232,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 restartTimeout);
         }
 
+        /// <summary> Installs Windows Updates. Corresponds to Packer Windows Update Provisioner (https://github.com/rgl/packer-provisioner-windows-update). </summary>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
         /// <param name="searchCriteria"> Criteria to search updates. Omit or specify empty string to use the default (search all). Refer to above link for examples and detailed description of this field. </param>
         /// <param name="filters"> Array of filters to select updates to apply. Omit or specify empty array to use the default (no filter). Refer to above link for examples and detailed description of this field. </param>
@@ -229,6 +251,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 updateLimit);
         }
 
+        /// <summary> Runs the specified PowerShell on the VM (Windows). Corresponds to Packer powershell provisioner. Exactly one of 'scriptUri' or 'inline' can be specified. </summary>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
         /// <param name="scriptUri"> URI of the PowerShell script to be run for customizing. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the power shell script provided in the scriptUri field above. </param>
@@ -254,6 +277,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 (validExitCodes ?? new ChangeTrackingList<int>()).ToList());
         }
 
+        /// <summary> Uploads files to VMs (Linux, Windows). Corresponds to Packer file provisioner. </summary>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
         /// <param name="sourceUri"> The URI of the file to be uploaded for customizing the VM. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the file provided in the sourceUri field above. </param>
@@ -278,6 +302,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateOptimizeConfig(vmBootState is null ? default : new ImageTemplatePropertiesOptimizeVmBoot(vmBootState, default), workload, default);
         }
 
+        /// <summary> Optimization is applied on the image for specific workloads. </summary>
         /// <param name="state"> Enabling this field will optimize vm images for specific workloads. </param>
         /// <param name="scriptUri"> URI of the script to be run for workload optimization. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the script provided in the scriptUri field. </param>
@@ -287,6 +312,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateWorkloadOptimization(state, scriptUri, sha256Checksum, default);
         }
 
+        /// <summary> Configuration options and list of validations to be performed on the resulting image. </summary>
         /// <param name="shouldContinueDistributeOnFailure"> If validation fails and this field is set to false, output image(s) will not be distributed. This is the default behavior. If validation fails and this field is set to true, output image(s) will still be distributed. Please use this option with caution as it may result in bad images being distributed for use. In either case (true or false), the end to end image run will be reported as having failed in case of a validation failure. [Note: This field has no effect if validation succeeds.]. </param>
         /// <param name="isSourceValidationOnly"> If this field is set to true, the image specified in the 'source' section will directly be validated. No separate build will be run to generate and then validate a customized image. </param>
         /// <param name="inVMValidations"> List of validations to be performed. </param>
@@ -298,6 +324,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateValidationConfig(shouldContinueDistributeOnFailure, isSourceValidationOnly, (inVMValidations ?? new ChangeTrackingList<ImageTemplateInVMValidator>()).ToList(), default);
         }
 
+        /// <summary>
+        /// Describes a unit of in-VM validation of image
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateShellValidator"/>, <see cref="Models.ImageTemplatePowerShellValidator"/>, and <see cref="Models.ImageTemplateFileValidator"/>.
+        /// </summary>
         /// <param name="type"> The type of validation you want to use on the Image. For example, "Shell" can be shell validation. </param>
         /// <param name="name"> Friendly Name to provide context on what this validation step does. </param>
         /// <returns> A new <see cref="Models.ImageTemplateInVMValidator"/> instance for mocking. </returns>
@@ -306,6 +336,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new UnknownImageTemplateInVMValidator(@type, name, default);
         }
 
+        /// <summary> Runs the specified shell script during the validation phase (Linux). Corresponds to Packer shell provisioner. Exactly one of 'scriptUri' or 'inline' can be specified. </summary>
         /// <param name="name"> Friendly Name to provide context on what this validation step does. </param>
         /// <param name="scriptUri"> URI of the shell script to be run for validation. It can be a github link, Azure Storage URI, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the shell script provided in the scriptUri field. </param>
@@ -324,6 +355,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 (inline ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> Runs the specified PowerShell script during the validation phase (Windows). Corresponds to Packer powershell provisioner. Exactly one of 'scriptUri' or 'inline' can be specified. </summary>
         /// <param name="name"> Friendly Name to provide context on what this validation step does. </param>
         /// <param name="scriptUri"> URI of the PowerShell script to be run for validation. It can be a github link, Azure Storage URI, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the power shell script provided in the scriptUri field above. </param>
@@ -349,6 +381,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 (validExitCodes ?? new ChangeTrackingList<int>()).ToList());
         }
 
+        /// <summary> Uploads files required for validation to VMs (Linux, Windows). Corresponds to Packer file provisioner. </summary>
         /// <param name="name"> Friendly Name to provide context on what this validation step does. </param>
         /// <param name="sourceUri"> The URI of the file to be uploaded to the VM for validation. It can be a github link, Azure Storage URI (authorized or SAS), etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the file provided in the sourceUri field above. </param>
@@ -365,6 +398,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 destination);
         }
 
+        /// <summary>
+        /// Generic distribution object
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateManagedImageDistributor"/>, <see cref="Models.ImageTemplateSharedImageDistributor"/>, and <see cref="Models.ImageTemplateVhdDistributor"/>.
+        /// </summary>
         /// <param name="type"> Type of distribution. </param>
         /// <param name="runOutputName"> The name to be used for the associated RunOutput. </param>
         /// <param name="artifactTags"> Tags that will be applied to the artifact once it has been created/updated by the distributor. </param>
@@ -376,6 +413,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new UnknownImageTemplateDistributor(@type, runOutputName, artifactTags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Distribute as a Managed Disk Image. </summary>
         /// <param name="runOutputName"> The name to be used for the associated RunOutput. </param>
         /// <param name="artifactTags"> Tags that will be applied to the artifact once it has been created/updated by the distributor. </param>
         /// <param name="imageId"> Resource Id of the Managed Disk Image. </param>
@@ -394,6 +432,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 location);
         }
 
+        /// <summary> Distribute via Azure Compute Gallery. </summary>
         /// <param name="runOutputName"> The name to be used for the associated RunOutput. </param>
         /// <param name="artifactTags"> Tags that will be applied to the artifact once it has been created/updated by the distributor. </param>
         /// <param name="galleryImageId"> Resource Id of the Azure Compute Gallery image. </param>
@@ -424,6 +463,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 replicationMode);
         }
 
+        /// <summary> Describes the target region information. </summary>
         /// <param name="name"> The name of the region. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created in this region. Omit to use the default (1). </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image in this region. Omit to use the default (Standard_LRS). </param>
@@ -433,6 +473,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateTargetRegion(name, replicaCount, storageAccountType, default);
         }
 
+        /// <summary>
+        /// Describes how to generate new x.y.z version number for distribution.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DistributeVersionerLatest"/> and <see cref="Models.DistributeVersionerSource"/>.
+        /// </summary>
         /// <param name="scheme"> Version numbering scheme to be used. </param>
         /// <returns> A new <see cref="Models.DistributeVersioner"/> instance for mocking. </returns>
         public static DistributeVersioner DistributeVersioner(string scheme = default)
@@ -440,6 +484,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new UnknownDistributeVersioner(scheme, default);
         }
 
+        /// <summary> Generates version number that will be latest based on existing version numbers. </summary>
         /// <param name="major"> Major version for the generated version number. Determine what is "latest" based on versions with this value as the major version. -1 is equivalent to leaving it unset. </param>
         /// <returns> A new <see cref="Models.DistributeVersionerLatest"/> instance for mocking. </returns>
         public static DistributeVersionerLatest DistributeVersionerLatest(int? major = default)
@@ -447,12 +492,14 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new DistributeVersionerLatest(default, default, major);
         }
 
+        /// <summary> Generates version number based on version number of source image. </summary>
         /// <returns> A new <see cref="Models.DistributeVersionerSource"/> instance for mocking. </returns>
         public static DistributeVersionerSource DistributeVersionerSource()
         {
             return new DistributeVersionerSource(default, default);
         }
 
+        /// <summary> Distribute via VHD in a storage account. </summary>
         /// <param name="runOutputName"> The name to be used for the associated RunOutput. </param>
         /// <param name="artifactTags"> Tags that will be applied to the artifact once it has been created/updated by the distributor. </param>
         /// <param name="uri"> Optional Azure Storage URI for the distributed VHD blob. Omit to use the default (empty string) in which case VHD would be published to the storage account in the staging resource group. </param>
@@ -464,6 +511,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateVhdDistributor(default, runOutputName, artifactTags ?? new ChangeTrackingDictionary<string, string>(), default, uri);
         }
 
+        /// <summary> Error handling options upon a build failure. </summary>
         /// <param name="onCustomizerError"> If there is a customizer error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a customizer error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="onValidationError"> If there is a validation error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a validation error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <returns> A new <see cref="Models.ImageTemplateErrorHandling"/> instance for mocking. </returns>
@@ -472,6 +520,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateErrorHandling(onCustomizerError, onValidationError, default);
         }
 
+        /// <summary> Describes the error happened when create or update an image template. </summary>
         /// <param name="provisioningErrorCode"> Error code of the provisioning failure. </param>
         /// <param name="message"> Verbose error message about the provisioning failure. </param>
         /// <returns> A new <see cref="Models.ImageBuilderProvisioningError"/> instance for mocking. </returns>
@@ -480,23 +529,25 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageBuilderProvisioningError(provisioningErrorCode, message, default);
         }
 
-        /// <param name="startOn"> Start time of the last run (UTC). </param>
-        /// <param name="endOn"> End time of the last run (UTC). </param>
+        /// <summary> Describes the latest status of running an image template. </summary>
+        /// <param name="startsOn"> Start time of the last run (UTC). </param>
+        /// <param name="endsOn"> End time of the last run (UTC). </param>
         /// <param name="runState"> State of the last run. </param>
         /// <param name="runSubState"> Sub-state of the last run. </param>
         /// <param name="message"> Verbose information about the last run state. </param>
         /// <returns> A new <see cref="Models.ImageTemplateLastRunStatus"/> instance for mocking. </returns>
-        public static ImageTemplateLastRunStatus ImageTemplateLastRunStatus(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ImageTemplateRunState? runState = default, ImageTemplateRunSubState? runSubState = default, string message = default)
+        public static ImageTemplateLastRunStatus ImageTemplateLastRunStatus(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ImageTemplateRunState? runState = default, ImageTemplateRunSubState? runSubState = default, string message = default)
         {
             return new ImageTemplateLastRunStatus(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 runState,
                 runSubState,
                 message,
                 default);
         }
 
+        /// <summary> Describes the virtual machines used to build and validate images. </summary>
         /// <param name="vmSize"> Size of the virtual machine used to build, customize and capture images. Omit or specify empty string to use the default (Standard_D1_v2 for Gen1 images and Standard_D2ds_v4 for Gen2 images). </param>
         /// <param name="osDiskSizeGB"> Size of the OS disk in GB. Omit or specify 0 to use Azure's default OS disk size. </param>
         /// <param name="userAssignedIdentities"> Optional array of resource IDs of user assigned managed identities to be configured on the build VM and validation VM. This may include the identity of the image template. </param>
@@ -509,6 +560,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateVmProfile(vmSize, osDiskSizeGB, (userAssignedIdentities ?? new ChangeTrackingList<string>()).ToList(), vnetConfig, default);
         }
 
+        /// <summary> Virtual Network configuration. </summary>
         /// <param name="subnetId"> Resource id of a pre-existing subnet on which the build VM and validation VM will be deployed. </param>
         /// <param name="containerInstanceSubnetId"> Resource id of a pre-existing subnet on which Azure Container Instance will be deployed for Isolated Builds. This field may be specified only if `subnetId` is also specified and must be on the same Virtual Network as the subnet specified in `subnetId`. </param>
         /// <param name="proxyVmSize"> Size of the proxy virtual machine used to pass traffic to the build VM and validation VM. This must not be specified if `containerInstanceSubnetId` is specified because no proxy virtual machine is deployed in that case. Omit or specify empty string to use the default (Standard_A1_v2). </param>
@@ -518,6 +570,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageBuilderVirtualNetworkConfig(subnetId, containerInstanceSubnetId, proxyVmSize, default);
         }
 
+        /// <summary> Data disk properties. </summary>
         /// <param name="sizeGB"> Size of the data disk in GB. </param>
         /// <returns> A new <see cref="Models.ImageBuilderDataDisk"/> instance for mocking. </returns>
         public static ImageBuilderDataDisk ImageBuilderDataDisk(int? sizeGB = default)
@@ -525,6 +578,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageBuilderDataDisk(sizeGB, default);
         }
 
+        /// <summary> Identity for the image template. </summary>
         /// <param name="type"> The type of identity used for the image template. The type 'None' will remove any identities from the image template. </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <returns> A new <see cref="Models.ImageTemplateIdentity"/> instance for mocking. </returns>
