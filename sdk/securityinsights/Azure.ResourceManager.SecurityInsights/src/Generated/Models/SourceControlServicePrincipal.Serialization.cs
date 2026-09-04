@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(CredentialsExpireOn))
+            if (Optional.IsDefined(CredentialsExpiresOn))
             {
                 writer.WritePropertyName("credentialsExpireOn"u8);
-                writer.WriteStringValue(CredentialsExpireOn.Value, "O");
+                writer.WriteStringValue(CredentialsExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string id = default;
             string tenantId = default;
             string appId = default;
-            DateTimeOffset? credentialsExpireOn = default;
+            DateTimeOffset? credentialsExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    credentialsExpireOn = prop.Value.GetDateTimeOffset("O");
+                    credentialsExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SourceControlServicePrincipal(id, tenantId, appId, credentialsExpireOn, additionalBinaryDataProperties);
+            return new SourceControlServicePrincipal(id, tenantId, appId, credentialsExpiresOn, additionalBinaryDataProperties);
         }
     }
 }

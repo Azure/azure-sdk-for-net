@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (Optional.IsDefined(NumberOfBucket))
             {
                 writer.WritePropertyName("numberOfBucket"u8);
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             IList<EntityTimelineKind> kinds = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             int? numberOfBucket = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("numberOfBucket"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityTimelineContent(kinds ?? new ChangeTrackingList<EntityTimelineKind>(), startOn, endOn, numberOfBucket, additionalBinaryDataProperties);
+            return new EntityTimelineContent(kinds ?? new ChangeTrackingList<EntityTimelineKind>(), startsOn, endsOn, numberOfBucket, additionalBinaryDataProperties);
         }
     }
 }
