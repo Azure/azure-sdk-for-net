@@ -74,6 +74,37 @@ public class HostedResilienceFailureTests
 
     [Test]
     [NonParallelizable]
+    public void HostedMode_ComposesWhenCoreCredentialIsRegisteredAfter()
+    {
+        ConfigureHostedEnvironment();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        var credential = new TestCredential();
+        services.AddResponsesServerCore(
+            o => o.ResilientBackground = true,
+            CreateHostedStorage(credential));
+
+        Assert.That(
+            services.Any(descriptor => descriptor.ServiceType == typeof(TokenCredential)),
+            Is.False,
+            "Settings-bound hosted storage must not publish an ambient credential.");
+        Assert.DoesNotThrow(() => services.AddResilientTasks(credential));
+
+        using ServiceProvider provider = services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<TokenCredential>(),
+            Is.SameAs(credential));
+        Assert.That(
+            provider.GetRequiredService<ITaskStore>(),
+            Is.InstanceOf<HostedTaskStore>());
+        Assert.That(
+            provider.GetRequiredService<TaskHostEnvironment>().Credential,
+            Is.SameAs(credential));
+        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
+    }
+
+    [Test]
+    [NonParallelizable]
     public void HostedMode_ComposesWhenConsumerTaskIsRegisteredFirst()
     {
         ConfigureHostedEnvironment();

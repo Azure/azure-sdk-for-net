@@ -132,20 +132,23 @@ conversation) and stays alive between turns until you end it.
 
 ### One-shot
 
-```csharp
+```C# Snippet:Core_TasksGuide_OneShotHelloWorld
 var builder = AgentHost.CreateBuilder();
 
-TaskDefinition<string, string> echo = builder.Services
-    .AddResilientTask<string, string>("echo", async (ctx, ct) =>
+TaskDefinition<string, string> echo = builder.Services.AddResilientTask<string, string>(
+    "echo", async (ctx, ct) =>
     {
+        await Task.Yield();
         return $"you said: {ctx.Input}";
     });
 
 var app = builder.Build();
-await app.StartAsync();
+await app.App.StartAsync();
 
 string result = await echo.RunAsync("hello");
 // result == "you said: hello"
+
+await app.App.StopAsync();
 ```
 
 The registration-time handle is bound to the task engine when the application host starts.

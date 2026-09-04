@@ -49,9 +49,7 @@ public static class ResilientTaskServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
         if (credential is not null)
         {
-            // Publish an explicitly supplied Core credential so composing protocol packages can
-            // reuse the same identity instead of creating and attempting to attach a second one.
-            services.TryAddSingleton<TokenCredential>(credential);
+            RegisterExplicitCredential(services, credential);
         }
 
         EnsureCoreServices(services, credential);
@@ -83,6 +81,34 @@ public static class ResilientTaskServiceCollectionExtensions
         }
 
         EnsureCoreServices(services, credential, endpoint);
+        return services;
+    }
+
+    /// <summary>
+    /// Registers a replaceable framework-default hosted credential. An explicit credential supplied
+    /// later through <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/> supersedes
+    /// this fallback; consumer credential registrations remain authoritative.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="credentialFactory">Creates the fallback credential from the built provider.</param>
+    /// <returns>The service collection.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static IServiceCollection AddResilientTaskCredentialDefault(
+        this IServiceCollection services,
+        Func<IServiceProvider, TokenCredential> credentialFactory)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(credentialFactory);
+
+        TaskCredentialRegistrationState state = GetOrCreateCredentialState(services);
+        if (!services.Any(descriptor => descriptor.ServiceType == typeof(TokenCredential)))
+        {
+            ServiceDescriptor descriptor =
+                ServiceDescriptor.Singleton<TokenCredential>(credentialFactory);
+            services.Add(descriptor);
+            state.DefaultDescriptor = descriptor;
+        }
+
         return services;
     }
 
@@ -681,6 +707,47 @@ public static class ResilientTaskServiceCollectionExtensions
         }
 
         return null;
+    }
+
+    private static void RegisterExplicitCredential(
+        IServiceCollection services,
+        TokenCredential credential)
+    {
+        TaskCredentialRegistrationState state = GetOrCreateCredentialState(services);
+        ServiceDescriptor? defaultDescriptor = state.DefaultDescriptor;
+        bool hasConsumerCredential = services.Any(descriptor =>
+            descriptor.ServiceType == typeof(TokenCredential)
+            && !ReferenceEquals(descriptor, defaultDescriptor));
+
+        if (!hasConsumerCredential)
+        {
+            if (defaultDescriptor is not null)
+            {
+                services.Remove(defaultDescriptor);
+                state.DefaultDescriptor = null;
+            }
+
+            services.TryAddSingleton<TokenCredential>(credential);
+        }
+    }
+
+    private static TaskCredentialRegistrationState GetOrCreateCredentialState(
+        IServiceCollection services)
+    {
+        TaskCredentialRegistrationState? state = services
+            .Where(descriptor =>
+                descriptor.ServiceType == typeof(TaskCredentialRegistrationState))
+            .Select(descriptor => descriptor.ImplementationInstance)
+            .OfType<TaskCredentialRegistrationState>()
+            .FirstOrDefault();
+        if (state is not null)
+        {
+            return state;
+        }
+
+        state = new TaskCredentialRegistrationState();
+        services.TryAddSingleton(state);
+        return state;
     }
 
     private static TaskHostEnvironment? ResolveRegisteredEnvironment(IServiceCollection services)
