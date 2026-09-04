@@ -160,11 +160,15 @@ namespace Azure.AI.Projects.Agents
         public AgentAdministrationClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.Agents.AgentAdministrationClientOptions options = null) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult CreateAgent(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord> CreateAgent(string name, Azure.AI.Projects.Agents.ProjectsAgentDefinition definition, Azure.AI.Projects.Agents.AgentState? state = default(Azure.AI.Projects.Agents.AgentState?), System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, Azure.AI.Projects.Agents.AgentBlueprintReference blueprintReference = null, Azure.AI.Projects.Agents.DigitalWorkerType? digitalWorkerType = default(Azure.AI.Projects.Agents.DigitalWorkerType?), bool? draft = default(bool?), Azure.AI.Projects.Agents.AgentEndpointConfiguration agentEndpoint = null, Azure.AI.Projects.Agents.AgentCard agentCard = null, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord>> CreateAgentAsync(string name, Azure.AI.Projects.Agents.ProjectsAgentDefinition definition, Azure.AI.Projects.Agents.AgentState? state = default(Azure.AI.Projects.Agents.AgentState?), System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, Azure.AI.Projects.Agents.AgentBlueprintReference blueprintReference = null, Azure.AI.Projects.Agents.DigitalWorkerType? digitalWorkerType = default(Azure.AI.Projects.Agents.DigitalWorkerType?), bool? draft = default(bool?), Azure.AI.Projects.Agents.AgentEndpointConfiguration agentEndpoint = null, Azure.AI.Projects.Agents.AgentCard agentCard = null, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateAgentFromManifest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentFromManifestAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentVersion> CreateAgentVersion(string agentName, Azure.AI.Projects.Agents.ProjectsAgentDefinition definition, System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, Azure.AI.Projects.Agents.AgentBlueprintReference blueprintReference = null, Azure.AI.Projects.Agents.DigitalWorkerType? digitalWorkerType = default(Azure.AI.Projects.Agents.DigitalWorkerType?), bool? draft = default(bool?), Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentVersion> CreateAgentVersion(string agentName, Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions options, string foundryFeatures = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateAgentVersion(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentVersion>> CreateAgentVersionAsync(string agentName, Azure.AI.Projects.Agents.ProjectsAgentDefinition definition, System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, Azure.AI.Projects.Agents.AgentBlueprintReference blueprintReference = null, Azure.AI.Projects.Agents.DigitalWorkerType? digitalWorkerType = default(Azure.AI.Projects.Agents.DigitalWorkerType?), bool? draft = default(bool?), Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentVersion>> CreateAgentVersionAsync(string agentName, Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions options = null, string foundryFeatures = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentVersionAsync(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, Azure.AI.Projects.Agents.AgentVersionFromCodeMetadata metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -203,10 +207,16 @@ namespace Azure.AI.Projects.Agents
         public virtual System.ClientModel.ClientResult EnableAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> EnableAgentAsync(string agentName, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> EnableAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord> GenerateAgent(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GenerateAgent(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord>> GenerateAgentAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GenerateAgentAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult GetAgent(string agentName, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord> GetAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentAsync(string agentName, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord>> GetAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual Azure.AI.Projects.Agents.AgentEndpointConversations GetAgentEndpointConversations() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual Azure.AI.Projects.Agents.AgentOptimizationJobs GetAgentOptimizationJobs() { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.ProjectsAgentRecord> GetAgents(Azure.AI.Projects.Agents.ProjectsAgentKind? kind = default(Azure.AI.Projects.Agents.ProjectsAgentKind?), int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -214,6 +224,8 @@ namespace Azure.AI.Projects.Agents
         public virtual Azure.AI.Projects.Agents.AgentSessionFiles GetAgentSessionFiles(string agentName, string sessionId) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual Azure.AI.Projects.Agents.ProjectAgentSkills GetAgentSkills() { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual Azure.AI.Projects.Agents.AgentTelephony GetAgentTelephony() { throw null; }
         public virtual Azure.AI.Projects.Agents.AgentToolboxes GetAgentToolboxes() { throw null; }
         public virtual System.ClientModel.ClientResult GetAgentVersion(string agentName, string agentVersion, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentVersion> GetAgentVersion(string agentName, string agentVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -229,6 +241,8 @@ namespace Azure.AI.Projects.Agents
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.ProjectAgentSession> GetSessions(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.ProjectAgentSession> GetSessionsAsync(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual Azure.AI.Projects.Agents.VoiceAgentWebSocket GetVoiceAgentWebSocket() { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord> PatchAgent(string agentName, Azure.AI.Projects.Agents.PatchAgentOptions patchAgentOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.ProjectsAgentRecord>> PatchAgentAsync(string agentName, Azure.AI.Projects.Agents.PatchAgentOptions patchAgentOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult StopSession(string agentName, string sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -346,6 +360,68 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.AgentEndpointConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class AgentEndpointConversations
+    {
+        protected AgentEndpointConversations() { }
+        public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public virtual System.ClientModel.ClientResult DeleteAgentConversation(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult DeleteAgentConversation(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAgentConversationAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAgentConversationAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversation(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceConversation> GetAgentConversation(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceConversation>> GetAgentConversationAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationAudio(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceRecordingResponse> GetAgentConversationAudio(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationAudioAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceRecordingResponse>> GetAgentConversationAudioAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationAudioContent(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<System.BinaryData> GetAgentConversationAudioContent(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationAudioContentAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetAgentConversationAudioContentAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationItem(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationItem(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Realtime.RealtimeItem>> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceItemAudioResponse> GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceItemAudioResponse>> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<System.BinaryData> GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse> GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<System.BinaryData> GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAgentConversationItems(string agentName, string conversationId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult GetAgentConversationResponse(string agentName, string conversationId, string responseId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceResponse> GetAgentConversationResponse(string agentName, string conversationId, string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceResponse>> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Realtime.RealtimeItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.VoiceResponse> GetAgentConversationResponses(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAgentConversationResponses(string agentName, string conversationId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.VoiceResponse> GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.VoiceConversation> GetAgentConversations(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAgentConversations(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.VoiceConversation> GetAgentConversationsAsync(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAgentConversationsAsync(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
     public partial class AgentFromCodeOptions
     {
@@ -474,6 +550,24 @@ namespace Azure.AI.Projects.Agents
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentOptimizationDatasetInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentOptimizationDatasetInputType : System.IEquatable<Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentOptimizationDatasetInputType(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType Inline { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType Reference { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType left, Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType left, Azure.AI.Projects.Agents.AgentOptimizationDatasetInputType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class AgentOptimizationDatasetItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentOptimizationDatasetItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentOptimizationDatasetItem>
     {
         public AgentOptimizationDatasetItem() { }
@@ -526,13 +620,13 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentOptimizationJob : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentOptimizationJob>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentOptimizationJob>
     {
         public AgentOptimizationJob() { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentOptimizationJobInputs Inputs { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.AgentOptimizationJobProgress Progress { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentOptimizationJobResult Result { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentsJobStatus Status { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Warnings { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.AgentOptimizationJob JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -570,11 +664,11 @@ namespace Azure.AI.Projects.Agents
     {
         internal AgentOptimizationJobListItem() { }
         public Azure.AI.Projects.Agents.OptimizedAgentIdentifier Agent { get { throw null; } }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentOptimizationJobProgress Progress { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentsJobStatus Status { get { throw null; } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.AgentOptimizationJobListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.AgentOptimizationJobListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -591,7 +685,7 @@ namespace Azure.AI.Projects.Agents
         internal AgentOptimizationJobProgress() { }
         public double BestScore { get { throw null; } }
         public int CandidatesCompleted { get { throw null; } }
-        public double ElapsedSeconds { get { throw null; } }
+        public System.TimeSpan ElapsedSeconds { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.AgentOptimizationJobProgress JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.AgentOptimizationJobProgress PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -636,8 +730,8 @@ namespace Azure.AI.Projects.Agents
         public virtual System.ClientModel.ClientResult Delete(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.AgentOptimizationJob> Get(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.AgentOptimizationJobListItem> GetAll(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.AgentOptimizationJobListItem> GetAllAsync(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.AgentOptimizationJob> GetAll(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.AgentOptimizationJob> GetAllAsync(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.AgentOptimizationJob>> GetAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -753,7 +847,7 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentsSkill : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentsSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsSkill>
     {
         internal AgentsSkill() { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string DefaultVersion { get { throw null; } }
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
@@ -803,6 +897,71 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.AgentStateSource? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.AgentStateSource left, Azure.AI.Projects.Agents.AgentStateSource right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class AgentTelephony
+    {
+        protected AgentTelephony() { }
+        public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyBinding> CreateTelephonyBinding(string agentName, Azure.AI.Projects.Agents.CreateTelephonyBindingContent body, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult CreateTelephonyBinding(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, Azure.AI.Projects.Agents.CreateTelephonyBindingContent body, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateTelephonyBindingAsync(string agentName, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult DeleteTelephonyBinding(string agentName, string bindingId, string ifMatch, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult DeleteTelephonyBinding(string agentName, string bindingId, string ifMatch, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyCallRecord> EndTelephonyCall(string agentName, string callId, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult EndTelephonyCall(string agentName, string callId, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyCallRecord>> EndTelephonyCallAsync(string agentName, string callId, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> EndTelephonyCallAsync(string agentName, string callId, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyBinding> GetTelephonyBinding(string agentName, string bindingId, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetTelephonyBinding(string agentName, string bindingId, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyBinding>> GetTelephonyBindingAsync(string agentName, string bindingId, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetTelephonyBindingAsync(string agentName, string bindingId, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.TelephonyBindingListItem> GetTelephonyBindings(string agentName, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), Azure.AI.Projects.Agents.TelephonyProvider? provider = default(Azure.AI.Projects.Agents.TelephonyProvider?), Azure.AI.Projects.Agents.TelephonyBindingStatus? status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus?), int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetTelephonyBindings(string agentName, string foundryFeatures, string provider, string status, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.TelephonyBindingListItem> GetTelephonyBindingsAsync(string agentName, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), Azure.AI.Projects.Agents.TelephonyProvider? provider = default(Azure.AI.Projects.Agents.TelephonyProvider?), Azure.AI.Projects.Agents.TelephonyBindingStatus? status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus?), int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetTelephonyBindingsAsync(string agentName, string foundryFeatures, string provider, string status, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyCallRecord> GetTelephonyCall(string agentName, string callId, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetTelephonyCall(string agentName, string callId, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyCallRecord>> GetTelephonyCallAsync(string agentName, string callId, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetTelephonyCallAsync(string agentName, string callId, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.TelephonyCallSummary> GetTelephonyCalls(string agentName, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), Azure.AI.Projects.Agents.TelephonyProvider? provider = default(Azure.AI.Projects.Agents.TelephonyProvider?), Azure.AI.Projects.Agents.TelephonyCallStatus? status = default(Azure.AI.Projects.Agents.TelephonyCallStatus?), System.DateTimeOffset? startedAfter = default(System.DateTimeOffset?), System.DateTimeOffset? startedBefore = default(System.DateTimeOffset?), int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetTelephonyCalls(string agentName, string foundryFeatures, string provider, string status, System.DateTimeOffset? startedAfter, System.DateTimeOffset? startedBefore, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.TelephonyCallSummary> GetTelephonyCallsAsync(string agentName, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), Azure.AI.Projects.Agents.TelephonyProvider? provider = default(Azure.AI.Projects.Agents.TelephonyProvider?), Azure.AI.Projects.Agents.TelephonyCallStatus? status = default(Azure.AI.Projects.Agents.TelephonyCallStatus?), System.DateTimeOffset? startedAfter = default(System.DateTimeOffset?), System.DateTimeOffset? startedBefore = default(System.DateTimeOffset?), int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetTelephonyCallsAsync(string agentName, string foundryFeatures, string provider, string status, System.DateTimeOffset? startedAfter, System.DateTimeOffset? startedBefore, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyTransferTargets> GetTelephonyTransferTargets(string agentName, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult GetTelephonyTransferTargets(string agentName, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyTransferTargets>> GetTelephonyTransferTargetsAsync(string agentName, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetTelephonyTransferTargetsAsync(string agentName, string foundryFeatures, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.ClientResult ReplaceTelephonyTransferTargets(string agentName, string ifMatch, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyTransferTargets> ReplaceTelephonyTransferTargets(string agentName, string ifMatch, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelephonyTransferTarget> transferTargets, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyTransferTargets>> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelephonyTransferTarget> transferTargets, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult TransferTelephonyCall(string agentName, string callId, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyCallRecord> TransferTelephonyCall(string agentName, string callId, string target, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> TransferTelephonyCallAsync(string agentName, string callId, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.TelephonyCallRecord>> TransferTelephonyCallAsync(string agentName, string callId, string target, Azure.AI.Projects.Agents.AgentDefinitionOptInKeys? foundryFeatures = default(Azure.AI.Projects.Agents.AgentDefinitionOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult UpdateTelephonyBinding(string agentName, string bindingId, string ifMatch, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
     }
     public partial class AgentToolboxes
     {
@@ -1310,7 +1469,6 @@ namespace Azure.AI.Projects.Agents
     public partial class CodeInterpreterToolboxTool : Azure.AI.Projects.Agents.ToolboxTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CodeInterpreterToolboxTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CodeInterpreterToolboxTool>
     {
         public CodeInterpreterToolboxTool() { }
-        public System.Collections.Generic.IList<OpenAI.CallableToolAllowedCaller> AllowedCallers { get { throw null; } set { } }
         public OpenAI.Responses.CodeInterpreterToolContainer Container { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.ToolboxTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1368,6 +1526,54 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class CreateTeamsPhoneExtensionTelephonyBindingContent : Azure.AI.Projects.Agents.CreateTelephonyBindingContent, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>
+    {
+        public CreateTeamsPhoneExtensionTelephonyBindingContent(string connection, string resourceAccountObjectId) { }
+        public string PhoneNumber { get { throw null; } set { } }
+        public string ResourceAccountObjectId { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.CreateTelephonyBindingContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.CreateTelephonyBindingContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class CreateTelephonyBindingContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>
+    {
+        internal CreateTelephonyBindingContent() { }
+        public string Connection { get { throw null; } }
+        public string Label { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.CreateTelephonyBindingContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.Agents.CreateTelephonyBindingContent createTelephonyBindingContent) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.CreateTelephonyBindingContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.CreateTelephonyBindingContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.CreateTelephonyBindingContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTelephonyBindingContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class CreateTwilioTelephonyBindingContent : Azure.AI.Projects.Agents.CreateTelephonyBindingContent, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>
+    {
+        public CreateTwilioTelephonyBindingContent(string connection, string phoneNumber) { }
+        public string PhoneNumber { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.CreateTelephonyBindingContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.CreateTelephonyBindingContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeclarativeAgentDefinition : Azure.AI.Projects.Agents.ProjectsAgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.DeclarativeAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.DeclarativeAgentDefinition>
     {
@@ -1536,6 +1742,28 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class GenerateVoiceAgentRequest : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>
+    {
+        public GenerateVoiceAgentRequest(string name) { }
+        public string Description { get { throw null; } set { } }
+        public bool? Draft { get { throw null; } set { } }
+        public string Goal { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceModelType? ModelType { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentTool> Tools { get { throw null; } }
+        public string UseCase { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.GenerateVoiceAgentRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.GenerateVoiceAgentRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.GenerateVoiceAgentRequest System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.GenerateVoiceAgentRequest System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.GenerateVoiceAgentRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class HeaderTelemetryEndpointAuth : Azure.AI.Projects.Agents.TelemetryEndpointAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>
     {
         public HeaderTelemetryEndpointAuth(string headerName, string secretId, string secretKey) { }
@@ -1632,7 +1860,6 @@ namespace Azure.AI.Projects.Agents
     public partial class MCPToolboxTool : Azure.AI.Projects.Agents.ToolboxTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.MCPToolboxTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.MCPToolboxTool>
     {
         public MCPToolboxTool(string serverLabel) { }
-        public System.Collections.Generic.IList<OpenAI.CallableToolAllowedCaller> AllowedCallers { get { throw null; } set { } }
         public System.BinaryData AllowedTools { get { throw null; } set { } }
         public string Authorization { get { throw null; } set { } }
         public OpenAI.MCPToolboxToolConnectorId? ConnectorId { get { throw null; } set { } }
@@ -1914,9 +2141,9 @@ namespace Azure.AI.Projects.Agents
     {
         internal ProjectAgentSession() { }
         public string AgentSessionId { get { throw null; } }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public System.DateTimeOffset LastAccessedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public System.DateTimeOffset ExpiresAt { get { throw null; } }
+        public System.DateTimeOffset LastAccessedAt { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentSessionStatus Status { get { throw null; } }
         public Azure.AI.Projects.Agents.VersionIndicator VersionIndicator { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.ProjectAgentSession JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2007,6 +2234,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.ProjectsAgentKind External { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentKind Hosted { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentKind Prompt { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ProjectsAgentKind Voice { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentKind Workflow { get { throw null; } }
         public bool Equals(Azure.AI.Projects.Agents.ProjectsAgentKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -2029,6 +2257,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol InvocationsWs { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Mcp { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Responses { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Voice { get { throw null; } }
         public bool Equals(Azure.AI.Projects.Agents.ProjectsAgentProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -2099,7 +2328,7 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.AgentOptimizationJobInputs AgentOptimizationJobInputs(Azure.AI.Projects.Agents.OptimizedAgentIdentifier agent = null, Azure.AI.Projects.Agents.AgentOptimizationDatasetInput trainDataset = null, Azure.AI.Projects.Agents.AgentOptimizationDatasetInput validationDataset = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.AgentOptimizationEvaluatorRef> evaluators = null, Azure.AI.Projects.Agents.AgentOptimizationOptions options = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobProgress AgentOptimizationJobProgress(int candidatesCompleted = 0, double bestScore = 0, double elapsedSeconds = 0) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentOptimizationJobProgress AgentOptimizationJobProgress(int candidatesCompleted = 0, double bestScore = 0, double elapsedSecondsInternal = 0) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.AgentOptimizationJobResult AgentOptimizationJobResult(string baseline = null, string best = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.AgentOptimizationCandidate> candidates = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -2107,7 +2336,7 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.AgentOptimizationReferenceDatasetInput AgentOptimizationReferenceDatasetInput(string name = null, string version = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.AgentsSkill AgentsSkill(string id = null, string name = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string defaultVersion = null, string latestVersion = null) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentsSkill AgentsSkill(string id = null, string name = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string defaultVersion = null, string latestVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentVersionFromCodeMetadata AgentVersionFromCodeMetadata(string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Projects.Agents.HostedAgentDefinition definition = null) { throw null; }
         public static Azure.AI.Projects.Agents.AzureAISearchTool AzureAISearchTool(Azure.AI.Projects.Agents.AzureAISearchToolOptions options) { throw null; }
         public static Azure.AI.Projects.Agents.AzureAISearchTool AzureAISearchTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, Azure.AI.Projects.Agents.AzureAISearchToolOptions options = null) { throw null; }
@@ -2144,12 +2373,18 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputDefinition) { throw null; }
         public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, Azure.AI.Projects.Agents.StructuredOutputDefinition outputDefinition = null) { throw null; }
         public static Azure.AI.Projects.Agents.CodeConfiguration CodeConfiguration(string runtime = null, System.Collections.Generic.IEnumerable<string> entryPoint = null, Azure.AI.Projects.Agents.CodeDependencyResolution dependencyResolution = default(Azure.AI.Projects.Agents.CodeDependencyResolution), string contentHash = null) { throw null; }
-        public static Azure.AI.Projects.Agents.CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, System.Collections.Generic.IEnumerable<OpenAI.CallableToolAllowedCaller> allowedCallers = null, System.BinaryData internalContainer = null) { throw null; }
+        public static Azure.AI.Projects.Agents.CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, System.BinaryData internalContainer = null) { throw null; }
         public static Azure.AI.Projects.Agents.ContainerConfiguration ContainerConfiguration(string image = null, string registryConnectionId = null) { throw null; }
         public static OpenAI.ContainerSkill ContainerSkill(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName) { throw null; }
         public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = null, Azure.AI.Projects.Agents.RaiInvocationModeration invocationsModeration = null) { throw null; }
         public static Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, string manifestId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValues = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.CreateTeamsPhoneExtensionTelephonyBindingContent CreateTeamsPhoneExtensionTelephonyBindingContent(string connection = null, string label = null, string phoneNumber = null, string resourceAccountObjectId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.CreateTelephonyBindingContent CreateTelephonyBindingContent(string provider = null, string connection = null, string label = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent CreateTwilioTelephonyBindingContent(string connection = null, string label = null, string phoneNumber = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public static Azure.AI.Projects.Agents.DeclarativeAgentDefinition DeclarativeAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, string model = null, string instructions = null, float? temperature = default(float?), float? topP = default(float?), OpenAI.Responses.ResponseReasoningOptions reasoningOptions = null, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseTool> tools = null, System.BinaryData toolChoice = null, OpenAI.Responses.ResponseTextOptions textOptions = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = null) { throw null; }
         public static OpenAI.EmptyModelParam EmptyModelParam() { throw null; }
@@ -2163,6 +2398,8 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.FabricIQPreviewToolboxTool FabricIQPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, string projectConnectionId = null, string serverLabel = null, System.Uri serverUri = null, System.BinaryData requireApprovalInternal = null) { throw null; }
         public static Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule FixedRatioVersionSelectionRule(string agentVersion = null, int trafficPercentage = 0) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.GenerateVoiceAgentRequest GenerateVoiceAgentRequest(string name = null, Azure.AI.Projects.Agents.VoiceModelType? modelType = default(Azure.AI.Projects.Agents.VoiceModelType?), string model = null, string useCase = null, string goal = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentTool> tools = null, bool? draft = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = null, string secretId = null, string secretKey = null) { throw null; }
         public static Azure.AI.Projects.Agents.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProjectsAgentTool> tools, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> versions, string cpu, string memory, System.Collections.Generic.IDictionary<string, string> environmentVariables, string image) { throw null; }
         public static Azure.AI.Projects.Agents.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, string cpu = null, string memory = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, Azure.AI.Projects.Agents.ContainerConfiguration containerConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> versions = null, Azure.AI.Projects.Agents.CodeConfiguration codeConfiguration = null, Azure.AI.Projects.Agents.TelemetryConfig telemetryConfig = null, Azure.AI.Projects.Agents.SessionConfiguration sessionConfiguration = null) { throw null; }
@@ -2172,7 +2409,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration InvocationsWsProtocolConfiguration() { throw null; }
         public static Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference ManagedAgentIdentityBlueprintReference(string blueprintId = null) { throw null; }
         public static Azure.AI.Projects.Agents.McpProtocolConfiguration McpProtocolConfiguration() { throw null; }
-        public static Azure.AI.Projects.Agents.MCPToolboxTool MCPToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, string serverLabel = null, System.Uri serverUri = null, OpenAI.MCPToolboxToolConnectorId? connectorId = default(OpenAI.MCPToolboxToolConnectorId?), string tunnelId = null, string authorization = null, string serverDescription = null, System.Collections.Generic.IDictionary<string, string> headers = null, System.BinaryData allowedTools = null, System.Collections.Generic.IEnumerable<OpenAI.CallableToolAllowedCaller> allowedCallers = null, System.BinaryData requireApprovalInternal = null, bool? deferLoading = default(bool?), string projectConnectionId = null) { throw null; }
+        public static Azure.AI.Projects.Agents.MCPToolboxTool MCPToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, string serverLabel = null, System.Uri serverUri = null, OpenAI.MCPToolboxToolConnectorId? connectorId = default(OpenAI.MCPToolboxToolConnectorId?), string tunnelId = null, string authorization = null, string serverDescription = null, System.Collections.Generic.IDictionary<string, string> headers = null, System.BinaryData allowedTools = null, System.BinaryData requireApprovalInternal = null, bool? deferLoading = default(bool?), string projectConnectionId = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Projects.Agents.MemorySearchToolOptions searchOptions = null, int? updateDelayInSecs = default(int?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -2194,11 +2431,10 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.OptimizedAgentIdentifier OptimizedAgentIdentifier(string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.OtlpTelemetryEndpoint OtlpTelemetryEndpoint(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes = null, Azure.AI.Projects.Agents.TelemetryEndpointAuthentication authentication = null, string endpoint = null, Azure.AI.Projects.Agents.TelemetryTransportProtocol protocol = default(Azure.AI.Projects.Agents.TelemetryTransportProtocol)) { throw null; }
         public static Azure.AI.Projects.Agents.PatchAgentOptions PatchAgentOptions(Azure.AI.Projects.Agents.AgentEndpointConfiguration agentEndpoint = null, Azure.AI.Projects.Agents.AgentCard agentCard = null) { throw null; }
-        public static OpenAI.ProgrammaticToolCallingParam ProgrammaticToolCallingParam() { throw null; }
-        public static Azure.AI.Projects.Agents.ProjectAgentSession ProjectAgentSession(string agentSessionId = null, Azure.AI.Projects.Agents.VersionIndicator versionIndicator = null, Azure.AI.Projects.Agents.AgentSessionStatus status = default(Azure.AI.Projects.Agents.AgentSessionStatus), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastAccessedOn = default(System.DateTimeOffset), System.DateTimeOffset expiresOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.Agents.ProjectAgentSession ProjectAgentSession(string agentSessionId = null, Azure.AI.Projects.Agents.VersionIndicator versionIndicator = null, Azure.AI.Projects.Agents.AgentSessionStatus status = default(Azure.AI.Projects.Agents.AgentSessionStatus), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset lastAccessedAt = default(System.DateTimeOffset), System.DateTimeOffset expiresAt = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentDefinition ProjectsAgentDefinition(string kind = null, Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentRecord ProjectsAgentRecord(string id, string name) { throw null; }
-        public static Azure.AI.Projects.Agents.ProjectsAgentRecord ProjectsAgentRecord(string id = null, string name = null, Azure.AI.Projects.Agents.AgentState state = default(Azure.AI.Projects.Agents.AgentState)) { throw null; }
+        public static Azure.AI.Projects.Agents.ProjectsAgentRecord ProjectsAgentRecord(string id = null, string name = null, Azure.AI.Projects.Agents.AgentState state = default(Azure.AI.Projects.Agents.AgentState), Azure.AI.Projects.Agents.DigitalWorkerType? digitalWorkerType = default(Azure.AI.Projects.Agents.DigitalWorkerType?)) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentTool ProjectsAgentTool(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentVersion ProjectsAgentVersion(System.Collections.Generic.IDictionary<string, string> metadata, string id, string name, string version, string description, System.DateTimeOffset createdAt, Azure.AI.Projects.Agents.ProjectsAgentDefinition definition) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentVersion ProjectsAgentVersion(System.Collections.Generic.IDictionary<string, string> metadata = null, string id = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.Projects.Agents.ProjectsAgentDefinition definition = null, bool? draft = default(bool?), Azure.AI.Projects.Agents.AgentVersionStatus? status = default(Azure.AI.Projects.Agents.AgentVersionStatus?), Azure.AI.Projects.Agents.AgentIdentity instanceIdentity = null, Azure.AI.Projects.Agents.AgentIdentity blueprint = null, Azure.AI.Projects.Agents.AgentBlueprintReference blueprintReference = null, string agentGuidInternal = null) { throw null; }
@@ -2206,37 +2442,68 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, Azure.AI.Projects.Agents.ProjectsAgentDefinition definition = null, Azure.AI.Projects.Agents.AgentBlueprintReference blueprintReference = null, Azure.AI.Projects.Agents.DigitalWorkerType? digitalWorkerType = default(Azure.AI.Projects.Agents.DigitalWorkerType?), bool? draft = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = null, string instanceName = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.PromotionInfo PromotionInfo(System.DateTimeOffset promotedOn = default(System.DateTimeOffset), string agentName = null, string agentVersion = null) { throw null; }
+        public static Azure.AI.Projects.Agents.PromotionInfo PromotionInfo(System.DateTimeOffset promotedAt = default(System.DateTimeOffset), string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProtocolConfiguration ProtocolConfiguration(Azure.AI.Projects.Agents.ActivityProtocolConfiguration activity = null, Azure.AI.Projects.Agents.ResponsesProtocolConfiguration responses = null, Azure.AI.Projects.Agents.A2AProtocolConfiguration a2a = null, Azure.AI.Projects.Agents.McpProtocolConfiguration mcp = null, Azure.AI.Projects.Agents.InvocationsProtocolConfiguration invocations = null, Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration invocationsWs = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProtocolVersionRecord ProtocolVersionRecord(Azure.AI.Projects.Agents.ProjectsAgentProtocol protocol = default(Azure.AI.Projects.Agents.ProjectsAgentProtocol), string version = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination PSTNTelephonyTransferDestination(string value = null) { throw null; }
         public static Azure.AI.Projects.Agents.RaiInvocationModeration RaiInvocationModeration(Azure.AI.Projects.Agents.RaiInvocationContentType? inputContentType = default(Azure.AI.Projects.Agents.RaiInvocationContentType?), Azure.AI.Projects.Agents.RaiInvocationContentType? outputContentType = default(Azure.AI.Projects.Agents.RaiInvocationContentType?), Azure.AI.Projects.Agents.RaiInvocationMode responseMode = default(Azure.AI.Projects.Agents.RaiInvocationMode), System.Collections.Generic.IEnumerable<string> inputPaths = null, System.Collections.Generic.IEnumerable<string> outputPaths = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.RaiSseTextSelector> streamSelectors = null) { throw null; }
         public static Azure.AI.Projects.Agents.RaiSseTextSelector RaiSseTextSelector(string eventType = null, string textField = null) { throw null; }
+        public static OpenAI.RealtimeFunctionToolParameters RealtimeFunctionToolParameters() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.ReminderPreviewToolboxTool ReminderPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null) { throw null; }
         public static Azure.AI.Projects.Agents.ResponsesProtocolConfiguration ResponsesProtocolConfiguration() { throw null; }
         public static Azure.AI.Projects.Agents.SessionConfiguration SessionConfiguration(System.TimeSpan? idleTimeoutSeconds = default(System.TimeSpan?)) { throw null; }
-        public static Azure.AI.Projects.Agents.SessionDirectoryEntry SessionDirectoryEntry(string name = null, long sizeInBytes = (long)0, bool isDirectory = false, System.DateTimeOffset modifiedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.Agents.SessionDirectoryEntry SessionDirectoryEntry(string name = null, long sizeInBytes = (long)0, bool isDirectory = false, System.DateTimeOffset modifiedAt = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.Projects.Agents.SessionFileWriteResponse SessionFileWriteResponse(string path = null, long bytesWritten = (long)0) { throw null; }
         public static Azure.AI.Projects.Agents.SessionLogEvent SessionLogEvent(Azure.AI.Projects.Agents.SessionLogEventKind @event = default(Azure.AI.Projects.Agents.SessionLogEventKind), string data = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.SharePointGroundingToolOptions SharePointGroundingToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolProjectConnection> projectConnections = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.SharepointPreviewTool SharepointPreviewTool(Azure.AI.Projects.Agents.SharePointGroundingToolOptions toolOptions = null) { throw null; }
-        public static Azure.AI.Projects.Agents.ShellToolboxTool ShellToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, System.Collections.Generic.IEnumerable<OpenAI.CallableToolAllowedCaller> allowedCallers = null, Azure.AI.Projects.Agents.ToolboxShellEnvironment environment = null) { throw null; }
+        public static Azure.AI.Projects.Agents.ShellToolboxTool ShellToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, Azure.AI.Projects.Agents.ToolboxShellEnvironment environment = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.SipTelephonyTransferDestination SipTelephonyTransferDestination(System.Uri value = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.SkillDeletionResult SkillDeletionResult(string id = null, string name = null, bool deleted = false) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.SkillInlineContent SkillInlineContent(string description = null, string instructions = null, string license = null, string compatibility = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Collections.Generic.IEnumerable<string> allowedTools = null) { throw null; }
         public static OpenAI.SkillReferenceParam SkillReferenceParam(string skillId = null, string version = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.SkillVersion SkillVersion(string id = null, string skillId = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.Projects.Agents.SkillVersion SkillVersion(string id = null, string skillId = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.SkillVersionDeletionResult SkillVersionDeletionResult(string id = null, string name = null, bool deleted = false, string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.StructuredInputDefinition StructuredInputDefinition(string description = null, System.BinaryData defaultValue = null, System.Collections.Generic.IDictionary<string, System.BinaryData> schema = null, bool? isRequired = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.StructuredOutputDefinition StructuredOutputDefinition(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> schema = null, bool? strict = default(bool?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding TeamsPhoneExtensionTelephonyBinding(string id = null, string connection = null, string label = null, Azure.AI.Projects.Agents.TelephonyBindingStatus status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus), System.Uri incomingCallUrl = null, string phoneNumber = null, string resourceAccountObjectId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem TeamsPhoneExtensionTelephonyBindingListItem(string id = null, string connection = null, string label = null, Azure.AI.Projects.Agents.TelephonyBindingStatus status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus), System.Uri incomingCallUrl = null, string etag = null, string phoneNumber = null, string resourceAccountObjectId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination TeamsTelephonyTransferDestination(string value = null) { throw null; }
         public static Azure.AI.Projects.Agents.TelemetryConfig TelemetryConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryEndpoint> endpoints = null) { throw null; }
         public static Azure.AI.Projects.Agents.TelemetryEndpoint TelemetryEndpoint(string kind = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes = null, Azure.AI.Projects.Agents.TelemetryEndpointAuthentication authentication = null) { throw null; }
         public static Azure.AI.Projects.Agents.TelemetryEndpointAuthentication TelemetryEndpointAuthentication(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyBinding TelephonyBinding(string id = null, string provider = null, string connection = null, string label = null, Azure.AI.Projects.Agents.TelephonyBindingStatus status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus), System.Uri incomingCallUrl = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyBindingListItem TelephonyBindingListItem(string id = null, string provider = null, string connection = null, string label = null, Azure.AI.Projects.Agents.TelephonyBindingStatus status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus), System.Uri incomingCallUrl = null, string etag = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent TelephonyCallLifecycleEvent(long sequence = (long)0, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName name = default(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName), Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource source = default(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource), Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome outcome = default(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome), System.DateTimeOffset observedAt = default(System.DateTimeOffset), System.DateTimeOffset? occurredAt = default(System.DateTimeOffset?), Azure.AI.Projects.Agents.TelephonyCallTimestampSource timestampSource = default(Azure.AI.Projects.Agents.TelephonyCallTimestampSource), string reason = null, string providerEventId = null, long? providerSequence = default(long?), int? providerStatusCode = default(int?), int? providerSubCode = default(int?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyCallRecord TelephonyCallRecord(string id = null, Azure.AI.Projects.Agents.TelephonyProvider provider = default(Azure.AI.Projects.Agents.TelephonyProvider), string providerCallId = null, string callerNumber = null, string providerNumber = null, Azure.AI.Projects.Agents.TelephonyCallStatus status = default(Azure.AI.Projects.Agents.TelephonyCallStatus), Azure.AI.Projects.Agents.TelephonyCallPhase phase = default(Azure.AI.Projects.Agents.TelephonyCallPhase), System.DateTimeOffset startedAt = default(System.DateTimeOffset), System.DateTimeOffset? answeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? mediaConnectedAt = default(System.DateTimeOffset?), System.DateTimeOffset? agentSessionReadyAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), System.TimeSpan? durationMs = default(System.TimeSpan?), string endReason = null, int? providerStatusCode = default(int?), int? providerSubCode = default(int?), string providerMessage = null, Azure.AI.Projects.Agents.TelephonyCallTiming timing = null, Azure.AI.Projects.Agents.TelephonyCallTrace trace = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent> events = null, bool eventsTruncated = false) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyCallSummary TelephonyCallSummary(string id = null, Azure.AI.Projects.Agents.TelephonyProvider provider = default(Azure.AI.Projects.Agents.TelephonyProvider), string providerCallId = null, string callerNumber = null, string providerNumber = null, Azure.AI.Projects.Agents.TelephonyCallStatus status = default(Azure.AI.Projects.Agents.TelephonyCallStatus), Azure.AI.Projects.Agents.TelephonyCallPhase phase = default(Azure.AI.Projects.Agents.TelephonyCallPhase), System.DateTimeOffset startedAt = default(System.DateTimeOffset), System.DateTimeOffset? answeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? mediaConnectedAt = default(System.DateTimeOffset?), System.DateTimeOffset? agentSessionReadyAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), System.TimeSpan? durationMs = default(System.TimeSpan?), string endReason = null, int? providerStatusCode = default(int?), int? providerSubCode = default(int?), string providerMessage = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyCallTiming TelephonyCallTiming(System.DateTimeOffset? receivedAt = default(System.DateTimeOffset?), System.DateTimeOffset? validatedAt = default(System.DateTimeOffset?), System.DateTimeOffset? admittedAt = default(System.DateTimeOffset?), System.DateTimeOffset? answerRequestedAt = default(System.DateTimeOffset?), System.DateTimeOffset? answeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? mediaConnectedAt = default(System.DateTimeOffset?), System.DateTimeOffset? agentSessionReadyAt = default(System.DateTimeOffset?), System.DateTimeOffset? firstCallerAudioAt = default(System.DateTimeOffset?), System.DateTimeOffset? firstAgentAudioAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), Azure.AI.Projects.Agents.TelephonyCallDurationBasis? durationBasis = default(Azure.AI.Projects.Agents.TelephonyCallDurationBasis?), Azure.AI.Projects.Agents.TelephonyCallTimestampSource timestampSource = default(Azure.AI.Projects.Agents.TelephonyCallTimestampSource)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyCallTrace TelephonyCallTrace(Azure.AI.Projects.Agents.TelephonyCallTraceStatus status = default(Azure.AI.Projects.Agents.TelephonyCallTraceStatus), string traceId = null, string rootSpanId = null, string conversationId = null, Azure.AI.Projects.Agents.TelephonyCallTraceMode? mode = default(Azure.AI.Projects.Agents.TelephonyCallTraceMode?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyTransferDestination TelephonyTransferDestination(string kind = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyTransferTarget TelephonyTransferTarget(string name = null, string description = null, Azure.AI.Projects.Agents.TelephonyTransferDestination destination = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TelephonyTransferTargets TelephonyTransferTargets(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelephonyTransferTarget> transferTargets = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolboxPolicies ToolboxPolicies(Azure.AI.Projects.Agents.ContentFilterConfiguration raiConfig = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolboxRecord ToolboxRecord(string id = null, string name = null, string defaultVersion = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -2249,16 +2516,105 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.ToolboxSkill ToolboxSkill(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolboxSkillReference ToolboxSkillReference(string name = null, string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolboxTool ToolboxTool(string type = null, string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null) { throw null; }
-        public static Azure.AI.Projects.Agents.ToolboxVersion ToolboxVersion(System.Collections.Generic.IDictionary<string, string> metadata = null, string id = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolboxTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolboxSkill> skills = null, Azure.AI.Projects.Agents.ToolboxPolicies policies = null) { throw null; }
+        public static Azure.AI.Projects.Agents.ToolboxVersion ToolboxVersion(System.Collections.Generic.IDictionary<string, string> metadata = null, string id = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolboxTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolboxSkill> skills = null, Azure.AI.Projects.Agents.ToolboxPolicies policies = null) { throw null; }
+        public static OpenAI.ToolChoiceFunction ToolChoiceFunction(string name = null) { throw null; }
+        public static OpenAI.ToolChoiceMCP ToolChoiceMCP(string serverLabel = null, string name = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolConfig ToolConfig(bool? isPinned = default(bool?), string additionalSearchText = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolProjectConnection ToolProjectConnection(string projectConnectionId = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolSearchTool ToolSearchTool(Azure.AI.Projects.Agents.ToolSearchExecutionKind? execution = default(Azure.AI.Projects.Agents.ToolSearchExecutionKind?), string description = null, OpenAI.EmptyModelParam parameters = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolSearchToolboxTool ToolSearchToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TwilioTelephonyBinding TwilioTelephonyBinding(string id = null, string connection = null, string label = null, Azure.AI.Projects.Agents.TelephonyBindingStatus status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus), System.Uri incomingCallUrl = null, string phoneNumber = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = null, string connection = null, string label = null, Azure.AI.Projects.Agents.TelephonyBindingStatus status = default(Azure.AI.Projects.Agents.TelephonyBindingStatus), System.Uri incomingCallUrl = null, string etag = null, string phoneNumber = null) { throw null; }
         public static Azure.AI.Projects.Agents.UpdateToolboxRequest UpdateToolboxRequest(string name = null, string defaultVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.VersionIndicator VersionIndicator(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.VersionRefIndicator VersionRefIndicator(string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.VersionSelectionRule VersionSelectionRule(string type = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.VersionSelector VersionSelector(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VersionSelectionRule> versionSelectionRules = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioConfig VoiceAgentAudioConfig(Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig input = null, Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig output = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig VoiceAgentAudioInputConfig(OpenAI.Realtime.RealtimeAudioFormat format = null, Azure.AI.Projects.Agents.VoiceAgentNoiseReduction noiseReduction = null, Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig turnDetection = null, Azure.AI.Projects.Agents.VoiceAgentEchoCancellation echoCancellation = null, Azure.AI.Projects.Agents.VoiceAgentInputTranscription transcription = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig VoiceAgentAudioOutputConfig(OpenAI.Realtime.RealtimeAudioFormat format = null, string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, float? speed = default(float?), float? voiceTemperature = default(float?), System.Uri customLexiconUrl = null, System.Uri customTextNormalizationUrl = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string style = null, string pitch = null, string volume = null, string customVoiceEndpointId = null, string personalVoiceModel = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentAudioTimestampType> outputAudioTimestampTypes = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarConfig VoiceAgentAvatarConfig(Azure.AI.Projects.Agents.VoiceAgentAvatarType type = default(Azure.AI.Projects.Agents.VoiceAgentAvatarType), string character = null, string style = null, bool? customized = default(bool?), Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol? outputProtocol = default(Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol?), string model = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams video = null, Azure.AI.Projects.Agents.VoiceAgentAvatarScene scene = null, bool? outputAuditAudio = default(bool?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarScene VoiceAgentAvatarScene(float? zoom = default(float?), float? positionX = default(float?), float? positionY = default(float?), float? rotationX = default(float?), float? rotationY = default(float?), float? rotationZ = default(float?), float? amplitude = default(float?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground VoiceAgentAvatarVideoBackground(System.Uri imageUrl = null, string color = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<object> bottomRight = null, System.Collections.Generic.IEnumerable<object> topLeft = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default(int?), Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop crop = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution resolution = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground background = null, int? gopSize = default(int?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution VoiceAgentAvatarVideoResolution(int width = 0, int height = 0) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default(bool?), float? threshold = default(float?), System.TimeSpan? prefixPaddingMs = default(System.TimeSpan?), System.TimeSpan? silenceDurationMs = default(System.TimeSpan?), System.TimeSpan? idleTimeoutMs = default(System.TimeSpan?), Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = null, System.TimeSpan? speechDurationMs = default(System.TimeSpan?), bool? removeFillerWords = default(bool?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default(bool?), float? threshold = default(float?), System.TimeSpan? prefixPaddingMs = default(System.TimeSpan?), System.TimeSpan? silenceDurationMs = default(System.TimeSpan?), System.TimeSpan? idleTimeoutMs = default(System.TimeSpan?), Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = null, System.TimeSpan? speechDurationMs = default(System.TimeSpan?), bool? removeFillerWords = default(bool?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?), System.Collections.Generic.IEnumerable<string> languages = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default(bool?), float? threshold = default(float?), System.TimeSpan? prefixPaddingMs = default(System.TimeSpan?), System.TimeSpan? silenceDurationMs = default(System.TimeSpan?), System.TimeSpan? idleTimeoutMs = default(System.TimeSpan?), Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = null, System.TimeSpan? speechDurationMs = default(System.TimeSpan?), bool? removeFillerWords = default(bool?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?), System.Collections.Generic.IEnumerable<string> languages = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentDefinition VoiceAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, Azure.AI.Projects.Agents.VoiceModelType? modelType = default(Azure.AI.Projects.Agents.VoiceModelType?), string model = null, Azure.AI.Projects.Agents.VoiceConversationEngine conversationEngine = null, string instructions = null, Azure.AI.Projects.Agents.VoiceAgentGreetingConfig greeting = null, Azure.AI.Projects.Agents.VoiceAgentAudioConfig audio = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentSessionIncludeOption> include = null, Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig interimResponse = null, Azure.AI.Projects.Agents.VoiceAgentAvatarConfig avatar = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentTool> tools = null, System.BinaryData toolChoice = null, bool? parallelToolCalls = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = null, Azure.AI.Projects.Agents.VoiceAgentSubagentConfig subagentConfig = null, bool? store = default(bool?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentEchoCancellation VoiceAgentEchoCancellation(Azure.AI.Projects.Agents.VoiceAgentEchoCancellationReferenceSource? referenceSource = default(Azure.AI.Projects.Agents.VoiceAgentEchoCancellationReferenceSource?), int? channels = default(int?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection VoiceAgentEndOfUtteranceDetection(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel model = default(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel), Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel? thresholdLevel = default(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel?), System.TimeSpan? timeoutMs = default(System.TimeSpan?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentFunctionTool VoiceAgentFunctionTool(string description = null, OpenAI.RealtimeFunctionToolParameters parameters = null, string name = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentGreetingConfig VoiceAgentGreetingConfig(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = null, string prompt = null, OpenAI.VoiceAgentAudioInputConfigTranscriptionDelay? delay = default(OpenAI.VoiceAgentAudioInputConfigTranscriptionDelay?), Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel model = default(Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel), System.Collections.Generic.IDictionary<string, string> customSpeech = null, System.Collections.Generic.IEnumerable<string> phraseList = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig VoiceAgentInterimResponseConfig(string type = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger> triggers = null, System.TimeSpan? latencyThresholdMs = default(System.TimeSpan?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = null, System.BinaryData toolChoice = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig VoiceAgentLlmInterimResponseConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger> triggers = null, System.TimeSpan? latencyThresholdMs = default(System.TimeSpan?), string model = null, string instructions = null, int? maxCompletionTokens = default(int?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = null, string authorization = null, string serverDescription = null, System.Collections.Generic.IDictionary<string, string> headers = null, System.BinaryData allowedTools = null, System.BinaryData requireApproval = null, bool? deferLoading = default(bool?), string projectConnectionId = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, System.Uri serverUrl = null, Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling? responseScheduling = default(Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentNoiseReduction VoiceAgentNoiseReduction(Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType type = default(Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection VoiceAgentSemanticVadTurnDetection(bool? autoTruncate = default(bool?), OpenAI.VoiceAgentSemanticVadTurnDetectionEagerness? eagerness = default(OpenAI.VoiceAgentSemanticVadTurnDetectionEagerness?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection VoiceAgentServerVadTurnDetection(bool? autoTruncate = default(bool?), double? threshold = default(double?), long? prefixPaddingMs = default(long?), long? silenceDurationMs = default(long?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?), long? idleTimeoutMs = default(long?), System.TimeSpan? speechDurationMs = default(System.TimeSpan?), Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger> triggers = null, System.TimeSpan? latencyThresholdMs = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<string> texts = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentSubagent VoiceAgentSubagent(string agentName = null, string agentVersion = null, string agentCapabilities = null, Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy responsePolicy = null, System.TimeSpan? invokeTimeoutSeconds = default(System.TimeSpan?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentSubagentConfig VoiceAgentSubagentConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentSubagent> subagents = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy VoiceAgentSubagentResponsePolicy(bool? immediateAck = default(bool?), System.TimeSpan? gapFillingInterval = default(System.TimeSpan?), string ackInstructions = null, string gapFillingInstructions = null, bool? enableDeltaProgress = default(bool?), string progressInstructions = null, System.TimeSpan? progressUpdateInterval = default(System.TimeSpan?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentSystemTool VoiceAgentSystemTool(Azure.AI.Projects.Agents.VoiceAgentSystemToolName name = default(Azure.AI.Projects.Agents.VoiceAgentSystemToolName), string description = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig VoiceAgentTemplateGreetingConfig(string text = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentTool VoiceAgentTool(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentToolboxTool VoiceAgentToolboxTool(string toolboxName = null, string toolboxVersion = null, Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling? responseScheduling = default(Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentToolChoice VoiceAgentToolChoice(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig VoiceAgentTurnDetectionConfig(string type = null, bool? autoTruncate = default(bool?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceConversationEngine VoiceConversationEngine(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse VoiceGeneratedItemAudioResponse(string conversationId = null, string itemId = null, Azure.AI.Projects.Agents.VoiceAudioRole? role = default(Azure.AI.Projects.Agents.VoiceAudioRole?), Azure.AI.Projects.Agents.VoiceAudioContainerFormat? format = default(Azure.AI.Projects.Agents.VoiceAudioContainerFormat?), Azure.AI.Projects.Agents.VoiceAudioCodec? codec = default(Azure.AI.Projects.Agents.VoiceAudioCodec?), int? sampleRate = default(int?), int? channels = default(int?), System.TimeSpan? startOffsetMs = default(System.TimeSpan?), System.TimeSpan? durationMs = default(System.TimeSpan?), System.Uri blobUri = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine VoiceHostedAgentConversationEngine(string name = null, string version = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceItemAudioResponse VoiceItemAudioResponse(string conversationId = null, string itemId = null, Azure.AI.Projects.Agents.VoiceAudioRole? role = default(Azure.AI.Projects.Agents.VoiceAudioRole?), Azure.AI.Projects.Agents.VoiceAudioContainerFormat? format = default(Azure.AI.Projects.Agents.VoiceAudioContainerFormat?), Azure.AI.Projects.Agents.VoiceAudioCodec? codec = default(Azure.AI.Projects.Agents.VoiceAudioCodec?), int? sampleRate = default(int?), int? channels = default(int?), System.TimeSpan? startOffsetMs = default(System.TimeSpan?), System.TimeSpan? durationMs = default(System.TimeSpan?), System.Uri blobUri = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceMcpListToolsTool VoiceMcpListToolsTool(string name = null, string description = null, Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema inputSchema = null, Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations annotations = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations VoiceMcpListToolsToolAnnotations() { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema VoiceMcpListToolsToolInputSchema() { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceRecordingChannelLayout VoiceRecordingChannelLayout() { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceRecordingResponse VoiceRecordingResponse(string conversationId = null, Azure.AI.Projects.Agents.VoiceAudioContainerFormat format = default(Azure.AI.Projects.Agents.VoiceAudioContainerFormat), int sampleRate = 0, int channels = 0, Azure.AI.Projects.Agents.VoiceRecordingChannelLayout channelLayout = null, System.TimeSpan durationMs = default(System.TimeSpan), System.Uri blobUri = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceResponse VoiceResponse(string id = null, Azure.AI.Projects.Agents.VoiceResponseBaseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseBaseObject?), OpenAI.VoiceResponseBaseStatus? status = default(OpenAI.VoiceResponseBaseStatus?), OpenAI.Realtime.RealtimeResponseStatusDetails statusDetails = null, OpenAI.Realtime.RealtimeResponseUsage usage = null, string conversationId = null, System.Collections.Generic.IEnumerable<OpenAI.VoiceResponseBaseOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null, string id0 = null, System.Collections.Generic.IEnumerable<OpenAI.Realtime.RealtimeItem> output = null, string conversationId0 = null, Azure.AI.Projects.Agents.VoiceResponseAudio audio = null, System.Collections.Generic.IDictionary<string, string> metadata = null, float? temperature = default(float?), System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceResponseAudio VoiceResponseAudio(Azure.AI.Projects.Agents.VoiceResponseAudioOutput output = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, OpenAI.Realtime.RealtimeAudioFormat format = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public static Azure.AI.Projects.Agents.VoiceResponseBase VoiceResponseBase(string id = null, Azure.AI.Projects.Agents.VoiceResponseBaseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseBaseObject?), OpenAI.VoiceResponseBaseStatus? status = default(OpenAI.VoiceResponseBaseStatus?), OpenAI.Realtime.RealtimeResponseStatusDetails statusDetails = null, OpenAI.Realtime.RealtimeResponseUsage usage = null, string conversationId = null, System.Collections.Generic.IEnumerable<OpenAI.VoiceResponseBaseOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = null, string serverLabel = null, System.BinaryData requireApproval = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -2372,7 +2728,7 @@ namespace Azure.AI.Projects.Agents
         internal PromotionInfo() { }
         public string AgentName { get { throw null; } }
         public string AgentVersion { get { throw null; } }
-        public System.DateTimeOffset PromotedOn { get { throw null; } }
+        public System.DateTimeOffset PromotedAt { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.PromotionInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.PromotionInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2416,6 +2772,21 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.ProtocolVersionRecord System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ProtocolVersionRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ProtocolVersionRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ProtocolVersionRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class PSTNTelephonyTransferDestination : Azure.AI.Projects.Agents.TelephonyTransferDestination, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>
+    {
+        public PSTNTelephonyTransferDestination(string value) { }
+        public string Value { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.TelephonyTransferDestination JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyTransferDestination PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublishApprovalStatus : System.IEquatable<Azure.AI.Projects.Agents.PublishApprovalStatus>
@@ -2555,7 +2926,7 @@ namespace Azure.AI.Projects.Agents
     {
         internal SessionDirectoryEntry() { }
         public bool IsDirectory { get { throw null; } }
-        public System.DateTimeOffset ModifiedOn { get { throw null; } }
+        public System.DateTimeOffset ModifiedAt { get { throw null; } }
         public string Name { get { throw null; } }
         public long SizeInBytes { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.SessionDirectoryEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2649,7 +3020,6 @@ namespace Azure.AI.Projects.Agents
     public partial class ShellToolboxTool : Azure.AI.Projects.Agents.ToolboxTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ShellToolboxTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ShellToolboxTool>
     {
         public ShellToolboxTool(Azure.AI.Projects.Agents.ToolboxShellEnvironment environment) { }
-        public System.Collections.Generic.IList<OpenAI.CallableToolAllowedCaller> AllowedCallers { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.ToolboxShellEnvironment Environment { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.ToolboxTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2660,6 +3030,21 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.ShellToolboxTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ShellToolboxTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ShellToolboxTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ShellToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class SipTelephonyTransferDestination : Azure.AI.Projects.Agents.TelephonyTransferDestination, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>
+    {
+        public SipTelephonyTransferDestination(System.Uri value) { }
+        public System.Uri Value { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.TelephonyTransferDestination JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyTransferDestination PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.SipTelephonyTransferDestination System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.SipTelephonyTransferDestination System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SipTelephonyTransferDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class SkillDeletionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.SkillDeletionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SkillDeletionResult>
@@ -2703,7 +3088,7 @@ namespace Azure.AI.Projects.Agents
     public partial class SkillVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.SkillVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SkillVersion>
     {
         internal SkillVersion() { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
@@ -2773,6 +3158,53 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.StructuredOutputDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.StructuredOutputDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TeamsPhoneExtensionTelephonyBinding : Azure.AI.Projects.Agents.TelephonyBinding, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>
+    {
+        internal TeamsPhoneExtensionTelephonyBinding() { }
+        public string PhoneNumber { get { throw null; } }
+        public string ResourceAccountObjectId { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.TelephonyBinding JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyBinding PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBinding>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TeamsPhoneExtensionTelephonyBindingListItem : Azure.AI.Projects.Agents.TelephonyBindingListItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>
+    {
+        internal TeamsPhoneExtensionTelephonyBindingListItem() { }
+        public string PhoneNumber { get { throw null; } }
+        public string ResourceAccountObjectId { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.TelephonyBindingListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyBindingListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsPhoneExtensionTelephonyBindingListItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TeamsTelephonyTransferDestination : Azure.AI.Projects.Agents.TelephonyTransferDestination, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>
+    {
+        public TeamsTelephonyTransferDestination(string value) { }
+        public string Value { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.TelephonyTransferDestination JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyTransferDestination PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TeamsTelephonyTransferDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TelemetryConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryConfig>
     {
         public TelemetryConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryEndpoint> endpoints) { }
@@ -2831,6 +3263,460 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.TelemetryTransportProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.TelemetryTransportProtocol left, Azure.AI.Projects.Agents.TelemetryTransportProtocol right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class TelephonyBinding : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBinding>
+    {
+        internal TelephonyBinding() { }
+        public string Connection { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Uri IncomingCallUrl { get { throw null; } }
+        public string Label { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyBindingStatus Status { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyBinding JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.TelephonyBinding (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.TelephonyBinding PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyBinding System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyBinding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyBinding>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyBinding System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBinding>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBinding>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBinding>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class TelephonyBindingListItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>
+    {
+        internal TelephonyBindingListItem() { }
+        public string Connection { get { throw null; } }
+        public string Etag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Uri IncomingCallUrl { get { throw null; } }
+        public string Label { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyBindingStatus Status { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyBindingListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyBindingListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyBindingListItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyBindingListItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyBindingListItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyBindingStatus : System.IEquatable<Azure.AI.Projects.Agents.TelephonyBindingStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyBindingStatus(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyBindingStatus Active { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyBindingStatus Suspended { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyBindingStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyBindingStatus left, Azure.AI.Projects.Agents.TelephonyBindingStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyBindingStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyBindingStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyBindingStatus left, Azure.AI.Projects.Agents.TelephonyBindingStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallDurationBasis : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallDurationBasis>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallDurationBasis(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallDurationBasis Answered { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallDurationBasis Received { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallDurationBasis other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallDurationBasis left, Azure.AI.Projects.Agents.TelephonyCallDurationBasis right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallDurationBasis (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallDurationBasis? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallDurationBasis left, Azure.AI.Projects.Agents.TelephonyCallDurationBasis right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyCallLifecycleEvent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>
+    {
+        internal TelephonyCallLifecycleEvent() { }
+        public Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName Name { get { throw null; } }
+        public System.DateTimeOffset ObservedAt { get { throw null; } }
+        public System.DateTimeOffset? OccurredAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Outcome { get { throw null; } }
+        public string ProviderEventId { get { throw null; } }
+        public long? ProviderSequence { get { throw null; } }
+        public int? ProviderStatusCode { get { throw null; } }
+        public int? ProviderSubCode { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public long Sequence { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource Source { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallTimestampSource TimestampSource { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallLifecycleEventName : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallLifecycleEventName(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName AgentSessionConnect { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName BindingResolve { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName CallDisconnect { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName CallHangup { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName CallTransfer { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName FirstAgentAudio { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName FirstCallerAudio { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName MediaConnect { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName ProviderAnswer { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName WebhookReceived { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName WebhookValidation { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName left, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName left, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallLifecycleEventOutcome : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallLifecycleEventOutcome(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Cancelled { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Observed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Rejected { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Started { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome left, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome left, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventOutcome right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallLifecycleEventSource : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallLifecycleEventSource(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource Gateway { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource TeamsPhoneExtension { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource Twilio { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource VoiceAgent { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource left, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource left, Azure.AI.Projects.Agents.TelephonyCallLifecycleEventSource right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallPhase : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallPhase>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallPhase(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Admitted { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase AgentSessionReady { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Answered { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Answering { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Bridging { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Completed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Managing { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase MediaConnected { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Received { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Rejected { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallPhase Validated { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallPhase other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallPhase left, Azure.AI.Projects.Agents.TelephonyCallPhase right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallPhase (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallPhase? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallPhase left, Azure.AI.Projects.Agents.TelephonyCallPhase right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyCallRecord : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallRecord>
+    {
+        internal TelephonyCallRecord() { }
+        public System.DateTimeOffset? AgentSessionReadyAt { get { throw null; } }
+        public System.DateTimeOffset? AnsweredAt { get { throw null; } }
+        public string CallerNumber { get { throw null; } }
+        public System.TimeSpan? DurationMs { get { throw null; } }
+        public System.DateTimeOffset? EndedAt { get { throw null; } }
+        public string EndReason { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.TelephonyCallLifecycleEvent> Events { get { throw null; } }
+        public bool EventsTruncated { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.DateTimeOffset? MediaConnectedAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallPhase Phase { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyProvider Provider { get { throw null; } }
+        public string ProviderCallId { get { throw null; } }
+        public string ProviderMessage { get { throw null; } }
+        public string ProviderNumber { get { throw null; } }
+        public int? ProviderStatusCode { get { throw null; } }
+        public int? ProviderSubCode { get { throw null; } }
+        public System.DateTimeOffset StartedAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallStatus Status { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallTiming Timing { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallTrace Trace { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.TelephonyCallRecord (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyCallRecord System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyCallRecord System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallStatus : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallStatus(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallStatus InProgress { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallStatus Success { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallStatus left, Azure.AI.Projects.Agents.TelephonyCallStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallStatus left, Azure.AI.Projects.Agents.TelephonyCallStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyCallSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallSummary>
+    {
+        internal TelephonyCallSummary() { }
+        public System.DateTimeOffset? AgentSessionReadyAt { get { throw null; } }
+        public System.DateTimeOffset? AnsweredAt { get { throw null; } }
+        public string CallerNumber { get { throw null; } }
+        public System.TimeSpan? DurationMs { get { throw null; } }
+        public System.DateTimeOffset? EndedAt { get { throw null; } }
+        public string EndReason { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.DateTimeOffset? MediaConnectedAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallPhase Phase { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyProvider Provider { get { throw null; } }
+        public string ProviderCallId { get { throw null; } }
+        public string ProviderMessage { get { throw null; } }
+        public string ProviderNumber { get { throw null; } }
+        public int? ProviderStatusCode { get { throw null; } }
+        public int? ProviderSubCode { get { throw null; } }
+        public System.DateTimeOffset StartedAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallStatus Status { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyCallSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyCallSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallTimestampSource : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallTimestampSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallTimestampSource(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallTimestampSource Derived { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTimestampSource Gateway { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTimestampSource Provider { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallTimestampSource other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallTimestampSource left, Azure.AI.Projects.Agents.TelephonyCallTimestampSource right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallTimestampSource (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallTimestampSource? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallTimestampSource left, Azure.AI.Projects.Agents.TelephonyCallTimestampSource right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyCallTiming : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallTiming>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTiming>
+    {
+        internal TelephonyCallTiming() { }
+        public System.DateTimeOffset? AdmittedAt { get { throw null; } }
+        public System.DateTimeOffset? AgentSessionReadyAt { get { throw null; } }
+        public System.DateTimeOffset? AnsweredAt { get { throw null; } }
+        public System.DateTimeOffset? AnswerRequestedAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallDurationBasis? DurationBasis { get { throw null; } }
+        public System.DateTimeOffset? EndedAt { get { throw null; } }
+        public System.DateTimeOffset? FirstAgentAudioAt { get { throw null; } }
+        public System.DateTimeOffset? FirstCallerAudioAt { get { throw null; } }
+        public System.DateTimeOffset? MediaConnectedAt { get { throw null; } }
+        public System.DateTimeOffset? ReceivedAt { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallTimestampSource TimestampSource { get { throw null; } }
+        public System.DateTimeOffset? ValidatedAt { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallTiming JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallTiming PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyCallTiming System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallTiming>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallTiming>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyCallTiming System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTiming>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTiming>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTiming>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyCallTrace : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallTrace>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTrace>
+    {
+        internal TelephonyCallTrace() { }
+        public string ConversationId { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallTraceMode? Mode { get { throw null; } }
+        public string RootSpanId { get { throw null; } }
+        public Azure.AI.Projects.Agents.TelephonyCallTraceStatus Status { get { throw null; } }
+        public string TraceId { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallTrace JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyCallTrace PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyCallTrace System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallTrace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyCallTrace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyCallTrace System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTrace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTrace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyCallTrace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallTraceMode : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallTraceMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallTraceMode(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceMode Live { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceMode PostCall { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallTraceMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallTraceMode left, Azure.AI.Projects.Agents.TelephonyCallTraceMode right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallTraceMode (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallTraceMode? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallTraceMode left, Azure.AI.Projects.Agents.TelephonyCallTraceMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyCallTraceStatus : System.IEquatable<Azure.AI.Projects.Agents.TelephonyCallTraceStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyCallTraceStatus(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceStatus Available { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceStatus Emitting { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceStatus NotApplicable { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceStatus NotRecorded { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyCallTraceStatus Pending { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyCallTraceStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyCallTraceStatus left, Azure.AI.Projects.Agents.TelephonyCallTraceStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallTraceStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyCallTraceStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyCallTraceStatus left, Azure.AI.Projects.Agents.TelephonyCallTraceStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelephonyProvider : System.IEquatable<Azure.AI.Projects.Agents.TelephonyProvider>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TelephonyProvider(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.TelephonyProvider TeamsPhoneExtension { get { throw null; } }
+        public static Azure.AI.Projects.Agents.TelephonyProvider Twilio { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.TelephonyProvider other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.TelephonyProvider left, Azure.AI.Projects.Agents.TelephonyProvider right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyProvider (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.TelephonyProvider? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.TelephonyProvider left, Azure.AI.Projects.Agents.TelephonyProvider right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class TelephonyTransferDestination : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>
+    {
+        internal TelephonyTransferDestination() { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyTransferDestination JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyTransferDestination PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyTransferDestination System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyTransferDestination System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyTransferTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>
+    {
+        public TelephonyTransferTarget(string name, string description, Azure.AI.Projects.Agents.TelephonyTransferDestination destination) { }
+        public string Description { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.TelephonyTransferDestination Destination { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyTransferTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.TelephonyTransferTarget PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyTransferTarget System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyTransferTarget System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTarget>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TelephonyTransferTargets : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>
+    {
+        internal TelephonyTransferTargets() { }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.TelephonyTransferTarget> TransferTargets { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.TelephonyTransferTargets JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.TelephonyTransferTargets (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.TelephonyTransferTargets PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TelephonyTransferTargets System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TelephonyTransferTargets System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelephonyTransferTargets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ToolboxPolicies : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ToolboxPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ToolboxPolicies>
     {
@@ -2994,7 +3880,7 @@ namespace Azure.AI.Projects.Agents
     public partial class ToolboxVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ToolboxVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ToolboxVersion>
     {
         internal ToolboxVersion() { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
@@ -3089,6 +3975,36 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ToolSearchToolboxTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ToolSearchToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TwilioTelephonyBinding : Azure.AI.Projects.Agents.TelephonyBinding, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>
+    {
+        internal TwilioTelephonyBinding() { }
+        public string PhoneNumber { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.TelephonyBinding JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyBinding PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TwilioTelephonyBinding System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TwilioTelephonyBinding System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBinding>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TwilioTelephonyBindingListItem : Azure.AI.Projects.Agents.TelephonyBindingListItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>
+    {
+        internal TwilioTelephonyBindingListItem() { }
+        public string PhoneNumber { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.TelephonyBindingListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.TelephonyBindingListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class UpdateToolboxRequest : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.UpdateToolboxRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.UpdateToolboxRequest>
     {
         public UpdateToolboxRequest(string name, string defaultVersion) { }
@@ -3158,6 +4074,1305 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.VersionSelector System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VersionSelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VersionSelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VersionSelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAudioConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>
+    {
+        public VoiceAgentAudioConfig() { }
+        public Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig Input { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig Output { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAudioConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAudioConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAudioConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAudioConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAudioInputConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>
+    {
+        public VoiceAgentAudioInputConfig() { }
+        public Azure.AI.Projects.Agents.VoiceAgentEchoCancellation EchoCancellation { get { throw null; } set { } }
+        public OpenAI.Realtime.RealtimeAudioFormat Format { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentNoiseReduction NoiseReduction { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentInputTranscription Transcription { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig TurnDetection { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAudioOutputConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>
+    {
+        public VoiceAgentAudioOutputConfig() { }
+        public System.Uri CustomLexiconUrl { get { throw null; } set { } }
+        public System.Uri CustomTextNormalizationUrl { get { throw null; } set { } }
+        public string CustomVoiceEndpointId { get { throw null; } set { } }
+        public OpenAI.Realtime.RealtimeAudioFormat Format { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentAudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
+        public string PersonalVoiceModel { get { throw null; } set { } }
+        public string Pitch { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PreferLocales { get { throw null; } }
+        public float? Speed { get { throw null; } set { } }
+        public string Style { get { throw null; } set { } }
+        public string Voice { get { throw null; } set { } }
+        public string VoiceLocale { get { throw null; } set { } }
+        public float? VoiceTemperature { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceType? VoiceType { get { throw null; } set { } }
+        public string Volume { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public enum VoiceAgentAudioTimestampType
+    {
+        Word = 0,
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAvatarConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>
+    {
+        public VoiceAgentAvatarConfig(Azure.AI.Projects.Agents.VoiceAgentAvatarType type, string character) { }
+        public string Character { get { throw null; } set { } }
+        public bool? Customized { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public bool? OutputAuditAudio { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol? OutputProtocol { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarScene Scene { get { throw null; } set { } }
+        public string Style { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarType Type { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams Video { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentAvatarOutputProtocol : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentAvatarOutputProtocol(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol Webrtc { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol Websocket { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol left, Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol left, Azure.AI.Projects.Agents.VoiceAgentAvatarOutputProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VoiceAgentAvatarScene : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>
+    {
+        public VoiceAgentAvatarScene() { }
+        public float? Amplitude { get { throw null; } set { } }
+        public float? PositionX { get { throw null; } set { } }
+        public float? PositionY { get { throw null; } set { } }
+        public float? RotationX { get { throw null; } set { } }
+        public float? RotationY { get { throw null; } set { } }
+        public float? RotationZ { get { throw null; } set { } }
+        public float? Zoom { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarScene JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarScene PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarScene System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarScene System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarScene>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentAvatarType : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentAvatarType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentAvatarType(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarType PhotoAvatar { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarType VideoAvatar { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentAvatarType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentAvatarType left, Azure.AI.Projects.Agents.VoiceAgentAvatarType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentAvatarType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentAvatarType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentAvatarType left, Azure.AI.Projects.Agents.VoiceAgentAvatarType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VoiceAgentAvatarVideoBackground : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>
+    {
+        public VoiceAgentAvatarVideoBackground() { }
+        public string Color { get { throw null; } set { } }
+        public System.Uri ImageUrl { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceAgentAvatarVideoCrop : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>
+    {
+        public VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<object> bottomRight, System.Collections.Generic.IEnumerable<object> topLeft) { }
+        public System.Collections.Generic.IList<object> BottomRight { get { throw null; } }
+        public System.Collections.Generic.IList<object> TopLeft { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceAgentAvatarVideoParams : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>
+    {
+        public VoiceAgentAvatarVideoParams() { }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground Background { get { throw null; } set { } }
+        public int? Bitrate { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop Crop { get { throw null; } set { } }
+        public int? GopSize { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution Resolution { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceAgentAvatarVideoResolution : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>
+    {
+        public VoiceAgentAvatarVideoResolution(int width, int height) { }
+        public int Height { get { throw null; } set { } }
+        public int Width { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAzureSemanticVadEnTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>
+    {
+        public VoiceAgentAzureSemanticVadEnTurnDetection() { }
+        public bool? CreateResponse { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get { throw null; } set { } }
+        public System.TimeSpan? IdleTimeoutMs { get { throw null; } set { } }
+        public bool? InterruptResponse { get { throw null; } set { } }
+        public System.TimeSpan? PrefixPaddingMs { get { throw null; } set { } }
+        public bool? RemoveFillerWords { get { throw null; } set { } }
+        public System.TimeSpan? SilenceDurationMs { get { throw null; } set { } }
+        public System.TimeSpan? SpeechDurationMs { get { throw null; } set { } }
+        public float? Threshold { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadEnTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAzureSemanticVadMultilingualTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>
+    {
+        public VoiceAgentAzureSemanticVadMultilingualTurnDetection() { }
+        public bool? CreateResponse { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get { throw null; } set { } }
+        public System.TimeSpan? IdleTimeoutMs { get { throw null; } set { } }
+        public bool? InterruptResponse { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Languages { get { throw null; } }
+        public System.TimeSpan? PrefixPaddingMs { get { throw null; } set { } }
+        public bool? RemoveFillerWords { get { throw null; } set { } }
+        public System.TimeSpan? SilenceDurationMs { get { throw null; } set { } }
+        public System.TimeSpan? SpeechDurationMs { get { throw null; } set { } }
+        public float? Threshold { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentAzureSemanticVadTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>
+    {
+        public VoiceAgentAzureSemanticVadTurnDetection() { }
+        public bool? CreateResponse { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get { throw null; } set { } }
+        public System.TimeSpan? IdleTimeoutMs { get { throw null; } set { } }
+        public bool? InterruptResponse { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Languages { get { throw null; } }
+        public System.TimeSpan? PrefixPaddingMs { get { throw null; } set { } }
+        public bool? RemoveFillerWords { get { throw null; } set { } }
+        public System.TimeSpan? SilenceDurationMs { get { throw null; } set { } }
+        public System.TimeSpan? SpeechDurationMs { get { throw null; } set { } }
+        public float? Threshold { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentConnectionOptions
+    {
+        public VoiceAgentConnectionOptions() { }
+        public string AgentVersion { get { throw null; } set { } }
+        public string SessionId { get { throw null; } set { } }
+        public bool? Store { get { throw null; } set { } }
+        public System.BinaryData StructuredInputs { get { throw null; } set { } }
+        public bool UseRealtimeSubprotocol { get { throw null; } set { } }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentDefinition : Azure.AI.Projects.Agents.ProjectsAgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>
+    {
+        public VoiceAgentDefinition() { }
+        public Azure.AI.Projects.Agents.VoiceAgentAudioConfig Audio { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentAvatarConfig Avatar { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceConversationEngine ConversationEngine { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentGreetingConfig Greeting { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentSessionIncludeOption> Include { get { throw null; } }
+        public string Instructions { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig InterimResponse { get { throw null; } set { } }
+        public System.BinaryData MaxOutputTokens { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceModelType? ModelType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceOutputModality> OutputModalities { get { throw null; } }
+        public bool? ParallelToolCalls { get { throw null; } set { } }
+        public bool? Store { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> StructuredInputs { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAgentSubagentConfig SubagentConfig { get { throw null; } set { } }
+        public System.BinaryData ToolChoice { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentTool> Tools { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.ProjectsAgentDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.ProjectsAgentDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceAgentEchoCancellation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>
+    {
+        public VoiceAgentEchoCancellation() { }
+        public int? Channels { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentEchoCancellationReferenceSource? ReferenceSource { get { throw null; } set { } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentEchoCancellation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentEchoCancellation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentEchoCancellation System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentEchoCancellation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEchoCancellation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum VoiceAgentEchoCancellationReferenceSource
+    {
+        Server = 0,
+        Client = 1,
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentEndOfUtteranceDetection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>
+    {
+        public VoiceAgentEndOfUtteranceDetection(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel model) { }
+        public Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel Model { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel? ThresholdLevel { get { throw null; } set { } }
+        public System.TimeSpan? TimeoutMs { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentEndOfUtteranceDetectionModel : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentEndOfUtteranceDetectionModel(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel SemanticDetectionV1 { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel SemanticDetectionV1En { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel SemanticDetectionV1Multilingual { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel SmartEndOfTurnDetection { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel left, Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel left, Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetectionModel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentEndOfUtteranceThresholdLevel : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentEndOfUtteranceThresholdLevel(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel Default { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel High { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel Low { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel Medium { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel left, Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel left, Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceThresholdLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentFunctionTool : Azure.AI.Projects.Agents.VoiceAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>
+    {
+        public VoiceAgentFunctionTool(string name) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public OpenAI.RealtimeFunctionToolParameters Parameters { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentFunctionTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentFunctionTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentFunctionTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class VoiceAgentGreetingConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>
+    {
+        internal VoiceAgentGreetingConfig() { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentGreetingConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentGreetingConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentGreetingConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentGreetingConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentGreetingConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentInputTranscription : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>
+    {
+        public VoiceAgentInputTranscription(Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel model) { }
+        public System.Collections.Generic.IDictionary<string, string> CustomSpeech { get { throw null; } }
+        public OpenAI.VoiceAgentAudioInputConfigTranscriptionDelay? Delay { get { throw null; } set { } }
+        public string Language { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel Model { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PhraseList { get { throw null; } }
+        public string Prompt { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentInputTranscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentInputTranscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentInputTranscription System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentInputTranscription System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInputTranscription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentInputTranscriptionModel : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentInputTranscriptionModel(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel AzureSpeech { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel Gpt4oMiniTranscribe { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel Gpt4oTranscribe { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel Gpt4oTranscribeDiarize { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel GptLiveTranscribe { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel GptRealtimeWhisper { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel GptTranscribe { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel MaiTranscribe { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel Whisper1 { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel left, Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel left, Azure.AI.Projects.Agents.VoiceAgentInputTranscriptionModel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class VoiceAgentInterimResponseConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>
+    {
+        internal VoiceAgentInterimResponseConfig() { }
+        public System.TimeSpan? LatencyThresholdMs { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger> Triggers { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentInterimResponseTrigger : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentInterimResponseTrigger(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger Latency { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger Tool { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger left, Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger left, Azure.AI.Projects.Agents.VoiceAgentInterimResponseTrigger right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentLlmGeneratedGreetingConfig : Azure.AI.Projects.Agents.VoiceAgentGreetingConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>
+    {
+        public VoiceAgentLlmGeneratedGreetingConfig(string prompt) { }
+        public string Prompt { get { throw null; } set { } }
+        public System.BinaryData ToolChoice { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentGreetingConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentGreetingConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceAgentLlmInterimResponseConfig : Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>
+    {
+        public VoiceAgentLlmInterimResponseConfig() { }
+        public string Instructions { get { throw null; } set { } }
+        public int? MaxCompletionTokens { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentMcpTool : Azure.AI.Projects.Agents.VoiceAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>
+    {
+        public VoiceAgentMcpTool(string serverLabel) { }
+        public System.BinaryData AllowedTools { get { throw null; } set { } }
+        public string Authorization { get { throw null; } set { } }
+        public bool? DeferLoading { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } set { } }
+        public string ProjectConnectionId { get { throw null; } set { } }
+        public System.BinaryData RequireApproval { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling? ResponseScheduling { get { throw null; } set { } }
+        public string ServerDescription { get { throw null; } set { } }
+        public string ServerLabel { get { throw null; } set { } }
+        public System.Uri ServerUrl { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentMcpTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentMcpTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentNoiseReduction : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>
+    {
+        public VoiceAgentNoiseReduction(Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType type) { }
+        public Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType Type { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentNoiseReduction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentNoiseReduction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentNoiseReduction System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentNoiseReduction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentNoiseReduction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentNoiseReductionType : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentNoiseReductionType(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType AzureDeepNoiseSuppression { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType FarField { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType NearField { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType left, Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType left, Azure.AI.Projects.Agents.VoiceAgentNoiseReductionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSemanticVadTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>
+    {
+        public VoiceAgentSemanticVadTurnDetection() { }
+        public bool? CreateResponse { get { throw null; } set { } }
+        public OpenAI.VoiceAgentSemanticVadTurnDetectionEagerness? Eagerness { get { throw null; } set { } }
+        public bool? InterruptResponse { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentServerVadTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>
+    {
+        public VoiceAgentServerVadTurnDetection() { }
+        public bool? CreateResponse { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get { throw null; } set { } }
+        public long? IdleTimeoutMs { get { throw null; } set { } }
+        public bool? InterruptResponse { get { throw null; } set { } }
+        public long? PrefixPaddingMs { get { throw null; } set { } }
+        public long? SilenceDurationMs { get { throw null; } set { } }
+        public System.TimeSpan? SpeechDurationMs { get { throw null; } set { } }
+        public double? Threshold { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSession : System.IAsyncDisposable, System.IDisposable
+    {
+        internal VoiceAgentSession() { }
+        public System.Net.WebSockets.WebSocketState ConnectionState { get { throw null; } }
+        public bool IsConnected { get { throw null; } }
+        public virtual System.Threading.Tasks.Task AddItemAsync(System.BinaryData item, string previousItemId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task CancelResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task ClearInputAudioAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task ClearOutputAudioAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task CommitPendingAudioAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task ConfigureSessionAsync(System.BinaryData session, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task DeleteItemAsync(string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.Projects.Agents.VoiceAgentSessionMessage> ReceiveUpdatesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task RequestItemRetrievalAsync(string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendBinaryAsync(System.BinaryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendCommandAsync(System.BinaryData command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendInputAudioAsync(System.BinaryData audio, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendInputAudioAsync(System.IO.Stream audio, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task StartResponseAsync(System.BinaryData responseOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task TruncateItemAsync(string itemId, int contentIndex, System.TimeSpan audioEndTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public enum VoiceAgentSessionIncludeOption
+    {
+        InputAudioTranscriptionLogprobs = 0,
+        InputAudioTranscriptionPhrases = 1,
+        FileSearchCallResults = 2,
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSessionMessage
+    {
+        internal VoiceAgentSessionMessage() { }
+        public System.BinaryData Data { get { throw null; } }
+        public OpenAI.RealtimeServerEventType? EventType { get { throw null; } }
+        public System.Net.WebSockets.WebSocketMessageType MessageType { get { throw null; } }
+    }
+    public partial class VoiceAgentStaticInterimResponseConfig : Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>
+    {
+        public VoiceAgentStaticInterimResponseConfig() { }
+        public System.Collections.Generic.IList<string> Texts { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSubagent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>
+    {
+        public VoiceAgentSubagent(string agentName, string agentCapabilities) { }
+        public string AgentCapabilities { get { throw null; } set { } }
+        public string AgentName { get { throw null; } set { } }
+        public string AgentVersion { get { throw null; } set { } }
+        public System.TimeSpan? InvokeTimeoutSeconds { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy ResponsePolicy { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentSubagent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentSubagent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentSubagent System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentSubagent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSubagentConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>
+    {
+        public VoiceAgentSubagentConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentSubagent> subagents) { }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentSubagent> Subagents { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentSubagentConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentSubagentConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentSubagentConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentSubagentConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSubagentResponsePolicy : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>
+    {
+        public VoiceAgentSubagentResponsePolicy() { }
+        public string AckInstructions { get { throw null; } set { } }
+        public bool? EnableDeltaProgress { get { throw null; } set { } }
+        public string GapFillingInstructions { get { throw null; } set { } }
+        public System.TimeSpan? GapFillingInterval { get { throw null; } set { } }
+        public bool? ImmediateAck { get { throw null; } set { } }
+        public string ProgressInstructions { get { throw null; } set { } }
+        public System.TimeSpan? ProgressUpdateInterval { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSubagentResponsePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentSystemTool : Azure.AI.Projects.Agents.VoiceAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>
+    {
+        public VoiceAgentSystemTool(Azure.AI.Projects.Agents.VoiceAgentSystemToolName name) { }
+        public string Description { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentSystemToolName Name { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentSystemTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentSystemTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSystemTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentSystemToolName : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentSystemToolName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentSystemToolName(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentSystemToolName EndConversation { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentSystemToolName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentSystemToolName left, Azure.AI.Projects.Agents.VoiceAgentSystemToolName right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentSystemToolName (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentSystemToolName? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentSystemToolName left, Azure.AI.Projects.Agents.VoiceAgentSystemToolName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentTemplateGreetingConfig : Azure.AI.Projects.Agents.VoiceAgentGreetingConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>
+    {
+        public VoiceAgentTemplateGreetingConfig(string text) { }
+        public string Text { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentGreetingConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentGreetingConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class VoiceAgentTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTool>
+    {
+        internal VoiceAgentTool() { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentToolboxTool : Azure.AI.Projects.Agents.VoiceAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>
+    {
+        public VoiceAgentToolboxTool(string toolboxName, string toolboxVersion) { }
+        public Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling? ResponseScheduling { get { throw null; } set { } }
+        public string ToolboxName { get { throw null; } set { } }
+        public string ToolboxVersion { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentToolboxTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentToolboxTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class VoiceAgentToolChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>
+    {
+        internal VoiceAgentToolChoice() { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentToolChoice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentToolChoice PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentToolChoice System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentToolChoice System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentToolChoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentToolResponseScheduling : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentToolResponseScheduling(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling Interrupt { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling Silent { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling SkipIfBusy { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling WhenIdle { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling left, Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling left, Azure.AI.Projects.Agents.VoiceAgentToolResponseScheduling right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class VoiceAgentTurnDetectionConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>
+    {
+        internal VoiceAgentTurnDetectionConfig() { }
+        public bool? AutoTruncate { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentWebSocket
+    {
+        protected VoiceAgentWebSocket() { }
+        public event System.EventHandler<System.BinaryData> OnReceivingCommand { add { } remove { } }
+        public event System.EventHandler<System.BinaryData> OnSendingCommand { add { } remove { } }
+        public virtual System.Threading.Tasks.Task<Azure.AI.Projects.Agents.VoiceAgentSession> StartSessionAsync(string agentName, Azure.AI.Projects.Agents.VoiceAgentConnectionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAudioCodec : System.IEquatable<Azure.AI.Projects.Agents.VoiceAudioCodec>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAudioCodec(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAudioCodec Pcm16 { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAudioCodec Pcma { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAudioCodec Pcmu { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAudioCodec other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAudioCodec left, Azure.AI.Projects.Agents.VoiceAudioCodec right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAudioCodec (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAudioCodec? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAudioCodec left, Azure.AI.Projects.Agents.VoiceAudioCodec right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAudioContainerFormat : System.IEquatable<Azure.AI.Projects.Agents.VoiceAudioContainerFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAudioContainerFormat(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAudioContainerFormat Wav { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAudioContainerFormat other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAudioContainerFormat left, Azure.AI.Projects.Agents.VoiceAudioContainerFormat right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAudioContainerFormat (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAudioContainerFormat? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAudioContainerFormat left, Azure.AI.Projects.Agents.VoiceAudioContainerFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAudioRole : System.IEquatable<Azure.AI.Projects.Agents.VoiceAudioRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAudioRole(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAudioRole Agent { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAudioRole User { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAudioRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAudioRole left, Azure.AI.Projects.Agents.VoiceAudioRole right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAudioRole (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAudioRole? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAudioRole left, Azure.AI.Projects.Agents.VoiceAudioRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceConversation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversation>
+    {
+        internal VoiceConversation() { }
+        public System.DateTimeOffset? CompletedAt { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public string Object { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceConversationStatus Status { get { throw null; } }
+        public OpenAI.Realtime.RealtimeResponseUsage Usage { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceConversation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.VoiceConversation (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.VoiceConversation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceConversation System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceConversation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceConversation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceConversation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public abstract partial class VoiceConversationEngine : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceConversationEngine>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversationEngine>
+    {
+        internal VoiceConversationEngine() { }
+        protected virtual Azure.AI.Projects.Agents.VoiceConversationEngine JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceConversationEngine PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceConversationEngine System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceConversationEngine>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceConversationEngine>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceConversationEngine System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversationEngine>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversationEngine>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceConversationEngine>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class VoiceConversationItem
+    {
+        internal VoiceConversationItem() { }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceConversationStatus : System.IEquatable<Azure.AI.Projects.Agents.VoiceConversationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceConversationStatus(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceConversationStatus Completed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceConversationStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceConversationStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceConversationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceConversationStatus left, Azure.AI.Projects.Agents.VoiceConversationStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceConversationStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceConversationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceConversationStatus left, Azure.AI.Projects.Agents.VoiceConversationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceGeneratedItemAudioResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>
+    {
+        internal VoiceGeneratedItemAudioResponse() { }
+        public System.Uri BlobUri { get { throw null; } }
+        public int? Channels { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioCodec? Codec { get { throw null; } }
+        public string ConversationId { get { throw null; } }
+        public System.TimeSpan? DurationMs { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioContainerFormat? Format { get { throw null; } }
+        public string ItemId { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioRole? Role { get { throw null; } }
+        public int? SampleRate { get { throw null; } }
+        public System.TimeSpan? StartOffsetMs { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceGeneratedItemAudioResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceHostedAgentConversationEngine : Azure.AI.Projects.Agents.VoiceConversationEngine, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>
+    {
+        public VoiceHostedAgentConversationEngine(string name) { }
+        public string Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceConversationEngine JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceConversationEngine PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceHostedAgentConversationEngine>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceItemAudioResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>
+    {
+        internal VoiceItemAudioResponse() { }
+        public System.Uri BlobUri { get { throw null; } }
+        public int? Channels { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioCodec? Codec { get { throw null; } }
+        public string ConversationId { get { throw null; } }
+        public System.TimeSpan? DurationMs { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioContainerFormat? Format { get { throw null; } }
+        public string ItemId { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioRole? Role { get { throw null; } }
+        public int? SampleRate { get { throw null; } }
+        public System.TimeSpan? StartOffsetMs { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceItemAudioResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.VoiceItemAudioResponse (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.VoiceItemAudioResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceItemAudioResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceItemAudioResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceItemAudioResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceMcpListToolsTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>
+    {
+        internal VoiceMcpListToolsTool() { }
+        public Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations Annotations { get { throw null; } }
+        public string Description { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema InputSchema { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceMcpListToolsTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceMcpListToolsTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceMcpListToolsTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceMcpListToolsTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceMcpListToolsToolAnnotations : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>
+    {
+        internal VoiceMcpListToolsToolAnnotations() { }
+        protected virtual Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolAnnotations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceMcpListToolsToolInputSchema : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>
+    {
+        internal VoiceMcpListToolsToolInputSchema() { }
+        protected virtual Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceMcpListToolsToolInputSchema>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceModelType : System.IEquatable<Azure.AI.Projects.Agents.VoiceModelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceModelType(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceModelType Managed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceModelType SelfDeployed { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceModelType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceModelType left, Azure.AI.Projects.Agents.VoiceModelType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceModelType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceModelType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceModelType left, Azure.AI.Projects.Agents.VoiceModelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceOutputModality : System.IEquatable<Azure.AI.Projects.Agents.VoiceOutputModality>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceOutputModality(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceOutputModality Animation { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceOutputModality Audio { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceOutputModality Avatar { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceOutputModality Text { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceOutputModality other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceOutputModality left, Azure.AI.Projects.Agents.VoiceOutputModality right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceOutputModality (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceOutputModality? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceOutputModality left, Azure.AI.Projects.Agents.VoiceOutputModality right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceRecordingChannelLayout : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>
+    {
+        internal VoiceRecordingChannelLayout() { }
+        public string Left { get { throw null; } }
+        public string Right { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceRecordingChannelLayout JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceRecordingChannelLayout PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceRecordingChannelLayout System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceRecordingChannelLayout System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceRecordingResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>
+    {
+        internal VoiceRecordingResponse() { }
+        public System.Uri BlobUri { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceRecordingChannelLayout ChannelLayout { get { throw null; } }
+        public int Channels { get { throw null; } }
+        public string ConversationId { get { throw null; } }
+        public System.TimeSpan DurationMs { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioContainerFormat Format { get { throw null; } }
+        public int SampleRate { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceRecordingResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.VoiceRecordingResponse (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.VoiceRecordingResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceRecordingResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceRecordingResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceResponse : Azure.AI.Projects.Agents.VoiceResponseBase, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponse>
+    {
+        internal VoiceResponse() { }
+        public Azure.AI.Projects.Agents.VoiceResponseAudio Audio { get { throw null; } }
+        public System.DateTimeOffset? CompletedAt { get { throw null; } }
+        public new string ConversationId { get { throw null; } }
+        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public new string Id { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IList<OpenAI.Realtime.RealtimeItem> Output { get { throw null; } }
+        public new System.Collections.Generic.IList<OpenAI.VoiceResponseBaseOutputModality> OutputModalities { get { throw null; } }
+        public float? Temperature { get { throw null; } }
+        protected override Azure.AI.Projects.Agents.VoiceResponseBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Agents.VoiceResponse (System.ClientModel.ClientResult result) { throw null; }
+        protected override Azure.AI.Projects.Agents.VoiceResponseBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceResponseAudio : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudio>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudio>
+    {
+        public VoiceResponseAudio() { }
+        public Azure.AI.Projects.Agents.VoiceResponseAudioOutput Output { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceResponseAudio JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceResponseAudio PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceResponseAudio System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudio>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudio>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceResponseAudio System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudio>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudio>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudio>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceResponseAudioOutput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>
+    {
+        public VoiceResponseAudioOutput() { }
+        public OpenAI.Realtime.RealtimeAudioFormat Format { get { throw null; } set { } }
+        public string Voice { get { throw null; } set { } }
+        public string VoiceLocale { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceType? VoiceType { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.VoiceResponseAudioOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceResponseAudioOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceResponseAudioOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceResponseAudioOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseAudioOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceResponseBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseBase>
+    {
+        internal VoiceResponseBase() { }
+        public string ConversationId { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.BinaryData MaxOutputTokens { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceResponseBaseObject? Object { get { throw null; } }
+        public System.Collections.Generic.IList<OpenAI.VoiceResponseBaseOutputModality> OutputModalities { get { throw null; } }
+        public OpenAI.VoiceResponseBaseStatus? Status { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public OpenAI.Realtime.RealtimeResponseStatusDetails StatusDetails { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        public OpenAI.Realtime.RealtimeResponseUsage Usage { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceResponseBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceResponseBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceResponseBase System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResponseBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceResponseBase System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResponseBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceResponseBaseObject : System.IEquatable<Azure.AI.Projects.Agents.VoiceResponseBaseObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceResponseBaseObject(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseObject RealtimeResponse { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceResponseBaseObject other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceResponseBaseObject left, Azure.AI.Projects.Agents.VoiceResponseBaseObject right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceResponseBaseObject (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceResponseBaseObject? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceResponseBaseObject left, Azure.AI.Projects.Agents.VoiceResponseBaseObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceType : System.IEquatable<Azure.AI.Projects.Agents.VoiceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceType(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceType AvatarVoiceSync { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceType AzureCustom { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceType AzurePersonal { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceType AzureRealtimeNative { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceType AzureStandard { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceType Openai { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceType left, Azure.AI.Projects.Agents.VoiceType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceType left, Azure.AI.Projects.Agents.VoiceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class WebIQPreviewTool : Azure.AI.Projects.Agents.ProjectsAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.WebIQPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.WebIQPreviewTool>
@@ -3273,11 +5488,6 @@ namespace Azure.AI.Projects.Agents
 }
 namespace OpenAI
 {
-    public enum CallableToolAllowedCaller
-    {
-        Direct = 0,
-        Programmatic = 1,
-    }
     public enum ContainerMemoryLimit
     {
         _1g = 0,
@@ -3354,19 +5564,6 @@ namespace OpenAI
         ConnectorOutlookemail = 6,
         ConnectorSharepoint = 7,
     }
-    public partial class ProgrammaticToolCallingParam : Azure.AI.Projects.Agents.ProjectsAgentTool, System.ClientModel.Primitives.IJsonModel<OpenAI.ProgrammaticToolCallingParam>, System.ClientModel.Primitives.IPersistableModel<OpenAI.ProgrammaticToolCallingParam>
-    {
-        public ProgrammaticToolCallingParam() { }
-        protected override Azure.AI.Projects.Agents.ProjectsAgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Agents.ProjectsAgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.ProgrammaticToolCallingParam System.ClientModel.Primitives.IJsonModel<OpenAI.ProgrammaticToolCallingParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.ProgrammaticToolCallingParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.ProgrammaticToolCallingParam System.ClientModel.Primitives.IPersistableModel<OpenAI.ProgrammaticToolCallingParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.ProgrammaticToolCallingParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.ProgrammaticToolCallingParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RealtimeClientEventType : System.IEquatable<OpenAI.RealtimeClientEventType>
     {
@@ -3383,6 +5580,7 @@ namespace OpenAI
         public static OpenAI.RealtimeClientEventType OutputAudioBufferClear { get { throw null; } }
         public static OpenAI.RealtimeClientEventType ResponseCancel { get { throw null; } }
         public static OpenAI.RealtimeClientEventType ResponseCreate { get { throw null; } }
+        public static OpenAI.RealtimeClientEventType RtcCallSdpCreate { get { throw null; } }
         public static OpenAI.RealtimeClientEventType SessionAvatarConnect { get { throw null; } }
         public static OpenAI.RealtimeClientEventType SessionUpdate { get { throw null; } }
         public bool Equals(OpenAI.RealtimeClientEventType other) { throw null; }
@@ -3392,6 +5590,96 @@ namespace OpenAI
         public static implicit operator OpenAI.RealtimeClientEventType (string value) { throw null; }
         public static implicit operator OpenAI.RealtimeClientEventType? (string value) { throw null; }
         public static bool operator !=(OpenAI.RealtimeClientEventType left, OpenAI.RealtimeClientEventType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RealtimeFunctionToolParameters : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeFunctionToolParameters>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>
+    {
+        public RealtimeFunctionToolParameters() { }
+        protected virtual OpenAI.RealtimeFunctionToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual OpenAI.RealtimeFunctionToolParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        OpenAI.RealtimeFunctionToolParameters System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeFunctionToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeFunctionToolParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        OpenAI.RealtimeFunctionToolParameters System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RealtimeServerEventType : System.IEquatable<OpenAI.RealtimeServerEventType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RealtimeServerEventType(string value) { throw null; }
+        public static OpenAI.RealtimeServerEventType ConversationCreated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemAdded { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemCreated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemDeleted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemInputAudioTranscriptionCompleted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemInputAudioTranscriptionDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemInputAudioTranscriptionFailed { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemInputAudioTranscriptionSegment { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemRetrieved { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ConversationItemTruncated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType Error { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType InputAudioBufferCleared { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType InputAudioBufferCommitted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType InputAudioBufferDtmfEventReceived { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType InputAudioBufferSpeechStarted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType InputAudioBufferSpeechStopped { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType InputAudioBufferTimeoutTriggered { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType McpListToolsCompleted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType McpListToolsFailed { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType McpListToolsInProgress { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType OutputAudioBufferCleared { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType OutputAudioBufferStarted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType OutputAudioBufferStopped { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType RateLimitsUpdated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseAnimationBlendshapesDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseAnimationBlendshapesDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseAnimationVisemeDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseAnimationVisemeDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseAudioTimestampDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseAudioTimestampDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseContentPartAdded { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseContentPartDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseCreated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseFunctionCallArgumentsDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseFunctionCallArgumentsDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseMcpCallArgumentsDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseMcpCallArgumentsDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseMcpCallCompleted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseMcpCallFailed { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseMcpCallInProgress { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputAudioDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputAudioDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputAudioTranscriptDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputAudioTranscriptDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputItemAdded { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputItemDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputTextDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseOutputTextDone { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType ResponseVideoDelta { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType RtcCallError { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType RtcCallSdpCreated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionAvatarConnecting { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionAvatarSwitchToIdle { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionAvatarSwitchToSpeaking { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionCreated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionSubagentAborted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionSubagentCompleted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionSubagentStarted { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType SessionUpdated { get { throw null; } }
+        public static OpenAI.RealtimeServerEventType Warning { get { throw null; } }
+        public bool Equals(OpenAI.RealtimeServerEventType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(OpenAI.RealtimeServerEventType left, OpenAI.RealtimeServerEventType right) { throw null; }
+        public static implicit operator OpenAI.RealtimeServerEventType (string value) { throw null; }
+        public static implicit operator OpenAI.RealtimeServerEventType? (string value) { throw null; }
+        public static bool operator !=(OpenAI.RealtimeServerEventType left, OpenAI.RealtimeServerEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SkillReferenceParam : OpenAI.ContainerSkill, System.ClientModel.Primitives.IJsonModel<OpenAI.SkillReferenceParam>, System.ClientModel.Primitives.IPersistableModel<OpenAI.SkillReferenceParam>
@@ -3408,6 +5696,63 @@ namespace OpenAI
         OpenAI.SkillReferenceParam System.ClientModel.Primitives.IPersistableModel<OpenAI.SkillReferenceParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<OpenAI.SkillReferenceParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.SkillReferenceParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ToolChoiceFunction : Azure.AI.Projects.Agents.VoiceAgentToolChoice, System.ClientModel.Primitives.IJsonModel<OpenAI.ToolChoiceFunction>, System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceFunction>
+    {
+        public ToolChoiceFunction(string name) { }
+        public string Name { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentToolChoice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentToolChoice PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        OpenAI.ToolChoiceFunction System.ClientModel.Primitives.IJsonModel<OpenAI.ToolChoiceFunction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<OpenAI.ToolChoiceFunction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        OpenAI.ToolChoiceFunction System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceFunction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceFunction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceFunction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ToolChoiceMCP : Azure.AI.Projects.Agents.VoiceAgentToolChoice, System.ClientModel.Primitives.IJsonModel<OpenAI.ToolChoiceMCP>, System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceMCP>
+    {
+        public ToolChoiceMCP(string serverLabel) { }
+        public string Name { get { throw null; } set { } }
+        public string ServerLabel { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.VoiceAgentToolChoice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Agents.VoiceAgentToolChoice PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        OpenAI.ToolChoiceMCP System.ClientModel.Primitives.IJsonModel<OpenAI.ToolChoiceMCP>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<OpenAI.ToolChoiceMCP>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        OpenAI.ToolChoiceMCP System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceMCP>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceMCP>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.ToolChoiceMCP>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum VoiceAgentAudioInputConfigTranscriptionDelay
+    {
+        Minimal = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
+        Xhigh = 4,
+    }
+    public enum VoiceAgentSemanticVadTurnDetectionEagerness
+    {
+        Low = 0,
+        Medium = 1,
+        High = 2,
+        Auto = 3,
+    }
+    public enum VoiceResponseBaseOutputModality
+    {
+        Text = 0,
+        Audio = 1,
+    }
+    public enum VoiceResponseBaseStatus
+    {
+        Completed = 0,
+        Cancelled = 1,
+        Failed = 2,
+        Incomplete = 3,
+        InProgress = 4,
     }
     public partial class WebSearchApproximateLocation : System.ClientModel.Primitives.IJsonModel<OpenAI.WebSearchApproximateLocation>, System.ClientModel.Primitives.IPersistableModel<OpenAI.WebSearchApproximateLocation>
     {

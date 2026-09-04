@@ -21,8 +21,8 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(DigitalWorkerType?), typeof(bool?), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(DigitalWorkerType?), typeof(bool?), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -42,8 +42,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestOptions))]
 [CodeGenSuppress("GetInternalAgentResponsesClient")]
-[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(DigitalWorkerType?), typeof(bool?), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(DigitalWorkerType?), typeof(bool?), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -62,11 +62,24 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetSessionLogStreamAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
 {
+    private readonly AuthenticationTokenProvider _tokenProvider;
     private AgentToolboxes _cachedAgentsToolboxes;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
+    [Experimental("AAIP001")]
+    private VoiceAgentWebSocket _cachedVoiceAgentWebSocket;
+    [Experimental("AAIP001")]
+    private AgentEndpointConversations _cachedAgentEndpointConversations;
+    [Experimental("AAIP001")]
+    private AgentTelephony _cachedAgentTelephony;
+
+    internal AgentAdministrationClient(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
+        : this(clientDiagnostics, pipeline, endpoint, apiVersion)
+    {
+        _tokenProvider = tokenProvider;
+    }
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -79,6 +92,7 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
         options ??= new();
+        _tokenProvider = tokenProvider;
 
         Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
@@ -92,7 +106,7 @@ public partial class AgentAdministrationClient
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
             new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
-            new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview"),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -1122,5 +1136,26 @@ public partial class AgentAdministrationClient
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+    }
+
+    /// <summary> Gets the client for starting real-time voice-agent sessions. </summary>
+    [Experimental("AAIP001")]
+    public virtual VoiceAgentWebSocket GetVoiceAgentWebSocket()
+    {
+        return Volatile.Read(ref _cachedVoiceAgentWebSocket) ?? Interlocked.CompareExchange(ref _cachedVoiceAgentWebSocket, new VoiceAgentWebSocket(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedVoiceAgentWebSocket;
+    }
+
+    /// <summary> Gets the client for retrieving persisted voice-agent conversations. </summary>
+    [Experimental("AAIP001")]
+    public virtual AgentEndpointConversations GetAgentEndpointConversations()
+    {
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+    }
+
+    /// <summary> Gets the lazily-initialized voice-agent telephony sub-client. </summary>
+    [Experimental("AAIP001")]
+    public virtual AgentTelephony GetAgentTelephony()
+    {
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 }

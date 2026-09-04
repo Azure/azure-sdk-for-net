@@ -4,11 +4,46 @@
 
 ### Features Added
 
+- Added a `digitalWorkerType` parameter to `ProjectsAgentsModelFactory.ProjectsAgentRecord` for mocking the (preview) `DigitalWorkerType` value.
+- Added `VoiceAgentDefinition.ConversationEngine` (typed `VoiceConversationEngine`, with `VoiceHostedAgentConversationEngine` as the initial implementation) for fronting a hosted text agent as a voice agent's conversational backend, as an alternative to a directly-configured model.
+- Added `VoiceAgentDefinition.SubagentConfig` for configuring sibling Foundry text agents that a voice agent may consult as background specialists.
+- Added `AgentAdministrationClient.GetAgentTelephony()` for retrieving the client that manages voice-agent telephony bindings and calls.
+- Added preview support for creating voice agents and retrieving their persisted conversations, responses, items, metrics, and audio.
+- Added preview real-time voice-agent sessions over WebSockets, including text and binary message exchange.
+- Added `GenerateVoiceAgentRequest` for generating editable voice-agent definitions from authoring inputs.
+- Added `A2ATool` and `A2AToolboxTool` for agent-to-agent integrations.
+- Added preview `WebIQPreviewTool` and `WebIQPreviewToolboxTool` support.
+- Added `SessionConfiguration` for configuring hosted-agent session defaults.
+- Added `AgentEndpointConversations.GetAgentConversationItem(Async)` for retrieving a single persisted conversation item by id, including its transcript.
+- Added `AgentEndpointConversations.GetAgentConversationItemGeneratedAudio(Async)` and `GetAgentConversationItemGeneratedAudioContent(Async)` for retrieving generated-audio metadata and content for a persisted conversation item.
+- Added `ContentFilterConfiguration.InvocationsModeration` (typed `RaiInvocationModeration`) for declaring where user/agent text lives in agent-defined invocations request/response bodies, so content-safety guardrails can extract and moderate it.
+
 ### Breaking Changes
+
+- Removed the `model` parameter from the public `VoiceAgentDefinition(VoiceModelType, string)` constructor; use the new parameterless `VoiceAgentDefinition()` constructor and set the now-optional `ModelType`/`Model` properties instead (required together for a model-backed voice agent; omit both when using the new `ConversationEngine` property).
+- Renamed voice-agent configuration models to the `VoiceAgent*` family (e.g. `VoiceAudioConfig` → `VoiceAgentAudioConfig`, `VoiceSystemTool` → `VoiceAgentSystemTool`, `VoiceTurnDetection` → `VoiceAgentTurnDetectionConfig`) and renamed `VoiceResponse`'s base contract members (e.g. `VoiceResponseOutputModality` → `VoiceResponseBaseOutputModality`).
+- Removed the dedicated "message" conversation item models (`VoiceAssistantMessageItem`, `VoiceUserMessageItem`, `VoiceSystemMessageItem`, and the underlying `RealtimeConversationItemMessage*` types); persisted "message" items now round-trip through the `OpenAI.Realtime.RealtimeItem` base type instead of a dedicated typed model.
+- Changed voice-agent audio format configuration to use the real `OpenAI.Realtime.RealtimeAudioFormat` family (`RealtimePcmAudioFormat`/`RealtimePcmaAudioFormat`/`RealtimePcmuAudioFormat`) instead of the locally-defined `VoiceAudioFormat`/`RealtimeAudioFormatsAudioPcm*` models. Because `RealtimePcmAudioFormat.Rate` is read-only, set it through `RealtimePcmAudioFormat.Patch` (e.g. `format.Patch.Set("$.rate"u8, 24000)`) instead of an object initializer.
+- Persisted voice conversation item list operations and `VoiceResponse.Output` now return `BinaryData`.
+- Concrete voice item models now inherit the corresponding OpenAI realtime models instead of `VoiceConversationItem`.
+- Changed voice implementation values from strings to `VoiceType` and changed voice duration fields expressed in milliseconds to `TimeSpan`.
+- Removed the fixed avatar video codec setting; the service now controls the codec.
+- Renamed timestamp properties across several models for `*At` naming consistency: `AgentOptimizationJob.CreatedOn`/`UpdatedOn`, `AgentOptimizationJobListItem.CreatedOn`/`UpdatedOn`, `AgentsSkill.CreatedOn`, `ProjectAgentSession.CreatedOn`/`LastAccessedOn`/`ExpiresOn`, `PromotionInfo.PromotedOn`, `SessionDirectoryEntry.ModifiedOn`, `SkillVersion.CreatedOn`, and `ToolboxVersion.CreatedOn` are now `CreatedAt`, `UpdatedAt`, `LastAccessedAt`, `ExpiresAt`, `PromotedAt`, and `ModifiedAt` respectively.
+- Renamed `VoiceAgentSubAgent`/`VoiceAgentSubAgentConfig` to `VoiceAgentSubagent`/`VoiceAgentSubagentConfig` for casing consistency.
 
 ### Bugs Fixed
 
+- `VoiceAgentWebSocket` now also sends its SDK identifier as an `x-ms-client-sdk` connection-URL query parameter, so identification survives on platforms that disallow setting `User-Agent` on a WebSocket (e.g. .NET Framework) and through intermediaries that strip non-standard headers.
+- Fixed `VoiceResponse.Id`, `VoiceResponse.ConversationId`, and `VoiceResponse.OutputModalities` to correctly reflect the deserialized values instead of always returning `null` or an empty collection.
+
 ### Other Changes
+
+- Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract, including the "batch 2" voice-agent additions from [azure-rest-api-specs#45852](https://github.com/Azure/azure-rest-api-specs/pull/45852).
+
+### Sample Updates
+
+- Added a sample demonstrating voice-agent creation, real-time interaction, and persisted conversation retrieval.
+- Updated Agent Optimization samples to use the unified `AgentOptimization*` models.
 
 ## 3.0.0-beta.2 (2026-09-03)
 

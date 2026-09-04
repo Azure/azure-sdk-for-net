@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewTool"/>, <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="A2ATool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="WebIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="ProgrammaticToolCallingParam"/>, and <see cref="ToolSearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewTool"/>, <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="A2ATool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="WebIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, and <see cref="ToolSearchTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ProjectsAgentTool : IJsonModel<ProjectsAgentTool>
@@ -169,8 +169,6 @@ namespace Azure.AI.Projects.Agents
                         return OpenAI.InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return InternalWebSearchTool.DeserializeInternalWebSearchTool(element, options);
-                    case "programmatic_tool_calling":
-                        return ProgrammaticToolCallingParam.DeserializeProgrammaticToolCallingParam(element, options);
                     case "image_generation":
                         return OpenAI.InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":

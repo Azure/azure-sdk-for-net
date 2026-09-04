@@ -28,6 +28,12 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string TOOLBOX = "test-toolbox";
     protected const string SKILL = "test-skill";
+    protected const string CONVERSATIONS_AGENT_NAME = "cs-e2e-tests-conversations";
+    protected const string TELEPHONY_AGENT_NAME = "cs-e2e-tests-telephony";
+    protected const string CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-conversation";
+    protected const string LIFECYCLE_AGENT_NAME = "cs-e2e-tests-voice-lifecycle";
+    protected const string AUDIO_CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-audio";
+    protected const string TOOLCALL_AGENT_NAME = "cs-e2e-tests-voice-toolcall";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly int PAGE_SIZE = 3;
 
@@ -366,6 +372,30 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
         foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME2))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: CONVERSATIONS_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: TELEPHONY_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

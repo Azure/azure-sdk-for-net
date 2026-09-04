@@ -31,9 +31,11 @@ words:
   - wfresp
   - aiservices
   - aaip
+  - BYOS
+  - dedup
+  - MCPHTTP
   - Pcma
   - Pcmu
-  - MCPHTTP
   - Webrtc
   - Xhigh
 ignorePaths:

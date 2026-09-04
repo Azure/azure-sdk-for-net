@@ -88,12 +88,12 @@ namespace Azure.AI.Projects.Agents
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedOn, "U");
+                writer.WriteNumberValue(CreatedAt, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedOn, "U");
+                writer.WriteNumberValue(UpdatedAt, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(Progress))
             {
@@ -150,8 +150,8 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             AgentsJobStatus status = default;
             FoundryOpenAIError error = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset updatedOn = default;
+            DateTimeOffset createdAt = default;
+            DateTimeOffset updatedAt = default;
             AgentOptimizationJobProgress progress = default;
             OptimizedAgentIdentifier agent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -178,12 +178,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("progress"u8))
@@ -213,8 +213,8 @@ namespace Azure.AI.Projects.Agents
                 id,
                 status,
                 error,
-                createdOn,
-                updatedOn,
+                createdAt,
+                updatedAt,
                 progress,
                 agent,
                 additionalBinaryDataProperties);

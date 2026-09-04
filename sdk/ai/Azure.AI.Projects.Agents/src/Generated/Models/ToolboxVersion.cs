@@ -25,15 +25,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique identifier of the toolbox version. </param>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the toolbox version was created. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
-        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdOn, IEnumerable<ToolboxTool> tools)
+        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, IEnumerable<ToolboxTool> tools)
         {
             Metadata = metadata;
             Id = id;
             Name = name;
             Version = version;
-            CreatedOn = createdOn;
+            CreatedAt = createdAt;
             Tools = tools.ToList();
             Skills = new ChangeTrackingList<ToolboxSkill>();
         }
@@ -50,19 +50,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the toolbox version was created. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
         /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdOn, IList<ToolboxTool> tools, IList<ToolboxSkill> skills, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, IList<ToolboxTool> tools, IList<ToolboxSkill> skills, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Id = id;
             Name = name;
             Version = version;
             Description = description;
-            CreatedOn = createdOn;
+            CreatedAt = createdAt;
             Tools = tools;
             Skills = skills;
             Policies = policies;
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; }
 
         /// <summary> The Unix timestamp (seconds) when the toolbox version was created. </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <summary> The list of tools contained in this toolbox version. </summary>
         public IList<ToolboxTool> Tools { get; }

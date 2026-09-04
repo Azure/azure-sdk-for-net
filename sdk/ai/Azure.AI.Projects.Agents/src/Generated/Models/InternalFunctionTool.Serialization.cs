@@ -110,29 +110,6 @@ namespace OpenAI
             {
                 writer.WriteNull("parameters"u8);
             }
-            if (Optional.IsCollectionDefined(OutputSchema))
-            {
-                writer.WritePropertyName("output_schema"u8);
-                writer.WriteStartObject();
-                foreach (var item in OutputSchema)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Strict))
             {
                 writer.WritePropertyName("strict"u8);
@@ -146,16 +123,6 @@ namespace OpenAI
             {
                 writer.WritePropertyName("defer_loading"u8);
                 writer.WriteBooleanValue(DeferLoading.Value);
-            }
-            if (Optional.IsCollectionDefined(AllowedCallers))
-            {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
             }
         }
 
@@ -189,10 +156,8 @@ namespace OpenAI
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> parameters = default;
-            IDictionary<string, BinaryData> outputSchema = default;
             bool? strict = default;
             bool? deferLoading = default;
-            IList<CallableToolAllowedCaller> allowedCallers = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -237,27 +202,6 @@ namespace OpenAI
                     parameters = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("output_schema"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    outputSchema = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("strict"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -277,20 +221,6 @@ namespace OpenAI
                     deferLoading = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("allowed_callers"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToCallableToolAllowedCaller());
-                    }
-                    allowedCallers = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -302,10 +232,8 @@ namespace OpenAI
                 name,
                 description,
                 parameters,
-                outputSchema ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 strict,
-                deferLoading,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>());
+                deferLoading);
         }
     }
 }

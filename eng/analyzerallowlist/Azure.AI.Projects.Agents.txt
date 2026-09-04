@@ -13,25 +13,46 @@ nowarn:OPENAI001
 
 # AAIP001 is this library's own [Experimental] marker for preview Foundry Agent
 # features (HostedAgentDefinition, WorkflowAgentDefinition, AgentToolboxes,
-# AgentSessionFiles, AgentOptimizationJobs, ProjectAgentSkills). The library's
-# generated client surface and supporting types reference these experimental
-# members internally, so AAIP001 fires throughout the assembly. External
-# consumers opt in once via `#pragma warning disable AAIP001` (documented in
-# the README); acknowledging it once at the assembly level matches the same
-# intent for the library's own implementation.
+# AgentSessionFiles, AgentOptimizationJobs, ProjectAgentSkills, DigitalWorkerType).
+# The library's generated client surface and supporting types reference these
+# experimental members internally, so AAIP001 fires throughout the assembly.
+# External consumers opt in once via `#pragma warning disable AAIP001`
+# (documented in the README); acknowledging it once at the assembly level
+# matches the same intent for the library's own implementation.
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ToolboxTool.DeserializeToolboxTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentTool.DeserializeProjectsAgentTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentDefinition.DeserializeProjectsAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-# "Draft" property is experimental, while the rest of object is GA-ed.
+# "Draft"/"DigitalWorkerType" properties are experimental, while the rest of object is GA-ed.
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String},System.String,Azure.AI.Projects.Agents.ProjectsAgentDefinition,Azure.AI.Projects.Agents.AgentBlueprintReference,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},System.Nullable{System.Boolean},System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersion.#ctor(System.Collections.Generic.IDictionary{System.String,System.String},System.String,System.String,System.String,System.String,System.String,System.DateTimeOffset,Azure.AI.Projects.Agents.ProjectsAgentDefinition,System.Nullable{System.Boolean},System.Nullable{Azure.AI.Projects.Agents.AgentVersionStatus},Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentBlueprintReference,System.String,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersion.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.InternalCreateAgentRequest.#ctor(System.String,System.Nullable{Azure.AI.Projects.Agents.AgentState},System.Collections.Generic.IDictionary{System.String,System.String},System.String,Azure.AI.Projects.Agents.ProjectsAgentDefinition,Azure.AI.Projects.Agents.AgentBlueprintReference,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},System.Nullable{System.Boolean},Azure.AI.Projects.Agents.AgentEndpointConfiguration,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.InternalCreateAgentRequest.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-# DigitalWorkerType property is experimental, while the rest of object is GA-ed.
+# "Definition"/"DigitalWorkerType"/"Draft" properties are experimental, while the rest of object is GA-ed.
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.CreateAgentVersionRequest1.#ctor(Azure.AI.Projects.Agents.ProjectsAgentDefinition)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.CreateAgentVersionRequest1.#ctor(System.Collections.Generic.IDictionary{System.String,System.String},System.String,Azure.AI.Projects.Agents.ProjectsAgentDefinition,Azure.AI.Projects.Agents.AgentBlueprintReference,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},System.Nullable{System.Boolean},System.Collections.Generic.IDictionary{System.String,System.BinaryData})
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.CreateAgentVersionRequest1.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+# "DigitalWorkerType" property is experimental, while the rest of object is GA-ed.
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.#ctor(System.String,System.String,System.String,Azure.AI.Projects.Agents.AgentState,System.Nullable{Azure.AI.Projects.Agents.AgentStateSource},Azure.AI.Projects.Agents.AgentObjectVersions,Azure.AI.Projects.Agents.AgentEndpointConfiguration,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentBlueprintReference,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+
+# AAIP001 also fires for the AgentTelephony call/binding-listing pagination
+# helpers: AgentsPagedResultTelephonyCallSummary / AgentsPagedResultTelephonyBindingListItem
+# are marked [Experimental] (like several sibling AgentsPagedResult* page-envelope
+# types), but unlike those siblings their consuming CollectionResult classes were
+# not also attributed [Experimental] by ExperimentalAttributeVisitor
+# (sdk/ai/codegen), which currently only cascades that attribution for the
+# AgentEndpointConversations client by name. Point-suppressing here until the
+# visitor is generalized to cover AgentTelephony too.
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsAsyncCollectionResult.GetRawPagesAsync
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsAsyncCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsCollectionResult.GetRawPages
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyCallsCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsAsyncCollectionResult.GetRawPagesAsync
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsAsyncCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsCollectionResult.GetRawPages
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.AgentTelephonyGetTelephonyBindingsCollectionResult.GetContinuationToken(System.ClientModel.ClientResult)
 
 # AAIP002 marks generated declarations that expose OpenAI-experimental surface
 # (see OpenAIExperimentalVisitor in sdk/ai/codegen). The visitor attributes

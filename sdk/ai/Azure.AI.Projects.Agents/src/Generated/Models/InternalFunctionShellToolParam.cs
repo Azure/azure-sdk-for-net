@@ -13,7 +13,6 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalFunctionShellToolParam"/>. </summary>
         public InternalFunctionShellToolParam() : base(ToolType.Shell)
         {
-            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
@@ -21,14 +20,12 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"></param>
-        /// <param name="allowedCallers"></param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        internal InternalFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, IList<CallableToolAllowedCaller> allowedCallers, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
-            AllowedCallers = allowedCallers;
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
@@ -36,9 +33,6 @@ namespace OpenAI
 
         /// <summary> Gets or sets the Environment. </summary>
         public FunctionShellToolParamEnvironment Environment { get; set; }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }

@@ -88,6 +88,272 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
+        /// <summary> Creates a new agent or a new version of an existing agent. </summary>
+        /// <param name="name">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
+        /// <param name="state"> The initial operational state of the agent. Defaults to 'enabled' if not specified. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
+        /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
+        /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
+        /// <param name="agentCard"> Optional agent card for the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<ProjectsAgentRecord> CreateAgent(string name, ProjectsAgentDefinition definition, AgentState? state = default, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default, AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            InternalCreateAgentRequest spreadModel = new InternalCreateAgentRequest(
+                name,
+                state,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                definition,
+                blueprintReference,
+                digitalWorkerType,
+                draft,
+                agentEndpoint,
+                agentCard,
+                default);
+            ClientResult result = CreateAgent(spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates a new agent or a new version of an existing agent. </summary>
+        /// <param name="name">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
+        /// <param name="state"> The initial operational state of the agent. Defaults to 'enabled' if not specified. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
+        /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
+        /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
+        /// <param name="agentCard"> Optional agent card for the agent. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectsAgentRecord>> CreateAgentAsync(string name, ProjectsAgentDefinition definition, AgentState? state = default, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default, AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            InternalCreateAgentRequest spreadModel = new InternalCreateAgentRequest(
+                name,
+                state,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                definition,
+                blueprintReference,
+                digitalWorkerType,
+                draft,
+                agentEndpoint,
+                agentCard,
+                default);
+            ClientResult result = await CreateAgentAsync(spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GenerateAgent(BinaryContent content, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GenerateAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateGenerateAgentRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GenerateAgentAsync(BinaryContent content, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GenerateAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateGenerateAgentRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// </summary>
+        /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(BinaryData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = GenerateAgent(BinaryContent.Create(body), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Generates and creates an agent from kind-specific high-level inputs.
+        /// The generated definition remains fully editable through the standard agent versioning operations.
+        /// </summary>
+        /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(BinaryData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = await GenerateAgentAsync(BinaryContent.Create(body), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates a new version for the specified agent and returns the created version resource. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
+        /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersion(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentVersionRequest1 spreadModel = new CreateAgentVersionRequest1(
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                definition,
+                blueprintReference,
+                digitalWorkerType,
+                draft,
+                default);
+            ClientResult result = CreateAgentVersion(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates a new version for the specified agent and returns the created version resource. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
+        /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionAsync(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            CreateAgentVersionRequest1 spreadModel = new CreateAgentVersionRequest1(
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                definition,
+                blueprintReference,
+                digitalWorkerType,
+                draft,
+                default);
+            ClientResult result = await CreateAgentVersionAsync(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
         /// <summary>
         /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
         /// <list type="bullet">

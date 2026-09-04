@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Discriminator values for the dataset input union. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct AgentOptimizationDatasetInputType : IEquatable<AgentOptimizationDatasetInputType>
+    public readonly partial struct AgentOptimizationDatasetInputType : IEquatable<AgentOptimizationDatasetInputType>
     {
         private readonly string _value;
         /// <summary> Inline dataset — items are provided directly in the request body. </summary>

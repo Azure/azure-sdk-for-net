@@ -15,7 +15,6 @@ namespace OpenAI
         public InternalCustomToolParam(string name) : base(ToolType.Custom)
         {
             Name = name;
-            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCustomToolParam"/>. </summary>
@@ -25,14 +24,12 @@ namespace OpenAI
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="deferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        /// <param name="allowedCallers"></param>
-        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format, bool? deferLoading, IList<CallableToolAllowedCaller> allowedCallers) : base(@type, additionalBinaryDataProperties)
+        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Format = format;
             DeferLoading = deferLoading;
-            AllowedCallers = allowedCallers;
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
@@ -46,8 +43,5 @@ namespace OpenAI
 
         /// <summary> Whether this tool should be deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
     }
 }

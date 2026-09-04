@@ -1056,10 +1056,10 @@ public class AgentsTests : AgentsTestBase
             AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
             await jobsClient.CancelAsync(jobId: submittedJob.Id, cancellationToken: default);
         }
-        List<AgentOptimizationJobListItem> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJob> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<AgentOptimizationJobListItem> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJob> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
@@ -1069,7 +1069,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         //// Go backwards.
-        List<AgentOptimizationJobListItem> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJob> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));

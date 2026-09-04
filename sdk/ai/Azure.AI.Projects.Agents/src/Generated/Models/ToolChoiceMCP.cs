@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> MCP tool. </summary>
-    internal partial class ToolChoiceMCP : InternalToolChoiceParam
+    public partial class ToolChoiceMCP : VoiceAgentToolChoice
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server to use. </param>

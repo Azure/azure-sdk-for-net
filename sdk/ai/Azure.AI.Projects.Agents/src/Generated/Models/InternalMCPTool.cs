@@ -17,7 +17,6 @@ namespace OpenAI
         {
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
-            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
@@ -48,12 +47,11 @@ namespace OpenAI
         /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
-        /// <param name="allowedCallers"></param>
         /// <param name="requireApproval"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolboxToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolboxToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -63,7 +61,6 @@ namespace OpenAI
             ServerDescription = serverDescription;
             Headers = headers;
             AllowedTools = allowedTools;
-            AllowedCallers = allowedCallers;
             RequireApproval = requireApproval;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
@@ -147,9 +144,6 @@ namespace OpenAI
         /// </para>
         /// </summary>
         public BinaryData AllowedTools { get; set; }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary>
         /// Gets or sets the RequireApproval.

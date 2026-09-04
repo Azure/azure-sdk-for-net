@@ -3,6 +3,9 @@
 
 using Microsoft.TypeSpec.Generator;
 using Extensions.Plugin.Visitors;
+using Microsoft.TypeSpec.Generator.Input;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Extensions.Plugin
 {
@@ -13,16 +16,36 @@ namespace Extensions.Plugin
     /// </summary>
     internal sealed class ExtensionsPlugin : GeneratorPlugin
     {
+        private const string VoiceAgentWebSocketOperationId = "Azure.AI.Projects.VoiceAgentWebSocket.connectVoiceAgent";
+
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
+            var clients = new Queue<InputClient>(generator.InputLibrary.InputNamespace.RootClients.Concat(generator.InputLibrary.InputNamespace.Clients));
+            var visitedClients = new HashSet<InputClient>();
+
+            while (clients.TryDequeue(out InputClient client))
+            {
+                if (!visitedClients.Add(client))
+                {
+                    continue;
+                }
+
+                foreach (var method in client.Methods.Where(method => method.CrossLanguageDefinitionId == VoiceAgentWebSocketOperationId))
+                {
+                    method.Update(generateConvenient: false, generateProtocol: false);
+                    method.Operation.Update(generateConvenienceMethod: false, generateProtocolMethod: false);
+                }
+
+                client.Update(methods: client.Methods.Where(method => method.CrossLanguageDefinitionId != VoiceAgentWebSocketOperationId));
+
+                foreach (InputClient child in client.Children)
+                {
+                    clients.Enqueue(child);
+                }
+            }
+
             generator.AddVisitor(new SerializationOverrideVisitor());
-            // ExperimentalAttributeVisitor runs first so our intentional AAIP001 marking (driven by the
-            // typespec x-ms-foundry-meta CSV tables) wins for any declaration that is experimental both because
-            // we intend it to be and because it exposes OpenAI-experimental surface. OpenAIExperimentalVisitor
-            // then marks the remaining OpenAI-dependency surface with AAIP002. Both skip already-attributed
-            // declarations, and because C# suppresses experimental references inside any [Experimental] scope
-            // regardless of id, neither ordering requires an assembly-wide NoWarn.
             generator.AddVisitor(new ExperimentalAttributeVisitor());
             generator.AddVisitor(new OpenAIExperimentalVisitor());
         }
