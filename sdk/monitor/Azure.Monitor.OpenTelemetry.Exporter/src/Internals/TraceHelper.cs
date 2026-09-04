@@ -116,11 +116,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var group = routeBatch.GetOrAdd(ingestionEndpoint);
                         var telemetryItems = group.TelemetryItems;
 
-                        if (azureMonitorResource?.MonitorBaseData != null && group.ShouldEmitResourceFor(instrumentationKey))
-                        {
-                            telemetryItems.Add(new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey, azureMonitorResource.MonitorBaseData));
-                        }
-
+                        // No _APPRESOURCEPREVIEW_ envelope here. It describes the host process, so
+                        // emitting it under a tenant's instrumentation key would file the host's
+                        // identity as though it were the tenant's own application.
                         var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
                         if (activity.Events.Any())

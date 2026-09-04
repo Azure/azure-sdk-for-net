@@ -456,15 +456,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             try
             {
-                var result = _multiTenantStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
-
-                if (result != ExportResult.Success)
-                {
-                    // Customer SDK stats are off on this path, so without this the loss is invisible.
-                    AzureMonitorExporterEventSource.Log.FailedToPersistRoutedTelemetry(group.IngestionEndpoint);
-                }
-
-                return result;
+                // A refusal is reported by BudgetedBlobProvider, which every persistence path shares.
+                return _multiTenantStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
             }
             catch (Exception ex)
             {

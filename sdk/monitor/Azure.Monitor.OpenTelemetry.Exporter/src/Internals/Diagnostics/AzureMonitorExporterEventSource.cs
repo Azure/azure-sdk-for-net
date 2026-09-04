@@ -566,5 +566,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
         public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
+
+        [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-tenant export is enabled. The limit is per process, so it would be shared across every tenant the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
+        public void RateLimitedSamplingIgnoredForMultiTenantExport(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
+
+        [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
+        public void MultiTenantPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
     }
 }

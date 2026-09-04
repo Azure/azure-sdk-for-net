@@ -199,8 +199,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, routeBatch[0].TelemetryItems.Count);
         }
 
+        /// <summary>
+        /// The resource envelope describes the host process. Filing it under a tenant's
+        /// instrumentation key would report the host's identity as that tenant's own application.
+        /// </summary>
         [Fact]
-        public void ResourceEnvelopeIsEmittedOncePerInstrumentationKeyInAGroup()
+        public void NoResourceEnvelopeIsEmittedForRoutedTelemetry()
         {
             var resource = ResourceBuilder.CreateDefault().Build().CreateAzureMonitorResource("ikey-a");
             Assert.NotNull(resource!.MonitorBaseData);
@@ -215,12 +219,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 sampleRate: 100,
                 routeBatch);
 
-            var resourceEnvelopes = routeBatch[0].TelemetryItems
-                .Where(item => item.Data?.BaseType == "MetricData")
-                .Select(item => item.InstrumentationKey)
-                .ToArray();
+            Assert.Empty(routeBatch[0].TelemetryItems.Where(item => item.Data?.BaseType == "MetricData"));
 
-            Assert.Equal(new[] { "ikey-a", "ikey-b" }, resourceEnvelopes);
+            // The activities themselves still go, one envelope each.
+            Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
         }
 
         [Fact]

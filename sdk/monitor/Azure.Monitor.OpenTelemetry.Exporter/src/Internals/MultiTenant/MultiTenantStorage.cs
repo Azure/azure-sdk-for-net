@@ -417,7 +417,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                     // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
                     // the only handle handed out, because this cap cannot see across partitions.
                     var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
-                    var blobProvider = new BudgetedBlobProvider(this, innerProvider);
+                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, ingestionEndpoint);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
                     var transmissionStateManager = new TransmissionStateManager();
 
@@ -431,6 +431,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                     _partitions[ingestionEndpoint] = created;
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(_connectionVars.InstrumentationKey, directory);
+
+                    // The directory is a one-way hash, so without this there is no way to tell which
+                    // endpoint a partition on disk belongs to.
+                    AzureMonitorExporterEventSource.Log.MultiTenantPartitionCreated(ingestionEndpoint, directory);
 
                     return created;
                 }

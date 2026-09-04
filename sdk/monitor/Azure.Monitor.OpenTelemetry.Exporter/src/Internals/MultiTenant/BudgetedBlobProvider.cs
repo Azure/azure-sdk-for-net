@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry.PersistentStorage.Abstractions;
 using OpenTelemetry.PersistentStorage.FileSystem;
 
@@ -22,11 +23,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
     {
         private readonly MultiTenantStorage _owner;
         private readonly FileBlobProvider _inner;
+        private readonly string _ingestionEndpoint;
 
-        internal BudgetedBlobProvider(MultiTenantStorage owner, FileBlobProvider inner)
+        internal BudgetedBlobProvider(MultiTenantStorage owner, FileBlobProvider inner, string ingestionEndpoint)
         {
             _owner = owner;
             _inner = inner;
+            _ingestionEndpoint = ingestionEndpoint;
         }
 
         protected override IEnumerable<PersistentBlob> OnGetBlobs() => _inner.GetBlobs();
@@ -49,6 +52,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         {
             var created = _owner.TryCreateBlobWithinBudget(_inner, buffer, leasePeriodMilliseconds, out var inner);
             blob = inner!;
+
+            if (!created)
+            {
+                // Every routed write reaches storage through here, so this is the one place that can
+                // report a drop no matter which failure path produced it.
+                AzureMonitorExporterEventSource.Log.FailedToPersistRoutedTelemetry(_ingestionEndpoint);
+            }
 
             return created;
         }

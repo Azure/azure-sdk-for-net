@@ -74,17 +74,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         internal sealed class Group
         {
-            private readonly HashSet<string> _resourceEmittedFor = new(StringComparer.Ordinal);
-
             internal string IngestionEndpoint { get; private set; } = string.Empty;
 
             internal List<TelemetryItem> TelemetryItems { get; } = new();
-
-            /// <summary>
-            /// Ingestion associates the resource envelope with the instrumentation key it carries,
-            /// so every tenant in the group needs its own rather than inheriting another tenant's.
-            /// </summary>
-            internal bool ShouldEmitResourceFor(string instrumentationKey) => _resourceEmittedFor.Add(instrumentationKey);
 
             internal void Open(string ingestionEndpoint)
             {
@@ -100,7 +92,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             {
                 IngestionEndpoint = string.Empty;
                 TelemetryItems.Clear();
-                _resourceEmittedFor.Clear();
             }
         }
     }
