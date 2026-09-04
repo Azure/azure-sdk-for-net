@@ -4,5 +4,4 @@ overrides:
   - filename: '**/sdk/devopsinfrastructure/**/*'
     words:
       - devopsinfrastructure
-      - Nvme
       - nvme
