@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Credentials to connect to VmmServer. </summary>
         /// <param name="username"> Username to use to connect to VmmServer. </param>
         /// <param name="password"> Password to use to connect to VmmServer. </param>
         /// <returns> A new <see cref="Models.VmmCredential"/> instance for mocking. </returns>
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new VmmCredential(username, password, default);
         }
 
+        /// <summary> Object containing tags updates for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ScVmmResourcePatch"/> instance for mocking. </returns>
         public static ScVmmResourcePatch ScVmmResourcePatch(IDictionary<string, string> tags = default)
@@ -117,6 +119,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Cloud Capacity model. </summary>
         /// <param name="cpuCount"> CPUCount specifies the maximum number of CPUs that can be allocated in the cloud. </param>
         /// <param name="memoryMB"> MemoryMB specifies a memory usage limit in megabytes. </param>
         /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
@@ -127,6 +130,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new ScVmmCloudCapacity(cpuCount, memoryMB, vmCount, storageGB, default);
         }
 
+        /// <summary> The StorageQoSPolicy definition. </summary>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="id"> The ID of the QoS policy. </param>
         /// <param name="iopsMaximum"> The maximum IO operations per second. </param>
@@ -242,6 +246,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Network Interface model. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="displayName"> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </param>
         /// <param name="ipv4Addresses"> Gets the nic ipv4 addresses. </param>
@@ -274,6 +279,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Virtual disk model. </summary>
         /// <param name="name"> Gets or sets the name of the disk. </param>
         /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
         /// <param name="diskId"> Gets or sets the disk id. </param>
@@ -309,6 +315,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> The StorageQoSPolicyDetails definition. </summary>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="id"> The ID of the QoS policy. </param>
         /// <returns> A new <see cref="Models.ScVmmStorageQosPolicyDetails"/> instance for mocking. </returns>
@@ -344,6 +351,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Defines the inventory item. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -363,6 +371,10 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary>
+        /// Defines the resource properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualNetworkInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualMachineInventoryItem"/>.
+        /// </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
@@ -380,6 +392,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> The Cloud inventory item. </summary>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
@@ -396,6 +409,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> The Virtual network inventory item. </summary>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
@@ -412,6 +426,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> The Virtual machine template inventory item. </summary>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
@@ -436,6 +451,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 osName);
         }
 
+        /// <summary> The Virtual machine inventory item. </summary>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
@@ -472,6 +488,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 managedMachineResourceId);
         }
 
+        /// <summary> Defines the resource properties. </summary>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="inventoryItemName"> Gets or sets the Managed Object name in Vmm for the resource. </param>
         /// <returns> A new <see cref="Models.ScVmmInventoryItemDetails"/> instance for mocking. </returns>
@@ -515,6 +532,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Availability Set model. </summary>
         /// <param name="id"> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </param>
         /// <param name="name"> Gets or sets the name of the availability set. </param>
         /// <returns> A new <see cref="Models.ScVmmAvailabilitySetItem"/> instance for mocking. </returns>
@@ -523,6 +541,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new ScVmmAvailabilitySetItem(id, name, default);
         }
 
+        /// <summary> Defines the resource properties. </summary>
         /// <param name="adminUsername"> Gets or sets the admin username. </param>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
@@ -556,6 +575,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Defines the resource properties. </summary>
         /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
         /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
@@ -577,6 +597,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Specifies the vmmServer infrastructure specific settings for the virtual machine instance. </summary>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
         /// <param name="cloudId"> ARM Id of the cloud resource to use for deploying the vm. </param>
@@ -608,6 +629,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Defines the resource properties. </summary>
         /// <param name="parentCheckpointId"> Gets ID of parent of the checkpoint. </param>
         /// <param name="checkpointId"> Gets ID of the checkpoint. </param>
         /// <param name="name"> Gets name of the checkpoint. </param>
@@ -635,6 +657,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default), default);
         }
 
+        /// <summary> Defines the resource update properties. </summary>
         /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
         /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
@@ -654,6 +677,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Network Interface Update model. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="macAddress"> Gets or sets the nic MAC address. </param>
         /// <param name="virtualNetworkId"> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </param>
@@ -675,6 +699,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Virtual Disk Update model. </summary>
         /// <param name="name"> Gets or sets the name of the disk. </param>
         /// <param name="diskId"> Gets or sets the disk id. </param>
         /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
@@ -698,6 +723,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Defines the stop action properties. </summary>
         /// <param name="skipShutdown"> Gets or sets a value indicating whether to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Defaults to false. </param>
         /// <returns> A new <see cref="Models.StopVirtualMachineContent"/> instance for mocking. </returns>
         public static StopVirtualMachineContent StopVirtualMachineContent(SkipShutdown? skipShutdown = default)
@@ -705,6 +731,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new StopVirtualMachineContent(skipShutdown, default);
         }
 
+        /// <summary> Defines the create checkpoint action properties. </summary>
         /// <param name="name"> Name of the checkpoint. </param>
         /// <param name="description"> Description of the checkpoint. </param>
         /// <returns> A new <see cref="Models.VirtualMachineCreateCheckpointContent"/> instance for mocking. </returns>
@@ -713,6 +740,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new VirtualMachineCreateCheckpointContent(name, description, default);
         }
 
+        /// <summary> Defines the delete checkpoint action properties. </summary>
         /// <param name="id"> ID of the checkpoint to be deleted. </param>
         /// <returns> A new <see cref="Models.VirtualMachineDeleteCheckpointContent"/> instance for mocking. </returns>
         public static VirtualMachineDeleteCheckpointContent VirtualMachineDeleteCheckpointContent(string id = default)
@@ -720,6 +748,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new VirtualMachineDeleteCheckpointContent(id, default);
         }
 
+        /// <summary> Defines the restore checkpoint action properties. </summary>
         /// <param name="id"> ID of the checkpoint to be restored to. </param>
         /// <returns> A new <see cref="Models.VirtualMachineRestoreCheckpointContent"/> instance for mocking. </returns>
         public static VirtualMachineRestoreCheckpointContent VirtualMachineRestoreCheckpointContent(string id = default)
@@ -779,6 +808,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
+        /// <summary> Username / Password Credentials to connect to guest. </summary>
         /// <param name="username"> Gets or sets username to connect with the guest. </param>
         /// <param name="password"> Gets or sets the password to connect with the guest. </param>
         /// <returns> A new <see cref="Models.ScVmmGuestCredential"/> instance for mocking. </returns>
@@ -787,15 +817,15 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new ScVmmGuestCredential(username, password, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmServerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The VmmServers resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
-        /// <param name="credentials"> Credentials to connect to VMMServer. </param>
+        /// <param name="credentials"> Credentials to connect to VmmServer. </param>
         /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
         /// <param name="port"> Port is the port on which the vmmServer is listening. </param>
         /// <param name="connectionStatus"> Gets the connection status to the vmmServer. </param>
@@ -828,18 +858,18 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmCloudData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Clouds resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="uuid"> Unique ID of the cloud. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
-        /// <param name="cloudName"> Name of the cloud in VMMServer. </param>
+        /// <param name="cloudName"> Name of the cloud in VmmServer. </param>
         /// <param name="cloudCapacity"> Capacity of the cloud. </param>
         /// <param name="storageQosPolicies"> List of QoS policies available for the cloud. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -867,7 +897,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmCloudCapacity"/>. </summary>
+        /// <summary> Cloud Capacity model. </summary>
         /// <param name="cpuCount"> CPUCount specifies the maximum number of CPUs that can be allocated in the cloud. </param>
         /// <param name="memoryMB"> MemoryMB specifies a memory usage limit in megabytes. </param>
         /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
@@ -878,13 +908,13 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new ScVmmCloudCapacity(cpuCount, memoryMB, vmCount, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The VirtualNetworks resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="uuid"> Unique ID of the virtual network. </param>
@@ -913,13 +943,13 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmVirtualMachineTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The VirtualMachineTemplates resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="uuid"> Unique ID of the virtual machine template. </param>
@@ -974,13 +1004,13 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmAvailabilitySetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The AvailabilitySets resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="availabilitySetName"> Name of the availability set. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
@@ -1001,17 +1031,17 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmVirtualMachineInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Define the virtualMachineInstance. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="extendedLocation"> Gets or sets the extended location. </param>
         /// <param name="availabilitySets"> Availability Sets in vm. </param>
         /// <param name="osProfile"> OS properties. </param>
         /// <param name="hardwareProfile"> Hardware properties. </param>
-        /// <param name="networkInterfaces"> Network properties. </param>
-        /// <param name="storageDisks"> Storage properties. </param>
+        /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
+        /// <param name="storageDisks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
         /// <param name="infrastructureProfile"> Gets the infrastructure profile. </param>
         /// <param name="powerState"> Gets the power state of the virtual machine. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -1038,7 +1068,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OSProfileForVmInstance"/>. </summary>
+        /// <summary> Defines the resource properties. </summary>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="osType"> Gets the type of the os. </param>
@@ -1065,14 +1095,14 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmGuestAgentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Defines the GuestAgent. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="uuid"> Gets a unique identifier for this resource. </param>
         /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
-        /// <param name="httpsProxy"> HTTP Proxy configuration for the VM. </param>
+        /// <param name="httpsProxy"> Gets or sets httpsProxy url. </param>
         /// <param name="provisioningAction"> Gets or sets the guest agent provisioning action. </param>
         /// <param name="status"> Gets the guest agent status. </param>
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
@@ -1099,10 +1129,10 @@ namespace Azure.ResourceManager.ScVmm.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInventoryItem"/>. </summary>
+        /// <summary> The Virtual machine inventory item. </summary>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="osType"> Gets the type of the os. </param>
         /// <param name="osName"> Gets os name. </param>
