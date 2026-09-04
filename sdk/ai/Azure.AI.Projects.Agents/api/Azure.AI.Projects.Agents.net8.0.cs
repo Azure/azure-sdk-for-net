@@ -1339,6 +1339,7 @@ namespace Azure.AI.Projects.Agents
     public partial class ContentFilterConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ContentFilterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ContentFilterConfiguration>
     {
         public ContentFilterConfiguration(string raiPolicyName) { }
+        public Azure.AI.Projects.Agents.RaiInvocationModeration InvocationsModeration { get { throw null; } set { } }
         public string RaiPolicyName { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.Agents.ContentFilterConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2144,7 +2145,8 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null, System.Collections.Generic.IEnumerable<OpenAI.CallableToolAllowedCaller> allowedCallers = null, System.BinaryData internalContainer = null) { throw null; }
         public static Azure.AI.Projects.Agents.ContainerConfiguration ContainerConfiguration(string image = null, string registryConnectionId = null) { throw null; }
         public static OpenAI.ContainerSkill ContainerSkill(string type = null) { throw null; }
-        public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = null) { throw null; }
+        public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName) { throw null; }
+        public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = null, Azure.AI.Projects.Agents.RaiInvocationModeration invocationsModeration = null) { throw null; }
         public static Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, string manifestId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValues = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public static Azure.AI.Projects.Agents.DeclarativeAgentDefinition DeclarativeAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, string model = null, string instructions = null, float? temperature = default(float?), float? topP = default(float?), OpenAI.Responses.ResponseReasoningOptions reasoningOptions = null, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseTool> tools = null, System.BinaryData toolChoice = null, OpenAI.Responses.ResponseTextOptions textOptions = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = null) { throw null; }
@@ -2205,6 +2207,8 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.PromotionInfo PromotionInfo(System.DateTimeOffset promotedOn = default(System.DateTimeOffset), string agentName = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProtocolConfiguration ProtocolConfiguration(Azure.AI.Projects.Agents.ActivityProtocolConfiguration activity = null, Azure.AI.Projects.Agents.ResponsesProtocolConfiguration responses = null, Azure.AI.Projects.Agents.A2AProtocolConfiguration a2a = null, Azure.AI.Projects.Agents.McpProtocolConfiguration mcp = null, Azure.AI.Projects.Agents.InvocationsProtocolConfiguration invocations = null, Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration invocationsWs = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProtocolVersionRecord ProtocolVersionRecord(Azure.AI.Projects.Agents.ProjectsAgentProtocol protocol = default(Azure.AI.Projects.Agents.ProjectsAgentProtocol), string version = null) { throw null; }
+        public static Azure.AI.Projects.Agents.RaiInvocationModeration RaiInvocationModeration(Azure.AI.Projects.Agents.RaiInvocationContentType? inputContentType = default(Azure.AI.Projects.Agents.RaiInvocationContentType?), Azure.AI.Projects.Agents.RaiInvocationContentType? outputContentType = default(Azure.AI.Projects.Agents.RaiInvocationContentType?), Azure.AI.Projects.Agents.RaiInvocationMode responseMode = default(Azure.AI.Projects.Agents.RaiInvocationMode), System.Collections.Generic.IEnumerable<string> inputPaths = null, System.Collections.Generic.IEnumerable<string> outputPaths = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.RaiSseTextSelector> streamSelectors = null) { throw null; }
+        public static Azure.AI.Projects.Agents.RaiSseTextSelector RaiSseTextSelector(string eventType = null, string textField = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.ReminderPreviewToolboxTool ReminderPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.ToolConfig> toolConfigs = null) { throw null; }
         public static Azure.AI.Projects.Agents.ResponsesProtocolConfiguration ResponsesProtocolConfiguration() { throw null; }
@@ -2430,6 +2434,75 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.PublishApprovalStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.PublishApprovalStatus left, Azure.AI.Projects.Agents.PublishApprovalStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RaiInvocationContentType : System.IEquatable<Azure.AI.Projects.Agents.RaiInvocationContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RaiInvocationContentType(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.RaiInvocationContentType Json { get { throw null; } }
+        public static Azure.AI.Projects.Agents.RaiInvocationContentType Text { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.RaiInvocationContentType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.RaiInvocationContentType left, Azure.AI.Projects.Agents.RaiInvocationContentType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.RaiInvocationContentType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.RaiInvocationContentType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.RaiInvocationContentType left, Azure.AI.Projects.Agents.RaiInvocationContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RaiInvocationMode : System.IEquatable<Azure.AI.Projects.Agents.RaiInvocationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RaiInvocationMode(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.RaiInvocationMode Both { get { throw null; } }
+        public static Azure.AI.Projects.Agents.RaiInvocationMode NonStreaming { get { throw null; } }
+        public static Azure.AI.Projects.Agents.RaiInvocationMode Streaming { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.RaiInvocationMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.RaiInvocationMode left, Azure.AI.Projects.Agents.RaiInvocationMode right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.RaiInvocationMode (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.RaiInvocationMode? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.RaiInvocationMode left, Azure.AI.Projects.Agents.RaiInvocationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RaiInvocationModeration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.RaiInvocationModeration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiInvocationModeration>
+    {
+        public RaiInvocationModeration(Azure.AI.Projects.Agents.RaiInvocationMode responseMode) { }
+        public Azure.AI.Projects.Agents.RaiInvocationContentType? InputContentType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> InputPaths { get { throw null; } }
+        public Azure.AI.Projects.Agents.RaiInvocationContentType? OutputContentType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OutputPaths { get { throw null; } }
+        public Azure.AI.Projects.Agents.RaiInvocationMode ResponseMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.RaiSseTextSelector> StreamSelectors { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.RaiInvocationModeration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.RaiInvocationModeration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.RaiInvocationModeration System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.RaiInvocationModeration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.RaiInvocationModeration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.RaiInvocationModeration System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiInvocationModeration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiInvocationModeration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiInvocationModeration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiSseTextSelector : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.RaiSseTextSelector>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiSseTextSelector>
+    {
+        public RaiSseTextSelector(string eventType) { }
+        public string EventType { get { throw null; } set { } }
+        public string TextField { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.RaiSseTextSelector JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.RaiSseTextSelector PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.RaiSseTextSelector System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.RaiSseTextSelector System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class ReminderPreviewToolboxTool : Azure.AI.Projects.Agents.ToolboxTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ReminderPreviewToolboxTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ReminderPreviewToolboxTool>
