@@ -4,13 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 using OpenTelemetry;
@@ -206,7 +209,59 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain(connectionStringIKey, request.Body, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Customer SDK stats are reported under the exporter's own connection string, so counting a
+        /// tenant's telemetry there would attribute one customer's volume to another.
+        /// </summary>
+        /// <remarks>
+        /// The single-tenant export is the control. Without it this would pass even if the listener
+        /// were attached to the wrong meter or the counters were switched off entirely, which is
+        /// exactly what happened when it was first written against a mock transmitter that never
+        /// reaches the code emitting them.
+        /// </remarks>
+        [Fact]
+        public void RoutedExportEmitsNoCustomerSdkStatsWhileSingleTenantDoes()
+        {
+            var measurements = 0;
+
+            using var listener = new MeterListener
+            {
+                InstrumentPublished = (instrument, l) =>
+                {
+                    if (instrument.Meter.Name == CustomerSdkStatsMeters.MeterName)
+                    {
+                        l.EnableMeasurementEvents(instrument);
+                    }
+                },
+            };
+
+            listener.SetMeasurementEventCallback<long>((_, _, _, _) => Interlocked.Increment(ref measurements));
+            listener.Start();
+
+            var ingestion = new MockIngestion();
+
+            using (var singleTenant = CreateExporter(ingestion, multiTenantEnabled: false, out _))
+            {
+                singleTenant.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+            }
+
+            var control = Volatile.Read(ref measurements);
+            Assert.True(control > 0, "the listener saw nothing on the path that does report customer stats");
+
+            using (var routed = CreateExporter(ingestion, out _))
+            {
+                routed.Export(CreateBatch(
+                    CreateActivity("ikey-east", EastUs),
+                    CreateActivity("ikey-west", WestUs)));
+            }
+
+            Assert.Equal(control, Volatile.Read(ref measurements));
+        }
+
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out string instrumentationKey)
+            => CreateExporter(ingestion, multiTenantEnabled: true, out instrumentationKey);
+
+        private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiTenantEnabled, out string instrumentationKey)
         {
             instrumentationKey = "00000000-0000-0000-0000-0000000000ff";
 
@@ -223,8 +278,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // would disagree about the mode they are running in.
             return new AzureMonitorTraceExporter(
                 options,
-                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiTenantEnabled: true),
-                multiTenantEnabled: true);
+                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiTenantEnabled),
+                multiTenantEnabled);
         }
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);

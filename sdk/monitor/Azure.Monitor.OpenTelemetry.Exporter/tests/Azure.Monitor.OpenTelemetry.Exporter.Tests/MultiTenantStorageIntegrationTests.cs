@@ -87,6 +87,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// Tenants in one region share an ingestion endpoint, so they share a partition and a blob.
+        /// Both must come back in the single replay that blob produces.
+        /// </summary>
+        [Fact]
+        public void TenantsSharingAnEndpointArePersistedAndReplayedTogether()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            using var exporter = CreateExporter(ingestion, out var transmitter);
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east-a", EastUs),
+                CreateActivity("ikey-east-b", EastUs)));
+
+            // One endpoint, so one partition holding one blob for both tenants.
+            var partition = transmitter._multiTenantStorage!.TryGet(EastUs)!;
+            Assert.Single(transmitter._multiTenantStorage.Partitions);
+
+            var blob = Directory.GetFiles(partition.Directory, "*.blob").Single();
+            var persisted = Encoding.UTF8.GetString(File.ReadAllBytes(blob));
+            Assert.Contains("ikey-east-a", persisted, StringComparison.Ordinal);
+            Assert.Contains("ikey-east-b", persisted, StringComparison.Ordinal);
+
+            ingestion.SetStatus(EastUs, 200);
+            partition.TransmissionStateManager.ResetConsecutiveErrors();
+            partition.TransmissionStateManager.CloseTransmission();
+            partition.TransmitFromStorageHandler.Drain();
+
+            var replay = ingestion.Requests.Last();
+            Assert.Equal(EastUs + "v2.1/track", replay.Uri);
+            Assert.Contains("ikey-east-a", replay.Body, StringComparison.Ordinal);
+            Assert.Contains("ikey-east-b", replay.Body, StringComparison.Ordinal);
+        }
+
+        /// <summary>
         /// Back-off is per endpoint, so a throttled stamp must not stop a healthy one.
         /// </summary>
         [Fact]

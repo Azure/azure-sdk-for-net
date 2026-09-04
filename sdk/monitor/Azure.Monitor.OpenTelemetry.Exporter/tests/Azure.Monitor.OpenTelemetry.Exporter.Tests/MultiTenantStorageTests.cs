@@ -8,6 +8,8 @@ using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading;
 
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -421,6 +423,90 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// The budget holds when writers run concurrently rather than one at a time, which is the
+        /// only way the rest of this class is exercised.
+        /// </summary>
+        /// <remarks>
+        /// This does not reliably reproduce the check-then-act race that <c>TryReserve</c>'s
+        /// compare-and-swap exists to prevent: replacing the CAS with a plain read-then-add still
+        /// passes, because the window is a few instructions wide and every writer that finds the
+        /// budget full queues behind the eviction lock. Treat it as a smoke test for the invariant,
+        /// not as a regression test for the reservation.
+        /// </remarks>
+        [Fact]
+        public void ConcurrentWritersDoNotExceedTheSharedBudget()
+        {
+            const int PayloadSize = 4096;
+            const int Writers = 24;
+            const long Budget = PayloadSize * 8;
+
+            using var storage = CreateStorage(Budget);
+
+            var partitions = new[]
+            {
+                storage.TryGet(EastUs)!,
+                storage.TryGet(WestUs)!,
+                storage.TryGet("https://westeurope-1.in.applicationinsights.azure.com/")!,
+            };
+
+            var start = new ManualResetEventSlim();
+            var threads = new List<Thread>();
+
+            for (int i = 0; i < Writers; i++)
+            {
+                var partition = partitions[i % partitions.Length];
+
+                var thread = new Thread(() =>
+                {
+                    start.Wait();
+                    storage.SaveTelemetry(partition, new byte[PayloadSize]);
+                });
+
+                threads.Add(thread);
+                thread.Start();
+            }
+
+            start.Set();
+
+            foreach (var thread in threads)
+            {
+                Assert.True(thread.Join(TimeSpan.FromSeconds(30)), "a writer did not finish");
+            }
+
+            var totalBytes = Directory
+                .EnumerateFiles(_rootDirectory, "*.blob", SearchOption.AllDirectories)
+                .Sum(file => new FileInfo(file).Length);
+
+            Assert.True(totalBytes <= Budget, $"total {totalBytes} bytes exceeded the shared budget of {Budget}");
+        }
+
+        /// <summary>
+        /// Partitions are keyed by ingestion endpoint, not by tenant, so tenants in the same region
+        /// share one directory and their telemetry ends up in the same blob.
+        /// </summary>
+        [Fact]
+        public void TenantsSharingAnEndpointShareOnePartition()
+        {
+            using var storage = CreateStorage();
+
+            var first = storage.TryGet(EastUs)!;
+            var second = storage.TryGet(EastUs)!;
+
+            Assert.Same(first, second);
+            Assert.Single(storage.Partitions);
+
+            // A group is serialized as one payload, so both tenants' envelopes land in one blob.
+            var payload = Encoding.UTF8.GetBytes("{\"iKey\":\"ikey-a\"}\n{\"iKey\":\"ikey-b\"}");
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(first, payload));
+
+            var blob = Directory.GetFiles(first.Directory, "*.blob").Single();
+            var content = Encoding.UTF8.GetString(File.ReadAllBytes(blob));
+
+            Assert.Contains("ikey-a", content, StringComparison.Ordinal);
+            Assert.Contains("ikey-b", content, StringComparison.Ordinal);
+        }
+
+        /// <summary>
         /// Ingestion endpoints are regional and the directory name is a hash of the endpoint, so a
         /// directory written by a previous run is picked up again the next time that region is
         /// routed. That is what makes a manifest unnecessary to recover the backlog.
@@ -452,8 +538,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// <summary>
         /// Mirrors the provider's own naming, which is what orders blobs by age across directories.
         /// </summary>
-        private static string WriteBlobFile(string directory, DateTime timestampUtc, int length)
-        {
+        private static string WriteBlobFile(string directory, DateTime timestampUtc, int length)        {
             Directory.CreateDirectory(directory);
 
             var path = Path.Combine(

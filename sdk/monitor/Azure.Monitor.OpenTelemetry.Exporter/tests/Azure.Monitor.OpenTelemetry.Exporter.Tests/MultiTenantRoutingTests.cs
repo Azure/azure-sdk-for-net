@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -224,6 +225,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // The activities themselves still go, one envelope each.
             Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
+        }
+
+        /// <summary>
+        /// Characterizes what a routed envelope currently says about identity when the host has a
+        /// real resource. The resource metric is withheld, but the role tags on the envelope are the
+        /// host's, so a tenant sees the relaying service's name and instance as its own application.
+        /// This is a recorded gap, not settled behaviour: the test exists so that changing it is a
+        /// deliberate act rather than an accident.
+        /// </summary>
+        [Fact]
+        public void RoutedEnvelopesCarryTheHostsCloudRole()
+        {
+            var resource = ResourceBuilder.CreateDefault()
+                .AddAttributes(new Dictionary<string, object>
+                {
+                    { "service.name", "relay-host" },
+                    { "service.instance.id", "relay-instance" },
+                })
+                .Build()
+                .CreateAzureMonitorResource("exporter-ikey");
+
+            Assert.NotNull(resource);
+
+            var routeBatch = new EndpointRouteBatch();
+            TraceHelper.OtelToAzureMonitorTraceMultiTenant(
+                CreateBatch(CreateActivity("ikey-a", EastUs)),
+                resource,
+                sampleRate: 100,
+                routeBatch);
+
+            var telemetryItem = routeBatch[0].TelemetryItems.Single();
+
+            Assert.Equal("ikey-a", telemetryItem.InstrumentationKey);
+            Assert.Equal("relay-host", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("relay-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
         [Fact]
