@@ -394,6 +394,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             exporter.Export(CreateBatch(CreateActivity("ikey-a", EastUs)));
             exporter.Export(CreateBatch(CreateActivity("ikey-b", WestUs)));
 
+            // Asserted first: Assert.All succeeds on an empty list, so without this the test would
+            // pass if the transmitter were never called at all.
+            Assert.Equal(2, transmitter.Sends.Count);
             Assert.All(transmitter.Sends, send => Assert.NotEmpty(send.TelemetryItems));
         }
 

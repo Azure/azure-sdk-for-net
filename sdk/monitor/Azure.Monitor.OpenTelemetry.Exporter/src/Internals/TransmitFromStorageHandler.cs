@@ -133,15 +133,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return Task.CompletedTask;
             }
 
-            return Volatile.Read(ref _inFlightDrain)?.Task ?? Task.Run(Drain);
+            var inFlight = Volatile.Read(ref _inFlightDrain);
+
+            // Reading the slot and starting a drain cannot be atomic, so the started drain reports
+            // back whether it won. Returning without that check handed the caller a task that
+            // completed at once while the real upload was still running.
+            return inFlight != null ? inFlight.Task : Task.Run(DrainCore);
         }
 
-        internal void Drain()
+        internal void Drain() => DrainCore();
+
+        private Task DrainCore()
         {
             // Cheap rejection before allocating the completion source that becomes the drain slot.
-            if (Volatile.Read(ref _inFlightDrain) != null)
+            var inFlight = Volatile.Read(ref _inFlightDrain);
+            if (inFlight != null)
             {
-                return;
+                return inFlight.Task;
             }
 
             var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -149,9 +157,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // The completion source is the drain slot. Publishing it separately from claiming the
             // slot left a window where a caller could see no drain in flight, start a second one that
             // exited immediately, and wait on that instead of the upload still running.
-            if (Interlocked.CompareExchange(ref _inFlightDrain, completion, null) != null)
+            var winner = Interlocked.CompareExchange(ref _inFlightDrain, completion, null);
+            if (winner != null)
             {
-                return;
+                return winner.Task;
             }
 
             try
@@ -174,6 +183,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 Volatile.Write(ref _inFlightDrain, null);
                 completion.TrySetResult(true);
             }
+
+            return completion.Task;
         }
 
         private void DrainBlobs()

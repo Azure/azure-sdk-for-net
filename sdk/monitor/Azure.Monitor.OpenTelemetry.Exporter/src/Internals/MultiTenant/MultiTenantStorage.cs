@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private long _currentSizeBytes;
         private long _lastRecountMilliseconds;
-        private bool _disposed;
+        private volatile bool _disposed;
 
         internal MultiTenantStorage(
             ApplicationInsightsRestClient restClient,
@@ -127,13 +127,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
             }
 
-            var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
+            var reserved = false;
 
             // Serialized: two writers selecting the same blob would both measure it, both see their
             // delete succeed - File.Delete does not fail on a file that is already gone - and both
             // credit its bytes back, leaving the total below what is actually on disk.
             lock (_evictLock)
             {
+                // Inside the lock: computed outside, another writer could take the room this
+                // measured, leaving the eviction below paid for and the write still refused.
+                var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
                 var candidates = SelectOldest(MaxBlobsToEvict);
 
                 long evictable = 0;
@@ -148,18 +151,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                     return false;
                 }
 
-                for (int i = 0; i < candidates.Count; i++)
+                for (int i = 0; i < candidates.Count && !reserved; i++)
                 {
                     TryEvict(candidates[i]);
-
-                    if (TryReserve(buffer.Length))
-                    {
-                        return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
-                    }
+                    reserved = TryReserve(buffer.Length);
                 }
             }
 
-            return false;
+            // Outside the lock: the write is the slow part, and holding it here would serialize
+            // every partition's failure path behind one disk write.
+            return reserved && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
         }
 
         /// <summary>
@@ -225,13 +226,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return;
             }
 
-            var before = Interlocked.Read(ref _currentSizeBytes);
-
             if (TryCalculateRootSize(out var size))
             {
-                // Applied as a correction rather than assigned: the walk takes time, and assigning
-                // its result would discard every reservation and eviction made while it ran.
-                Interlocked.Add(ref _currentSizeBytes, size - before);
+                // Sampled after the walk, not before: a write that landed while the walk was running
+                // has already added itself to the total, and the walk may have counted it as well.
+                // Correcting against the later sample errs towards a brief overshoot rather than
+                // towards evicting telemetry that is still wanted.
+                var current = Interlocked.Read(ref _currentSizeBytes);
+
+                Interlocked.Add(ref _currentSizeBytes, size - current);
             }
         }
 

@@ -243,26 +243,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     waitMilliseconds = GetRemainingDrainWait();
 
                     // Recomposing is only worth its risk when there are partitions the earlier
-                    // composite could not have seen. Otherwise wait on what is already running: a
+                    // composite could not have seen. Otherwise reuse what is already running: a
                     // composite can complete after its inner drain does, and recomposing in that
                     // window starts a fresh pass with a budget that may already be spent, leaving
                     // the pipeline to be disposed underneath it.
                     if (_multiTenantStorage == null)
                     {
-                        WaitForDrain(existing, waitMilliseconds);
-                        return;
+                        drain = existing;
+                    }
+                    else
+                    {
+                        drain = DrainAllAsync(handler);
+                        _inFlightDrain = drain;
                     }
                 }
                 else
                 {
                     _drainWaitMilliseconds = waitMilliseconds;
                     _drainStarted = Stopwatch.StartNew();
-                }
 
-                drain = DrainAllAsync(handler);
-                _inFlightDrain = drain;
+                    drain = DrainAllAsync(handler);
+                    _inFlightDrain = drain;
+                }
             }
 
+            // Never inside _drainLock: Dispose takes it too, so waiting there would block an
+            // unrelated provider's teardown for the whole budget.
             WaitForDrain(drain, waitMilliseconds);
         }
 
