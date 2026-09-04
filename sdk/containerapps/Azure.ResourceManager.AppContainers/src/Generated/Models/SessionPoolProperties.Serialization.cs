@@ -125,11 +125,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("sessionNetworkConfiguration"u8);
                 writer.WriteObjectValue(SessionNetworkConfiguration, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TemplateUpdateStatus))
-            {
-                writer.WritePropertyName("templateUpdateStatus"u8);
-                writer.WriteObjectValue(TemplateUpdateStatus, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(PoolManagementEndpoint))
             {
                 writer.WritePropertyName("poolManagementEndpoint"u8);
@@ -149,11 +144,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(McpServerSettings))
-            {
-                writer.WritePropertyName("mcpServerSettings"u8);
-                writer.WriteObjectValue(McpServerSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -206,11 +196,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             DynamicPoolConfiguration dynamicPoolConfiguration = default;
             CustomContainerTemplate customContainerTemplate = default;
             SessionNetworkConfiguration sessionNetworkConfiguration = default;
-            TemplateUpdateStatus templateUpdateStatus = default;
             Uri poolManagementEndpoint = default;
             SessionPoolProvisioningState? provisioningState = default;
             IList<SessionPoolManagedIdentitySetting> managedIdentitySettings = default;
-            McpServerSettings mcpServerSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -300,15 +288,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     sessionNetworkConfiguration = SessionNetworkConfiguration.DeserializeSessionNetworkConfiguration(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("templateUpdateStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    templateUpdateStatus = TemplateUpdateStatus.DeserializeTemplateUpdateStatus(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("poolManagementEndpoint"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -341,15 +320,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     managedIdentitySettings = array;
                     continue;
                 }
-                if (prop.NameEquals("mcpServerSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mcpServerSettings = McpServerSettings.DeserializeMcpServerSettings(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -365,11 +335,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 dynamicPoolConfiguration,
                 customContainerTemplate,
                 sessionNetworkConfiguration,
-                templateUpdateStatus,
                 poolManagementEndpoint,
                 provisioningState,
                 managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>(),
-                mcpServerSettings,
                 additionalBinaryDataProperties);
         }
     }

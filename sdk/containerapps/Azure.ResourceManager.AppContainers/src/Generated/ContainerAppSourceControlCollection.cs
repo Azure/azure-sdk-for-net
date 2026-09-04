@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppSourceControlResource.ResourceType, out string containerAppSourceControlApiVersion);
             _containerAppsSourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppSourceControlResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsSourceControlsRestClient = new ContainerAppsSourceControls(_containerAppsSourceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppSourceControlApiVersion ?? "2025-10-02-preview");
+            _containerAppsSourceControlsRestClient = new ContainerAppsSourceControls(_containerAppsSourceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppSourceControlApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,18 +67,17 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="xMsGithubAuxiliary"> Github personal access token used for SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ContainerAppSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, string xMsGithubAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
             Argument.AssertNotNull(data, nameof(data));
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sourceControlName, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
+                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sourceControlName, ContainerAppSourceControlData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
                     new ContainerAppSourceControlResourceOperationSource(Client),
@@ -127,18 +125,17 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="xMsGithubAuxiliary"> Github personal access token used for SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ContainerAppSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, string xMsGithubAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
             Argument.AssertNotNull(data, nameof(data));
@@ -151,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sourceControlName, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
+                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sourceControlName, ContainerAppSourceControlData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
                     new ContainerAppSourceControlResourceOperationSource(Client),
@@ -186,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +281,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +315,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +349,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +406,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +463,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +524,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -590,39 +587,5 @@ namespace Azure.ResourceManager.AppContainers
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        /// <summary>
-        /// Create or update the SourceControl for a Container App.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}Operation IdContainerAppsSourceControls_CreateOrUpdateDefault Api Version2025-07-01Resource<see cref="ContainerAppSourceControlResource"/>
-        /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
-        /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
-        /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<ArmOperation<ContainerAppSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdateAsync(waitUntil: waitUntil, sourceControlName: sourceControlName, data: data, xMsGithubAuxiliary: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
-        /// Create or update the SourceControl for a Container App.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}Operation IdContainerAppsSourceControls_CreateOrUpdateDefault Api Version2025-07-01Resource<see cref="ContainerAppSourceControlResource"/>
-        /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
-        /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
-        /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation<ContainerAppSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil: waitUntil, sourceControlName: sourceControlName, data: data, xMsGithubAuxiliary: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

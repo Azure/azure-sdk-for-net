@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppSourceControlApiVersion);
             _containerAppsSourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsSourceControlsRestClient = new ContainerAppsSourceControls(_containerAppsSourceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppSourceControlApiVersion ?? "2025-10-02-preview");
+            _containerAppsSourceControlsRestClient = new ContainerAppsSourceControls(_containerAppsSourceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppSourceControlApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,11 +209,8 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsGithubAuxiliary"> Github personal access token used for SourceControl. </param>
-        /// <param name="ignoreWorkflowDeletionFailure"> Ignore Workflow Deletion Failure. </param>
-        /// <param name="deleteWorkflow"> Delete workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string xMsGithubAuxiliary = default, bool? ignoreWorkflowDeletionFailure = default, bool? deleteWorkflow = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _containerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlResource.Delete");
             scope.Start();
@@ -224,7 +220,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsSourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsGithubAuxiliary, ignoreWorkflowDeletionFailure, deleteWorkflow, context);
+                HttpMessage message = _containerAppsSourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppsSourceControlsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -253,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,11 +258,8 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsGithubAuxiliary"> Github personal access token used for SourceControl. </param>
-        /// <param name="ignoreWorkflowDeletionFailure"> Ignore Workflow Deletion Failure. </param>
-        /// <param name="deleteWorkflow"> Delete workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string xMsGithubAuxiliary = default, bool? ignoreWorkflowDeletionFailure = default, bool? deleteWorkflow = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _containerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlResource.Delete");
             scope.Start();
@@ -276,7 +269,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsSourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsGithubAuxiliary, ignoreWorkflowDeletionFailure, deleteWorkflow, context);
+                HttpMessage message = _containerAppsSourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppsSourceControlsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -305,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -315,10 +308,9 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="xMsGithubAuxiliary"> Github personal access token used for SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppSourceControlResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppSourceControlData data, string xMsGithubAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppSourceControlResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -330,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
+                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppSourceControlData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
                     new ContainerAppSourceControlResourceOperationSource(Client),
@@ -365,7 +357,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -375,10 +367,9 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="xMsGithubAuxiliary"> Github personal access token used for SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppSourceControlResource> Update(WaitUntil waitUntil, ContainerAppSourceControlData data, string xMsGithubAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppSourceControlResource> Update(WaitUntil waitUntil, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -390,7 +381,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
+                HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppSourceControlData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
                     new ContainerAppSourceControlResourceOperationSource(Client),
@@ -411,67 +402,5 @@ namespace Azure.ResourceManager.AppContainers
                 throw;
             }
         }
-
-        /// <summary>
-        /// Delete a Container App SourceControl.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}Operation IdContainerAppsSourceControls_DeleteDefault Api Version2025-07-01Resource<see cref="ContainerAppSourceControlResource"/>
-        /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-        {
-            return DeleteAsync(waitUntil: waitUntil, xMsGithubAuxiliary: default, ignoreWorkflowDeletionFailure: default, deleteWorkflow: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
-        /// Delete a Container App SourceControl.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}Operation IdContainerAppsSourceControls_DeleteDefault Api Version2025-07-01Resource<see cref="ContainerAppSourceControlResource"/>
-        /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-        {
-            return Delete(waitUntil: waitUntil, xMsGithubAuxiliary: default, ignoreWorkflowDeletionFailure: default, deleteWorkflow: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
-        /// Create or update the SourceControl for a Container App.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}Operation IdContainerAppsSourceControls_CreateOrUpdateDefault Api Version2025-07-01Resource<see cref="ContainerAppSourceControlResource"/>
-        /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
-        /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<ArmOperation<ContainerAppSourceControlResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppSourceControlData data, CancellationToken cancellationToken)
-        {
-            return UpdateAsync(waitUntil: waitUntil, data: data, xMsGithubAuxiliary: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
-        /// Create or update the SourceControl for a Container App.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}Operation IdContainerAppsSourceControls_CreateOrUpdateDefault Api Version2025-07-01Resource<see cref="ContainerAppSourceControlResource"/>
-        /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
-        /// <param name="data"> Properties used to create a Container App SourceControl. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation<ContainerAppSourceControlResource> Update(WaitUntil waitUntil, ContainerAppSourceControlData data, CancellationToken cancellationToken)
-        {
-            return Update(waitUntil: waitUntil, data: data, xMsGithubAuxiliary: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

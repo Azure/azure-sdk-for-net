@@ -89,16 +89,6 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Any errors that occurred during deployment. </summary>
-        [WirePath("properties.deploymentErrors")]
-        public string DeploymentErrors
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeploymentErrors;
-            }
-        }
-
         /// <summary> Deprecated. Resource ID of the Container App's environment. </summary>
         [WirePath("properties.managedEnvironmentId")]
         public ResourceIdentifier ManagedEnvironmentId
@@ -253,13 +243,13 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Patching mode for the container app. Null or default in this field will be interpreted as Automatic by RP. Automatic mode will automatically apply available patches. Manual mode will require the user to manually apply patches. Disabled mode will stop patch detection and auto patching. </summary>
-        [WirePath("properties.patchingConfiguration.patchingMode")]
-        public PatchingMode? PatchingMode
+        /// <summary> Resource ID of a subnet used for outbound (egress) traffic from this Container App. Only supported for Container Apps in an Express managed environment. Mutually exclusive with the environment-level VNet configuration and immutable after the Container App is created. </summary>
+        [WirePath("properties.networking.outboundVnetSubnetId")]
+        public string NetworkingOutboundVnetSubnetId
         {
             get
             {
-                return Properties is null ? default : Properties.PatchingMode;
+                return Properties is null ? default : Properties.NetworkingOutboundVnetSubnetId;
             }
             set
             {
@@ -267,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     Properties = new ContainerAppProperties();
                 }
-                Properties.PatchingMode = value;
+                Properties.NetworkingOutboundVnetSubnetId = value;
             }
         }
     }
