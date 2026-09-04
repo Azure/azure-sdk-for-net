@@ -44,3 +44,9 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.JsonModelWriteCore
 # override non-experimental base members. Scoping the suppression to this one
 # generated method keeps AAIP002 live everywhere else in the assembly.
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+
+# WebSearchToolboxTool consumes OpenAI's experimental web-search filter and
+# approximate-location models. The generated serialization methods must access
+# those attributed members and invoke the attributed internal constructor.
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.WebSearchToolboxTool.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.WebSearchToolboxTool.DeserializeWebSearchToolboxTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)

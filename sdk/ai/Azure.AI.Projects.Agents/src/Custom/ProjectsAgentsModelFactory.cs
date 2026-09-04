@@ -16,7 +16,6 @@ public partial class ProjectsAgentsModelFactory
 
     internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, DigitalWorkerType? digitalWorkerType=default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
     {
-        //return new ProjectsAgentRecord("agent", id, name, state, stateSource, versions, agentEndpoint, instanceIdentity, blueprint, blueprintReference, agentCard, additionalBinaryDataProperties: null);
         return new ProjectsAgentRecord(
                 @object: "agent",
                 id: id,

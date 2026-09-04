@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory
 {
@@ -132,9 +133,9 @@ namespace Azure.AI.Projects.Memory
             }
             int embeddingTokens = default;
             long inputTokens = default;
-            ResponseUsageInputTokensDetails inputTokensDetails = default;
+            ResponseInputTokenUsageDetails inputTokensDetails = default;
             long outputTokens = default;
-            ResponseUsageOutputTokensDetails outputTokensDetails = default;
+            ResponseOutputTokenUsageDetails outputTokensDetails = default;
             long totalTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +152,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("input_tokens_details"u8))
                 {
-                    inputTokensDetails = ResponseUsageInputTokensDetails.DeserializeResponseUsageInputTokensDetails(prop.Value, options);
+                    inputTokensDetails = ModelReaderWriter.Read<ResponseInputTokenUsageDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("output_tokens"u8))
@@ -161,7 +162,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("output_tokens_details"u8))
                 {
-                    outputTokensDetails = ResponseUsageOutputTokensDetails.DeserializeResponseUsageOutputTokensDetails(prop.Value, options);
+                    outputTokensDetails = ModelReaderWriter.Read<ResponseOutputTokenUsageDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("total_tokens"u8))

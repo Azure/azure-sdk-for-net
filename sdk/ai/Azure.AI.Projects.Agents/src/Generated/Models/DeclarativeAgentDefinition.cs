@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
@@ -100,9 +99,6 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet">
         /// <item>
         /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="InternalToolChoiceParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

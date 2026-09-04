@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Projects
 {
@@ -15,6 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the Azure AI agent. </param>
         /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
         public static AzureAIAgentTarget AzureAIAgentTarget(string name = default, string version = default, IEnumerable<ToolDescription> toolDescriptions = default)
         {
             toolDescriptions ??= new ChangeTrackingList<ToolDescription>();

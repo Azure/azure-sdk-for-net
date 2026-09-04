@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -59,7 +60,7 @@ namespace Azure.AI.Projects.Agents
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalMCPToolRequireApproval"/>. </description>
+        /// <description> <see cref="McpToolCallApprovalPolicy"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="string"/>. </description>

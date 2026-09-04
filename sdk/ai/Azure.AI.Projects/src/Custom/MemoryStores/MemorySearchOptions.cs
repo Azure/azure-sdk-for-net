@@ -6,11 +6,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
 /// <summary> Options that describe a memory-store search request. </summary>
+[CodeGenType("SearchMemoriesRequest")]
 [Experimental("AAIP001")]
 public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 {
@@ -21,11 +23,10 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 
     /// <summary> The conversation items used as context for the search. </summary>
     public IList<ResponseItem> Items { get; private set; }
-    /// <summary> The scope (for example, user or session identifier) that partitions the memory store. </summary>
-    public string Scope { get; }
     /// <summary> The identifier of the previous search, used to continue or refine a prior search. </summary>
     public string PreviousSearchId { get; set; }
     /// <summary> Options controlling how the search results are shaped (limits, ranking, etc.). </summary>
+    [CodeGenMember("Options")]
     public MemorySearchResultOptions ResultOptions { get; set; }
 
     /// <summary> Initializes a new instance of <see cref="MemorySearchOptions"/>. </summary>
@@ -36,43 +37,61 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
         Items = new ChangeTrackingList<ResponseItem>();
     }
 
-    private InternalMemorySearchOptions GetInternalCopy()
+    /// <param name="element"> The JSON element to deserialize. </param>
+    /// <param name="options"> The client options for reading and writing models. </param>
+    internal static MemorySearchOptions DeserializeMemorySearchOptions(JsonElement element, ModelReaderWriterOptions options)
     {
-        return new InternalMemorySearchOptions(Scope, ResponseItemHelpers.ConvertItemsTo<InputItem, ResponseItem>(Items), PreviousSearchId, ResultOptions, additionalBinaryDataProperties: null);
-    }
-
-    private static MemorySearchOptions CreateFromInternalOptions(InternalMemorySearchOptions internalOptions)
-    {
-        return new(internalOptions.Scope)
+        if (element.ValueKind == JsonValueKind.Null)
         {
-            PreviousSearchId = internalOptions.PreviousSearchId,
-            Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem, InputItem>(internalOptions.Items),
-            ResultOptions = internalOptions.Options,
-        };
-    }
+            return null;
+        }
+        string scope = default;
+        IList<ResponseItem> items = default;
+        string previousSearchId = default;
+        MemorySearchResultOptions resultOptions = default;
+        IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        foreach (var prop in element.EnumerateObject())
+        {
+            if (prop.NameEquals("scope"u8))
+            {
+                scope = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("items"u8))
+            {
+                if (prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
+                List<ResponseItem> array = new List<ResponseItem>();
+                foreach (var item in prop.Value.EnumerateArray())
+                {
+                    ResponseItem responseItem = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(item.GetRawText()), options, AzureAIProjectsContext.Default);
+                    array.Add(responseItem);
+                }
+                items = array;
+                continue;
+            }
+            if (prop.NameEquals("previous_search_id"u8))
+            {
+                previousSearchId = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("options"u8))
+            {
+                if (prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
+                resultOptions = ModelReaderWriter.Read<MemorySearchResultOptions>(BinaryData.FromString(prop.Value.GetRawText()), options, AzureAIProjectsContext.Default);
 
-    MemorySearchOptions IJsonModel<MemorySearchOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-    {
-        InternalMemorySearchOptions internalOptions = ((IJsonModel<InternalMemorySearchOptions>)new InternalMemorySearchOptions()).Create(ref reader, options);
-        return CreateFromInternalOptions(internalOptions);
-    }
-
-    MemorySearchOptions IPersistableModel<MemorySearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-    {
-        InternalMemorySearchOptions internalOptions = ((IPersistableModel<InternalMemorySearchOptions>)new InternalMemorySearchOptions()).Create(data, options);
-        return CreateFromInternalOptions(internalOptions);
-    }
-
-    string IPersistableModel<MemorySearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        => options.Format ?? ModelSerializationExtensions.WireOptions.Format;
-
-    void IJsonModel<MemorySearchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-    {
-        ((IJsonModel<InternalMemorySearchOptions>)GetInternalCopy()).Write(writer, options);
-    }
-
-    BinaryData IPersistableModel<MemorySearchOptions>.Write(ModelReaderWriterOptions options)
-    {
-        return ((IPersistableModel<InternalMemorySearchOptions>)GetInternalCopy()).Write(options);
+                continue;
+            }
+            if (options.Format != "W")
+            {
+                additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+        }
+        return new MemorySearchOptions(scope, items ?? new ChangeTrackingList<ResponseItem>(), previousSearchId, resultOptions, additionalBinaryDataProperties);
     }
 }

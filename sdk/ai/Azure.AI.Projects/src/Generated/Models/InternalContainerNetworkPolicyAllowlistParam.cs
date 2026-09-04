@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     {
         /// <summary> Initializes a new instance of <see cref="InternalContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
-        public InternalContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(ContainerNetworkPolicyParamType.Allowlist)
+        internal InternalContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base("allowlist")
         {
             AllowedDomains = allowedDomains.ToList();
             DomainSecrets = new ChangeTrackingList<InternalContainerNetworkPolicyDomainSecretParam>();

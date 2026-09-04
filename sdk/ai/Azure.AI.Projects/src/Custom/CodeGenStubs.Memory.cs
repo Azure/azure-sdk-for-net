@@ -13,7 +13,6 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenType("MemoryOperation")] public partial class MemoryOperation { }
 [CodeGenType("MemoryOperationKind")] public readonly partial struct MemoryOperationKind { }
 [CodeGenType("MemorySearchItem")] public partial class MemorySearchItem { }
-[CodeGenType("MemorySearchResultOptions")] public partial class MemorySearchResultOptions { }
 [CodeGenType("MemoryStoreDefaultDefinition")] public partial class MemoryStoreDefaultDefinition { }
 [CodeGenType("MemoryStoreDefaultOptions")] public partial class MemoryStoreDefaultOptions { }
 [CodeGenType("MemoryStoreDefinition")] public abstract partial class MemoryStoreDefinition { }

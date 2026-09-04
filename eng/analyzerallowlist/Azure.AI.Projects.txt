@@ -12,9 +12,19 @@ nowarn:AAIP001 T:Azure.AI.Projects.AIProjectClient
 nowarn:AAIP001 M:Azure.AI.Projects.InternalTool.DeserializeInternalTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEvaluationRuleAction(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 
+# AAIP002 is the [Experimental] marker for this library's own preview surface
+# This tag is being set for experimental types, brought from OpenAI package.
+# AzureAIAgentTarget constructor creates emply list of tools
+nowarn:AAIP002 M:Azure.AI.Projects.Evaluation.AzureAIAgentTarget.#ctor(System.String)
+nowarn:AAIP002 M:Azure.AI.Projects.Evaluation.AzureAIAgentTarget.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Evaluation.AzureAIAgentTarget.DeserializeAzureAIAgentTarget(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+# Response Items are experimental according to OpenAI; they are used internally in InternalMemoryUpdateOptions
+nowarn:AAIP002 M:Azure.AI.Projects.Memory.MemoryUpdateOptions.DeserializeMemoryUpdateOptions(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+
 # OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
 # wraps (ResponseItem, OpenAIContext, etc.). The library is intentionally a
 # wrapper / extension of those preview surfaces and exposes them to its own
 # callers via Azure.AI.Projects.Memory and ResponseItemHelpers. Acknowledging
 # the opt-in once at the assembly level matches the design intent.
 nowarn:OPENAI001
+nowarn:OPENAICUA001
