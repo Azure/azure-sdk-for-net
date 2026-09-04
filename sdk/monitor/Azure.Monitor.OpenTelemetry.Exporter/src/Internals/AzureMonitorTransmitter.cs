@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _connectionVars = InitializeConnectionVars(options, platform);
 
-            _transmissionStateManager = new TransmissionStateManager();
+            _transmissionStateManager = new TransmissionStateManager(_connectionVars.IngestionEndpoint);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
