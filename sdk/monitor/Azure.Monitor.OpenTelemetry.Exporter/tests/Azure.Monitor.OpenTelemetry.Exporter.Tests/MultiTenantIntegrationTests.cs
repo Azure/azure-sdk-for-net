@@ -218,7 +218,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 EnableStatsbeat = false,
             };
 
-            return new AzureMonitorTraceExporter(options, new AzureMonitorTransmitter(options, DefaultPlatform.Instance), multiTenantEnabled: true);
+            // Both halves must be told the gate is on. The two-argument transmitter constructor reads
+            // the process-wide switch, which is off under test, so the exporter and the transmitter
+            // would disagree about the mode they are running in.
+            return new AzureMonitorTraceExporter(
+                options,
+                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiTenantEnabled: true),
+                multiTenantEnabled: true);
         }
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);

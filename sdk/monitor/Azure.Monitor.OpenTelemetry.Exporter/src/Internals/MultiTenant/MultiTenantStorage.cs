@@ -69,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private readonly long _maxSizeBytes;
         private readonly bool _isAadEnabled;
         private readonly object _createLock = new();
+        private readonly object _evictLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private long _currentSizeBytes;
         private long _lastRecountMilliseconds;
@@ -127,27 +128,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             }
 
             var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
-            var candidates = SelectOldest(MaxBlobsToEvict);
 
-            long evictable = 0;
-            for (int i = 0; i < candidates.Count; i++)
+            // Serialized: two writers selecting the same blob would both measure it, both see their
+            // delete succeed - File.Delete does not fail on a file that is already gone - and both
+            // credit its bytes back, leaving the total below what is actually on disk.
+            lock (_evictLock)
             {
-                evictable += FileLength(candidates[i].Path);
-            }
+                var candidates = SelectOldest(MaxBlobsToEvict);
 
-            // Deleting everything on offer would still leave the write refused, so delete nothing.
-            if (evictable < shortfall)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < candidates.Count; i++)
-            {
-                TryEvict(candidates[i]);
-
-                if (TryReserve(buffer.Length))
+                long evictable = 0;
+                for (int i = 0; i < candidates.Count; i++)
                 {
-                    return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                    evictable += FileLength(candidates[i].Path);
+                }
+
+                // Deleting everything on offer would still leave the write refused, so delete nothing.
+                if (evictable < shortfall)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    TryEvict(candidates[i]);
+
+                    if (TryReserve(buffer.Length))
+                    {
+                        return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                    }
                 }
             }
 
@@ -217,9 +225,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return;
             }
 
+            var before = Interlocked.Read(ref _currentSizeBytes);
+
             if (TryCalculateRootSize(out var size))
             {
-                Interlocked.Exchange(ref _currentSizeBytes, size);
+                // Applied as a correction rather than assigned: the walk takes time, and assigning
+                // its result would discard every reservation and eviction made while it ran.
+                Interlocked.Add(ref _currentSizeBytes, size - before);
             }
         }
 
@@ -412,14 +424,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// </summary>
         internal EndpointStorage? TryGet(string ingestionEndpoint)
         {
-            if (_partitions.TryGetValue(ingestionEndpoint, out var existing))
-            {
-                return existing;
-            }
-
+            // Checked first: Dispose empties the dictionary before tearing partitions down, so a
+            // hit after this point cannot be on one that is already disposed.
             if (_disposed)
             {
                 return null;
+            }
+
+            if (_partitions.TryGetValue(ingestionEndpoint, out var existing))
+            {
+                return existing;
             }
 
             lock (_createLock)
@@ -473,6 +487,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         public void Dispose()
         {
+            EndpointStorage[] partitions;
+
             lock (_createLock)
             {
                 if (_disposed)
@@ -481,14 +497,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 }
 
                 _disposed = true;
+
+                // Removed before being disposed, so a concurrent caller cannot be handed one.
+                partitions = new List<EndpointStorage>(_partitions.Values).ToArray();
+                _partitions.Clear();
             }
 
-            foreach (var partition in _partitions.Values)
+            foreach (var partition in partitions)
             {
                 partition.Dispose();
             }
-
-            _partitions.Clear();
         }
 
         internal sealed class EndpointStorage : IDisposable

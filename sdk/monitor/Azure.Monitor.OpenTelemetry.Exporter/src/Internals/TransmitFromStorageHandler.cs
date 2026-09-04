@@ -138,6 +138,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void Drain()
         {
+            // Cheap rejection before allocating the completion source that becomes the drain slot.
+            if (Volatile.Read(ref _inFlightDrain) != null)
+            {
+                return;
+            }
+
             var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             // The completion source is the drain slot. Publishing it separately from claiming the
@@ -260,8 +266,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <returns><see langword="true"/> when draining may continue.</returns>
         private bool TransmitBatch(List<PendingBlob> batch, byte[] payload)
         {
-            // Routed telemetry is excluded from customer SDK stats. Note this only suppresses the
-            // top-level counter; 206 partial-success handling still synthesizes its own.
+            // Routed telemetry is excluded from customer SDK stats: a null counter suppresses both
+            // the top-level count and the per-envelope counts synthesized for a 206.
             var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload) : null;
 
             var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;

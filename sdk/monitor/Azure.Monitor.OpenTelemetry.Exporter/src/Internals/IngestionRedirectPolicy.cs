@@ -36,16 +36,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             Request request = message.Request;
 
-            // Captured before any rewrite, and includes the path: endpoints can differ only by path
-            // on a shared gateway host, and the same-host trust branch does not compare paths.
-            var originKey = request.Uri.ToUri().GetLeftPart(UriPartial.Path);
+            // Materializing the key costs a Uri and a string, so it is deferred until something can
+            // use it. A process that never sees a redirect never pays for one.
+            string? originKey = null;
 
-            if (_cache.TryRead(originKey, out Uri? redirectUri))
+            if (!_cache.IsEmpty)
             {
-                if (RedirectPolicyHelper.IsTrustedIngestionRedirect(request.Uri.ToUri(), redirectUri))
+                // Captured before any rewrite, and includes the path: endpoints can differ only by
+                // path on a shared gateway host, and the same-host trust branch does not compare paths.
+                originKey = request.Uri.ToUri().GetLeftPart(UriPartial.Path);
+
+                if (_cache.TryRead(originKey, out Uri? cachedRedirect)
+                    && RedirectPolicyHelper.IsTrustedIngestionRedirect(request.Uri.ToUri(), cachedRedirect))
                 {
                     // Set up for the redirect
-                    request.Uri.Reset(redirectUri);
+                    request.Uri.Reset(cachedRedirect);
                 }
             }
 
@@ -60,9 +65,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             uint redirectCount = 1;
             Response response = message.Response;
+            Uri? redirectUri;
 
             while (redirectCount < MaxRedirect && IsRedirection(response.Status))
             {
+                // Nothing has rewritten the address yet on this pass, so this is still the origin.
+                originKey ??= request.Uri.ToUri().GetLeftPart(UriPartial.Path);
+
                 if (!TryGetRedirectUri(response, out redirectUri))
                 {
                     AzureMonitorExporterEventSource.Log.RedirectHeaderParseFailed();
@@ -159,14 +168,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             private readonly Dictionary<string, Entry> _entries = new(StringComparer.Ordinal);
 
+            private volatile int _count;
+
+            /// <summary>
+            /// Read without the lock so the common case, a pipeline that has never been redirected,
+            /// does not synchronize on every request.
+            /// </summary>
+            public bool IsEmpty => _count == 0;
+
             public bool TryRead(string key, [NotNullWhen(true)] out T? cachedValue)
             {
                 lock (_lockObj)
                 {
-                    if (_entries.TryGetValue(key, out var entry) && DateTimeOffset.UtcNow < entry.Expiration && entry.Value != null)
+                    if (_entries.TryGetValue(key, out var entry))
                     {
-                        cachedValue = entry.Value;
-                        return true;
+                        if (DateTimeOffset.UtcNow < entry.Expiration && entry.Value != null)
+                        {
+                            cachedValue = entry.Value;
+                            return true;
+                        }
+
+                        // Frees the slot: otherwise a process that has seen the maximum number of
+                        // origins stops caching redirects for the rest of its life.
+                        _entries.Remove(key);
+                        _count = _entries.Count;
                     }
                 }
 
@@ -185,6 +210,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
 
                     _entries[key] = new Entry(cachingValue, DateTimeOffset.UtcNow.Add(expire));
+                    _count = _entries.Count;
                 }
             }
 

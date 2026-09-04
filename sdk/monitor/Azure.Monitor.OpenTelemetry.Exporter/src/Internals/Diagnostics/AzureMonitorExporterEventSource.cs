@@ -572,5 +572,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiTenantPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
+
+        [NonEvent]
+        public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                RoutedTelemetryPersistenceThrew(ingestionEndpoint, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(66, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
+        public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, string exceptionMessage) => WriteEvent(66, ingestionEndpoint, exceptionMessage);
     }
 }

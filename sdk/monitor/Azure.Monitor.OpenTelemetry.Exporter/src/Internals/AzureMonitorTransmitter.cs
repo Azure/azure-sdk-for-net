@@ -77,6 +77,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // host named by an Activity tag. Refuse the combination rather than disclose the token.
             if (multiTenantEnabled && _isAadEnabled)
             {
+                _transmissionStateManager.Dispose();
+
                 throw new NotSupportedException(
                     "Multi-tenant export cannot be used with Microsoft Entra ID authentication. The credential is scoped to this exporter's audience and would be sent to endpoints supplied by telemetry, so either clear AzureMonitorExporterOptions.Credential or disable the Azure.Monitor.OpenTelemetry.EnableMultiTenantExport switch.");
             }
@@ -238,11 +240,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var existing = _inFlightDrain;
                 if (existing != null && !existing.IsCompleted)
                 {
-                    // Each signal shuts down separately but shares this transmitter, and the later
-                    // one may have created storage partitions the earlier composite never saw. Every
-                    // handler returns its in-flight drain, so recomposing picks those up without
-                    // abandoning work already underway.
                     waitMilliseconds = GetRemainingDrainWait();
+
+                    // Recomposing is only worth its risk when there are partitions the earlier
+                    // composite could not have seen. Otherwise wait on what is already running: a
+                    // composite can complete after its inner drain does, and recomposing in that
+                    // window starts a fresh pass with a budget that may already be spent, leaving
+                    // the pipeline to be disposed underneath it.
+                    if (_multiTenantStorage == null)
+                    {
+                        WaitForDrain(existing, waitMilliseconds);
+                        return;
+                    }
                 }
                 else
                 {
@@ -470,7 +479,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.FailedToPersistOnShutdown(_connectionVars.InstrumentationKey, ex);
+                // Reached on back-off and on a send exception, not only at shutdown.
+                AzureMonitorExporterEventSource.Log.RoutedTelemetryPersistenceThrew(group.IngestionEndpoint, ex);
 
                 return ExportResult.Failure;
             }

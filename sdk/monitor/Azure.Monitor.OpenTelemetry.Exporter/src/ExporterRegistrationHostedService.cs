@@ -110,6 +110,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
+        private static int s_liveMetricsSuppressionReported;
+
         private static bool LiveMetricsIsSupported()
         {
             if (!MultiTenantConfig.Enabled)
@@ -117,7 +119,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 return true;
             }
 
-            AzureMonitorExporterEventSource.Log.LiveMetricsDisabledForMultiTenantExport();
+            // Asked once per signal, but the answer is a property of the process.
+            if (Interlocked.Exchange(ref s_liveMetricsSuppressionReported, 1) == 0)
+            {
+                AzureMonitorExporterEventSource.Log.LiveMetricsDisabledForMultiTenantExport();
+            }
+
             return false;
         }
     }

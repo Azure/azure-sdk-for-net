@@ -116,9 +116,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var group = routeBatch.GetOrAdd(ingestionEndpoint);
                         var telemetryItems = group.TelemetryItems;
 
-                        // No _APPRESOURCEPREVIEW_ envelope here. It describes the host process, so
-                        // emitting it under a tenant's instrumentation key would file the host's
-                        // identity as though it were the tenant's own application.
+                        // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
+                        // process and would be filed as the tenant's own application. Note the
+                        // envelope below still carries the host's ai.cloud.role and roleInstance;
+                        // deciding what those should say for a routed tenant is still open.
                         var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
                         if (activity.Events.Any())

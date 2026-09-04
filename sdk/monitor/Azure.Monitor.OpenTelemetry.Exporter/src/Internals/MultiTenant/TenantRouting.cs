@@ -72,9 +72,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// </summary>
         /// <remarks>
         /// The endpoint is resolved upstream from the same trusted source as a connection string, so
-        /// this applies no host allow-list. It rejects only what cannot be a valid ingestion target:
-        /// a non-HTTP scheme, or credentials, a query, or a fragment, all of which would corrupt the
-        /// URI the REST client builds by appending the API path.
+        /// this applies no host allow-list. It rejects anything that cannot be a valid ingestion
+        /// target: a scheme other than HTTPS, or credentials, a query, or a fragment, all of which
+        /// would corrupt the URI the REST client builds by appending the API path.
         /// </remarks>
         internal static string? NormalizeEndpoint(string rawEndpoint)
         {
