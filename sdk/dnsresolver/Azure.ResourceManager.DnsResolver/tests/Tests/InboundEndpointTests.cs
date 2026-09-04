@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
