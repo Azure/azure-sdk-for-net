@@ -165,6 +165,56 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(WestUs + "v2.1/track", ingestion.Requests[1].Uri);
         }
 
+        /// <summary>
+        /// The redirect cache is keyed by endpoint including its path, because a gateway can serve
+        /// several tenants on one host and tell them apart only by path. Keyed by authority alone,
+        /// one tenant's redirect would silently retarget the other's telemetry.
+        /// </summary>
+        [Fact]
+        public void ACachedRedirectDoesNotCrossTenantsOnASharedGatewayHost()
+        {
+            const string FirstTenant = "https://gateway.example.com/tenant-a/";
+            const string SecondTenant = "https://gateway.example.com/tenant-b/";
+            const string FirstTenantRedirect = "https://gateway.example.com/tenant-a-moved/v2.1/track";
+
+            var ingestion = new MockIngestion();
+            ingestion.SetRedirectOnce(FirstTenant, FirstTenantRedirect);
+
+            using var exporter = CreateExporter(ingestion, out _);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-a", FirstTenant)));
+            ingestion.Requests.Clear();
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-a", FirstTenant),
+                CreateActivity("ikey-b", SecondTenant)));
+
+            Assert.Equal(2, ingestion.Requests.Count);
+            Assert.Equal(FirstTenantRedirect, ingestion.Requests[0].Uri);
+
+            // Same host, different path: the second tenant must be untouched by the first's redirect.
+            Assert.Equal(SecondTenant + "v2.1/track", ingestion.Requests[1].Uri);
+        }
+
+        /// <summary>
+        /// A stamp answers 404 for a path it does not serve, so a request that lands somewhere the
+        /// API is not cannot be mistaken for a delivered one.
+        /// </summary>
+        [Fact]
+        public void ARedirectToAPathTheStampDoesNotServeIsNotTreatedAsDelivered()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetRedirectOnce(EastUs, EastUs + "not/the/api");
+
+            using var exporter = CreateExporter(ingestion, out _);
+
+            var result = exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+
+            Assert.Equal(ExportResult.Failure, result);
+            Assert.Equal(2, ingestion.Requests.Count);
+            Assert.Equal(EastUs + "not/the/api", ingestion.Requests[1].Uri);
+        }
+
         [Fact]
         public void UnroutableActivitiesReachNoStamp()
         {
@@ -315,10 +365,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Stands in for the regional ingestion stamps: answers per host and records what it saw.
+        /// Stands in for the regional ingestion stamps: answers per endpoint and records what it saw.
         /// </summary>
+        /// <remarks>
+        /// Keyed by the whole endpoint rather than the host, so two tenants behind one gateway that
+        /// differ only by path are distinguishable, and a request to a path no stamp serves is a 404
+        /// rather than a success. Answering 200 to anything let a misrouted request look like a pass.
+        /// </remarks>
         private sealed class MockIngestion
         {
+            private const string TrackPath = "v2.1/track";
+
             private readonly Dictionary<string, int> _statusByEndpoint = new(StringComparer.Ordinal);
             private readonly Dictionary<string, string> _pendingRedirects = new(StringComparer.Ordinal);
 
@@ -331,29 +388,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             internal List<CapturedRequest> Requests { get; } = new();
 
-            internal void SetStatus(string ingestionEndpoint, int statusCode) => _statusByEndpoint[Host(ingestionEndpoint)] = statusCode;
+            internal void SetStatus(string ingestionEndpoint, int statusCode) => _statusByEndpoint[ingestionEndpoint] = statusCode;
 
-            /// <summary>One 307 for this host, then normal responses, mirroring a stamp move.</summary>
-            internal void SetRedirectOnce(string ingestionEndpoint, string location) => _pendingRedirects[Host(ingestionEndpoint)] = location;
+            /// <summary>One 307 for this endpoint, then normal responses, mirroring a stamp move.</summary>
+            internal void SetRedirectOnce(string ingestionEndpoint, string location) => _pendingRedirects[ingestionEndpoint] = location;
 
             internal CapturedRequest RequestTo(string ingestionEndpoint) =>
                 Requests.Single(request => request.Uri.StartsWith(ingestionEndpoint, StringComparison.Ordinal));
 
             private MockResponse Respond(Request request)
             {
-                var host = request.Uri.Host ?? string.Empty;
                 Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request)));
 
-                if (_pendingRedirects.TryGetValue(host, out var location))
+                if (!TryGetEndpoint(request, out var endpoint))
                 {
-                    _pendingRedirects.Remove(host);
+                    return new MockResponse(404);
+                }
+
+                if (_pendingRedirects.TryGetValue(endpoint, out var location))
+                {
+                    _pendingRedirects.Remove(endpoint);
                     return new MockResponse(307).AddHeader("Location", location);
                 }
 
-                return new MockResponse(_statusByEndpoint.TryGetValue(host, out var status) ? status : 200);
+                return new MockResponse(_statusByEndpoint.TryGetValue(endpoint, out var status) ? status : 200);
             }
 
-            private static string Host(string ingestionEndpoint) => new Uri(ingestionEndpoint).Host;
+            /// <summary>The endpoint a request was addressed to, which is its URI minus the API path.</summary>
+            private static bool TryGetEndpoint(Request request, out string endpoint)
+            {
+                var uri = request.Uri.ToUri();
+                var absolute = uri.GetLeftPart(UriPartial.Path);
+
+                if (!absolute.EndsWith(TrackPath, StringComparison.Ordinal))
+                {
+                    endpoint = string.Empty;
+                    return false;
+                }
+
+                endpoint = absolute.Substring(0, absolute.Length - TrackPath.Length);
+                return true;
+            }
 
             private static string ReadBody(Request request)
             {
