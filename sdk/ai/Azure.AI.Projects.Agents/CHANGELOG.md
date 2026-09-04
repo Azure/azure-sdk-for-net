@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-beta.2 (Unreleased)
+## 3.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -18,6 +18,11 @@
 - `VoiceAgentWebSocket` now also sends its SDK identifier as an `x-ms-client-sdk` connection-URL query parameter, so identification survives on platforms that disallow setting `User-Agent` on a WebSocket (e.g. .NET Framework) and through intermediaries that strip non-standard headers.
 
 ### Other Changes
+
+## 3.0.0-beta.2 (2026-09-03)
+
+### Other Changes
+- No user-facing changes
 
 ## 3.0.0-beta.1 (2026-08-24)
 

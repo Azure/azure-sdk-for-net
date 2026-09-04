@@ -19,4 +19,4 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/sdk-common
 - specification/ai-foundry/data-plane/Foundry/src/voice-agents
 
-emitterPackageJsonPath: sdk/ai/Azure.AI.Projects.Agents/tsp-emitter-package.json
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
