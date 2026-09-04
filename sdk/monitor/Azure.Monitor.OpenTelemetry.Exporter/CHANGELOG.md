@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.4 (2026-09-04)
+## 1.9.0 (2026-09-04)
 
 ### Features Added
 - Add support for project id attributes propagation
