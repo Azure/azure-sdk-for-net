@@ -146,6 +146,7 @@ public class VoiceAgentWebSocketTests
             Assert.That(uri.Query, Does.Contain("agent_session_id=session%201"));
             Assert.That(uri.Query, Does.Contain("x-agent-version-override=4"));
             Assert.That(uri.Query, Does.Contain("store=true"));
+            Assert.That(uri.Query, Does.Contain("x-ms-client-sdk=Azure-VoiceAgents-SDK%2F.NET"));
         });
     }
 
