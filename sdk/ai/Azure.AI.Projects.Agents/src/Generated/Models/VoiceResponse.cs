@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -25,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         internal VoiceResponse(string id, string conversationId)
         {
             Id = id;
-            Output = new ChangeTrackingList<RealtimeConversationItem>();
+            Output = new ChangeTrackingList<RealtimeItem>();
             ConversationId = conversationId;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
@@ -70,7 +71,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResponse(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<RealtimeConversationItem> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResponse(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<RealtimeItem> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
             Id = id0;
             Output = output;
@@ -83,7 +84,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </summary>
-        public IList<RealtimeConversationItem> Output { get; }
+        public IList<RealtimeItem> Output { get; }
 
         /// <summary> The audio configuration used for the response, including the voice and audio format used for output. </summary>
         public VoiceResponseAudio Audio { get; }

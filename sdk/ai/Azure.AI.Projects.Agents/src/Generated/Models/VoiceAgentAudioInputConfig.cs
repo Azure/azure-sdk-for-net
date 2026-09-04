@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="echoCancellation"> Optional server-side echo cancellation settings. </param>
         /// <param name="transcription"> Asynchronous input-audio transcription. Set to null to disable transcription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentAudioInputConfig(RealtimeAudioFormats format, VoiceAgentNoiseReduction noiseReduction, VoiceAgentTurnDetectionConfig turnDetection, VoiceAgentEchoCancellation echoCancellation, VoiceAgentInputTranscription transcription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentAudioInputConfig(RealtimeAudioFormat format, VoiceAgentNoiseReduction noiseReduction, VoiceAgentTurnDetectionConfig turnDetection, VoiceAgentEchoCancellation echoCancellation, VoiceAgentInputTranscription transcription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
             NoiseReduction = noiseReduction;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input audio format. </summary>
-        public RealtimeAudioFormats Format { get; set; }
+        public RealtimeAudioFormat Format { get; set; }
 
         /// <summary> Input noise reduction. Set to null to disable. </summary>
         public VoiceAgentNoiseReduction NoiseReduction { get; set; }

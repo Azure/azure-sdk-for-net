@@ -17,8 +17,10 @@ using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Realtime;
 
 #pragma warning disable AAIP001
+#pragma warning disable OPENAI002
 
 namespace Azure.AI.Projects.Agents.Tests.LiveTests;
 
@@ -26,6 +28,18 @@ public class VoiceAgentConversationTests : VoiceAgentLiveTestBase
 {
     public VoiceAgentConversationTests(bool isAsync) : base(isAsync)
     {
+    }
+
+    /// <summary>
+    /// Builds a PCM audio format at the given sample rate. <see cref="RealtimePcmAudioFormat.Rate"/> is
+    /// read-only in the current OpenAI SDK "patch model" shape, so the rate must be set through the
+    /// underlying <see cref="System.ClientModel.Primitives.JsonPatch"/> instead of an object initializer.
+    /// </summary>
+    private static RealtimePcmAudioFormat CreatePcmAudioFormat(int rate)
+    {
+        RealtimePcmAudioFormat format = new();
+        format.Patch.Set("$.rate"u8, rate);
+        return format;
     }
 
     private async Task EnsureConversationAgentAsync(AgentAdministrationClient agentsClient, CancellationToken cancellationToken)
@@ -67,7 +81,7 @@ public class VoiceAgentConversationTests : VoiceAgentLiveTestBase
                 {
                     Input = new VoiceAgentAudioInputConfig
                     {
-                        Format = new RealtimeAudioFormatsAudioPcm { Rate = 24000 },
+                        Format = CreatePcmAudioFormat(24000),
                     },
                 },
             };
@@ -189,7 +203,7 @@ public class VoiceAgentConversationTests : VoiceAgentLiveTestBase
             .AnyAsync(c => c.Id == conversationId);
         Assert.That(listed, Is.True, "The persisted conversation must appear when listing the agent's conversations.");
 
-        List<RealtimeConversationItem> items = await conversationsClient
+        List<RealtimeItem> items = await conversationsClient
             .GetAgentConversationItemsAsync(CONVERSATION_AGENT_NAME, conversationId, cancellationToken: timeout.Token)
             .ToListAsync();
         Assert.That(items, Is.Not.Empty, "Expected at least one persisted conversation item.");

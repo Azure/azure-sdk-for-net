@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -954,7 +954,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<RealtimeConversationItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<RealtimeItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -1003,7 +1003,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<RealtimeConversationItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<RealtimeItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -1172,7 +1172,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<RealtimeConversationItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<RealtimeItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -1217,7 +1217,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<RealtimeConversationItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<RealtimeItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -1327,14 +1327,16 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<RealtimeConversationItem> GetAgentConversationItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<RealtimeItem> GetAgentConversationItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             ClientResult result = GetAgentConversationItem(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((RealtimeConversationItem)result, result.GetRawResponse());
+            PipelineResponse response = result.GetRawResponse();
+            RealtimeItem value = ModelReaderWriter.Read<RealtimeItem>(response.Content, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+            return ClientResult.FromValue(value, response);
         }
 
         /// <summary>
@@ -1351,14 +1353,16 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<RealtimeConversationItem>> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<RealtimeItem>> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             ClientResult result = await GetAgentConversationItemAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((RealtimeConversationItem)result, result.GetRawResponse());
+            PipelineResponse response = result.GetRawResponse();
+            RealtimeItem value = ModelReaderWriter.Read<RealtimeItem>(response.Content, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+            return ClientResult.FromValue(value, response);
         }
 
         /// <summary>

@@ -8,12 +8,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
     [Experimental("AAIP001")]
-    internal partial class AgentEndpointConversationsGetAgentConversationResponseItemsAsyncCollectionResultOfT : AsyncCollectionResult<RealtimeConversationItem>
+    internal partial class AgentEndpointConversationsGetAgentConversationResponseItemsAsyncCollectionResultOfT : AsyncCollectionResult<RealtimeItem>
     {
         private readonly AgentEndpointConversations _client;
         private readonly string _agentName;
@@ -101,9 +101,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<RealtimeConversationItem> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<RealtimeItem> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (RealtimeConversationItem item in ((AgentsPagedResultRealtimeConversationItem)page).Data)
+            foreach (RealtimeItem item in ((AgentsPagedResultRealtimeConversationItem)page).Data)
             {
                 yield return item;
                 await Task.Yield();

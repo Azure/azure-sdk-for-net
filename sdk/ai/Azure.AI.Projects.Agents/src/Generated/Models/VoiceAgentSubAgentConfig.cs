@@ -11,31 +11,31 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentSubAgentConfig
+    public partial class VoiceAgentSubagentConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/>. </summary>
         /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subagents"/> is null. </exception>
-        public VoiceAgentSubAgentConfig(IEnumerable<VoiceAgentSubAgent> subagents)
+        public VoiceAgentSubagentConfig(IEnumerable<VoiceAgentSubagent> subagents)
         {
             Argument.AssertNotNull(subagents, nameof(subagents));
 
             Subagents = subagents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/>. </summary>
         /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSubAgentConfig(IList<VoiceAgentSubAgent> subagents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentSubagentConfig(IList<VoiceAgentSubagent> subagents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subagents = subagents;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The sibling Foundry text agents, in the same project, that this voice agent may consult. </summary>
-        public IList<VoiceAgentSubAgent> Subagents { get; }
+        public IList<VoiceAgentSubagent> Subagents { get; }
     }
 }

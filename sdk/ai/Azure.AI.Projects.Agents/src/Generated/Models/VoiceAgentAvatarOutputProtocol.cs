@@ -15,8 +15,6 @@ namespace Azure.AI.Projects.Agents
         private readonly string _value;
         private const string WebrtcValue = "webrtc";
         private const string WebsocketValue = "websocket";
-        /// <summary> Binary WebSocket transport. </summary>
-        private const string WebsocketBinaryValue = "websocket-binary";
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarOutputProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,9 +31,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Websocket. </summary>
         public static VoiceAgentAvatarOutputProtocol Websocket { get; } = new VoiceAgentAvatarOutputProtocol(WebsocketValue);
-
-        /// <summary> Binary WebSocket transport. </summary>
-        public static VoiceAgentAvatarOutputProtocol WebsocketBinary { get; } = new VoiceAgentAvatarOutputProtocol(WebsocketBinaryValue);
 
         /// <summary> Determines if two <see cref="VoiceAgentAvatarOutputProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

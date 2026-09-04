@@ -240,7 +240,7 @@ namespace Azure.AI.Projects.Agents
             BinaryData toolChoice = default;
             bool? parallelToolCalls = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
-            VoiceAgentSubAgentConfig subagentConfig = default;
+            VoiceAgentSubagentConfig subagentConfig = default;
             bool? store = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -411,7 +411,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    subagentConfig = VoiceAgentSubAgentConfig.DeserializeVoiceAgentSubAgentConfig(prop.Value, options);
+                    subagentConfig = VoiceAgentSubagentConfig.DeserializeVoiceAgentSubagentConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("store"u8))

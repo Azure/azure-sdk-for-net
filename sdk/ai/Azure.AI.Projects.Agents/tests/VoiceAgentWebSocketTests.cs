@@ -14,8 +14,10 @@ using System.Threading.Tasks;
 using Azure.AI.Projects.Agents.Tests.Samples;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Realtime;
 
 #pragma warning disable AAIP001
+#pragma warning disable OPENAI002
 
 namespace Azure.AI.Projects.Agents.Tests;
 
@@ -33,7 +35,7 @@ public class VoiceAgentWebSocketTests
             {
                 Input = new VoiceAgentAudioInputConfig
                 {
-                    Format = new RealtimeAudioFormatsAudioPcm { Rate = 24000 },
+                    Format = CreatePcmAudioFormat(24000),
                     NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
                     TurnDetection = new VoiceAgentServerVadTurnDetection
                     {
@@ -102,7 +104,7 @@ public class VoiceAgentWebSocketTests
             ModelReaderWriterOptions.Json);
         // "message" is no longer a modeled RealtimeConversationItem discriminator in this spec revision
         // (only function-call/MCP item types remain); it now round-trips via the base type.
-        RealtimeConversationItem assistantMessage = response.Output.Single();
+        RealtimeItem assistantMessage = response.Output.Single();
         BinaryData outputData = ModelReaderWriter.Write(assistantMessage);
         using JsonDocument outputDocument = JsonDocument.Parse(outputData);
 
@@ -402,6 +404,18 @@ public class VoiceAgentWebSocketTests
             Assert.That(invalidJson.EventType, Is.Null);
             Assert.That(binary.EventType, Is.Null);
         });
+    }
+
+    /// <summary>
+    /// Builds a PCM audio format at the given sample rate. <see cref="RealtimePcmAudioFormat.Rate"/> is
+    /// read-only in the current OpenAI SDK "patch model" shape, so the rate must be set through the
+    /// underlying <see cref="System.ClientModel.Primitives.JsonPatch"/> instead of an object initializer.
+    /// </summary>
+    private static RealtimePcmAudioFormat CreatePcmAudioFormat(int rate)
+    {
+        RealtimePcmAudioFormat format = new();
+        format.Patch.Set("$.rate"u8, rate);
+        return format;
     }
 
     private sealed class TestWebSocket : WebSocket

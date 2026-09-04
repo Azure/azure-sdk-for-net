@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -55,6 +57,7 @@ namespace Azure.AI.Projects.Agents
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal VoiceResponseBase(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -81,6 +84,7 @@ namespace Azure.AI.Projects.Agents
         public VoiceResponseBaseStatus? Status { get; }
 
         /// <summary> Additional details about the status. </summary>
+        [Experimental("AAIP002")]
         public RealtimeResponseStatusDetails StatusDetails { get; }
 
         /// <summary>
@@ -89,6 +93,7 @@ namespace Azure.AI.Projects.Agents
         ///   Items to the Conversation, thus output from previous turns (text and
         ///   audio tokens) will become the input for later turns.
         /// </summary>
+        [Experimental("AAIP002")]
         public RealtimeResponseUsage Usage { get; }
 
         /// <summary>

@@ -10,16 +10,16 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A sibling Foundry text agent that a voice agent may consult as a background specialist. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentSubAgent
+    public partial class VoiceAgentSubagent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagent"/>. </summary>
         /// <param name="agentName"> The name of the subagent. The subagent must be in the same project as the voice agent. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentCapabilities"/> is null. </exception>
-        public VoiceAgentSubAgent(string agentName, string agentCapabilities)
+        public VoiceAgentSubagent(string agentName, string agentCapabilities)
         {
             Argument.AssertNotNull(agentName, nameof(agentName));
             Argument.AssertNotNull(agentCapabilities, nameof(agentCapabilities));
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects.Agents
             AgentCapabilities = agentCapabilities;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagent"/>. </summary>
         /// <param name="agentName"> The name of the subagent. The subagent must be in the same project as the voice agent. </param>
         /// <param name="agentVersion"> The version of the subagent. When omitted, the active version is used. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
         /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </param>
         /// <param name="invokeTimeoutSeconds"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSubAgent(string agentName, string agentVersion, string agentCapabilities, VoiceAgentSubagentResponsePolicy responsePolicy, TimeSpan? invokeTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentSubagent(string agentName, string agentVersion, string agentCapabilities, VoiceAgentSubagentResponsePolicy responsePolicy, TimeSpan? invokeTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;

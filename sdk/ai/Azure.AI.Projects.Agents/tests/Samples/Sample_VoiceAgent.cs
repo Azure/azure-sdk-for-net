@@ -13,8 +13,10 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Realtime;
 
 #pragma warning disable AAIP001
+#pragma warning disable OPENAI002
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 
@@ -66,7 +68,7 @@ public class Sample_VoiceAgent : SamplesBase
                     {
                         Input = new VoiceAgentAudioInputConfig
                         {
-                            Format = new RealtimeAudioFormatsAudioPcm { Rate = 24000 },
+                            Format = CreatePcmAudioFormat(24000),
                             NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
                             TurnDetection = new VoiceAgentServerVadTurnDetection
                             {
@@ -317,6 +319,18 @@ public class Sample_VoiceAgent : SamplesBase
     }
     #endregion
 
+    /// <summary>
+    /// Builds a PCM audio format at the given sample rate. <see cref="RealtimePcmAudioFormat.Rate"/> is
+    /// read-only in the current OpenAI SDK "patch model" shape, so the rate must be set through the
+    /// underlying <see cref="System.ClientModel.Primitives.JsonPatch"/> instead of an object initializer.
+    /// </summary>
+    private static RealtimePcmAudioFormat CreatePcmAudioFormat(int rate)
+    {
+        RealtimePcmAudioFormat format = new();
+        format.Patch.Set("$.rate"u8, rate);
+        return format;
+    }
+
     private static string GetConversationId(JsonElement eventPayload)
     {
         return eventPayload.TryGetProperty("response", out JsonElement response)
@@ -359,7 +373,7 @@ public class Sample_VoiceAgent : SamplesBase
                 cancellationToken);
             Console.WriteLine($"Response {responseId}: {detail.Status}");
 
-            await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
+            await foreach (RealtimeItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
                 agentName,
                 conversationId,
                 responseId,
@@ -379,7 +393,7 @@ public class Sample_VoiceAgent : SamplesBase
             }
         }
 
-        await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationItemsAsync(
+        await foreach (RealtimeItem conversationItem in conversationsClient.GetAgentConversationItemsAsync(
             agentName,
             conversationId,
             cancellationToken: cancellationToken))

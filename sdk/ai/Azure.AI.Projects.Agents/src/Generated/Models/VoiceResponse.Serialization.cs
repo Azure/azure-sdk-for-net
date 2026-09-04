@@ -8,6 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -98,8 +99,13 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (RealtimeConversationItem item in Output)
+                foreach (RealtimeItem item in Output)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -179,7 +185,7 @@ namespace Azure.AI.Projects.Agents
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id0 = default;
-            IList<RealtimeConversationItem> output = default;
+            IList<RealtimeItem> output = default;
             string conversationId0 = default;
             VoiceResponseAudio audio = default;
             IDictionary<string, string> metadata = default;
@@ -217,7 +223,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    statusDetails = RealtimeResponseStatusDetails.DeserializeRealtimeResponseStatusDetails(prop.Value, options);
+                    statusDetails = ModelReaderWriter.Read<RealtimeResponseStatusDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -226,7 +232,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    usage = RealtimeResponseUsage.DeserializeRealtimeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("conversation_id"u8))
@@ -268,10 +274,17 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<RealtimeConversationItem> array = new List<RealtimeConversationItem>();
+                    List<RealtimeItem> array = new List<RealtimeItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RealtimeConversationItem.DeserializeRealtimeConversationItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     output = array;
                     continue;
@@ -354,7 +367,7 @@ namespace Azure.AI.Projects.Agents
                 maxOutputTokens,
                 additionalBinaryDataProperties,
                 id0,
-                output ?? new ChangeTrackingList<RealtimeConversationItem>(),
+                output ?? new ChangeTrackingList<RealtimeItem>(),
                 conversationId0,
                 audio,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),

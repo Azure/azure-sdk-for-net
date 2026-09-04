@@ -18,7 +18,7 @@ VoiceAgentDefinition definition = new()
     {
         Input = new VoiceAgentAudioInputConfig
         {
-            Format = new RealtimeAudioFormatsAudioPcm { Rate = 24000 },
+            Format = CreatePcmAudioFormat(24000),
             NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
             TurnDetection = new VoiceAgentServerVadTurnDetection
             {
@@ -288,7 +288,7 @@ private static async Task<string> ReadPersistedConversationAsync(
             cancellationToken);
         Console.WriteLine($"Response {responseId}: {detail.Status}");
 
-        await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
+        await foreach (RealtimeItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
             agentName,
             conversationId,
             responseId,
@@ -308,7 +308,7 @@ private static async Task<string> ReadPersistedConversationAsync(
         }
     }
 
-    await foreach (RealtimeConversationItem conversationItem in conversationsClient.GetAgentConversationItemsAsync(
+    await foreach (RealtimeItem conversationItem in conversationsClient.GetAgentConversationItemsAsync(
         agentName,
         conversationId,
         cancellationToken: cancellationToken))

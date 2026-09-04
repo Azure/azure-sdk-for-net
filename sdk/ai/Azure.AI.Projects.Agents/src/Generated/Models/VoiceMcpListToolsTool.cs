@@ -16,12 +16,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceMcpListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputSchema"/> is null. </exception>
-        public VoiceMcpListToolsTool(string name, VoiceMcpListToolsToolInputSchema inputSchema)
+        internal VoiceMcpListToolsTool(string name, VoiceMcpListToolsToolInputSchema inputSchema)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputSchema, nameof(inputSchema));
-
             Name = name;
             InputSchema = inputSchema;
         }
@@ -42,15 +38,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The name of the tool. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
         /// <summary> The JSON schema describing the tool's input. </summary>
-        public VoiceMcpListToolsToolInputSchema InputSchema { get; set; }
+        public VoiceMcpListToolsToolInputSchema InputSchema { get; }
 
-        /// <summary> Gets or sets the Annotations. </summary>
-        public VoiceMcpListToolsToolAnnotations Annotations { get; set; }
+        /// <summary> Gets the Annotations. </summary>
+        public VoiceMcpListToolsToolAnnotations Annotations { get; }
     }
 }

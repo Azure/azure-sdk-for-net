@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultRealtimeConversationItem"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        internal AgentsPagedResultRealtimeConversationItem(IEnumerable<RealtimeConversationItem> data, bool hasMore)
+        internal AgentsPagedResultRealtimeConversationItem(IEnumerable<RealtimeItem> data, bool hasMore)
         {
             Data = data.ToList();
             HasMore = hasMore;
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsPagedResultRealtimeConversationItem(IList<RealtimeConversationItem> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsPagedResultRealtimeConversationItem(IList<RealtimeItem> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             FirstId = firstId;
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The requested list of items. </summary>
-        public IList<RealtimeConversationItem> Data { get; }
+        public IList<RealtimeItem> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }

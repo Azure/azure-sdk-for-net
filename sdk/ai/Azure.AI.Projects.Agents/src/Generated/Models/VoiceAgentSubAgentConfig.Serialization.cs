@@ -10,56 +10,56 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
-    public partial class VoiceAgentSubAgentConfig : IJsonModel<VoiceAgentSubAgentConfig>
+    public partial class VoiceAgentSubagentConfig : IJsonModel<VoiceAgentSubagentConfig>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubAgentConfig"/> for deserialization. </summary>
-        internal VoiceAgentSubAgentConfig()
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/> for deserialization. </summary>
+        internal VoiceAgentSubagentConfig()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentSubAgentConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceAgentSubagentConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubAgentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubagentConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentSubAgentConfig(document.RootElement, options);
+                        return DeserializeVoiceAgentSubagentConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentSubAgentConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAgentSubagentConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubAgentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubagentConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentSubAgentConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAgentSubagentConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentSubAgentConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VoiceAgentSubagentConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentSubAgentConfig IPersistableModel<VoiceAgentSubAgentConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceAgentSubagentConfig IPersistableModel<VoiceAgentSubagentConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentSubAgentConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceAgentSubagentConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentSubAgentConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceAgentSubagentConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,14 +70,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubAgentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubagentConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentSubAgentConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAgentSubagentConfig)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("subagents"u8);
             writer.WriteStartArray();
-            foreach (VoiceAgentSubAgent item in Subagents)
+            foreach (VoiceAgentSubagent item in Subagents)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -101,39 +101,39 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentSubAgentConfig IJsonModel<VoiceAgentSubAgentConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceAgentSubagentConfig IJsonModel<VoiceAgentSubagentConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentSubAgentConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceAgentSubagentConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubAgentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentSubagentConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentSubAgentConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAgentSubagentConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentSubAgentConfig(document.RootElement, options);
+            return DeserializeVoiceAgentSubagentConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentSubAgentConfig DeserializeVoiceAgentSubAgentConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static VoiceAgentSubagentConfig DeserializeVoiceAgentSubagentConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VoiceAgentSubAgent> subagents = default;
+            IList<VoiceAgentSubagent> subagents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("subagents"u8))
                 {
-                    List<VoiceAgentSubAgent> array = new List<VoiceAgentSubAgent>();
+                    List<VoiceAgentSubagent> array = new List<VoiceAgentSubagent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VoiceAgentSubAgent.DeserializeVoiceAgentSubAgent(item, options));
+                        array.Add(VoiceAgentSubagent.DeserializeVoiceAgentSubagent(item, options));
                     }
                     subagents = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAgentSubAgentConfig(subagents, additionalBinaryDataProperties);
+            return new VoiceAgentSubagentConfig(subagents, additionalBinaryDataProperties);
         }
     }
 }

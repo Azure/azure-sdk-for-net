@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -87,8 +87,13 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (RealtimeConversationItem item in Data)
+            foreach (RealtimeItem item in Data)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -146,7 +151,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<RealtimeConversationItem> data = default;
+            IList<RealtimeItem> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -155,10 +160,17 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<RealtimeConversationItem> array = new List<RealtimeConversationItem>();
+                    List<RealtimeItem> array = new List<RealtimeItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RealtimeConversationItem.DeserializeRealtimeConversationItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     data = array;
                     continue;

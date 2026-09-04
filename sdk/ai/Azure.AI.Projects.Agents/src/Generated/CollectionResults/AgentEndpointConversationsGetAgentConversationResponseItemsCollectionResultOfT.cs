@@ -7,12 +7,12 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
     [Experimental("AAIP001")]
-    internal partial class AgentEndpointConversationsGetAgentConversationResponseItemsCollectionResultOfT : CollectionResult<RealtimeConversationItem>
+    internal partial class AgentEndpointConversationsGetAgentConversationResponseItemsCollectionResultOfT : CollectionResult<RealtimeItem>
     {
         private readonly AgentEndpointConversations _client;
         private readonly string _agentName;
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<RealtimeConversationItem> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<RealtimeItem> GetValuesFromPage(ClientResult page)
         {
             return ((AgentsPagedResultRealtimeConversationItem)page).Data;
         }

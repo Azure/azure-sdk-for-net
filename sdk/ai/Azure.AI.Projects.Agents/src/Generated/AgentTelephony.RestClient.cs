@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_bindings", false);
+            uri.AppendPath("/telephony/bindings", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_bindings", false);
+            uri.AppendPath("/telephony/bindings", false);
             if (provider != null)
             {
                 uri.AppendQuery("provider", provider, true);
@@ -99,7 +99,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_bindings/", false);
+            uri.AppendPath("/telephony/bindings/", false);
             uri.AppendPath(bindingId, true);
             if (_apiVersion != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_bindings/", false);
+            uri.AppendPath("/telephony/bindings/", false);
             uri.AppendPath(bindingId, true);
             if (_apiVersion != null)
             {
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_bindings/", false);
+            uri.AppendPath("/telephony/bindings/", false);
             uri.AppendPath(bindingId, true);
             if (_apiVersion != null)
             {
@@ -171,7 +171,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_calls", false);
+            uri.AppendPath("/telephony/calls", false);
             if (provider != null)
             {
                 uri.AppendQuery("provider", provider, true);
@@ -225,7 +225,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_calls/", false);
+            uri.AppendPath("/telephony/calls/", false);
             uri.AppendPath(callId, true);
             if (_apiVersion != null)
             {
@@ -248,7 +248,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_calls/", false);
+            uri.AppendPath("/telephony/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath(":transfer", false);
             if (_apiVersion != null)
@@ -274,7 +274,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_calls/", false);
+            uri.AppendPath("/telephony/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath(":end", false);
             if (_apiVersion != null)
@@ -298,7 +298,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_transfer_targets", false);
+            uri.AppendPath("/telephony/transfer_targets", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -320,7 +320,7 @@ namespace Azure.AI.Projects.Agents
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony_transfer_targets", false);
+            uri.AppendPath("/telephony/transfer_targets", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

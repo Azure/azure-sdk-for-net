@@ -69,7 +69,7 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubAgentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData maxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
@@ -233,7 +233,7 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }
 
         /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
-        public VoiceAgentSubAgentConfig SubagentConfig { get; set; }
+        public VoiceAgentSubagentConfig SubagentConfig { get; set; }
 
         /// <summary>
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
