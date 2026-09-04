@@ -11,3 +11,6 @@ AGENTS.md
 eng/**
 # Allow relative links for the top-level eval suite (evals is a cross-cutting asset at repo root).
 evals/**
+# Allow relative links in internal engineering documentation
+doc/**
+docs/**
