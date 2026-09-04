@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DisplayName = displayName;
             InitialDataStorageSizeInGb = initialDataStorageSizeInGb;
             DataStorageSizeInGbs = dataStorageSizeInGbs;
-            DbSystemOptions = dbSystemOptions;
+            DBSystemOptions = dbSystemOptions;
             DiskRedundancy = diskRedundancy;
             DomainV2 = domainV2;
             GridImageOcid = gridImageOcid;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? DataStorageSizeInGbs { get; }
 
         /// <summary> The DB system options. </summary>
-        internal OracleDBSystemOptions DbSystemOptions { get; set; }
+        internal OracleDBSystemOptions DBSystemOptions { get; set; }
 
         /// <summary> The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </summary>
         public DBSystemDiskRedundancyType? DiskRedundancy { get; set; }
@@ -178,19 +178,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? ComputeCount { get; set; }
 
         /// <summary> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </summary>
-        public StorageManagementType? DbSystemOptionsStorageManagement
+        public StorageManagementType? DBSystemOptionsStorageManagement
         {
             get
             {
-                return DbSystemOptions is null ? default : DbSystemOptions.StorageManagement;
+                return DBSystemOptions is null ? default : DBSystemOptions.StorageManagement;
             }
             set
             {
-                if (DbSystemOptions is null)
+                if (DBSystemOptions is null)
                 {
-                    DbSystemOptions = new OracleDBSystemOptions();
+                    DBSystemOptions = new OracleDBSystemOptions();
                 }
-                DbSystemOptions.StorageManagement = value;
+                DBSystemOptions.StorageManagement = value;
             }
         }
     }

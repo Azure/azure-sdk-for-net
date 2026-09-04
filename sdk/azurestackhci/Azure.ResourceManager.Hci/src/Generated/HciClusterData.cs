@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
-                return Properties is null ? default : Properties.RegistrationTimestamp;
+                return Properties is null ? default : Properties.RegistrationOn;
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
-                return Properties is null ? default : Properties.LastSyncTimestamp;
+                return Properties is null ? default : Properties.LastSyncOn;
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
-                return Properties is null ? default : Properties.LastBillingTimestamp;
+                return Properties is null ? default : Properties.LastBillingOn;
             }
         }
 

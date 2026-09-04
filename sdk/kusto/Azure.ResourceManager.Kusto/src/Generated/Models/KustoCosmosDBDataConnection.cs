@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new CosmosDBDataConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 

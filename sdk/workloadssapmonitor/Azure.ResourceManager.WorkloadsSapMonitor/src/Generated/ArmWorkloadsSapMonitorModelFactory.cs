@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Configuration details of app service plan. </summary>
         /// <param name="tier"> The App Service plan tier. </param>
         /// <param name="capacity"> The number of workers in app service plan. If this is not set or set to 0, auto scale will be configured for the app service plan, otherwise, instance count is set to this number. </param>
         /// <returns> A new <see cref="Models.SapMonitorAppServicePlanConfiguration"/> instance for mocking. </returns>
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapMonitorAppServicePlanConfiguration(tier, capacity, default);
         }
 
+        /// <summary> Defines the request body for updating SAP monitor resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.SapMonitorPatch"/> instance for mocking. </returns>
@@ -103,6 +105,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Resource health details. </summary>
         /// <param name="healthState"> Health state of the resource. </param>
         /// <param name="impactingReasons"> Reasons impacting health state. </param>
         /// <returns> A new <see cref="Models.WorkloadsSapMonitorHealth"/> instance for mocking. </returns>
@@ -111,6 +114,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new WorkloadsSapMonitorHealth(healthState, impactingReasons, default);
         }
 
+        /// <summary>
+        /// Gets or sets the provider specific properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HanaDBProviderInstanceProperties"/>, <see cref="Models.SapNetWeaverProviderInstanceProperties"/>, <see cref="Models.PrometheusOSProviderInstanceProperties"/>, <see cref="Models.DB2ProviderInstanceProperties"/>, <see cref="Models.PrometheusHAClusterProviderInstanceProperties"/>, <see cref="Models.MsSqlServerProviderInstanceProperties"/>, and <see cref="Models.OracleProviderInstanceProperties"/>.
+        /// </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <returns> A new <see cref="Models.SapProviderInstanceSpecificProperties"/> instance for mocking. </returns>
         public static SapProviderInstanceSpecificProperties SapProviderInstanceSpecificProperties(string providerType = default)
@@ -118,6 +125,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new UnknownSapProviderInstanceSpecificProperties(providerType, default);
         }
 
+        /// <summary> Gets or sets the provider properties. </summary>
         /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
         /// <param name="dbName"> Gets or sets the hana database name. </param>
         /// <param name="sqlPort"> Gets or sets the database sql port. </param>
@@ -148,6 +156,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 sapSid);
         }
 
+        /// <summary> Gets or sets the provider properties. </summary>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
         /// <param name="sapHostname"> Gets or sets the target virtual machine IP Address/FQDN. </param>
         /// <param name="sapInstanceNr"> Gets or sets the instance number of SAP NetWeaver. </param>
@@ -180,6 +189,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 sslPreference);
         }
 
+        /// <summary> Gets or sets the PrometheusOS provider properties. </summary>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the prometheus node exporter. </param>
@@ -196,6 +206,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 sapSid);
         }
 
+        /// <summary> Gets or sets the DB2 provider properties. </summary>
         /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
         /// <param name="dbName"> Gets or sets the db2 database name. </param>
         /// <param name="dbPort"> Gets or sets the db2 database sql port. </param>
@@ -222,6 +233,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 sslCertificateUri);
         }
 
+        /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="hostname"> Gets or sets the target machine name. </param>
         /// <param name="sid"> Gets or sets the cluster sid. </param>
@@ -242,6 +254,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 sslCertificateUri);
         }
 
+        /// <summary> Gets or sets the SQL server provider properties. </summary>
         /// <param name="hostname"> Gets or sets the SQL server host name. </param>
         /// <param name="dbPort"> Gets or sets the database sql port. </param>
         /// <param name="dbUsername"> Gets or sets the database user name. </param>
@@ -266,6 +279,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 sslCertificateUri);
         }
 
+        /// <summary> Gets or sets the Oracle provider properties. </summary>
         /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
         /// <param name="dbPort"> Gets or sets the oracle database sql port. </param>
         /// <param name="dbName"> Gets or sets the oracle database name. </param>
@@ -311,6 +325,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Gets or sets the SID groupings by landscape and Environment. </summary>
         /// <param name="landscape"> Gets or sets the list of landscape to SID mappings. </param>
         /// <param name="sapApplication"> Gets or sets the list of Sap Applications to SID mappings. </param>
         /// <returns> A new <see cref="Models.SapLandscapeMonitorPropertiesGrouping"/> instance for mocking. </returns>
@@ -322,6 +337,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapLandscapeMonitorPropertiesGrouping((landscape ?? new ChangeTrackingList<SapLandscapeMonitorSidMapping>()).ToList(), (sapApplication ?? new ChangeTrackingList<SapLandscapeMonitorSidMapping>()).ToList(), default);
         }
 
+        /// <summary> Gets or sets the mapping for SID to Environment/Applications. </summary>
         /// <param name="name"> Gets or sets the name of the grouping. </param>
         /// <param name="topSid"> Gets or sets the list of SID's. </param>
         /// <returns> A new <see cref="Models.SapLandscapeMonitorSidMapping"/> instance for mocking. </returns>
@@ -332,6 +348,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapLandscapeMonitorSidMapping(name, (topSid ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Gets or sets the Threshold Values for Top Metrics Health. </summary>
         /// <param name="name"> Gets or sets the name of the threshold. </param>
         /// <param name="green"> Gets or sets the threshold value for Green. </param>
         /// <param name="yellow"> Gets or sets the threshold value for Yellow. </param>
@@ -342,6 +359,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapLandscapeMonitorMetricThresholds(name, green, yellow, red, default);
         }
 
+        /// <summary> A alert associated with SAP monitor. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -359,6 +377,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Describes the properties of an Alert for SAP monitor. </summary>
         /// <param name="errors"> Defines the alert instance errors. </param>
         /// <param name="alertRuleResourceId"> ID of the alert rule resource created. </param>
         /// <param name="templateName"> Name of the alert template from which it was created. </param>
@@ -382,6 +401,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Describes the properties of an alert. </summary>
         /// <param name="status"> Indicates whether the alert is in an enabled state. </param>
         /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. </param>
         /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
@@ -418,6 +438,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Defines the Alert Query Parameter. </summary>
         /// <param name="name"> The name of the alert query parameter. </param>
         /// <param name="value"> The value of the alert query parameter. </param>
         /// <returns> A new <see cref="Models.SapMonitorAlertQueryContent"/> instance for mocking. </returns>
@@ -426,6 +447,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapMonitorAlertQueryContent(name, value, default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -443,6 +465,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Describes the properties of an Alert Template for SAP monitor. </summary>
         /// <param name="errors"> Defines the SAP monitor Alert Template errors. </param>
         /// <param name="provisioningState"> State of provisioning of the Alert Template. </param>
         /// <param name="templateDisplayName"> Display name of the alert template. </param>
@@ -482,6 +505,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Defines the Alert Template MetricMeasurement Properties. </summary>
         /// <param name="thresholdOperator"> Operator used for threshold comparison. </param>
         /// <param name="threshold"> The Threshold Value Associated with the Alert Template for Metric Measurement. </param>
         /// <param name="metricTriggerType"> Metric Trigger Type Associated with the Alert Template for Metric Measurement. </param>
@@ -501,6 +525,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
+        /// <summary> Describes the Query Input Parameter properties in alerts template. </summary>
         /// <param name="name"> Name of the Query Input Parameter. </param>
         /// <param name="type"> Type of the Query Input Parameter. </param>
         /// <param name="description"> Description of the Query Input Parameter. </param>

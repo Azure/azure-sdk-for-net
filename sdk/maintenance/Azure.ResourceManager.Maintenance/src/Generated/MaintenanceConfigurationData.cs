@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new MaintenanceConfigurationProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

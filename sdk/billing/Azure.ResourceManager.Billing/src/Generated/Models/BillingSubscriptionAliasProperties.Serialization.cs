@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Billing.Models
             BillingSystemOverrides systemOverrides = default;
             Uri resourceUri = default;
             TimeSpan? termDuration = default;
-            DateTimeOffset? termStartOn = default;
-            DateTimeOffset? termEndOn = default;
+            DateTimeOffset? termStartsOn = default;
+            DateTimeOffset? termEndsOn = default;
             Guid? provisioningTenantId = default;
             BillingSubscriptionStatus? status = default;
             BillingSubscriptionOperationStatus? operationStatus = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    termStartOn = prop.Value.GetDateTimeOffset("O");
+                    termStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("termEndDate"u8))
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    termEndOn = prop.Value.GetDateTimeOffset("O");
+                    termEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningTenantId"u8))
@@ -551,8 +551,8 @@ namespace Azure.ResourceManager.Billing.Models
                 systemOverrides,
                 resourceUri,
                 termDuration,
-                termStartOn,
-                termEndOn,
+                termStartsOn,
+                termEndsOn,
                 provisioningTenantId,
                 status,
                 operationStatus,

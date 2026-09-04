@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="nameServers"> Name servers. </param>
         /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expireOn"> Domain expiration timestamp. </param>
+        /// <param name="expiresOn"> Domain expiration timestamp. </param>
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDnsRecordManagementReady"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"> Authorization code for the domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainProperties(RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, AppServiceDomainProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, ResourceIdentifier dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainProperties(RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, AppServiceDomainProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, ResourceIdentifier dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             NameServers = nameServers;
             IsDomainPrivacyEnabled = isDomainPrivacyEnabled;
             CreatedOn = createdOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             LastRenewedOn = lastRenewedOn;
             IsAutoRenew = isAutoRenew;
             IsDnsRecordManagementReady = isDnsRecordManagementReady;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Domain expiration timestamp. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Timestamp when the domain was renewed last time. </summary>
         public DateTimeOffset? LastRenewedOn { get; }

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmContainerOrchestratorRuntimeModelFactory
     {
+        /// <summary> A StorageClass resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> Details of the StorageClass StorageClass. </summary>
         /// <param name="allowVolumeExpansion"> Volume can be expanded or not. </param>
         /// <param name="mountOptions"> Additional mount options. </param>
         /// <param name="provisioner"> Provisioner name. </param>
@@ -69,6 +71,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary>
+        /// The properties of storage class of the StorageClass
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.NativeStorageClassTypeProperties"/>, <see cref="Models.RwxStorageClassTypeProperties"/>, <see cref="Models.BlobStorageClassTypeProperties"/>, <see cref="Models.NfsStorageClassTypeProperties"/>, and <see cref="Models.SmbStorageClassTypeProperties"/>.
+        /// </summary>
         /// <param name="type"> Type of the storage class. </param>
         /// <returns> A new <see cref="Models.StorageClassTypeProperties"/> instance for mocking. </returns>
         public static StorageClassTypeProperties StorageClassTypeProperties(string @type = default)
@@ -76,12 +82,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new UnknownStorageClassTypeProperties(default, default);
         }
 
+        /// <summary> The properties of Native StorageClass. </summary>
         /// <returns> A new <see cref="Models.NativeStorageClassTypeProperties"/> instance for mocking. </returns>
         public static NativeStorageClassTypeProperties NativeStorageClassTypeProperties()
         {
             return new NativeStorageClassTypeProperties(default, default);
         }
 
+        /// <summary> The properties of RWX StorageClass. </summary>
         /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
         /// <returns> A new <see cref="Models.RwxStorageClassTypeProperties"/> instance for mocking. </returns>
         public static RwxStorageClassTypeProperties RwxStorageClassTypeProperties(string backingStorageClassName = default)
@@ -89,6 +97,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new RwxStorageClassTypeProperties(default, default, backingStorageClassName);
         }
 
+        /// <summary> The properties of Blob StorageClass. </summary>
         /// <param name="azureStorageAccountName"> Azure Storage Account Name. </param>
         /// <param name="azureStorageAccountKey"> Azure Storage Account Key. </param>
         /// <returns> A new <see cref="Models.BlobStorageClassTypeProperties"/> instance for mocking. </returns>
@@ -97,6 +106,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new BlobStorageClassTypeProperties(default, default, azureStorageAccountName, azureStorageAccountKey);
         }
 
+        /// <summary> The properties of NFS StorageClass. </summary>
         /// <param name="server"> NFS Server. </param>
         /// <param name="share"> NFS share. </param>
         /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
@@ -115,6 +125,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 onDelete);
         }
 
+        /// <summary> The properties of SMB StorageClass. </summary>
         /// <param name="source"> SMB Source. </param>
         /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
         /// <param name="username"> Server username. </param>
@@ -133,6 +144,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 domain);
         }
 
+        /// <summary> The model for updating a storageClass. </summary>
         /// <param name="properties"> The properties of StorageClass. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterStorageClassPatch"/> instance for mocking. </returns>
         public static ConnectedClusterStorageClassPatch ConnectedClusterStorageClassPatch(StorageClassPropertiesUpdate properties = default)
@@ -140,6 +152,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new ConnectedClusterStorageClassPatch(properties, default);
         }
 
+        /// <summary> The model for updating storageClass properties. </summary>
         /// <param name="allowVolumeExpansion"> Volume can be expanded or not. </param>
         /// <param name="mountOptions"> Additional mount options. </param>
         /// <param name="accessModes"> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </param>
@@ -169,6 +182,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> The model for update a storageClass. </summary>
         /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
         /// <param name="azureStorageAccountName"> Azure Storage Account Name. </param>
         /// <param name="azureStorageAccountKey"> Azure Storage Account Key. </param>
@@ -200,6 +214,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> A LoadBalancer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -217,6 +232,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> Details of the LoadBalancer. </summary>
         /// <param name="addresses"> IP Range. </param>
         /// <param name="serviceSelector"> A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field. </param>
         /// <param name="advertiseMode"> Advertise Mode. </param>
@@ -238,6 +254,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> A BgpPeer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -255,6 +272,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> Details of the BgpPeer. </summary>
         /// <param name="myAsn"> My ASN. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerAddress"> Peer Address. </param>
@@ -265,6 +283,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new ConnectedClusterBgpPeerProperties(myAsn, peerAsn, peerAddress, provisioningState, default);
         }
 
+        /// <summary> A Service resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -282,6 +301,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
+        /// <summary> Properties for the service resource. </summary>
         /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterServiceProperties"/> instance for mocking. </returns>
