@@ -88,9 +88,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
             var runId = Guid.NewGuid().ToString("N");
 
+            var distinctEndpoints = new HashSet<string>(routes.ConvertAll(r => r.IngestionEndpoint), StringComparer.Ordinal).Count;
+
             Console.WriteLine($"Run id     : {runId}");
             Console.WriteLine($"Activities : {activityCount} requests, each with one dependency");
             Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
+            Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s)");
             Console.WriteLine($"Endpoints  : {(faultEndpoints ? "FAULTED (503 injected)" : "live")}");
             Console.WriteLine();
 
@@ -168,10 +171,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     continue;
                 }
 
-                routes.Add(new MultiTenantTraceDemo.TenantRoute(
-                    new Uri(ingestionEndpoint).Host.Split('.')[0],
-                    instrumentationKey,
-                    ingestionEndpoint));
+                // Tenants in the same region share an ingestion endpoint, so the host alone is not a
+                // unique name. Keeping it unique is what lets the counts and the demo.tenant
+                // dimension tell two same-endpoint tenants apart.
+                var host = new Uri(ingestionEndpoint).Host.Split('.')[0];
+                var name = host;
+
+                for (int n = 2; routes.Exists(route => route.Name == name); n++)
+                {
+                    name = $"{host}#{n}";
+                }
+
+                routes.Add(new MultiTenantTraceDemo.TenantRoute(name, instrumentationKey, ingestionEndpoint));
             }
 
             return routes;
