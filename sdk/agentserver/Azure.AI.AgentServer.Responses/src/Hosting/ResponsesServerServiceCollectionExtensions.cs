@@ -92,7 +92,8 @@ public static class ResponsesServerServiceCollectionExtensions
             // Register a default only when the consumer has not supplied one. Both the response
             // pipeline and Core hosted task store resolve the final TokenCredential from the built
             // provider, so instance/factory registrations before or after this call compose equally.
-            services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
+            services.AddResilientTaskCredentialDefault(
+                _ => new DefaultAzureCredential());
 
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
