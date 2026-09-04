@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("agentVersionStatus"u8);
                 writer.WriteStringValue(AgentVersionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpiresOn))
             {
                 writer.WritePropertyName("agentVersionExpirationDate"u8);
-                writer.WriteStringValue(AgentVersionExpireOn.Value, "O");
+                writer.WriteStringValue(AgentVersionExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(ServerOSVersion))
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             BinaryData serverCertificate = default;
             string agentVersion = default;
             RegisteredServerAgentVersionStatus? agentVersionStatus = default;
-            DateTimeOffset? agentVersionExpireOn = default;
+            DateTimeOffset? agentVersionExpiresOn = default;
             string serverOSVersion = default;
             int? serverManagementErrorCode = default;
             string lastHeartbeat = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    agentVersionExpireOn = prop.Value.GetDateTimeOffset("O");
+                    agentVersionExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("serverOSVersion"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 serverCertificate,
                 agentVersion,
                 agentVersionStatus,
-                agentVersionExpireOn,
+                agentVersionExpiresOn,
                 serverOSVersion,
                 serverManagementErrorCode,
                 lastHeartbeat,

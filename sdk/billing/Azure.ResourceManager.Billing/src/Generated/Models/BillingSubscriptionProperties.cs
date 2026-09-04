@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="systemOverrides"> System imposed policies that regulate behavior of the subscription. </param>
         /// <param name="resourceUri"> Unique identifier of the linked resource. </param>
         /// <param name="termDuration"> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </param>
-        /// <param name="termStartOn"> Start date of the term in UTC time. </param>
-        /// <param name="termEndOn"> End date of the term in UTC time. </param>
+        /// <param name="termStartsOn"> Start date of the term in UTC time. </param>
+        /// <param name="termEndsOn"> End date of the term in UTC time. </param>
         /// <param name="provisioningTenantId"> The tenant in which the subscription is provisioned. </param>
         /// <param name="status"> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
         /// <param name="operationStatus"> The status of an operation on the subscription. When None, there is no ongoing operation. When LockedForUpdate, write operations will be blocked on the Billing Subscription. Other is the default value and you may need to refer to the latest API version for more details. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="suspensionReasons"> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
         /// <param name="suspensionReasonDetails"> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionProperties(BillingSubscriptionAutoRenewState? autoRenew, Guid? beneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, EnrollmentAccountSubscriptionDetails enrollmentAccountSubscriptionDetails, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingSubscriptionProperties(BillingSubscriptionAutoRenewState? autoRenew, Guid? beneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, EnrollmentAccountSubscriptionDetails enrollmentAccountSubscriptionDetails, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartsOn, DateTimeOffset? termEndsOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoRenew = autoRenew;
             BeneficiaryTenantId = beneficiaryTenantId;
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Billing.Models
             SystemOverrides = systemOverrides;
             ResourceUri = resourceUri;
             TermDuration = termDuration;
-            TermStartOn = termStartOn;
-            TermEndOn = termEndOn;
+            TermStartsOn = termStartsOn;
+            TermEndsOn = termEndsOn;
             ProvisioningTenantId = provisioningTenantId;
             Status = status;
             OperationStatus = operationStatus;
@@ -263,11 +263,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Start date of the term in UTC time. </summary>
         [WirePath("termStartDate")]
-        public DateTimeOffset? TermStartOn { get; }
+        public DateTimeOffset? TermStartsOn { get; }
 
         /// <summary> End date of the term in UTC time. </summary>
         [WirePath("termEndDate")]
-        public DateTimeOffset? TermEndOn { get; }
+        public DateTimeOffset? TermEndsOn { get; }
 
         /// <summary> The tenant in which the subscription is provisioned. </summary>
         [WirePath("provisioningTenantId")]
@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </summary>
         [WirePath("enrollmentAccountSubscriptionDetails.enrollmentAccountStartDate")]
-        public DateTimeOffset? EnrollmentAccountStartOn
+        public DateTimeOffset? EnrollmentAccountStartsOn
         {
             get
             {
-                return EnrollmentAccountSubscriptionDetails is null ? default : EnrollmentAccountSubscriptionDetails.EnrollmentAccountStartOn;
+                return EnrollmentAccountSubscriptionDetails is null ? default : EnrollmentAccountSubscriptionDetails.EnrollmentAccountStartsOn;
             }
         }
 

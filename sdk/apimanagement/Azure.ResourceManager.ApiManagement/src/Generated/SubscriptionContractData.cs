@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new SubscriptionContractProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new SubscriptionContractProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new SubscriptionContractProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunProperties"/>. </summary>
-        /// <param name="waitEndOn"> Gets the wait end time. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="waitEndsOn"> Gets the wait end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="status"> Gets the status. </param>
         /// <param name="code"> Gets the code. </param>
         /// <param name="error"> Gets the error. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunProperties(DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunProperties(DateTimeOffset? waitEndsOn, DateTimeOffset? startsOn, DateTimeOffset? endsOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WaitEndOn = waitEndOn;
-            StartOn = startOn;
-            EndOn = endOn;
+            WaitEndsOn = waitEndsOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             Code = code;
             Error = error;
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the wait end time. </summary>
         [WirePath("waitEndTime")]
-        public DateTimeOffset? WaitEndOn { get; }
+        public DateTimeOffset? WaitEndsOn { get; }
 
         /// <summary> Gets the start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets the end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets the status. </summary>
         [WirePath("status")]

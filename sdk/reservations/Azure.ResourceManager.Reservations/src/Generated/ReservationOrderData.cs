@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Reservations
         {
             get
             {
-                return Properties is null ? default : Properties.ReservationExpireOn;
+                return Properties is null ? default : Properties.ReservationExpiresOn;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Reservations
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
         }
 

@@ -142,6 +142,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
+        /// <summary> Connection state of the private endpoint connection. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -180,6 +181,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
+        /// <summary> Feature of a resource, which controls the runtime behavior. </summary>
         /// <param name="flag">
         /// FeatureFlags is the supported features of Azure SignalR service.
         /// <list type="bullet"><item><description>ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.</description></item><item><description>EnableConnectivityLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.</description></item></list>
@@ -194,6 +196,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRFeature(flag, value, properties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
         /// <param name="enabled">
         /// Indicates whether or not enable live trace.
         /// When it's set to true, live trace client can connect to the service.
@@ -210,6 +213,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRLiveTraceConfiguration(enabled, (categories ?? new ChangeTrackingList<SignalRLiveTraceCategory>()).ToList(), default);
         }
 
+        /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -226,6 +230,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRLiveTraceCategory(name, enabled, default);
         }
 
+        /// <summary> Resource log category configuration of a Microsoft.SignalRService resource. </summary>
         /// <param name="name">
         /// Gets or sets the resource log category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -242,6 +247,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRResourceLogCategory(name, enabled, default);
         }
 
+        /// <summary> Serverless settings. </summary>
         /// <param name="connectionTimeoutInSeconds">
         /// Gets or sets Client Connection Timeout. Optional to be set.
         /// Value in seconds.
@@ -268,6 +274,10 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRServerlessSettings(connectionTimeoutInSeconds, keepAliveIntervalInSeconds, default);
         }
 
+        /// <summary>
+        /// Upstream template item settings. It defines the Upstream URL of the incoming requests.
+        /// The template defines the pattern of the event, the hub or the category of the incoming request that matches current URL template.
+        /// </summary>
         /// <param name="hubPattern">
         /// Gets or sets the matching pattern for hub names. If not set, it matches any hub.
         /// There are 3 kind of patterns supported:
@@ -311,6 +321,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRUpstreamAuthSettings(authType, managedIdentityResource is null ? default : new ManagedIdentitySettings(managedIdentityResource, default), default);
         }
 
+        /// <summary> Network ACLs for the resource. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
@@ -324,6 +335,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRNetworkAcls(defaultAction, publicNetwork, (privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>()).ToList(), (ipRules ?? new ChangeTrackingList<SignalRIPRule>()).ToList(), default);
         }
 
+        /// <summary> Network ACL. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <returns> A new <see cref="Models.SignalRNetworkAcl"/> instance for mocking. </returns>
@@ -335,6 +347,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRNetworkAcl((allow ?? new ChangeTrackingList<SignalRRequestType>()).ToList(), (deny ?? new ChangeTrackingList<SignalRRequestType>()).ToList(), default);
         }
 
+        /// <summary> ACL for a private endpoint. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>
@@ -347,6 +360,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRPrivateEndpointAcl((allow ?? new ChangeTrackingList<SignalRRequestType>()).ToList(), (deny ?? new ChangeTrackingList<SignalRRequestType>()).ToList(), default, name);
         }
 
+        /// <summary> An IP rule. </summary>
         /// <param name="value"> An IP or CIDR or ServiceTag. </param>
         /// <param name="action"> Azure Networking ACL Action. </param>
         /// <returns> A new <see cref="Models.SignalRIPRule"/> instance for mocking. </returns>
@@ -355,6 +369,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRIPRule(value, action, default);
         }
 
+        /// <summary> Application firewall settings for the resource. </summary>
         /// <param name="clientConnectionCountRules"> Rules to control the client connection count. </param>
         /// <param name="clientTrafficControlRules"> Rules to control the client traffic. </param>
         /// <param name="maxClientConnectionLifetimeInSeconds"> Config to control the client connection lifetime in seconds, can be set to 0 to disable the config. </param>
@@ -367,6 +382,10 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRApplicationFirewallSettings((clientConnectionCountRules ?? new ChangeTrackingList<SignalRClientConnectionCountRule>()).ToList(), (clientTrafficControlRules ?? new ChangeTrackingList<SignalRClientTrafficControlRule>()).ToList(), maxClientConnectionLifetimeInSeconds, default);
         }
 
+        /// <summary>
+        /// A base class for client connection count rules
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SignalRThrottleByJwtCustomClaimRule"/>, <see cref="Models.SignalRThrottleByJwtSignatureRule"/>, and <see cref="Models.SignalRThrottleByUserIdRule"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.SignalRClientConnectionCountRule"/> instance for mocking. </returns>
         public static SignalRClientConnectionCountRule SignalRClientConnectionCountRule(string @type = default)
@@ -374,6 +393,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new UnknownSignalRClientConnectionCountRule(default, default);
         }
 
+        /// <summary> Throttle the client connection by a custom JWT claim. </summary>
         /// <param name="claimName"> The name of the claim in the JWT token. The client connection with the same claim value will be aggregated. If the claim is not found in the token, the connection will be allowed. </param>
         /// <param name="maxCount"> Maximum connection count allowed for the same Jwt claim value. Clients with the same Jwt claim will get rejected if the connection count exceeds this value. Default value is 20. </param>
         /// <returns> A new <see cref="Models.SignalRThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
@@ -382,6 +402,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRThrottleByJwtCustomClaimRule(default, default, claimName, maxCount);
         }
 
+        /// <summary> Throttle the client connection by the JWT signature. </summary>
         /// <param name="maxCount"> Maximum connection count allowed for the same JWT signature. Clients with the same JWT signature will get rejected if the connection count exceeds this value. Default value is 20. </param>
         /// <returns> A new <see cref="Models.SignalRThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static SignalRThrottleByJwtSignatureRule SignalRThrottleByJwtSignatureRule(int? maxCount = default)
@@ -389,6 +410,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRThrottleByJwtSignatureRule(default, default, maxCount);
         }
 
+        /// <summary> Throttle the client connection by the user ID. </summary>
         /// <param name="maxCount"> Maximum connection count allowed for the same user ID. Clients with the same user ID will get rejected if the connection count exceeds this value. Default value is 20. </param>
         /// <returns> A new <see cref="Models.SignalRThrottleByUserIdRule"/> instance for mocking. </returns>
         public static SignalRThrottleByUserIdRule SignalRThrottleByUserIdRule(int? maxCount = default)
@@ -396,6 +418,10 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRThrottleByUserIdRule(default, default, maxCount);
         }
 
+        /// <summary>
+        /// A base class for client traffic control rules
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SignalRTrafficThrottleByJwtCustomClaimRule"/>, <see cref="Models.SignalRTrafficThrottleByJwtSignatureRule"/>, and <see cref="Models.SignalRTrafficThrottleByUserIdRule"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.SignalRClientTrafficControlRule"/> instance for mocking. </returns>
         public static SignalRClientTrafficControlRule SignalRClientTrafficControlRule(string @type = default)
@@ -403,6 +429,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new UnknownSignalRClientTrafficControlRule(default, default);
         }
 
+        /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
         /// <param name="claimName"> The name of the claim in the JWT token. The message bytes with the same claim value will be aggregated. If the claim is not found in the token, the rule will be skipped. </param>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT claim will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
@@ -412,6 +439,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRTrafficThrottleByJwtCustomClaimRule(default, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <summary> Throttle the client traffic by the JWT signature. </summary>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT signature will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByJwtSignatureRule"/> instance for mocking. </returns>
@@ -420,6 +448,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRTrafficThrottleByJwtSignatureRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <summary> Throttle the client traffic by the user ID. </summary>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same user ID within a time window. Clients with the same user ID will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByUserIdRule"/> instance for mocking. </returns>
@@ -428,6 +457,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRTrafficThrottleByUserIdRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <summary> Route settings for the resource. </summary>
         /// <param name="serverBalanceWeight">
         /// Gets or sets the server balance weight.
         /// A higher value means a greater balance of client connections across different app server instances.
@@ -455,6 +485,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRRouteSettings(serverBalanceWeight, connectionBalanceWeight, latencyWeight, default);
         }
 
+        /// <summary> The billing information of the resource. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
@@ -486,6 +517,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
+        /// <summary> A class represents the access keys of the resource. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>
@@ -496,6 +528,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, default);
         }
 
+        /// <summary> Parameters describes the request to regenerate access keys. </summary>
         /// <param name="keyType"> The type of access key. </param>
         /// <returns> A new <see cref="Models.SignalRRegenerateKeyContent"/> instance for mocking. </returns>
         public static SignalRRegenerateKeyContent SignalRRegenerateKeyContent(SignalRKeyType? keyType = default)
@@ -503,6 +536,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRRegenerateKeyContent(keyType, default);
         }
 
+        /// <summary> Describes an available sku.". </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
@@ -512,6 +546,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRSku(resourceType, sku, capacity, default);
         }
 
+        /// <summary> Describes scaling information of a sku. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>
@@ -551,6 +586,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
+        /// <summary> Describes a  resource type that has been onboarded to private link service. </summary>
         /// <param name="name"> The name of the resource type that has been onboarded to private link service. </param>
         /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service. </param>
         /// <returns> A new <see cref="Models.ShareablePrivateLinkResourceType"/> instance for mocking. </returns>
@@ -559,6 +595,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new ShareablePrivateLinkResourceType(name, properties, default);
         }
 
+        /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
         /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>
@@ -576,7 +613,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
         /// <returns> A new <see cref="SignalR.SignalRCustomCertificateData"/> instance for mocking. </returns>
         public static SignalRCustomCertificateData SignalRCustomCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SignalRProvisioningState? provisioningState = default, Uri keyVaultBaseUri = default, string keyVaultSecretName = default, string keyVaultSecretVersion = default)
         {
@@ -596,7 +632,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificateId"> Resource ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         /// <returns> A new <see cref="SignalR.SignalRCustomDomainData"/> instance for mocking. </returns>
         public static SignalRCustomDomainData SignalRCustomDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SignalRProvisioningState? provisioningState = default, string domainName = default, ResourceIdentifier customCertificateId = default)
         {
@@ -643,6 +678,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
+        /// <summary> Data POST-ed to the nameAvailability action. </summary>
         /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <returns> A new <see cref="Models.SignalRNameAvailabilityContent"/> instance for mocking. </returns>
@@ -651,6 +687,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRNameAvailabilityContent(resourceType, name, default);
         }
 
+        /// <summary> Result of the request to check name availability. It contains a flag and possible reason of failure. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>
@@ -660,6 +697,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Object that describes a specific usage of the resources. </summary>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="currentValue"> Current value for the usage quota. </param>
         /// <param name="limit"> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </param>
@@ -677,6 +715,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
+        /// <summary> Localizable String object containing the name and a localized value. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
         /// <returns> A new <see cref="Models.SignalRUsageName"/> instance for mocking. </returns>
@@ -685,16 +724,16 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRUsageName(value, localizedValue, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A class representing a resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service, it can be SignalR or RawWebSockets. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -703,35 +742,34 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="isClientCertEnabled"> TLS settings for the resource. </param>
+        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
-        ///             
-        ///              FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        ///              And the response will only include featureFlags that are explicitly set.
-        ///              When a featureFlag is not explicitly set, its globally default value will be used
-        ///              But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
+        /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
+        /// And the response will only include featureFlags that are explicitly set.
+        /// When a featureFlag is not explicitly set, its globally default value will be used
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="corsAllowedOrigins"> Cross-Origin Resource Sharing (CORS) settings. </param>
-        /// <param name="upstreamTemplates"> The settings for the Upstream when the service is in server-less mode. </param>
+        /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
+        /// <param name="corsAllowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
+        /// <param name="upstreamTemplates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
         /// <param name="networkACLs"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to "Enabled".
-        ///              When it's Enabled, network ACLs still apply.
-        ///              When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="disableLocalAuth">
         /// DisableLocalAuth
-        ///              Enable or disable local auth with AccessKey
-        ///              When set as true, connection with AccessKey=xxx won't work.
+        /// Enable or disable local auth with AccessKey
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="disableAadAuth">
         /// DisableLocalAuth
-        ///              Enable or disable aad auth
-        ///              When set as true, connection with AuthType=aad won't work.
+        /// Enable or disable aad auth
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -776,13 +814,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A private endpoint connection to an azure resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="privateEndpointId"> Private endpoint. </param>
+        /// <param name="privateEndpointId"> Full qualified Id of the private endpoint. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="SignalR.SignalRPrivateEndpointConnectionData"/> instance for mocking. </returns>
@@ -798,11 +836,11 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Describes a Shared Private Link Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -828,11 +866,11 @@ namespace Azure.ResourceManager.SignalR.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SignalRPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupId"> Group Id of the private link resource. </param>
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>

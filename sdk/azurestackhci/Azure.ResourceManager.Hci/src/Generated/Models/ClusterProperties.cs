@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
         /// <param name="billingModel"> Type of billing applied to the resource. </param>
         /// <param name="billingProperties"> Billing properties of the cluster, including upcoming billing model details. </param>
-        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
-        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
-        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
+        /// <param name="registrationOn"> First cluster sync timestamp. </param>
+        /// <param name="lastSyncOn"> Most recent cluster sync timestamp. </param>
+        /// <param name="lastBillingOn"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
         /// <param name="secretsLocations"> List of secret locations. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationOn, DateTimeOffset? lastSyncOn, DateTimeOffset? lastBillingOn, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Hci.Models
             TrialDaysRemaining = trialDaysRemaining;
             BillingModel = billingModel;
             BillingProperties = billingProperties;
-            RegistrationTimestamp = registrationTimestamp;
-            LastSyncTimestamp = lastSyncTimestamp;
-            LastBillingTimestamp = lastBillingTimestamp;
+            RegistrationOn = registrationOn;
+            LastSyncOn = lastSyncOn;
+            LastBillingOn = lastBillingOn;
             ServiceEndpoint = serviceEndpoint;
             ResourceProviderObjectId = resourceProviderObjectId;
             SecretsLocations = secretsLocations;
@@ -167,15 +167,15 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> First cluster sync timestamp. </summary>
         [WirePath("registrationTimestamp")]
-        public DateTimeOffset? RegistrationTimestamp { get; }
+        public DateTimeOffset? RegistrationOn { get; }
 
         /// <summary> Most recent cluster sync timestamp. </summary>
         [WirePath("lastSyncTimestamp")]
-        public DateTimeOffset? LastSyncTimestamp { get; }
+        public DateTimeOffset? LastSyncOn { get; }
 
         /// <summary> Most recent billing meter timestamp. </summary>
         [WirePath("lastBillingTimestamp")]
-        public DateTimeOffset? LastBillingTimestamp { get; }
+        public DateTimeOffset? LastBillingOn { get; }
 
         /// <summary> Region specific DataPath Endpoint of the cluster. </summary>
         [WirePath("serviceEndpoint")]

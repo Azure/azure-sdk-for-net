@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expires"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(RetentionPeriod))
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             IList<SnapshotKeyValueFilter> filters = default;
             SnapshotCompositionType? compositionType = default;
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             long? retentionPeriod = default;
             long? size = default;
             long? itemsCount = default;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("retentionPeriod"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 filters,
                 compositionType,
                 createdOn,
-                expireOn,
+                expiresOn,
                 retentionPeriod,
                 size,
                 itemsCount,

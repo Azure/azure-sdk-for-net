@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Identifies the Azure key vault associated with a Batch account. </summary>
         /// <param name="id"> The resource ID of the Azure key vault associated with the Batch account. </param>
         /// <param name="uri"> The URL of the Azure key vault associated with the Batch account. </param>
         /// <returns> A new <see cref="Models.BatchKeyVaultReference"/> instance for mocking. </returns>
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchKeyVaultReference(id, uri, default);
         }
 
+        /// <summary> Network profile for Batch account, which contains network rule settings for each endpoint. </summary>
         /// <param name="accountAccess"> Network access profile for batchAccount endpoint (Batch account data plane API). </param>
         /// <param name="nodeManagementAccess"> Network access profile for nodeManagement endpoint (Batch service managing compute nodes for Batch pools). </param>
         /// <returns> A new <see cref="Models.BatchNetworkProfile"/> instance for mocking. </returns>
@@ -96,6 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNetworkProfile(accountAccess, nodeManagementAccess, default);
         }
 
+        /// <summary> Network access profile for Batch endpoint. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         /// <param name="ipRules"> Array of IP ranges to filter client IP address. </param>
         /// <returns> A new <see cref="Models.BatchEndpointAccessProfile"/> instance for mocking. </returns>
@@ -106,6 +109,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchEndpointAccessProfile(defaultAction, (ipRules ?? new ChangeTrackingList<BatchIPRule>()).ToList(), default);
         }
 
+        /// <summary> Rule to filter client IP address. </summary>
         /// <param name="action"> Action when client IP address is matched. </param>
         /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
         /// <returns> A new <see cref="Models.BatchIPRule"/> instance for mocking. </returns>
@@ -140,6 +144,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> The private link service connection state of the private endpoint connection. </summary>
         /// <param name="status"> The status of the Batch private endpoint connection. </param>
         /// <param name="description"> Description of the private Connection state. </param>
         /// <param name="actionRequired"> Action required on the private connection state. </param>
@@ -181,6 +186,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountEncryptionConfiguration(keySource, keyIdentifier is null ? default : new KeyVaultProperties(keyIdentifier, default), default);
         }
 
+        /// <summary> A VM Family and its associated core quota for the Batch account. </summary>
         /// <param name="name"> The Virtual Machine family name. </param>
         /// <param name="coreQuota"> The core quota for the VM family for the Batch account. </param>
         /// <returns> A new <see cref="Models.BatchVmFamilyCoreQuota"/> instance for mocking. </returns>
@@ -236,6 +242,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default), identity, default);
         }
 
+        /// <summary> Parameters supplied to the RegenerateKey operation. </summary>
         /// <param name="keyType"> The type of account key to regenerate. </param>
         /// <returns> A new <see cref="Models.BatchAccountRegenerateKeyContent"/> instance for mocking. </returns>
         public static BatchAccountRegenerateKeyContent BatchAccountRegenerateKeyContent(BatchAccountKeyType keyType = default)
@@ -243,6 +250,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountRegenerateKeyContent(keyType, default);
         }
 
+        /// <summary> A set of Azure Batch account keys. </summary>
         /// <param name="accountName"> The Batch account name. </param>
         /// <param name="primary"> The primary key associated with the account. </param>
         /// <param name="secondary"> The secondary key associated with the account. </param>
@@ -252,6 +260,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountKeys(accountName, primary, secondary, default);
         }
 
+        /// <summary> A collection of related endpoints from the same service for which the Batch service requires outbound access. </summary>
         /// <param name="category"> The type of service that the Batch service connects to. </param>
         /// <param name="endpoints"> The endpoints for this service to which the Batch service makes outbound calls. </param>
         /// <returns> A new <see cref="Models.BatchAccountOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -262,6 +271,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountOutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<BatchAccountEndpointDependency>()).ToList(), default);
         }
 
+        /// <summary> A domain name and connection details used to access a dependency. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>
@@ -273,6 +283,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountEndpointDependency(domainName, description, (endpointDetails ?? new ChangeTrackingList<BatchEndpointDetail>()).ToList(), default);
         }
 
+        /// <summary> Details about the connection between the Batch service and the endpoint. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <returns> A new <see cref="Models.BatchEndpointDetail"/> instance for mocking. </returns>
         public static BatchEndpointDetail BatchEndpointDetail(int? port = default)
@@ -280,6 +291,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchEndpointDetail(port, default);
         }
 
+        /// <summary> Parameters for an activating an application package. </summary>
         /// <param name="format"> The format of the application package binary file. </param>
         /// <returns> A new <see cref="Models.BatchApplicationPackageActivateContent"/> instance for mocking. </returns>
         public static BatchApplicationPackageActivateContent BatchApplicationPackageActivateContent(string format = default)
@@ -360,6 +372,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Deployment configuration properties. </summary>
         /// <param name="vmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
         /// <returns> A new <see cref="Models.BatchDeploymentConfiguration"/> instance for mocking. </returns>
         public static BatchDeploymentConfiguration BatchDeploymentConfiguration(BatchVmConfiguration vmConfiguration = default)
@@ -405,6 +418,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>
         /// <param name="publisher"> For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="offer"> For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> For example, 18.04-LTS or 2022-datacenter. </param>
@@ -426,6 +440,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Settings which will be used by the data disks associated to Compute Nodes in the Pool. When using attached data disks, you need to mount and format the disks from within a VM to use them. </summary>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
         /// <param name="caching">
         /// Values are:
@@ -459,6 +474,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new VmDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default), default);
         }
 
+        /// <summary> The configuration for container-enabled pools. </summary>
         /// <param name="containerType"> The container technology to be used. </param>
         /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
@@ -481,6 +497,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchVmContainerRegistry(userName, password, registryServer, identityResourceId is null ? default : new ComputeNodeIdentityReference(identityResourceId, default), default);
         }
 
+        /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
         /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
         /// <param name="customerManagedKey"> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
         /// <returns> A new <see cref="Models.BatchDiskEncryptionConfiguration"/> instance for mocking. </returns>
@@ -500,6 +517,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchDiskCustomerManagedKey(keyUri, rotationToLatestKeyVersionEnabled, identityReferenceResourceId is null ? default : new ComputeNodeIdentityReference(identityReferenceResourceId, default), default);
         }
 
+        /// <summary> The configuration for virtual machine extensions. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> The type of the extensions. </param>
@@ -544,6 +562,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
@@ -554,6 +573,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, proxyAgentSettings, default);
         }
 
+        /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </summary>
         /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. </param>
         /// <param name="isVTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. </param>
         /// <returns> A new <see cref="Models.BatchUefiSettings"/> instance for mocking. </returns>
@@ -562,6 +582,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchUefiSettings(isSecureBootEnabled, isVTpmEnabled, default);
         }
 
+        /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
         /// <param name="enabled"> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </param>
         /// <param name="imds"> Settings for the IMDS endpoint. </param>
         /// <param name="wireServer"> Settings for the WireServer endpoint. </param>
@@ -571,6 +592,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchProxyAgentSettings(enabled, imds, wireServer, default);
         }
 
+        /// <summary> Specifies particular host endpoint settings. </summary>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <returns> A new <see cref="Models.BatchHostEndpointSettings"/> instance for mocking. </returns>
@@ -579,6 +601,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchHostEndpointSettings(mode, inVmAccessControlProfileReferenceId, default);
         }
 
+        /// <summary> Scale settings for the pool. </summary>
         /// <param name="fixedScale"> This property and autoScale are mutually exclusive and one of the properties must be specified. </param>
         /// <param name="autoScale"> This property and fixedScale are mutually exclusive and one of the properties must be specified. </param>
         /// <returns> A new <see cref="Models.BatchAccountPoolScaleSettings"/> instance for mocking. </returns>
@@ -587,6 +610,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountPoolScaleSettings(fixedScale, autoScale, default);
         }
 
+        /// <summary> Fixed scale settings for the pool. </summary>
         /// <param name="resizeTimeout"> The default value is 15 minutes. Timeout values use ISO 8601 format. For example, use PT10M for 10 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service rejects the request with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <param name="targetDedicatedNodes"> At least one of targetDedicatedNodes, targetLowPriorityNodes must be set. </param>
         /// <param name="targetLowPriorityNodes"> At least one of targetDedicatedNodes, targetLowPriorityNodes must be set. </param>
@@ -597,6 +621,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountFixedScaleSettings(resizeTimeout, targetDedicatedNodes, targetLowPriorityNodes, nodeDeallocationOption, default);
         }
 
+        /// <summary> AutoScale settings for the pool. </summary>
         /// <param name="formula"> A formula for the desired number of compute nodes in the pool. </param>
         /// <param name="evaluationInterval"> If omitted, the default value is 15 minutes (PT15M). </param>
         /// <returns> A new <see cref="Models.BatchAccountAutoScaleSettings"/> instance for mocking. </returns>
@@ -605,6 +630,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountAutoScaleSettings(formula, evaluationInterval, default);
         }
 
+        /// <summary> The results and errors from an execution of a pool autoscale formula. </summary>
         /// <param name="evaluationOn"> The time at which the autoscale formula was last evaluated. </param>
         /// <param name="results"> Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>
         /// <param name="error"> An error that occurred when autoscaling a pool. </param>
@@ -631,6 +657,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> A inbound NAT pool that can be used to address specific ports on compute nodes in a Batch pool externally. </summary>
         /// <param name="name"> The name must be unique within a Batch pool, can contain letters, numbers, underscores, periods, and hyphens. Names must start with a letter or number, must end with a letter, number, or underscore, and cannot exceed 77 characters.  If any invalid values are provided the request fails with HTTP status code 400. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="backendPort"> This must be unique within a Batch pool. Acceptable values are between 1 and 65535 except for 29876 and 29877 as these are reserved. If any reserved values are provided the request fails with HTTP status code 400. </param>
@@ -652,6 +679,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> A network security group rule to apply to an inbound endpoint. </summary>
         /// <param name="priority"> Priorities within a pool must be unique and are evaluated in order of priority. The lower the number the higher the priority. For example, rules could be specified with order numbers of 150, 250, and 350. The rule with the order number of 150 takes precedence over the rule that has an order of 250. Allowed priorities are 150 to 4096. If any reserved or duplicate values are provided the request fails with HTTP status code 400. </param>
         /// <param name="access"> The action that should be taken for a specified IP address, subnet range or tag. </param>
         /// <param name="sourceAddressPrefix"> Valid values are a single IP address (i.e. 10.10.10.10), IP subnet (i.e. 192.168.1.0/24), default tag, or * (for all addresses).  If any other values are provided the request fails with HTTP status code 400. </param>
@@ -664,6 +692,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The public IP Address configuration of the networking configuration of a Pool. </summary>
         /// <param name="provision"> The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
@@ -678,6 +707,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchPublicIPAddressConfiguration(provision, (ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (ipFamilies ?? new ChangeTrackingList<BatchIPFamily>()).ToList(), (ipTags ?? new ChangeTrackingList<BatchIPTag>()).ToList(), default);
         }
 
+        /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
         /// <param name="ipTagType"> Example: FirstPartyUsage. </param>
         /// <param name="tag"> Example: SQL. </param>
         /// <returns> A new <see cref="Models.BatchIPTag"/> instance for mocking. </returns>
@@ -686,6 +716,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchIPTag(ipTagType, tag, default);
         }
 
+        /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
         /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. </param>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
         /// <returns> A new <see cref="Models.BatchTaskSchedulingPolicy"/> instance for mocking. </returns>
@@ -711,6 +742,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Properties used to create a user account on a Linux node. </summary>
         /// <param name="uid"> The uid and gid properties must be specified together or not at all. If not specified the underlying operating system picks the uid. </param>
         /// <param name="gid"> The uid and gid properties must be specified together or not at all. If not specified the underlying operating system picks the gid. </param>
         /// <param name="sshPrivateKey"> The private key must not be password protected. The private key is used to automatically configure asymmetric-key based authentication for SSH between nodes in a Linux pool when the pool's enableInterNodeCommunication property is true (it is ignored if enableInterNodeCommunication is false). It does this by placing the key pair into the user's .ssh directory. If not specified, password-less SSH is not configured between nodes (no modification of the user's .ssh directory is done). </param>
@@ -720,6 +752,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchLinuxUserConfiguration(uid, gid, sshPrivateKey, default);
         }
 
+        /// <summary> A name-value pair associated with a Batch service resource. </summary>
         /// <param name="name"> The name of the metadata item. </param>
         /// <param name="value"> The value of the metadata item. </param>
         /// <returns> A new <see cref="Models.BatchAccountPoolMetadataItem"/> instance for mocking. </returns>
@@ -728,6 +761,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountPoolMetadataItem(name, value, default);
         }
 
+        /// <summary> A task which is run when a compute node joins a pool in the Azure Batch service, or when the compute node is rebooted or reimaged. </summary>
         /// <param name="commandLine"> The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. Required if any other properties of the startTask are specified. </param>
         /// <param name="resourceFiles"> A list of files that the Batch service will download to the compute node before running the command line. </param>
         /// <param name="environmentSettings"> A list of environment variable settings for the start task. </param>
@@ -773,6 +807,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> An environment variable to be set on a task process. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <returns> A new <see cref="Models.BatchEnvironmentSetting"/> instance for mocking. </returns>
@@ -781,6 +816,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchEnvironmentSetting(name, value, default);
         }
 
+        /// <summary> The definition of the user identity under which the task is run. </summary>
         /// <param name="userName"> The userName and autoUser properties are mutually exclusive; you must specify one but not both. </param>
         /// <param name="autoUser"> The userName and autoUser properties are mutually exclusive; you must specify one but not both. </param>
         /// <returns> A new <see cref="Models.BatchUserIdentity"/> instance for mocking. </returns>
@@ -789,6 +825,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchUserIdentity(userName, autoUser, default);
         }
 
+        /// <summary> Specifies the parameters for the auto user that runs a task on the Batch service. </summary>
         /// <param name="scope"> The default value is Pool. If the pool is running Windows a value of Task should be specified if stricter isolation between tasks is required. For example, if the task mutates the registry in a way which could impact other tasks, or if certificates have been specified on the pool which should not be accessible by normal tasks but should be accessible by start tasks. </param>
         /// <param name="elevationLevel"> The default value is nonAdmin. </param>
         /// <returns> A new <see cref="Models.BatchAutoUserSpecification"/> instance for mocking. </returns>
@@ -797,6 +834,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAutoUserSpecification(scope, elevationLevel, default);
         }
 
+        /// <summary> The container settings for a task. </summary>
         /// <param name="containerRunOptions"> These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </param>
         /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <param name="registry"> This setting can be omitted if was already provided at pool creation. </param>
@@ -816,6 +854,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> The entry of path and mount mode you want to mount into task container. </summary>
         /// <param name="source"> The paths which will be mounted to container task's container. </param>
         /// <param name="isReadOnly"> For Linux, if you mount this path as a read/write mode, this does not mean that all users in container have the read/write access for the path, it depends on the access in host VM. If this path is mounted read-only, all users within the container will not be able to modify the path. </param>
         /// <returns> A new <see cref="Models.ContainerHostBatchBindMountEntry"/> instance for mocking. </returns>
@@ -824,6 +863,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new ContainerHostBatchBindMountEntry(source, isReadOnly, default);
         }
 
+        /// <summary> Link to an application package inside the batch account. </summary>
         /// <param name="id"> The ID of the application package to install. This must be inside the same batch account as the pool. This can either be a reference to a specific version or the default version if one exists. </param>
         /// <param name="version"> If this is omitted, and no default version is specified for this application, the request fails with the error code InvalidApplicationPackageReferences. If you are calling the REST API directly, the HTTP status code is 409. </param>
         /// <returns> A new <see cref="Models.BatchApplicationPackageReference"/> instance for mocking. </returns>
@@ -832,6 +872,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchApplicationPackageReference(id, version, default);
         }
 
+        /// <summary> Details about the current or last completed resize operation. </summary>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated compute nodes in the pool. </param>
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/low-priority compute nodes in the pool. </param>
         /// <param name="resizeTimeout"> The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
@@ -853,6 +894,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> The file system to mount on each node. </summary>
         /// <param name="blobFileSystemConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="nfsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="cifsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
@@ -884,6 +926,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Information used to connect to an NFS file system. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>
@@ -893,6 +936,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNfsMountConfiguration(source, relativeMountPath, mountOptions, default);
         }
 
+        /// <summary> Information used to connect to a CIFS file system. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
@@ -910,6 +954,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Information used to connect to an Azure Fileshare. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
         /// <param name="fileUri"> This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
@@ -927,6 +972,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
         /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; <b>Automatic</b> - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; <b>Rolling</b> - Scale set performs updates in batches with an optional pause time in between. </param>
         /// <param name="automaticOSUpgradePolicy"> The configuration parameters used for performing automatic OS upgrade. </param>
         /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
@@ -936,6 +982,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new UpgradePolicy(mode, automaticOSUpgradePolicy, rollingUpgradePolicy, default);
         }
 
+        /// <summary> The configuration parameters used for performing automatic OS upgrade. </summary>
         /// <param name="disableAutomaticRollback"> Whether OS image rollback feature should be disabled. </param>
         /// <param name="enableAutomaticOSUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchmanagement/pool/create?tabs=HTTP#windowsconfiguration) cannot be set to true. </param>
         /// <param name="useRollingUpgradePolicy"> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </param>
@@ -946,6 +993,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new AutomaticOSUpgradePolicy(disableAutomaticRollback, enableAutomaticOSUpgrade, useRollingUpgradePolicy, osRollingUpgradeDeferral, default);
         }
 
+        /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
         /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. If this field is not set, Azure Azure Batch will not set its default value. The value of enableCrossZoneUpgrade on the created VirtualMachineScaleSet will be decided by the default configurations on VirtualMachineScaleSet. This field is able to be set to true or false only when using NodePlacementConfiguration as Zonal. </param>
         /// <param name="maxBatchInstancePercent"> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
@@ -967,6 +1015,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Network security perimeter (NSP) configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -984,6 +1033,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Network security configuration properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
@@ -1003,6 +1053,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.BatchProvisioningIssue"/> instance for mocking. </returns>
@@ -1011,6 +1062,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchProvisioningIssue(name, properties, default);
         }
 
+        /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
@@ -1031,6 +1083,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Access rule in a network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
@@ -1039,6 +1092,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccessRule(name, properties, default);
         }
 
+        /// <summary> Properties of Access Rule. </summary>
         /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -1067,6 +1121,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
@@ -1087,6 +1142,7 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Quotas associated with a Batch region for a particular subscription. </summary>
         /// <param name="accountQuota"> The number of Batch accounts that may be created under the subscription in the specified region. </param>
         /// <returns> A new <see cref="Models.BatchLocationQuota"/> instance for mocking. </returns>
         public static BatchLocationQuota BatchLocationQuota(int? accountQuota = default)
@@ -1094,6 +1150,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchLocationQuota(accountQuota, default);
         }
 
+        /// <summary> Describes a Batch supported SKU. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="familyName"> The family name of the SKU. </param>
         /// <param name="capabilities"> A collection of capabilities which this SKU supports. </param>
@@ -1106,6 +1163,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchSupportedSku(name, familyName, (capabilities ?? new ChangeTrackingList<BatchSkuCapability>()).ToList(), batchSupportEndOfLife, default);
         }
 
+        /// <summary> A SKU capability, such as the number of cores. </summary>
         /// <param name="name"> The name of the feature. </param>
         /// <param name="value"> The value of the feature. </param>
         /// <returns> A new <see cref="Models.BatchSkuCapability"/> instance for mocking. </returns>
@@ -1114,6 +1172,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchSkuCapability(name, value, default);
         }
 
+        /// <summary> Parameters for a check name availability request. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.BatchNameAvailabilityContent"/> instance for mocking. </returns>
@@ -1122,6 +1181,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
@@ -1131,12 +1191,12 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> Contains information about an Azure Batch account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
         /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
@@ -1154,8 +1214,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="poolQuota"> The pool quota for the Batch account. </param>
         /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
@@ -1190,15 +1250,15 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Contains information about a private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> The private endpoint of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}. </param>
         /// <param name="groupIds"> The value has one and only one group id. </param>
         /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
@@ -1216,10 +1276,10 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BatchAccountCreateOrUpdateContent"/>. </summary>
+        /// <summary> Parameters supplied to the Create operation. </summary>
         /// <param name="location"> The region in which to create the account. </param>
         /// <param name="tags"> The user-specified tags associated with the account. </param>
-        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
         /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </param>
         /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
@@ -1242,11 +1302,11 @@ namespace Azure.ResourceManager.Batch.Models
                 default), identity, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Contains information about an application in a Batch account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="displayName"> The display name for the application. </param>
@@ -1267,17 +1327,17 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An application package which represents a particular version of an application. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="state"> The current state of the application package. </param>
         /// <param name="format"> The format of the application package, if the package is active. </param>
         /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
-        /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
+        /// <param name="storageUriExpireOn"></param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
         /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1288,11 +1348,11 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && format is null && storageUri is null && storageUriExpireOn is null && lastActivatedOn is null ? default : new ApplicationPackageProperties(
+                state is null && format is null && storageUri is null && lastActivatedOn is null ? default : new ApplicationPackageProperties(
                     state,
                     format,
                     storageUri,
-                    storageUriExpireOn,
+                    default,
                     lastActivatedOn,
                     default),
                 etag,
@@ -1300,11 +1360,11 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountDetectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Contains the information for a detector. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
@@ -1323,12 +1383,12 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The type of identity used for the Batch Pool. Current supported identity types: UserAssigned, None. </param>
+        /// <summary> Contains information about a pool. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The type of identity used for the Batch Pool. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
@@ -1339,7 +1399,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="allocationState"> Whether the pool is resizing. </param>
         /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
         /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
-        /// <param name="deploymentVmConfiguration"> Deployment configuration properties. </param>
+        /// <param name="deploymentVmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
         /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
@@ -1396,11 +1456,11 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Contains information about a private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="groupId"> The group id is used to establish the private link connection. </param>

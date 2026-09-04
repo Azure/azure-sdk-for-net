@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("targetModelVersion"u8);
                 writer.WriteStringValue(TargetModelVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeStartOn))
+            if (Optional.IsDefined(AutoUpgradeStartsOn))
             {
                 writer.WritePropertyName("autoUpgradeStartDate"u8);
-                writer.WriteStringValue(AutoUpgradeStartOn.Value, "O");
+                writer.WriteStringValue(AutoUpgradeStartsOn.Value, "O");
             }
             if (Optional.IsDefined(UpgradeOnExpiryLeadTimeDays))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string targetModelName = default;
             string targetModelVersion = default;
-            DateTimeOffset? autoUpgradeStartOn = default;
+            DateTimeOffset? autoUpgradeStartsOn = default;
             int? upgradeOnExpiryLeadTimeDays = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    autoUpgradeStartOn = prop.Value.GetDateTimeOffset("O");
+                    autoUpgradeStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("upgradeOnExpiryLeadTimeDays"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesModelReplacementConfiguration(targetModelName, targetModelVersion, autoUpgradeStartOn, upgradeOnExpiryLeadTimeDays, additionalBinaryDataProperties);
+            return new CognitiveServicesModelReplacementConfiguration(targetModelName, targetModelVersion, autoUpgradeStartsOn, upgradeOnExpiryLeadTimeDays, additionalBinaryDataProperties);
         }
     }
 }

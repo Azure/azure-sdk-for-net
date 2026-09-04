@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         Properties = new CertificateContractProperties();
                     }
-                    Properties.ExpireOn = value.Value;
+                    Properties.ExpiresOn = value.Value;
                 }
             }
         }

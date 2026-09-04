@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("endTimeUtc"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("startTimeUtc"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("timeGenerated"u8);
             writer.WriteStringValue(GeneratedOn, "O");
             if (Optional.IsDefined(Vendor))
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string productName = default;
             string description = default;
             string displayName = default;
-            DateTimeOffset endOn = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset endsOn = default;
+            DateTimeOffset startsOn = default;
             DateTimeOffset generatedOn = default;
             string vendor = default;
             string intent = default;
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeGenerated"u8))
@@ -287,8 +287,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 productName,
                 description,
                 displayName,
-                endOn,
-                startOn,
+                endsOn,
+                startsOn,
                 generatedOn,
                 vendor,
                 intent,

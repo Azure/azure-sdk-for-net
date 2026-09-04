@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }
 
+        /// <summary> The storage task assignment report. </summary>
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Report")]
+        internal StorageTaskAssignmentReport Report { get; set; }
+
+        /// <summary> The container prefix for the location of storage task assignment report. </summary>
+        [WirePath("report.prefix")]
+        public string ReportPrefix
+        {
+            get => Report?.Prefix;
+            set => Report = new StorageTaskAssignmentReport(value);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. </summary>
         /// <param name="taskId"> The ID of the corresponding storage task. </param>
         /// <param name="isEnabled"> Indicates whether the storage task assignment is enabled. </param>

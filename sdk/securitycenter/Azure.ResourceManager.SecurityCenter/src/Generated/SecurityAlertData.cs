@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
         }
 
@@ -294,6 +294,23 @@ namespace Azure.ResourceManager.SecurityCenter
                     Properties = new AlertProperties();
                 }
                 return Properties.SubTechniques;
+            }
+        }
+
+        /// <summary> Type of the supportingEvidence. </summary>
+        public string SecurityAlertSupportingEvidenceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityAlertSupportingEvidenceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                Properties.SecurityAlertSupportingEvidenceType = value;
             }
         }
     }

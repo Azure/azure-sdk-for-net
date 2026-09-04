@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new WebhookProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

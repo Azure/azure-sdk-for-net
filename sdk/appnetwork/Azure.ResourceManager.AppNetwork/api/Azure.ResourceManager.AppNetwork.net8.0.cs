@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
     public partial class AppLinkUpgradeHistoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties>
     {
         internal AppLinkUpgradeHistoryProperties() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public string FromVersion { get { throw null; } }
         public string InitiatedBy { get { throw null; } }
         public Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset StartOn { get { throw null; } }
+        public System.DateTimeOffset StartsOn { get { throw null; } }
         public string ToVersion { get { throw null; } }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkPatch AppLinkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkReleaseChannelInfo AppLinkReleaseChannelInfo(string releaseChannel = null, string version = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistory AppLinkUpgradeHistory(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string initiatedBy = null, string fromVersion = null, string toVersion = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), string initiatedBy = null, string fromVersion = null, string toVersion = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeProfile AppLinkUpgradeProfile(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode mode = default(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode), Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel? fullyManagedUpgradeReleaseChannel = default(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel?), string selfManagedUpgradeVersion = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkVersionInfo AppLinkVersionInfo(string version = null, System.Collections.Generic.IEnumerable<string> upgrades = null) { throw null; }
     }
