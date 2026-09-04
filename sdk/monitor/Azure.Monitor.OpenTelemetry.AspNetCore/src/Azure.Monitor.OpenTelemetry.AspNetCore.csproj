@@ -52,6 +52,8 @@
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SchemaConstants.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SdkVersionUtils.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticSlot.cs" LinkBase="Shared\Exporter" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticSlotMap.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" LinkBase="Shared\Exporter" />
   </ItemGroup>
 

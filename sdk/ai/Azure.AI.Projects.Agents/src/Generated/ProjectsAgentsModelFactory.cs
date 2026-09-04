@@ -45,7 +45,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentGuidInternal"> The unique GUID identifier of the agent. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
-        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, bool? draft, AgentVersionStatus? status = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, string agentGuidInternal = default)
+        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default, bool? draft = default, AgentVersionStatus? status = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, string agentGuidInternal = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Agents
         /// content-safety moderation.
         /// </param>
         /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
-        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName, RaiInvocationModeration invocationsModeration)
+        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default, RaiInvocationModeration invocationsModeration = default)
         {
             return new ContentFilterConfiguration(raiPolicyName, invocationsModeration, additionalBinaryDataProperties: null);
         }
@@ -1668,7 +1668,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, DigitalWorkerType? digitalWorkerType = default, bool? draft = default)
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default, AgentBlueprintReference blueprintReference = default, DigitalWorkerType? digitalWorkerType = default, bool? draft = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1744,7 +1744,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="definition"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default)
+        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
         {
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, draft: default, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuidInternal: default);
         }
@@ -1753,7 +1753,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
         /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default)
+        public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName)
         {
             return ContentFilterConfiguration(raiPolicyName: raiPolicyName, invocationsModeration: default);
         }
@@ -1770,7 +1770,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default)
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition)
         {
             return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default, digitalWorkerType: default, draft: default);
         }
