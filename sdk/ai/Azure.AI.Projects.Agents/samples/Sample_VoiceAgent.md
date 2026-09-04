@@ -38,9 +38,10 @@ VoiceAgentDefinition definition = new()
 };
 definition.OutputModalities.Add(VoiceOutputModality.Audio);
 definition.Tools.Add(new VoiceAgentSystemTool(VoiceAgentSystemToolName.EndConversation));
-agentVersion = await agentsClient.CreateAgentVersionAsync(
+ClientResult<ProjectsAgentVersion> createResult = await agentsClient.CreateAgentVersionAsync(
     agentName,
     new ProjectsAgentVersionCreationOptions(definition));
+agentVersion = createResult;
 ```
 
 1. Retrieve the agent and its versions, and use the same enable and disable operations shared by other Foundry agent kinds.
@@ -57,8 +58,8 @@ await foreach (ProjectsAgentVersion listedVersion in agentsClient.GetAgentVersio
     Console.WriteLine($"Version {listedVersion.Version}: {listedVersion.Description}");
 }
 
-await agentsClient.DisableAgentAsync(agentName);
-await agentsClient.EnableAgentAsync(agentName);
+ClientResult disableResult = await agentsClient.DisableAgentAsync(agentName);
+ClientResult enableResult = await agentsClient.EnableAgentAsync(agentName);
 ```
 
 1. Connect to the agent's real-time endpoint, add a text turn, and stream the PCM16 audio response. The raw event payload remains available through `Data` for forward compatibility.
@@ -97,7 +98,7 @@ await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(ti
     }
 
     using JsonDocument document = JsonDocument.Parse(update.Data);
-    Console.WriteLine(update.EventType);
+    LogRealtimeEvent(update.EventType, document.RootElement);
     if (update.EventType == RealtimeServerEventType.ResponseOutputAudioDelta)
     {
         byte[] audioChunk = Convert.FromBase64String(document.RootElement.GetProperty("delta").GetString());
@@ -109,7 +110,38 @@ await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(ti
     }
 }
 Console.WriteLine($"Received {responseAudio.Length} bytes of PCM response audio.");
-await session.CloseAsync();
+```
+
+1. Send a follow-up turn that asks the agent to end the conversation, which exercises the `end_conversation` system tool registered on the agent definition end-to-end.
+
+```C# Snippet:Sample_VoiceAgent_Tools
+// The agent was configured with the "end_conversation" system tool. Prompting the model
+// to end the conversation exercises that tool end-to-end: the service invokes it as a
+// function_call item and reflects the outcome in the response, without the client having
+// to submit a function_call_output (system tools are handled entirely server-side, unlike
+// custom/user-defined function tools).
+await session.AddItemAsync(BinaryData.FromObjectAsJson(new
+{
+    type = "message",
+    role = "user",
+    content = new[] { new { type = "input_text", text = "Please say a brief goodbye and then end our conversation." } }
+}), cancellationToken: timeout.Token);
+await session.StartResponseAsync(cancellationToken: timeout.Token);
+
+await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(timeout.Token))
+{
+    if (update.MessageType != WebSocketMessageType.Text)
+    {
+        continue;
+    }
+
+    using JsonDocument document = JsonDocument.Parse(update.Data);
+    LogRealtimeEvent(update.EventType, document.RootElement);
+    if (update.EventType == RealtimeServerEventType.ResponseDone)
+    {
+        break;
+    }
+}
 ```
 
 1. Set `FOUNDRY_VOICE_INPUT_AUDIO_PATH` to a raw PCM16, mono, 24 kHz input file to run the audio streaming turn. Set `FOUNDRY_VOICE_OUTPUT_AUDIO_PATH` to choose where the streamed PCM16 response is written; otherwise the sample uses the system temporary directory.
@@ -189,15 +221,19 @@ public static async Task<string> StreamAudioTurnAsync(
     {
         await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(cancellationToken))
         {
+            if (update.MessageType != WebSocketMessageType.Text)
+            {
+                continue;
+            }
+            using JsonDocument document = JsonDocument.Parse(update.Data);
+            LogRealtimeEvent(update.EventType, document.RootElement);
             if (update.EventType == RealtimeServerEventType.ResponseOutputAudioDelta)
             {
-                using JsonDocument document = JsonDocument.Parse(update.Data);
                 byte[] audioChunk = Convert.FromBase64String(document.RootElement.GetProperty("delta").GetString());
                 await outputPcm.WriteAsync(audioChunk, 0, audioChunk.Length, cancellationToken);
             }
             else if (update.EventType == RealtimeServerEventType.ResponseDone)
             {
-                using JsonDocument document = JsonDocument.Parse(update.Data);
                 if (IsCancelledResponse(document.RootElement))
                 {
                     continue;
@@ -269,11 +305,12 @@ private static async Task<string> ReadPersistedConversationAsync(
     CancellationToken cancellationToken = default)
 {
     string assistantItemId = null;
-    VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(
+    ClientResult<VoiceConversation> conversationResult = await conversationsClient.GetAgentConversationAsync(
         agentName,
         conversationId,
         cancellationToken);
-    Console.WriteLine($"Created at {conversation.CreatedAt}; status: {conversation.Status}");
+    VoiceConversation conversation = conversationResult;
+    Console.WriteLine($"Created at {conversation.CreatedAt}; status: {conversation.Status} (GetAgentConversation status: {(int)conversationResult.GetRawResponse().Status})");
 
     await foreach (VoiceResponse response in conversationsClient.GetAgentConversationResponsesAsync(
         agentName,
@@ -281,12 +318,13 @@ private static async Task<string> ReadPersistedConversationAsync(
         cancellationToken: cancellationToken))
     {
         string responseId = response.Id;
-        VoiceResponse detail = await conversationsClient.GetAgentConversationResponseAsync(
+        ClientResult<VoiceResponse> detailResult = await conversationsClient.GetAgentConversationResponseAsync(
             agentName,
             conversationId,
             responseId,
             cancellationToken);
-        Console.WriteLine($"Response {responseId}: {detail.Status}");
+        VoiceResponse detail = detailResult;
+        Console.WriteLine($"Response {responseId}: {detail.Status} (GetAgentConversationResponse status: {(int)detailResult.GetRawResponse().Status})");
 
         await foreach (RealtimeItem conversationItem in conversationsClient.GetAgentConversationResponseItemsAsync(
             agentName,
@@ -294,16 +332,12 @@ private static async Task<string> ReadPersistedConversationAsync(
             responseId,
             cancellationToken: cancellationToken))
         {
-            using JsonDocument itemDocument = JsonDocument.Parse(ModelReaderWriter.Write(conversationItem));
-            JsonElement item = itemDocument.RootElement;
-            string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
-            Console.WriteLine($"Response item: {itemType}");
+            Console.WriteLine($"Response item: {DescribeItem(conversationItem)}");
             if (assistantItemId is null
-                && item.TryGetProperty("role", out JsonElement role)
-                && role.ValueEquals("assistant")
-                && item.TryGetProperty("id", out JsonElement id))
+                && conversationItem is RealtimeMessageItem assistantMessage
+                && assistantMessage.Role == RealtimeMessageRole.Assistant)
             {
-                assistantItemId = id.GetString();
+                assistantItemId = assistantMessage.Id;
             }
         }
     }
@@ -313,13 +347,30 @@ private static async Task<string> ReadPersistedConversationAsync(
         conversationId,
         cancellationToken: cancellationToken))
     {
-        using JsonDocument itemDocument = JsonDocument.Parse(ModelReaderWriter.Write(conversationItem));
-        JsonElement item = itemDocument.RootElement;
-        string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
-        Console.WriteLine($"Conversation item: {itemType}");
+        Console.WriteLine($"Conversation item: {DescribeItem(conversationItem)}");
     }
     return assistantItemId;
 }
+
+/// <summary>
+/// Describes a persisted conversation item using typed pattern-matching rather than
+/// round-tripping through <see cref="ModelReaderWriter.Write{T}(T, ModelReaderWriterOptions)"/>.
+/// Items retrieved from the persisted-conversation-item endpoints omit large fields (e.g. inline
+/// audio bytes, which are fetched separately via the dedicated audio endpoints), and re-serializing
+/// such a partially-populated item can throw inside some OpenAI.Realtime content-part writers that
+/// don't yet null-check every field. Typed access below sidesteps that entirely.
+/// </summary>
+private static string DescribeItem(RealtimeItem item) => item switch
+{
+    RealtimeMessageItem message => $"message (role={message.Role}, id={message.Id}, status={message.Status})",
+    RealtimeFunctionCallItem functionCall => $"function_call (name={functionCall.FunctionName}, id={functionCall.Id})",
+    RealtimeFunctionCallOutputItem functionCallOutput => $"function_call_output (id={functionCallOutput.Id})",
+    RealtimeMcpToolCallItem mcpToolCall => $"mcp_call (name={mcpToolCall.ToolName}, id={mcpToolCall.Id})",
+    RealtimeMcpToolCallApprovalRequestItem mcpApprovalRequest => $"mcp_approval_request (id={mcpApprovalRequest.Id})",
+    RealtimeMcpToolCallApprovalResponseItem mcpApprovalResponse => $"mcp_approval_response (id={mcpApprovalResponse.Id})",
+    RealtimeMcpToolDefinitionListItem mcpToolList => $"mcp_list_tools (id={mcpToolList.Id})",
+    _ => $"unknown ({item.GetType().Name})"
+};
 ```
 
 1. Retrieve whole-call or per-item recording metadata. Foundry-managed audio is returned as WAV content; when `BlobUri` is present, download the recording from the configured bring-your-own-storage account instead.
@@ -332,11 +383,12 @@ private static async Task DownloadConversationAudioAsync(
     Stream destination,
     CancellationToken cancellationToken = default)
 {
-    VoiceRecordingResponse recording = await conversationsClient.GetAgentConversationAudioAsync(
+    ClientResult<VoiceRecordingResponse> recordingResult = await conversationsClient.GetAgentConversationAudioAsync(
         agentName,
         conversationId,
         cancellationToken);
-    Console.WriteLine($"{recording.Format}, {recording.SampleRate} Hz, {recording.Channels} channels");
+    VoiceRecordingResponse recording = recordingResult;
+    Console.WriteLine($"{recording.Format}, {recording.SampleRate} Hz, {recording.Channels} channels (GetAgentConversationAudio status: {(int)recordingResult.GetRawResponse().Status})");
 
     if (recording.BlobUri is not null)
     {
@@ -344,11 +396,12 @@ private static async Task DownloadConversationAudioAsync(
         return;
     }
 
-    BinaryData content = await conversationsClient.GetAgentConversationAudioContentAsync(
+    ClientResult<BinaryData> contentResult = await conversationsClient.GetAgentConversationAudioContentAsync(
         agentName,
         conversationId,
         cancellationToken);
-    byte[] bytes = content.ToArray();
+    Console.WriteLine($"GetAgentConversationAudioContent status: {(int)contentResult.GetRawResponse().Status}");
+    byte[] bytes = ((BinaryData)contentResult).ToArray();
     await destination.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
 }
 
@@ -360,12 +413,13 @@ private static async Task DownloadConversationItemAudioAsync(
     Stream destination,
     CancellationToken cancellationToken = default)
 {
-    VoiceItemAudioResponse audio = await conversationsClient.GetAgentConversationItemAudioAsync(
+    ClientResult<VoiceItemAudioResponse> audioResult = await conversationsClient.GetAgentConversationItemAudioAsync(
         agentName,
         conversationId,
         itemId,
         cancellationToken);
-    Console.WriteLine($"{audio.Role}: {audio.DurationMs}");
+    VoiceItemAudioResponse audio = audioResult;
+    Console.WriteLine($"{audio.Role}: {audio.DurationMs} (GetAgentConversationItemAudio status: {(int)audioResult.GetRawResponse().Status})");
 
     if (audio.BlobUri is not null)
     {
@@ -373,12 +427,13 @@ private static async Task DownloadConversationItemAudioAsync(
         return;
     }
 
-    BinaryData content = await conversationsClient.GetAgentConversationItemAudioContentAsync(
+    ClientResult<BinaryData> contentResult = await conversationsClient.GetAgentConversationItemAudioContentAsync(
         agentName,
         conversationId,
         itemId,
         cancellationToken);
-    byte[] bytes = content.ToArray();
+    Console.WriteLine($"GetAgentConversationItemAudioContent status: {(int)contentResult.GetRawResponse().Status}");
+    byte[] bytes = ((BinaryData)contentResult).ToArray();
     await destination.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
 }
 ```
