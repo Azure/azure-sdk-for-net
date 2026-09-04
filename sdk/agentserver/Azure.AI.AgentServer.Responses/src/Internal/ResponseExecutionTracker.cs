@@ -115,7 +115,7 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
             execution.ShutdownRequested = true;
             if (execution.Context is not null)
             {
-                execution.Context.IsShutdownRequested = true;
+                execution.Context.SignalShutdown();
             }
 
             try
