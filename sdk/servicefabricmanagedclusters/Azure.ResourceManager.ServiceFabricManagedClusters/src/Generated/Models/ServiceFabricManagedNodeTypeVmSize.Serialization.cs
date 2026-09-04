@@ -14,56 +14,56 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies a VM size in the sku profile. </summary>
-    public partial class SkuProfileVmSize : IJsonModel<SkuProfileVmSize>
+    public partial class ServiceFabricManagedNodeTypeVmSize : IJsonModel<ServiceFabricManagedNodeTypeVmSize>
     {
-        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/> for deserialization. </summary>
-        internal SkuProfileVmSize()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeVmSize"/> for deserialization. </summary>
+        internal ServiceFabricManagedNodeTypeVmSize()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuProfileVmSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ServiceFabricManagedNodeTypeVmSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeVmSize>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSkuProfileVmSize(document.RootElement, options);
+                        return DeserializeServiceFabricManagedNodeTypeVmSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeVmSize)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeVmSize>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeVmSize)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SkuProfileVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceFabricManagedNodeTypeVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkuProfileVmSize IPersistableModel<SkuProfileVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServiceFabricManagedNodeTypeVmSize IPersistableModel<ServiceFabricManagedNodeTypeVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SkuProfileVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricManagedNodeTypeVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SkuProfileVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricManagedNodeTypeVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeVmSize)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkuProfileVmSize IJsonModel<SkuProfileVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServiceFabricManagedNodeTypeVmSize IJsonModel<ServiceFabricManagedNodeTypeVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuProfileVmSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ServiceFabricManagedNodeTypeVmSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeVmSize)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuProfileVmSize(document.RootElement, options);
+            return DeserializeServiceFabricManagedNodeTypeVmSize(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SkuProfileVmSize DeserializeSkuProfileVmSize(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceFabricManagedNodeTypeVmSize DeserializeServiceFabricManagedNodeTypeVmSize(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SkuProfileVmSize(name, rank, additionalBinaryDataProperties);
+            return new ServiceFabricManagedNodeTypeVmSize(name, rank, additionalBinaryDataProperties);
         }
     }
 }

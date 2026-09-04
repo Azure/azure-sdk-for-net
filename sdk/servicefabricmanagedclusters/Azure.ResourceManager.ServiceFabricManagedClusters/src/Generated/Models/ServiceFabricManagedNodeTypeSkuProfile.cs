@@ -13,26 +13,26 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies the sku profile for Instance Mix scenarios on a node type. </summary>
-    public partial class SkuProfile
+    public partial class ServiceFabricManagedNodeTypeSkuProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SkuProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeSkuProfile"/>. </summary>
         /// <param name="vmSizes"> Specifies the VM sizes for the node type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSizes"/> is null. </exception>
-        public SkuProfile(IEnumerable<SkuProfileVmSize> vmSizes)
+        public ServiceFabricManagedNodeTypeSkuProfile(IEnumerable<ServiceFabricManagedNodeTypeVmSize> vmSizes)
         {
             Argument.AssertNotNull(vmSizes, nameof(vmSizes));
 
             VmSizes = vmSizes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeSkuProfile"/>. </summary>
         /// <param name="vmSizes"> Specifies the VM sizes for the node type. </param>
         /// <param name="allocationStrategy"> Specifies the allocation strategy for the VM sizes in the sku profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuProfile(IList<SkuProfileVmSize> vmSizes, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceFabricManagedNodeTypeSkuProfile(IList<ServiceFabricManagedNodeTypeVmSize> vmSizes, ServiceFabricManagedNodeTypeAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             AllocationStrategy = allocationStrategy;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Specifies the VM sizes for the node type. </summary>
-        public IList<SkuProfileVmSize> VmSizes { get; }
+        public IList<ServiceFabricManagedNodeTypeVmSize> VmSizes { get; }
 
         /// <summary> Specifies the allocation strategy for the VM sizes in the sku profile. </summary>
-        public AllocationStrategy? AllocationStrategy { get; set; }
+        public ServiceFabricManagedNodeTypeAllocationStrategy? AllocationStrategy { get; set; }
     }
 }

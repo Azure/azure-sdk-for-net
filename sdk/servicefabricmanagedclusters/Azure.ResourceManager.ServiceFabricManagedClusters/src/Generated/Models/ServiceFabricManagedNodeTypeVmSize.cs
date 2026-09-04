@@ -12,26 +12,26 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies a VM size in the sku profile. </summary>
-    public partial class SkuProfileVmSize
+    public partial class ServiceFabricManagedNodeTypeVmSize
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeVmSize"/>. </summary>
         /// <param name="name"> The name of the VM size. For example, Standard_D2s_v3. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SkuProfileVmSize(string name)
+        public ServiceFabricManagedNodeTypeVmSize(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeVmSize"/>. </summary>
         /// <param name="name"> The name of the VM size. For example, Standard_D2s_v3. </param>
-        /// <param name="rank"> Specifies the rank or priority of the VM size within the sku profile. Lower values indicate higher priority. </param>
+        /// <param name="rank"> Specifies the rank or priority of the VM size when allocationStrategy is Prioritized. Lower values indicate higher priority. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuProfileVmSize(string name, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceFabricManagedNodeTypeVmSize(string name, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Rank = rank;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> The name of the VM size. For example, Standard_D2s_v3. </summary>
         public string Name { get; set; }
 
-        /// <summary> Specifies the rank or priority of the VM size within the sku profile. Lower values indicate higher priority. </summary>
+        /// <summary> Specifies the rank or priority of the VM size when allocationStrategy is Prioritized. Lower values indicate higher priority. </summary>
         public int? Rank { get; set; }
     }
 }

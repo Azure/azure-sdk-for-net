@@ -441,20 +441,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("dataDiskCaching"u8);
                 writer.WriteStringValue(DataDiskCaching.Value.ToString());
             }
-            if (Optional.IsDefined(DataDiskWriteAcceleratorEnabled))
+            if (Optional.IsDefined(IsDataDiskWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("dataDiskWriteAcceleratorEnabled"u8);
-                writer.WriteBooleanValue(DataDiskWriteAcceleratorEnabled.Value);
+                writer.WriteBooleanValue(IsDataDiskWriteAcceleratorEnabled.Value);
             }
-            if (Optional.IsDefined(DataDiskIOPSReadWrite))
+            if (Optional.IsDefined(DataDiskIopsReadWrite))
             {
                 writer.WritePropertyName("dataDiskIOPSReadWrite"u8);
-                writer.WriteNumberValue(DataDiskIOPSReadWrite.Value);
+                writer.WriteNumberValue(DataDiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DataDiskMBpsReadWrite))
+            if (Optional.IsDefined(DataDiskMbpsReadWrite))
             {
                 writer.WritePropertyName("dataDiskMBpsReadWrite"u8);
-                writer.WriteNumberValue(DataDiskMBpsReadWrite.Value);
+                writer.WriteNumberValue(DataDiskMbpsReadWrite.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -554,11 +554,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             bool? enableResilientEphemeralOSDisk = default;
             ScaleInPolicy scaleInPolicy = default;
             ProxyAgentSettings proxyAgentSettings = default;
-            SkuProfile skuProfile = default;
-            DiskCachingType? dataDiskCaching = default;
-            bool? dataDiskWriteAcceleratorEnabled = default;
-            int? dataDiskIOPSReadWrite = default;
-            int? dataDiskMBpsReadWrite = default;
+            ServiceFabricManagedNodeTypeSkuProfile skuProfile = default;
+            ServiceFabricManagedDiskCachingType? dataDiskCaching = default;
+            bool? isDataDiskWriteAcceleratorEnabled = default;
+            int? dataDiskIopsReadWrite = default;
+            int? dataDiskMbpsReadWrite = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    skuProfile = SkuProfile.DeserializeSkuProfile(prop.Value, options);
+                    skuProfile = ServiceFabricManagedNodeTypeSkuProfile.DeserializeServiceFabricManagedNodeTypeSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataDiskCaching"u8))
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    dataDiskCaching = new DiskCachingType(prop.Value.GetString());
+                    dataDiskCaching = new ServiceFabricManagedDiskCachingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataDiskWriteAcceleratorEnabled"u8))
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    dataDiskWriteAcceleratorEnabled = prop.Value.GetBoolean();
+                    isDataDiskWriteAcceleratorEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dataDiskIOPSReadWrite"u8))
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    dataDiskIOPSReadWrite = prop.Value.GetInt32();
+                    dataDiskIopsReadWrite = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("dataDiskMBpsReadWrite"u8))
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    dataDiskMBpsReadWrite = prop.Value.GetInt32();
+                    dataDiskMbpsReadWrite = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -1212,9 +1212,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 proxyAgentSettings,
                 skuProfile,
                 dataDiskCaching,
-                dataDiskWriteAcceleratorEnabled,
-                dataDiskIOPSReadWrite,
-                dataDiskMBpsReadWrite,
+                isDataDiskWriteAcceleratorEnabled,
+                dataDiskIopsReadWrite,
+                dataDiskMbpsReadWrite,
                 additionalBinaryDataProperties);
         }
     }

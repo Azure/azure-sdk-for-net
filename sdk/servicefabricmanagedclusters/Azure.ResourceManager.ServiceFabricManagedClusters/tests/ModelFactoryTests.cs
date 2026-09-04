@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         [Test]
         public void InstanceMixAndDiskSettingsUseExpectedWireNames()
         {
-            var vmSize = new SkuProfileVmSize("Standard_D4s_v5") { Rank = 1 };
+            var vmSize = new ServiceFabricManagedNodeTypeVmSize("Standard_D4s_v5") { Rank = 1 };
             var dataDisk = new NodeTypeVmssDataDisk(1, 128, ServiceFabricManagedDataDiskType.PremiumLrs, "E")
             {
-                Caching = DiskCachingType.ReadOnly,
-                WriteAcceleratorEnabled = true,
-                DiskIOPSReadWrite = 5000,
-                DiskMBpsReadWrite = 200,
+                Caching = ServiceFabricManagedDiskCachingType.ReadOnly,
+                IsWriteAcceleratorEnabled = true,
+                DiskIopsReadWrite = 5000,
+                DiskMbpsReadWrite = 200,
             };
             var data = new ServiceFabricManagedNodeTypeData
             {
-                SkuProfile = new SkuProfile(new[] { vmSize })
+                SkuProfile = new ServiceFabricManagedNodeTypeSkuProfile(new[] { vmSize })
                 {
-                    AllocationStrategy = AllocationStrategy.Prioritized,
+                    AllocationStrategy = ServiceFabricManagedNodeTypeAllocationStrategy.Prioritized,
                 },
-                DataDiskCaching = DiskCachingType.ReadWrite,
-                DataDiskWriteAcceleratorEnabled = true,
-                DataDiskIOPSReadWrite = 10000,
-                DataDiskMBpsReadWrite = 400,
+                DataDiskCaching = ServiceFabricManagedDiskCachingType.ReadWrite,
+                IsDataDiskWriteAcceleratorEnabled = true,
+                DataDiskIopsReadWrite = 10000,
+                DataDiskMbpsReadWrite = 400,
             };
             data.AdditionalDataDisks.Add(dataDisk);
 
